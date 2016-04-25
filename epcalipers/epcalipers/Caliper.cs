@@ -23,7 +23,9 @@ namespace epcalipers
         public Color unselectedColor { set; get; }
         public Color selectedColor { set; get; }
         public int lineWidth { set; get; }
-        public float valueInPoints { set; get; }
+        public float valueInPoints {
+            get { return bar2Position - bar1Position; }
+        }
         public Boolean isSelected { set; get; }
         public Calibration calibration { set; get; }
         public Font textFont { set; get; }
@@ -71,6 +73,145 @@ namespace epcalipers
             {
                 differential = 0.0f;
             }
+        }
+
+        public void draw(Graphics g, RectangleF rect)
+        {
+            Brush brush = new SolidBrush(color);
+            Pen pen = new Pen(brush, lineWidth);
+            if (direction == CaliperDirection.Horizontal)
+            {
+                crossbarPosition = Math.Min(crossbarPosition, rect.Size.Height - DELTA);
+                crossbarPosition = Math.Max(crossbarPosition, DELTA);
+                bar1Position = Math.Min(bar1Position, rect.Size.Width - DELTA);
+                bar2Position = Math.Max(bar2Position, DELTA);
+                g.DrawLine(pen, bar1Position, 0.0f, bar1Position, rect.Size.Height);
+                g.DrawLine(pen, bar2Position, 0.0f, bar2Position, rect.Size.Height);
+                g.DrawLine(pen, bar2Position, crossbarPosition, bar1Position, crossbarPosition);
+            }
+            else
+            {
+                crossbarPosition = Math.Min(crossbarPosition, rect.Size.Width - DELTA);
+                crossbarPosition = Math.Max(crossbarPosition, DELTA);
+                bar1Position = Math.Min(bar1Position, rect.Size.Height - DELTA);
+                bar2Position = Math.Max(bar2Position, DELTA);
+                g.DrawLine(pen, 0.0f, bar1Position, rect.Size.Width, bar1Position);
+                g.DrawLine(pen, 0.0f, bar2Position, rect.Size.Width, bar2Position);
+                g.DrawLine(pen, crossbarPosition, bar2Position, crossbarPosition, bar1Position);              
+            }
+            String text = measurement();
+            SizeF sizeOfString = g.MeasureString(text, textFont);
+            float stringWidth = sizeOfString.Width / 2;
+            float firstBarPosition = bar2Position > bar1Position ? bar1Position : bar2Position;
+            float center = firstBarPosition + Math.Abs(bar2Position - bar1Position);
+            if (direction == CaliperDirection.Horizontal)
+            {
+                g.DrawString(text, textFont, brush, center - stringWidth, crossbarPosition - 20);
+            }
+            else
+            {
+                g.DrawString(text, textFont, brush, crossbarPosition + 5, bar1Position
+                    + (bar2Position - bar1Position) / 2);
+            }
+        }
+
+
+        // returns significant bar coordinate depending on direction of caliper
+        public float barCoord(PointF p)
+        {
+            return direction == CaliperDirection.Horizontal ? p.X : p.Y;
+        }
+
+        private String measurement()
+        {
+            String s = String.Format("%.4g %s", calibratedResult(),
+                calibration.units);
+            return s;
+        }
+
+        private float calibratedResult()
+        {
+            float result = intervalResult();
+            if (result != 0.0f && calibration.displayRate &&
+                calibration.canDisplayRate)
+            {
+                result = rateResult(result);
+            }
+            return result;
+        }
+
+        private float intervalResult()
+        {
+            return valueInPoints * calibration.multiplier;
+        }
+
+        private float rateResult(float interval)
+        {
+            if (interval != 0.0f)
+            {
+                if (calibration.unitsAreMsecs)
+                {
+                    interval = 60000.0f / interval;
+                }
+                else if (calibration.unitsAreSeconds)
+                {
+                    interval = 60.0f / interval;
+                }
+            }
+            return interval;
+        }
+
+        private float intervalInSecs(float interval)
+        {
+            if (calibration.unitsAreSeconds)
+            {
+                return interval;
+            }
+            else
+            {
+                return interval / 1000.0f;
+            }
+        }
+
+        private float intervalInMsec(float interval)
+        {
+            if (calibration.unitsAreMsecs)
+            {
+                return interval;
+            }
+            else
+            {
+                return 1000.0f * interval;
+            }
+        }
+
+        public Boolean pointNearBar(PointF p, float barPosition)
+        {
+            return barCoord(p) > barPosition - DELTA && barCoord(p) < barPosition + DELTA;
+        }
+
+        public Boolean pointNearCrossbar(PointF p)
+        {
+            Boolean nearBar;
+            float delta = DELTA + 5.0f;
+            if (direction == CaliperDirection.Horizontal)
+            {
+                nearBar = (p.X > Math.Min(bar1Position, bar2Position) && p.X < Math.Max(bar2Position, bar1Position) && p.Y > crossbarPosition - delta && p.Y < crossbarPosition + delta);
+
+            }
+            else
+            {
+                nearBar = (p.Y > Math.Min(bar1Position , bar2Position) &&
+                    p.Y < Math.Max(bar2Position, bar1Position) && p.X > crossbarPosition - delta &&
+                    p.X < crossbarPosition + delta);
+            }
+            return nearBar;
+        }
+
+        private Boolean pointNearCaliper(PointF p)
+        {
+            return pointNearCrossbar(p) || pointNearBar(p, bar1Position) ||
+                pointNearBar(p, bar2Position);
         }
 
     }
