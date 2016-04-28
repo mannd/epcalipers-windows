@@ -15,25 +15,25 @@ namespace epcalipers.Tests
         public void CalibrationTest()
         {
             Calibration cal = new Calibration();
-            cal.calibrated = true;
-            cal.units = "msec";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "milliseconds";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "sec";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "secs";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "Msec";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "ms";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.units = "mm";
-            Assert.IsFalse(cal.canDisplayRate);
-            cal.units = "mSecs";
-            Assert.IsTrue(cal.canDisplayRate);
-            cal.direction = CaliperDirection.Vertical;
-            Assert.IsFalse(cal.canDisplayRate);
+            cal.Calibrated = true;
+            cal.Units = "msec";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "milliseconds";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "sec";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "secs";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "Msec";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "ms";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Units = "mm";
+            Assert.IsFalse(cal.CanDisplayRate);
+            cal.Units = "mSecs";
+            Assert.IsTrue(cal.CanDisplayRate);
+            cal.Direction = CaliperDirection.Vertical;
+            Assert.IsFalse(cal.CanDisplayRate);
         }
 
 
@@ -42,38 +42,38 @@ namespace epcalipers.Tests
         public void initWithDirectionTest()
         {
             Calibration cal = new Calibration();
-            Assert.IsTrue(cal.direction == CaliperDirection.Horizontal);
-            Assert.IsTrue(cal.units == "points");
-            Assert.IsFalse(cal.displayRate);
-            Assert.IsFalse(cal.canDisplayRate);
+            Assert.IsTrue(cal.Direction == CaliperDirection.Horizontal);
+            Assert.IsTrue(cal.Units == "points");
+            Assert.IsFalse(cal.DisplayRate);
+            Assert.IsFalse(cal.CanDisplayRate);
         }
 
         [TestMethod()]
         public void currentHorizontalCalFactorTest()
         {
             Calibration cal = new Calibration();
-            cal.originalZoom = 1.0f;
-            cal.originalCalFactor = 0.5f;
-            cal.currentZoom = 1.0f;
-            Assert.IsTrue(cal.currentCalFactor == 0.5f);
-            cal.currentZoom = 2.0f;
-            Assert.IsTrue(cal.currentCalFactor == 0.25f);
+            cal.OriginalZoom = 1.0f;
+            cal.OriginalCalFactor = 0.5f;
+            cal.CurrentZoom = 1.0f;
+            Assert.IsTrue(cal.CurrentCalFactor == 0.5f);
+            cal.CurrentZoom = 2.0f;
+            Assert.IsTrue(cal.CurrentCalFactor == 0.25f);
         }
 
         [TestMethod()]
         public void complexCalibrationTest()
         {
             Calibration cal = new Calibration();
-            cal.units = "Seconds";
-            cal.displayRate = true;
-            Assert.IsTrue(cal.units == "points");
-            cal.calibrated = true;
-            Assert.IsTrue(cal.units == "bpm");
-            cal.calibrated = false;
-            cal.displayRate = false;
-            Assert.IsTrue(cal.units == "points");
-            cal.calibrated = true;
-            Assert.IsTrue(cal.units == "Seconds");
+            cal.Units = "Seconds";
+            cal.DisplayRate = true;
+            Assert.IsTrue(cal.Units == "points");
+            cal.Calibrated = true;
+            Assert.IsTrue(cal.Units == "bpm");
+            cal.Calibrated = false;
+            cal.DisplayRate = false;
+            Assert.IsTrue(cal.Units == "points");
+            cal.Calibrated = true;
+            Assert.IsTrue(cal.Units == "Seconds");
         }
     }
 }

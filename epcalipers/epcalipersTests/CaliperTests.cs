@@ -16,13 +16,13 @@ namespace epcalipers.Tests
         public void barCoordTest()
         {
             Caliper c = new Caliper();
-            Assert.IsTrue(c.bar1Position == 0);
-            Assert.IsTrue(c.bar2Position == 0);
-            Assert.IsTrue(c.crossbarPosition == 100);
+            Assert.IsTrue(c.Bar1Position == 0);
+            Assert.IsTrue(c.Bar2Position == 0);
+            Assert.IsTrue(c.CrossbarPosition == 100);
             PointF p = new PointF(100, 50);
-            Assert.IsTrue(c.barCoord(p) == 100);
-            c.direction = CaliperDirection.Vertical;
-            Assert.IsTrue(c.barCoord(p) == 50);
+            Assert.IsTrue(c.BarCoord(p) == 100);
+            c.Direction = CaliperDirection.Vertical;
+            Assert.IsTrue(c.BarCoord(p) == 50);
         }
     }
 }

@@ -31,13 +31,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.addCaliper = new System.Windows.Forms.Button();
             this.calibrateButton = new System.Windows.Forms.Button();
             this.intervalRateButton = new System.Windows.Forms.Button();
             this.meanRRButton = new System.Windows.Forms.Button();
             this.qtcButton = new System.Windows.Forms.Button();
             this.imageButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.addCaliper = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
@@ -68,6 +68,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(682, 427);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -82,6 +83,15 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(682, 43);
             this.flowLayoutPanel1.TabIndex = 2;
+            // 
+            // addCaliper
+            // 
+            this.addCaliper.Location = new System.Drawing.Point(3, 3);
+            this.addCaliper.Name = "addCaliper";
+            this.addCaliper.Size = new System.Drawing.Size(75, 23);
+            this.addCaliper.TabIndex = 6;
+            this.addCaliper.Text = "Add Caliper";
+            this.addCaliper.UseVisualStyleBackColor = true;
             // 
             // calibrateButton
             // 
@@ -137,15 +147,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // addCaliper
-            // 
-            this.addCaliper.Location = new System.Drawing.Point(3, 3);
-            this.addCaliper.Name = "addCaliper";
-            this.addCaliper.Size = new System.Drawing.Size(75, 23);
-            this.addCaliper.TabIndex = 6;
-            this.addCaliper.Text = "Add Caliper";
-            this.addCaliper.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

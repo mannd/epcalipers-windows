@@ -10,13 +10,13 @@ namespace epcalipers
     {
         private String rawUnits;
 
-        public CaliperDirection direction { set; get; }
-        public String units
+        public CaliperDirection Direction { set; get; }
+        public String Units
         {
             set { rawUnits = value; }
             get {
-                if (calibrated) {
-                    if (displayRate) {
+                if (Calibrated) {
+                    if (DisplayRate) {
                         return "bpm";
                     }
                     else {
@@ -28,69 +28,69 @@ namespace epcalipers
                 }
             }
         }
-        public String calibrationString { set; get; }
-        public Boolean canDisplayRate
+        public String CalibrationString { set; get; }
+        public bool CanDisplayRate
         {
             get
             {
-                if (direction == CaliperDirection.Vertical  || !calibrated)
+                if (Direction == CaliperDirection.Vertical  || !Calibrated)
                 {
                     return false;
                 }
-                return unitsAreMsecs || unitsAreSeconds;
+                return UnitsAreMsecs || UnitsAreSeconds;
             }
         }
-        // TODO refactor next 2 variables:
-        // enum Units { Sec, Msec, None }; 
-        public Boolean unitsAreSeconds { get { return _unitsAreSeconds(); } }
-        public Boolean unitsAreMsecs { get { return _unitsAreMsecs(); } }
-        public Boolean displayRate { get; set; }
-        public float multiplier {
+        // TODO possibly refactor next 2 variables:
+        //public enum UnitType { Sec, Msec, Bpm, None };
+        public bool UnitsAreSeconds { get { return _unitsAreSeconds(); } }
+        public bool UnitsAreMsecs { get { return _unitsAreMsecs(); } }
+        public bool DisplayRate { get; set; }
+        public float Multiplier {
             get
             {
-                if (calibrated)
+                if (Calibrated)
                 {
-                    return currentCalFactor;
+                    return CurrentCalFactor;
                 } else
                 {
                     return 1.0f;
                 }
             }
         }
-        public float originalZoom { get; set; }
-        public float currentZoom { get; set; }
-        public float originalCalFactor { get; set; }
-        public float currentCalFactor
+        public float OriginalZoom { get; set; }
+        public float CurrentZoom { get; set; }
+        public float OriginalCalFactor { get; set; }
+        public float CurrentCalFactor
         {
             get
             {
-                return originalZoom * originalCalFactor / currentZoom;
+                return OriginalZoom * OriginalCalFactor / CurrentZoom;
             }
         }
-        public Boolean calibrated { get; set; }
+        public bool Calibrated { get; set; }
 
         // constructor
         public Calibration()
         {
-            initWithDirection(CaliperDirection.Horizontal);
+            InitWithDirection(CaliperDirection.Horizontal);
         }
 
-        public void initWithDirection(CaliperDirection direction)
+        public void InitWithDirection(CaliperDirection direction)
         {
-            reset();
-            this.direction = direction;
+            Reset();
+            this.Direction = direction;
         }
 
-        private void reset()
+        private void Reset()
         {
-            units = "points";
-            displayRate = false;
-            originalZoom = 1.0f;
-            currentZoom = 1.0f;
-            calibrated = false;
+            Units = "points";
+            DisplayRate = false;
+            OriginalZoom = 1.0f;
+            CurrentZoom = 1.0f;
+            Calibrated = false;
         }
 
-        private Boolean _unitsAreSeconds()
+        private bool _unitsAreSeconds()
         {
             if (rawUnits.Length < 1)
                 return false;
@@ -99,7 +99,7 @@ namespace epcalipers
                 || units.Equals("SECS") || units.Equals("SECONDS");
         }
 
-        private Boolean _unitsAreMsecs()
+        private bool _unitsAreMsecs()
         {
             if (rawUnits.Length < 1)
                 return false;
