@@ -42,5 +42,15 @@ namespace epcalipers
         {
             return interval / numberOfIntervals;
         }
+
+        public static float QtcBazettSec(float qtInSec, float rrInSec)
+        {
+            return  qtInSec / (float)Math.Sqrt(rrInSec);
+        }
+
+        public static float QtcBazettMsec(float qt, float rrInMsec)
+        {
+            return SecToMsec(QtcBazettSec(MsecToSec(qt), MsecToSec(rrInMsec)));
+        }
     }
 }

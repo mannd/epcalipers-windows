@@ -37,5 +37,18 @@ namespace epcalipers.Tests
         {
             Assert.IsTrue(EPCalculator.MeanInterval(300, 3) == 100);
         }
+
+        [TestMethod()]
+        public void QtcTest()
+        {
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(345, 879)) == 368);
+            Assert.IsTrue(Math.Round(EPCalculator.SecToMsec(EPCalculator.QtcBazettSec(0.356f, 1.33f))) == 309);
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(499, 999)) == 499);
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(134, 765)) == 153);
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(500, 1000)) == 500);
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(371, 1000)) == 371);
+            Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(459, 777)) == 521);
+
+        }
     }
 }
