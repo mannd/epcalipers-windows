@@ -102,8 +102,13 @@ namespace epcalipers
             {
                 return;
             }
-            theBitmap = zoom(theBitmap, trackBar1.Value);
-            pictureBox1.Image = theBitmap;
+            if (trackBar1.Value == 1)
+            {
+                pictureBox1.Image = theBitmap;
+                return;
+            }
+            Bitmap zoomedBitmap = zoom(theBitmap, trackBar1.Value);
+            pictureBox1.Image = zoomedBitmap;
         }
     }
 }
