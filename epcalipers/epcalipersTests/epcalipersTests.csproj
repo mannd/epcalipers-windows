@@ -53,7 +53,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CalibrationTests.cs" />
-    <Compile Include="Calipers.cs" />
     <Compile Include="CaliperTests.cs" />
     <Compile Include="EPCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

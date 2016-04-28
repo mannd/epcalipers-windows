@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace epcalipers
 {
     // This class manages the set of calipers on the screen
-    class Calipers
+    public class Calipers
     {
         List<Caliper> calipers = new List<Caliper>();
         bool Locked { get; set; }
@@ -27,6 +27,16 @@ namespace epcalipers
             {
                 c.Draw(g, rect);
             } 
+        }
+
+        public void addCaliper(Caliper c)
+        {
+            calipers.Add(c);
+        }
+
+        public void deleteCaliper(Caliper c)
+        {
+            calipers.Remove(c);
         }
 
         public Caliper GetActiveCaliper()

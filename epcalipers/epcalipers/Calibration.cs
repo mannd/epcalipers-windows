@@ -8,10 +8,10 @@ namespace epcalipers
 {
     public class Calibration
     {
-        private String rawUnits;
+        private string rawUnits;
 
         public CaliperDirection Direction { set; get; }
-        public String Units
+        public string Units
         {
             set { rawUnits = value; }
             get {
@@ -28,7 +28,7 @@ namespace epcalipers
                 }
             }
         }
-        public String CalibrationString { set; get; }
+        public string CalibrationString { set; get; }
         public bool CanDisplayRate
         {
             get
@@ -94,7 +94,7 @@ namespace epcalipers
         {
             if (rawUnits.Length < 1)
                 return false;
-            String units = rawUnits.ToUpper();
+            string units = rawUnits.ToUpper();
             return units.Equals("S") || units.Equals("SEC") || units.Equals("SECOND")
                 || units.Equals("SECS") || units.Equals("SECONDS");
         }
@@ -103,7 +103,7 @@ namespace epcalipers
         {
             if (rawUnits.Length < 1)
                 return false;
-            String units = rawUnits.ToUpper();
+            string units = rawUnits.ToUpper();
             return units.Contains("MSEC") || units.Equals("MS") || units.Contains("MILLIS");
         }
     }

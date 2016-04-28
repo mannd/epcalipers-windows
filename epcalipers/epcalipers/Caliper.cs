@@ -50,8 +50,8 @@ namespace epcalipers
             CaliperColor = Color.Blue;
             LineWidth = 2;
             IsSelected = false;
-            TextFont = new Font("Helvetica", 18);
-            CurrentCalibration = null;
+            TextFont = new Font("Helvetica", 14);
+            CurrentCalibration = new Calibration();
             // paragraph style ?
         }
 
@@ -60,13 +60,13 @@ namespace epcalipers
            if (Direction == CaliperDirection.Horizontal)
             {
                 Bar1Position = (rect.Size.Width / 3.0f) + differential;
-                Bar2Position = ((2.0f * rect.Size.Width) / 3.0f) + differential;
+                Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
                 CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
             }
            else
             {
                 Bar1Position = (rect.Size.Height / 3.0f) + differential;
-                Bar2Position = ((2.0f * rect.Size.Height) / 3.0f) + differential;
+                Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
                 CrossbarPosition = (rect.Size.Width / 2.0f) + differential;            
             }
             differential += 15.0f;
@@ -100,19 +100,19 @@ namespace epcalipers
                 g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
                 g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);              
             }
-            String text = Measurement();
+            string text = Measurement();
             SizeF sizeOfString = g.MeasureString(text, TextFont);
-            float stringWidth = sizeOfString.Width / 2;
+            float stringWidth = sizeOfString.Width;
+            float stringHeight = sizeOfString.Height;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
-            float center = firstBarPosition + Math.Abs(Bar2Position - Bar1Position);
+            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             if (Direction == CaliperDirection.Horizontal)
             {
-                g.DrawString(text, TextFont, brush, center - stringWidth, CrossbarPosition - 20);
+                g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 30);
             }
             else
             {
-                g.DrawString(text, TextFont, brush, CrossbarPosition + 5, Bar1Position
-                    + (Bar2Position - Bar1Position) / 2);
+                g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
             }
         }
 
@@ -123,9 +123,10 @@ namespace epcalipers
             return Direction == CaliperDirection.Horizontal ? p.X : p.Y;
         }
 
-        private String Measurement()
+        private string Measurement()
         {
-            String s = String.Format("%.4g %s", CalibratedResult(),
+            // "%.4g %s"
+            string s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
                 CurrentCalibration.Units);
             return s;
         }

@@ -15,10 +15,12 @@ namespace epcalipers
     {
 
         Bitmap theBitmap;
+        Calipers theCalipers;
 
         public Form1()
         {
             InitializeComponent();
+            theCalipers = new Calipers();
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -31,6 +33,7 @@ namespace epcalipers
             {
                 pictureBox1.Load(openFileDialog1.FileName);
                 theBitmap = new Bitmap(pictureBox1.Image);
+                trackBar1.Value = 1;
             }
         }
 
@@ -43,6 +46,17 @@ namespace epcalipers
         private void addCaliper_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("addCaliper button pushed");
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            Caliper c = new Caliper();
+            //c.Direction = CaliperDirection.Vertical;
+            //c.CurrentCalibration.Direction = CaliperDirection.Vertical;
+            c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
+            theCalipers.addCaliper(c);
+            pictureBox1.Refresh();
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -79,21 +93,22 @@ namespace epcalipers
 
             // Create a local version of the graphics object for the PictureBox.
             Graphics g = e.Graphics;
+            theCalipers.Draw(g, pictureBox1.DisplayRectangle);
             // Simulate a caliper
             // Draw a string on the PictureBox.
-            String label = "200 points";
-            Font font = new Font("Arial", 10);
-            SizeF sizeOfString = g.MeasureString(label, font);
-            float width = sizeOfString.Width / 2.0f;
-            g.DrawString(label,
-                font, System.Drawing.Brushes.Blue, new Point(300 - (int)width, 180));
-            // Draw a line in the PictureBox.
-            g.DrawLine(System.Drawing.Pens.Blue, 200, 0,
-                200, pictureBox1.Height);
-            g.DrawLine(System.Drawing.Pens.Blue, 400, 0,
-                400, pictureBox1.Height);
-            g.DrawLine(System.Drawing.Pens.Blue, 200, 200,
-                400, 200);
+            //String label = "200 points";
+            //Font font = new Font("Arial", 10);
+            //SizeF sizeOfString = g.MeasureString(label, font);
+            //float width = sizeOfString.Width / 2.0f;
+            //g.DrawString(label,
+            //    font, System.Drawing.Brushes.Blue, new Point(300 - (int)width, 180));
+            //// Draw a line in the PictureBox.
+            //g.DrawLine(System.Drawing.Pens.Blue, 200, 0,
+            //    200, pictureBox1.Height);
+            //g.DrawLine(System.Drawing.Pens.Blue, 400, 0,
+            //    400, pictureBox1.Height);
+            //g.DrawLine(System.Drawing.Pens.Blue, 200, 200,
+            //    400, 200);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -110,5 +125,7 @@ namespace epcalipers
             Bitmap zoomedBitmap = zoom(theBitmap, trackBar1.Value);
             pictureBox1.Image = zoomedBitmap;
         }
+
+
     }
 }

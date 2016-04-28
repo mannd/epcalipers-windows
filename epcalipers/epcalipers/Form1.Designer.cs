@@ -88,6 +88,7 @@
             this.addCaliper.TabIndex = 6;
             this.addCaliper.Text = "Add Caliper";
             this.addCaliper.UseVisualStyleBackColor = true;
+            this.addCaliper.Click += new System.EventHandler(this.addCaliper_Click);
             // 
             // calibrateButton
             // 
