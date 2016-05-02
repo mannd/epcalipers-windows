@@ -1,4 +1,7 @@
-﻿namespace epcalipers
+﻿using System;
+using System.Windows.Forms;
+
+namespace epcalipers
 {
     partial class Form1
     {
@@ -116,6 +119,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

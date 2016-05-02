@@ -29,14 +29,15 @@ namespace epcalipers
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            pictureBox1.MouseClick += PictureBox1_MouseClick;
-            setupButtons();
-            showMainMenu();
+            pictureBox1.MouseClick += pictureBox1_MouseClick;
+            pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
+            SetupButtons();
+            ShowMainMenu();
         }
 
  
 
-        private void setupButtons()
+        private void SetupButtons()
         {
             imageButton = new Button();
             imageButton.Text = "Image";
@@ -47,10 +48,11 @@ namespace epcalipers
             calibrateButton = new Button();
             calibrateButton.Text = "Calibrate";
             calibrateButton.Click += calibrateButton_Click;
+        
             // other buttons here
         }
 
-        private void showMainMenu()
+        private void ShowMainMenu()
         {
             flowLayoutPanel1.Controls.Clear();
             flowLayoutPanel1.Controls.AddRange(new Control[]{ imageButton, addCalipersButton, calibrateButton });
@@ -82,20 +84,14 @@ namespace epcalipers
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("addCaliper button pushed");
-            if (pictureBox1.Image == null)
+            if (pictureBox1.Image == null )
             {
                 return;
             }
-            Caliper c = new Caliper();
-            //c.Direction = CaliperDirection.Vertical;
-            //c.CurrentCalibration.Direction = CaliperDirection.Vertical;
-            c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
-            theCalipers.addCaliper(c);
-            pictureBox1.Refresh();
+            AddCaliper(CaliperDirection.Horizontal);
         }
 
-        private void addCaliper(CaliperDirection direction)
+         private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
             c.Direction = direction;
@@ -105,7 +101,7 @@ namespace epcalipers
             pictureBox1.Refresh();
         }
 
-        private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("click");
             Point mouseClickLocation = new Point(e.X, e.Y);
@@ -115,7 +111,7 @@ namespace epcalipers
 
         private void ClickEvent(Point point)
         {
-            if (theCalipers.toggleCaliperIfClicked(point))
+            if (theCalipers.ToggleCaliperIfClicked(point))
             {
                 pictureBox1.Refresh();
             }
@@ -123,9 +119,19 @@ namespace epcalipers
 
  
 
-        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("double click");
+            Point mouseClickLocation = new Point(e.X, e.Y);
+            DoubleClickEvent(mouseClickLocation);
+        }
+
+        private void DoubleClickEvent(Point point)
+        {
+            if (theCalipers.DeleteCaliperIfClicked(point))
+            {
+                pictureBox1.Refresh();
+            }
         }
 
         private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -136,7 +142,7 @@ namespace epcalipers
 
         }
 
-        private Bitmap zoom(Bitmap originalBitmap, Double zoomFactor)
+        private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)
         {
             Size newSize = new Size((int)(originalBitmap.Width * zoomFactor), (int)(originalBitmap.Height * zoomFactor));
             Bitmap bmp = new Bitmap(originalBitmap, newSize);
@@ -180,10 +186,10 @@ namespace epcalipers
                 pictureBox1.Image = theBitmap;
                 return;
             }
-            Bitmap zoomedBitmap = zoom(theBitmap, trackBar1.Value);
+            Bitmap zoomedBitmap = Zoom(theBitmap, trackBar1.Value);
             pictureBox1.Image = zoomedBitmap;
         }
 
-
+ 
     }
 }

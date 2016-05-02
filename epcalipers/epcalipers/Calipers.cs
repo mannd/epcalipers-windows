@@ -77,19 +77,7 @@ namespace epcalipers
             c.IsSelected = false;
         }
 
-       public void toggleCaliper(Caliper c)
-        {
-            if (c.IsSelected)
-            {
-                UnselectCaliper(c);
-            }
-            else
-            {
-                SelectCaliper(c);
-            }
-        }
-
-        public bool toggleCaliperIfClicked(Point point)
+        public bool ToggleCaliperIfClicked(Point point)
         {
             bool caliperToggled = false;
             for (int i = calipers.Count - 1; i >= 0; i--)
@@ -112,6 +100,20 @@ namespace epcalipers
                 }
             }
             return caliperToggled;
+        }
+
+        public bool DeleteCaliperIfClicked(Point point)
+        {
+            bool deleted = false;
+            for (int i = calipers.Count - 1; i >= 0; i--)
+            {
+                if (calipers[i].PointNearCaliper(point) && !deleted)
+                {
+                    deleteCaliper(calipers[i]);
+                    deleted = true;
+                }
+            }
+            return deleted;
         }
 
     
