@@ -16,6 +16,11 @@ namespace epcalipers
 
         Bitmap theBitmap;
         Calipers theCalipers;
+        Button imageButton;
+        Button addCalipersButton;
+        Button calibrateButton;
+        Button intervalRateButton;
+        Button measureButton;
 
         public Form1()
         {
@@ -24,6 +29,36 @@ namespace epcalipers
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            pictureBox1.MouseClick += PictureBox1_MouseClick;
+            setupButtons();
+            showMainMenu();
+        }
+
+ 
+
+        private void setupButtons()
+        {
+            imageButton = new Button();
+            imageButton.Text = "Image";
+            imageButton.Click += imageButton_Click;
+            addCalipersButton = new Button();
+            addCalipersButton.Text = "Add Calipers";
+            addCalipersButton.Click += addCaliper_Click;
+            calibrateButton = new Button();
+            calibrateButton.Text = "Calibrate";
+            calibrateButton.Click += calibrateButton_Click;
+            // other buttons here
+        }
+
+        private void showMainMenu()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Controls.AddRange(new Control[]{ imageButton, addCalipersButton, calibrateButton });
+            if (theBitmap == null)
+            {
+                addCalipersButton.Enabled = false;
+                calibrateButton.Enabled = false;
+            }
         }
 
         private void imageButton_Click(object sender, EventArgs e)
@@ -34,6 +69,8 @@ namespace epcalipers
                 pictureBox1.Load(openFileDialog1.FileName);
                 theBitmap = new Bitmap(pictureBox1.Image);
                 trackBar1.Value = 1;
+                addCalipersButton.Enabled = true;
+                calibrateButton.Enabled = true;
             }
         }
 
@@ -56,14 +93,35 @@ namespace epcalipers
             c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
             theCalipers.addCaliper(c);
             pictureBox1.Refresh();
-
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void addCaliper(CaliperDirection direction)
+        {
+            Caliper c = new Caliper();
+            c.Direction = direction;
+            //c.CurrentCalibration.Direction = CaliperDirection.Vertical;
+            c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
+            theCalipers.addCaliper(c);
+            pictureBox1.Refresh();
+        }
+
+        private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("click");
-
+            Point mouseClickLocation = new Point(e.X, e.Y);
+            Debug.WriteLine("mouse click {0}, {1}", e.X, e.Y);
+            ClickEvent(mouseClickLocation);
         }
+
+        private void ClickEvent(Point point)
+        {
+            if (theCalipers.toggleCaliperIfClicked(point))
+            {
+                pictureBox1.Refresh();
+            }
+        }
+
+ 
 
         private void pictureBox1_DoubleClick(object sender, EventArgs e)
         {

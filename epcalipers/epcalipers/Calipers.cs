@@ -42,7 +42,7 @@ namespace epcalipers
         public Caliper GetActiveCaliper()
         {
             Caliper c = null;
-            for (int i = calipers.Count -1; i >= 0 && c != null; i--)
+            for (int i = calipers.Count -1; i >= 0 && c == null; i--)
             {
                 if (calipers[i].IsSelected)
                 {
@@ -76,5 +76,44 @@ namespace epcalipers
             c.CaliperColor = c.UnselectedColor;
             c.IsSelected = false;
         }
+
+       public void toggleCaliper(Caliper c)
+        {
+            if (c.IsSelected)
+            {
+                UnselectCaliper(c);
+            }
+            else
+            {
+                SelectCaliper(c);
+            }
+        }
+
+        public bool toggleCaliperIfClicked(Point point)
+        {
+            bool caliperToggled = false;
+            for (int i = calipers.Count - 1; i >= 0; i--)
+            {
+                if (calipers[i].PointNearCaliper(point) && !caliperToggled)
+                {
+                    caliperToggled = true;
+                    if (calipers[i].IsSelected)
+                    {
+                        UnselectCaliper(calipers[i]);
+                    }
+                    else
+                    {
+                        SelectCaliper(calipers[i]);
+                    }
+                }
+                else
+                {
+                    UnselectCaliper(calipers[i]);
+                }
+            }
+            return caliperToggled;
+        }
+
+    
     }
 }

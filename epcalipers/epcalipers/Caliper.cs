@@ -210,7 +210,7 @@ namespace epcalipers
             return nearBar;
         }
 
-        private bool PointNearCaliper(PointF p)
+        public bool PointNearCaliper(PointF p)
         {
             return PointNearCrossbar(p) || PointNearBar(p, Bar1Position) ||
                 PointNearBar(p, Bar2Position);
