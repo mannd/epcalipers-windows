@@ -87,7 +87,21 @@ namespace epcalipers
             {
                 return;
             }
-            AddCaliper(CaliperDirection.Vertical);
+            NewCaliperDialog dialog = new NewCaliperDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                CaliperDirection direction;
+                if (dialog.horizontalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Horizontal;
+                }
+                else
+                {
+                    direction = CaliperDirection.Vertical;
+                }
+                AddCaliper(direction);
+            }
         }
 
          private void AddCaliper(CaliperDirection direction)
@@ -150,28 +164,9 @@ namespace epcalipers
 
         private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            //System.Diagnostics.Debug.WriteLine("paint");
-            //System.Diagnostics.Debug.WriteLine("PictureBox Top {0}, Bottom {1}", pictureBox1.Top, pictureBox1.Bottom);
-            //System.Diagnostics.Debug.WriteLine("Panel Top {0}, Bottom {1}", panel2.Top, panel2.Bottom);
-
             // Create a local version of the graphics object for the PictureBox.
             Graphics g = e.Graphics;
             theCalipers.Draw(g, pictureBox1.DisplayRectangle);
-            // Simulate a caliper
-            // Draw a string on the PictureBox.
-            //String label = "200 points";
-            //Font font = new Font("Arial", 10);
-            //SizeF sizeOfString = g.MeasureString(label, font);
-            //float width = sizeOfString.Width / 2.0f;
-            //g.DrawString(label,
-            //    font, System.Drawing.Brushes.Blue, new Point(300 - (int)width, 180));
-            //// Draw a line in the PictureBox.
-            //g.DrawLine(System.Drawing.Pens.Blue, 200, 0,
-            //    200, pictureBox1.Height);
-            //g.DrawLine(System.Drawing.Pens.Blue, 400, 0,
-            //    400, pictureBox1.Height);
-            //g.DrawLine(System.Drawing.Pens.Blue, 200, 200,
-            //    400, 200);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
