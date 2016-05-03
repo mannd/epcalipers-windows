@@ -31,13 +31,10 @@ namespace epcalipers
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            pictureBox1.MouseClick += pictureBox1_MouseClick;
             pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
             SetupButtons();
             ShowMainMenu();
         }
-
- 
 
         private void SetupButtons()
         {
@@ -90,28 +87,16 @@ namespace epcalipers
             {
                 return;
             }
-            AddCaliper(CaliperDirection.Horizontal);
+            AddCaliper(CaliperDirection.Vertical);
         }
 
          private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
             c.Direction = direction;
-            //c.CurrentCalibration.Direction = CaliperDirection.Vertical;
             c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
             theCalipers.addCaliper(c);
             pictureBox1.Refresh();
-        }
-
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-            Debug.WriteLine("click");
-            Point mouseClickLocation = new Point(e.X, e.Y);
-            Debug.WriteLine("mouse click {0}, {1}", e.X, e.Y);
-            if (theCalipers.ToggleCaliperIfClicked(mouseClickLocation))
-            {
-                pictureBox1.Refresh();
-            }
         }
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -149,7 +134,11 @@ namespace epcalipers
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            theCalipers.ReleaseGrabbedCaliper();
+            if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
+            {
+                pictureBox1.Refresh();
+
+            }
         }
 
         private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)

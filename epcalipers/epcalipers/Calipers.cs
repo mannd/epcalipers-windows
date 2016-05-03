@@ -12,21 +12,21 @@ namespace epcalipers
     {
         List<Caliper> calipers = new List<Caliper>();
         bool Locked { get; set; }
+        // this is the (sole) caliper that is selected/highlighted
         Caliper ActiveCaliper { get; set; }
-
+        // for caliper movement
         Caliper grabbedCaliper;
         bool crossbarGrabbed = false;
         bool bar1Grabbed = false;
         bool bar2Grabbed = false;
         bool caliperWasDragged = false;
-
+ 
 
         public Calipers()
         {
             Locked = false;
             ActiveCaliper = null;
             grabbedCaliper = null;
-            
         }
 
         public void Draw(Graphics g, RectangleF rect)
@@ -190,16 +190,59 @@ namespace epcalipers
                     grabbedCaliper.Bar2Position += delta.X;
                 }
                 needsRefresh = true;
+                caliperWasDragged = true;
             }
             return needsRefresh;
         }
 
-        public void ReleaseGrabbedCaliper()
+        public bool ReleaseGrabbedCaliper(int clickCount)
         {
-            grabbedCaliper = null;
-            bar1Grabbed = false;
-            bar2Grabbed = false;
-            crossbarGrabbed = false;
+            bool needsRefresh = false;
+            if (grabbedCaliper != null)
+            {
+                if (!caliperWasDragged && !Locked)
+                {
+                    if (clickCount == 1)
+                    {
+                        ToggleCaliperState(grabbedCaliper);
+                        needsRefresh = true;
+                    }
+                }
+                grabbedCaliper = null;
+                bar1Grabbed = false;
+                bar2Grabbed = false;
+                crossbarGrabbed = false;
+                caliperWasDragged = false;
+            }
+            return needsRefresh;
+        }
+
+        private void ToggleCaliperState(Caliper c)
+        {
+            if (c == null)
+            {
+                return;
+            }
+            if (c.IsSelected)
+            {
+                UnselectCaliper(c);
+            }
+            else
+            {
+                SelectCaliper(c);
+            }
+            UnselectCalipersExcept(c);
+        }
+
+        private void UnselectCalipersExcept(Caliper c)
+        {
+            foreach (var caliper in calipers)
+            {
+                if (caliper != c)
+                {
+                    UnselectCaliper(caliper);
+                }
+            }
         }
 
     
