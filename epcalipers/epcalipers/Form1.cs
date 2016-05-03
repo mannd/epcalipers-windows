@@ -22,6 +22,8 @@ namespace epcalipers
         Button intervalRateButton;
         Button measureButton;
 
+        Point firstPoint;
+
         public Form1()
         {
             InitializeComponent();
@@ -106,40 +108,48 @@ namespace epcalipers
             Debug.WriteLine("click");
             Point mouseClickLocation = new Point(e.X, e.Y);
             Debug.WriteLine("mouse click {0}, {1}", e.X, e.Y);
-            ClickEvent(mouseClickLocation);
-        }
-
-        private void ClickEvent(Point point)
-        {
-            if (theCalipers.ToggleCaliperIfClicked(point))
+            if (theCalipers.ToggleCaliperIfClicked(mouseClickLocation))
             {
                 pictureBox1.Refresh();
             }
         }
-
- 
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Debug.WriteLine("double click");
             Point mouseClickLocation = new Point(e.X, e.Y);
-            DoubleClickEvent(mouseClickLocation);
-        }
-
-        private void DoubleClickEvent(Point point)
-        {
-            if (theCalipers.DeleteCaliperIfClicked(point))
+            if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
             {
                 pictureBox1.Refresh();
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+         private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             // Update the mouse path with the mouse information
             Point mouseDownLocation = new Point(e.X, e.Y);
             Debug.WriteLine("mouse down {0}, {1}", e.X, e.Y);
+            Point mouseClickLocation = new Point(e.X, e.Y);
+            firstPoint = mouseClickLocation;
+            theCalipers.GrabCaliperIfClicked(mouseClickLocation);
+        }
 
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point newPoint = new Point(e.X, e.Y);
+            int deltaX = newPoint.X - firstPoint.X;
+            int deltaY = newPoint.Y - firstPoint.Y;
+            if (theCalipers.DragGrabbedCaliper(deltaX, deltaY))
+            {
+                firstPoint = newPoint;
+                pictureBox1.Refresh();
+            }
+
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            theCalipers.ReleaseGrabbedCaliper();
         }
 
         private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)

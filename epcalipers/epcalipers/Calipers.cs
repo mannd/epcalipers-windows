@@ -14,10 +14,18 @@ namespace epcalipers
         bool Locked { get; set; }
         Caliper ActiveCaliper { get; set; }
 
+        Caliper grabbedCaliper;
+        bool crossbarGrabbed = false;
+        bool bar1Grabbed = false;
+        bool bar2Grabbed = false;
+        bool caliperWasDragged = false;
+
+
         public Calipers()
         {
             Locked = false;
             ActiveCaliper = null;
+            grabbedCaliper = null;
             
         }
 
@@ -39,6 +47,7 @@ namespace epcalipers
             calipers.Remove(c);
         }
 
+        // this is the highlighted/selected caliper used for calibration or measurements
         public Caliper GetActiveCaliper()
         {
             Caliper c = null;
@@ -114,6 +123,83 @@ namespace epcalipers
                 }
             }
             return deleted;
+        }
+
+        // This shortens the caliper grabbing process c/w the other versions of EP Calipers
+        public void GrabCaliperIfClicked(Point point)
+        {
+            Caliper caliper = null;
+            foreach (var c in calipers)
+            {
+                if (c.PointNearCrossbar(point) && caliper == null)
+                {
+                    crossbarGrabbed = true;
+                    caliper = c;
+                }
+                else if (c.PointNearBar(point, c.Bar1Position) && caliper == null)
+                {
+                    bar1Grabbed = true;
+                    caliper = c;
+                }
+                else if (c.PointNearBar(point, c.Bar2Position) && caliper == null)
+                {
+                    bar2Grabbed = true;
+                    caliper = c;
+                }
+            }
+            grabbedCaliper = caliper;
+        }
+
+        // below may not be needed
+        private Caliper getGrabbedCaliper(Point point)
+        {
+            Caliper caliper = null;
+            foreach (var c in calipers)
+            {
+                if (c.PointNearCaliper(point) && caliper == null) {
+                    caliper = c;
+                }
+            }
+            return caliper;
+        }
+
+        public bool DragGrabbedCaliper(float deltaX, float deltaY)
+        {
+            bool needsRefresh = false;
+            if (grabbedCaliper != null)
+            {
+                PointF delta = new PointF(deltaX, deltaY);
+                if (grabbedCaliper.Direction == CaliperDirection.Vertical)
+                {
+                    float tmp = delta.X;
+                    delta.X = delta.Y;
+                    delta.Y = tmp;
+                }
+                if (crossbarGrabbed)
+                {
+                    grabbedCaliper.Bar1Position += delta.X;
+                    grabbedCaliper.Bar2Position += delta.X;
+                    grabbedCaliper.CrossbarPosition += delta.Y;
+                }
+                else if (bar1Grabbed)
+                {
+                    grabbedCaliper.Bar1Position += delta.X;
+                }
+                else if (bar2Grabbed)
+                {
+                    grabbedCaliper.Bar2Position += delta.X;
+                }
+                needsRefresh = true;
+            }
+            return needsRefresh;
+        }
+
+        public void ReleaseGrabbedCaliper()
+        {
+            grabbedCaliper = null;
+            bar1Grabbed = false;
+            bar2Grabbed = false;
+            crossbarGrabbed = false;
         }
 
     
