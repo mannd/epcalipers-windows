@@ -245,6 +245,11 @@ namespace epcalipers
             }
         }
 
+        public int NumberOfCalipers()
+        {
+            return calipers.Count;
+        }
+
     
     }
 }

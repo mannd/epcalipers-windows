@@ -21,6 +21,8 @@ namespace epcalipers
         Button calibrateButton;
         Button intervalRateButton;
         Button measureButton;
+        Control[] mainMenu;
+        Control[] calibrationMenu;
 
         Point firstPoint;
 
@@ -39,7 +41,7 @@ namespace epcalipers
         private void SetupButtons()
         {
             imageButton = new Button();
-            imageButton.Text = "Image";
+            imageButton.Text = "Image"; 
             imageButton.Click += imageButton_Click;
             addCalipersButton = new Button();
             addCalipersButton.Text = "Add Calipers";
@@ -54,7 +56,12 @@ namespace epcalipers
         private void ShowMainMenu()
         {
             flowLayoutPanel1.Controls.Clear();
-            flowLayoutPanel1.Controls.AddRange(new Control[]{ imageButton, addCalipersButton, calibrateButton });
+            if (mainMenu == null)
+            {
+                mainMenu = new Control[] { imageButton, addCalipersButton, calibrateButton };
+
+            }
+            flowLayoutPanel1.Controls.AddRange(mainMenu);
             if (theBitmap == null)
             {
                 addCalipersButton.Enabled = false;
@@ -78,7 +85,18 @@ namespace epcalipers
         private void calibrateButton_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("calibrate button pushed");
+            if (theCalipers.NumberOfCalipers() < 1)
+            {
+                ShowNoCalipersDialog();
+                return;
+            }
 
+        }
+
+        private void ShowNoCalipersDialog()
+        {
+            MessageBox.Show("Add one or more calipers first before proceeding.",
+                "No Calipers To Use");
         }
 
         private void addCaliper_Click(object sender, EventArgs e)
@@ -104,7 +122,7 @@ namespace epcalipers
             }
         }
 
-         private void AddCaliper(CaliperDirection direction)
+        private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
             c.Direction = direction;
@@ -123,7 +141,7 @@ namespace epcalipers
             }
         }
 
-         private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             // Update the mouse path with the mouse information
             Point mouseDownLocation = new Point(e.X, e.Y);
@@ -148,11 +166,7 @@ namespace epcalipers
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
-            {
-                pictureBox1.Refresh();
 
-            }
         }
 
         private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)
@@ -184,6 +198,21 @@ namespace epcalipers
             pictureBox1.Image = zoomedBitmap;
         }
 
- 
+        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Drawing.Printing.PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(PrintPictureBox);
+            pd.Print();
+        }
+
+        private void PrintPictureBox(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
+        }
     }
 }
