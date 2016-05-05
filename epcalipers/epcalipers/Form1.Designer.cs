@@ -45,6 +45,7 @@ namespace epcalipers
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -214,6 +215,7 @@ namespace epcalipers
         private ToolStripSeparator quitToolStripMenuItem;
         private ToolStripMenuItem quitToolStripMenuItem1;
         private SaveFileDialog saveFileDialog1;
+        private PageSetupDialog pageSetupDialog1;
     }
 }
 

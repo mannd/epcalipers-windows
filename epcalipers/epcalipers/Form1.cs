@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,9 @@ namespace epcalipers
         Button calibrateButton;
         Button intervalRateButton;
         Button measureButton;
+        Button setCalibrationButton;
+        Button clearCalibrationButton;
+        Button backCalibrationButton;
         Control[] mainMenu;
         Control[] calibrationMenu;
 
@@ -50,8 +54,29 @@ namespace epcalipers
             calibrateButton = new Button();
             calibrateButton.Text = "Calibrate";
             calibrateButton.Click += calibrateButton_Click;
+            setCalibrationButton = new Button();
+            setCalibrationButton.Text = "Set Calibration";
+            setCalibrationButton.Click += setCalibrationButton_Click;
+            clearCalibrationButton = new Button();
+            clearCalibrationButton.Text = "Clear All Calibration";
+            clearCalibrationButton.AutoSize = true;
+            clearCalibrationButton.Click += clearCalibrationButton_Click;
+            backCalibrationButton = new Button();
+            backCalibrationButton.Text = "Done";
+            backCalibrationButton.Click += BackCalibrationButton_Click;
+
         
             // other buttons here
+        }
+
+        private void clearCalibrationButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BackCalibrationButton_Click(object sender, EventArgs e)
+        {
+            ShowMainMenu();
         }
 
         private void ShowMainMenu()
@@ -68,6 +93,17 @@ namespace epcalipers
                 addCalipersButton.Enabled = false;
                 calibrateButton.Enabled = false;
             }
+        }
+
+        private void ShowCalibrationMenu()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            if (calibrationMenu == null)
+            {
+                calibrationMenu = new Control[] { calibrateButton,
+                    clearCalibrationButton, backCalibrationButton };
+            }
+            flowLayoutPanel1.Controls.AddRange(calibrationMenu);
         }
 
         private void imageButton_Click(object sender, EventArgs e)
@@ -91,6 +127,12 @@ namespace epcalipers
                 ShowNoCalipersDialog();
                 return;
             }
+            ShowCalibrationMenu();
+
+        }
+
+        private void setCalibrationButton_Click(object sender, EventArgs e)
+        {
 
         }
 
@@ -182,7 +224,6 @@ namespace epcalipers
 
         private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
-            // Create a local version of the graphics object for the PictureBox.
             Graphics g = e.Graphics;
             theCalipers.Draw(g, pictureBox1.DisplayRectangle);
         }
@@ -209,16 +250,20 @@ namespace epcalipers
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Drawing.Printing.PrintDocument pd = new System.Drawing.Printing.PrintDocument();
-            pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(PrintPictureBox);
+            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
             pd.Print();
         }
 
-        private void PrintPictureBox(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        private void PrintPictureBox(object sender, PrintPageEventArgs e)
         {
-            Graphics g = e.Graphics;
+            //Graphics g = e.Graphics;
+            Image image = (Image)pictureBox1.Image.Clone();
+            Graphics g = Graphics.FromImage(image);
+            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
+            /// and saving images.
             theCalipers.Draw(g, pictureBox1.DisplayRectangle);
-           // e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
+            e.Graphics.DrawImage(image, 0, 0);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,9 +277,11 @@ namespace epcalipers
                 //pictureBox1.Image.Save(saveFileDialog1.FileName);
                 //Image image = pictureBox1.Image;
                 //image.siz
-                
+                Image image = (Image)pictureBox1.Image.Clone();
+                Graphics g = Graphics.FromImage(image);
+                theCalipers.Draw(g, pictureBox1.DisplayRectangle);
+                image.Save(saveFileDialog1.FileName);               
             }
-
         }
     }
 }
