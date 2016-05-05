@@ -30,6 +30,8 @@ namespace epcalipers
 
         Point firstPoint;
 
+        string fileTypeFilter = "Image Files (*.jpg, *.bmp) | *.jpg; *.bmp";
+
         public Form1()
         {
             InitializeComponent();
@@ -55,10 +57,10 @@ namespace epcalipers
             calibrateButton.Text = "Calibrate";
             calibrateButton.Click += calibrateButton_Click;
             setCalibrationButton = new Button();
-            setCalibrationButton.Text = "Set Calibration";
+            setCalibrationButton.Text = "Set";
             setCalibrationButton.Click += setCalibrationButton_Click;
             clearCalibrationButton = new Button();
-            clearCalibrationButton.Text = "Clear All Calibration";
+            clearCalibrationButton.Text = "Clear";
             clearCalibrationButton.AutoSize = true;
             clearCalibrationButton.Click += clearCalibrationButton_Click;
             backCalibrationButton = new Button();
@@ -100,7 +102,7 @@ namespace epcalipers
             flowLayoutPanel1.Controls.Clear();
             if (calibrationMenu == null)
             {
-                calibrationMenu = new Control[] { calibrateButton,
+                calibrationMenu = new Control[] { setCalibrationButton,
                     clearCalibrationButton, backCalibrationButton };
             }
             flowLayoutPanel1.Controls.AddRange(calibrationMenu);
@@ -109,6 +111,8 @@ namespace epcalipers
         private void imageButton_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("image button pushed");
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = fileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Load(openFileDialog1.FileName);
@@ -121,25 +125,74 @@ namespace epcalipers
 
         private void calibrateButton_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("calibrate button pushed");
-            if (theCalipers.NumberOfCalipers() < 1)
+            if (NoCalipersError())
             {
-                ShowNoCalipersDialog();
                 return;
             }
             ShowCalibrationMenu();
+            if (theCalipers.SelectCaliperIfNoneSelected())
+            {
+                pictureBox1.Refresh();
+            }
+        }
 
+        private bool NoCalipersError()
+        {
+            bool noCalipers = false;
+            if (theCalipers.NumberOfCalipers() < 1)
+            {
+                ShowNoCalipersDialog();
+                noCalipers = true; ;
+            }
+            return noCalipers;
         }
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
-
+            if (NoCalipersError())
+            {
+                return;
+            }
+            if (theCalipers.NoCaliperIsSelected())
+            {
+                if (theCalipers.NumberOfCalipers() == 1)
+                {
+                    // assume user wants to calibrate sole caliper so select it
+                    theCalipers.SelectSoleCaliper();
+                    pictureBox1.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval");
+                    return;
+                }
+            }
+            CalibrationDialog dialog = new CalibrationDialog();
+            Caliper c = theCalipers.GetActiveCaliper();
+            if (c.Direction == CaliperDirection.Horizontal)
+            {
+                dialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
+            }
+            else
+            {
+                dialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
+            }
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Calibrate(dialog.calibrationMeasurementTextBox.Text);
+            }
         }
 
         private void ShowNoCalipersDialog()
         {
             MessageBox.Show("Add one or more calipers first before proceeding.",
                 "No Calipers To Use");
+        }
+
+        private void Calibrate(string rawCalibration)
+        {
+           
         }
 
         private void addCaliper_Click(object sender, EventArgs e)
@@ -176,7 +229,6 @@ namespace epcalipers
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Debug.WriteLine("double click");
             Point mouseClickLocation = new Point(e.X, e.Y);
             if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
             {
@@ -188,7 +240,6 @@ namespace epcalipers
         {
             // Update the mouse path with the mouse information
             Point mouseDownLocation = new Point(e.X, e.Y);
-            Debug.WriteLine("mouse down {0}, {1}", e.X, e.Y);
             Point mouseClickLocation = new Point(e.X, e.Y);
             firstPoint = mouseClickLocation;
             theCalipers.GrabCaliperIfClicked(mouseClickLocation);
@@ -272,11 +323,10 @@ namespace epcalipers
             {
                 return;
             }
+            saveFileDialog1.Filter = fileTypeFilter;
+            saveFileDialog1.DefaultExt = "jpg";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                //pictureBox1.Image.Save(saveFileDialog1.FileName);
-                //Image image = pictureBox1.Image;
-                //image.siz
                 Image image = (Image)pictureBox1.Image.Clone();
                 Graphics g = Graphics.FromImage(image);
                 theCalipers.Draw(g, pictureBox1.DisplayRectangle);

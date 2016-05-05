@@ -75,6 +75,11 @@ namespace epcalipers
             InitWithDirection(CaliperDirection.Horizontal);
         }
 
+        public Calibration(CaliperDirection direction)
+        {
+            InitWithDirection(direction);
+        }
+
         public void InitWithDirection(CaliperDirection direction)
         {
             Reset();

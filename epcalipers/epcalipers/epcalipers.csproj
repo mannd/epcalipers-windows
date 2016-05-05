@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calibration.cs" />
+    <Compile Include="CalibrationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalibrationDialog.Designer.cs">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caliper.cs" />
     <Compile Include="Calipers.cs" />
     <Compile Include="EPCalculator.cs" />
@@ -64,6 +70,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CalibrationDialog.resx">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

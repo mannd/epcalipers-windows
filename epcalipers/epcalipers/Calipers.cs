@@ -11,15 +11,19 @@ namespace epcalipers
     public class Calipers
     {
         List<Caliper> calipers = new List<Caliper>();
-        bool Locked { get; set; }
+        public bool Locked { get; set; }
         // this is the (sole) caliper that is selected/highlighted
-        Caliper ActiveCaliper { get; set; }
+        /// TODO: check - replaced by GetActiveCaliper()?
+        private Caliper ActiveCaliper { get; set; }
+        public Calibration HorizontalCalibration { get; set; }
+        public Calibration VerticalCalibration { get; set; }
+
         // for caliper movement
-        Caliper grabbedCaliper;
-        bool crossbarGrabbed = false;
-        bool bar1Grabbed = false;
-        bool bar2Grabbed = false;
-        bool caliperWasDragged = false;
+        private Caliper grabbedCaliper;
+        private bool crossbarGrabbed = false;
+        private bool bar1Grabbed = false;
+        private bool bar2Grabbed = false;
+        private bool caliperWasDragged = false;
  
 
         public Calipers()
@@ -27,6 +31,8 @@ namespace epcalipers
             Locked = false;
             ActiveCaliper = null;
             grabbedCaliper = null;
+            HorizontalCalibration = new Calibration(CaliperDirection.Horizontal);
+            VerticalCalibration = new Calibration(CaliperDirection.Vertical);
         }
 
         public void Draw(Graphics g, RectangleF rect)
@@ -66,12 +72,16 @@ namespace epcalipers
             return GetActiveCaliper() == null;
         }
 
-        public void SelectCaliperIfNoneSelected()
+        // returns true if caliper selected changes
+        public bool SelectCaliperIfNoneSelected()
         {
+            bool selectionMade = false;
             if (calipers.Count > 0 && NoCaliperIsSelected())
             {
                 SelectCaliper(calipers[calipers.Count - 1]);
+                selectionMade = true;
             }
+            return selectionMade;
         }
 
         public void SelectCaliper(Caliper c)
@@ -84,6 +94,15 @@ namespace epcalipers
         {
             c.CaliperColor = c.UnselectedColor;
             c.IsSelected = false;
+        }
+
+        public void SelectSoleCaliper()
+        {
+            if (calipers.Count != 1)
+            {
+                return;
+            }
+            SelectCaliper(calipers[0]);
         }
 
         public bool ToggleCaliperIfClicked(Point point)
@@ -113,6 +132,10 @@ namespace epcalipers
 
         public bool DeleteCaliperIfClicked(Point point)
         {
+            if (Locked)
+            {
+                return false; ;
+            }
             bool deleted = false;
             for (int i = calipers.Count - 1; i >= 0; i--)
             {
