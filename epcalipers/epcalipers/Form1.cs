@@ -34,6 +34,7 @@ namespace epcalipers
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
+            pictureBox1.MouseUp += pictureBox1_MouseUp;
             SetupButtons();
             ShowMainMenu();
         }
@@ -166,7 +167,10 @@ namespace epcalipers
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-
+            if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
+            {
+                pictureBox1.Refresh();
+            }
         }
 
         private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)
@@ -212,7 +216,25 @@ namespace epcalipers
 
         private void PrintPictureBox(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
+            Graphics g = e.Graphics;
+            theCalipers.Draw(g, pictureBox1.DisplayRectangle);
+           // e.Graphics.DrawImage(pictureBox1.Image, 0, 0);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //pictureBox1.Image.Save(saveFileDialog1.FileName);
+                //Image image = pictureBox1.Image;
+                //image.siz
+                
+            }
+
         }
     }
 }
