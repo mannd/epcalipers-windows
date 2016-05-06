@@ -126,8 +126,13 @@ namespace epcalipers
         private string Measurement()
         {
             // "%.4g %s"
-            string s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
-                CurrentCalibration.Units);
+            //string s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
+            //    CurrentCalibration.Units);
+            /// TODO: Change below mimics behavior of the other versions of this app.
+            // Code above rounds to nearest number, which is ok for msec but not for 
+            // mV or sec.  Consider preference to allow rounding only if isMsec() and
+            // apply it here.
+            string s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
             return s;
         }
 
