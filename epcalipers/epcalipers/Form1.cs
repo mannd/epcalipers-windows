@@ -52,36 +52,38 @@ namespace epcalipers
         {
             imageButton = new Button();
             imageButton.Text = "Image";
+            toolTip1.SetToolTip(imageButton, "Load ECG image");
             imageButton.Click += imageButton_Click;
             addCalipersButton = new Button();
-            addCalipersButton.Text = "Add Calipers";
+            addCalipersButton.Text = "Add Caliper";
+            toolTip1.SetToolTip(addCalipersButton, "Add new caliper");
             addCalipersButton.Click += addCaliper_Click;
             calibrateButton = new Button();
             calibrateButton.Text = "Calibrate";
+            toolTip1.SetToolTip(calibrateButton, "Calibrate caliper");
             calibrateButton.Click += calibrateButton_Click;
             setCalibrationButton = new Button();
             setCalibrationButton.Text = "Set";
+            toolTip1.SetToolTip(setCalibrationButton, "Set calibration interval");
             setCalibrationButton.Click += setCalibrationButton_Click;
             clearCalibrationButton = new Button();
             clearCalibrationButton.Text = "Clear";
+            toolTip1.SetToolTip(clearCalibrationButton, "Clear all calibration");
             clearCalibrationButton.AutoSize = true;
             clearCalibrationButton.Click += clearCalibrationButton_Click;
             backCalibrationButton = new Button();
+            toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
             backCalibrationButton.Text = "Done";
-            backCalibrationButton.Click += BackCalibrationButton_Click;
-
-
-            // other buttons here
-        }
-
-        private void clearCalibrationButton_Click(object sender, EventArgs e)
-        {
-            ClearCalibration();
-        }
-
-        private void BackCalibrationButton_Click(object sender, EventArgs e)
-        {
-            ShowMainMenu();
+            backCalibrationButton.Click += backCalibrationButton_Click;
+            intervalRateButton = new Button();
+            intervalRateButton.Text = "Int/Rate";
+            intervalRateButton.Click += intervalRateButton_Click;
+            toolTip1.SetToolTip(intervalRateButton, "Toggle between interval and rate");
+            //
+            measureButton = new Button();
+            measureButton.Text = "Measure";
+            toolTip1.SetToolTip(measureButton, "Make measurements");
+            //
         }
 
         private void ShowMainMenu()
@@ -89,7 +91,9 @@ namespace epcalipers
             flowLayoutPanel1.Controls.Clear();
             if (mainMenu == null)
             {
-                mainMenu = new Control[] { imageButton, addCalipersButton, calibrateButton };
+                mainMenu = new Control[] { measureButton,
+                    intervalRateButton, calibrateButton,
+                    addCalipersButton, imageButton  };
 
             }
             flowLayoutPanel1.Controls.AddRange(mainMenu);
@@ -98,6 +102,9 @@ namespace epcalipers
                 addCalipersButton.Enabled = false;
                 calibrateButton.Enabled = false;
             }
+            intervalRateButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
+            measureButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
+            theCalipers.Locked = false;
         }
 
         private void ShowCalibrationMenu()
@@ -105,10 +112,21 @@ namespace epcalipers
             flowLayoutPanel1.Controls.Clear();
             if (calibrationMenu == null)
             {
-                calibrationMenu = new Control[] { setCalibrationButton,
-                    clearCalibrationButton, backCalibrationButton };
+                calibrationMenu = new Control[] { backCalibrationButton,
+                    clearCalibrationButton,
+                    setCalibrationButton };
             }
             flowLayoutPanel1.Controls.AddRange(calibrationMenu);
+        }
+
+        private void clearCalibrationButton_Click(object sender, EventArgs e)
+        {
+            ClearCalibration();
+        }
+
+        private void backCalibrationButton_Click(object sender, EventArgs e)
+        {
+            ShowMainMenu();
         }
 
         private void imageButton_Click(object sender, EventArgs e)
@@ -138,17 +156,6 @@ namespace epcalipers
             {
                 pictureBox1.Refresh();
             }
-        }
-
-        private bool NoCalipersError()
-        {
-            bool noCalipers = false;
-            if (theCalipers.NumberOfCalipers() < 1)
-            {
-                ShowNoCalipersDialog();
-                noCalipers = true; ;
-            }
-            return noCalipers;
         }
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
@@ -186,6 +193,17 @@ namespace epcalipers
             {
                 Calibrate(dialog.calibrationMeasurementTextBox.Text);
             }
+        }
+
+        private bool NoCalipersError()
+        {
+            bool noCalipers = false;
+            if (theCalipers.NumberOfCalipers() < 1)
+            {
+                ShowNoCalipersDialog();
+                noCalipers = true; ;
+            }
+            return noCalipers;
         }
 
         private void ShowNoCalipersDialog()
@@ -273,7 +291,6 @@ namespace epcalipers
             }
         }
 
-
         private void addCaliper_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image == null )
@@ -312,6 +329,34 @@ namespace epcalipers
             c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
             theCalipers.addCaliper(c);
             pictureBox1.Refresh();
+        }
+
+        private void intervalRateButton_Click(object sender, EventArgs e)
+        {
+            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
+            pictureBox1.Refresh();
+        }
+
+        private void zoomInButton_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomInFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            pictureBox1.Image = zoomedBitmap;
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomOutFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            pictureBox1.Image = zoomedBitmap;
         }
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -372,16 +417,6 @@ namespace epcalipers
             theCalipers.Draw(g, pictureBox1.DisplayRectangle);
         }
 
-        //private void trackBar1_Scroll(object sender, EventArgs e)
-        //{
-        //    if (theBitmap == null)
-        //    {
-        //        return;
-        //    }
-        //    //Bitmap zoomedBitmap = Zoom(theBitmap, trackBar1.Value);
-        //    //pictureBox1.Image = zoomedBitmap;
-        //}
-
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -420,28 +455,6 @@ namespace epcalipers
                 theCalipers.Draw(g, pictureBox1.DisplayRectangle);
                 image.Save(saveFileDialog1.FileName);               
             }
-        }
-
-        private void zoomInButton_Click(object sender, EventArgs e)
-        {
-            if (pictureBox1.Image == null)
-            {
-                return;
-            }
-            currentActualZoom *= zoomInFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            pictureBox1.Image = zoomedBitmap;
-        }
-
-        private void zoomOutButton_Click(object sender, EventArgs e)
-        {
-            if (pictureBox1.Image == null)
-            {
-                return;
-            }
-            currentActualZoom *= zoomOutFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            pictureBox1.Image = zoomedBitmap;
         }
     }
 }
