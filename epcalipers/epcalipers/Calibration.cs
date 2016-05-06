@@ -86,7 +86,7 @@ namespace epcalipers
             this.Direction = direction;
         }
 
-        private void Reset()
+        public void Reset()
         {
             Units = "points";
             DisplayRate = false;

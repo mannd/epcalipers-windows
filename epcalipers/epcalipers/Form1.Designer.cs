@@ -35,7 +35,6 @@ namespace epcalipers
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,21 +45,24 @@ namespace epcalipers
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.zoomInButton = new System.Windows.Forms.Button();
+            this.zoomOutButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 83.33334F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.34752F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.65248F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.trackBar1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -75,9 +77,9 @@ namespace epcalipers
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(117, 415);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(81, 415);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(568, 40);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(604, 40);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // panel1
@@ -99,18 +101,6 @@ namespace epcalipers
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(3, 415);
-            this.trackBar1.Maximum = 5;
-            this.trackBar1.Minimum = 1;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(104, 40);
-            this.trackBar1.TabIndex = 4;
-            this.trackBar1.Value = 1;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // openFileDialog1
             // 
@@ -172,6 +162,37 @@ namespace epcalipers
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.zoomInButton);
+            this.flowLayoutPanel2.Controls.Add(this.zoomOutButton);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 415);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(72, 40);
+            this.flowLayoutPanel2.TabIndex = 4;
+            // 
+            // zoomInButton
+            // 
+            this.zoomInButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.zoomInButton.Location = new System.Drawing.Point(3, 3);
+            this.zoomInButton.Name = "zoomInButton";
+            this.zoomInButton.Size = new System.Drawing.Size(23, 23);
+            this.zoomInButton.TabIndex = 0;
+            this.zoomInButton.Text = "+";
+            this.zoomInButton.UseVisualStyleBackColor = true;
+            this.zoomInButton.Click += new System.EventHandler(this.zoomInButton_Click);
+            // 
+            // zoomOutButton
+            // 
+            this.zoomOutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.zoomOutButton.Location = new System.Drawing.Point(32, 3);
+            this.zoomOutButton.Name = "zoomOutButton";
+            this.zoomOutButton.Size = new System.Drawing.Size(23, 23);
+            this.zoomOutButton.TabIndex = 1;
+            this.zoomOutButton.Text = "-";
+            this.zoomOutButton.UseVisualStyleBackColor = true;
+            this.zoomOutButton.Click += new System.EventHandler(this.zoomOutButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -186,9 +207,9 @@ namespace epcalipers
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,7 +227,6 @@ namespace epcalipers
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TrackBar trackBar1;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
@@ -216,6 +236,9 @@ namespace epcalipers
         private ToolStripMenuItem quitToolStripMenuItem1;
         private SaveFileDialog saveFileDialog1;
         private PageSetupDialog pageSetupDialog1;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Button zoomInButton;
+        private Button zoomOutButton;
     }
 }
 

@@ -33,7 +33,6 @@ namespace epcalipers
         string fileTypeFilter = "Image Files (*.jpg, *.bmp) | *.jpg; *.bmp";
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
-        int currentZoomSetting = 1;
         double currentActualZoom = 1.0;
 
         public Form1()
@@ -77,7 +76,7 @@ namespace epcalipers
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
         {
-
+            ClearCalibration();
         }
 
         private void BackCalibrationButton_Click(object sender, EventArgs e)
@@ -121,7 +120,8 @@ namespace epcalipers
             {
                 pictureBox1.Load(openFileDialog1.FileName);
                 theBitmap = new Bitmap(pictureBox1.Image);
-                trackBar1.Value = 1;
+                currentActualZoom = 1.0;
+                ClearCalibration();
                 addCalipersButton.Enabled = true;
                 calibrateButton.Enabled = true;
             }
@@ -256,6 +256,24 @@ namespace epcalipers
             }
         }
 
+        private void ClearCalibration()
+        {
+            ResetCalibration();
+            pictureBox1.Refresh();
+
+        }
+
+        private void ResetCalibration()
+        {
+            if (theCalipers.HorizontalCalibration.Calibrated ||
+                theCalipers.VerticalCalibration.Calibrated)
+            {
+                theCalipers.HorizontalCalibration.Reset();
+                theCalipers.VerticalCalibration.Reset();
+            }
+        }
+
+
         private void addCaliper_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image == null )
@@ -335,27 +353,14 @@ namespace epcalipers
             }
         }
 
-        private Bitmap Zoom(Bitmap originalBitmap, int zoomFactor)
+        private Bitmap Zoom(Bitmap originalBitmap)
         {
             // Note zoom factors used in Mac OS X version
             // // These are taken from the Apple IKImageView demo
             //let zoomInFactor: CGFloat = 1.414214
             //let zoomOutFactor: CGFloat = 0.7071068
-            bool zoomingIn = zoomFactor > currentZoomSetting;
-            currentZoomSetting = zoomFactor;
-            if (zoomingIn)
-            {
-                currentActualZoom = zoomFactor * zoomInFactor;
-            }
-            else
-            {
-                currentActualZoom = zoomFactor * zoomOutFactor;
-            }
+            
             theCalipers.updateCalibration(currentActualZoom);
-            if (zoomFactor == 1)
-            {
-                return theBitmap;
-            }
             Size newSize = new Size((int)(originalBitmap.Width * currentActualZoom), (int)(originalBitmap.Height * currentActualZoom));
             Bitmap bmp = new Bitmap(originalBitmap, newSize);
             return bmp;
@@ -367,15 +372,15 @@ namespace epcalipers
             theCalipers.Draw(g, pictureBox1.DisplayRectangle);
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            if (theBitmap == null)
-            {
-                return;
-            }
-            Bitmap zoomedBitmap = Zoom(theBitmap, trackBar1.Value);
-            pictureBox1.Image = zoomedBitmap;
-        }
+        //private void trackBar1_Scroll(object sender, EventArgs e)
+        //{
+        //    if (theBitmap == null)
+        //    {
+        //        return;
+        //    }
+        //    //Bitmap zoomedBitmap = Zoom(theBitmap, trackBar1.Value);
+        //    //pictureBox1.Image = zoomedBitmap;
+        //}
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -415,6 +420,28 @@ namespace epcalipers
                 theCalipers.Draw(g, pictureBox1.DisplayRectangle);
                 image.Save(saveFileDialog1.FileName);               
             }
+        }
+
+        private void zoomInButton_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomInFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            pictureBox1.Image = zoomedBitmap;
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomOutFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            pictureBox1.Image = zoomedBitmap;
         }
     }
 }
