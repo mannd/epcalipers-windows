@@ -28,7 +28,7 @@ namespace epcalipers.Tests
         [TestMethod()]
         public void MsecToSecTest()
         {
-           Assert.IsTrue(EPCalculator.MsecToSec(1200) == 1.2f);
+           Assert.IsTrue(EPCalculator.MsecToSec(1200) == 1.2);
            Assert.IsTrue(EPCalculator.MsecToSec(1000) == 1);
         }
 

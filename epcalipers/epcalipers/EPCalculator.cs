@@ -8,47 +8,47 @@ namespace epcalipers
 {
     public static class EPCalculator
     {
-        public static float MsecToBpm(float interval)
+        public static double MsecToBpm(double interval)
         {
-            return 60000.0f / interval;
+            return 60000.0 / interval;
         }
 
-        public static float BpmToMsec(float rate)
+        public static double BpmToMsec(double rate)
         {
-            return 60000.0f / rate;
+            return 60000.0 / rate;
         }
 
-        public static float SecToBpm(float interval)
+        public static double SecToBpm(double interval)
         {
-            return 60.0f / interval;
+            return 60.0 / interval;
         }
 
-        public static float BpmToSec(float rate)
+        public static double BpmToSec(double rate)
         {
-            return 60.0f / rate;
+            return 60.0 / rate;
         }
 
-        public static float MsecToSec(float interval)
+        public static double MsecToSec(double interval)
         {
-            return interval / 1000.0f;
+            return interval / 1000.0;
         }
 
-        public static float SecToMsec(float interval)
+        public static double SecToMsec(double interval)
         {
-            return interval * 1000.0f;
+            return interval * 1000.0;
         }
 
-        public static float MeanInterval(float interval, int numberOfIntervals)
+        public static double MeanInterval(double interval, int numberOfIntervals)
         {
             return interval / numberOfIntervals;
         }
 
-        public static float QtcBazettSec(float qtInSec, float rrInSec)
+        public static double QtcBazettSec(double qtInSec, double rrInSec)
         {
-            return  qtInSec / (float)Math.Sqrt(rrInSec);
+            return  qtInSec / (double)Math.Sqrt(rrInSec);
         }
 
-        public static float QtcBazettMsec(float qt, float rrInMsec)
+        public static double QtcBazettMsec(double qt, double rrInMsec)
         {
             return SecToMsec(QtcBazettSec(MsecToSec(qt), MsecToSec(rrInMsec)));
         }

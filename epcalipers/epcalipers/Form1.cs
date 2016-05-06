@@ -31,6 +31,10 @@ namespace epcalipers
         Point firstPoint;
 
         string fileTypeFilter = "Image Files (*.jpg, *.bmp) | *.jpg; *.bmp";
+        double zoomInFactor = 1.414214;
+        double zoomOutFactor = 0.7071068;
+        int currentZoomSetting = 1;
+        double currentActualZoom = 1.0;
 
         public Form1()
         {
@@ -48,7 +52,7 @@ namespace epcalipers
         private void SetupButtons()
         {
             imageButton = new Button();
-            imageButton.Text = "Image"; 
+            imageButton.Text = "Image";
             imageButton.Click += imageButton_Click;
             addCalipersButton = new Button();
             addCalipersButton.Text = "Add Calipers";
@@ -67,7 +71,7 @@ namespace epcalipers
             backCalibrationButton.Text = "Done";
             backCalibrationButton.Click += BackCalibrationButton_Click;
 
-        
+
             // other buttons here
         }
 
@@ -192,7 +196,64 @@ namespace epcalipers
 
         private void Calibrate(string rawCalibration)
         {
-           
+            try
+            {
+                if (rawCalibration.Length < 1)
+                {
+                    throw new Exception("No calibration measurement entered.");
+                }
+                float value = 0.0f;
+                string units = "";
+                char[] delimiters = { ' ' };
+                string[] parts = rawCalibration.Split(delimiters);
+                value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                value = Math.Abs(value);
+                if (parts.Length > 1)
+                {
+                    // assume second substring is units
+                    units = parts[1];
+                }
+                if (value == 0)
+                {
+                    throw new Exception("Calibration can't be zero.");
+                }
+                Caliper c = theCalipers.GetActiveCaliper();
+                if (c == null)
+                {
+                    // this really shouldn't happen
+                    throw new Exception("No caliper for calibration.");
+                }
+                if (c.ValueInPoints <= 0)
+                {
+                    // this could happen
+                    throw new Exception("Caliper must be positive to calibrate.");
+                }
+                Calibration calibration;
+                if (c.Direction == CaliperDirection.Horizontal)
+                {
+                    calibration = theCalipers.HorizontalCalibration;
+                }
+                else
+                {
+                    calibration = theCalipers.VerticalCalibration;
+                }
+                calibration.CalibrationString = rawCalibration;
+                calibration.Units = units;
+                if (!calibration.CanDisplayRate)
+                {
+                    calibration.DisplayRate = false;
+                }
+                calibration.OriginalZoom = currentActualZoom;
+                calibration.OriginalCalFactor = value / c.ValueInPoints;
+                calibration.CurrentZoom = calibration.OriginalZoom;
+                calibration.Calibrated = true;
+                pictureBox1.Refresh();
+                
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Calibration Error");
+            }
         }
 
         private void addCaliper_Click(object sender, EventArgs e)
@@ -222,6 +283,14 @@ namespace epcalipers
         {
             Caliper c = new Caliper();
             c.Direction = direction;
+            if (direction == CaliperDirection.Horizontal)
+            {
+                c.CurrentCalibration = theCalipers.HorizontalCalibration;
+            }
+            else
+            {
+                c.CurrentCalibration = theCalipers.VerticalCalibration;
+            }
             c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
             theCalipers.addCaliper(c);
             pictureBox1.Refresh();
@@ -266,9 +335,28 @@ namespace epcalipers
             }
         }
 
-        private Bitmap Zoom(Bitmap originalBitmap, Double zoomFactor)
+        private Bitmap Zoom(Bitmap originalBitmap, int zoomFactor)
         {
-            Size newSize = new Size((int)(originalBitmap.Width * zoomFactor), (int)(originalBitmap.Height * zoomFactor));
+            // Note zoom factors used in Mac OS X version
+            // // These are taken from the Apple IKImageView demo
+            //let zoomInFactor: CGFloat = 1.414214
+            //let zoomOutFactor: CGFloat = 0.7071068
+            bool zoomingIn = zoomFactor > currentZoomSetting;
+            currentZoomSetting = zoomFactor;
+            if (zoomingIn)
+            {
+                currentActualZoom = zoomFactor * zoomInFactor;
+            }
+            else
+            {
+                currentActualZoom = zoomFactor * zoomOutFactor;
+            }
+            theCalipers.updateCalibration(currentActualZoom);
+            if (zoomFactor == 1)
+            {
+                return theBitmap;
+            }
+            Size newSize = new Size((int)(originalBitmap.Width * currentActualZoom), (int)(originalBitmap.Height * currentActualZoom));
             Bitmap bmp = new Bitmap(originalBitmap, newSize);
             return bmp;
         }
@@ -283,11 +371,6 @@ namespace epcalipers
         {
             if (theBitmap == null)
             {
-                return;
-            }
-            if (trackBar1.Value == 1)
-            {
-                pictureBox1.Image = theBitmap;
                 return;
             }
             Bitmap zoomedBitmap = Zoom(theBitmap, trackBar1.Value);

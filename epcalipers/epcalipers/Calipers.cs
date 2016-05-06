@@ -273,6 +273,17 @@ namespace epcalipers
             return calipers.Count;
         }
 
+        public bool updateCalibration(double zoomFactor)
+        {
+            if (HorizontalCalibration.Calibrated ||
+                VerticalCalibration.Calibrated)
+            {
+                HorizontalCalibration.CurrentZoom = zoomFactor;
+                VerticalCalibration.CurrentZoom = zoomFactor;
+            }
+            return NumberOfCalipers() > 0;
+        }
+
     
     }
 }

@@ -131,9 +131,9 @@ namespace epcalipers
             return s;
         }
 
-        private float CalibratedResult()
+        private double CalibratedResult()
         {
-            float result = IntervalResult();
+            double result = IntervalResult();
             if (result != 0.0f && CurrentCalibration.DisplayRate &&
                 CurrentCalibration.CanDisplayRate)
             {
@@ -142,14 +142,14 @@ namespace epcalipers
             return result;
         }
 
-        private float IntervalResult()
+        private double IntervalResult()
         {
             return ValueInPoints * CurrentCalibration.Multiplier;
         }
 
-        private float RateResult(float interval)
+        private double RateResult(double interval)
         {
-            if (interval != 0.0f)
+            if (interval != 0.0)
             {
                 if (CurrentCalibration.UnitsAreMsecs)
                 {
@@ -163,7 +163,7 @@ namespace epcalipers
             return interval;
         }
 
-        private float IntervalInSecs(float interval)
+        private double IntervalInSecs(double interval)
         {
             if (CurrentCalibration.UnitsAreSeconds)
             {
@@ -175,7 +175,7 @@ namespace epcalipers
             }
         }
 
-        private float IntervalInMsec(float interval)
+        private double IntervalInMsec(double interval)
         {
             if (CurrentCalibration.UnitsAreMsecs)
             {

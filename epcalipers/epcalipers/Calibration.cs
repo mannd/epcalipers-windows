@@ -45,7 +45,7 @@ namespace epcalipers
         public bool UnitsAreSeconds { get { return _unitsAreSeconds(); } }
         public bool UnitsAreMsecs { get { return _unitsAreMsecs(); } }
         public bool DisplayRate { get; set; }
-        public float Multiplier {
+        public double Multiplier {
             get
             {
                 if (Calibrated)
@@ -57,10 +57,10 @@ namespace epcalipers
                 }
             }
         }
-        public float OriginalZoom { get; set; }
-        public float CurrentZoom { get; set; }
-        public float OriginalCalFactor { get; set; }
-        public float CurrentCalFactor
+        public double OriginalZoom { get; set; }
+        public double CurrentZoom { get; set; }
+        public double OriginalCalFactor { get; set; }
+        public double CurrentCalFactor
         {
             get
             {
