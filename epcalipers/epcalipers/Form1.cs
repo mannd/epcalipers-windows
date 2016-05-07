@@ -92,8 +92,25 @@ namespace epcalipers
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-               
+               if (dialog.meanIntervalRateButton.Checked)
+                {
+                    MeasureMeanIntervalRate();
+                }
+               else if (dialog.qtcButton.Checked)
+                {
+                    QTcInterval();
+                }
             }
+        }
+
+        private void MeasureMeanIntervalRate()
+        {
+
+        }
+
+        private void QTcInterval()
+        {
+
         }
 
         private void ShowMainMenu()
