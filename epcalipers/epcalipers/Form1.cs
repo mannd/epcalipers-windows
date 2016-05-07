@@ -51,8 +51,8 @@ namespace epcalipers
         private void SetupButtons()
         {
             imageButton = new Button();
-            imageButton.Text = "Image";
-            toolTip1.SetToolTip(imageButton, "Load ECG image");
+            imageButton.Text = "Open";
+            toolTip1.SetToolTip(imageButton, "Open ECG image");
             imageButton.Click += imageButton_Click;
             addCalipersButton = new Button();
             addCalipersButton.Text = "Add Caliper";
@@ -79,11 +79,21 @@ namespace epcalipers
             intervalRateButton.Text = "Int/Rate";
             intervalRateButton.Click += intervalRateButton_Click;
             toolTip1.SetToolTip(intervalRateButton, "Toggle between interval and rate");
-            //
             measureButton = new Button();
             measureButton.Text = "Measure";
+            measureButton.Click += MeasureButton_Click;
             toolTip1.SetToolTip(measureButton, "Make measurements");
             //
+        }
+
+        private void MeasureButton_Click(object sender, EventArgs e)
+        {
+            MeasureDialog dialog = new MeasureDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+               
+            }
         }
 
         private void ShowMainMenu()
