@@ -257,7 +257,7 @@ namespace epcalipers
             UnselectCalipersExcept(c);
         }
 
-        private void UnselectCalipersExcept(Caliper c)
+        public void UnselectCalipersExcept(Caliper c)
         {
             foreach (var caliper in calipers)
             {
@@ -282,6 +282,31 @@ namespace epcalipers
                 VerticalCalibration.CurrentZoom = zoomFactor;
             }
             return NumberOfCalipers() > 0;
+        }
+
+        public Caliper getLoneTimeCaliper()
+        {
+            Caliper c = null;
+            int n = 0;
+            if (calipers.Count > 0)
+            {
+                foreach (Caliper caliper in calipers)
+                {
+                    if (caliper.Direction == CaliperDirection.Horizontal)
+                    {
+                        c = caliper;
+                        n++;
+                    }
+                }
+            }
+            if (n == 1)
+            {
+                return c;
+            }
+            else
+            {
+                return null;
+            }
         }
 
     

@@ -25,6 +25,9 @@ namespace epcalipers
         Button setCalibrationButton;
         Button clearCalibrationButton;
         Button backCalibrationButton;
+        Button meanRRButton;
+        Button qtcButton;
+        Label messageLabel;
         Control[] mainMenu;
         Control[] calibrationMenu;
 
@@ -60,7 +63,7 @@ namespace epcalipers
             addCalipersButton.Click += addCaliper_Click;
             calibrateButton = new Button();
             calibrateButton.Text = "Calibrate";
-            toolTip1.SetToolTip(calibrateButton, "Calibrate caliper");
+            toolTip1.SetToolTip(calibrateButton, "Calibrate calipers");
             calibrateButton.Click += calibrateButton_Click;
             setCalibrationButton = new Button();
             setCalibrationButton.Text = "Set";
@@ -73,7 +76,7 @@ namespace epcalipers
             clearCalibrationButton.Click += clearCalibrationButton_Click;
             backCalibrationButton = new Button();
             toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
-            backCalibrationButton.Text = "Done";
+            backCalibrationButton.Text = "Back";
             backCalibrationButton.Click += backCalibrationButton_Click;
             intervalRateButton = new Button();
             intervalRateButton.Text = "Int/Rate";
@@ -83,7 +86,26 @@ namespace epcalipers
             measureButton.Text = "Measure";
             measureButton.Click += MeasureButton_Click;
             toolTip1.SetToolTip(measureButton, "Make measurements");
+            meanRRButton = new Button();
+            meanRRButton.Text = "Mean Rate";
+            meanRRButton.Click += MeanRRButton_Click;
+            toolTip1.SetToolTip(meanRRButton, "Measure mean interval and rate");
+            qtcButton = new Button();
+            qtcButton.Text = "QTc";
+            qtcButton.Click += QtcButton_Click;
+            toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
             //
+            messageLabel = new Label();
+        }
+
+        private void QtcButton_Click(object sender, EventArgs e)
+        {
+            QTcInterval();
+        }
+
+        private void MeanRRButton_Click(object sender, EventArgs e)
+        {
+            MeasureMeanIntervalRate();
         }
 
         private void MeasureButton_Click(object sender, EventArgs e)
@@ -105,7 +127,79 @@ namespace epcalipers
 
         private void MeasureMeanIntervalRate()
         {
+            if (NoCalipersError())
+            {
+                ShowMainMenu();
+                return;
+            }
+            Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
+            if (singleHorizontalCaliper != null)
+            {
+                theCalipers.SelectCaliper(singleHorizontalCaliper);
+                theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
+                pictureBox1.Refresh();
+            }
+            if (theCalipers.NoCaliperIsSelected())
+            {
+                NoTimeCaliperError();
+                ShowMainMenu();
+                return;
+            }
+            Caliper c = theCalipers.GetActiveCaliper();
+            if (c.Direction == CaliperDirection.Vertical)
+            {
+                NoTimeCaliperError();
+                ShowMainMenu();
+                return;
+            }
+            MeasureRRDialog dialog = new MeasureRRDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string rawValue = dialog.numberOfIntervalsTextBox.Text;
+                try
+                {
+                    if (rawValue.Length < 1)
+                    {
+                        throw new Exception("Number of intervals not entered.");
+                    }
+                    int divisor = int.Parse(rawValue);
+                    divisor = Math.Abs(divisor);
+                    if (divisor == 0)
+                    {
+                        throw new Exception("Number of intervals can't be zero.");
+                    }
+                    if (c == null)
+                    {
+                        throw new Exception("Can't find a selected caliper.");
+                    }
+                    double intervalResult = Math.Abs(c.IntervalResult());
+                    double meanRR = intervalResult / divisor;
+                    double meanRate;
+                    if (c.CurrentCalibration.UnitsAreMsecs)
+                    {
+                        meanRate = EPCalculator.MsecToBpm(meanRR);
+                    }
+                    else
+                    {
+                        meanRate = EPCalculator.SecToBpm(meanRR);
+                    }
+                    string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
+                    message += Environment.NewLine;
+                    message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
+                    MessageBox.Show(message, "Mean Interval and Rate");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Measurement Error");
+                }
+            }
+        }
 
+        private void NoTimeCaliperError()
+        {
+            MessageBox.Show("Select a time caliper.  Stretch the caliper over several intervals to get an average interval and rate.",
+                "No Time Caliper Selected");
         }
 
         private void QTcInterval()
@@ -118,7 +212,7 @@ namespace epcalipers
             flowLayoutPanel1.Controls.Clear();
             if (mainMenu == null)
             {
-                mainMenu = new Control[] { measureButton,
+                mainMenu = new Control[] { qtcButton, meanRRButton,
                     intervalRateButton, calibrateButton,
                     addCalipersButton, imageButton  };
 
@@ -130,7 +224,8 @@ namespace epcalipers
                 calibrateButton.Enabled = false;
             }
             intervalRateButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
-            measureButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
+            meanRRButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
+            qtcButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
             theCalipers.Locked = false;
         }
 
@@ -293,7 +388,9 @@ namespace epcalipers
                 calibration.CurrentZoom = calibration.OriginalZoom;
                 calibration.Calibrated = true;
                 pictureBox1.Refresh();
-                
+                // return to main menu after successful calibration
+                // = behavior in mobile versions
+                ShowMainMenu();
             }
             catch (Exception e)
             {

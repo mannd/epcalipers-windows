@@ -154,7 +154,7 @@ namespace epcalipers
             return result;
         }
 
-        private double IntervalResult()
+        public double IntervalResult()
         {
             return ValueInPoints * CurrentCalibration.Multiplier;
         }

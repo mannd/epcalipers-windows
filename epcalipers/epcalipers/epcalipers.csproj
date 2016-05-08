@@ -62,6 +62,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MeasureRRDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MeasureRRDialog.Designer.cs">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MeasureDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MeasureRRDialog.resx">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MeasureDialog.resx">
       <DependentUpon>MeasureDialog.cs</DependentUpon>

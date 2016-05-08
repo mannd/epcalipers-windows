@@ -1,6 +1,6 @@
 ﻿namespace epcalipers
 {
-    partial class CalibrationDialog
+    partial class MeasureRRDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.calibrationMeasurementTextBox = new System.Windows.Forms.TextBox();
+            this.numberOfIntervalsTextBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -37,18 +37,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 68);
+            this.label1.Location = new System.Drawing.Point(13, 76);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(219, 26);
+            this.label1.Size = new System.Drawing.Size(219, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Enter calibration measurement including units\r\n(e.g. 1000 msec or 1 mV):";
+            this.label1.Text = "How many intervals is this caliper measuring?";
             // 
-            // calibrationMeasurementTextBox
+            // numberOfIntervalsTextBox
             // 
-            this.calibrationMeasurementTextBox.Location = new System.Drawing.Point(15, 103);
-            this.calibrationMeasurementTextBox.Name = "calibrationMeasurementTextBox";
-            this.calibrationMeasurementTextBox.Size = new System.Drawing.Size(257, 20);
-            this.calibrationMeasurementTextBox.TabIndex = 1;
+            this.numberOfIntervalsTextBox.Location = new System.Drawing.Point(16, 141);
+            this.numberOfIntervalsTextBox.Name = "numberOfIntervalsTextBox";
+            this.numberOfIntervalsTextBox.Size = new System.Drawing.Size(100, 20);
+            this.numberOfIntervalsTextBox.TabIndex = 1;
+            this.numberOfIntervalsTextBox.Text = "3";
             // 
             // okButton
             // 
@@ -70,7 +71,7 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // CalibrationDialog
+            // MeasureRRDialog
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,10 +80,10 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.calibrationMeasurementTextBox);
+            this.Controls.Add(this.numberOfIntervalsTextBox);
             this.Controls.Add(this.label1);
-            this.Name = "CalibrationDialog";
-            this.Text = "Calibrate";
+            this.Name = "MeasureRRDialog";
+            this.Text = "Enter Number of Intervals";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,8 +92,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox calibrationMeasurementTextBox;
         public System.Windows.Forms.Button okButton;
-        public System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button cancelButton;
+        public System.Windows.Forms.TextBox numberOfIntervalsTextBox;
     }
 }
