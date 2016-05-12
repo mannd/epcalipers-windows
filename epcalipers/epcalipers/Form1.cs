@@ -21,17 +21,20 @@ namespace epcalipers
         Button addCalipersButton;
         Button calibrateButton;
         Button intervalRateButton;
-        Button measureButton;
+        Button measureRRForQtcButton;
         Button setCalibrationButton;
         Button clearCalibrationButton;
         Button backCalibrationButton;
         Button meanRRButton;
         Button qtcButton;
         Button cancelButton;
-        Label messageLabel;
+        Button measureQTcButton;
+        Label measureQtcMessageLabel;
+        Label measureRRForQtcMessageLabel;
         Control[] mainMenu;
         Control[] calibrationMenu;
         Control[] qtcStep1Menu;
+        Control[] qtcStep2Menu;
 
         Point firstPoint;
 
@@ -39,6 +42,7 @@ namespace epcalipers
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
+        double rrIntervalForQtc = 0.0;
 
         public Form1()
         {
@@ -84,10 +88,14 @@ namespace epcalipers
             intervalRateButton.Text = "Int/Rate";
             intervalRateButton.Click += intervalRateButton_Click;
             toolTip1.SetToolTip(intervalRateButton, "Toggle between interval and rate");
-            measureButton = new Button();
-            measureButton.Text = "Measure";
-            measureButton.Click += MeasureButton_Click;
-            toolTip1.SetToolTip(measureButton, "Meaure RR Interval");
+            measureRRForQtcButton = new Button();
+            measureRRForQtcButton.Text = "Measure";
+            measureRRForQtcButton.Click += MeasureRRForQtcButton_Click;
+            toolTip1.SetToolTip(measureRRForQtcButton, "Measure 1 or more RR intervals for QTc");
+            measureQTcButton = new Button();
+            measureQTcButton.Text = "Measure";
+            measureQTcButton.Click += MeasureQTcButton_Click;
+            toolTip1.SetToolTip(measureQTcButton, "Measure QT interval");
             meanRRButton = new Button();
             meanRRButton.Text = "Mean Rate";
             meanRRButton.Click += MeanRRButton_Click;
@@ -101,12 +109,50 @@ namespace epcalipers
             cancelButton.Text = "Cancel";
             cancelButton.Click += CancelButton_Click;
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
-            messageLabel = new Label();
-            messageLabel.Text = "Measure one or more RR intervals";
+            measureRRForQtcMessageLabel = new Label();
+            measureRRForQtcMessageLabel.Text = "Measure one or more RR intervals";
             // properties below ensure label is aligned with Buttons
-            messageLabel.AutoSize = true;
-            messageLabel.Dock = DockStyle.Fill;
-            messageLabel.TextAlign = ContentAlignment.MiddleCenter;
+            measureRRForQtcMessageLabel.AutoSize = true;
+            measureRRForQtcMessageLabel.Dock = DockStyle.Fill;
+            measureRRForQtcMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
+            measureQtcMessageLabel = new Label();
+            measureQtcMessageLabel.Text = "Measure QT";
+            measureQtcMessageLabel.AutoSize = true;
+            measureQtcMessageLabel.Dock = DockStyle.Fill;
+            measureQtcMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
+        }
+
+        private void MeasureQTcButton_Click(object sender, EventArgs e)
+        {
+            if (theCalipers.NoTimeCaliperSelected())
+            {
+                NoTimeCaliperError();
+                return;
+            }
+            Caliper c = theCalipers.GetActiveCaliper();
+            if (c == null)
+            {
+                return;
+            }
+            double qt = Math.Abs(EPCalculator.MsecToSec(c.IntervalResult()));
+            double meanRR = Math.Abs(EPCalculator.MsecToSec(rrIntervalForQtc));
+            string result = "Invalid Result";
+            if (meanRR > 0)
+            {
+                double qtc = EPCalculator.QtcBazettSec(qt, meanRR);
+                if (c.CurrentCalibration.UnitsAreMsecs)
+                {
+                    meanRR *= 1000.0;
+                    qt *= 1000.0;
+                    qtc *= 1000.0;
+                }
+                //s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
+
+                result = string.Format("Mean RR = {0}\nQT = {1}\nQTc = {2}\n(Bazett's formula)", meanRR.ToString("G4"),
+                    qt.ToString("G4"), qtc.ToString("G4"));
+            }
+            MessageBox.Show(result, "Calculated QTc");
+            ShowMainMenu();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -125,12 +171,24 @@ namespace epcalipers
             MeasureMeanIntervalRate();
         }
 
-        private void MeasureButton_Click(object sender, EventArgs e)
+        private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
             MeasureRRDialog dialog = new MeasureRRDialog();
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                try
+                {
+                    string rawValue = dialog.numberOfIntervalsTextBox.Text;
+                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, theCalipers.GetActiveCaliper());
+                    rrIntervalForQtc = tuple.Item1;
+                    showQTcStep2Menu();
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message, "Measurement Error");
+                    ShowMainMenu();
+                }
             }
         }
 
@@ -165,31 +223,9 @@ namespace epcalipers
                 string rawValue = dialog.numberOfIntervalsTextBox.Text;
                 try
                 {
-                    if (rawValue.Length < 1)
-                    {
-                        throw new Exception("Number of intervals not entered.");
-                    }
-                    int divisor = int.Parse(rawValue);
-                    divisor = Math.Abs(divisor);
-                    if (divisor == 0)
-                    {
-                        throw new Exception("Number of intervals can't be zero.");
-                    }
-                    if (c == null)
-                    {
-                        throw new Exception("Can't find a selected caliper.");
-                    }
-                    double intervalResult = Math.Abs(c.IntervalResult());
-                    double meanRR = intervalResult / divisor;
-                    double meanRate;
-                    if (c.CurrentCalibration.UnitsAreMsecs)
-                    {
-                        meanRate = EPCalculator.MsecToBpm(meanRR);
-                    }
-                    else
-                    {
-                        meanRate = EPCalculator.SecToBpm(meanRR);
-                    }
+                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, c);
+                    double meanRR = tuple.Item1;
+                    double meanRate = tuple.Item2;
                     string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
                     message += Environment.NewLine;
                     message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
@@ -202,9 +238,40 @@ namespace epcalipers
             }
         }
 
+        private Tuple<double, double> getMeanRRMeanRate(string rawValue, Caliper c)
+        {
+            
+            if (rawValue.Length < 1)
+            {
+                throw new Exception("Number of intervals not entered.");
+            }
+            int divisor = int.Parse(rawValue);
+            divisor = Math.Abs(divisor);
+            if (divisor == 0)
+            {
+                throw new Exception("Number of intervals can't be zero.");
+            }
+            if (c == null)
+            {
+                throw new Exception("Can't find a selected caliper.");
+            }
+            double intervalResult = Math.Abs(c.IntervalResult());
+            double meanRR = intervalResult / divisor;
+            double meanRate;
+            if (c.CurrentCalibration.UnitsAreMsecs)
+            {
+                meanRate = EPCalculator.MsecToBpm(meanRR);
+            }
+            else
+            {
+                meanRate = EPCalculator.SecToBpm(meanRR);
+            }
+            return Tuple.Create(meanRR, meanRate);
+        }
+
         private void NoTimeCaliperError()
         {
-            MessageBox.Show("Select a time caliper.");
+            MessageBox.Show("Select a time caliper.", "Measurement Error");
         }
 
         private void QTcInterval()
@@ -233,9 +300,19 @@ namespace epcalipers
             flowLayoutPanel1.Controls.Clear();
             if (qtcStep1Menu == null)
             {
-                qtcStep1Menu = new Control[] { cancelButton, measureButton, messageLabel };
+                qtcStep1Menu = new Control[] { cancelButton, measureRRForQtcButton, measureRRForQtcMessageLabel };
             }
             flowLayoutPanel1.Controls.AddRange(qtcStep1Menu);
+        }
+
+        private void showQTcStep2Menu()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            if (qtcStep2Menu == null)
+            {
+                qtcStep2Menu = new Control[] { cancelButton, measureQTcButton, measureQtcMessageLabel };
+            }
+            flowLayoutPanel1.Controls.AddRange(qtcStep2Menu);
         }
 
         private void ShowMainMenu()
@@ -327,7 +404,8 @@ namespace epcalipers
                 }
                 else
                 {
-                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval");
+                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
+                        "No Caliper Selected");
                     return;
                 }
             }

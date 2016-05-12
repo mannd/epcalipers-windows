@@ -83,7 +83,7 @@
             this.Controls.Add(this.numberOfIntervalsTextBox);
             this.Controls.Add(this.label1);
             this.Name = "MeasureRRDialog";
-            this.Text = "Enter Number of Intervals";
+            this.Text = "Number of Intervals";
             this.ResumeLayout(false);
             this.PerformLayout();
 
