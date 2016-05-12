@@ -27,9 +27,11 @@ namespace epcalipers
         Button backCalibrationButton;
         Button meanRRButton;
         Button qtcButton;
+        Button cancelButton;
         Label messageLabel;
         Control[] mainMenu;
         Control[] calibrationMenu;
+        Control[] qtcStep1Menu;
 
         Point firstPoint;
 
@@ -85,7 +87,7 @@ namespace epcalipers
             measureButton = new Button();
             measureButton.Text = "Measure";
             measureButton.Click += MeasureButton_Click;
-            toolTip1.SetToolTip(measureButton, "Make measurements");
+            toolTip1.SetToolTip(measureButton, "Meaure RR Interval");
             meanRRButton = new Button();
             meanRRButton.Text = "Mean Rate";
             meanRRButton.Click += MeanRRButton_Click;
@@ -95,7 +97,22 @@ namespace epcalipers
             qtcButton.Click += QtcButton_Click;
             toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
             //
+            cancelButton = new Button();
+            cancelButton.Text = "Cancel";
+            cancelButton.Click += CancelButton_Click;
+            toolTip1.SetToolTip(cancelButton, "Cancel measurement");
             messageLabel = new Label();
+            messageLabel.Text = "Measure one or more RR intervals";
+            // properties below ensure label is aligned with Buttons
+            messageLabel.AutoSize = true;
+            messageLabel.Dock = DockStyle.Fill;
+            messageLabel.TextAlign = ContentAlignment.MiddleCenter;
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            theCalipers.Locked = false;
+            ShowMainMenu();
         }
 
         private void QtcButton_Click(object sender, EventArgs e)
@@ -110,18 +127,10 @@ namespace epcalipers
 
         private void MeasureButton_Click(object sender, EventArgs e)
         {
-            MeasureDialog dialog = new MeasureDialog();
+            MeasureRRDialog dialog = new MeasureRRDialog();
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-               if (dialog.meanIntervalRateButton.Checked)
-                {
-                    MeasureMeanIntervalRate();
-                }
-               else if (dialog.qtcButton.Checked)
-                {
-                    QTcInterval();
-                }
             }
         }
 
@@ -129,7 +138,6 @@ namespace epcalipers
         {
             if (NoCalipersError())
             {
-                ShowMainMenu();
                 return;
             }
             Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
@@ -142,14 +150,12 @@ namespace epcalipers
             if (theCalipers.NoCaliperIsSelected())
             {
                 NoTimeCaliperError();
-                ShowMainMenu();
                 return;
             }
             Caliper c = theCalipers.GetActiveCaliper();
             if (c.Direction == CaliperDirection.Vertical)
             {
                 NoTimeCaliperError();
-                ShowMainMenu();
                 return;
             }
             MeasureRRDialog dialog = new MeasureRRDialog();
@@ -198,13 +204,38 @@ namespace epcalipers
 
         private void NoTimeCaliperError()
         {
-            MessageBox.Show("Select a time caliper.  Stretch the caliper over several intervals to get an average interval and rate.",
-                "No Time Caliper Selected");
+            MessageBox.Show("Select a time caliper.");
         }
 
         private void QTcInterval()
         {
+            theCalipers.HorizontalCalibration.DisplayRate = false;
+            Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
+            if (singleHorizontalCaliper != null)
+            {
+                theCalipers.SelectCaliper(singleHorizontalCaliper);
+                theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
+                pictureBox1.Refresh();
+            }
+            if (theCalipers.NoTimeCaliperSelected())
+            {
+                NoTimeCaliperError();
+            }
+            else
+            {
+                showQTcStep1Menu();
+                theCalipers.Locked = true;
+            }
+        }
 
+        private void showQTcStep1Menu()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            if (qtcStep1Menu == null)
+            {
+                qtcStep1Menu = new Control[] { cancelButton, measureButton, messageLabel };
+            }
+            flowLayoutPanel1.Controls.AddRange(qtcStep1Menu);
         }
 
         private void ShowMainMenu()

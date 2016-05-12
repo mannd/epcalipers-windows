@@ -84,6 +84,13 @@ namespace epcalipers
             return selectionMade;
         }
 
+        public bool NoTimeCaliperSelected()
+        {
+            return (calipers.Count < 1 ||
+                NoCaliperIsSelected() ||
+                GetActiveCaliper().Direction == CaliperDirection.Vertical);
+        }
+
         public void SelectCaliper(Caliper c)
         {
             c.CaliperColor = c.SelectedColor;
