@@ -1,24 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="epcalipers.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="CaliperColorSetting" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Blue</Value>
-    </Setting>
-    <Setting Name="HighlightColorSetting" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Red</Value>
-    </Setting>
-    <Setting Name="LineWidthSetting" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
-    <Setting Name="HorizontalCalibrationSetting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1000 msec</Value>
-    </Setting>
-    <Setting Name="VerticalCalibrationSetting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">10 mm</Value>
-    </Setting>
-    <Setting Name="RoundMsecRateSetting" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-  </Settings>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
 </SettingsFile>
