@@ -132,6 +132,8 @@ namespace epcalipers
             Caliper c = theCalipers.GetActiveCaliper();
             if (c == null)
             {
+                // this shouldn't happen, but just in case...
+                NoCalipersError();
                 return;
             }
             double qt = Math.Abs(EPCalculator.MsecToSec(c.IntervalResult()));
