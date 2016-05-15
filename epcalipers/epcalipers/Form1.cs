@@ -351,6 +351,8 @@ namespace epcalipers
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
         {
+            PreferencesDialog dialog = new PreferencesDialog();
+            dialog.Show();
             ClearCalibration();
         }
 
