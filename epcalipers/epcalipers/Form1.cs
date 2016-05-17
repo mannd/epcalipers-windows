@@ -580,6 +580,10 @@ namespace epcalipers
             }
             currentActualZoom *= zoomInFactor;
             Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (pictureBox1.Image != null && pictureBox1.Image != theBitmap)
+            {
+                pictureBox1.Image.Dispose();
+            }
             pictureBox1.Image = zoomedBitmap;
         }
 
@@ -591,6 +595,10 @@ namespace epcalipers
             }
             currentActualZoom *= zoomOutFactor;
             Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (pictureBox1.Image != null && pictureBox1.Image != theBitmap)
+            {
+                pictureBox1.Image.Dispose();
+            }
             pictureBox1.Image = zoomedBitmap;
         }
 
@@ -659,6 +667,11 @@ namespace epcalipers
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("No image is open so how can you print?", "No Image Open");
+                return;
+            }
             PrintDocument pd = new System.Drawing.Printing.PrintDocument();
             pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
             pd.Print();
@@ -679,6 +692,7 @@ namespace epcalipers
         {
             if (pictureBox1.Image == null)
             {
+                MessageBox.Show("No image is open so how can you save?", "No Image Open");
                 return;
             }
             saveFileDialog1.Filter = fileTypeFilter;
@@ -691,5 +705,8 @@ namespace epcalipers
                 image.Save(saveFileDialog1.FileName);               
             }
         }
+
+        // Drag and drop image onto form
+
     }
 }
