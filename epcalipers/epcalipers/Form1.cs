@@ -42,14 +42,18 @@ namespace epcalipers
         Point firstPoint;
 
         string fileTypeFilter = "Image Files (*.jpg, *.bmp) | *.jpg; *.bmp";
+
+        // Note zoom factors used in Mac OS X version
+        // These are taken from the Apple IKImageView demo
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
+
         double rrIntervalForQtc = 0.0;
 
+        // Drag and drop variables
         protected Thread getImageThread;
         protected bool validData;
-        //protected PictureBox thumbnail;
         protected DragDropEffects effects;
         protected string lastFilename;
         protected Image image;
@@ -62,11 +66,11 @@ namespace epcalipers
             InitializeComponent();
             preferences = new Preferences();
             theCalipers = new Calipers();
-            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
-            pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            pictureBox1.MouseDoubleClick += pictureBox1_MouseDoubleClick;
-            pictureBox1.MouseUp += pictureBox1_MouseUp;
+            ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            ecgPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            ecgPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            ecgPictureBox.MouseDoubleClick += pictureBox1_MouseDoubleClick;
+            ecgPictureBox.MouseUp += pictureBox1_MouseUp;
             SetupButtons();
             ShowMainMenu();
         }
@@ -118,7 +122,6 @@ namespace epcalipers
             qtcButton.Text = "QTc";
             qtcButton.Click += QtcButton_Click;
             toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
-            //
             cancelButton = new Button();
             cancelButton.Text = "Cancel";
             cancelButton.Click += CancelButton_Click;
@@ -217,7 +220,7 @@ namespace epcalipers
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
                 theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
             if (theCalipers.NoCaliperIsSelected())
             {
@@ -296,7 +299,7 @@ namespace epcalipers
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
                 theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
             if (theCalipers.NoTimeCaliperSelected())
             {
@@ -380,12 +383,8 @@ namespace epcalipers
             openFileDialog1.Filter = fileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                pictureBox1.Load(openFileDialog1.FileName);
-                theBitmap = new Bitmap(pictureBox1.Image);
-                currentActualZoom = 1.0;
-                ClearCalibration();
-                addCalipersButton.Enabled = true;
-                calibrateButton.Enabled = true;
+                ecgPictureBox.Load(openFileDialog1.FileName);
+                ResetBitmap(ecgPictureBox.Image);
             }
         }
 
@@ -398,7 +397,7 @@ namespace epcalipers
             ShowCalibrationMenu();
             if (theCalipers.SelectCaliperIfNoneSelected())
             {
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
         }
 
@@ -414,7 +413,7 @@ namespace epcalipers
                 {
                     // assume user wants to calibrate sole caliper so select it
                     theCalipers.SelectSoleCaliper();
-                    pictureBox1.Refresh();
+                    ecgPictureBox.Refresh();
                 }
                 else
                 {
@@ -518,7 +517,7 @@ namespace epcalipers
                 calibration.OriginalCalFactor = value / c.ValueInPoints;
                 calibration.CurrentZoom = calibration.OriginalZoom;
                 calibration.Calibrated = true;
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
                 // return to main menu after successful calibration
                 // = behavior in mobile versions
                 ShowMainMenu();
@@ -532,7 +531,7 @@ namespace epcalipers
         private void ClearCalibration()
         {
             ResetCalibration();
-            pictureBox1.Refresh();
+            ecgPictureBox.Refresh();
 
         }
 
@@ -548,7 +547,7 @@ namespace epcalipers
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image == null )
+            if (ecgPictureBox.Image == null )
             {
                 return;
             }
@@ -586,45 +585,45 @@ namespace epcalipers
             {
                 c.CurrentCalibration = theCalipers.VerticalCalibration;
             }
-            c.SetInitialPositionInRect(pictureBox1.DisplayRectangle);
+            c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
-            pictureBox1.Refresh();
+            ecgPictureBox.Refresh();
         }
 
         private void intervalRateButton_Click(object sender, EventArgs e)
         {
             theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
-            pictureBox1.Refresh();
+            ecgPictureBox.Refresh();
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image == null)
+            if (ecgPictureBox.Image == null)
             {
                 return;
             }
             currentActualZoom *= zoomInFactor;
             Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (pictureBox1.Image != null && pictureBox1.Image != theBitmap)
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
-                pictureBox1.Image.Dispose();
+                ecgPictureBox.Image.Dispose();
             }
-            pictureBox1.Image = zoomedBitmap;
+            ecgPictureBox.Image = zoomedBitmap;
         }
 
         private void zoomOutButton_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image == null)
+            if (ecgPictureBox.Image == null)
             {
                 return;
             }
             currentActualZoom *= zoomOutFactor;
             Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (pictureBox1.Image != null && pictureBox1.Image != theBitmap)
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
-                pictureBox1.Image.Dispose();
+                ecgPictureBox.Image.Dispose();
             }
-            pictureBox1.Image = zoomedBitmap;
+            ecgPictureBox.Image = zoomedBitmap;
         }
 
         private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -632,7 +631,7 @@ namespace epcalipers
             Point mouseClickLocation = new Point(e.X, e.Y);
             if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
             {
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
         }
 
@@ -653,7 +652,7 @@ namespace epcalipers
             if (theCalipers.DragGrabbedCaliper(deltaX, deltaY))
             {
                 firstPoint = newPoint;
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
 
         }
@@ -662,17 +661,13 @@ namespace epcalipers
         {
             if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
             {
-                pictureBox1.Refresh();
+                ecgPictureBox.Refresh();
             }
         }
 
         private Bitmap Zoom(Bitmap originalBitmap)
         {
-            // Note zoom factors used in Mac OS X version
-            // // These are taken from the Apple IKImageView demo
-            //let zoomInFactor: CGFloat = 1.414214
-            //let zoomOutFactor: CGFloat = 0.7071068
-            
+           
             theCalipers.updateCalibration(currentActualZoom);
             Size newSize = new Size((int)(originalBitmap.Width * currentActualZoom), (int)(originalBitmap.Height * currentActualZoom));
             Bitmap bmp = new Bitmap(originalBitmap, newSize);
@@ -682,7 +677,7 @@ namespace epcalipers
         private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            theCalipers.Draw(g, pictureBox1.DisplayRectangle);
+            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
         }
 
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -692,7 +687,7 @@ namespace epcalipers
 
         private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image == null)
+            if (ecgPictureBox.Image == null)
             {
                 MessageBox.Show("No image is open so how can you print?", "No Image Open");
                 return;
@@ -705,17 +700,17 @@ namespace epcalipers
         private void PrintPictureBox(object sender, PrintPageEventArgs e)
         {
             //Graphics g = e.Graphics;
-            Image image = (Image)pictureBox1.Image.Clone();
+            Image image = (Image)ecgPictureBox.Image.Clone();
             Graphics g = Graphics.FromImage(image);
             /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
             /// and saving images.
-            theCalipers.Draw(g, pictureBox1.DisplayRectangle);
+            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
             e.Graphics.DrawImage(image, 0, 0);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image == null)
+            if (ecgPictureBox.Image == null)
             {
                 MessageBox.Show("No image is open so how can you save?", "No Image Open");
                 return;
@@ -724,9 +719,9 @@ namespace epcalipers
             saveFileDialog1.DefaultExt = "jpg";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Image image = (Image)pictureBox1.Image.Clone();
+                Image image = (Image)ecgPictureBox.Image.Clone();
                 Graphics g = Graphics.FromImage(image);
-                theCalipers.Draw(g, pictureBox1.DisplayRectangle);
+                theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
                 image.Save(saveFileDialog1.FileName);               
             }
         }
@@ -747,12 +742,15 @@ namespace epcalipers
             preferences.Load();
             // update all the calipers
             theCalipers.UpdatePreferences(preferences);
-            pictureBox1.Refresh();
+            ecgPictureBox.Refresh();
         }
 
-
-
-        // Drag and drop image onto form
+        /* Drag and drop image onto form
+         * based on http://www.codeproject.com/Articles/9017/A-Simple-Drag-And-Drop-How-To-Example
+         * Note re license: "This article has no explicit license attached to it but may contain
+         *  usage terms in the article text or the download files themselves. 
+         *  If in doubt please contact the author via the discussion board below."
+         */
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
@@ -765,12 +763,12 @@ namespace epcalipers
                 }
                 thumbnail.Visible = false;
                 image = nextImage;
-                AdjustView();
-                if ((pictureBox1.Image != null) && (pictureBox1.Image != nextImage))
+                if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
                 {
-                    pictureBox1.Image.Dispose();
+                    ecgPictureBox.Image.Dispose();
                 }
-                pictureBox1.Image = image;
+                ecgPictureBox.Image = image;
+                ResetBitmap(image);
             }
         }
 
@@ -812,9 +810,13 @@ namespace epcalipers
             Debug.WriteLine("OnDragOver");
             if (validData)
             {
+                // only bother if mouse position changes
                 if ((e.X != lastX) || (e.Y != lastY))
                 {
                     setThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
+                    Debug.WriteLine("lastX and lastY = {0} & {1}", lastX, lastY);
+                    lastX = e.X;
+                    lastY = e.Y;
                 }
             }
         }
@@ -874,30 +876,17 @@ namespace epcalipers
             }
         }
 
-        protected void AdjustView()
+        private void ResetBitmap(Image image)
         {
-            float fw = this.ClientSize.Width;
-            float fh = this.ClientSize.Height;
-            float iw = image.Width;
-            float ih = image.Height;
-
-            float rw = fw / iw;
-            float rh = fh / ih;
-
-            if (rw < rh)
+            if (theBitmap != null)
             {
-                pictureBox1.Width = (int)fw;
-                pictureBox1.Height = (int)(ih * rw);
-                pictureBox1.Left = 0;
-                pictureBox1.Top = (int)((fh - pictureBox1.Height) / 2);
+                theBitmap.Dispose();
             }
-            else
-            {
-                pictureBox1.Width = (int)(iw * rh);
-                pictureBox1.Height = (int)fh;
-                pictureBox1.Left = (int)((fw - pictureBox1.Width) / 2);
-                pictureBox1.Top = 0;
-            }
+            theBitmap = new Bitmap(image);
+            currentActualZoom = 1.0;
+            ClearCalibration();
+            addCalipersButton.Enabled = true;
+            calibrateButton.Enabled = true;
         }
 
 
