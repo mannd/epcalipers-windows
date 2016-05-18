@@ -29,6 +29,7 @@ namespace epcalipers
         public bool IsSelected { set; get; }
         public Calibration CurrentCalibration { set; get; }
         public Font TextFont { set; get; }
+        public bool RoundMsecRate { set; get; }
 
         public Caliper()
         {
@@ -52,7 +53,7 @@ namespace epcalipers
             IsSelected = false;
             TextFont = new Font("Helvetica", 14);
             CurrentCalibration = new Calibration();
-            // paragraph style ?
+            RoundMsecRate = true;
         }
 
         public void SetInitialPositionInRect(RectangleF rect)
@@ -131,7 +132,7 @@ namespace epcalipers
             // mV or sec.  Consider preference to allow rounding only if UnitsAreMsec() or displaying
             // rate and apply it here.  Below shows how to do either method, depending on UnitsAreMsec()
             string s;
-            if (CurrentCalibration.UnitsAreMsecs || CurrentCalibration.DisplayRate)
+            if (RoundMsecRate && (CurrentCalibration.UnitsAreMsecs || CurrentCalibration.DisplayRate))
             {
                 s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
                     CurrentCalibration.Units);

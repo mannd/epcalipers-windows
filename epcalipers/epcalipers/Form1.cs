@@ -561,6 +561,11 @@ namespace epcalipers
         private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
+            c.LineWidth = preferences.LineWidth;
+            c.UnselectedColor = preferences.CaliperColor;
+            c.SelectedColor = preferences.HighlightColor;
+            c.CaliperColor = c.UnselectedColor;
+            c.RoundMsecRate = preferences.RoundMsecRate;
             c.Direction = direction;
             if (direction == CaliperDirection.Horizontal)
             {
@@ -721,9 +726,20 @@ namespace epcalipers
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 dialog.Save();
+                UpdatePreferences();
             }
 
         }
+
+        private void UpdatePreferences()
+        {
+            preferences.Load();
+            // update all the calipers
+            theCalipers.UpdatePreferences(preferences);
+            pictureBox1.Refresh();
+        }
+
+
 
         // Drag and drop image onto form
 

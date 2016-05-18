@@ -1,4 +1,5 @@
-﻿using System;
+﻿using epcalipers.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -313,6 +314,25 @@ namespace epcalipers
             else
             {
                 return null;
+            }
+        }
+
+        public void UpdatePreferences(Preferences p)
+        {
+            foreach (Caliper caliper in calipers)
+            {
+                caliper.LineWidth = p.LineWidth;
+                caliper.UnselectedColor = p.CaliperColor;
+                caliper.SelectedColor = p.HighlightColor;
+                if (caliper.IsSelected)
+                {
+                    caliper.CaliperColor = caliper.SelectedColor;
+                }
+                else
+                {
+                    caliper.CaliperColor = caliper.UnselectedColor;
+                }
+                caliper.RoundMsecRate = p.RoundMsecRate;
             }
         }
 
