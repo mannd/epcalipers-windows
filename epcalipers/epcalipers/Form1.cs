@@ -1,4 +1,5 @@
-﻿using System;
+﻿using epcalipers.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,6 +36,7 @@ namespace epcalipers
         Control[] calibrationMenu;
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
+        Preferences preferences;
 
         Point firstPoint;
 
@@ -47,6 +49,7 @@ namespace epcalipers
         public Form1()
         {
             InitializeComponent();
+            preferences = new Preferences();
             theCalipers = new Calipers();
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -351,8 +354,6 @@ namespace epcalipers
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
         {
-            PreferencesDialog dialog = new PreferencesDialog();
-            dialog.Show();
             ClearCalibration();
         }
 
@@ -415,10 +416,18 @@ namespace epcalipers
             Caliper c = theCalipers.GetActiveCaliper();
             if (c.Direction == CaliperDirection.Horizontal)
             {
+                if (theCalipers.HorizontalCalibration.CalibrationString == null)
+                {
+                    theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
+                }
                 dialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
             }
             else
             {
+                if (theCalipers.VerticalCalibration.CalibrationString == null)
+                {
+                    theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
+                }
                 dialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
             }
             DialogResult result = dialog.ShowDialog();
@@ -704,6 +713,16 @@ namespace epcalipers
                 theCalipers.Draw(g, pictureBox1.DisplayRectangle);
                 image.Save(saveFileDialog1.FileName);               
             }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreferencesDialog dialog = new PreferencesDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                dialog.Save();
+            }
+
         }
 
         // Drag and drop image onto form

@@ -13,16 +13,23 @@ namespace epcalipers
 {
     public partial class PreferencesDialog : Form
     {
+
+        Preferences preferences;
         public PreferencesDialog()
         {
             InitializeComponent();
+            preferences = new Preferences();
         }
 
         private void PreferencesDialog_Load(object sender, EventArgs e)
         {
-            Preferences preferences = new Preferences();
             propertyGrid1.SelectedObject = preferences;
 
+        }
+
+        public void Save()
+        {
+            preferences.Save();
         }
     }
 }

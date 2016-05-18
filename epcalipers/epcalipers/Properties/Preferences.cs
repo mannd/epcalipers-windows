@@ -10,7 +10,6 @@ namespace epcalipers.Properties
 {
     public class Preferences
     {
-        private Settings settings;
         private Color caliperColor;
         private Color highlightColor;
         private int lineWidth;
@@ -21,13 +20,17 @@ namespace epcalipers.Properties
 
         public Preferences()
         {
-            settings = new Settings();
-            caliperColor = settings.CaliperColor;
-            highlightColor = settings.HighlightColor;
-            lineWidth = settings.LineWidth;
-            horizontalCalibration = settings.HorizontalCalibration;
-            verticalCalibration = settings.VerticalCalibration;
-            roundMsecRate = settings.RoundMsecRate;
+            Load();
+        }
+
+        public void Load()
+        {
+            caliperColor = (Color)Settings.Default["CaliperColor"];
+            highlightColor = (Color)Settings.Default["HighlightColor"];
+            lineWidth = (int)Settings.Default["LineWidth"];
+            horizontalCalibration = (string)Settings.Default["HorizontalCalibration"];
+            verticalCalibration = (string)Settings.Default["VerticalCalibration"];
+            roundMsecRate = (bool)Settings.Default["RoundMsecRate"];
         }
 
         [Browsable(true),
@@ -103,15 +106,15 @@ namespace epcalipers.Properties
 
 
 
-        public void SavePreferences()
+        public void Save()
         {
-            settings.CaliperColor = caliperColor;
-            settings.HighlightColor = highlightColor;
-            settings.LineWidth = lineWidth;
-            settings.HorizontalCalibration = horizontalCalibration;
-            settings.VerticalCalibration = verticalCalibration;
-            settings.RoundMsecRate = roundMsecRate;
-            settings.Save();
+            Settings.Default["CaliperColor"] = caliperColor;
+            Settings.Default["HighlightColor"] = highlightColor;
+            Settings.Default["LineWidth"] = lineWidth;
+            Settings.Default["HorizontalCalibration"] = horizontalCalibration;
+            Settings.Default["VerticalCalibration"] = verticalCalibration;
+            Settings.Default["RoundMsecRate"] = roundMsecRate;
+            Settings.Default.Save();
         }
 
     }
