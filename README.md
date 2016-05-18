@@ -4,10 +4,10 @@
 This is the MS Windows version of EP Calipers.
 Versions for Android, iOS and Mac OS X already exist.
 
-EP Calipers is an Apple iOS application that provides
-electronic calipers for making measurements on images of ECGs or other
-recordings.  Simple calculations such as mean heart rate and corrected
-QT intervals can be performed directly in the app.
+EP Calipers provides electronic calipers for making measurements on
+images of ECGs or other recordings.  Simple calculations such as mean
+heart rate and corrected QT intervals can be performed directly in the
+app.
 
 A Windows Forms version is being developed initially, with plans for a
 Windows Universal app in the future.
