@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -45,6 +46,16 @@ namespace epcalipers
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
         double rrIntervalForQtc = 0.0;
+
+        protected Thread getImageThread;
+        protected bool validData;
+        //protected PictureBox thumbnail;
+        protected DragDropEffects effects;
+        protected string lastFilename;
+        protected Image image;
+        protected Image nextImage;
+        protected int lastX = 0;
+        protected int lastY = 0;
 
         public Form1()
         {
@@ -742,6 +753,154 @@ namespace epcalipers
 
 
         // Drag and drop image onto form
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragDrop");
+            if (validData)
+            {
+                while (getImageThread.IsAlive)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(0);
+                }
+                thumbnail.Visible = false;
+                image = nextImage;
+                AdjustView();
+                if ((pictureBox1.Image != null) && (pictureBox1.Image != nextImage))
+                {
+                    pictureBox1.Image.Dispose();
+                }
+                pictureBox1.Image = image;
+            }
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragEnter");
+            string filename;
+            validData = GetFilename(out filename, e);
+            if (validData)
+            {
+                if (lastFilename != filename)
+                {
+                    thumbnail.Image = null;
+                    thumbnail.Visible = false;
+                    lastFilename = filename;
+                    getImageThread = new Thread(new ThreadStart(LoadImage));
+                    getImageThread.Start();
+                }
+                else
+                {
+                    thumbnail.Visible = true;
+                }
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void OnDragLeave(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnDragLeave");
+            thumbnail.Visible = false;
+        }
+
+        private void OnDragOver(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragOver");
+            if (validData)
+            {
+                if ((e.X != lastX) || (e.Y != lastY))
+                {
+                    setThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
+                }
+            }
+        }
+
+        protected bool GetFilename(out string filename, DragEventArgs e)
+        {
+            bool result = false;
+            filename = String.Empty;
+
+            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+            {
+                Array data = ((IDataObject)e.Data).GetData("FileDrop") as Array;
+                if (data != null)
+                {
+                    if ((data.Length == 1) && (data.GetValue(0) is String))
+                    {
+                        filename = ((string[])data)[0];
+                        string ext = System.IO.Path.GetExtension(filename).ToLower();
+                        if ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp"))
+                        {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public delegate void AssignImageDlgt();
+
+        protected void LoadImage()
+        {
+            nextImage = new Bitmap(lastFilename);
+            this.Invoke(new AssignImageDlgt(AssignImage));
+        }
+
+        protected void AssignImage()
+        {
+            thumbnail.Width = 100;
+            thumbnail.Height = nextImage.Height * 100 / nextImage.Width;
+            setThumbnailLocation(PointToClient(new Point(lastX, lastY)));
+            thumbnail.Image = nextImage;
+        }
+
+        protected void setThumbnailLocation(Point point)
+        {
+            if (thumbnail.Image == null)
+            {
+                thumbnail.Visible = false;
+            }
+            else
+            {
+                point.X -= thumbnail.Width / 2;
+                point.Y -= thumbnail.Height / 2;
+                thumbnail.Location = point;
+                thumbnail.Visible = true;
+            }
+        }
+
+        protected void AdjustView()
+        {
+            float fw = this.ClientSize.Width;
+            float fh = this.ClientSize.Height;
+            float iw = image.Width;
+            float ih = image.Height;
+
+            float rw = fw / iw;
+            float rh = fh / ih;
+
+            if (rw < rh)
+            {
+                pictureBox1.Width = (int)fw;
+                pictureBox1.Height = (int)(ih * rw);
+                pictureBox1.Left = 0;
+                pictureBox1.Top = (int)((fh - pictureBox1.Height) / 2);
+            }
+            else
+            {
+                pictureBox1.Width = (int)(iw * rh);
+                pictureBox1.Height = (int)fh;
+                pictureBox1.Left = (int)((fw - pictureBox1.Width) / 2);
+                pictureBox1.Top = 0;
+            }
+        }
+
+
 
     }
 }
