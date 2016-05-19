@@ -50,14 +50,15 @@ namespace epcalipers
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate90RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate90LToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate1RToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotate1LToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -78,8 +79,8 @@ namespace epcalipers
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(688, 458);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -88,9 +89,9 @@ namespace epcalipers
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(81, 415);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(81, 424);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(604, 40);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(604, 31);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // panel1
@@ -102,7 +103,7 @@ namespace epcalipers
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(682, 406);
+            this.panel1.Size = new System.Drawing.Size(682, 415);
             this.panel1.TabIndex = 3;
             // 
             // thumbnail
@@ -128,9 +129,9 @@ namespace epcalipers
             // 
             this.flowLayoutPanel2.Controls.Add(this.zoomInButton);
             this.flowLayoutPanel2.Controls.Add(this.zoomOutButton);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 415);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 424);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(72, 40);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(72, 31);
             this.flowLayoutPanel2.TabIndex = 4;
             // 
             // zoomInButton
@@ -188,45 +189,46 @@ namespace epcalipers
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.imageButton_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(143, 6);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
             // 
             // quitToolStripMenuItem1
             // 
             this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
-            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem,
-            this.rotateToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.resetImageToolStripMenuItem});
+            this.rotate90RToolStripMenuItem,
+            this.rotate90LToolStripMenuItem1,
+            this.rotate1RToolStripMenuItem2,
+            this.rotate1LToolStripMenuItem3,
+            this.resetImageToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -239,33 +241,33 @@ namespace epcalipers
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
-            // rotateToolStripMenuItem
+            // rotate90RToolStripMenuItem
             // 
-            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.rotateToolStripMenuItem.Text = "Rotate 90 R";
-            this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click);
+            this.rotate90RToolStripMenuItem.Name = "rotate90RToolStripMenuItem";
+            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rotate90RToolStripMenuItem.Text = "Rotate 90 R";
+            this.rotate90RToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // rotate90LToolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem1.Text = "Rotate 90 L";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.rotate90LToolStripMenuItem1_Click);
+            this.rotate90LToolStripMenuItem1.Name = "rotate90LToolStripMenuItem1";
+            this.rotate90LToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.rotate90LToolStripMenuItem1.Text = "Rotate 90 L";
+            this.rotate90LToolStripMenuItem1.Click += new System.EventHandler(this.rotate90LToolStripMenuItem1_Click);
             // 
-            // toolStripMenuItem2
+            // rotate1RToolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem2.Text = "Rotate 1 R";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.rotate1RToolStripMenuItem2_Click);
+            this.rotate1RToolStripMenuItem2.Name = "rotate1RToolStripMenuItem2";
+            this.rotate1RToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.rotate1RToolStripMenuItem2.Text = "Rotate 1 R";
+            this.rotate1RToolStripMenuItem2.Click += new System.EventHandler(this.rotate1RToolStripMenuItem2_Click);
             // 
-            // toolStripMenuItem3
+            // rotate1LToolStripMenuItem3
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem3.Text = "Rotate 1 L";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.rotate1LToolStripMenuItem3_Click);
+            this.rotate1LToolStripMenuItem3.Name = "rotate1LToolStripMenuItem3";
+            this.rotate1LToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.rotate1LToolStripMenuItem3.Text = "Rotate 1 L";
+            this.rotate1LToolStripMenuItem3.Click += new System.EventHandler(this.rotate1LToolStripMenuItem3_Click);
             // 
             // resetImageToolStripMenuItem
             // 
@@ -273,6 +275,11 @@ namespace epcalipers
             this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetImageToolStripMenuItem.Text = "Reset image";
             this.resetImageToolStripMenuItem.Click += new System.EventHandler(this.resetImageToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // Form1
             // 
@@ -330,11 +337,12 @@ namespace epcalipers
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
         protected PictureBox thumbnail;
-        private ToolStripMenuItem rotateToolStripMenuItem;
+        private ToolStripMenuItem rotate90RToolStripMenuItem;
         private ToolStripMenuItem resetImageToolStripMenuItem;
-        private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem2;
-        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem rotate90LToolStripMenuItem1;
+        private ToolStripMenuItem rotate1RToolStripMenuItem2;
+        private ToolStripMenuItem rotate1LToolStripMenuItem3;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }
 

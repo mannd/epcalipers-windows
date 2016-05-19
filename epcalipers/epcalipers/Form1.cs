@@ -919,7 +919,7 @@ namespace epcalipers
                 ecgPictureBox.Image.Dispose();
             }
             ecgPictureBox.Image = zoomedBitmap;
-            // calibration can be maintained with rotation
+            // calibration can't be maintained with rotation
             ResetCalibration();
 
         }
