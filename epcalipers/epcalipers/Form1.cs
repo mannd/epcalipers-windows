@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace epcalipers
     {
 
         Bitmap theBitmap;
+        Bitmap originalBitmapCopy;
         Calipers theCalipers;
         Button imageButton;
         Button addCalipersButton;
@@ -883,13 +885,144 @@ namespace epcalipers
                 theBitmap.Dispose();
             }
             theBitmap = new Bitmap(image);
+            // reset originalBitmapCopy so it can be used for rotation of new image
+            if (originalBitmapCopy != null)
+            {
+                originalBitmapCopy.Dispose();
+                originalBitmapCopy = null;
+            }
             currentActualZoom = 1.0;
             ClearCalibration();
             addCalipersButton.Enabled = true;
             calibrateButton.Enabled = true;
         }
 
+        
 
+        // rotation
+        private void RotateEcgImage(float angle)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            if (originalBitmapCopy == null)
+            {
+                originalBitmapCopy = new Bitmap(theBitmap);
+            }
+            Bitmap rotatedBitmap = RotateImage(theBitmap, angle, Color.Black);
+            theBitmap.Dispose();
+            theBitmap = new Bitmap(rotatedBitmap);
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+            {
+                ecgPictureBox.Image.Dispose();
+            }
+            ecgPictureBox.Image = zoomedBitmap;
+            // calibration can be maintained with rotation
+            ResetCalibration();
 
+        }
+
+        private void ResetEcgImage()
+        {
+            if (theBitmap != null && originalBitmapCopy != null)
+            {
+                theBitmap.Dispose();
+                theBitmap = new Bitmap(originalBitmapCopy);
+                if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+                {
+                    ecgPictureBox.Image.Dispose();
+                }
+                ecgPictureBox.Image = theBitmap;
+                ResetCalibration();
+                currentActualZoom = 1.0;
+                // not necessary to refresh image when image updated
+                //ecgPictureBox.Refresh();
+            }
+        }
+        
+
+        // code based on http://stackoverflow.com/questions/14184700/how-to-rotate-image-x-degrees-in-c
+        private Bitmap RotateImage(Bitmap bmp, float angle, Color bkColor)
+        {
+            angle = angle % 360;
+            if (angle > 180)
+                angle -= 360;
+
+            PixelFormat pf = default(PixelFormat);
+            if (bkColor == Color.Transparent)
+            {
+                pf = PixelFormat.Format32bppArgb;
+            }
+            else
+            {
+                pf = bmp.PixelFormat;
+            }
+
+            float sin = (float)Math.Abs(Math.Sin(angle * Math.PI / 180.0)); // this function takes radians
+            float cos = (float)Math.Abs(Math.Cos(angle * Math.PI / 180.0)); // this one too
+            float newImgWidth = sin * bmp.Height + cos * bmp.Width;
+            float newImgHeight = sin * bmp.Width + cos * bmp.Height;
+            float originX = 0f;
+            float originY = 0f;
+
+            if (angle > 0)
+            {
+                if (angle <= 90)
+                    originX = sin * bmp.Height;
+                else
+                {
+                    originX = newImgWidth;
+                    originY = newImgHeight - sin * bmp.Width;
+                }
+            }
+            else
+            {
+                if (angle >= -90)
+                    originY = sin * bmp.Width;
+                else
+                {
+                    originX = newImgWidth - sin * bmp.Height;
+                    originY = newImgHeight;
+                }
+            }
+
+            Bitmap newImg = new Bitmap((int)newImgWidth, (int)newImgHeight, pf);
+            Graphics g = Graphics.FromImage(newImg);
+            g.Clear(bkColor);
+            g.TranslateTransform(originX, originY); // offset the origin to our calculated values
+            g.RotateTransform(angle); // set up rotate
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+            g.DrawImageUnscaled(bmp, 0, 0); // draw the image at 0, 0
+            g.Dispose();
+
+            return newImg;
+        }
+
+        private void resetImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetEcgImage();
+        }
+
+        private void rotate90RToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(90.0f);
+        }
+
+        private void rotate1LToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(-1.0f);
+        }
+
+        private void rotate90LToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(-90.0f);
+        }
+
+        private void rotate1RToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(1.0f);
+        }
     }
 }

@@ -50,6 +50,11 @@ namespace epcalipers
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -113,7 +118,7 @@ namespace epcalipers
             // ecgPictureBox
             // 
             this.ecgPictureBox.Location = new System.Drawing.Point(0, 3);
-            this.ecgPictureBox.Name = "pictureBox1";
+            this.ecgPictureBox.Name = "ecgPictureBox";
             this.ecgPictureBox.Size = new System.Drawing.Size(679, 424);
             this.ecgPictureBox.TabIndex = 0;
             this.ecgPictureBox.TabStop = false;
@@ -216,7 +221,12 @@ namespace epcalipers
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.rotateToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.resetImageToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -224,10 +234,45 @@ namespace epcalipers
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // rotateToolStripMenuItem
+            // 
+            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rotateToolStripMenuItem.Text = "Rotate 90 R";
+            this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Text = "Rotate 90 L";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.rotate90LToolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "Rotate 1 R";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.rotate1RToolStripMenuItem2_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "Rotate 1 L";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.rotate1LToolStripMenuItem3_Click);
+            // 
+            // resetImageToolStripMenuItem
+            // 
+            this.resetImageToolStripMenuItem.Name = "resetImageToolStripMenuItem";
+            this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetImageToolStripMenuItem.Text = "Reset image";
+            this.resetImageToolStripMenuItem.Click += new System.EventHandler(this.resetImageToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -285,6 +330,11 @@ namespace epcalipers
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem optionsToolStripMenuItem;
         protected PictureBox thumbnail;
+        private ToolStripMenuItem rotateToolStripMenuItem;
+        private ToolStripMenuItem resetImageToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
     }
 }
 
