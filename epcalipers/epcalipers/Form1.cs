@@ -43,7 +43,7 @@ namespace epcalipers
 
         Point firstPoint;
 
-        string fileTypeFilter = "Image Files (*.jpg, *.bmp) | *.jpg; *.bmp";
+        string fileTypeFilter = "Image Files (*.jpg, *.bmp *.pdf) | *.jpg; *.bmp; *.pdf";
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -385,8 +385,9 @@ namespace epcalipers
             openFileDialog1.Filter = fileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                ecgPictureBox.Load(openFileDialog1.FileName);
-                ResetBitmap(ecgPictureBox.Image);
+                //ecgPictureBox.Load(openFileDialog1.FileName);
+                //ResetBitmap(ecgPictureBox.Image);
+                TestOpenPdf(openFileDialog1.FileName);
             }
         }
 
@@ -1023,6 +1024,22 @@ namespace epcalipers
         private void rotate1RToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             RotateEcgImage(1.0f);
+        }
+
+        // PDF stuff
+        private void TestOpenPdf(string filename)
+        {
+            ImageMagick.MagickReadSettings settings = new ImageMagick.MagickReadSettings();
+            settings.Density = new ImageMagick.Density(300, 300);
+            using (ImageMagick.MagickImageCollection images = new ImageMagick.MagickImageCollection())
+            {
+                images.Read(filename, settings);
+                //int page = 1;
+                ecgPictureBox.Image = images[0].ToBitmap();
+                ResetBitmap(ecgPictureBox.Image);
+
+            }
+            
         }
     }
 }
