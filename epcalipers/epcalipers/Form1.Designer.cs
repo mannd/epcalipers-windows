@@ -49,16 +49,16 @@ namespace epcalipers
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate90RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate90LToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate1RToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate1LToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.resetImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -189,33 +189,33 @@ namespace epcalipers
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.imageButton_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(143, 6);
             // 
             // quitToolStripMenuItem1
             // 
             this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
-            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
@@ -233,53 +233,53 @@ namespace epcalipers
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.ToolTipText = "Change options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-            // 
             // rotate90RToolStripMenuItem
             // 
             this.rotate90RToolStripMenuItem.Name = "rotate90RToolStripMenuItem";
-            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.rotate90RToolStripMenuItem.Text = "Rotate 90 R";
             this.rotate90RToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click);
             // 
             // rotate90LToolStripMenuItem1
             // 
             this.rotate90LToolStripMenuItem1.Name = "rotate90LToolStripMenuItem1";
-            this.rotate90LToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.rotate90LToolStripMenuItem1.Size = new System.Drawing.Size(138, 22);
             this.rotate90LToolStripMenuItem1.Text = "Rotate 90 L";
             this.rotate90LToolStripMenuItem1.Click += new System.EventHandler(this.rotate90LToolStripMenuItem1_Click);
             // 
             // rotate1RToolStripMenuItem2
             // 
             this.rotate1RToolStripMenuItem2.Name = "rotate1RToolStripMenuItem2";
-            this.rotate1RToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.rotate1RToolStripMenuItem2.Size = new System.Drawing.Size(138, 22);
             this.rotate1RToolStripMenuItem2.Text = "Rotate 1 R";
             this.rotate1RToolStripMenuItem2.Click += new System.EventHandler(this.rotate1RToolStripMenuItem2_Click);
             // 
             // rotate1LToolStripMenuItem3
             // 
             this.rotate1LToolStripMenuItem3.Name = "rotate1LToolStripMenuItem3";
-            this.rotate1LToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.rotate1LToolStripMenuItem3.Size = new System.Drawing.Size(138, 22);
             this.rotate1LToolStripMenuItem3.Text = "Rotate 1 L";
             this.rotate1LToolStripMenuItem3.Click += new System.EventHandler(this.rotate1LToolStripMenuItem3_Click);
             // 
             // resetImageToolStripMenuItem
             // 
             this.resetImageToolStripMenuItem.Name = "resetImageToolStripMenuItem";
-            this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.resetImageToolStripMenuItem.Text = "Reset image";
             this.resetImageToolStripMenuItem.Click += new System.EventHandler(this.resetImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.ToolTipText = "Change options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // Form1
             // 

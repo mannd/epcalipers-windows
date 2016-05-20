@@ -70,7 +70,7 @@ namespace epcalipers
             theCalipers = new Calipers();
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            ecgPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            ecgPictureBox.MouseDown += pictureBox1_MouseDown;
             ecgPictureBox.MouseDoubleClick += pictureBox1_MouseDoubleClick;
             ecgPictureBox.MouseUp += pictureBox1_MouseUp;
             SetupButtons();
