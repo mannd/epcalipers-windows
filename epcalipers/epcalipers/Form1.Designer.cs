@@ -59,6 +59,7 @@ namespace epcalipers
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -228,7 +229,8 @@ namespace epcalipers
             this.rotate1LToolStripMenuItem3,
             this.resetImageToolStripMenuItem,
             this.toolStripSeparator1,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.nextPageToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -280,6 +282,14 @@ namespace epcalipers
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // nextPageToolStripMenuItem
+            // 
+            this.nextPageToolStripMenuItem.Name = "nextPageToolStripMenuItem";
+            this.nextPageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
+            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.nextPageToolStripMenuItem.Text = "Next page";
+            this.nextPageToolStripMenuItem.Click += new System.EventHandler(this.nextPageToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -343,6 +353,7 @@ namespace epcalipers
         private ToolStripMenuItem rotate1RToolStripMenuItem2;
         private ToolStripMenuItem rotate1LToolStripMenuItem3;
         private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem nextPageToolStripMenuItem;
     }
 }
 

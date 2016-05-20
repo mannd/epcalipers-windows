@@ -1115,5 +1115,33 @@ namespace epcalipers
                 isPdf = false;
             }
         }
+
+        private void NextPdfPage()
+        {
+            if (pdfImages == null || ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            if (currentPdfPage < numberOfPdfPages)
+            {
+                currentPdfPage++;
+                ecgPictureBox.Image.Dispose();
+                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+                ResetBitmap(ecgPictureBox.Image);
+            }
+        }
+
+        private void PreviousPdfPage()
+        {
+            if (pdfImages == null || ecgPictureBox.Image == null)
+            {
+                return;
+            }
+        }
+
+        private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NextPdfPage();
+        }
     }
 }
