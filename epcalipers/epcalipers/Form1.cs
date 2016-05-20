@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -44,7 +45,7 @@ namespace epcalipers
 
         Point firstPoint;
 
-        string fileTypeFilter = "Image Files (*.jpg, *.bmp *.pdf) | *.jpg; *.bmp; *.pdf";
+        string fileTypeFilter = "Image Files (*.jpg, *.bmp *.png *.pdf) | *.jpg; *.bmp; *.png; *.pdf";
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -63,6 +64,13 @@ namespace epcalipers
         protected Image nextImage;
         protected int lastX = 0;
         protected int lastY = 0;
+
+        // PDF stuff
+        private bool isPdf = false;
+        private MagickImageCollection pdfImages = null;
+        int numberOfPdfPages = 0;
+        int currentPdfPage = 0;
+
         #endregion
         #region Initialization
         public Form1()
@@ -230,11 +238,35 @@ namespace epcalipers
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = fileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //ecgPictureBox.Load(openFileDialog1.FileName);
-                //ResetBitmap(ecgPictureBox.Image);
-                TestOpenPdf(openFileDialog1.FileName);
-            }
+                try
+                {
+                    {
+                        if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
+                        {
+                            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
+                            DialogResult result = MessageBox.Show("This may take a few seconds.  Proceed?", "Open PDF", buttons);
+                            if (result != DialogResult.OK)
+                            {
+                                return;
+                            }
+                            OpenPdf(openFileDialog1.FileName);
+                            isPdf = true;
+                        }
+                        else
+                        {
+                            ecgPictureBox.Load(openFileDialog1.FileName);
+                            ClearPdf();
+                        }
+                        ResetBitmap(ecgPictureBox.Image);
+                    }
+                }
+                catch (Exception exception)
+                {
+
+                    MessageBox.Show("Could not read file from disk. " +
+                        exception.Message, "Error");
+                    isPdf = false;
+                }
         }
 
         private void calibrateButton_Click(object sender, EventArgs e)
@@ -405,21 +437,30 @@ namespace epcalipers
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
-            if (validData)
+            try
             {
-                while (getImageThread.IsAlive)
+                if (validData)
                 {
-                    Application.DoEvents();
-                    Thread.Sleep(0);
+                    while (getImageThread.IsAlive)
+                    {
+                        Application.DoEvents();
+                        Thread.Sleep(0);
+                    }
+                    thumbnail.Visible = false;
+                    image = nextImage;
+                    if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
+                    {
+                        ecgPictureBox.Image.Dispose();
+                    }
+                    ecgPictureBox.Image = image;
+                    ResetBitmap(image);
+                    ClearPdf();
                 }
-                thumbnail.Visible = false;
-                image = nextImage;
-                if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
-                {
-                    ecgPictureBox.Image.Dispose();
-                }
-                ecgPictureBox.Image = image;
-                ResetBitmap(image);
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Exception");
             }
         }
 
@@ -500,8 +541,16 @@ namespace epcalipers
 
         protected void LoadImage()
         {
-            nextImage = new Bitmap(lastFilename);
-            this.Invoke(new AssignImageDlgt(AssignImage));
+            try
+            {
+                nextImage = new Bitmap(lastFilename);
+                this.Invoke(new AssignImageDlgt(AssignImage));
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("exception in LoadImage");
+            }
         }
 
         protected void AssignImage()
@@ -1034,19 +1083,37 @@ namespace epcalipers
         #endregion
 
         // PDF stuff
-        private void TestOpenPdf(string filename)
+        private void OpenPdf(string filename)
         {
             MagickReadSettings settings = new MagickReadSettings();
             settings.Density = new Density(300, 300);
-            using (MagickImageCollection images = new MagickImageCollection())
+            using (pdfImages)
             {
-                images.Read(filename, settings);
-                //int page = 1;
-                ecgPictureBox.Image = images[0].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image);
-
+                if (pdfImages == null)
+                {
+                    pdfImages = new MagickImageCollection();
+                }
+                Debug.WriteLine("Before load PDF");
+                // Consider using background worker here
+                pdfImages.Read(filename, settings);
+                Debug.WriteLine("After Load PDF");
+                numberOfPdfPages = pdfImages.Count;
+                currentPdfPage = 1;
+                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+                isPdf = true;
             }
-            
+        }
+
+        private void ClearPdf()
+        {
+            if (pdfImages != null)
+            { 
+                pdfImages.Dispose();
+                pdfImages = null;
+                numberOfPdfPages = 0;
+                currentPdfPage = 0;
+                isPdf = false;
+            }
         }
     }
 }
