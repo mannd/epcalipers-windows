@@ -123,7 +123,7 @@ namespace epcalipers
             this.ecgPictureBox.Size = new System.Drawing.Size(679, 424);
             this.ecgPictureBox.TabIndex = 0;
             this.ecgPictureBox.TabStop = false;
-            this.ecgPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+            this.ecgPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ecgPictureBox_MouseMove);
             // 
             // flowLayoutPanel2
             // 

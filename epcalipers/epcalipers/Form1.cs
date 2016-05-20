@@ -69,10 +69,10 @@ namespace epcalipers
             preferences = new Preferences();
             theCalipers = new Calipers();
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            ecgPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            ecgPictureBox.MouseDown += pictureBox1_MouseDown;
-            ecgPictureBox.MouseDoubleClick += pictureBox1_MouseDoubleClick;
-            ecgPictureBox.MouseUp += pictureBox1_MouseUp;
+            ecgPictureBox.Paint += ecgPictureBox_Paint;
+            ecgPictureBox.MouseDown += ecgPictureBox_MouseDown;
+            ecgPictureBox.MouseDoubleClick += ecgPictureBox_MouseDoubleClick;
+            ecgPictureBox.MouseUp += ecgPictureBox_MouseUp;
             SetupButtons();
             ShowMainMenu();
         }
@@ -628,7 +628,7 @@ namespace epcalipers
             ecgPictureBox.Image = zoomedBitmap;
         }
 
-        private void pictureBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Point mouseClickLocation = new Point(e.X, e.Y);
             if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
@@ -637,7 +637,7 @@ namespace epcalipers
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             // Update the mouse path with the mouse information
             Point mouseDownLocation = new Point(e.X, e.Y);
@@ -646,7 +646,7 @@ namespace epcalipers
             theCalipers.GrabCaliperIfClicked(mouseClickLocation);
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void ecgPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             Point newPoint = new Point(e.X, e.Y);
             int deltaX = newPoint.X - firstPoint.X;
@@ -659,7 +659,7 @@ namespace epcalipers
 
         }
 
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
             {
@@ -676,7 +676,7 @@ namespace epcalipers
             return bmp;
         }
 
-        private void pictureBox1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void ecgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
