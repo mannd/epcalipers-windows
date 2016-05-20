@@ -1,4 +1,5 @@
 ﻿using epcalipers.Properties;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace epcalipers
 {
     public partial class Form1 : Form
     {
-
+        #region Fields
         Bitmap theBitmap;
         Bitmap originalBitmapCopy;
         Calipers theCalipers;
@@ -62,7 +63,8 @@ namespace epcalipers
         protected Image nextImage;
         protected int lastX = 0;
         protected int lastY = 0;
-
+        #endregion
+        #region Initialization
         public Form1()
         {
             InitializeComponent();
@@ -140,7 +142,8 @@ namespace epcalipers
             measureQtcMessageLabel.Dock = DockStyle.Fill;
             measureQtcMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
         }
-
+        #endregion
+        #region Buttons
         private void MeasureQTcButton_Click(object sender, EventArgs e)
         {
             if (theCalipers.NoTimeCaliperSelected())
@@ -211,6 +214,386 @@ namespace epcalipers
             }
         }
 
+        private void clearCalibrationButton_Click(object sender, EventArgs e)
+        {
+            ClearCalibration();
+        }
+
+        private void backCalibrationButton_Click(object sender, EventArgs e)
+        {
+            ShowMainMenu();
+        }
+
+        private void imageButton_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("image button pushed");
+            openFileDialog1.FileName = "";
+            openFileDialog1.Filter = fileTypeFilter;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //ecgPictureBox.Load(openFileDialog1.FileName);
+                //ResetBitmap(ecgPictureBox.Image);
+                TestOpenPdf(openFileDialog1.FileName);
+            }
+        }
+
+        private void calibrateButton_Click(object sender, EventArgs e)
+        {
+            if (NoCalipersError())
+            {
+                return;
+            }
+            ShowCalibrationMenu();
+            if (theCalipers.SelectCaliperIfNoneSelected())
+            {
+                ecgPictureBox.Refresh();
+            }
+        }
+
+        private void setCalibrationButton_Click(object sender, EventArgs e)
+        {
+            if (NoCalipersError())
+            {
+                return;
+            }
+            if (theCalipers.NoCaliperIsSelected())
+            {
+                if (theCalipers.NumberOfCalipers() == 1)
+                {
+                    // assume user wants to calibrate sole caliper so select it
+                    theCalipers.SelectSoleCaliper();
+                    ecgPictureBox.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
+                        "No Caliper Selected");
+                    return;
+                }
+            }
+            CalibrationDialog dialog = new CalibrationDialog();
+            Caliper c = theCalipers.GetActiveCaliper();
+            if (c.Direction == CaliperDirection.Horizontal)
+            {
+                if (theCalipers.HorizontalCalibration.CalibrationString == null)
+                {
+                    theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
+                }
+                dialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
+            }
+            else
+            {
+                if (theCalipers.VerticalCalibration.CalibrationString == null)
+                {
+                    theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
+                }
+                dialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
+            }
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Calibrate(dialog.calibrationMeasurementTextBox.Text);
+            }
+        }
+
+        private void addCaliper_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null )
+            {
+                return;
+            }
+            NewCaliperDialog dialog = new NewCaliperDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                CaliperDirection direction;
+                if (dialog.horizontalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Horizontal;
+                }
+                else
+                {
+                    direction = CaliperDirection.Vertical;
+                }
+                AddCaliper(direction);
+            }
+        }
+
+       private void zoomInButton_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomInFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+            {
+                ecgPictureBox.Image.Dispose();
+            }
+            ecgPictureBox.Image = zoomedBitmap;
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomOutFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+            {
+                ecgPictureBox.Image.Dispose();
+            }
+            ecgPictureBox.Image = zoomedBitmap;
+        }
+
+        private void intervalRateButton_Click(object sender, EventArgs e)
+        {
+            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
+            ecgPictureBox.Refresh();
+        }
+        #endregion
+        #region Mouse
+        private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Point mouseClickLocation = new Point(e.X, e.Y);
+            if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
+            {
+                ecgPictureBox.Refresh();
+            }
+        }
+
+        private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            // Update the mouse path with the mouse information
+            Point mouseDownLocation = new Point(e.X, e.Y);
+            Point mouseClickLocation = new Point(e.X, e.Y);
+            firstPoint = mouseClickLocation;
+            theCalipers.GrabCaliperIfClicked(mouseClickLocation);
+        }
+
+        private void ecgPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point newPoint = new Point(e.X, e.Y);
+            int deltaX = newPoint.X - firstPoint.X;
+            int deltaY = newPoint.Y - firstPoint.Y;
+            if (theCalipers.DragGrabbedCaliper(deltaX, deltaY))
+            {
+                firstPoint = newPoint;
+                ecgPictureBox.Refresh();
+            }
+
+        }
+
+        private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
+            {
+                ecgPictureBox.Refresh();
+            }
+        }
+        #endregion
+        #region Drag and Drop
+        /* Drag and drop image onto form
+         * based on http://www.codeproject.com/Articles/9017/A-Simple-Drag-And-Drop-How-To-Example
+         * Note re license: "This article has no explicit license attached to it but may contain
+         *  usage terms in the article text or the download files themselves. 
+         *  If in doubt please contact the author via the discussion board below."
+         */
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragDrop");
+            if (validData)
+            {
+                while (getImageThread.IsAlive)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(0);
+                }
+                thumbnail.Visible = false;
+                image = nextImage;
+                if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
+                {
+                    ecgPictureBox.Image.Dispose();
+                }
+                ecgPictureBox.Image = image;
+                ResetBitmap(image);
+            }
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragEnter");
+            string filename;
+            validData = GetFilename(out filename, e);
+            if (validData)
+            {
+                if (lastFilename != filename)
+                {
+                    thumbnail.Image = null;
+                    thumbnail.Visible = false;
+                    lastFilename = filename;
+                    getImageThread = new Thread(new ThreadStart(LoadImage));
+                    getImageThread.Start();
+                }
+                else
+                {
+                    thumbnail.Visible = true;
+                }
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void OnDragLeave(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OnDragLeave");
+            thumbnail.Visible = false;
+        }
+
+        private void OnDragOver(object sender, DragEventArgs e)
+        {
+            Debug.WriteLine("OnDragOver");
+            if (validData)
+            {
+                // only bother if mouse position changes
+                if ((e.X != lastX) || (e.Y != lastY))
+                {
+                    setThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
+                    Debug.WriteLine("lastX and lastY = {0} & {1}", lastX, lastY);
+                    lastX = e.X;
+                    lastY = e.Y;
+                }
+            }
+        }
+
+        protected bool GetFilename(out string filename, DragEventArgs e)
+        {
+            bool result = false;
+            filename = String.Empty;
+
+            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+            {
+                Array data = ((IDataObject)e.Data).GetData("FileDrop") as Array;
+                if (data != null)
+                {
+                    if ((data.Length == 1) && (data.GetValue(0) is String))
+                    {
+                        filename = ((string[])data)[0];
+                        string ext = System.IO.Path.GetExtension(filename).ToLower();
+                        if ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp"))
+                        {
+                            result = true;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        public delegate void AssignImageDlgt();
+
+        protected void LoadImage()
+        {
+            nextImage = new Bitmap(lastFilename);
+            this.Invoke(new AssignImageDlgt(AssignImage));
+        }
+
+        protected void AssignImage()
+        {
+            thumbnail.Width = 100;
+            thumbnail.Height = nextImage.Height * 100 / nextImage.Width;
+            setThumbnailLocation(PointToClient(new Point(lastX, lastY)));
+            thumbnail.Image = nextImage;
+        }
+
+        protected void setThumbnailLocation(Point point)
+        {
+            if (thumbnail.Image == null)
+            {
+                thumbnail.Visible = false;
+            }
+            else
+            {
+                point.X -= thumbnail.Width / 2;
+                point.Y -= thumbnail.Height / 2;
+                thumbnail.Location = point;
+                thumbnail.Visible = true;
+            }
+        }
+        #endregion
+        #region Menu
+        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                MessageBox.Show("No image is open so how can you print?", "No Image Open");
+                return;
+            }
+            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
+            pd.Print();
+        }
+
+        private void PrintPictureBox(object sender, PrintPageEventArgs e)
+        {
+            //Graphics g = e.Graphics;
+            Image image = (Image)ecgPictureBox.Image.Clone();
+            Graphics g = Graphics.FromImage(image);
+            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
+            /// and saving images.
+            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
+            e.Graphics.DrawImage(image, 0, 0);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                MessageBox.Show("No image is open so how can you save?", "No Image Open");
+                return;
+            }
+            saveFileDialog1.Filter = fileTypeFilter;
+            saveFileDialog1.DefaultExt = "jpg";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Image image = (Image)ecgPictureBox.Image.Clone();
+                Graphics g = Graphics.FromImage(image);
+                theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
+                image.Save(saveFileDialog1.FileName);               
+            }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreferencesDialog dialog = new PreferencesDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                dialog.Save();
+                UpdatePreferences();
+            }
+
+        }
+
+        private void UpdatePreferences()
+        {
+            preferences.Load();
+            // update all the calipers
+            theCalipers.UpdatePreferences(preferences);
+            ecgPictureBox.Refresh();
+        }
+        #endregion
+        #region Calipers
         private void MeasureMeanIntervalRate()
         {
             if (NoCalipersError())
@@ -368,88 +751,6 @@ namespace epcalipers
             flowLayoutPanel1.Controls.AddRange(calibrationMenu);
         }
 
-        private void clearCalibrationButton_Click(object sender, EventArgs e)
-        {
-            ClearCalibration();
-        }
-
-        private void backCalibrationButton_Click(object sender, EventArgs e)
-        {
-            ShowMainMenu();
-        }
-
-        private void imageButton_Click(object sender, EventArgs e)
-        {
-            Debug.WriteLine("image button pushed");
-            openFileDialog1.FileName = "";
-            openFileDialog1.Filter = fileTypeFilter;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //ecgPictureBox.Load(openFileDialog1.FileName);
-                //ResetBitmap(ecgPictureBox.Image);
-                TestOpenPdf(openFileDialog1.FileName);
-            }
-        }
-
-        private void calibrateButton_Click(object sender, EventArgs e)
-        {
-            if (NoCalipersError())
-            {
-                return;
-            }
-            ShowCalibrationMenu();
-            if (theCalipers.SelectCaliperIfNoneSelected())
-            {
-                ecgPictureBox.Refresh();
-            }
-        }
-
-        private void setCalibrationButton_Click(object sender, EventArgs e)
-        {
-            if (NoCalipersError())
-            {
-                return;
-            }
-            if (theCalipers.NoCaliperIsSelected())
-            {
-                if (theCalipers.NumberOfCalipers() == 1)
-                {
-                    // assume user wants to calibrate sole caliper so select it
-                    theCalipers.SelectSoleCaliper();
-                    ecgPictureBox.Refresh();
-                }
-                else
-                {
-                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
-                        "No Caliper Selected");
-                    return;
-                }
-            }
-            CalibrationDialog dialog = new CalibrationDialog();
-            Caliper c = theCalipers.GetActiveCaliper();
-            if (c.Direction == CaliperDirection.Horizontal)
-            {
-                if (theCalipers.HorizontalCalibration.CalibrationString == null)
-                {
-                    theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
-                }
-                dialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
-            }
-            else
-            {
-                if (theCalipers.VerticalCalibration.CalibrationString == null)
-                {
-                    theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
-                }
-                dialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
-            }
-            DialogResult result = dialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Calibrate(dialog.calibrationMeasurementTextBox.Text);
-            }
-        }
-
         private bool NoCalipersError()
         {
             bool noCalipers = false;
@@ -548,29 +849,6 @@ namespace epcalipers
             }
         }
 
-        private void addCaliper_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null )
-            {
-                return;
-            }
-            NewCaliperDialog dialog = new NewCaliperDialog();
-            DialogResult result = dialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                CaliperDirection direction;
-                if (dialog.horizontalCaliperRadioButton.Checked)
-                {
-                    direction = CaliperDirection.Horizontal;
-                }
-                else
-                {
-                    direction = CaliperDirection.Vertical;
-                }
-                AddCaliper(direction);
-            }
-        }
-
         private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
@@ -593,81 +871,6 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
-        private void intervalRateButton_Click(object sender, EventArgs e)
-        {
-            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
-            ecgPictureBox.Refresh();
-        }
-
-        private void zoomInButton_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                return;
-            }
-            currentActualZoom *= zoomInFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-            {
-                ecgPictureBox.Image.Dispose();
-            }
-            ecgPictureBox.Image = zoomedBitmap;
-        }
-
-        private void zoomOutButton_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                return;
-            }
-            currentActualZoom *= zoomOutFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-            {
-                ecgPictureBox.Image.Dispose();
-            }
-            ecgPictureBox.Image = zoomedBitmap;
-        }
-
-        private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Point mouseClickLocation = new Point(e.X, e.Y);
-            if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
-            {
-                ecgPictureBox.Refresh();
-            }
-        }
-
-        private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            // Update the mouse path with the mouse information
-            Point mouseDownLocation = new Point(e.X, e.Y);
-            Point mouseClickLocation = new Point(e.X, e.Y);
-            firstPoint = mouseClickLocation;
-            theCalipers.GrabCaliperIfClicked(mouseClickLocation);
-        }
-
-        private void ecgPictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point newPoint = new Point(e.X, e.Y);
-            int deltaX = newPoint.X - firstPoint.X;
-            int deltaY = newPoint.Y - firstPoint.Y;
-            if (theCalipers.DragGrabbedCaliper(deltaX, deltaY))
-            {
-                firstPoint = newPoint;
-                ecgPictureBox.Refresh();
-            }
-
-        }
-
-        private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
-            {
-                ecgPictureBox.Refresh();
-            }
-        }
-
         private Bitmap Zoom(Bitmap originalBitmap)
         {
            
@@ -681,202 +884,6 @@ namespace epcalipers
         {
             Graphics g = e.Graphics;
             theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-        }
-
-        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void printToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                MessageBox.Show("No image is open so how can you print?", "No Image Open");
-                return;
-            }
-            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
-            pd.Print();
-        }
-
-        private void PrintPictureBox(object sender, PrintPageEventArgs e)
-        {
-            //Graphics g = e.Graphics;
-            Image image = (Image)ecgPictureBox.Image.Clone();
-            Graphics g = Graphics.FromImage(image);
-            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
-            /// and saving images.
-            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-            e.Graphics.DrawImage(image, 0, 0);
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                MessageBox.Show("No image is open so how can you save?", "No Image Open");
-                return;
-            }
-            saveFileDialog1.Filter = fileTypeFilter;
-            saveFileDialog1.DefaultExt = "jpg";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Image image = (Image)ecgPictureBox.Image.Clone();
-                Graphics g = Graphics.FromImage(image);
-                theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-                image.Save(saveFileDialog1.FileName);               
-            }
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PreferencesDialog dialog = new PreferencesDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                dialog.Save();
-                UpdatePreferences();
-            }
-
-        }
-
-        private void UpdatePreferences()
-        {
-            preferences.Load();
-            // update all the calipers
-            theCalipers.UpdatePreferences(preferences);
-            ecgPictureBox.Refresh();
-        }
-
-        /* Drag and drop image onto form
-         * based on http://www.codeproject.com/Articles/9017/A-Simple-Drag-And-Drop-How-To-Example
-         * Note re license: "This article has no explicit license attached to it but may contain
-         *  usage terms in the article text or the download files themselves. 
-         *  If in doubt please contact the author via the discussion board below."
-         */
-        private void OnDragDrop(object sender, DragEventArgs e)
-        {
-            Debug.WriteLine("OnDragDrop");
-            if (validData)
-            {
-                while (getImageThread.IsAlive)
-                {
-                    Application.DoEvents();
-                    Thread.Sleep(0);
-                }
-                thumbnail.Visible = false;
-                image = nextImage;
-                if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
-                {
-                    ecgPictureBox.Image.Dispose();
-                }
-                ecgPictureBox.Image = image;
-                ResetBitmap(image);
-            }
-        }
-
-        private void OnDragEnter(object sender, DragEventArgs e)
-        {
-            Debug.WriteLine("OnDragEnter");
-            string filename;
-            validData = GetFilename(out filename, e);
-            if (validData)
-            {
-                if (lastFilename != filename)
-                {
-                    thumbnail.Image = null;
-                    thumbnail.Visible = false;
-                    lastFilename = filename;
-                    getImageThread = new Thread(new ThreadStart(LoadImage));
-                    getImageThread.Start();
-                }
-                else
-                {
-                    thumbnail.Visible = true;
-                }
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-        }
-
-        private void OnDragLeave(object sender, EventArgs e)
-        {
-            Debug.WriteLine("OnDragLeave");
-            thumbnail.Visible = false;
-        }
-
-        private void OnDragOver(object sender, DragEventArgs e)
-        {
-            Debug.WriteLine("OnDragOver");
-            if (validData)
-            {
-                // only bother if mouse position changes
-                if ((e.X != lastX) || (e.Y != lastY))
-                {
-                    setThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
-                    Debug.WriteLine("lastX and lastY = {0} & {1}", lastX, lastY);
-                    lastX = e.X;
-                    lastY = e.Y;
-                }
-            }
-        }
-
-        protected bool GetFilename(out string filename, DragEventArgs e)
-        {
-            bool result = false;
-            filename = String.Empty;
-
-            if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
-            {
-                Array data = ((IDataObject)e.Data).GetData("FileDrop") as Array;
-                if (data != null)
-                {
-                    if ((data.Length == 1) && (data.GetValue(0) is String))
-                    {
-                        filename = ((string[])data)[0];
-                        string ext = System.IO.Path.GetExtension(filename).ToLower();
-                        if ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp"))
-                        {
-                            result = true;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-
-        public delegate void AssignImageDlgt();
-
-        protected void LoadImage()
-        {
-            nextImage = new Bitmap(lastFilename);
-            this.Invoke(new AssignImageDlgt(AssignImage));
-        }
-
-        protected void AssignImage()
-        {
-            thumbnail.Width = 100;
-            thumbnail.Height = nextImage.Height * 100 / nextImage.Width;
-            setThumbnailLocation(PointToClient(new Point(lastX, lastY)));
-            thumbnail.Image = nextImage;
-        }
-
-        protected void setThumbnailLocation(Point point)
-        {
-            if (thumbnail.Image == null)
-            {
-                thumbnail.Visible = false;
-            }
-            else
-            {
-                point.X -= thumbnail.Width / 2;
-                point.Y -= thumbnail.Height / 2;
-                thumbnail.Location = point;
-                thumbnail.Visible = true;
-            }
         }
 
         private void ResetBitmap(Image image)
@@ -897,9 +904,8 @@ namespace epcalipers
             addCalipersButton.Enabled = true;
             calibrateButton.Enabled = true;
         }
-
-        
-
+        #endregion
+        #region Rotation
         // rotation
         private void RotateEcgImage(float angle)
         {
@@ -1025,13 +1031,14 @@ namespace epcalipers
         {
             RotateEcgImage(1.0f);
         }
+        #endregion
 
         // PDF stuff
         private void TestOpenPdf(string filename)
         {
-            ImageMagick.MagickReadSettings settings = new ImageMagick.MagickReadSettings();
-            settings.Density = new ImageMagick.Density(300, 300);
-            using (ImageMagick.MagickImageCollection images = new ImageMagick.MagickImageCollection())
+            MagickReadSettings settings = new MagickReadSettings();
+            settings.Density = new Density(300, 300);
+            using (MagickImageCollection images = new MagickImageCollection())
             {
                 images.Read(filename, settings);
                 //int page = 1;
