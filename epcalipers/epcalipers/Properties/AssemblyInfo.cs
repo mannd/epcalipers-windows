@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EP Calipers")]
-[assembly: AssemblyDescription("Electronic calipers for cardiologists.")]
+[assembly: AssemblyDescription("Electronic calipers for cardiologists and electrophysiologists.  For further information please select the Help menu item or visit the EP Studios website.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EP Studios, Inc.")]
 [assembly: AssemblyProduct("EP Calipers")]
