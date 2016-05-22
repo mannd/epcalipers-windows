@@ -60,6 +60,7 @@ namespace epcalipers
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -230,7 +231,8 @@ namespace epcalipers
             this.resetImageToolStripMenuItem,
             this.toolStripSeparator1,
             this.optionsToolStripMenuItem,
-            this.nextPageToolStripMenuItem});
+            this.nextPageToolStripMenuItem,
+            this.previousPageToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -286,10 +288,18 @@ namespace epcalipers
             // nextPageToolStripMenuItem
             // 
             this.nextPageToolStripMenuItem.Name = "nextPageToolStripMenuItem";
-            this.nextPageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Down)));
-            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.nextPageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Right)));
+            this.nextPageToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.nextPageToolStripMenuItem.Text = "Next page";
             this.nextPageToolStripMenuItem.Click += new System.EventHandler(this.nextPageToolStripMenuItem_Click);
+            // 
+            // previousPageToolStripMenuItem
+            // 
+            this.previousPageToolStripMenuItem.Name = "previousPageToolStripMenuItem";
+            this.previousPageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Left)));
+            this.previousPageToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.previousPageToolStripMenuItem.Text = "Previous page";
+            this.previousPageToolStripMenuItem.Click += new System.EventHandler(this.previousPageToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -354,6 +364,7 @@ namespace epcalipers
         private ToolStripMenuItem rotate1LToolStripMenuItem3;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem nextPageToolStripMenuItem;
+        private ToolStripMenuItem previousPageToolStripMenuItem;
     }
 }
 

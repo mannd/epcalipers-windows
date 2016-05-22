@@ -1137,11 +1137,23 @@ namespace epcalipers
             {
                 return;
             }
+            if (currentPdfPage > 1)
+            {
+                currentPdfPage--;
+                ecgPictureBox.Image.Dispose();
+                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+                ResetBitmap(ecgPictureBox.Image);
+            }
         }
 
         private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NextPdfPage();
+        }
+
+        private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreviousPdfPage();
         }
     }
 }
