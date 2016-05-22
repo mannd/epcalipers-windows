@@ -177,7 +177,7 @@ namespace epcalipers
                 }
                 //s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
 
-                result = string.Format("Mean RR = {0}\nQT = {1}\nQTc = {2}\n(Bazett's formula)", meanRR.ToString("G4"),
+                result = string.Format("Mean RR = {0} msec\nQT = {1} msec\nQTc = {2} msec (Bazett's formula)", meanRR.ToString("G4"),
                     qt.ToString("G4"), qtc.ToString("G4"));
             }
             MessageBox.Show(result, "Calculated QTc");
@@ -262,6 +262,11 @@ namespace epcalipers
 
         private void calibrateButton_Click(object sender, EventArgs e)
         {
+            DoCalibration();
+        }
+
+        private void DoCalibration()
+        {
             if (NoCalipersError())
             {
                 return;
@@ -344,11 +349,31 @@ namespace epcalipers
 
        private void zoomInButton_Click(object sender, EventArgs e)
         {
+            ZoomIn();
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            ZoomOut();
+        }
+
+        private void ZoomIn()
+        {
+            ZoomBy(zoomInFactor);
+        }
+
+        private void ZoomOut()
+        {
+            ZoomBy(zoomOutFactor);
+        }
+
+        private void ResetZoom()
+        {
             if (ecgPictureBox.Image == null)
             {
                 return;
             }
-            currentActualZoom *= zoomInFactor;
+            currentActualZoom = 1.0;
             Bitmap zoomedBitmap = Zoom(theBitmap);
             if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
@@ -357,13 +382,13 @@ namespace epcalipers
             ecgPictureBox.Image = zoomedBitmap;
         }
 
-        private void zoomOutButton_Click(object sender, EventArgs e)
+        private void ZoomBy(double zoomFactor)
         {
             if (ecgPictureBox.Image == null)
             {
                 return;
             }
-            currentActualZoom *= zoomOutFactor;
+            currentActualZoom *= zoomFactor;
             Bitmap zoomedBitmap = Zoom(theBitmap);
             if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
@@ -373,6 +398,11 @@ namespace epcalipers
         }
 
         private void intervalRateButton_Click(object sender, EventArgs e)
+        {
+            ToggleIntervalRate();
+        }
+
+        private void ToggleIntervalRate()
         {
             theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
             ecgPictureBox.Refresh();
@@ -567,72 +597,6 @@ namespace epcalipers
             }
         }
         #endregion
-        #region Menu
-        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void printToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                MessageBox.Show("No image is open so how can you print?", "No Image Open");
-                return;
-            }
-            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
-            pd.Print();
-        }
-
-        private void PrintPictureBox(object sender, PrintPageEventArgs e)
-        {
-            //Graphics g = e.Graphics;
-            Image image = (Image)ecgPictureBox.Image.Clone();
-            Graphics g = Graphics.FromImage(image);
-            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
-            /// and saving images.
-            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-            e.Graphics.DrawImage(image, 0, 0);
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                MessageBox.Show("No image is open so how can you save?", "No Image Open");
-                return;
-            }
-            saveFileDialog1.Filter = fileTypeFilter;
-            saveFileDialog1.DefaultExt = "jpg";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Image image = (Image)ecgPictureBox.Image.Clone();
-                Graphics g = Graphics.FromImage(image);
-                theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-                image.Save(saveFileDialog1.FileName);               
-            }
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PreferencesDialog dialog = new PreferencesDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                dialog.Save();
-                UpdatePreferences();
-            }
-
-        }
-
-        private void UpdatePreferences()
-        {
-            preferences.Load();
-            // update all the calipers
-            theCalipers.UpdatePreferences(preferences);
-            ecgPictureBox.Refresh();
-        }
-        #endregion
         #region Calipers
         private void MeasureMeanIntervalRate()
         {
@@ -773,10 +737,18 @@ namespace epcalipers
                 addCalipersButton.Enabled = false;
                 calibrateButton.Enabled = false;
             }
-            intervalRateButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
-            meanRRButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
-            qtcButton.Enabled = theCalipers.HorizontalCalibration.CanDisplayRate;
+            EnableButtonsMenus(theCalipers.HorizontalCalibration.CanDisplayRate);
             theCalipers.Locked = false;
+        }
+
+        private void EnableButtonsMenus(bool enable)
+        {
+            intervalRateButton.Enabled = enable;
+            meanRRButton.Enabled = enable;
+            qtcButton.Enabled = enable;
+            toggleRateintervalToolStripMenuItem.Enabled = enable;
+            meanRateIntervalToolStripMenuItem.Enabled = enable;
+            qTcMeasurementToolStripMenuItem.Enabled = enable;
         }
 
         private void ShowCalibrationMenu()
@@ -887,6 +859,7 @@ namespace epcalipers
                 theCalipers.HorizontalCalibration.Reset();
                 theCalipers.VerticalCalibration.Reset();
             }
+            EnableButtonsMenus(false);
         }
 
         private void AddCaliper(CaliperDirection direction)
@@ -988,7 +961,6 @@ namespace epcalipers
                 //ecgPictureBox.Refresh();
             }
         }
-        
 
         // code based on http://stackoverflow.com/questions/14184700/how-to-rotate-image-x-degrees-in-c
         private Bitmap RotateImage(Bitmap bmp, float angle, Color bkColor)
@@ -1046,33 +1018,8 @@ namespace epcalipers
 
             return newImg;
         }
-
-        private void resetImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ResetEcgImage();
-        }
-
-        private void rotate90RToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RotateEcgImage(90.0f);
-        }
-
-        private void rotate1LToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            RotateEcgImage(-1.0f);
-        }
-
-        private void rotate90LToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            RotateEcgImage(-90.0f);
-        }
-
-        private void rotate1RToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            RotateEcgImage(1.0f);
-        }
         #endregion
-
+        #region PDF
         // PDF stuff
         private void OpenPdf(string filename)
         {
@@ -1135,21 +1082,189 @@ namespace epcalipers
                 ResetBitmap(ecgPictureBox.Image);
             }
         }
-
-        private void nextPageToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion
+        #region Menu
+        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            NextPdfPage();
+            Application.Exit();
         }
 
-        private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PreviousPdfPage();
+            if (ecgPictureBox.Image == null)
+            {
+                MessageBox.Show("No image is open so how can you print?", "No Image Open");
+                return;
+            }
+            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
+            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
+            pd.Print();
+        }
+
+        private void PrintPictureBox(object sender, PrintPageEventArgs e)
+        {
+            //Graphics g = e.Graphics;
+            Image image = (Image)ecgPictureBox.Image.Clone();
+            Graphics g = Graphics.FromImage(image);
+            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
+            /// and saving images.
+            theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
+            e.Graphics.DrawImage(image, 0, 0);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                MessageBox.Show("No image is open so how can you save?", "No Image Open");
+                return;
+            }
+            saveFileDialog1.Filter = fileTypeFilter;
+            saveFileDialog1.DefaultExt = "jpg";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Image image = (Image)ecgPictureBox.Image.Clone();
+                Graphics g = Graphics.FromImage(image);
+                theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
+                image.Save(saveFileDialog1.FileName);               
+            }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PreferencesDialog dialog = new PreferencesDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                dialog.Save();
+                UpdatePreferences();
+            }
+
+        }
+
+        private void UpdatePreferences()
+        {
+            preferences.Load();
+            // update all the calipers
+            theCalipers.UpdatePreferences(preferences);
+            ecgPictureBox.Refresh();
         }
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 box = new AboutBox1();
             box.ShowDialog();
+        }
+
+        private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ZoomIn();
+        }
+
+        private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ZoomOut();
+        }
+
+        private void resetZoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetZoom();
+        }
+
+        private void rotate90RToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            RotateEcgImage(90.0f);
+        }
+
+        private void rotate90LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(-90.0f);
+        }
+
+        private void rotate1RToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(1.0f);
+        }
+
+        private void rotate1LToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(-1.0f);
+        }
+
+        private void resetImageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ResetEcgImage();
+        }
+
+        private void timeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            AddCaliper(CaliperDirection.Horizontal);
+        }
+
+        private void amplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            AddCaliper(CaliperDirection.Vertical);
+        }
+
+        private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            Caliper c = theCalipers.GetActiveCaliper();
+            if (c != null)
+            {
+                theCalipers.deleteCaliper(c);
+                ecgPictureBox.Refresh();
+            }
+        }
+
+        private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DoCalibration();
+        }
+
+        private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearCalibration();
+        }
+
+        private void nextPageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            NextPdfPage();
+        }
+
+        private void previousPageToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            PreviousPdfPage();
+        }
+
+        #endregion
+
+        // TODO activate/deactive menu items to guard against bad behavior
+        private void toggleRateintervalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
+            ecgPictureBox.Refresh();
+
+        }
+
+        private void meanRateIntervalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MeasureMeanIntervalRate();
+        }
+
+        private void qTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QTcInterval();
         }
     }
 }
