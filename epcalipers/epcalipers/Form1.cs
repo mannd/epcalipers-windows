@@ -243,12 +243,6 @@ namespace epcalipers
                     {
                         if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
                         {
-                            MessageBoxButtons buttons = MessageBoxButtons.OKCancel;
-                            DialogResult result = MessageBox.Show("This may take a few seconds.  Proceed?", "Open PDF", buttons);
-                            if (result != DialogResult.OK)
-                            {
-                                return;
-                            }
                             OpenPdf(openFileDialog1.FileName);
                             isPdf = true;
                         }
@@ -1093,10 +1087,11 @@ namespace epcalipers
                 {
                     pdfImages = new MagickImageCollection();
                 }
-                Debug.WriteLine("Before load PDF");
+                Cursor.Current = Cursors.WaitCursor;
                 // Consider using background worker here
+                //Application.DoEvents();
                 pdfImages.Read(filename, settings);
-                Debug.WriteLine("After Load PDF");
+                Cursor.Current = Cursors.Default;
                 numberOfPdfPages = pdfImages.Count;
                 currentPdfPage = 1;
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
