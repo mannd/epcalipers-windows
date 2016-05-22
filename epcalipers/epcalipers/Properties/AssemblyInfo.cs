@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("epcalipers")]
-[assembly: AssemblyDescription("Electronic calipers for cardiologists")]
+[assembly: AssemblyTitle("EP Calipers")]
+[assembly: AssemblyDescription("Electronic calipers for cardiologists.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("EP Studios")]
-[assembly: AssemblyProduct("epcalipers")]
+[assembly: AssemblyCompany("EP Studios, Inc.")]
+[assembly: AssemblyProduct("EP Calipers")]
 [assembly: AssemblyCopyright("Copyright © 2016, EP Studios, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

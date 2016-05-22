@@ -36,7 +36,8 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Unselected caliper color"),
-            DisplayName("Caliper color")]
+            DisplayName("Caliper color"),
+            Category("Calipers")]
         public Color CaliperColor
         {
             get { return caliperColor; }
@@ -46,7 +47,8 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Selected caliper color"),
-            DisplayName("Selected caliper color")]
+            DisplayName("Selected caliper color"),
+            Category("Calipers")]
         public Color HighlightColor
         {
             get { return highlightColor; }
@@ -56,7 +58,8 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Caliper line width (between 1 and 3)"),
-            DisplayName("Line width")]
+            DisplayName("Line width"),
+            Category("Calipers")]
         public int LineWidth
         {
             get { return lineWidth; }
@@ -77,7 +80,8 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Default calibration interval for time calipers"),
-            DisplayName("Default time calibration")]
+            DisplayName("Default time calibration"),
+            Category("Calibration")]
         public string HorizontalCalibration
         {
             get { return horizontalCalibration; }
@@ -85,9 +89,10 @@ namespace epcalipers.Properties
         }
 
         [Browsable(true),
-        ReadOnly(false),
-        Description("Default calibration interval for amplitude calipers"),
-        DisplayName("Default amplitude calibration")]
+            ReadOnly(false),
+            Description("Default calibration interval for amplitude calipers"),
+            DisplayName("Default amplitude calibration"),
+            Category("Calibration")]
         public string VerticalCalibration
         {
             get { return verticalCalibration; }
@@ -95,9 +100,10 @@ namespace epcalipers.Properties
         }
 
         [Browsable(true),
-    ReadOnly(false),
-    Description("Round msec and rates to nearest integer"),
-    DisplayName("Round msec and rates")]
+            ReadOnly(false),
+            Description("Round msec and rates to nearest integer"),
+            DisplayName("Round msec and rates"),
+            Category("Measurements")]
         public bool RoundMsecRate
         {
             get { return roundMsecRate; }

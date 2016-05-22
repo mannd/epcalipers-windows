@@ -1148,7 +1148,8 @@ namespace epcalipers
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox box = new AboutBox();
+            AboutBox1 box = new AboutBox1();
+            box.ShowDialog();
         }
     }
 }
