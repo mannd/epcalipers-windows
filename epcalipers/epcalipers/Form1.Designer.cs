@@ -56,11 +56,17 @@ namespace epcalipers
             this.resetImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.nextPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.previousPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutEPCalipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -168,7 +174,10 @@ namespace epcalipers
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.calipersToolStripMenuItem,
+            this.zoomToolStripMenuItem,
+            this.toolsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(688, 24);
@@ -198,6 +207,7 @@ namespace epcalipers
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -205,6 +215,7 @@ namespace epcalipers
             // printToolStripMenuItem
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
@@ -229,10 +240,10 @@ namespace epcalipers
             this.rotate1RToolStripMenuItem2,
             this.rotate1LToolStripMenuItem3,
             this.resetImageToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.optionsToolStripMenuItem,
             this.nextPageToolStripMenuItem,
-            this.previousPageToolStripMenuItem});
+            this.previousPageToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -240,47 +251,47 @@ namespace epcalipers
             // rotate90RToolStripMenuItem
             // 
             this.rotate90RToolStripMenuItem.Name = "rotate90RToolStripMenuItem";
-            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.rotate90RToolStripMenuItem.Text = "Rotate 90 R";
             this.rotate90RToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click);
             // 
             // rotate90LToolStripMenuItem1
             // 
             this.rotate90LToolStripMenuItem1.Name = "rotate90LToolStripMenuItem1";
-            this.rotate90LToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.rotate90LToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
             this.rotate90LToolStripMenuItem1.Text = "Rotate 90 L";
             this.rotate90LToolStripMenuItem1.Click += new System.EventHandler(this.rotate90LToolStripMenuItem1_Click);
             // 
             // rotate1RToolStripMenuItem2
             // 
             this.rotate1RToolStripMenuItem2.Name = "rotate1RToolStripMenuItem2";
-            this.rotate1RToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.rotate1RToolStripMenuItem2.Size = new System.Drawing.Size(202, 22);
             this.rotate1RToolStripMenuItem2.Text = "Rotate 1 R";
             this.rotate1RToolStripMenuItem2.Click += new System.EventHandler(this.rotate1RToolStripMenuItem2_Click);
             // 
             // rotate1LToolStripMenuItem3
             // 
             this.rotate1LToolStripMenuItem3.Name = "rotate1LToolStripMenuItem3";
-            this.rotate1LToolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.rotate1LToolStripMenuItem3.Size = new System.Drawing.Size(202, 22);
             this.rotate1LToolStripMenuItem3.Text = "Rotate 1 L";
             this.rotate1LToolStripMenuItem3.Click += new System.EventHandler(this.rotate1LToolStripMenuItem3_Click);
             // 
             // resetImageToolStripMenuItem
             // 
             this.resetImageToolStripMenuItem.Name = "resetImageToolStripMenuItem";
-            this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetImageToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.resetImageToolStripMenuItem.Text = "Reset image";
             this.resetImageToolStripMenuItem.Click += new System.EventHandler(this.resetImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
@@ -300,6 +311,40 @@ namespace epcalipers
             this.previousPageToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.previousPageToolStripMenuItem.Text = "Previous page";
             this.previousPageToolStripMenuItem.Click += new System.EventHandler(this.previousPageToolStripMenuItem_Click);
+            // 
+            // calipersToolStripMenuItem
+            // 
+            this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
+            this.calipersToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.calipersToolStripMenuItem.Text = "Calipers";
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutEPCalipersToolStripMenuItem,
+            this.viewHelpToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutEPCalipersToolStripMenuItem
+            // 
+            this.aboutEPCalipersToolStripMenuItem.Name = "aboutEPCalipersToolStripMenuItem";
+            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
+            this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
+            // 
+            // viewHelpToolStripMenuItem
+            // 
+            this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.viewHelpToolStripMenuItem.Text = "View help";
             // 
             // Form1
             // 
@@ -365,6 +410,12 @@ namespace epcalipers
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem nextPageToolStripMenuItem;
         private ToolStripMenuItem previousPageToolStripMenuItem;
+        private ToolStripMenuItem calipersToolStripMenuItem;
+        private ToolStripMenuItem zoomToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem aboutEPCalipersToolStripMenuItem;
+        private ToolStripMenuItem viewHelpToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

@@ -66,7 +66,6 @@ namespace epcalipers
         protected int lastY = 0;
 
         // PDF stuff
-        private bool isPdf = false;
         private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
@@ -244,7 +243,6 @@ namespace epcalipers
                         if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
                         {
                             OpenPdf(openFileDialog1.FileName);
-                            isPdf = true;
                         }
                         else
                         {
@@ -259,7 +257,6 @@ namespace epcalipers
 
                     MessageBox.Show("Could not read file from disk. " +
                         exception.Message, "Error");
-                    isPdf = false;
                 }
         }
 
@@ -454,7 +451,7 @@ namespace epcalipers
             catch (Exception exception)
             {
 
-                MessageBox.Show("Exception");
+                MessageBox.Show("Exception: " + exception.Message, "Error");
             }
         }
 
@@ -543,7 +540,7 @@ namespace epcalipers
             catch (Exception exception)
             {
 
-                MessageBox.Show("exception in LoadImage");
+                MessageBox.Show("Exception in LoadImage: " + exception.Message, "Error");
             }
         }
 
@@ -1095,7 +1092,6 @@ namespace epcalipers
                 numberOfPdfPages = pdfImages.Count;
                 currentPdfPage = 1;
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                isPdf = true;
             }
         }
 
@@ -1107,7 +1103,6 @@ namespace epcalipers
                 pdfImages = null;
                 numberOfPdfPages = 0;
                 currentPdfPage = 0;
-                isPdf = false;
             }
         }
 
@@ -1149,6 +1144,11 @@ namespace epcalipers
         private void previousPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PreviousPdfPage();
+        }
+
+        private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox box = new AboutBox();
         }
     }
 }
