@@ -16,7 +16,11 @@ namespace epcalipers.Properties
         private string horizontalCalibration;
         private string verticalCalibration;
         private bool roundMsecRate;
+        private int numberOfIntervalsMeanRR;
+        private int numberOfIntervalsQtc;
+
         private const int MAX_LINEWIDTH = 3;
+        private const int MAX_NUMBER_OF_INTERVALS = 10;
 
         public Preferences()
         {
@@ -31,6 +35,8 @@ namespace epcalipers.Properties
             horizontalCalibration = (string)Settings.Default["HorizontalCalibration"];
             verticalCalibration = (string)Settings.Default["VerticalCalibration"];
             roundMsecRate = (bool)Settings.Default["RoundMsecRate"];
+            numberOfIntervalsMeanRR = (int)Settings.Default["NumberOfIntervalsMeanRR"];
+            numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
         }
 
         [Browsable(true),
@@ -110,6 +116,50 @@ namespace epcalipers.Properties
             set { roundMsecRate = value; }
         }
 
+        [Browsable(true),
+            ReadOnly(false),
+            Description("Number of intervals for mean RR measurement (between 2 and 10)"),
+            DisplayName("Number of intervals (mean RR)"),
+            Category("Measurements")]
+        public int NumberOfIntervalsMeanRR
+        {
+            get { return numberOfIntervalsMeanRR; }
+            set
+            {
+                if (value < 2)
+                {
+                    value = 2;
+                }
+                if (value > MAX_NUMBER_OF_INTERVALS)
+                {
+                    value = MAX_NUMBER_OF_INTERVALS;
+                }
+                numberOfIntervalsMeanRR = value;
+            }
+        }
+
+        [Browsable(true),
+    ReadOnly(false),
+    Description("Number of intervals for RR measurement for QTc calculation (between 1 and 10)"),
+    DisplayName("Number of intervals (QTc)"),
+    Category("Measurements")]
+        public int NumberOfIntervalsQtc
+        {
+            get { return numberOfIntervalsQtc; }
+            set
+            {
+                if (value < 1)
+                {
+                    value = 1;
+                }
+                if (value > MAX_NUMBER_OF_INTERVALS)
+                {
+                    value = MAX_NUMBER_OF_INTERVALS;
+                }
+                numberOfIntervalsQtc = value;
+            }
+        }
+
 
 
         public void Save()
@@ -120,6 +170,8 @@ namespace epcalipers.Properties
             Settings.Default["HorizontalCalibration"] = horizontalCalibration;
             Settings.Default["VerticalCalibration"] = verticalCalibration;
             Settings.Default["RoundMsecRate"] = roundMsecRate;
+            Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
+            Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default.Save();
         }
 

@@ -94,5 +94,29 @@ namespace epcalipers.Properties {
                 this["RoundMsecRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int NumberOfIntervalsMeanRR {
+            get {
+                return ((int)(this["NumberOfIntervalsMeanRR"]));
+            }
+            set {
+                this["NumberOfIntervalsMeanRR"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int NumberOfIntervalsQtc {
+            get {
+                return ((int)(this["NumberOfIntervalsQtc"]));
+            }
+            set {
+                this["NumberOfIntervalsQtc"] = value;
+            }
+        }
     }
 }

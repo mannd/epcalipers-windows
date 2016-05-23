@@ -45,8 +45,8 @@ namespace epcalipers
 
         Point firstPoint;
 
-        string openFileTypeFilter = "Image/PDF Files (*.jpg, *.bmp *.png *.pdf) | *.jpg; *.bmp; *.png; *.pdf";
-        string saveFileTypeFilter = "Image Files (*.jpg, *.bmp *.png) | *.jpg; *.bmp; *.png";
+        string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
+        string saveFileTypeFilter = "Image files (*.jpg, *.bmp *.png) | *.jpg; *.bmp; *.png";
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -206,6 +206,7 @@ namespace epcalipers
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
             MeasureRRDialog dialog = new MeasureRRDialog();
+            dialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -568,6 +569,7 @@ namespace epcalipers
                 return;
             }
             MeasureRRDialog dialog = new MeasureRRDialog();
+            dialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
