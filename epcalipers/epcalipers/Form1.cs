@@ -45,7 +45,8 @@ namespace epcalipers
 
         Point firstPoint;
 
-        string fileTypeFilter = "Image Files (*.jpg, *.bmp *.png *.pdf) | *.jpg; *.bmp; *.png; *.pdf";
+        string openFileTypeFilter = "Image/PDF Files (*.jpg, *.bmp *.png *.pdf) | *.jpg; *.bmp; *.png; *.pdf";
+        string saveFileTypeFilter = "Image Files (*.jpg, *.bmp *.png) | *.jpg; *.bmp; *.png";
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -84,6 +85,8 @@ namespace epcalipers
             ecgPictureBox.MouseUp += ecgPictureBox_MouseUp;
             SetupButtons();
             ShowMainMenu();
+            // form starts with no image loaded, so no pages either
+            EnablePages(false);
         }
 
         private void SetupButtons()
@@ -235,7 +238,7 @@ namespace epcalipers
         {
             Debug.WriteLine("image button pushed");
             openFileDialog1.FileName = "";
-            openFileDialog1.Filter = fileTypeFilter;
+            openFileDialog1.Filter = openFileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 try
                 {
@@ -264,20 +267,7 @@ namespace epcalipers
         {
             DoCalibration();
         }
-
-        private void DoCalibration()
-        {
-            if (NoCalipersError())
-            {
-                return;
-            }
-            ShowCalibrationMenu();
-            if (theCalipers.SelectCaliperIfNoneSelected())
-            {
-                ecgPictureBox.Refresh();
-            }
-        }
-
+        
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
             if (NoCalipersError())
@@ -347,7 +337,7 @@ namespace epcalipers
             }
         }
 
-       private void zoomInButton_Click(object sender, EventArgs e)
+        private void zoomInButton_Click(object sender, EventArgs e)
         {
             ZoomIn();
         }
@@ -357,56 +347,11 @@ namespace epcalipers
             ZoomOut();
         }
 
-        private void ZoomIn()
-        {
-            ZoomBy(zoomInFactor);
-        }
-
-        private void ZoomOut()
-        {
-            ZoomBy(zoomOutFactor);
-        }
-
-        private void ResetZoom()
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                return;
-            }
-            currentActualZoom = 1.0;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-            {
-                ecgPictureBox.Image.Dispose();
-            }
-            ecgPictureBox.Image = zoomedBitmap;
-        }
-
-        private void ZoomBy(double zoomFactor)
-        {
-            if (ecgPictureBox.Image == null)
-            {
-                return;
-            }
-            currentActualZoom *= zoomFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
-            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-            {
-                ecgPictureBox.Image.Dispose();
-            }
-            ecgPictureBox.Image = zoomedBitmap;
-        }
-
         private void intervalRateButton_Click(object sender, EventArgs e)
         {
             ToggleIntervalRate();
         }
 
-        private void ToggleIntervalRate()
-        {
-            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
-            ecgPictureBox.Refresh();
-        }
         #endregion
         #region Mouse
         private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -763,6 +708,19 @@ namespace epcalipers
             flowLayoutPanel1.Controls.AddRange(calibrationMenu);
         }
 
+        private void DoCalibration()
+        {
+            if (NoCalipersError())
+            {
+                return;
+            }
+            ShowCalibrationMenu();
+            if (theCalipers.SelectCaliperIfNoneSelected())
+            {
+                ecgPictureBox.Refresh();
+            }
+        }
+
         private bool NoCalipersError()
         {
             bool noCalipers = false;
@@ -884,6 +842,55 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
+        private void ToggleIntervalRate()
+        {
+            theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
+            ecgPictureBox.Refresh();
+        }
+
+        #endregion
+        #region Image
+
+        private void ZoomIn()
+        {
+            ZoomBy(zoomInFactor);
+        }
+
+        private void ZoomOut()
+        {
+            ZoomBy(zoomOutFactor);
+        }
+
+        private void ResetZoom()
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            currentActualZoom = 1.0;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+            {
+                ecgPictureBox.Image.Dispose();
+            }
+            ecgPictureBox.Image = zoomedBitmap;
+        }
+
+        private void ZoomBy(double zoomFactor)
+        {
+            if (ecgPictureBox.Image == null)
+            {
+                return;
+            }
+            currentActualZoom *= zoomFactor;
+            Bitmap zoomedBitmap = Zoom(theBitmap);
+            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+            {
+                ecgPictureBox.Image.Dispose();
+            }
+            ecgPictureBox.Image = zoomedBitmap;
+        }
+
         private Bitmap Zoom(Bitmap originalBitmap)
         {
            
@@ -917,8 +924,7 @@ namespace epcalipers
             addCalipersButton.Enabled = true;
             calibrateButton.Enabled = true;
         }
-        #endregion
-        #region Rotation
+       
         // rotation
         private void RotateEcgImage(float angle)
         {
@@ -1037,9 +1043,16 @@ namespace epcalipers
                 pdfImages.Read(filename, settings);
                 Cursor.Current = Cursors.Default;
                 numberOfPdfPages = pdfImages.Count;
+                EnablePages(numberOfPdfPages > 1);
                 currentPdfPage = 1;
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
             }
+        }
+
+        private void EnablePages(bool enable)
+        {
+            nextPageToolStripMenuItem1.Enabled = enable;
+            previousPageToolStripMenuItem1.Enabled = enable;
         }
 
         private void ClearPdf()
@@ -1050,6 +1063,7 @@ namespace epcalipers
                 pdfImages = null;
                 numberOfPdfPages = 0;
                 currentPdfPage = 0;
+                EnablePages(false);
             }
         }
 
@@ -1119,7 +1133,7 @@ namespace epcalipers
                 MessageBox.Show("No image is open so how can you save?", "No Image Open");
                 return;
             }
-            saveFileDialog1.Filter = fileTypeFilter;
+            saveFileDialog1.Filter = saveFileTypeFilter;
             saveFileDialog1.DefaultExt = "jpg";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -1247,9 +1261,6 @@ namespace epcalipers
             PreviousPdfPage();
         }
 
-        #endregion
-
-        // TODO activate/deactive menu items to guard against bad behavior
         private void toggleRateintervalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
@@ -1266,5 +1277,7 @@ namespace epcalipers
         {
             QTcInterval();
         }
+
+        #endregion
     }
 }
