@@ -478,6 +478,7 @@ namespace epcalipers
             this.viewHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
             this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.viewHelpToolStripMenuItem.Text = "EP Calipers help";
+            this.viewHelpToolStripMenuItem.Click += new System.EventHandler(this.viewHelpToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 

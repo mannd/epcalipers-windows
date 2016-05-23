@@ -1278,6 +1278,14 @@ namespace epcalipers
             QTcInterval();
         }
 
+        private void viewHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine(Application.StartupPath);
+            Debug.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
+            Help.ShowHelp(this, "epcalipers-help.chm");
+        }
         #endregion
+
+        
     }
 }
