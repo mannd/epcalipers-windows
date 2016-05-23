@@ -21,7 +21,6 @@ namespace epcalipers
     {
         #region Fields
         Bitmap theBitmap;
-        Bitmap originalBitmapCopy;
         Calipers theCalipers;
         Button imageButton;
         Button addCalipersButton;
@@ -42,6 +41,9 @@ namespace epcalipers
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
         Preferences preferences;
+        
+        float rotationAngle = 0.0f;
+        Color BACKGROUND_COLOR = Color.LightGray;
 
         Point firstPoint;
 
@@ -818,8 +820,8 @@ namespace epcalipers
             {
                 theCalipers.HorizontalCalibration.Reset();
                 theCalipers.VerticalCalibration.Reset();
-            }
-            EnableButtonsMenus(false);
+                EnableButtonsMenus(false);
+             }
         }
 
         private void AddCaliper(CaliperDirection direction)
@@ -870,7 +872,9 @@ namespace epcalipers
                 return;
             }
             currentActualZoom = 1.0;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
+            Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
+            Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+            rotatedBitmap.Dispose();
             if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
                 ecgPictureBox.Image.Dispose();
@@ -885,7 +889,9 @@ namespace epcalipers
                 return;
             }
             currentActualZoom *= zoomFactor;
-            Bitmap zoomedBitmap = Zoom(theBitmap);
+            Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
+            Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+            rotatedBitmap.Dispose();
             if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
                 ecgPictureBox.Image.Dispose();
@@ -893,12 +899,12 @@ namespace epcalipers
             ecgPictureBox.Image = zoomedBitmap;
         }
 
-        private Bitmap Zoom(Bitmap originalBitmap)
+        private Bitmap Zoom(Bitmap bitmap)
         {
            
             theCalipers.updateCalibration(currentActualZoom);
-            Size newSize = new Size((int)(originalBitmap.Width * currentActualZoom), (int)(originalBitmap.Height * currentActualZoom));
-            Bitmap bmp = new Bitmap(originalBitmap, newSize);
+            Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
+            Bitmap bmp = new Bitmap(bitmap, newSize);
             return bmp;
         }
 
@@ -915,13 +921,8 @@ namespace epcalipers
                 theBitmap.Dispose();
             }
             theBitmap = new Bitmap(image);
-            // reset originalBitmapCopy so it can be used for rotation of new image
-            if (originalBitmapCopy != null)
-            {
-                originalBitmapCopy.Dispose();
-                originalBitmapCopy = null;
-            }
             currentActualZoom = 1.0;
+            rotationAngle = 0.0f;
             ClearCalibration();
             addCalipersButton.Enabled = true;
             calibrateButton.Enabled = true;
@@ -934,14 +935,12 @@ namespace epcalipers
             {
                 return;
             }
-            if (originalBitmapCopy == null)
-            {
-                originalBitmapCopy = new Bitmap(theBitmap);
-            }
-            Bitmap rotatedBitmap = RotateImage(theBitmap, angle, Color.Black);
-            theBitmap.Dispose();
-            theBitmap = new Bitmap(rotatedBitmap);
-            Bitmap zoomedBitmap = Zoom(theBitmap);
+            rotationAngle += angle;
+            Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
+            // apply zoom to rotated bitmap
+            Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+            // don't need the unzoomed rotated bitmap anymore
+            rotatedBitmap.Dispose();
             if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
             {
                 ecgPictureBox.Image.Dispose();
@@ -954,10 +953,8 @@ namespace epcalipers
 
         private void ResetEcgImage()
         {
-            if (theBitmap != null && originalBitmapCopy != null)
+            if (theBitmap != null)
             {
-                theBitmap.Dispose();
-                theBitmap = new Bitmap(originalBitmapCopy);
                 if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
                 {
                     ecgPictureBox.Image.Dispose();
@@ -965,6 +962,7 @@ namespace epcalipers
                 ecgPictureBox.Image = theBitmap;
                 ResetCalibration();
                 currentActualZoom = 1.0;
+                rotationAngle = 0.0f;
                 // not necessary to refresh image when image updated
                 //ecgPictureBox.Refresh();
             }
