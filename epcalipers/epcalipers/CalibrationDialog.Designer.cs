@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CalibrationDialog));
             this.label1 = new System.Windows.Forms.Label();
             this.calibrationMeasurementTextBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
@@ -81,6 +82,7 @@
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.calibrationMeasurementTextBox);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CalibrationDialog";
             this.Text = "Calibrate";
             this.ResumeLayout(false);

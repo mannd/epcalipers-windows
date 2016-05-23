@@ -32,6 +32,7 @@ namespace epcalipers
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -48,17 +49,7 @@ namespace epcalipers
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.quitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.calipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutEPCalipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetZoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +62,7 @@ namespace epcalipers
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.nextPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.previousPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.calipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timeCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.amplitudeCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +73,16 @@ namespace epcalipers
             this.toggleRateintervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.meanRateIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.qTcMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutEPCalipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -215,7 +216,7 @@ namespace epcalipers
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.imageButton_Click);
             // 
@@ -223,7 +224,7 @@ namespace epcalipers
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -231,54 +232,21 @@ namespace epcalipers
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
             this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(143, 6);
             // 
             // quitToolStripMenuItem1
             // 
             this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
-            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.ToolTipText = "Change options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-            // 
-            // calipersToolStripMenuItem
-            // 
-            this.calipersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.timeCaliperToolStripMenuItem,
-            this.amplitudeCaliperToolStripMenuItem,
-            this.deleteCaliperToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.calibrateToolStripMenuItem,
-            this.clearCalibrationToolStripMenuItem,
-            this.toolStripSeparator5,
-            this.toggleRateintervalToolStripMenuItem,
-            this.meanRateIntervalToolStripMenuItem,
-            this.qTcMeasurementToolStripMenuItem});
-            this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
-            this.calipersToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.calipersToolStripMenuItem.Text = "Calipers";
             // 
             // zoomToolStripMenuItem
             // 
@@ -300,36 +268,12 @@ namespace epcalipers
             this.zoomToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.zoomToolStripMenuItem.Text = "Image";
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewHelpToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.aboutEPCalipersToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutEPCalipersToolStripMenuItem
-            // 
-            this.aboutEPCalipersToolStripMenuItem.Name = "aboutEPCalipersToolStripMenuItem";
-            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
-            this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
-            this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
-            // 
-            // viewHelpToolStripMenuItem
-            // 
-            this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
-            this.viewHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.viewHelpToolStripMenuItem.Text = "EP Calipers help";
-            // 
             // zoomInToolStripMenuItem
             // 
             this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
             this.zoomInToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
             this.zoomInToolStripMenuItem.ShowShortcutKeys = false;
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.zoomInToolStripMenuItem.Text = "Zoom in";
             this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click);
             // 
@@ -338,21 +282,21 @@ namespace epcalipers
             this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
             this.zoomOutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
             this.zoomOutToolStripMenuItem.ShowShortcutKeys = false;
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.zoomOutToolStripMenuItem.Text = "Zoom out";
             this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click);
             // 
             // resetZoomToolStripMenuItem
             // 
             this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
-            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.resetZoomToolStripMenuItem.Text = "Reset zoom";
             this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.resetZoomToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
             // 
             // rotate90RToolStripMenuItem
             // 
@@ -391,7 +335,7 @@ namespace epcalipers
             // resetImageToolStripMenuItem1
             // 
             this.resetImageToolStripMenuItem1.Name = "resetImageToolStripMenuItem1";
-            this.resetImageToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.resetImageToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
             this.resetImageToolStripMenuItem1.Text = "Reset image";
             this.resetImageToolStripMenuItem1.Click += new System.EventHandler(this.resetImageToolStripMenuItem1_Click);
             // 
@@ -416,76 +360,136 @@ namespace epcalipers
             this.previousPageToolStripMenuItem1.Text = "Previous page";
             this.previousPageToolStripMenuItem1.Click += new System.EventHandler(this.previousPageToolStripMenuItem1_Click);
             // 
+            // calipersToolStripMenuItem
+            // 
+            this.calipersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.timeCaliperToolStripMenuItem,
+            this.amplitudeCaliperToolStripMenuItem,
+            this.deleteCaliperToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.calibrateToolStripMenuItem,
+            this.clearCalibrationToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.toggleRateintervalToolStripMenuItem,
+            this.meanRateIntervalToolStripMenuItem,
+            this.qTcMeasurementToolStripMenuItem});
+            this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
+            this.calipersToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.calipersToolStripMenuItem.Text = "Calipers";
+            // 
             // timeCaliperToolStripMenuItem
             // 
             this.timeCaliperToolStripMenuItem.Name = "timeCaliperToolStripMenuItem";
-            this.timeCaliperToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.timeCaliperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.timeCaliperToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.timeCaliperToolStripMenuItem.Text = "Time caliper";
             this.timeCaliperToolStripMenuItem.Click += new System.EventHandler(this.timeCaliperToolStripMenuItem_Click);
             // 
             // amplitudeCaliperToolStripMenuItem
             // 
             this.amplitudeCaliperToolStripMenuItem.Name = "amplitudeCaliperToolStripMenuItem";
-            this.amplitudeCaliperToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.amplitudeCaliperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.amplitudeCaliperToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.amplitudeCaliperToolStripMenuItem.Text = "Amplitude caliper";
             this.amplitudeCaliperToolStripMenuItem.Click += new System.EventHandler(this.amplitudeCaliperToolStripMenuItem_Click);
             // 
             // deleteCaliperToolStripMenuItem
             // 
             this.deleteCaliperToolStripMenuItem.Name = "deleteCaliperToolStripMenuItem";
-            this.deleteCaliperToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.deleteCaliperToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.deleteCaliperToolStripMenuItem.Text = "Delete caliper";
             this.deleteCaliperToolStripMenuItem.Click += new System.EventHandler(this.deleteCaliperToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(211, 6);
             // 
             // calibrateToolStripMenuItem
             // 
             this.calibrateToolStripMenuItem.Name = "calibrateToolStripMenuItem";
-            this.calibrateToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.calibrateToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.calibrateToolStripMenuItem.Text = "Calibrate";
             this.calibrateToolStripMenuItem.Click += new System.EventHandler(this.calibrateToolStripMenuItem_Click);
             // 
             // clearCalibrationToolStripMenuItem
             // 
             this.clearCalibrationToolStripMenuItem.Name = "clearCalibrationToolStripMenuItem";
-            this.clearCalibrationToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.clearCalibrationToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.clearCalibrationToolStripMenuItem.Text = "Clear calibration";
             this.clearCalibrationToolStripMenuItem.Click += new System.EventHandler(this.clearCalibrationToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(211, 6);
             // 
             // toggleRateintervalToolStripMenuItem
             // 
             this.toggleRateintervalToolStripMenuItem.Name = "toggleRateintervalToolStripMenuItem";
-            this.toggleRateintervalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.toggleRateintervalToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.toggleRateintervalToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.toggleRateintervalToolStripMenuItem.Text = "Toggle rate/interval";
             this.toggleRateintervalToolStripMenuItem.Click += new System.EventHandler(this.toggleRateintervalToolStripMenuItem_Click);
             // 
             // meanRateIntervalToolStripMenuItem
             // 
             this.meanRateIntervalToolStripMenuItem.Name = "meanRateIntervalToolStripMenuItem";
-            this.meanRateIntervalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.meanRateIntervalToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.meanRateIntervalToolStripMenuItem.Text = "Mean rate interval";
             this.meanRateIntervalToolStripMenuItem.Click += new System.EventHandler(this.meanRateIntervalToolStripMenuItem_Click);
             // 
             // qTcMeasurementToolStripMenuItem
             // 
             this.qTcMeasurementToolStripMenuItem.Name = "qTcMeasurementToolStripMenuItem";
-            this.qTcMeasurementToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.qTcMeasurementToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.qTcMeasurementToolStripMenuItem.Text = "QTc measurement";
             this.qTcMeasurementToolStripMenuItem.Click += new System.EventHandler(this.qTcMeasurementToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.ToolTipText = "Change options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewHelpToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.aboutEPCalipersToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // viewHelpToolStripMenuItem
+            // 
+            this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
+            this.viewHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.viewHelpToolStripMenuItem.Text = "EP Calipers help";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
+            // 
+            // aboutEPCalipersToolStripMenuItem
+            // 
+            this.aboutEPCalipersToolStripMenuItem.Name = "aboutEPCalipersToolStripMenuItem";
+            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
+            this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -495,6 +499,7 @@ namespace epcalipers
             this.ClientSize = new System.Drawing.Size(688, 482);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "EP Calipers";

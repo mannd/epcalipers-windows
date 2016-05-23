@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>epcalipers-test-icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Magick.NET-Q16-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
       <HintPath>..\packages\Magick.NET-Q16-AnyCPU.7.0.1.101\lib\net40-client\Magick.NET-Q16-AnyCPU.dll</HintPath>
@@ -74,12 +77,6 @@
     <Compile Include="MeasureRRDialog.Designer.cs">
       <DependentUpon>MeasureRRDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="MeasureDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MeasureDialog.Designer.cs">
-      <DependentUpon>MeasureDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="NewCaliperDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,9 +105,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MeasureRRDialog.resx">
       <DependentUpon>MeasureRRDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MeasureDialog.resx">
-      <DependentUpon>MeasureDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewCaliperDialog.resx">
       <DependentUpon>NewCaliperDialog.cs</DependentUpon>
@@ -144,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="epcalipers-test-icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

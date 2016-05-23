@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewCaliperDialog));
             this.horizontalCaliperRadioButton = new System.Windows.Forms.RadioButton();
             this.VerticalCaliperRadioButton = new System.Windows.Forms.RadioButton();
             this.okButton = new System.Windows.Forms.Button();
@@ -99,6 +100,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewCaliperDialog";
             this.Text = "Add Caliper";
             this.groupBox1.ResumeLayout(false);
