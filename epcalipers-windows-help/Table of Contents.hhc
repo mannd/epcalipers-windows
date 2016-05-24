@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Overview">
+		<param name="Local" value="English.lproj\EPCalipers.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Introduction - EP Calipers 101">
+		<param name="Local" value="English.lproj\pgs\basics.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Image operations">
+		<param name="Local" value="English.lproj\pgs\images.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Caliper operations">
+		<param name="Local" value="English.lproj\pgs\calipers.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Making measurements">
+		<param name="Local" value="English.lproj\pgs\measurements.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Preferences">
+		<param name="Local" value="English.lproj\pgs\preferences.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Fine print">
+		<param name="Local" value="English.lproj\pgs\misc.html">
+		</OBJECT>
+</UL>
+</BODY></HTML>

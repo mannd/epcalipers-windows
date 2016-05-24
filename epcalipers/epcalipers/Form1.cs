@@ -1296,7 +1296,6 @@ namespace epcalipers
             Help.ShowHelp(this, "epcalipers-help.chm");
         }
 
-
         private void rotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(0.1f);
@@ -1309,3 +1308,4 @@ namespace epcalipers
         #endregion
     }
 }
+ 

@@ -1,0 +1,21 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\epcalipers\epcalipers\epcalipers-help.chm
+Contents file=Table of Contents.hhc
+Default topic=English.lproj\EPCalipers.html
+Display compile progress=No
+Full-text search=Yes
+Language=0x409 English (United States)
+
+
+[FILES]
+English.lproj\EPCalipers.html
+English.lproj\pgs\basics.html
+English.lproj\pgs\calipers.html
+English.lproj\pgs\images.html
+English.lproj\pgs\measurements.html
+English.lproj\pgs\misc.html
+English.lproj\pgs\preferences.html
+
+[INFOTYPES]
+

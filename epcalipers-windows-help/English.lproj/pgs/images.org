@@ -1,0 +1,33 @@
+#+AUTHOR:    David Mann
+#+EMAIL:     mannd@epstudiossoftware.com
+#+DATE:      
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+HTML_HEAD: <meta name="description" content="How to manipulate the ECG image" />
+* [[../../shrd/icon_32x32@2x.png]] Images
+Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  However, in order to open PDF files, it is necessary to download and install /Ghostscript/ on your computer.  /Ghostscript/ is a free, open-source PDF handling library.  It is available from [[http://www.ghostscript.com/download/gsdnld.html][this site]].  Download the Windows version (32-bit or 64-bit) that is appropriate for your computer.  You can right-click on "This PC" in a File Explore window and then click properties to see what kind of system (32-bit or 64-bit) you are running.  You can install from the GNU Affero General Public License column, which is the free version.  This version can be used because *EP Calipers* is itself open-source software covered by the GNU GPL v3.
+
+To load ECG images use one of the following methods.
+* Loading an image
+** Open command
+Use the *File | Open* menu command (or keyboard shortcut) to select an
+image stored on your computer.  You can also use the *Open* button to do the same thing.  
+** Drag and drop
+You can drag and drop an image file onto the program window and it will load.  Note that this method will *not* work with PDF files.  PDF files must be loaded using the first method above.
+** Multi-page PDFs
+If you load a PDF file with multiple pages, the first page will be shown initially.  You can use the *Image | Previous Page* and *Next Page* menu items to change pages, or the keyboard shortcuts.
+** Opening /AliveCor™/ ECGs
+/AliveCor/ ECGs can be saved as PDF files.  Load them with any of the above methods (except drag and drop).
+* Adjusting the image
+** Moving the image
+If the image is too large for the window, you can either enlarge the window using the normal Windows maximize button, or scroll around the image using the window scroll bars.  You can also zoom down the image as descrbed below.
+** Rotation
+If your ECG image is rotated or tilted, use the *Image | Rotation* menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  *Important:* You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
+** Zooming
+You can also use the Zoom buttons (*+* and *-*) at the lower left of the window to zoom in and oute.  Zooming is also available in the *Image* menu, which includes *Reset zoom* option to restore the original unzoomed image.   Note that Caliper calibration *does* adjust with zooming.  There is no need to recalibrate the calipers after zooming.
+* Saving or printing an edited image
+Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.

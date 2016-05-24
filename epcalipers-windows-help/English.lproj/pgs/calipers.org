@@ -1,0 +1,30 @@
+#+AUTHOR:    David Mann
+#+EMAIL:     mannd@epstudiossoftware.com
+#+DATE:      
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+HTML_HEAD: <meta name="description" content="How to use the electronic calipers" />
+* [[../../shrd/icon_32x32@2x.png]] Calipers
+* Adding and deleting calipers
+Calipers come in two flavors.  Calipers with a horizontal crossbar and vertical sidebars are used to make time measurements and are called "time calipers."  Calipers with a vertical crossbar and horizontal sidebars are used to make amplitude measurements and are called, you guessed it, "amplitude calipers."
+** Add Calipers
+Add calipers by clicking on the *Add Caliper* button and then selecting a time or amplitude caliper in the dialog that appears, or use the *Caliper* menu (or shortcut keys) to do this.
+#+CAPTION: Add Calipers
+[[../../shrd/EPCCaliperIcons.png]]
+** Selecting Calipers
+In order to make measurements or calibrate, it is necessary to "select" a single caliper when there are multiple calipers on the screen.  A single mouse click on any part of a caliper selects it.  A selected calipers is evident because it is a different color (by default red, but you can change this) than unselected calipers (by default blue).  Single-clicking a selected caliper again will unselect it.  Only one caliper at a time can be selected.
+#+CAPTION: The red caliper is selected
+[[../../shrd/EPCSelectedCaliper.png]]
+** Deleting Calipers
+Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.
+* Moving calipers
+** Moving
+Use the left mouse button over the crossbar area of a caliper.  Drag the mouse to move the caliper as a unit.  
+** Stretching (opening and closing)
+If the cursor is positioned over either the left or right sidebars of a time caliper (or top or bottom bars for an amplitude caliper) clicking with the left mouse button or holding your finger down on the track pad and then dragging will move that caliper bar by itself.  In this way you can widen or narrow the caliper interval.  Note that you cannot move both bars at the same time.  When you move one caliper bar, the other one always stays fixed.
+
+By combining movements of the crossbar and sidebars of a caliper, you can place it anywhere on the ECG image to make measurements.
