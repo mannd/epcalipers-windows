@@ -82,10 +82,8 @@ namespace epcalipers
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.rotateTinyRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateTinyLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pageSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -209,7 +207,6 @@ namespace epcalipers
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.printToolStripMenuItem,
-            this.pageSetupToolStripMenuItem,
             this.quitToolStripMenuItem,
             this.quitToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -518,13 +515,6 @@ namespace epcalipers
             this.rotateTinyLToolStripMenuItem.Text = "Rotate 0.1°L";
             this.rotateTinyLToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyLToolStripMenuItem_Click);
             // 
-            // pageSetupToolStripMenuItem
-            // 
-            this.pageSetupToolStripMenuItem.Name = "pageSetupToolStripMenuItem";
-            this.pageSetupToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pageSetupToolStripMenuItem.Text = "Page setup";
-            this.pageSetupToolStripMenuItem.Click += new System.EventHandler(this.pageSetupToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -587,7 +577,6 @@ namespace epcalipers
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutEPCalipersToolStripMenuItem;
         private ToolStripMenuItem viewHelpToolStripMenuItem;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ToolStripMenuItem zoomInToolStripMenuItem;
         private ToolStripMenuItem zoomOutToolStripMenuItem;
         private ToolStripMenuItem resetZoomToolStripMenuItem;
@@ -613,7 +602,6 @@ namespace epcalipers
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem rotateTinyRToolStripMenuItem;
         private ToolStripMenuItem rotateTinyLToolStripMenuItem;
-        private ToolStripMenuItem pageSetupToolStripMenuItem;
     }
 }
 

@@ -245,7 +245,6 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("image button pushed");
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -1123,23 +1122,18 @@ namespace epcalipers
                 MessageBox.Show("No image is open so how can you print?", "No Image Open");
                 return;
             }
-            PrintDocument pd = new System.Drawing.Printing.PrintDocument();
-            pd.PrintPage += new PrintPageEventHandler(PrintPictureBox);
-            pd.Print();
-        }
-
-        private void PrintPictureBox(object sender, PrintPageEventArgs e)
-        {
-            //Graphics g = e.Graphics;
+            string filename = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
             Image image = (Image)ecgPictureBox.Image.Clone();
             Graphics g = Graphics.FromImage(image);
-            /// TODO: Need theCalipers.DrawPrint method to make font smaller for printing
-            /// and saving images.
             theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-            e.Graphics.DrawImage(image, 0, 0);
+            image.Save(filename);
+            var p = new Process();
+            p.StartInfo.FileName = filename;
+            p.StartInfo.Verb = "Print";
+            p.Start();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+           private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
@@ -1153,7 +1147,8 @@ namespace epcalipers
                 Image image = (Image)ecgPictureBox.Image.Clone();
                 Graphics g = Graphics.FromImage(image);
                 theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
-                image.Save(saveFileDialog1.FileName);               
+                image.Save(saveFileDialog1.FileName);
+                image.Dispose();            
             }
         }
 
@@ -1312,17 +1307,5 @@ namespace epcalipers
             RotateEcgImage(-0.1f);
         }
         #endregion
-
-        private void pageSetupToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (pageSetupDialog1 == null)
-            {
-                pageSetupDialog1 = new PageSetupDialog();
-            }
-            pageSetupDialog1.PrinterSettings = new PrinterSettings();
-            pageSetupDialog1.PageSettings = new PageSettings();
-            pageSetupDialog1.EnableMetric = false;
-            pageSetupDialog1.ShowDialog();
-        }
     }
 }
