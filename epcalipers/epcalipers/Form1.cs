@@ -41,6 +41,9 @@ namespace epcalipers
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
         Preferences preferences;
+        PreferencesDialog preferencesDialog;
+        MeasureRRDialog measureRRDialog;
+        CalibrationDialog calibrationDialog;
         
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.LightGray;
@@ -119,7 +122,7 @@ namespace epcalipers
             backCalibrationButton.Text = "Back";
             backCalibrationButton.Click += backCalibrationButton_Click;
             intervalRateButton = new Button();
-            intervalRateButton.Text = "Int/Rate";
+            intervalRateButton.Text = "Rate/Int";
             intervalRateButton.Click += intervalRateButton_Click;
             toolTip1.SetToolTip(intervalRateButton, "Toggle between interval and rate");
             measureRRForQtcButton = new Button();
@@ -207,14 +210,17 @@ namespace epcalipers
 
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
-            MeasureRRDialog dialog = new MeasureRRDialog();
-            dialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
-            DialogResult result = dialog.ShowDialog();
+            if (measureRRDialog == null)
+            {
+                measureRRDialog = new MeasureRRDialog();
+            }
+            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
+            DialogResult result = measureRRDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
                 try
                 {
-                    string rawValue = dialog.numberOfIntervalsTextBox.Text;
+                    string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
                     Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, theCalipers.GetActiveCaliper());
                     rrIntervalForQtc = tuple.Item1;
                     showQTcStep2Menu();
@@ -248,6 +254,7 @@ namespace epcalipers
                     {
                         if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
                         {
+                            ClearPdf();
                             OpenPdf(openFileDialog1.FileName);
                         }
                         else
@@ -292,7 +299,10 @@ namespace epcalipers
                     return;
                 }
             }
-            CalibrationDialog dialog = new CalibrationDialog();
+            if (calibrationDialog == null)
+            {
+                calibrationDialog = new CalibrationDialog();
+            }
             Caliper c = theCalipers.GetActiveCaliper();
             if (c.Direction == CaliperDirection.Horizontal)
             {
@@ -300,7 +310,7 @@ namespace epcalipers
                 {
                     theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
                 }
-                dialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
+                calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
             }
             else
             {
@@ -308,12 +318,12 @@ namespace epcalipers
                 {
                     theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
                 }
-                dialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
+                calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
             }
-            DialogResult result = dialog.ShowDialog();
+            DialogResult result = calibrationDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Calibrate(dialog.calibrationMeasurementTextBox.Text);
+                Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
             }
         }
 
@@ -570,12 +580,15 @@ namespace epcalipers
                 NoTimeCaliperError();
                 return;
             }
-            MeasureRRDialog dialog = new MeasureRRDialog();
-            dialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            DialogResult result = dialog.ShowDialog();
+            if (measureRRDialog == null)
+            {
+                measureRRDialog = new MeasureRRDialog();
+            }
+            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
+            DialogResult result = measureRRDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                string rawValue = dialog.numberOfIntervalsTextBox.Text;
+                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
                 try
                 {
                     Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, c);
@@ -1146,10 +1159,13 @@ namespace epcalipers
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PreferencesDialog dialog = new PreferencesDialog();
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (preferencesDialog == null)
             {
-                dialog.Save();
+                preferencesDialog = new PreferencesDialog();
+            }
+            if (preferencesDialog.ShowDialog() == DialogResult.OK)
+            {
+                preferencesDialog.Save();
                 UpdatePreferences();
             }
 
@@ -1297,5 +1313,16 @@ namespace epcalipers
         }
         #endregion
 
+        private void pageSetupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pageSetupDialog1 == null)
+            {
+                pageSetupDialog1 = new PageSetupDialog();
+            }
+            pageSetupDialog1.PrinterSettings = new PrinterSettings();
+            pageSetupDialog1.PageSettings = new PageSettings();
+            pageSetupDialog1.EnableMetric = false;
+            pageSetupDialog1.ShowDialog();
+        }
     }
 }
