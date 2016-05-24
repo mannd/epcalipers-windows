@@ -13,7 +13,7 @@
 * [[./pgs/basics.html][Introduction -- EP Calipers 101]]
 Rationale and basic use of *EP Calipers*.
 * [[./pgs/images.org][Image operations]]
-Open, rotate, move, and save ECG images.
+Open, rotate, zoom, and save ECG images.
 * [[./pgs/calipers.html][Caliper operations]]
 Add, move, and delete calipers.
 * [[./pgs/measurements.html][Making measurements]]

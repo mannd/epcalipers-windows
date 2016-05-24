@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-05-23 Mon 20:35 -->
+<!-- 2016-05-24 Tue 14:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -95,6 +95,7 @@
   /*]]>*/-->
 </style>
 <meta name="description" content="Using calipers to make measurements" />
+<style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -144,64 +145,77 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-org711a080" class="outline-2">
-<h2 id="org711a080"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Making measurements</h2>
-<div class="outline-text-2" id="text-org711a080">
-</div><div id="outline-container-org3f4b61c" class="outline-3">
-<h3 id="org3f4b61c">Caliper interval</h3>
-<div class="outline-text-3" id="text-org3f4b61c">
+<div id="outline-container-orgacbbc3f" class="outline-2">
+<h2 id="orgacbbc3f"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Making measurements</h2>
+<div class="outline-text-2" id="text-orgacbbc3f">
+</div><div id="outline-container-org876311b" class="outline-3">
+<h3 id="org876311b">Caliper interval</h3>
+<div class="outline-text-3" id="text-org876311b">
 <p>
 The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).
 </p>
 </div>
 </div>
-<div id="outline-container-org313a8bb" class="outline-3">
-<h3 id="org313a8bb">Calibration</h3>
-<div class="outline-text-3" id="text-org313a8bb">
+<div id="outline-container-orga3568c1" class="outline-3">
+<h3 id="orga3568c1">Calibration</h3>
+<div class="outline-text-3" id="text-orga3568c1">
 <p>
-Calibration is necessary before any measurements can be made! Select the <b>Calibrate</b> button or the <b>Caliper | Calibrate</b> menu item.  Follow the prompts to select a caliper and stretch it over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select the <b>Set</b> button.  In the dialog box that appears, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 1000 msec,  or 1 mV).  Select the Calibrate button in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+Calibration is necessary before any measurements can be made! Select the <b>Calibrate</b> button or the <b>Caliper | Calibrate</b> menu item.  Follow the prompts to select a caliper and stretch it over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select the <b>Set</b> button.  In the dialog box that appears, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 1000 msec,  or 1 mV).  Select the <b>OK</b> button in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 </p>
+
+<div class="figure">
+<p><img src="../../shrd/calibration_dialog.png" alt="calibration_dialog.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> Calibration dialog</p>
+</div>
 
 <p>
 It is important to use time units such as <i>msec</i> or <i>sec</i> when providing a time calibration if you want to do calculated measurements such as the corrected QT interval.  In other words, type in your calibration measurement as <i>1000 msec</i> and not just <i>1000</i>.  Negative calibration intervals are treated as positive numbers (i.e. the negative sign is ignored).
 </p>
 </div>
 </div>
-<div id="outline-container-org548e0eb" class="outline-3">
-<h3 id="org548e0eb">Changing calibration</h3>
-<div class="outline-text-3" id="text-org548e0eb">
+<div id="outline-container-orgb4c3b82" class="outline-3">
+<h3 id="orgb4c3b82">Changing calibration</h3>
+<div class="outline-text-3" id="text-orgb4c3b82">
 <p>
 You can recalibrate at any time just by repeating the calibration process..  You can clear all calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the image is zoomed.  Selecting a new image will reset calibration.  Rotating the image will also reset calibration.
 </p>
 </div>
 </div>
-<div id="outline-container-org1ed92d4" class="outline-3">
-<h3 id="org1ed92d4">Interval/Rate</h3>
-<div class="outline-text-3" id="text-org1ed92d4">
+<div id="outline-container-orgb09e9e2" class="outline-3">
+<h3 id="orgb09e9e2">Interval/Rate</h3>
+<div class="outline-text-3" id="text-orgb09e9e2">
 <p>
 Once a time caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting the <b>Rate/Int</b> button or <b>Caliper | Toggle rate/interval</b> menu command.
 </p>
 </div>
 </div>
-<div id="outline-container-orgab7b16c" class="outline-3">
-<h3 id="orgab7b16c">Mean rate and interval calculation</h3>
-<div class="outline-text-3" id="text-orgab7b16c">
+<div id="outline-container-org49e17da" class="outline-3">
+<h3 id="org49e17da">Mean rate and interval calculation</h3>
+<div class="outline-text-3" id="text-org49e17da">
 <p>
-Select a calibratedtime  caliper and stretch it over a number of intervals.  Select the <b>Mean Rate</b> button or <b>Caliper | Mean rate interval</b> menu command and enter the number of intervals measured in the dialog box that appears.  Select the Calculate button to see the result.  Using <b>EP Calipers</b> to calculate mean rates and intervals is very useful in irregular rhythms, such as atrial fibrillation.
+Select a calibrated time  caliper and stretch it over a number of intervals.  Select the <b>Mean Rate</b> button or <b>Caliper | Mean rate interval</b> menu command and enter the number of intervals measured in the dialog box that appears.  Select the Calculate button to see the result.  Using <b>EP Calipers</b> to calculate mean rates and intervals is very useful in irregular rhythms, such as atrial fibrillation.
 </p>
+
+<div class="figure">
+<p><img src="../../shrd/mean_rr.png" alt="mean_rr.png" /> 
+</p>
+<p><span class="figure-number">Figure 2:</span> Mean RR measurement</p>
 </div>
 </div>
-<div id="outline-container-orgb39cfe2" class="outline-3">
-<h3 id="orgb39cfe2">QTc calculation</h3>
-<div class="outline-text-3" id="text-orgb39cfe2">
+</div>
+
+<div id="outline-container-orgc7e7df6" class="outline-3">
+<h3 id="orgc7e7df6">QTc calculation</h3>
+<div class="outline-text-3" id="text-orgc7e7df6">
 <p>
 QTc measurement is a multiple step process.  Select the <b>QTc</b> button on the toolbar or the <b>Caliper | QTc measurement</b> menu command.  Follow the prompt to stretch the selected caliper over one or more RR intervals and select the <b>Measure</b> button.  Enter the number of intervals the caliper is stretched over and select <b>OK</b>.  Then use the same caliper to measure the QT interval.  Select <b>Measure</b>.  A dialog box will give the calculated QTc using Bazett's formula.
 </p>
 
 <div class="figure">
-<p><img src="../../shrd/qtc-measurement.png" alt="qtc-measurement.png" />
+<p><img src="../../shrd/qtc_calculation.png" alt="qtc_calculation.png" />
 </p>
-<p><span class="figure-number">Figure 1:</span> QTc measurement</p>
+<p><span class="figure-number">Figure 3:</span> QTc measurement</p>
 </div>
 </div>
 </div>
