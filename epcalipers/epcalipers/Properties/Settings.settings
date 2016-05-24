@@ -9,7 +9,7 @@
       <Value Profile="(Default)">Red</Value>
     </Setting>
     <Setting Name="LineWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="HorizontalCalibration" Type="System.String" Scope="User">
       <Value Profile="(Default)">1000 msec</Value>

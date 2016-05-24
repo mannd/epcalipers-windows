@@ -83,6 +83,8 @@ namespace epcalipers
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.rotateTinyRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateTinyLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -259,6 +261,8 @@ namespace epcalipers
             this.rotate90LToolStripMenuItem,
             this.rotate1RToolStripMenuItem,
             this.rotate1LToolStripMenuItem,
+            this.rotateTinyRToolStripMenuItem,
+            this.rotateTinyLToolStripMenuItem,
             this.resetImageToolStripMenuItem1,
             this.toolStripSeparator3,
             this.nextPageToolStripMenuItem1,
@@ -492,6 +496,24 @@ namespace epcalipers
             this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
             this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
             // 
+            // rotateTinyRToolStripMenuItem
+            // 
+            this.rotateTinyRToolStripMenuItem.Name = "rotateTinyRToolStripMenuItem";
+            this.rotateTinyRToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.R)));
+            this.rotateTinyRToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyRToolStripMenuItem.Text = "Rotate 0.1°R";
+            this.rotateTinyRToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyRToolStripMenuItem_Click);
+            // 
+            // rotateTinyLToolStripMenuItem
+            // 
+            this.rotateTinyLToolStripMenuItem.Name = "rotateTinyLToolStripMenuItem";
+            this.rotateTinyLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.L)));
+            this.rotateTinyLToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyLToolStripMenuItem.Text = "Rotate 0.1°L";
+            this.rotateTinyLToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyLToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -578,6 +600,8 @@ namespace epcalipers
         private ToolStripMenuItem meanRateIntervalToolStripMenuItem;
         private ToolStripMenuItem qTcMeasurementToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem rotateTinyRToolStripMenuItem;
+        private ToolStripMenuItem rotateTinyLToolStripMenuItem;
     }
 }
 

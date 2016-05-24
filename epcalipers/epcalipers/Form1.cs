@@ -1284,8 +1284,18 @@ namespace epcalipers
             Debug.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
             Help.ShowHelp(this, "epcalipers-help.chm");
         }
+
+
+        private void rotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(0.1f);
+        }
+
+        private void rotateTinyLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RotateEcgImage(-0.1f);
+        }
         #endregion
 
-        
     }
 }
