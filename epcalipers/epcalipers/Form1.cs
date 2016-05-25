@@ -1,18 +1,11 @@
 ﻿using epcalipers.Properties;
 using ImageMagick;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace epcalipers
@@ -44,7 +37,7 @@ namespace epcalipers
         PreferencesDialog preferencesDialog;
         MeasureRRDialog measureRRDialog;
         CalibrationDialog calibrationDialog;
-        
+
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.LightGray;
 
@@ -98,7 +91,7 @@ namespace epcalipers
         {
             imageButton = new Button();
             imageButton.Text = "Open";
-            toolTip1.SetToolTip(imageButton, "Open ECG image");
+            toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
             imageButton.Click += imageButton_Click;
             addCalipersButton = new Button();
             addCalipersButton.Text = "Add Caliper";
@@ -124,7 +117,7 @@ namespace epcalipers
             intervalRateButton = new Button();
             intervalRateButton.Text = "Rate/Int";
             intervalRateButton.Click += intervalRateButton_Click;
-            toolTip1.SetToolTip(intervalRateButton, "Toggle between interval and rate");
+            toolTip1.SetToolTip(intervalRateButton, "Toggle between rate and interval");
             measureRRForQtcButton = new Button();
             measureRRForQtcButton.Text = "Measure";
             measureRRForQtcButton.Click += MeasureRRForQtcButton_Click;
@@ -136,7 +129,7 @@ namespace epcalipers
             meanRRButton = new Button();
             meanRRButton.Text = "Mean Rate";
             meanRRButton.Click += MeanRRButton_Click;
-            toolTip1.SetToolTip(meanRRButton, "Measure mean interval and rate");
+            toolTip1.SetToolTip(meanRRButton, "Measure mean rate and interval");
             qtcButton = new Button();
             qtcButton.Text = "QTc";
             qtcButton.Click += QtcButton_Click;
@@ -183,8 +176,6 @@ namespace epcalipers
                     qt *= 1000.0;
                     qtc *= 1000.0;
                 }
-                //s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
-
                 result = string.Format("Mean RR = {0} msec\nQT = {1} msec\nQTc = {2} msec (Bazett's formula)", meanRR.ToString("G4"),
                     qt.ToString("G4"), qtc.ToString("G4"));
             }
@@ -276,7 +267,7 @@ namespace epcalipers
         {
             DoCalibration();
         }
-        
+
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
             if (NoCalipersError())
@@ -328,7 +319,7 @@ namespace epcalipers
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null )
+            if (ecgPictureBox.Image == null)
             {
                 return;
             }
@@ -607,7 +598,7 @@ namespace epcalipers
 
         private Tuple<double, double> getMeanRRMeanRate(string rawValue, Caliper c)
         {
-            
+
             if (rawValue.Length < 1)
             {
                 throw new Exception("Number of intervals not entered.");
@@ -833,7 +824,7 @@ namespace epcalipers
                 theCalipers.HorizontalCalibration.Reset();
                 theCalipers.VerticalCalibration.Reset();
                 EnableButtonsMenus(false);
-             }
+            }
         }
 
         private void AddCaliper(CaliperDirection direction)
@@ -913,7 +904,7 @@ namespace epcalipers
 
         private Bitmap Zoom(Bitmap bitmap)
         {
-           
+
             theCalipers.updateCalibration(currentActualZoom);
             Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
             Bitmap bmp = new Bitmap(bitmap, newSize);
@@ -939,7 +930,7 @@ namespace epcalipers
             addCalipersButton.Enabled = true;
             calibrateButton.Enabled = true;
         }
-       
+
         // rotation
         private void RotateEcgImage(float angle)
         {
@@ -1070,7 +1061,7 @@ namespace epcalipers
         private void ClearPdf()
         {
             if (pdfImages != null)
-            { 
+            {
                 pdfImages.Dispose();
                 pdfImages = null;
                 numberOfPdfPages = 0;
@@ -1133,7 +1124,7 @@ namespace epcalipers
             p.Start();
         }
 
-           private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
@@ -1148,7 +1139,7 @@ namespace epcalipers
                 Graphics g = Graphics.FromImage(image);
                 theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
                 image.Save(saveFileDialog1.FileName);
-                image.Dispose();            
+                image.Dispose();
             }
         }
 
@@ -1308,4 +1299,3 @@ namespace epcalipers
         #endregion
     }
 }
- 
