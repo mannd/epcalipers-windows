@@ -107,7 +107,7 @@ namespace epcalipers.Properties
             this.linkLabel1.LinkVisited = true;
 
             // Navigate to a URL.
-            System.Diagnostics.Process.Start("http://www.epstudiossoftware.com");
+            System.Diagnostics.Process.Start("https://www.epstudiossoftware.com");
         }
     }
 }
