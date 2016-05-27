@@ -18,10 +18,10 @@ EP Calipers is open source, and licensed under the
 To load PDF files, it is necessary to install Ghostscript on your computer.  This is free and the download can be found [here](http://www.ghostscript.com/download/gsdnld.html).  Without Ghostscript the program can still load image files (JPG, BMP, PNG).
 
 ## Copyright
-Copyright © 2016 [EP Studios, Inc.](http://www.epstudiossoftware.com)
+Copyright © 2016 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann
 
 Email: [mannd@epstudiossoftware.com](mailto:mannd@epstudiossoftware.com)  
-Website: [http://www.epstudiossoftware.com](http://www.epstudiossoftware.com)   
+Website: [epstudiossoftware.com](https://www.epstudiossoftware.com)   
