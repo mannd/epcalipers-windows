@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epcalipers", "epcalipers\epcalipers.csproj", "{6FA709A0-D676-4F08-B2E9-A30582E78434}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epcalipersTests", "epcalipersTests\epcalipersTests.csproj", "{B27E06B3-B104-4C19-9253-8E92C01957E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epcalipers-mobile", "epcalipers-mobile\epcalipers-mobile.csproj", "{8F390899-729B-41CC-B929-EBC0B2044248}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "epcalipers-install", "epcalipers-install\epcalipers-install.wixproj", "{143A807E-54C9-4675-B9E3-2AF86BF73149}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,16 @@ Global
 		{8F390899-729B-41CC-B929-EBC0B2044248}.Release|x86.ActiveCfg = Release|x86
 		{8F390899-729B-41CC-B929-EBC0B2044248}.Release|x86.Build.0 = Release|x86
 		{8F390899-729B-41CC-B929-EBC0B2044248}.Release|x86.Deploy.0 = Release|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Debug|ARM.ActiveCfg = Debug|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Debug|x64.ActiveCfg = Debug|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Debug|x86.ActiveCfg = Debug|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Debug|x86.Build.0 = Debug|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|Any CPU.ActiveCfg = Release|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|ARM.ActiveCfg = Release|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x64.ActiveCfg = Release|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x86.ActiveCfg = Release|x86
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
