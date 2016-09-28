@@ -64,6 +64,8 @@ namespace epcalipers
             this.rotate90LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate1RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotate1LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateTinyRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateTinyLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetImageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.nextPageToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,8 +90,6 @@ namespace epcalipers
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.rotateTinyRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rotateTinyLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -149,6 +149,7 @@ namespace epcalipers
             // 
             // ecgPictureBox
             // 
+            this.ecgPictureBox.BackColor = System.Drawing.SystemColors.Window;
             this.ecgPictureBox.Location = new System.Drawing.Point(0, 3);
             this.ecgPictureBox.Name = "ecgPictureBox";
             this.ecgPictureBox.Size = new System.Drawing.Size(679, 424);
@@ -223,7 +224,7 @@ namespace epcalipers
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.imageButton_Click);
             // 
@@ -231,7 +232,7 @@ namespace epcalipers
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -239,19 +240,19 @@ namespace epcalipers
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
             this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(143, 6);
             // 
             // quitToolStripMenuItem1
             // 
             this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
-            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
@@ -340,6 +341,24 @@ namespace epcalipers
             this.rotate1LToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.rotate1LToolStripMenuItem.Text = "Rotate 1°L";
             this.rotate1LToolStripMenuItem.Click += new System.EventHandler(this.rotate1LToolStripMenuItem_Click);
+            // 
+            // rotateTinyRToolStripMenuItem
+            // 
+            this.rotateTinyRToolStripMenuItem.Name = "rotateTinyRToolStripMenuItem";
+            this.rotateTinyRToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.R)));
+            this.rotateTinyRToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyRToolStripMenuItem.Text = "Rotate 0.1°R";
+            this.rotateTinyRToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyRToolStripMenuItem_Click);
+            // 
+            // rotateTinyLToolStripMenuItem
+            // 
+            this.rotateTinyLToolStripMenuItem.Name = "rotateTinyLToolStripMenuItem";
+            this.rotateTinyLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.L)));
+            this.rotateTinyLToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyLToolStripMenuItem.Text = "Rotate 0.1°L";
+            this.rotateTinyLToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyLToolStripMenuItem_Click);
             // 
             // resetImageToolStripMenuItem1
             // 
@@ -502,24 +521,6 @@ namespace epcalipers
             this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
             this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
-            // 
-            // rotateTinyRToolStripMenuItem
-            // 
-            this.rotateTinyRToolStripMenuItem.Name = "rotateTinyRToolStripMenuItem";
-            this.rotateTinyRToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.R)));
-            this.rotateTinyRToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.rotateTinyRToolStripMenuItem.Text = "Rotate 0.1°R";
-            this.rotateTinyRToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyRToolStripMenuItem_Click);
-            // 
-            // rotateTinyLToolStripMenuItem
-            // 
-            this.rotateTinyLToolStripMenuItem.Name = "rotateTinyLToolStripMenuItem";
-            this.rotateTinyLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.L)));
-            this.rotateTinyLToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.rotateTinyLToolStripMenuItem.Text = "Rotate 0.1°L";
-            this.rotateTinyLToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyLToolStripMenuItem_Click);
             // 
             // Form1
             // 

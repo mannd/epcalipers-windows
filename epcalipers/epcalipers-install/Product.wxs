@@ -20,10 +20,10 @@
         <Directory Id="INSTALLFOLDER" Name="epcalipers" />
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="EPCalipers"/>
+        <Directory Id="ApplicationProgramsFolder" Name="EPCalipers" />
 
       </Directory>
-      <Directory Id="DesktopFolder" Name="Desktop"/>
+      <Directory Id="DesktopFolder" Name="Desktop" />
     </Directory>
   </Fragment>
 
@@ -33,7 +33,7 @@
         <Shortcut Id="ApplicationStartMenuShortcut" Name="EP Calipers" Description="EP Calipers" Target="[INSTALLFOLDER]epcalipers.exe" WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\epcalipers" Name="installed" Type="integer" Value="1" KeyPath="yes" />
-     </Component>
+      </Component>
     </DirectoryRef>
     <DirectoryRef Id="DesktopFolder">
       <Component Id="ApplicationShortcutDesktop" Guid="221ed130-19ac-4059-b671-3fdf0a2f0393">
@@ -43,16 +43,13 @@
       </Component>
     </DirectoryRef>
   </Fragment>
-  
-  
+
+
 
   <Fragment>
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
 
-      <Component Id="Magick.NET_Q16_AnyCPU.dll" Guid="f1ca5dc9-61bc-4ec8-b839-74845cfd7bf7">
-        <File Id="Magick.NET_Q16_AnyCPU.dll" Name="Magick.NET-Q16-AnyCPU.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-AnyCPU.dll" />
-      </Component>
       <Component Id="epcalipers_help.chm" Guid="ef8b927e-a191-4313-91b3-007642cf4444">
         <File Id="epcalipers_help.chm" Name="epcalipers-help.chm" Source="$(var.epcalipers_TargetDir)epcalipers-help.chm" />
       </Component>
@@ -64,6 +61,12 @@
       </Component>
       <Component Id="epcalipers.exe.config" Guid="ddf6d839-c675-465b-b73f-ba28e6843066">
         <File Id="epcalipers.exe.config" Name="epcalipers.exe.config" Source="$(var.epcalipers_TargetDir)epcalipers.exe.config" />
+      </Component>
+      <Component Id="Magick.NET_Q16_x64.Native.dll" Guid="77f1ceb0-baa6-4c6d-8ed9-7982a7ed7b48">
+        <File Id="Magick.NET_Q16_x64.Native.dll" Name="Magick.NET-Q16-x64.Native.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.Native.dll" />
+      </Component>
+      <Component Id="Magick.NET_Q16_x64.dll" Guid="8d5e2e1a-3810-4d23-a658-f5fa5e773486">
+        <File Id="Magick.NET_Q16_x64.dll" Name="Magick.NET-Q16-x64.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

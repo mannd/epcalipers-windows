@@ -39,7 +39,7 @@ namespace epcalipers
         CalibrationDialog calibrationDialog;
 
         float rotationAngle = 0.0f;
-        Color BACKGROUND_COLOR = Color.LightGray;
+        Color BACKGROUND_COLOR = Color.Transparent;
 
         Point firstPoint;
 
@@ -1034,6 +1034,8 @@ namespace epcalipers
         {
             MagickReadSettings settings = new MagickReadSettings();
             settings.Density = new Density(300, 300);
+            PdfReadDefines defines = new PdfReadDefines();
+
             using (pdfImages)
             {
                 if (pdfImages == null)

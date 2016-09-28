@@ -24,6 +24,9 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="epcalipers-install.wax" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\epcalipers\epcalipers.csproj">
       <Name>epcalipers</Name>
       <Project>{6fa709a0-d676-4f08-b2e9-a30582e78434}</Project>
@@ -32,9 +35,6 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="epcalipers-install.wax" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
