@@ -238,12 +238,14 @@ namespace epcalipers
         {
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
+            bool isPDF = false;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 try
                 {
                     {
                         if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
                         {
+                            isPDF = true;
                             ClearPdf();
                             OpenPdf(openFileDialog1.FileName);
                         }
@@ -257,10 +259,16 @@ namespace epcalipers
                 }
                 catch (Exception exception)
                 {
+                    String pdfWarning = "";
+                    if (isPDF)
+                    {
+                        pdfWarning = "A reminder: to open PDF files, the Ghostscript library must be installed.  See Help for more information";
 
-                    MessageBox.Show("Could not read file from disk. " +
+                    }
+                    MessageBox.Show(String.Format("Could not open {0} from disk. {1}", openFileDialog1.FileName, pdfWarning) + "\n\nDetailed error: " +
                         exception.Message, "Error");
                 }
+
         }
 
         private void calibrateButton_Click(object sender, EventArgs e)
