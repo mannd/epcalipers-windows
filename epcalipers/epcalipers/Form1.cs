@@ -58,7 +58,7 @@ namespace epcalipers
         protected Thread getImageThread;
         protected bool validData;
         protected DragDropEffects effects;
-        protected string lastFilename;
+        protected string lastFilename = "";
         protected Image image;
         protected Image nextImage;
         protected int lastX = 0;
@@ -85,6 +85,33 @@ namespace epcalipers
             ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
+            try
+            {
+                if (Environment.GetCommandLineArgs().Length > 1)
+                {
+                    string arg1 = Environment.GetCommandLineArgs()[1];
+                    string ext = System.IO.Path.GetExtension(arg1);
+                    if (IsValidFileType(ext, true))
+                    {
+                        lastFilename = arg1;
+                        if (ext.ToLower() == ".pdf")
+                        {
+                            OpenPdf(lastFilename);
+                        }
+                        else
+                        {
+                            Image argImage = new Bitmap(lastFilename);
+                            ecgPictureBox.Image = argImage;
+                        }
+                        ResetBitmap(ecgPictureBox.Image);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                lastFilename = "";
+                
+            }
         }
 
         private void SetupButtons()
@@ -418,20 +445,35 @@ namespace epcalipers
             {
                 if (validData)
                 {
-                    while (getImageThread.IsAlive)
+                    if (getImageThread != null)
                     {
-                        Application.DoEvents();
-                        Thread.Sleep(0);
+                        while (getImageThread.IsAlive)
+                        {
+                            Application.DoEvents();
+                            Thread.Sleep(0);
+                        }
                     }
                     thumbnail.Visible = false;
-                    image = nextImage;
+                    if (nextImage != null)
+                    {
+                        image = nextImage;
+                    }
                     if ((ecgPictureBox.Image != null) && (ecgPictureBox.Image != nextImage))
                     {
                         ecgPictureBox.Image.Dispose();
                     }
-                    ecgPictureBox.Image = image;
-                    ResetBitmap(image);
-                    ClearPdf();
+                    if (FileIsPdf(lastFilename))
+                    {
+                        ClearPdf();
+                        OpenPdf(lastFilename);
+                        ResetBitmap(ecgPictureBox.Image);
+                    }
+                    else
+                    {
+                        ecgPictureBox.Image = image;
+                        ResetBitmap(image);
+                        ClearPdf();
+                    }
                 }
             }
             catch (Exception exception)
@@ -453,8 +495,11 @@ namespace epcalipers
                     thumbnail.Image = null;
                     thumbnail.Visible = false;
                     lastFilename = filename;
-                    getImageThread = new Thread(new ThreadStart(LoadImage));
-                    getImageThread.Start();
+                    if (!FileIsPdf(filename))
+                    {
+                        getImageThread = new Thread(new ThreadStart(LoadImage));
+                        getImageThread.Start();
+                    }
                 }
                 else
                 {
@@ -503,15 +548,31 @@ namespace epcalipers
                     if ((data.Length == 1) && (data.GetValue(0) is String))
                     {
                         filename = ((string[])data)[0];
-                        string ext = System.IO.Path.GetExtension(filename).ToLower();
-                        if ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp"))
-                        {
-                            result = true;
-                        }
+                        string ext = System.IO.Path.GetExtension(filename);
+                        result = IsValidFileType(ext, true);
                     }
                 }
             }
             return result;
+        }
+
+        private bool IsValidFileType(string fileExtension, bool allowPDF)
+        {
+            string ext = fileExtension.ToLower();
+            return ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp") || (allowPDF && ext == ".pdf"));
+        }
+
+        private bool FileIsPdf(string fileName)
+        {
+            try
+            {
+                return System.IO.Path.GetExtension(fileName).ToLower() == ".pdf";
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        
         }
 
         public delegate void AssignImageDlgt();
