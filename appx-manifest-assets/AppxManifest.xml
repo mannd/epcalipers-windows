@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
-  <Identity Name="epcalipers" ProcessorArchitecture="x64" Publisher="CN=EP Studios" Version="1.1.1.1" />
+  <Identity Name="epstudios.epcalipers" ProcessorArchitecture="x64" Publisher="CN=EP Studios" Version="1.1.1.1" />
   <Properties>
     <DisplayName>EP Calipers</DisplayName>
     <PublisherDisplayName>EP Studios</PublisherDisplayName>
@@ -17,7 +17,7 @@
   </Capabilities>
   <Applications>
     <Application Id="epcalipers" Executable="epcalipers.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="epcalipers" Description="epcalipers" BackgroundColor="#777777" Square150x150Logo="Assets\epcalipers-icon.150x150.png" Square44x44Logo="Assets\epcalipers-icon.44x44.png" />
+      <uap:VisualElements DisplayName="EP Calipers" Description="Electronic calipers" BackgroundColor="black" Square150x150Logo="Assets\epcalipers-icon.150x150.png" Square44x44Logo="Assets\epcalipers-icon.44x44.png" />
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="fileassociations">
