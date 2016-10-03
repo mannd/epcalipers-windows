@@ -73,6 +73,7 @@ Global
 		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|ARM.ActiveCfg = Release|x86
 		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|ia64.ActiveCfg = Release|x86
 		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x64.ActiveCfg = Release|x64
+		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x64.Build.0 = Release|x64
 		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x86.ActiveCfg = Release|x86
 		{143A807E-54C9-4675-B9E3-2AF86BF73149}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection

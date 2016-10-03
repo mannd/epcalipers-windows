@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define epcalipers_TargetDir=$(var.epcalipers.TargetDir)?>
-  <Product Id="*" Name="EP Calipers" Language="1033" Version="1.1.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
+  <Product Id="*" Name="EP Calipers" Language="1033" Version="1.1.1.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
