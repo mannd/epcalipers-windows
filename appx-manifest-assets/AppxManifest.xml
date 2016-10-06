@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
-  <Identity Name="epstudios.epcalipers" ProcessorArchitecture="x64" Publisher="CN=EP Studios" Version="1.1.1.1" />
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+	 xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+	 xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2"
+	 xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+	 xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+	 xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
+  <Identity Name="EPStudios.EPCalipers"
+	    ProcessorArchitecture="x64"
+	    Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"
+	    Version="1.1.2.0" />
   <Properties>
     <DisplayName>EP Calipers</DisplayName>
     <PublisherDisplayName>EP Studios</PublisherDisplayName>
-    <Logo>Assets\epcalipers-icon.150x150.png</Logo>
+    <Description>Electronic calipers</Description>
+    <Logo>Assets\EpCalipers50Tile.scale-400.png</Logo>
   </Properties>
   <Resources>
     <Resource Language="en-us" />
@@ -17,11 +26,16 @@
   </Capabilities>
   <Applications>
     <Application Id="epcalipers" Executable="epcalipers.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="EP Calipers" Description="Electronic calipers" BackgroundColor="black" Square150x150Logo="Assets\epcalipers-icon.150x150.png" Square44x44Logo="Assets\epcalipers-icon.44x44.png" />
+      <uap:VisualElements
+	  DisplayName="EP Calipers"
+	  Description="Electronic calipers"
+	  BackgroundColor="#7a29cc"
+	  Square150x150Logo="Assets\EpCalipersMedTile.scale-100.png"
+	  Square44x44Logo="Assets\EpCalipersAppList.scale-100.png" />
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="fileassociations">
-            <uap:Logo>Assets\epcalipers-icon.50x50.png</uap:Logo>
+            <uap:Logo>Assets\EpCalipersAppList.scale-100.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.jpg</uap:FileType>
               <uap:FileType>.png</uap:FileType>
