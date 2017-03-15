@@ -76,6 +76,12 @@ namespace epcalipers
             InitializeComponent();
             preferences = new Preferences();
             theCalipers = new Calipers();
+
+            BackColor = Color.White;
+            this.TransparencyKey = Color.White;
+            ecgPictureBox.BackColor = System.Drawing.Color.Transparent;
+
+
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += ecgPictureBox_Paint;
             ecgPictureBox.MouseDown += ecgPictureBox_MouseDown;
