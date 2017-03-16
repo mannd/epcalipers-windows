@@ -123,51 +123,74 @@ namespace epcalipers
         private void SetupButtons()
         {
             imageButton = new Button();
+            imageButton.BackColor = Control.DefaultBackColor;
             imageButton.Text = "Open";
             toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
             imageButton.Click += imageButton_Click;
+
             addCalipersButton = new Button();
+            addCalipersButton.BackColor = Control.DefaultBackColor;
             addCalipersButton.Text = "Add Caliper";
             toolTip1.SetToolTip(addCalipersButton, "Add new caliper");
             addCalipersButton.Click += addCaliper_Click;
+
             calibrateButton = new Button();
+            calibrateButton.BackColor = Control.DefaultBackColor;
             calibrateButton.Text = "Calibrate";
             toolTip1.SetToolTip(calibrateButton, "Calibrate calipers");
             calibrateButton.Click += calibrateButton_Click;
+
             setCalibrationButton = new Button();
+            setCalibrationButton.BackColor = Control.DefaultBackColor;
             setCalibrationButton.Text = "Set";
             toolTip1.SetToolTip(setCalibrationButton, "Set calibration interval");
             setCalibrationButton.Click += setCalibrationButton_Click;
+
             clearCalibrationButton = new Button();
+            clearCalibrationButton.BackColor = Control.DefaultBackColor;
             clearCalibrationButton.Text = "Clear";
             toolTip1.SetToolTip(clearCalibrationButton, "Clear all calibration");
             clearCalibrationButton.AutoSize = true;
             clearCalibrationButton.Click += clearCalibrationButton_Click;
+
             backCalibrationButton = new Button();
+            backCalibrationButton.BackColor = Control.DefaultBackColor;
             toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
             backCalibrationButton.Text = "Back";
             backCalibrationButton.Click += backCalibrationButton_Click;
+
             intervalRateButton = new Button();
+            intervalRateButton.BackColor = Control.DefaultBackColor;
             intervalRateButton.Text = "Rate/Int";
             intervalRateButton.Click += intervalRateButton_Click;
             toolTip1.SetToolTip(intervalRateButton, "Toggle between rate and interval");
+
             measureRRForQtcButton = new Button();
+            measureRRForQtcButton.BackColor = Control.DefaultBackColor;
             measureRRForQtcButton.Text = "Measure";
             measureRRForQtcButton.Click += MeasureRRForQtcButton_Click;
             toolTip1.SetToolTip(measureRRForQtcButton, "Measure 1 or more RR intervals for QTc");
+
             measureQTcButton = new Button();
+            measureQTcButton.BackColor = Control.DefaultBackColor;
             measureQTcButton.Text = "Measure";
             measureQTcButton.Click += MeasureQTcButton_Click;
             toolTip1.SetToolTip(measureQTcButton, "Measure QT interval");
+
             meanRRButton = new Button();
+            meanRRButton.BackColor = Control.DefaultBackColor;
             meanRRButton.Text = "Mean Rate";
             meanRRButton.Click += MeanRRButton_Click;
             toolTip1.SetToolTip(meanRRButton, "Measure mean rate and interval");
+
             qtcButton = new Button();
+            qtcButton.BackColor = Control.DefaultBackColor;
             qtcButton.Text = "QTc";
             qtcButton.Click += QtcButton_Click;
             toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
+
             cancelButton = new Button();
+            cancelButton.BackColor = Control.DefaultBackColor;
             cancelButton.Text = "Cancel";
             cancelButton.Click += CancelButton_Click;
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
