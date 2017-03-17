@@ -156,7 +156,6 @@ namespace epcalipers
             // ecgPictureBox
             // 
             this.ecgPictureBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ecgPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ecgPictureBox.Location = new System.Drawing.Point(0, 0);
             this.ecgPictureBox.Name = "ecgPictureBox";
             this.ecgPictureBox.Size = new System.Drawing.Size(682, 415);

@@ -147,6 +147,7 @@ namespace epcalipers
             WindowState = FormWindowState.Normal;
             if (value)
             {
+                ecgPictureBox.Dock = DockStyle.Fill;
                 if (preferences.ShowHandlesTransparentMode)
                 {
                     setShowHandles(true);
@@ -154,9 +155,12 @@ namespace epcalipers
                 ecgPictureBox.BackColor = Color.Transparent;
                 BackColor = Color.Gray;
                 TransparencyKey = Color.Gray;
+                
             }
             else
             {
+                ecgPictureBox.Dock = DockStyle.None;
+                ecgPictureBox.Size = this.Size;
                 if (preferences.ShowHandlesPictureMode)
                 {
                     setShowHandles(true);
