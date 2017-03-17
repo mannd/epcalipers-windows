@@ -18,6 +18,7 @@ namespace epcalipers
         private Caliper ActiveCaliper { get; set; }
         public Calibration HorizontalCalibration { get; set; }
         public Calibration VerticalCalibration { get; set; }
+        public bool hasHandles { get; set; }
 
         // for caliper movement
         private Caliper grabbedCaliper;

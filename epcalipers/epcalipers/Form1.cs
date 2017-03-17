@@ -89,7 +89,7 @@ namespace epcalipers
             //ecgPictureBox.BackColor = BACKGROUND_COLOR;
             ecgPictureBox.BackColor = Color.White;
             isTransparent = false;
-
+            FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += ecgPictureBox_Paint;
@@ -153,6 +153,7 @@ namespace epcalipers
                 BackColor = oldFormBackgroundColor;
                 TransparencyKey = oldTransparencyKey;
             }
+            ResetCalibration();
             ShowMainMenu();
         }
 

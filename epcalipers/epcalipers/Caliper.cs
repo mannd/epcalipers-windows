@@ -113,8 +113,7 @@ namespace epcalipers
                 g.DrawLine(pen, Bar2Position, CrossbarPosition, Bar1Position, CrossbarPosition);
                 if (hasHandles)
                 {
-                    g.FillRectangle(brush, new Rectangle((int)Bar1Position - 10, (int)CrossbarPosition, 20, 10));
-                    g.FillRectangle(brush, new Rectangle((int)Bar2Position - 10, (int)CrossbarPosition, 20, 10));
+                    DrawHorizontalHandles(g, brush);
                 }
             }
             else
@@ -128,8 +127,7 @@ namespace epcalipers
                 g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);
                 if (hasHandles)
                 {
-                    g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)Bar1Position - 10, 10, 20));
-                    g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)Bar2Position - 10, 10, 20));
+                    DrawVerticalHandles(g, brush);
                 }
             }
             string text = Measurement();
@@ -148,6 +146,25 @@ namespace epcalipers
             }
             pen.Dispose();
             brush.Dispose();
+        }
+
+        private void DrawHorizontalHandles(Graphics g, Brush brush)
+        {
+            int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
+            int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
+            g.FillRectangle(brush, new Rectangle(x1 - 20, (int)CrossbarPosition - 5, 20, 10));
+            g.FillRectangle(brush, new Rectangle(x2, (int)CrossbarPosition - 5, 20, 10));
+            g.FillRectangle(brush, new Rectangle((int)((Bar2Position - Bar1Position) / 2.0 + Bar1Position - 10), (int)CrossbarPosition, 20, 10));
+        }
+
+        private void DrawVerticalHandles(Graphics g, Brush brush)
+        {
+            int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
+            int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
+            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 5, x1 - 20, 10, 20));
+            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 5, x2, 10, 20));
+            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)(Bar2Position - ((Bar2Position - Bar1Position) / 2.0) - 10),
+                10, 20));
         }
 
 
