@@ -109,7 +109,7 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Show caliper handles during image mode"),
-            DisplayName("Show handles image mode"),
+            DisplayName("Handles image mode"),
             Category("Calipers")]
         public bool ShowHandlesPictureMode
         {
@@ -120,7 +120,7 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Show caliper handles during transparent mode"),
-            DisplayName("Show handles transparent mode"),
+            DisplayName("Handles transparent mode"),
             Category("Calipers")]
         public bool ShowHandlesTransparentMode
         {

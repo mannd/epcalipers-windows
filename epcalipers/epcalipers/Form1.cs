@@ -1312,7 +1312,15 @@ namespace epcalipers
             preferences.Load();
             // update all the calipers
             theCalipers.UpdatePreferences(preferences);
-            ecgPictureBox.Refresh();
+            if ((isTransparent && preferences.ShowHandlesTransparentMode) || preferences.ShowHandlesPictureMode)
+            {
+                // this method incorporates ecgPictureBox.Refresh()
+                setShowHandles(true);
+            }
+            else
+            {
+                ecgPictureBox.Refresh();
+            }
         }
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
