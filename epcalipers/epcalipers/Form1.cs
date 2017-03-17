@@ -71,8 +71,8 @@ namespace epcalipers
 
         // transparency stuff
         private Color oldFormBackgroundColor;
-        private Color oldPictureBoxBackgroundColor;
         private Color oldTransparencyKey;
+        private bool isTransparent;
 
         #endregion
         #region Initialization
@@ -83,9 +83,10 @@ namespace epcalipers
             theCalipers = new Calipers();
 
             oldFormBackgroundColor = BackColor;
-            oldPictureBoxBackgroundColor = ecgPictureBox.BackColor;
+            //oldPictureBoxBackgroundColor = ecgPictureBox.BackColor;
             oldTransparencyKey = TransparencyKey;
             ecgPictureBox.BackColor = BACKGROUND_COLOR;
+            isTransparent = false;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += ecgPictureBox_Paint;
@@ -128,28 +129,21 @@ namespace epcalipers
 
         private void makeTransparent(bool value)
         {
+            isTransparent = value;
+            // when transparent, can't allow maximize, since bug in Windows makes it impossible
+            // to grab the window after being maximized and restored
+            MaximizeBox = !value;
             if (value)
             {
                 BackColor = Color.Gray;
                 TransparencyKey = Color.Gray;
-                ecgPictureBox.BackColor = Color.Transparent;
-                // when transparent, can't allow maximize, since bug in Windows makes it impossible
-                // to grab the window after being maximized and restored
-                MaximizeBox = false;
             }
             else
             {
-                MaximizeBox = true;
                 BackColor = oldFormBackgroundColor;
                 TransparencyKey = oldTransparencyKey;
             }
-           
-            //Debug.WriteLine("Form borderstyle = {0}", FormBorderStyle); FormBorderStyle = Sizable
-
-
-            // BackColor = oldFormBackgroundColor;
-            //ecgPictureBox.BackColor = oldPictureBoxBackgroundColor;
-
+            ShowMainMenu();
         }
 
         private void SetupButtons()
@@ -404,9 +398,9 @@ namespace epcalipers
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null)
+            if (ecgPictureBox.Image == null && !isTransparent)
             {
-                return;
+               return;
             }
             NewCaliperDialog dialog = new NewCaliperDialog();
             DialogResult result = dialog.ShowDialog();
@@ -803,11 +797,15 @@ namespace epcalipers
 
             }
             flowLayoutPanel1.Controls.AddRange(mainMenu);
-            if (theBitmap == null)
-            {
-                addCalipersButton.Enabled = false;
-                calibrateButton.Enabled = false;
-            }
+            //if (theBitmap == null && !isTransparent)
+            //{
+            //    addCalipersButton.Enabled = false;
+            //    calibrateButton.Enabled = false;
+            //}
+            bool enableButtons = !(theBitmap == null && !isTransparent);
+            addCalipersButton.Enabled = enableButtons;
+            calibrateButton.Enabled = enableButtons;
+
             EnableButtonsMenus(theCalipers.HorizontalCalibration.CanDisplayRate);
             theCalipers.Locked = false;
         }

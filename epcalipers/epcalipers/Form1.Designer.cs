@@ -102,6 +102,7 @@ namespace epcalipers
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.34752F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.65248F));
@@ -153,17 +154,20 @@ namespace epcalipers
             // ecgPictureBox
             // 
             this.ecgPictureBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ecgPictureBox.Location = new System.Drawing.Point(0, 3);
+            this.ecgPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ecgPictureBox.Location = new System.Drawing.Point(0, 0);
             this.ecgPictureBox.Name = "ecgPictureBox";
-            this.ecgPictureBox.Size = new System.Drawing.Size(679, 424);
+            this.ecgPictureBox.Size = new System.Drawing.Size(682, 415);
             this.ecgPictureBox.TabIndex = 0;
             this.ecgPictureBox.TabStop = false;
             this.ecgPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ecgPictureBox_MouseMove);
             // 
             // flowLayoutPanel2
             // 
+            this.flowLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
             this.flowLayoutPanel2.Controls.Add(this.zoomInButton);
             this.flowLayoutPanel2.Controls.Add(this.zoomOutButton);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 424);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(72, 31);
