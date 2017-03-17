@@ -58,18 +58,33 @@ namespace epcalipers
 
         public void SetInitialPositionInRect(RectangleF rect)
         {
-           if (Direction == CaliperDirection.Horizontal)
-            {
-                Bar1Position = (rect.Size.Width / 3.0f) + differential;
-                Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
-                CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
-            }
-           else
-            {
-                Bar1Position = (rect.Size.Height / 3.0f) + differential;
-                Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
-                CrossbarPosition = (rect.Size.Width / 2.0f) + differential;            
-            }
+            SetInitialPositionNearCorner(rect);
+            return;
+            // for testing
+           //if (Direction == CaliperDirection.Horizontal)
+           // {
+           //     Bar1Position = (rect.Size.Width / 3.0f) + differential;
+           //     Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
+           //     CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
+           // }
+           //else
+           // {
+           //     Bar1Position = (rect.Size.Height / 3.0f) + differential;
+           //     Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
+           //     CrossbarPosition = (rect.Size.Width / 2.0f) + differential;            
+           // }
+           // differential += 15.0f;
+           // if (differential > 80.0f)
+           // {
+           //     differential = 0.0f;
+           // }
+        }
+
+        public void SetInitialPositionNearCorner(RectangleF rect)
+        {
+            Bar1Position = 50 + differential;
+            Bar2Position = 100 + differential;
+            CrossbarPosition = 100 + differential;
             differential += 15.0f;
             if (differential > 80.0f)
             {

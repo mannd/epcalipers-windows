@@ -69,6 +69,11 @@ namespace epcalipers
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
 
+        // transparency stuff
+        private Color oldFormBackgroundColor;
+        private Color oldPictureBoxBackgroundColor;
+        private Color oldTransparencyKey;
+
         #endregion
         #region Initialization
         public Form1()
@@ -77,10 +82,10 @@ namespace epcalipers
             preferences = new Preferences();
             theCalipers = new Calipers();
 
-            BackColor = Color.White;
-            this.TransparencyKey = Color.White;
-            ecgPictureBox.BackColor = System.Drawing.Color.Transparent;
-
+            oldFormBackgroundColor = BackColor;
+            oldPictureBoxBackgroundColor = ecgPictureBox.BackColor;
+            oldTransparencyKey = TransparencyKey;
+            ecgPictureBox.BackColor = BACKGROUND_COLOR;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += ecgPictureBox_Paint;
@@ -91,6 +96,7 @@ namespace epcalipers
             ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
+
             try
             {
                 if (Environment.GetCommandLineArgs().Length > 1)
@@ -120,77 +126,92 @@ namespace epcalipers
             }
         }
 
+        private void makeTransparent(bool value)
+        {
+            if (value)
+            {
+                BackColor = Color.Gray;
+                TransparencyKey = Color.Gray;
+                ecgPictureBox.BackColor = Color.Transparent;
+                // when transparent, can't allow maximize, since bug in Windows makes it impossible
+                // to grab the window after being maximized and restored
+                MaximizeBox = false;
+            }
+            else
+            {
+                MaximizeBox = true;
+                BackColor = oldFormBackgroundColor;
+                TransparencyKey = oldTransparencyKey;
+            }
+           
+            //Debug.WriteLine("Form borderstyle = {0}", FormBorderStyle); FormBorderStyle = Sizable
+
+
+            // BackColor = oldFormBackgroundColor;
+            //ecgPictureBox.BackColor = oldPictureBoxBackgroundColor;
+
+        }
+
         private void SetupButtons()
         {
             imageButton = new Button();
-            imageButton.BackColor = Control.DefaultBackColor;
+           // imageButton.BackColor = Control.DefaultBackColor;
             imageButton.Text = "Open";
             toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
             imageButton.Click += imageButton_Click;
 
             addCalipersButton = new Button();
-            addCalipersButton.BackColor = Control.DefaultBackColor;
             addCalipersButton.Text = "Add Caliper";
             toolTip1.SetToolTip(addCalipersButton, "Add new caliper");
             addCalipersButton.Click += addCaliper_Click;
 
             calibrateButton = new Button();
-            calibrateButton.BackColor = Control.DefaultBackColor;
             calibrateButton.Text = "Calibrate";
             toolTip1.SetToolTip(calibrateButton, "Calibrate calipers");
             calibrateButton.Click += calibrateButton_Click;
 
             setCalibrationButton = new Button();
-            setCalibrationButton.BackColor = Control.DefaultBackColor;
             setCalibrationButton.Text = "Set";
             toolTip1.SetToolTip(setCalibrationButton, "Set calibration interval");
             setCalibrationButton.Click += setCalibrationButton_Click;
 
             clearCalibrationButton = new Button();
-            clearCalibrationButton.BackColor = Control.DefaultBackColor;
             clearCalibrationButton.Text = "Clear";
             toolTip1.SetToolTip(clearCalibrationButton, "Clear all calibration");
             clearCalibrationButton.AutoSize = true;
             clearCalibrationButton.Click += clearCalibrationButton_Click;
 
             backCalibrationButton = new Button();
-            backCalibrationButton.BackColor = Control.DefaultBackColor;
             toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
             backCalibrationButton.Text = "Back";
             backCalibrationButton.Click += backCalibrationButton_Click;
 
             intervalRateButton = new Button();
-            intervalRateButton.BackColor = Control.DefaultBackColor;
             intervalRateButton.Text = "Rate/Int";
             intervalRateButton.Click += intervalRateButton_Click;
             toolTip1.SetToolTip(intervalRateButton, "Toggle between rate and interval");
 
             measureRRForQtcButton = new Button();
-            measureRRForQtcButton.BackColor = Control.DefaultBackColor;
             measureRRForQtcButton.Text = "Measure";
             measureRRForQtcButton.Click += MeasureRRForQtcButton_Click;
             toolTip1.SetToolTip(measureRRForQtcButton, "Measure 1 or more RR intervals for QTc");
 
             measureQTcButton = new Button();
-            measureQTcButton.BackColor = Control.DefaultBackColor;
             measureQTcButton.Text = "Measure";
             measureQTcButton.Click += MeasureQTcButton_Click;
             toolTip1.SetToolTip(measureQTcButton, "Measure QT interval");
 
             meanRRButton = new Button();
-            meanRRButton.BackColor = Control.DefaultBackColor;
             meanRRButton.Text = "Mean Rate";
             meanRRButton.Click += MeanRRButton_Click;
             toolTip1.SetToolTip(meanRRButton, "Measure mean rate and interval");
 
             qtcButton = new Button();
-            qtcButton.BackColor = Control.DefaultBackColor;
             qtcButton.Text = "QTc";
             qtcButton.Click += QtcButton_Click;
             toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
 
             cancelButton = new Button();
-            cancelButton.BackColor = Control.DefaultBackColor;
             cancelButton.Text = "Cancel";
             cancelButton.Click += CancelButton_Click;
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
@@ -1397,5 +1418,10 @@ namespace epcalipers
             RotateEcgImage(-0.1f);
         }
         #endregion
+
+        private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            makeTransparent(transparentWindowToolStripMenuItem.Checked);
+        }
     }
 }

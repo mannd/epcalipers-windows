@@ -83,6 +83,8 @@ namespace epcalipers
             this.qTcMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transparentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -118,6 +120,7 @@ namespace epcalipers
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(81, 424);
@@ -201,6 +204,7 @@ namespace epcalipers
             this.zoomToolStripMenuItem,
             this.calipersToolStripMenuItem,
             this.toolsToolStripMenuItem,
+            this.windowToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -492,6 +496,22 @@ namespace epcalipers
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
+            // windowToolStripMenuItem
+            // 
+            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.transparentWindowToolStripMenuItem});
+            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.windowToolStripMenuItem.Text = "Window";
+            // 
+            // transparentWindowToolStripMenuItem
+            // 
+            this.transparentWindowToolStripMenuItem.CheckOnClick = true;
+            this.transparentWindowToolStripMenuItem.Name = "transparentWindowToolStripMenuItem";
+            this.transparentWindowToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.transparentWindowToolStripMenuItem.Text = "Transparent Window";
+            this.transparentWindowToolStripMenuItem.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -609,6 +629,8 @@ namespace epcalipers
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem rotateTinyRToolStripMenuItem;
         private ToolStripMenuItem rotateTinyLToolStripMenuItem;
+        private ToolStripMenuItem windowToolStripMenuItem;
+        private ToolStripMenuItem transparentWindowToolStripMenuItem;
     }
 }
 
