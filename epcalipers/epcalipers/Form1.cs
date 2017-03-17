@@ -140,6 +140,7 @@ namespace epcalipers
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
             MaximizeBox = !value;
+            WindowState = FormWindowState.Normal;
             if (value)
             {
                 ecgPictureBox.BackColor = Color.Transparent;

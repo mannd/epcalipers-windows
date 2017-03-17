@@ -114,7 +114,7 @@ namespace epcalipers
                 if (hasHandles)
                 {
                     g.FillRectangle(brush, new Rectangle((int)Bar1Position - 10, (int)CrossbarPosition, 20, 10));
-                    g.FillRectangle(brush, new Rectangle((int)Bar2Position - 10, (int)(CrossbarPosition), 20, 10));
+                    g.FillRectangle(brush, new Rectangle((int)Bar2Position - 10, (int)CrossbarPosition, 20, 10));
                 }
             }
             else
@@ -125,7 +125,12 @@ namespace epcalipers
                 Bar2Position = Math.Max(Bar2Position, DELTA);
                 g.DrawLine(pen, 0.0f, Bar1Position, rect.Size.Width, Bar1Position);
                 g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
-                g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);              
+                g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);
+                if (hasHandles)
+                {
+                    g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)Bar1Position - 10, 10, 20));
+                    g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)Bar2Position - 10, 10, 20));
+                }
             }
             string text = Measurement();
             SizeF sizeOfString = g.MeasureString(text, TextFont);
