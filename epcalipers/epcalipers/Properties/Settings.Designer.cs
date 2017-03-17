@@ -118,5 +118,29 @@ namespace epcalipers.Properties {
                 this["NumberOfIntervalsQtc"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowHandlesPictureMode {
+            get {
+                return ((bool)(this["ShowHandlesPictureMode"]));
+            }
+            set {
+                this["ShowHandlesPictureMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowHandlesTransparentMode {
+            get {
+                return ((bool)(this["ShowHandlesTransparentMode"]));
+            }
+            set {
+                this["ShowHandlesTransparentMode"] = value;
+            }
+        }
     }
 }

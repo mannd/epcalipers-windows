@@ -18,6 +18,8 @@ namespace epcalipers.Properties
         private bool roundMsecRate;
         private int numberOfIntervalsMeanRR;
         private int numberOfIntervalsQtc;
+        private bool showHandlesPictureMode;
+        private bool showHandlesTransparentMode;
 
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
@@ -37,6 +39,9 @@ namespace epcalipers.Properties
             roundMsecRate = (bool)Settings.Default["RoundMsecRate"];
             numberOfIntervalsMeanRR = (int)Settings.Default["NumberOfIntervalsMeanRR"];
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
+            showHandlesPictureMode = (bool)Settings.Default["ShowHandlesPictureMode"];
+            showHandlesTransparentMode = (bool)Settings.Default["ShowHandlesTransparentMode"];
+
         }
 
         [Browsable(true),
@@ -100,6 +105,29 @@ namespace epcalipers.Properties
                 lineWidth = value;
             }
         }
+
+        [Browsable(true),
+            ReadOnly(false),
+            Description("Show caliper handles during image mode"),
+            DisplayName("Show handles image mode"),
+            Category("Calipers")]
+        public bool ShowHandlesPictureMode
+        {
+            get { return showHandlesPictureMode; }
+            set { showHandlesPictureMode = value; }
+        }
+
+        [Browsable(true),
+            ReadOnly(false),
+            Description("Show caliper handles during transparent mode"),
+            DisplayName("Show handles transparent mode"),
+            Category("Calipers")]
+        public bool ShowHandlesTransparentMode
+        {
+            get { return showHandlesTransparentMode; }
+            set { showHandlesTransparentMode = value; }
+        }
+
 
         [Browsable(true),
             ReadOnly(false),
@@ -185,6 +213,8 @@ namespace epcalipers.Properties
             Settings.Default["CaliperColor"] = caliperColor;
             Settings.Default["HighlightColor"] = highlightColor;
             Settings.Default["LineWidth"] = lineWidth;
+            Settings.Default["ShowHandlesPictureMode"] = showHandlesPictureMode;
+            Settings.Default["ShowHandlesTransparentMode"] = showHandlesTransparentMode;
             Settings.Default["HorizontalCalibration"] = horizontalCalibration;
             Settings.Default["VerticalCalibration"] = verticalCalibration;
             Settings.Default["RoundMsecRate"] = roundMsecRate;
