@@ -46,8 +46,23 @@ namespace epcalipers.Properties
             Category("Calipers")]
         public Color CaliperColor
         {
-            get { return caliperColor; }
+            
+            get {
+                caliperColor = SneakilyAdjustColor(caliperColor);
+                return caliperColor;
+            }
             set { caliperColor = value; }
+        }
+
+        // We have to cheat a little here so that our secret TransparencyKey color (gray)
+        // doesn't disappear with transparent windows.
+        private Color SneakilyAdjustColor(Color color)
+        {
+            if (color == Color.Gray)
+            {
+                color = Color.LightGray;
+            }
+            return color;
         }
 
         [Browsable(true),
@@ -57,7 +72,10 @@ namespace epcalipers.Properties
             Category("Calipers")]
         public Color HighlightColor
         {
-            get { return highlightColor; }
+            get {
+                caliperColor = SneakilyAdjustColor(caliperColor);
+                return highlightColor;
+            }
             set { highlightColor = value; }
         }
 

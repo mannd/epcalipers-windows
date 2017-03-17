@@ -30,6 +30,7 @@ namespace epcalipers
         public Calibration CurrentCalibration { set; get; }
         public Font TextFont { set; get; }
         public bool RoundMsecRate { set; get; }
+        public bool hasHandles { set; get; }
 
         public Caliper()
         {
@@ -54,33 +55,38 @@ namespace epcalipers
             TextFont = new Font("Helvetica", 14);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
+            hasHandles = true;
         }
 
         public void SetInitialPositionInRect(RectangleF rect)
         {
+            // This is better than setting in middle, because caliper can become lost.
             SetInitialPositionNearCorner(rect);
             return;
-            // for testing
-           //if (Direction == CaliperDirection.Horizontal)
-           // {
-           //     Bar1Position = (rect.Size.Width / 3.0f) + differential;
-           //     Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
-           //     CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
-           // }
-           //else
-           // {
-           //     Bar1Position = (rect.Size.Height / 3.0f) + differential;
-           //     Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
-           //     CrossbarPosition = (rect.Size.Width / 2.0f) + differential;            
-           // }
-           // differential += 15.0f;
-           // if (differential > 80.0f)
-           // {
-           //     differential = 0.0f;
-           // }
         }
 
-        public void SetInitialPositionNearCorner(RectangleF rect)
+        private void setInitialPositionNearMiddle(RectangleF rect)
+        {
+            if (Direction == CaliperDirection.Horizontal)
+            {
+                Bar1Position = (rect.Size.Width / 3.0f) + differential;
+                Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
+                CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
+            }
+            else
+            {
+                Bar1Position = (rect.Size.Height / 3.0f) + differential;
+                Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
+                CrossbarPosition = (rect.Size.Width / 2.0f) + differential;
+            }
+            differential += 15.0f;
+            if (differential > 80.0f)
+            {
+                differential = 0.0f;
+            }
+        }
+
+        private void SetInitialPositionNearCorner(RectangleF rect)
         {
             Bar1Position = 50 + differential;
             Bar2Position = 100 + differential;
@@ -105,6 +111,11 @@ namespace epcalipers
                 g.DrawLine(pen, Bar1Position, 0.0f, Bar1Position, rect.Size.Height);
                 g.DrawLine(pen, Bar2Position, 0.0f, Bar2Position, rect.Size.Height);
                 g.DrawLine(pen, Bar2Position, CrossbarPosition, Bar1Position, CrossbarPosition);
+                if (hasHandles)
+                {
+                    g.FillRectangle(brush, new Rectangle((int)Bar1Position - 10, (int)CrossbarPosition, 20, 10));
+                    g.FillRectangle(brush, new Rectangle((int)Bar2Position - 10, (int)(CrossbarPosition), 20, 10));
+                }
             }
             else
             {
@@ -130,6 +141,8 @@ namespace epcalipers
             {
                 g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
             }
+            pen.Dispose();
+            brush.Dispose();
         }
 
 

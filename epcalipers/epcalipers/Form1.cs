@@ -74,6 +74,7 @@ namespace epcalipers
         private Color oldTransparencyKey;
         private bool isTransparent;
 
+
         #endregion
         #region Initialization
         public Form1()
@@ -85,8 +86,10 @@ namespace epcalipers
             oldFormBackgroundColor = BackColor;
             //oldPictureBoxBackgroundColor = ecgPictureBox.BackColor;
             oldTransparencyKey = TransparencyKey;
-            ecgPictureBox.BackColor = BACKGROUND_COLOR;
+            //ecgPictureBox.BackColor = BACKGROUND_COLOR;
+            ecgPictureBox.BackColor = Color.White;
             isTransparent = false;
+
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
             ecgPictureBox.Paint += ecgPictureBox_Paint;
@@ -129,17 +132,23 @@ namespace epcalipers
 
         private void makeTransparent(bool value)
         {
+            KillBitmap();
+            ecgPictureBox.Image = null;
+            imageButton.Enabled = !value;
+            openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
             MaximizeBox = !value;
             if (value)
             {
+                ecgPictureBox.BackColor = Color.Transparent;
                 BackColor = Color.Gray;
                 TransparencyKey = Color.Gray;
             }
             else
             {
+                ecgPictureBox.BackColor = Color.White;
                 BackColor = oldFormBackgroundColor;
                 TransparencyKey = oldTransparencyKey;
             }
@@ -797,11 +806,6 @@ namespace epcalipers
 
             }
             flowLayoutPanel1.Controls.AddRange(mainMenu);
-            //if (theBitmap == null && !isTransparent)
-            //{
-            //    addCalipersButton.Enabled = false;
-            //    calibrateButton.Enabled = false;
-            //}
             bool enableButtons = !(theBitmap == null && !isTransparent);
             addCalipersButton.Enabled = enableButtons;
             calibrateButton.Enabled = enableButtons;
@@ -1034,12 +1038,17 @@ namespace epcalipers
             theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
         }
 
-        private void ResetBitmap(Image image)
+        private void KillBitmap()
         {
             if (theBitmap != null)
             {
                 theBitmap.Dispose();
             }
+        }
+
+        private void ResetBitmap(Image image)
+        {
+            KillBitmap();
             theBitmap = new Bitmap(image);
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
