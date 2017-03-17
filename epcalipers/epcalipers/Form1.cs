@@ -84,9 +84,7 @@ namespace epcalipers
             theCalipers = new Calipers();
 
             oldFormBackgroundColor = BackColor;
-            //oldPictureBoxBackgroundColor = ecgPictureBox.BackColor;
             oldTransparencyKey = TransparencyKey;
-            //ecgPictureBox.BackColor = BACKGROUND_COLOR;
             ecgPictureBox.BackColor = Color.White;
             isTransparent = false;
             FormBorderStyle = FormBorderStyle.Sizable;
@@ -100,6 +98,12 @@ namespace epcalipers
             ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
+
+            if (preferences.ShowHandlesPictureMode)
+            {
+                showHandles(true);
+                showHandlesToolStripMenuItem.Checked = true;
+            }
 
             try
             {
@@ -143,18 +147,33 @@ namespace epcalipers
             WindowState = FormWindowState.Normal;
             if (value)
             {
+                if (preferences.ShowHandlesTransparentMode)
+                {
+                    setShowHandles(true);
+                }
                 ecgPictureBox.BackColor = Color.Transparent;
                 BackColor = Color.Gray;
                 TransparencyKey = Color.Gray;
             }
             else
             {
+                if (preferences.ShowHandlesPictureMode)
+                {
+                    setShowHandles(true);
+                }
                 ecgPictureBox.BackColor = Color.White;
                 BackColor = oldFormBackgroundColor;
                 TransparencyKey = oldTransparencyKey;
             }
             ResetCalibration();
+            ecgPictureBox.Refresh();
             ShowMainMenu();
+        }
+
+        private void setShowHandles(bool value)
+        {
+            showHandles(value);
+            showHandlesToolStripMenuItem.Checked = value;
         }
 
         private void SetupButtons()
@@ -1436,7 +1455,12 @@ namespace epcalipers
 
         private void showHandlesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            theCalipers.showHandles(showHandlesToolStripMenuItem.Checked);
+            showHandles(showHandlesToolStripMenuItem.Checked);
+        }
+
+        private void showHandles(bool value)
+        {
+            theCalipers.showHandles(value);
             ecgPictureBox.Refresh();
         }
     }

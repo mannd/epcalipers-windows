@@ -73,7 +73,7 @@ namespace epcalipers.Properties
         [Browsable(true),
             ReadOnly(false),
             Description("Selected caliper color"),
-            DisplayName("Selected caliper color"),
+            DisplayName("Caliper selected color"),
             Category("Calipers")]
         public Color HighlightColor
         {
