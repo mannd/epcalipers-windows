@@ -92,6 +92,8 @@ namespace epcalipers
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.showHandlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -409,7 +411,9 @@ namespace epcalipers
             this.toolStripSeparator5,
             this.toggleRateintervalToolStripMenuItem,
             this.meanRateIntervalToolStripMenuItem,
-            this.qTcMeasurementToolStripMenuItem});
+            this.qTcMeasurementToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.showHandlesToolStripMenuItem});
             this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
             this.calipersToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.calipersToolStripMenuItem.Text = "Calipers";
@@ -495,7 +499,7 @@ namespace epcalipers
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
@@ -512,8 +516,8 @@ namespace epcalipers
             // 
             this.transparentWindowToolStripMenuItem.CheckOnClick = true;
             this.transparentWindowToolStripMenuItem.Name = "transparentWindowToolStripMenuItem";
-            this.transparentWindowToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.transparentWindowToolStripMenuItem.Text = "Transparent Window";
+            this.transparentWindowToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.transparentWindowToolStripMenuItem.Text = "Transparent window";
             this.transparentWindowToolStripMenuItem.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -545,6 +549,19 @@ namespace epcalipers
             this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
             this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(211, 6);
+            // 
+            // showHandlesToolStripMenuItem
+            // 
+            this.showHandlesToolStripMenuItem.CheckOnClick = true;
+            this.showHandlesToolStripMenuItem.Name = "showHandlesToolStripMenuItem";
+            this.showHandlesToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.showHandlesToolStripMenuItem.Text = "Show handles";
+            this.showHandlesToolStripMenuItem.Click += new System.EventHandler(this.showHandlesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -635,6 +652,8 @@ namespace epcalipers
         private ToolStripMenuItem rotateTinyLToolStripMenuItem;
         private ToolStripMenuItem windowToolStripMenuItem;
         private ToolStripMenuItem transparentWindowToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator6;
+        private ToolStripMenuItem showHandlesToolStripMenuItem;
     }
 }
 

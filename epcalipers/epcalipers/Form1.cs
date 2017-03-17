@@ -959,6 +959,7 @@ namespace epcalipers
             c.CaliperColor = c.UnselectedColor;
             c.RoundMsecRate = preferences.RoundMsecRate;
             c.Direction = direction;
+            c.hasHandles = showHandlesToolStripMenuItem.Checked;
             if (direction == CaliperDirection.Horizontal)
             {
                 c.CurrentCalibration = theCalipers.HorizontalCalibration;
@@ -1431,6 +1432,12 @@ namespace epcalipers
         private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             makeTransparent(transparentWindowToolStripMenuItem.Checked);
+        }
+
+        private void showHandlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            theCalipers.showHandles(showHandlesToolStripMenuItem.Checked);
+            ecgPictureBox.Refresh();
         }
     }
 }

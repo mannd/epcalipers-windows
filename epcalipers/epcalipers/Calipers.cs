@@ -18,7 +18,6 @@ namespace epcalipers
         private Caliper ActiveCaliper { get; set; }
         public Calibration HorizontalCalibration { get; set; }
         public Calibration VerticalCalibration { get; set; }
-        public bool hasHandles { get; set; }
 
         // for caliper movement
         private Caliper grabbedCaliper;
@@ -315,6 +314,14 @@ namespace epcalipers
             else
             {
                 return null;
+            }
+        }
+
+        public void showHandles(bool value)
+        {
+            foreach (Caliper c in calipers)
+            {
+                c.hasHandles = value;
             }
         }
 

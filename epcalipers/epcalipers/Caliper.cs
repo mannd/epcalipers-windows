@@ -55,7 +55,7 @@ namespace epcalipers
             TextFont = new Font("Helvetica", 14);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
-            hasHandles = true;
+            hasHandles = false;
         }
 
         public void SetInitialPositionInRect(RectangleF rect)
