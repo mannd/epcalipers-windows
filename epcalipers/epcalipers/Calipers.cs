@@ -54,6 +54,11 @@ namespace epcalipers
             calipers.Remove(c);
         }
 
+        public void deleteAllCalipers()
+        {
+            calipers.Clear();
+        }
+
         // this is the highlighted/selected caliper used for calibration or measurements
         public Caliper GetActiveCaliper()
         {

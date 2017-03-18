@@ -137,9 +137,10 @@ namespace epcalipers
         private void makeTransparent(bool value)
         {
             KillBitmap();
+            theCalipers.deleteAllCalipers();
             ecgPictureBox.Image = null;
-            imageButton.Enabled = !value;
-            openToolStripMenuItem.Enabled = !value;
+            //imageButton.Enabled = !value;
+            //openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
@@ -341,6 +342,9 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
+            // opening a file removes transparency automatically
+            makeTransparent(false);
+            transparentWindowToolStripMenuItem.Checked = false;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
             bool isPDF = false;
@@ -360,6 +364,7 @@ namespace epcalipers
                             ClearPdf();
                         }
                         ResetBitmap(ecgPictureBox.Image);
+                        ShowMainMenu();
                     }
                 }
                 catch (Exception exception)
@@ -831,7 +836,8 @@ namespace epcalipers
 
             }
             flowLayoutPanel1.Controls.AddRange(mainMenu);
-            bool enableButtons = !(theBitmap == null && !isTransparent);
+            bool enableButtons = (theBitmap 
+                != null || isTransparent);
             addCalipersButton.Enabled = enableButtons;
             calibrateButton.Enabled = enableButtons;
 
@@ -1079,8 +1085,6 @@ namespace epcalipers
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
             ClearCalibration();
-            addCalipersButton.Enabled = true;
-            calibrateButton.Enabled = true;
         }
 
         // rotation
@@ -1458,7 +1462,6 @@ namespace epcalipers
         {
             RotateEcgImage(-0.1f);
         }
-        #endregion
 
         private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1475,5 +1478,8 @@ namespace epcalipers
             theCalipers.showHandles(value);
             ecgPictureBox.Refresh();
         }
+
+        #endregion
+
     }
 }
