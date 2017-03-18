@@ -344,7 +344,9 @@ namespace epcalipers
         private void imageButton_Click(object sender, EventArgs e)
         {
             // opening a file removes transparency automatically
-            makeTransparent(false);
+            if (isTransparent) { 
+              makeTransparent(false);
+            }
             transparentWindowToolStripMenuItem.Checked = false;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
@@ -525,7 +527,10 @@ namespace epcalipers
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
-            makeTransparent(false);
+            if (isTransparent)
+            {
+                makeTransparent(false);
+            }
             try
             {
                 if (validData)
