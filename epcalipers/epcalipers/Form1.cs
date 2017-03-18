@@ -172,6 +172,7 @@ namespace epcalipers
             }
             ResetCalibration();
             ecgPictureBox.Refresh();
+            // TODO: below sometimes called twice
             ShowMainMenu();
         }
 
@@ -524,6 +525,7 @@ namespace epcalipers
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
+            makeTransparent(false);
             try
             {
                 if (validData)
@@ -557,6 +559,7 @@ namespace epcalipers
                         ResetBitmap(image);
                         ClearPdf();
                     }
+                    ShowMainMenu();
                 }
             }
             catch (Exception exception)
@@ -836,16 +839,27 @@ namespace epcalipers
 
             }
             flowLayoutPanel1.Controls.AddRange(mainMenu);
-            bool enableButtons = (theBitmap 
-                != null || isTransparent);
-            addCalipersButton.Enabled = enableButtons;
-            calibrateButton.Enabled = enableButtons;
+            EnableImageMenuItems(ImageIsLoaded());
+            EnableCaliperMenuItems(CalipersAllowed());
+            EnableMeasurementMenuItems(MeasurementsAllowed());
 
-            EnableButtonsMenus(theCalipers.HorizontalCalibration.CanDisplayRate);
             theCalipers.Locked = false;
         }
 
-        private void EnableButtonsMenus(bool enable)
+        private void EnableCaliperMenuItems(bool enable)
+        {
+            addCalipersButton.Enabled = enable;
+            calibrateButton.Enabled = enable;
+            timeCaliperToolStripMenuItem.Enabled = enable;
+            amplitudeCaliperToolStripMenuItem.Enabled = enable;
+            deleteCaliperToolStripMenuItem.Enabled = enable;
+            showHandlesToolStripMenuItem.Enabled = enable;
+            deleteCaliperToolStripMenuItem.Enabled = enable;
+            calibrateToolStripMenuItem.Enabled = enable;
+            clearCalibrationToolStripMenuItem.Enabled = enable;
+        }
+
+        private void EnableMeasurementMenuItems(bool enable)
         {
             intervalRateButton.Enabled = enable;
             meanRRButton.Enabled = enable;
@@ -975,7 +989,7 @@ namespace epcalipers
             {
                 theCalipers.HorizontalCalibration.Reset();
                 theCalipers.VerticalCalibration.Reset();
-                EnableButtonsMenus(false);
+                EnableMeasurementMenuItems(false);
             }
         }
 
@@ -1010,6 +1024,21 @@ namespace epcalipers
 
         #endregion
         #region Image
+
+        private bool ImageIsLoaded()
+        {
+            return ecgPictureBox.Image != null;
+        }
+
+        private bool CalipersAllowed()
+        {
+            return ImageIsLoaded() || isTransparent;
+        }
+
+        private bool MeasurementsAllowed()
+        {
+            return theCalipers.HorizontalCalibration.CanDisplayRate;
+        }
 
         private void ZoomIn()
         {
@@ -1259,6 +1288,23 @@ namespace epcalipers
         }
         #endregion
         #region Menu
+
+        private void EnableImageMenuItems(bool value)
+        {
+            zoomInButton.Enabled = value;
+            zoomOutButton.Enabled = value;
+            zoomInToolStripMenuItem.Enabled = value;
+            zoomOutToolStripMenuItem.Enabled = value;
+            resetZoomToolStripMenuItem.Enabled = value;
+            rotate1LToolStripMenuItem.Enabled = value;
+            rotate1RToolStripMenuItem.Enabled = value;
+            rotate90LToolStripMenuItem.Enabled = value;
+            rotate90RToolStripMenuItem.Enabled = value;
+            rotateTinyLToolStripMenuItem.Enabled = value;
+            rotateTinyRToolStripMenuItem.Enabled = value;
+            resetImageToolStripMenuItem1.Enabled = value;
+        }
+
         private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -1379,7 +1425,7 @@ namespace epcalipers
 
         private void timeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null)
+            if (!CalipersAllowed())
             {
                 return;
             }
@@ -1388,7 +1434,7 @@ namespace epcalipers
 
         private void amplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null)
+            if (!CalipersAllowed())
             {
                 return;
             }
@@ -1397,7 +1443,7 @@ namespace epcalipers
 
         private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null)
+            if (!CalipersAllowed())
             {
                 return;
             }
