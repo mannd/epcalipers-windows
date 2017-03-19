@@ -36,12 +36,12 @@ namespace epcalipers
         protected bool caliperRequiresCalibration = true;
 
         // added for AngleCaliper derived class
-        protected bool requiresCalibration
+        public bool requiresCalibration
         {
             get { return caliperRequiresCalibration; }
         }
 
-        protected bool isAngleCaliper
+        public bool isAngleCaliper
         {
             get { return caliperIsAngleCaliper; }
         }

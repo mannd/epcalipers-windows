@@ -391,50 +391,68 @@ namespace epcalipers
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
-            if (NoCalipersError())
+            try
             {
-                return;
-            }
-            if (theCalipers.NoCaliperIsSelected())
-            {
-                if (theCalipers.NumberOfCalipers() == 1)
+                if (NoCalipersError())
                 {
-                    // assume user wants to calibrate sole caliper so select it
-                    theCalipers.SelectSoleCaliper();
-                    ecgPictureBox.Refresh();
+                    return;
+                }
+                if (theCalipers.NoCaliperIsSelected())
+                {
+                    if (theCalipers.NumberOfCalipers() == 1)
+                    {
+                        // assume user wants to calibrate sole caliper so select it
+                        theCalipers.SelectSoleCaliper();
+                        ecgPictureBox.Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
+                            "No Caliper Selected");
+                        return;
+                    }
+                }
+                if (calibrationDialog == null)
+                {
+                    calibrationDialog = new CalibrationDialog();
+                }
+                Caliper c = theCalipers.GetActiveCaliper();
+                if (c == null)
+                {
+                    throw new Exception("No caliper for calibration");
+                }
+                if (c.isAngleCaliper)
+                {
+                    throw new Exception("Angle calipers don't require calibration.  " +
+                        "Only time or amplitude calipers need to be calibrated.\n\n" +
+                        "If you want to use an angle caliper as a Brugadometer, " +
+                        "you must first calibrate time and amplitude calipers.");
+                }
+                if (c.Direction == CaliperDirection.Horizontal)
+                {
+                    if (theCalipers.HorizontalCalibration.CalibrationString == null)
+                    {
+                        theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
+                    }
+                    calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
                 }
                 else
                 {
-                    MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
-                        "No Caliper Selected");
-                    return;
+                    if (theCalipers.VerticalCalibration.CalibrationString == null)
+                    {
+                        theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
+                    }
+                    calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
                 }
-            }
-            if (calibrationDialog == null)
-            {
-                calibrationDialog = new CalibrationDialog();
-            }
-            Caliper c = theCalipers.GetActiveCaliper();
-            if (c.Direction == CaliperDirection.Horizontal)
-            {
-                if (theCalipers.HorizontalCalibration.CalibrationString == null)
+                DialogResult result = calibrationDialog.ShowDialog();
+                if (result == DialogResult.OK)
                 {
-                    theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
+                    Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
                 }
-                calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
             }
-            else
+            catch (Exception ex)
             {
-                if (theCalipers.VerticalCalibration.CalibrationString == null)
-                {
-                    theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
-                }
-                calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
-            }
-            DialogResult result = calibrationDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
+                MessageBox.Show(ex.Message, "Calibration Error");
             }
         }
 
@@ -731,7 +749,7 @@ namespace epcalipers
                 return;
             }
             Caliper c = theCalipers.GetActiveCaliper();
-            if (c.Direction == CaliperDirection.Vertical)
+            if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
             {
                 NoTimeCaliperError();
                 return;

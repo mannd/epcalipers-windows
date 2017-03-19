@@ -94,7 +94,8 @@ namespace epcalipers
         {
             return (calipers.Count < 1 ||
                 NoCaliperIsSelected() ||
-                GetActiveCaliper().Direction == CaliperDirection.Vertical);
+                GetActiveCaliper().Direction == CaliperDirection.Vertical) ||
+                GetActiveCaliper().isAngleCaliper;
         }
 
         public void SelectCaliper(Caliper c)
@@ -303,7 +304,8 @@ namespace epcalipers
             {
                 foreach (Caliper caliper in calipers)
                 {
-                    if (caliper.Direction == CaliperDirection.Horizontal)
+                    if (caliper.Direction == CaliperDirection.Horizontal
+                        && !caliper.isAngleCaliper)
                     {
                         c = caliper;
                         n++;
