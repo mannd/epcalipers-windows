@@ -34,6 +34,7 @@
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             // VerticalCaliperRadioButton
             // 
             this.VerticalCaliperRadioButton.AutoSize = true;
-            this.VerticalCaliperRadioButton.Location = new System.Drawing.Point(17, 46);
+            this.VerticalCaliperRadioButton.Location = new System.Drawing.Point(17, 44);
             this.VerticalCaliperRadioButton.Name = "VerticalCaliperRadioButton";
             this.VerticalCaliperRadioButton.Size = new System.Drawing.Size(150, 17);
             this.VerticalCaliperRadioButton.TabIndex = 1;
@@ -81,14 +82,26 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.horizontalCaliperRadioButton);
             this.groupBox1.Controls.Add(this.VerticalCaliperRadioButton);
             this.groupBox1.Location = new System.Drawing.Point(38, 89);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 69);
+            this.groupBox1.Size = new System.Drawing.Size(200, 102);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Caliper Direction";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(17, 69);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(87, 17);
+            this.radioButton1.TabIndex = 2;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Angle Caliper";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // NewCaliperDialog
             // 
@@ -115,5 +128,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.RadioButton horizontalCaliperRadioButton;
         public System.Windows.Forms.RadioButton VerticalCaliperRadioButton;
+        public System.Windows.Forms.RadioButton radioButton1;
     }
 }

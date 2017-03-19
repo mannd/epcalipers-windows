@@ -110,6 +110,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AngleCaliper.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationDialog.cs">
       <SubType>Form</SubType>

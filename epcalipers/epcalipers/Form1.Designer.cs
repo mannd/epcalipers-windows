@@ -94,6 +94,7 @@ namespace epcalipers
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.showHandlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.angleCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -233,7 +234,7 @@ namespace epcalipers
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.imageButton_Click);
             // 
@@ -241,7 +242,7 @@ namespace epcalipers
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -249,19 +250,19 @@ namespace epcalipers
             // 
             this.printToolStripMenuItem.Name = "printToolStripMenuItem";
             this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.printToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.printToolStripMenuItem.Text = "Print";
             this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(143, 6);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(149, 6);
             // 
             // quitToolStripMenuItem1
             // 
             this.quitToolStripMenuItem1.Name = "quitToolStripMenuItem1";
-            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(146, 22);
+            this.quitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.quitToolStripMenuItem1.Text = "Quit";
             this.quitToolStripMenuItem1.Click += new System.EventHandler(this.quitToolStripMenuItem1_Click);
             // 
@@ -403,6 +404,7 @@ namespace epcalipers
             this.calipersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timeCaliperToolStripMenuItem,
             this.amplitudeCaliperToolStripMenuItem,
+            this.angleCaliperToolStripMenuItem,
             this.deleteCaliperToolStripMenuItem,
             this.toolStripSeparator4,
             this.calibrateToolStripMenuItem,
@@ -562,6 +564,13 @@ namespace epcalipers
             this.showHandlesToolStripMenuItem.Text = "Show handles";
             this.showHandlesToolStripMenuItem.Click += new System.EventHandler(this.showHandlesToolStripMenuItem_Click);
             // 
+            // angleCaliperToolStripMenuItem
+            // 
+            this.angleCaliperToolStripMenuItem.Name = "angleCaliperToolStripMenuItem";
+            this.angleCaliperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.angleCaliperToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.angleCaliperToolStripMenuItem.Text = "Angle caliper";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -654,6 +663,7 @@ namespace epcalipers
         private ToolStripMenuItem transparentWindowToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripMenuItem showHandlesToolStripMenuItem;
+        private ToolStripMenuItem angleCaliperToolStripMenuItem;
     }
 }
 

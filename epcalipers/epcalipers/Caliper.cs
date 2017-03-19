@@ -32,6 +32,10 @@ namespace epcalipers
         public bool RoundMsecRate { set; get; }
         public bool hasHandles { set; get; }
 
+        // added for AngleCaliper derived class
+        protected bool requiresCalibration = true;
+        protected bool isAngleCaliper = false;
+
         public Caliper()
         {
             InitWithDirection(CaliperDirection.Horizontal, 0.0f, 0.0f, 100.0f);
@@ -58,7 +62,7 @@ namespace epcalipers
             hasHandles = false;
         }
 
-        public void SetInitialPositionInRect(RectangleF rect)
+        public virtual void SetInitialPositionInRect(RectangleF rect)
         {
             // This is better than setting in middle, because caliper can become lost.
             SetInitialPositionNearCorner(rect);

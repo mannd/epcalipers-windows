@@ -453,9 +453,13 @@ namespace epcalipers
                 {
                     direction = CaliperDirection.Horizontal;
                 }
-                else
+                else if (dialog.VerticalCaliperRadioButton.Checked)
                 {
                     direction = CaliperDirection.Vertical;
+                }
+                else if ()
+                {
+                    // angle caliper checked
                 }
                 AddCaliper(direction);
             }
