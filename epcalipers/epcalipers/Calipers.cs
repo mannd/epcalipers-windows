@@ -172,12 +172,12 @@ namespace epcalipers
                     crossbarGrabbed = true;
                     caliper = c;
                 }
-                else if (c.PointNearBar(point, c.Bar1Position) && caliper == null)
+                else if (c.PointNearBar1(point) && caliper == null)
                 {
                     bar1Grabbed = true;
                     caliper = c;
                 }
-                else if (c.PointNearBar(point, c.Bar2Position) && caliper == null)
+                else if (c.PointNearBar2(point) && caliper == null)
                 {
                     bar2Grabbed = true;
                     caliper = c;
@@ -199,7 +199,7 @@ namespace epcalipers
             return caliper;
         }
 
-        public bool DragGrabbedCaliper(float deltaX, float deltaY)
+        public bool DragGrabbedCaliper(float deltaX, float deltaY, PointF location)
         {
             bool needsRefresh = false;
             if (grabbedCaliper != null)
@@ -213,17 +213,15 @@ namespace epcalipers
                 }
                 if (crossbarGrabbed)
                 {
-                    grabbedCaliper.Bar1Position += delta.X;
-                    grabbedCaliper.Bar2Position += delta.X;
-                    grabbedCaliper.CrossbarPosition += delta.Y;
+                    grabbedCaliper.MoveCrossbar(delta);
                 }
                 else if (bar1Grabbed)
                 {
-                    grabbedCaliper.Bar1Position += delta.X;
+                    grabbedCaliper.MoveBar1(delta, location);
                 }
                 else if (bar2Grabbed)
                 {
-                    grabbedCaliper.Bar2Position += delta.X;
+                    grabbedCaliper.MoveBar2(delta, location);
                 }
                 needsRefresh = true;
                 caliperWasDragged = true;

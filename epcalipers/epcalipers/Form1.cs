@@ -127,7 +127,7 @@ namespace epcalipers
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 lastFilename = "";
                 
@@ -452,16 +452,18 @@ namespace epcalipers
                 if (dialog.horizontalCaliperRadioButton.Checked)
                 {
                     direction = CaliperDirection.Horizontal;
+                    AddCaliper(direction);
                 }
                 else if (dialog.VerticalCaliperRadioButton.Checked)
                 {
                     direction = CaliperDirection.Vertical;
+                    AddCaliper(direction);
                 }
-                else if ()
+                else    //if (dialog.angleCaliperRadioButton.Checked)
                 {
                     // angle caliper checked
+                    AddAngleCaliper();
                 }
-                AddCaliper(direction);
             }
         }
 
@@ -505,7 +507,7 @@ namespace epcalipers
             Point newPoint = new Point(e.X, e.Y);
             int deltaX = newPoint.X - firstPoint.X;
             int deltaY = newPoint.Y - firstPoint.Y;
-            if (theCalipers.DragGrabbedCaliper(deltaX, deltaY))
+            if (theCalipers.DragGrabbedCaliper(deltaX, deltaY, firstPoint))
             {
                 firstPoint = newPoint;
                 ecgPictureBox.Refresh();
@@ -663,7 +665,7 @@ namespace epcalipers
             {
                 return System.IO.Path.GetExtension(fileName).ToLower() == ".pdf";
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -861,6 +863,7 @@ namespace epcalipers
             calibrateButton.Enabled = enable;
             timeCaliperToolStripMenuItem.Enabled = enable;
             amplitudeCaliperToolStripMenuItem.Enabled = enable;
+            angleCaliperToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
             showHandlesToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
@@ -1020,6 +1023,23 @@ namespace epcalipers
             {
                 c.CurrentCalibration = theCalipers.VerticalCalibration;
             }
+            c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
+            theCalipers.addCaliper(c);
+            ecgPictureBox.Refresh();
+        }
+
+        private void AddAngleCaliper()
+        {
+            AngleCaliper c = new AngleCaliper();
+            // TODO: refactor common code
+            c.LineWidth = preferences.LineWidth;
+            c.UnselectedColor = preferences.CaliperColor;
+            c.SelectedColor = preferences.HighlightColor;
+            c.CaliperColor = c.UnselectedColor;
+            c.RoundMsecRate = preferences.RoundMsecRate;
+            c.Direction = CaliperDirection.Horizontal;
+            c.CurrentCalibration = theCalipers.HorizontalCalibration;
+            c.VerticalCalibration = theCalipers.VerticalCalibration;
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
@@ -1450,6 +1470,15 @@ namespace epcalipers
             AddCaliper(CaliperDirection.Vertical);
         }
 
+        private void angleCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!CalipersAllowed())
+            {
+                return;
+            }
+            AddAngleCaliper();
+        }
+
         private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!CalipersAllowed())
@@ -1533,6 +1562,9 @@ namespace epcalipers
             theCalipers.showHandles(value);
             ecgPictureBox.Refresh();
         }
+
+
+      
 
         #endregion
 

@@ -570,6 +570,7 @@ namespace epcalipers
             this.angleCaliperToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.angleCaliperToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.angleCaliperToolStripMenuItem.Text = "Angle caliper";
+            this.angleCaliperToolStripMenuItem.Click += new System.EventHandler(this.angleCaliperToolStripMenuItem_Click);
             // 
             // Form1
             // 

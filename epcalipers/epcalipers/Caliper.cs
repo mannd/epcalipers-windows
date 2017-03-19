@@ -11,7 +11,7 @@ namespace epcalipers
 
     public class Caliper
     {
-        private float DELTA = 20.0f;
+        protected float DELTA = 20.0f;
         //private int tmpLineWidth;
         private static float differential = 0.0f;
 
@@ -32,9 +32,19 @@ namespace epcalipers
         public bool RoundMsecRate { set; get; }
         public bool hasHandles { set; get; }
 
+        protected bool caliperIsAngleCaliper = false;
+        protected bool caliperRequiresCalibration = true;
+
         // added for AngleCaliper derived class
-        protected bool requiresCalibration = true;
-        protected bool isAngleCaliper = false;
+        protected bool requiresCalibration
+        {
+            get { return caliperRequiresCalibration; }
+        }
+
+        protected bool isAngleCaliper
+        {
+            get { return caliperIsAngleCaliper; }
+        }
 
         public Caliper()
         {
@@ -102,7 +112,7 @@ namespace epcalipers
             }
         }
 
-        public void Draw(Graphics g, RectangleF rect)
+        public virtual void Draw(Graphics g, RectangleF rect)
         {
             Brush brush = new SolidBrush(CaliperColor);
             Pen pen = new Pen(brush, LineWidth);
@@ -134,20 +144,7 @@ namespace epcalipers
                     DrawVerticalHandles(g, brush);
                 }
             }
-            string text = Measurement();
-            SizeF sizeOfString = g.MeasureString(text, TextFont);
-            float stringWidth = sizeOfString.Width;
-            float stringHeight = sizeOfString.Height;
-            float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
-            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
-            if (Direction == CaliperDirection.Horizontal)
-            {
-                g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 30);
-            }
-            else
-            {
-                g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
-            }
+            CaliperText(g, brush);
             pen.Dispose();
             brush.Dispose();
         }
@@ -171,6 +168,24 @@ namespace epcalipers
                 10, 20));
         }
 
+        protected void CaliperText(Graphics g, Brush brush)
+        {
+            string text = Measurement();
+            SizeF sizeOfString = g.MeasureString(text, TextFont);
+            float stringWidth = sizeOfString.Width;
+            float stringHeight = sizeOfString.Height;
+            float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
+            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
+            if (Direction == CaliperDirection.Horizontal)
+            {
+                g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 30);
+            }
+            else
+            {
+                g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
+            }
+        }
+
 
         // returns significant bar coordinate depending on direction of caliper
         public float BarCoord(PointF p)
@@ -178,7 +193,7 @@ namespace epcalipers
             return Direction == CaliperDirection.Horizontal ? p.X : p.Y;
         }
 
-        private string Measurement()
+        protected virtual string Measurement()
         {
             // "%.4g %s"
             /// TODO: Change below mimics behavior of the other versions of this app.
@@ -209,7 +224,7 @@ namespace epcalipers
             return result;
         }
 
-        public double IntervalResult()
+        public virtual double IntervalResult()
         {
             return ValueInPoints * CurrentCalibration.Multiplier;
         }
@@ -254,12 +269,22 @@ namespace epcalipers
             }
         }
 
-        public bool PointNearBar(PointF p, float barPosition)
+        private bool PointNearBar(PointF p, float barPosition)
         {
             return BarCoord(p) > barPosition - DELTA && BarCoord(p) < barPosition + DELTA;
         }
 
-        public bool PointNearCrossbar(PointF p)
+        public virtual bool PointNearBar1(PointF p)
+        {
+            return PointNearBar(p, Bar1Position);
+        }
+
+        public virtual bool PointNearBar2(PointF p)
+        {
+            return PointNearBar(p, Bar2Position);
+        }
+
+        public virtual bool PointNearCrossbar(PointF p)
         {
             bool nearBar;
             float delta = DELTA + 5.0f;
@@ -279,9 +304,29 @@ namespace epcalipers
 
         public bool PointNearCaliper(PointF p)
         {
-            return PointNearCrossbar(p) || PointNearBar(p, Bar1Position) ||
-                PointNearBar(p, Bar2Position);
+            return PointNearCrossbar(p) || PointNearBar1(p) ||
+                PointNearBar2(p);
         }
 
+        #region Movement
+
+        public virtual void MoveCrossbar(PointF delta)
+        {
+            Bar1Position += delta.X;
+            Bar2Position += delta.X;
+            CrossbarPosition += delta.Y;
+        }
+
+        public virtual void MoveBar1(PointF delta, PointF location)
+        {
+            Bar1Position += delta.X;
+        }
+
+        public virtual void MoveBar2(PointF delta, PointF location)
+        {
+            Bar2Position += delta.X;
+        }
+
+        #endregion
     }
 }
