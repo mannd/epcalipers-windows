@@ -560,6 +560,7 @@ namespace epcalipers
             // 
             this.showHandlesToolStripMenuItem.CheckOnClick = true;
             this.showHandlesToolStripMenuItem.Name = "showHandlesToolStripMenuItem";
+            this.showHandlesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.showHandlesToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.showHandlesToolStripMenuItem.Text = "Show handles";
             this.showHandlesToolStripMenuItem.Click += new System.EventHandler(this.showHandlesToolStripMenuItem_Click);

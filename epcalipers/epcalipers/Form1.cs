@@ -1026,13 +1026,7 @@ namespace epcalipers
         private void AddCaliper(CaliperDirection direction)
         {
             Caliper c = new Caliper();
-            c.LineWidth = preferences.LineWidth;
-            c.UnselectedColor = preferences.CaliperColor;
-            c.SelectedColor = preferences.HighlightColor;
-            c.CaliperColor = c.UnselectedColor;
-            c.RoundMsecRate = preferences.RoundMsecRate;
             c.Direction = direction;
-            c.hasHandles = showHandlesToolStripMenuItem.Checked;
             if (direction == CaliperDirection.Horizontal)
             {
                 c.CurrentCalibration = theCalipers.HorizontalCalibration;
@@ -1041,23 +1035,27 @@ namespace epcalipers
             {
                 c.CurrentCalibration = theCalipers.VerticalCalibration;
             }
-            c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
-            theCalipers.addCaliper(c);
-            ecgPictureBox.Refresh();
+            SetupCaliper(c);
         }
 
         private void AddAngleCaliper()
         {
             AngleCaliper c = new AngleCaliper();
             // TODO: refactor common code
+            c.Direction = CaliperDirection.Horizontal;
+            c.CurrentCalibration = theCalipers.HorizontalCalibration;
+            c.VerticalCalibration = theCalipers.VerticalCalibration;
+            SetupCaliper(c);
+        }
+
+        private void SetupCaliper(Caliper c)
+        {
             c.LineWidth = preferences.LineWidth;
             c.UnselectedColor = preferences.CaliperColor;
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
             c.RoundMsecRate = preferences.RoundMsecRate;
-            c.Direction = CaliperDirection.Horizontal;
-            c.CurrentCalibration = theCalipers.HorizontalCalibration;
-            c.VerticalCalibration = theCalipers.VerticalCalibration;
+            c.hasHandles = showHandlesToolStripMenuItem.Checked;
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
