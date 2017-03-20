@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-05-24 Tue 12:52 -->
+<!-- 2017-03-20 Mon 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
-<meta name="generator" content="Org-mode" />
+<meta name="generator" content="Org mode" />
 <meta name="author" content="David Mann" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -53,13 +53,97 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
@@ -92,6 +176,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="description" content="How to manipulate the ECG image" />
@@ -145,9 +230,9 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orga5928f1" class="outline-2">
-<h2 id="orga5928f1"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Images</h2>
-<div class="outline-text-2" id="text-orga5928f1">
+<div id="outline-container-org3aff529" class="outline-2">
+<h2 id="org3aff529"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Images</h2>
+<div class="outline-text-2" id="text-org3aff529">
 <p>
 Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  However, in order to open PDF files, it is necessary to download and install <i>Ghostscript</i> on your computer.  <i>Ghostscript</i> is a free, open-source PDF handling library.  It is available from <a href="http://www.ghostscript.com/download/gsdnld.html">this site</a>.  Download the Windows version (32-bit or 64-bit) that is appropriate for your computer.  You can right-click on <b>This PC</b> in a File Explorer window and then click properties to see what kind of system (32-bit or 64-bit) you are running.  You can install the download from the GNU Affero General Public License column, which is the free version.  This version can be used because <b>EP Calipers</b> is itself open-source software covered by the GNU GPL v3.
 </p>
@@ -157,77 +242,144 @@ To load ECG images use one of the following methods.
 </p>
 </div>
 </div>
-<div id="outline-container-org3fe7f94" class="outline-2">
-<h2 id="org3fe7f94">Loading an image</h2>
-<div class="outline-text-2" id="text-org3fe7f94">
-</div><div id="outline-container-org13619ae" class="outline-3">
-<h3 id="org13619ae">Open command</h3>
-<div class="outline-text-3" id="text-org13619ae">
+<div id="outline-container-org017a1cf" class="outline-2">
+<h2 id="org017a1cf">Loading an image</h2>
+<div class="outline-text-2" id="text-org017a1cf">
+</div>
+<div id="outline-container-orgd1d48e9" class="outline-3">
+<h3 id="orgd1d48e9">Open command</h3>
+<div class="outline-text-3" id="text-orgd1d48e9">
 <p>
 Use the <b>File | Open</b> menu command (or keyboard shortcut) to select an
 image stored on your computer.  You can also use the <b>Open</b> button to do the same thing.  
 </p>
 </div>
 </div>
-<div id="outline-container-org6a62aad" class="outline-3">
-<h3 id="org6a62aad">Drag and drop</h3>
-<div class="outline-text-3" id="text-org6a62aad">
+<div id="outline-container-org660341b" class="outline-3">
+<h3 id="org660341b">Drag and drop</h3>
+<div class="outline-text-3" id="text-org660341b">
 <p>
 You can drag and drop an image file onto the program window and it will load.  Note that this method will <b>not</b> work with PDF files.  PDF files must be loaded using the first method above.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf4f208" class="outline-3">
-<h3 id="orgf4f208">Multi-page PDFs</h3>
-<div class="outline-text-3" id="text-orgf4f208">
+<div id="outline-container-org38974a8" class="outline-3">
+<h3 id="org38974a8">Right-click on an image file</h3>
+<div class="outline-text-3" id="text-org38974a8">
+<p>
+Even when <b>EP Calipers</b> is not open, you can use the right click menu to open an image file.  Select <b>Open with</b> from the right click menu and select <b>EP Calipers</b> to open the image file.  This method can also be used to open email attachments.
+</p>
+</div>
+</div>
+<div id="outline-container-org76c934b" class="outline-3">
+<h3 id="org76c934b">Multi-page PDFs</h3>
+<div class="outline-text-3" id="text-org76c934b">
 <p>
 If you load a PDF file with multiple pages, the first page will be shown initially.  You can use the <b>Image | Previous Page</b> and <b>Next Page</b> menu items to change pages, or the keyboard shortcuts.
 </p>
 </div>
 </div>
-<div id="outline-container-org64863ec" class="outline-3">
-<h3 id="org64863ec">Opening <i>AliveCor™</i> ECGs</h3>
-<div class="outline-text-3" id="text-org64863ec">
+<div id="outline-container-orgbaf97c6" class="outline-3">
+<h3 id="orgbaf97c6">Opening <i>AliveCor™</i> ECGs</h3>
+<div class="outline-text-3" id="text-orgbaf97c6">
 <p>
 <i>AliveCor</i> ECGs can be saved as PDF files.  Load them with any of the above methods (except drag and drop).
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orge36062" class="outline-2">
-<h2 id="orge36062">Adjusting the image</h2>
-<div class="outline-text-2" id="text-orge36062">
-</div><div id="outline-container-org2d724d0" class="outline-3">
-<h3 id="org2d724d0">Moving the image</h3>
-<div class="outline-text-3" id="text-org2d724d0">
+<div id="outline-container-orgc1e215f" class="outline-2">
+<h2 id="orgc1e215f">Adjusting the image</h2>
+<div class="outline-text-2" id="text-orgc1e215f">
+</div>
+<div id="outline-container-orgb023ded" class="outline-3">
+<h3 id="orgb023ded">Moving the image</h3>
+<div class="outline-text-3" id="text-orgb023ded">
 <p>
-If the image is too large for the window, you can either enlarge the window using the normal Windows maximize button, or scroll around the image using the window scroll bars.  You can also zoom out the image as described below.
+If the image is too large for the window, you can either enlarge the
+window as usual (such as using the Windows maximize button), or scroll
+around the image using the window scroll bars.  You can also shrink
+the image by zooming out the image as described below.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf9e461a" class="outline-3">
-<h3 id="orgf9e461a">Rotation</h3>
-<div class="outline-text-3" id="text-orgf9e461a">
+<div id="outline-container-org574f7dd" class="outline-3">
+<h3 id="org574f7dd">Rotation</h3>
+<div class="outline-text-3" id="text-org574f7dd">
 <p>
-If your ECG image is rotated or tilted, use the <b>Image | Rotation</b> menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  <b>Important:</b> You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
+If the ECG image is rotated or tilted, use the <b>Image | Rotation</b> menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  <b>Important:</b> You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
 </p>
 </div>
 </div>
-<div id="outline-container-org643f941" class="outline-3">
-<h3 id="org643f941">Zooming</h3>
-<div class="outline-text-3" id="text-org643f941">
+<div id="outline-container-org15de757" class="outline-3">
+<h3 id="org15de757">Zooming</h3>
+<div class="outline-text-3" id="text-org15de757">
 <p>
 You can also use the Zoom buttons (<b>+</b> and <b>-</b>) at the lower left of the window to zoom in and oute.  Zooming is also available in the <b>Image</b> menu, which includes a <b>Reset zoom</b> option to restore the original unzoomed image.   Note that Caliper calibration <b>does</b> adjust with zooming.  There is no need to recalibrate the calipers after zooming.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org3c5f962" class="outline-2">
-<h2 id="org3c5f962">Saving or printing an edited image</h2>
-<div class="outline-text-2" id="text-org3c5f962">
+<div id="outline-container-orga15f5b0" class="outline-2">
+<h2 id="orga15f5b0">Saving or printing an edited image</h2>
+<div class="outline-text-2" id="text-orga15f5b0">
 <p>
 Use the <b>File | Save</b> menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from <b>EP Calipers</b> using the <b>File | Print</b> menu item.
 </p>
+</div>
+</div>
+<div id="outline-container-org48344aa" class="outline-2">
+<h2 id="org48344aa">Transparent windows</h2>
+<div class="outline-text-2" id="text-org48344aa">
+</div>
+<div id="outline-container-orgddc176a" class="outline-3">
+<h3 id="orgddc176a"><span class="todo TODO">TODO</span> What is transparent window mode?</h3>
+<div class="outline-text-3" id="text-orgddc176a">
+<p>
+Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo imaging app, and then make measurements directly on this image.  <b>EP Calipers</b> allows you do this using <i>transparent window mode</i>.  In this mode, the main window is transparent, allowing you to measure whatever is underneath the window using calipers.  Transparent window mode looks like this:
+</p>
+<p>
+[image]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org68678fe" class="outline-3">
+<h3 id="org68678fe">Activating transparent window mode</h3>
+<div class="outline-text-3" id="text-org68678fe">
+<p>
+Use the <b>Windows | Transparent window</b> menu item to activate and inactivate transparent window mode.  
+</p>
+</div>
+</div>
+<div id="outline-container-orga1131a7" class="outline-3">
+<h3 id="orga1131a7">Things to watch out for with transparent windows</h3>
+<div class="outline-text-3" id="text-orga1131a7">
+</div>
+<div id="outline-container-orgc3d1d20" class="outline-4">
+<h4 id="orgc3d1d20">Calibration implications</h4>
+<div class="outline-text-4" id="text-orgc3d1d20">
+<p>
+When you load an image into <b>EP Calipers</b> the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  In transparent window mode, the program has no clue if you zoom the underlying image that the calibration is now incorrect.  Take care to recalibrate your calipers if you zoom your image in a program external to <b>EP Calipers</b>.
+</p>
+</div>
+</div>
+<div id="outline-container-org415e2f8" class="outline-4">
+<h4 id="org415e2f8">Change modes</h4>
+<div class="outline-text-4" id="text-org415e2f8">
+<p>
+All calipers and calibration are cleared when changing modes.  While in transparent window mode, if you open an image file, the program reverts to normal image mode.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc762eea" class="outline-4">
+<h4 id="orgc762eea"><span class="todo TODO">TODO</span> Clicking through to the underlying window</h4>
+<div class="outline-text-4" id="text-orgc762eea">
+<p>
+When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the window on top, and the <b>EP Calipers</b> window may disappear underneath.  In order to help prevent this, you can add handles to calipers, making them easy to click and move.  Preferences can be set to add the handles automatically each time you enter transparent mode.  More information on using handles is here [add link here].
+</p>
+</div>
+</div>
 </div>
 </div>
 </div>
