@@ -44,6 +44,7 @@ namespace epcalipers
         //public enum UnitType { Sec, Msec, Bpm, None };
         public bool UnitsAreSeconds { get { return _unitsAreSeconds(); } }
         public bool UnitsAreMsecs { get { return _unitsAreMsecs(); } }
+        public bool UnitsAreMM { get { return _unitsAreMM(); } }
         public bool DisplayRate { get; set; }
         public double Multiplier {
             get
@@ -110,6 +111,16 @@ namespace epcalipers
                 return false;
             string units = rawUnits.ToUpper();
             return units.Contains("MSEC") || units.Equals("MS") || units.Contains("MILLIS");
+        }
+
+        private bool _unitsAreMM()
+        {
+            if (rawUnits.Length < 1 || Direction != CaliperDirection.Vertical)
+            {
+                return false;
+            }
+            string upcasedUnits = rawUnits.ToUpper();
+            return upcasedUnits.Equals("MM") || upcasedUnits.Contains("MILLIM");
         }
     }
 }

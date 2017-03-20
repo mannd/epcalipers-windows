@@ -56,6 +56,17 @@ namespace epcalipers
             }
 
             CaliperText(g, brush);
+
+            if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
+            {
+                // show Brugada triangle
+                if (angleInSouthernHemisphere(angleBar1) && angleInSouthernHemisphere(angleBar2))
+                {
+                    double pointsPerMM = 1.0 / VerticalCalibration.Multiplier;
+                    DrawTriangleBase(g, pen, brush, 5 * pointsPerMM);
+                }
+            }
+
             pen.Dispose();
             brush.Dispose();
         }
@@ -136,6 +147,72 @@ namespace epcalipers
         {
             return angleBar1 - angleBar2;
         }
+
+        #region Brugada
+        private bool angleInSouthernHemisphere(float angle)
+        {
+            // Note can't be <= because we get divide by zero error with Sin(angle) == 0
+            return (0 < (double)angle && angle < Math.PI);
+        }
+
+        private void DrawTriangleBase(Graphics g, Pen pen, Brush brush, double height)
+        {
+            PointF point1 = GetBasePoint1ForHeight(height);
+            PointF point2 = GetBasePoint2ForHeight(height);
+            double lengthInPoints = point2.X - point1.X;
+            g.DrawLine(pen, point1.X, point1.Y, point2.X, point2.Y);
+
+            string text = BaseMeasurement(lengthInPoints);
+            // we put the label below the base
+            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 20),
+                point1.Y + 5, 
+               (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
+               20.0f);
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Center;
+            g.DrawString(text, TextFont, brush, rect, format);
+        }
+
+        private PointF GetBasePoint1ForHeight(double height)
+        {
+            // Dangerous possible divide by zero here
+            double pointY = CrossbarPosition + height;
+            double pointX = height * (Math.Sin(angleBar1 - Math.PI / 2) 
+                / Math.Sin(Math.PI - angleBar1));
+            pointX = Bar1Position - pointX;
+            PointF point = new PointF((float)pointX, (float)pointY);
+            return point;
+        }
+
+        private PointF GetBasePoint2ForHeight(double height)
+        {
+            // Dangerous possible divide by zero here
+            double pointY = CrossbarPosition + height;
+            double pointX = height * (Math.Sin(Math.PI / 2 - angleBar2)
+                / Math.Sin(angleBar2));
+            pointX += Bar1Position;
+            PointF point = new PointF((float)pointX, (float)pointY);
+            return point;
+        }
+
+        private double CalibratedBaseResult(double lengthInPoints)
+        {
+            lengthInPoints = lengthInPoints * CurrentCalibration.Multiplier;
+            if (RoundMsecRate && CurrentCalibration.UnitsAreMsecs)
+            {
+                lengthInPoints = Math.Round(lengthInPoints);
+            }
+            return lengthInPoints;
+        }
+
+        private string BaseMeasurement(double lengthInPoints)
+        {
+            string s = string.Format("{0} {1}", 
+                CalibratedBaseResult(lengthInPoints).ToString("G4"), CurrentCalibration.Units);
+            return s;
+        }
+
+        #endregion
 
         #region Movement
 
