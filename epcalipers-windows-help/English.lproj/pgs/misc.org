@@ -11,10 +11,11 @@
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * [[../../shrd/icon_32x32@2x.png]] Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
+- Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers-windows][GitHub]].
 - *EP Calipers* is also available for iOS, Mac OS X, and Android devices.  Look for it on the Apple App and Mac Stores and Google Play.
 - *EP Calipers* is open source software and is licensed under the [[http://www.gnu.org/licenses/gpl.html][Gnu GPL v3 license]].  No guarantees are made as to the accuracy of the
   program, so use at your own risk.
 - For questions, error reporting or suggestions contact
   [[mailto:mannd@epstudiossoftware.com][mannd@epstudiossoftware.com]]
-- Website: [[http://www.epstudiossoftware.com][epstudiossoftware.com]]
+- Website: [[https://www.epstudiossoftware.com][epstudiossoftware.com]]
