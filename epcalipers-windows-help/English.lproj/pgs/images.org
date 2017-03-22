@@ -35,7 +35,7 @@ image by zooming out as described below.
 ** Rotation
 If the ECG image is rotated or tilted, use the *Image | Rotation* menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  *Important:* You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
 ** Zooming
-You can also use the Zoom buttons (*+* and *-*) at the lower left of the window to zoom in and oute.  Zooming is also available in the *Image* menu, which includes a *Reset zoom* option to restore the original unzoomed image.   Note that Caliper calibration *does* adjust with zooming.  There is no need to recalibrate the calipers after zooming.
+You can also use the Zoom buttons (*+* and *-*) at the lower left of the window to zoom in and out.  Zooming is also available in the *Image* menu, which includes a *Reset zoom* option to restore the original unzoomed image.   Note that Caliper calibration *does* adjust with zooming.  There is no need to recalibrate the calipers after zooming.
 * Saving or printing an edited image
 Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.
 * Transparent windows
