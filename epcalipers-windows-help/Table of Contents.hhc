@@ -29,7 +29,7 @@
 		<param name="Local" value="English.lproj\pgs\measurements.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Preferences">
+		<param name="Name" value="Options">
 		<param name="Local" value="English.lproj\pgs\preferences.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">

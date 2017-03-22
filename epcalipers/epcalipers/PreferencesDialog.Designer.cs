@@ -73,7 +73,7 @@
             this.Controls.Add(this.propertyGrid1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PreferencesDialog";
-            this.Text = "Preferences";
+            this.Text = "Options";
             this.Load += new System.EventHandler(this.PreferencesDialog_Load);
             this.ResumeLayout(false);
 

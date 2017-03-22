@@ -9,12 +9,12 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_HEAD: <meta name="description" content="Changing default settings" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* [[../../shrd/icon_32x32@2x.png]] Preferences
-** Selecting preferences
-Preferences can be selected using the *Tools | Options* menu item.  You can change default settings as you prefer, including caliper colors, line width of the calipers, default calibration intervals and number of intervals used to calculate mean intervals.  For example, if you usually use just 1 RR interval to calculate the QTc, set the number of mean RR intervals for the QTc measurement to 1 interval.  Remember though you can override any of these values when you actually do the measurements.
-#+CAPTION: Preferences
+* [[../../shrd/icon_32x32@2x.png]] Options
+** Changing options
+Options can be selected using the *Tools | Options* menu item.  You can change default settings as you prefer, including caliper colors, line width of the calipers, default calibration intervals and number of intervals used to calculate mean intervals.  For example, if you usually use just 1 RR interval to calculate the QTc, set the number of mean RR intervals for the QTc measurement to 1 interval.  Remember though you can override any of these values when you actually do the measurements.
+#+CAPTION: Options dialog
 [[../../shrd/preferences_dialog.png]]
-** Preferences explained
+** Options explained
 - *Caliper color* This is the color of unselected calipers.
 - *Selected caliper color* This is the color of the selected caliper.
 - *Line width* Increase or decrease this value to make the caliper lines thicker or thinner.
@@ -22,6 +22,6 @@ Preferences can be selected using the *Tools | Options* menu item.  You can chan
 - *Amplitude calibration* This is the default value for calibration of amplitude calipers.  Put whatever value you usually use to calibrate here.
 - *Number of intervals (mean RR)* The default number of intervals you use to measure mean RR intervals.
 - *Number of intervals (QTc)* The default number of intervals you use to measure the mean RR interval when making QTc measurements.
-- *Round msec and rates* Rounds intervals in msec to the nearest msec and heart rates to the nearest bpm.  If unchecked, values are shown with higher precision using up to 3 decimal places.  Note that values in secs or values using other units are never rounded regardless of this preference.
+- *Round msec and rates* Rounds intervals in msec to the nearest msec and heart rates to the nearest bpm.  If unchecked, values are shown with higher precision using up to 3 decimal places.  Note that values in secs or values using other units are never rounded regardless of this option.
 - *Show handles with transparent mode* Handles will appear when you enter transparent mode.  Note that once handles appear, you will need to turn them off using the *Caliper | Show handles* menu item to make them disappear again, even if you return to image mode
 - *Show handles with image mode* Handles will appear on all calipers when you start the program.  These handles will persist until they are turned off using the *Caliper | Show handles* menu item.

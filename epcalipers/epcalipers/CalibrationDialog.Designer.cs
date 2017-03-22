@@ -38,7 +38,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 68);
+            this.label1.Location = new System.Drawing.Point(14, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 26);
             this.label1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // calibrationMeasurementTextBox
             // 
-            this.calibrationMeasurementTextBox.Location = new System.Drawing.Point(15, 103);
+            this.calibrationMeasurementTextBox.Location = new System.Drawing.Point(14, 138);
             this.calibrationMeasurementTextBox.Name = "calibrationMeasurementTextBox";
             this.calibrationMeasurementTextBox.Size = new System.Drawing.Size(257, 20);
             this.calibrationMeasurementTextBox.TabIndex = 1;

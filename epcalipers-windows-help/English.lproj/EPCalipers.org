@@ -18,7 +18,7 @@ Open, rotate, zoom, and save ECG images.
 Add, move, and delete calipers.
 * [[./pgs/measurements.html][Making measurements]]
 Calibrate calipers, measure, and do ECG calculations.
-* [[./pgs/preferences.html][Preferences]]
-Change app preferences, such as caliper color, default calibration, etc.
+* [[./pgs/preferences.html][Options]]
+Change app options, such as caliper color, default calibration, etc.
 * [[./pgs/misc.html][Fine print]]
 Miscellaneous stuff.

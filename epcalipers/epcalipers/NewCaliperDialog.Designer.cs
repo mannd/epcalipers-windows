@@ -85,7 +85,7 @@
             this.groupBox1.Controls.Add(this.angleCaliperRadioButton);
             this.groupBox1.Controls.Add(this.horizontalCaliperRadioButton);
             this.groupBox1.Controls.Add(this.VerticalCaliperRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(38, 89);
+            this.groupBox1.Location = new System.Drawing.Point(42, 79);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 102);
             this.groupBox1.TabIndex = 4;

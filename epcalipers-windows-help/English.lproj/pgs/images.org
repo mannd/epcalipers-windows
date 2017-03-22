@@ -15,7 +15,7 @@ Images include files in typical image formats such as JPG, BMP, and PNG, as well
 To load ECG images use one of the following methods.
 * Loading an image
 ** Open command
-Use the *File | Open* menu command (or keyboard shortcut) to select an
+Use the *File | Open* menu command (or keyboard shortcut Ctrl-O) to select an
 image stored on your computer.  You can also use the *Open* button to do the same thing.  
 ** Drag and drop
 You can drag and drop an image file onto the program window and it will load.
@@ -40,9 +40,9 @@ You can also use the Zoom buttons (*+* and *-*) at the lower left of the window 
 Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.
 * Transparent windows
 ** What is transparent window mode?
-Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo imaging app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent window mode/.  In this mode, the main window is transparent, allowing you to measure whatever is underneath the window using calipers.  Transparent window mode looks like this:
+Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent window mode/.  In this mode, the main window is transparent, allowing you to measure whatever is underneath the window using calipers.  Transparent window mode looks like this:
 #+CAPTION: Transparent window mode
-[image]
+[[../../shrd/transparent_window.png]]
 
 ** Activating transparent window mode
 Use the *Window | Transparent window* menu item to activate and inactivate transparent window mode.  
@@ -52,4 +52,4 @@ When you load an image into *EP Calipers* the normal way and calibrate your cali
 *** Change modes
 All calipers and calibration are cleared when changing modes.  While in transparent window mode, if you open an image file, the program reverts to normal image mode.
 *** Clicking through to the underlying window
-When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the active window on top, and the *EP Calipers* window may disappear underneath.  In order to help prevent this, you can add [[file:calipers.org::*Caliper%20handles][handles]] to calipers, making them easy to click and move.  [[file:preferences.org::*Selecting%20preferences][Preferences]] can be set to add the handles automatically each time you enter transparent mode.
+When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the active window on top, and the *EP Calipers* window may disappear underneath.  In order to help prevent this, you can add [[file:calipers.org::*Caliper%20handles][handles]] to calipers, making them easy to click and move.  [[file:preferences.org::*Changing%20options][Options]] can be set to add the handles automatically each time you enter transparent mode.  The default setting for this option is to add caliper handles whenever you activate transparent mode.

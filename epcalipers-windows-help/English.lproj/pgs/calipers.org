@@ -20,6 +20,10 @@ Add calipers by clicking on the *Add Caliper* button and then selecting a time, 
 In order to make measurements or calibrate, it is necessary to /select/ a single caliper when there are multiple calipers on the screen.  A single mouse click on any part of a caliper selects it.  A selected calipers is evident because it is a different color (by default red, but you can change this) than unselected calipers (by default blue).  Single-clicking a selected caliper again will unselect it.  Only one caliper at a time can be selected.
 #+CAPTION: The red caliper is selected
 [[../../shrd/selected_caliper.png]]
+
+#+CAPTION: An angle caliper
+[[../../shrd/angle_caliper.png]]
+
 ** Deleting Calipers
 Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.
 * Moving calipers
@@ -30,4 +34,7 @@ If the cursor is positioned over either the left or right sidebar of a time cali
 
 By combining movements, you can place a caliper anywhere on the ECG image to make measurements.
 * Caliper handles
-It can be easier to grasp and move a caliper if graphical /handles/ are shown on the caliper.  This is particularly true in transparent window mode, in which your mouse cursor must be exactly over the caliper in order to grasp it, otherwise you risk clicking through to the window underneath.  Use the *Caliper | Show handles* menu option to show or hide the handles.  The handles are shown as rectangles or circles on the various elements of the caliper (sidebars, crossbar, or apex of the caliper).  [[file:preferences.org::*Selecting%20preferences][Preferences]] can be used to always show handles while in transparent mode (useful) or in both modes (not so useful).
+#+CAPTION: Caliper with handles
+[[../../shrd/caliper_handles.png]]
+
+It can be easier to grasp and move a caliper if graphical /handles/ are shown on the caliper.  This is particularly true in transparent window mode, in which your mouse cursor must be exactly over the caliper in order to grasp it, otherwise you risk clicking through to the window underneath.  Use the *Caliper | Show handles* menu option to show or hide the handles.  The handles are shown as rectangles or circles on the various elements of the caliper (sidebars, crossbar, or apex of the caliper).  [[file:preferences.org::*Changing%20options][Options]] can be used to always show handles while in transparent mode (useful) or in both modes (not so useful).

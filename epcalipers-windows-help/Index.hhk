@@ -5,5 +5,30 @@
 <!-- Sitemap 1.0 -->
 </HEAD><BODY>
 <UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Brugadometer">
+		<param name="Name" value="Untitled: c:\Users\mannd\git\epcalipers-windows\epcalipers-windows-help\English.lproj\pgs\measurements.html">
+		<param name="Local" value="English.lproj\pgs\measurements.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="caliper">
+		<param name="Name" value="Untitled: c:\Users\mannd\git\epcalipers-windows\epcalipers-windows-help\English.lproj\pgs\calipers.html">
+		<param name="Local" value="English.lproj\pgs\calipers.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="handles">
+		<param name="Name" value="Untitled: c:\Users\mannd\git\epcalipers-windows\epcalipers-windows-help\English.lproj\pgs\calipers.html">
+		<param name="Local" value="English.lproj\pgs\calipers.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="heart rate">
+		<param name="Name" value="Untitled: c:\Users\mannd\git\epcalipers-windows\epcalipers-windows-help\English.lproj\pgs\measurements.html">
+		<param name="Local" value="English.lproj\pgs\measurements.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="QT interval">
+		<param name="Name" value="Untitled: c:\Users\mannd\git\epcalipers-windows\epcalipers-windows-help\English.lproj\pgs\measurements.html">
+		<param name="Local" value="English.lproj\pgs\measurements.html">
+		</OBJECT>
 </UL>
 </BODY></HTML>
