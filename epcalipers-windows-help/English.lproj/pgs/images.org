@@ -10,7 +10,7 @@
 #+HTML_HEAD: <meta name="description" content="How to manipulate the ECG image" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * [[../../shrd/icon_32x32@2x.png]] Images
-Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  However, in order to open PDF files, it is necessary to download and install /Ghostscript/ on your computer.  /Ghostscript/ is a free, open-source PDF handling library.  It is available from [[http://www.ghostscript.com/download/gsdnld.html][this site]].  Download the Windows version (32-bit or 64-bit) that is appropriate for your computer.  You can right-click on *This PC* in a File Explorer window and then click properties to see what kind of system (32-bit or 64-bit) you are running.  You can install the download from the GNU Affero General Public License column, which is the free version.  This version can be used because *EP Calipers* is itself open-source software covered by the GNU GPL v3.
+Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  However, in order to open PDF files, it is necessary to download and install /Ghostscript/ on your computer.  /Ghostscript/ is a free, open-source PDF handling library.  It is available from [[https://www.ghostscript.com/download/gsdnld.html][this site]].  Download the Windows version (32-bit or 64-bit) that is appropriate for your computer.  You can right-click on *This PC* in a File Explorer window and then click properties to see what kind of system (32-bit or 64-bit) you are running.  You can install the download from the GNU Affero General Public License column, which is the free version.  This version can be used because *EP Calipers* is itself open-source software covered by the [[https://www.gnu.org/licenses/gpl-3.0.en.html][GNU GPL v3]].
 
 To load ECG images use one of the following methods.
 * Loading an image
@@ -18,19 +18,20 @@ To load ECG images use one of the following methods.
 Use the *File | Open* menu command (or keyboard shortcut) to select an
 image stored on your computer.  You can also use the *Open* button to do the same thing.  
 ** Drag and drop
-You can drag and drop an image file onto the program window and it will load.  Note that this method will *not* work with PDF files.  PDF files must be loaded using the first method above.
+You can drag and drop an image file onto the program window and it will load.
 ** Right-click on an image file
 Even when *EP Calipers* is not open, you can use the right click menu to open an image file.  Select *Open with* from the right click menu and select *EP Calipers* to open the image file.  This method can also be used to open email attachments.
 ** Multi-page PDFs
-If you load a PDF file with multiple pages, the first page will be shown initially.  You can use the *Image | Previous Page* and *Next Page* menu items to change pages, or the keyboard shortcuts.
+If you load a PDF file with multiple pages, the first page will be shown initially.  You can use the *Image | Previous Page* and *Next Page* menu items to change pages, or the keyboard shortcuts.  Note that a big PDF file may take a long time to load.
 ** Opening /AliveCor™/ ECGs
-/AliveCor/ ECGs can be saved as PDF files.  Load them with any of the above methods (except drag and drop).
+[[https://www.alivecor.com/][AliveCor]] ECGs can be saved as PDF files.  Load them with any of the above methods (except drag and drop).
 * Adjusting the image
 ** Moving the image
 If the image is too large for the window, you can either enlarge the
 window as usual (such as using the Windows maximize button), or scroll
-around the image using the window scroll bars.  You can also shrink
-the image by zooming out the image as described below.
+around the image using the window scroll bars.  You can use the mouse
+scroll wheel to scroll the image up and down.  You can also shrink the
+image by zooming out as described below.
 ** Rotation
 If the ECG image is rotated or tilted, use the *Image | Rotation* menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  *Important:* You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
 ** Zooming
@@ -38,17 +39,17 @@ You can also use the Zoom buttons (*+* and *-*) at the lower left of the window 
 * Saving or printing an edited image
 Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.
 * Transparent windows
-** TODO What is transparent window mode?
+** What is transparent window mode?
 Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo imaging app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent window mode/.  In this mode, the main window is transparent, allowing you to measure whatever is underneath the window using calipers.  Transparent window mode looks like this:
 #+CAPTION: Transparent window mode
 [image]
 
 ** Activating transparent window mode
-Use the *Windows | Transparent window* menu item to activate and inactivate transparent window mode.  
+Use the *Window | Transparent window* menu item to activate and inactivate transparent window mode.  
 ** Things to watch out for with transparent windows
 *** Calibration implications
-When you load an image into *EP Calipers* the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  In transparent window mode, the program has no clue if you zoom the underlying image that the calibration is now incorrect.  Take care to recalibrate your calipers if you zoom your image in a program external to *EP Calipers*.
+When you load an image into *EP Calipers* the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  In transparent window mode the program has no way to figure out if you zoom the underlying image and invalidate calibration.  Take care to recalibrate your calipers if you zoom your image in a program external to *EP Calipers*.
 *** Change modes
 All calipers and calibration are cleared when changing modes.  While in transparent window mode, if you open an image file, the program reverts to normal image mode.
-*** TODO Clicking through to the underlying window
-When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the window on top, and the *EP Calipers* window may disappear underneath.  In order to help prevent this, you can add handles to calipers, making them easy to click and move.  Preferences can be set to add the handles automatically each time you enter transparent mode.  More information on using handles is here [add link here].
+*** Clicking through to the underlying window
+When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the active window on top, and the *EP Calipers* window may disappear underneath.  In order to help prevent this, you can add [[file:calipers.org::*Caliper%20handles][handles]] to calipers, making them easy to click and move.  [[file:preferences.org::*Selecting%20preferences][Preferences]] can be set to add the handles automatically each time you enter transparent mode.

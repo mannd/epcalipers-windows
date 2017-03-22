@@ -124,6 +124,7 @@ namespace epcalipers
                             ecgPictureBox.Image = argImage;
                         }
                         ResetBitmap(ecgPictureBox.Image);
+                        ShowMainMenu();
                     }
                 }
             }

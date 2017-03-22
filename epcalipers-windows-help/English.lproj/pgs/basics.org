@@ -31,7 +31,7 @@ end of the caliper.  Use the zoom buttons to enlarge or shrink the
 image as needed.  If the ECG is bigger than your screen, you can use
 the scrollbars to move the image around.  As an alternative to loading
 an image you can make the main window transparent and use your
-electronic claipers to measure any image that is open on your Desktop.
+electronic calipers to measure any image that is open on your Desktop.
 The rest of these help pages will go over how to load ECG images, add
 and delete calipers, calibrate the calipers and make advanced
 measurements like the corrected QT interval.
@@ -67,14 +67,14 @@ Many of these keys are combinations using the CTRL (Control) key, the SHIFT key 
 | CTRL+ALT+L       | Rotate image 0.1° left     |
 | CTRL+R           | Rotate image 1° right      |
 | CTRL+L           | Rotate image 1° left       |
-| SHIFT+CTRL+R     | Rotate image 90° right     |
-| SHIFT+CTRL+L     | Rotate image 90° left      |
+| CTRL+SHIFT+R     | Rotate image 90° right     |
+| CTRL+SHIFT+L     | Rotate image 90° left      |
 | CTRL+0 (zero)    | Reset image rotation       |
 | CTRL+=           | Zoom in                    |
 | CTRL+-           | Zoom out                   |
 | CTRL+T           | Add time caliper           |
 | CTRL+A           | Add amplitude caliper      |
-| CTRL+L           | Add angle caliper          |
+| CTRL+G           | Add angle caliper          |
 | Del              | Delete selected caliper    |
 | CTRL+H           | Show caliper handles       |
 | CTRL+I           | Toggle rate/interval       |
