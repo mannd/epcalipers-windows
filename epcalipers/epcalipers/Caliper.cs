@@ -9,6 +9,10 @@ namespace epcalipers
 {
     public enum CaliperDirection { Horizontal, Vertical };
 
+    public enum CaliperComponent { LeftBar, RightBar, CrossBar, LowerBar, UpperBar, Apex, NoComponent};
+
+    public enum MovementDirection { Up, Down, Left, Right, Stationary };
+
     public class Caliper
     {
         protected float DELTA = 20.0f;
@@ -328,5 +332,123 @@ namespace epcalipers
         }
 
         #endregion
+
+        #region Tweak
+
+        public static String ComponentName(CaliperComponent component)
+        {
+            switch (component)
+            {
+                case CaliperComponent.LeftBar:
+                    return "left bar";
+                case CaliperComponent.RightBar:
+                    return "right bar";
+                case CaliperComponent.CrossBar:
+                    return "crossbar";
+                case CaliperComponent.UpperBar:
+                    return "upper bar";
+                case CaliperComponent.LowerBar:
+                    return "lower bar";
+                case CaliperComponent.Apex:
+                    return "apex";
+                default:
+                    return "unknown component";
+            }
+        }
+
+        // NB: Window coordinates origin are upper left corner, like iOS, not like macOS
+        public void MoveBarInDirection(MovementDirection movementDirection, float distance, CaliperComponent component)
+        {
+            if (component == CaliperComponent.NoComponent)
+            {
+                return;
+            }
+            CaliperComponent adjustedComponent = MoveCrossbarInsteadOfSideBar(movementDirection, component) ? CaliperComponent.CrossBar : component;
+            if (adjustedComponent == CaliperComponent.CrossBar)
+            {
+                MoveCrossbarInDirection(movementDirection, distance);
+                return;
+            }
+
+            if (movementDirection == MovementDirection.Up || movementDirection == MovementDirection.Left)
+            {
+                distance = -distance;
+            }
+            // TODO: make sure directions are correct, c.f. iOS version
+            switch (adjustedComponent)
+            {
+                case CaliperComponent.LeftBar:
+                case CaliperComponent.UpperBar:
+                    Bar1Position += distance;
+                    break;
+                case CaliperComponent.RightBar:
+                case CaliperComponent.LowerBar:
+                    Bar2Position += distance;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private bool MoveCrossbarInsteadOfSideBar(MovementDirection movementDirection, CaliperComponent component)
+        {
+            if (component == CaliperComponent.CrossBar || component == CaliperComponent.Apex)
+            {
+                return false;
+            }
+            return (Direction == CaliperDirection.Horizontal && 
+                (movementDirection == MovementDirection.Up || movementDirection == MovementDirection.Down)) 
+                ||
+                (Direction == CaliperDirection.Vertical && 
+                (movementDirection == MovementDirection.Left || movementDirection == MovementDirection.Up));
+        }
+
+        private void MoveCrossbarInDirection(MovementDirection movementDirection, float distance)
+        {
+            if (Direction == CaliperDirection.Vertical)
+            {
+                movementDirection = SwapDirection(movementDirection);
+            }
+            switch (movementDirection)
+            {
+                case MovementDirection.Up:
+                    CrossbarPosition -= distance;
+                    break;
+                case MovementDirection.Down:
+                    CrossbarPosition += distance;
+                    break;
+                case MovementDirection.Left:
+                    Bar1Position -= distance;
+                    Bar2Position -= distance;
+                    break;
+                case MovementDirection.Right:
+                    Bar1Position += distance;
+                    Bar2Position += distance;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private MovementDirection SwapDirection(MovementDirection movementDirection)
+        {
+            // TODO: check these directions
+            switch (movementDirection)
+            {
+                case MovementDirection.Left:
+                    return MovementDirection.Down;
+                case MovementDirection.Right:
+                    return MovementDirection.Up;
+                case MovementDirection.Up:
+                    return MovementDirection.Right;
+                case MovementDirection.Down:
+                    return MovementDirection.Left;
+                default:
+                    return MovementDirection.Stationary;
+            }
+        }
+
+        #endregion
+
     }
 }
