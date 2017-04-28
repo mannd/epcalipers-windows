@@ -357,7 +357,7 @@ namespace epcalipers
         }
 
         // NB: Window coordinates origin are upper left corner, like iOS, not like macOS
-        public void MoveBarInDirection(MovementDirection movementDirection, float distance, CaliperComponent component)
+        public virtual void MoveBarInDirection(MovementDirection movementDirection, float distance, CaliperComponent component)
         {
             if (component == CaliperComponent.NoComponent)
             {
@@ -390,7 +390,7 @@ namespace epcalipers
             }
         }
 
-        private bool MoveCrossbarInsteadOfSideBar(MovementDirection movementDirection, CaliperComponent component)
+        protected bool MoveCrossbarInsteadOfSideBar(MovementDirection movementDirection, CaliperComponent component)
         {
             if (component == CaliperComponent.CrossBar || component == CaliperComponent.Apex)
             {

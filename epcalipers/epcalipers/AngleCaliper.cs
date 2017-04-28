@@ -143,6 +143,11 @@ namespace epcalipers
             return radians * 180.0 / Math.PI;
         }
 
+        private double DegreesToRadians(double degrees)
+        {
+            return (degrees * Math.PI) / 180.0;
+        }
+
         public override double IntervalResult()
         {
             return angleBar1 - angleBar2;
@@ -230,6 +235,37 @@ namespace epcalipers
         public override void MoveBar2(PointF delta, PointF location)
         {
             angleBar2 = (float)MoveBarAngle(delta, location);
+        }
+
+        #endregion
+
+        #region Tweak
+
+        public override void MoveBarInDirection(MovementDirection movementDirection, float distance, CaliperComponent component)
+        {
+            CaliperComponent adjustedComponent = MoveCrossbarInsteadOfSideBar(movementDirection, component) ? CaliperComponent.Apex : component;
+            if (adjustedComponent == CaliperComponent.Apex)
+            {
+                base.MoveBarInDirection(movementDirection, distance, CaliperComponent.CrossBar);
+            }
+            // TODO: test this
+            // We use smaller increments for angle calipers, otherwise movement is too large.
+            distance = distance / 2.0f;
+            if (movementDirection == MovementDirection.Left)
+            {
+                distance = -distance;
+            }
+            switch (adjustedComponent)
+            {
+                case CaliperComponent.LeftBar:
+                    angleBar1 -= (float)(DegreesToRadians(distance));
+                    break;
+                case CaliperComponent.RightBar:
+                    angleBar2 -= (float)(DegreesToRadians(distance));
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion
