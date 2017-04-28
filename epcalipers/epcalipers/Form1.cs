@@ -514,9 +514,16 @@ namespace epcalipers
 
         private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            Point clickPoint = new Point(e.X, e.Y);
+            if  (e.Button == MouseButtons.Right)
+            {
+                contextMenuStrip1.Show(this, clickPoint);
+                contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
+                return;
+            }
             // Update the mouse path with the mouse information
-            Point mouseDownLocation = new Point(e.X, e.Y);
-            Point mouseClickLocation = new Point(e.X, e.Y);
+            Point mouseDownLocation = clickPoint;
+            Point mouseClickLocation = clickPoint;
             firstPoint = mouseClickLocation;
             theCalipers.GrabCaliperIfClicked(mouseClickLocation);
         }
@@ -1581,9 +1588,13 @@ namespace epcalipers
         }
 
 
-      
+
 
         #endregion
 
+        private void tToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

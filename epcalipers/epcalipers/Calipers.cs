@@ -285,6 +285,19 @@ namespace epcalipers
             return calipers.Count;
         }
 
+        public bool PointIsNearCaliper(Point p)
+        {
+            bool pointNearCaliper = false;
+            foreach(var c in calipers)
+            {
+                if (c.PointNearCaliper(p)) {
+                    pointNearCaliper = true;
+                    break;
+                }
+            }
+            return pointNearCaliper;
+        }
+
         public bool updateCalibration(double zoomFactor)
         {
             if (HorizontalCalibration.Calibrated ||
