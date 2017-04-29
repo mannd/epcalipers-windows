@@ -25,6 +25,13 @@ namespace epcalipers
         private bool bar1Grabbed = false;
         private bool bar2Grabbed = false;
         private bool caliperWasDragged = false;
+
+        // for color and tweaking
+        private Caliper chosenCaliper;
+        private CaliperComponent chosenComponent;
+        private bool tweakingComponent;
+        // FIXME: change to lower value (0.5?) after debugging
+        private float tweakDistance = 1;
  
 
         public Calipers()
@@ -34,6 +41,9 @@ namespace epcalipers
             grabbedCaliper = null;
             HorizontalCalibration = new Calibration(CaliperDirection.Horizontal);
             VerticalCalibration = new Calibration(CaliperDirection.Vertical);
+            chosenCaliper = null;
+            chosenComponent = CaliperComponent.NoComponent;
+            tweakingComponent = false;
         }
 
         public void Draw(Graphics g, RectangleF rect)
@@ -187,7 +197,6 @@ namespace epcalipers
             grabbedCaliper = caliper;
         }
 
-        // below may not be needed
         private Caliper getGrabbedCaliper(Point point)
         {
             Caliper caliper = null;
@@ -198,6 +207,41 @@ namespace epcalipers
                 }
             }
             return caliper;
+        }
+
+        public void SetChosenCaliper(Point point)
+        {
+            chosenCaliper = getGrabbedCaliper(point);
+        }
+
+        // assumes chosenCaliper is not selected (e.g. highlighted)
+        public void SetChosenCaliperColor(Color color)
+        {
+            if (chosenCaliper == null)
+            {
+                return;
+            }
+            chosenCaliper.CaliperColor = color;
+            chosenCaliper.UnselectedColor = color;
+        }
+
+        public void UnselectChosenCaliper()
+        {
+            if (chosenCaliper == null)
+            {
+                return;
+            }
+            UnselectCaliper(chosenCaliper);
+        }
+
+        public Color GetChosenCaliperColor()
+        {
+            if (chosenCaliper == null)
+            {
+                // shouldn't happen, but just in case
+                return Color.Blue;
+            }
+            return chosenCaliper.UnselectedColor;
         }
 
         public bool DragGrabbedCaliper(float deltaX, float deltaY, PointF location)
@@ -348,7 +392,7 @@ namespace epcalipers
             foreach (Caliper caliper in calipers)
             {
                 caliper.LineWidth = p.LineWidth;
-                caliper.UnselectedColor = p.CaliperColor;
+                //caliper.UnselectedColor = p.CaliperColor;
                 caliper.SelectedColor = p.HighlightColor;
                 if (caliper.IsSelected)
                 {
@@ -356,7 +400,7 @@ namespace epcalipers
                 }
                 else
                 {
-                    caliper.CaliperColor = caliper.UnselectedColor;
+                    //caliper.CaliperColor = caliper.UnselectedColor;
                 }
                 caliper.RoundMsecRate = p.RoundMsecRate;
             }

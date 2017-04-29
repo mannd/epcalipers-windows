@@ -41,6 +41,9 @@ namespace epcalipers
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.Transparent;
 
+        // allow users to retain custom colors per session
+        int[] customColors;
+
         Point firstPoint;
 
         string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
@@ -519,6 +522,7 @@ namespace epcalipers
             {
                 contextMenuStrip1.Show(this, clickPoint);
                 contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
+                theCalipers.SetChosenCaliper(clickPoint);
                 return;
             }
             // Update the mouse path with the mouse information
@@ -1587,14 +1591,34 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
+        #region right-click menu
+        private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            theCalipers.UnselectChosenCaliper();
+            ecgPictureBox.Refresh();
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.Color = theCalipers.GetChosenCaliperColor();
+            colorDialog.AllowFullOpen = true;
+            colorDialog.CustomColors = customColors;
+            DialogResult result = colorDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                theCalipers.SetChosenCaliperColor(colorDialog.Color);
+                customColors = colorDialog.CustomColors;
+                ecgPictureBox.Refresh();
+            }
+        }
 
+        private void tweakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
 
 
         #endregion
 
-        private void tToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 }

@@ -97,7 +97,7 @@ namespace epcalipers
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.caliperColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tweakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -581,22 +581,23 @@ namespace epcalipers
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.caliperColorToolStripMenuItem,
-            this.tToolStripMenuItem});
+            this.tweakToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 70);
             // 
             // caliperColorToolStripMenuItem
             // 
             this.caliperColorToolStripMenuItem.Name = "caliperColorToolStripMenuItem";
             this.caliperColorToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.caliperColorToolStripMenuItem.Text = "Caliper Color";
+            this.caliperColorToolStripMenuItem.Click += new System.EventHandler(this.caliperColorToolStripMenuItem_Click);
             // 
-            // tToolStripMenuItem
+            // tweakToolStripMenuItem
             // 
-            this.tToolStripMenuItem.Name = "tToolStripMenuItem";
-            this.tToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.tToolStripMenuItem.Text = "Tweak Caliper Position";
-            this.tToolStripMenuItem.Click += new System.EventHandler(this.tToolStripMenuItem_Click);
+            this.tweakToolStripMenuItem.Name = "tweakToolStripMenuItem";
+            this.tweakToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.tweakToolStripMenuItem.Text = "Tweak Caliper Position";
+            this.tweakToolStripMenuItem.Click += new System.EventHandler(this.tweakToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -694,7 +695,7 @@ namespace epcalipers
         private ToolStripMenuItem angleCaliperToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem caliperColorToolStripMenuItem;
-        private ToolStripMenuItem tToolStripMenuItem;
+        private ToolStripMenuItem tweakToolStripMenuItem;
     }
 }
 
