@@ -61,7 +61,7 @@ namespace epcalipers.Properties
 
         // We have to cheat a little here so that our secret TransparencyKey color (gray)
         // doesn't disappear with transparent windows.
-        private Color SneakilyAdjustColor(Color color)
+        public static Color SneakilyAdjustColor(Color color)
         {
             if (color == Color.Gray)
             {

@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace epcalipers
 {
@@ -27,12 +28,17 @@ namespace epcalipers
         Button qtcButton;
         Button cancelButton;
         Button measureQTcButton;
+        Button cancelTweakButton;
         Label measureQtcMessageLabel;
         Label measureRRForQtcMessageLabel;
+        Label tweakLabel;
         Control[] mainMenu;
         Control[] calibrationMenu;
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
+        Control[] tweakMenu;
+        Control[] oldControls = new Control[8];
+                
         Preferences preferences;
         PreferencesDialog preferencesDialog;
         MeasureRRDialog measureRRDialog;
@@ -249,18 +255,32 @@ namespace epcalipers
             cancelButton.Text = "Cancel";
             cancelButton.Click += CancelButton_Click;
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
+
+            cancelTweakButton = new Button();
+            cancelTweakButton.Text = "Cancel";
+            cancelTweakButton.Click += CancelTweakButton_Click;
+            toolTip1.SetToolTip(cancelTweakButton, "Cancel tweaking");
+  
             measureRRForQtcMessageLabel = new Label();
             measureRRForQtcMessageLabel.Text = "Measure one or more RR intervals";
-            // properties below ensure label is aligned with Buttons
-            measureRRForQtcMessageLabel.AutoSize = true;
-            measureRRForQtcMessageLabel.Dock = DockStyle.Fill;
-            measureRRForQtcMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
+            AdjustLabel(measureRRForQtcMessageLabel);
             measureQtcMessageLabel = new Label();
             measureQtcMessageLabel.Text = "Measure QT";
-            measureQtcMessageLabel.AutoSize = true;
-            measureQtcMessageLabel.Dock = DockStyle.Fill;
-            measureQtcMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
+            AdjustLabel(measureQtcMessageLabel);
+            tweakLabel = new Label();
+            // tweakLabel text is changed on the fly
+            AdjustLabel(tweakLabel);
         }
+
+ 
+        private void AdjustLabel(Label label)
+        {
+            // properties below ensure label is aligned with Buttons
+            label.AutoSize = true;
+            label.Dock = DockStyle.Fill;
+            label.TextAlign = ContentAlignment.MiddleCenter;
+        }
+      
         #endregion
         #region Buttons
         private void MeasureQTcButton_Click(object sender, EventArgs e)
@@ -294,6 +314,8 @@ namespace epcalipers
             ShowMainMenu();
         }
 
+        // TODO: cancel button needs to return to QT measurement if we are doing QTc,
+        // and, must keep calipers locked if doing QTc.
         private void CancelButton_Click(object sender, EventArgs e)
         {
             theCalipers.Locked = false;
@@ -504,6 +526,22 @@ namespace epcalipers
             ToggleIntervalRate();
         }
 
+        private void CancelTweakButton_Click(object sender, EventArgs e)
+        {
+            // FIXME:  this doesn't work.  need to push and pop toolbar
+            // Doing QTc measurement
+            if (oldControls.Length > 0)
+            {
+                flowLayoutPanel1.Controls.Clear();
+                flowLayoutPanel1.Controls.AddRange(oldControls);
+            }
+            else
+            {
+                ShowMainMenu();
+            }
+        }
+
+
         #endregion
         #region Mouse
         private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -523,6 +561,7 @@ namespace epcalipers
                 contextMenuStrip1.Show(this, clickPoint);
                 contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
                 theCalipers.SetChosenCaliper(clickPoint);
+                theCalipers.SetChosenCaliperComponent(clickPoint);
                 return;
             }
             // Update the mouse path with the mouse information
@@ -1603,7 +1642,7 @@ namespace epcalipers
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                theCalipers.SetChosenCaliperColor(colorDialog.Color);
+                theCalipers.SetChosenCaliperColor(Preferences.SneakilyAdjustColor(colorDialog.Color));
                 customColors = colorDialog.CustomColors;
                 ecgPictureBox.Refresh();
             }
@@ -1611,7 +1650,14 @@ namespace epcalipers
 
         private void tweakToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            flowLayoutPanel1.Controls.CopyTo(oldControls, 0);
+            flowLayoutPanel1.Controls.Clear();
+            tweakLabel.Text = "Tweak testing 123";
+            if (tweakMenu == null)
+            {
+                tweakMenu = new Control[] { cancelTweakButton, tweakLabel };
+            }
+            flowLayoutPanel1.Controls.AddRange(tweakMenu);
         }
 
         #endregion

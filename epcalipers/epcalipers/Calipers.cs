@@ -244,6 +244,45 @@ namespace epcalipers
             return chosenCaliper.UnselectedColor;
         }
 
+        public void SetChosenCaliperComponent(Point point)
+        {
+            if (chosenCaliper == null)
+            {
+                chosenComponent = CaliperComponent.NoComponent;
+            }
+            else
+            {
+                chosenComponent = GetCaliperComponent(chosenCaliper, point);
+            }
+        }
+
+        private CaliperComponent GetCaliperComponent(Caliper caliper, Point point)
+        {
+            if (caliper == null)
+            {
+                return CaliperComponent.NoComponent;
+            }
+            if (caliper.PointNearBar1(point))
+            {
+                return caliper.Direction == CaliperDirection.Horizontal ? CaliperComponent.LeftBar : CaliperComponent.UpperBar;
+            }
+            else if (caliper.PointNearBar2(point))
+            {
+                return caliper.Direction == CaliperDirection.Horizontal ? CaliperComponent.RightBar : CaliperComponent.LowerBar;
+            }
+            else if (caliper.PointNearCrossbar(point))
+            {
+                return caliper.isAngleCaliper ? CaliperComponent.Apex : CaliperComponent.CrossBar;
+            }
+            else
+            {
+                return CaliperComponent.NoComponent;
+            }
+            
+        }
+
+
+
         public bool DragGrabbedCaliper(float deltaX, float deltaY, PointF location)
         {
             bool needsRefresh = false;
