@@ -7,7 +7,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace epcalipers
 {
@@ -37,8 +36,10 @@ namespace epcalipers
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
         Control[] tweakMenu;
-        Control[] oldControls = new Control[8];
-                
+        static int maxControlNumber = 10;
+        Control[] oldControls = new Control[maxControlNumber];
+
+
         Preferences preferences;
         PreferencesDialog preferencesDialog;
         MeasureRRDialog measureRRDialog;
@@ -528,16 +529,11 @@ namespace epcalipers
 
         private void CancelTweakButton_Click(object sender, EventArgs e)
         {
-            // FIXME:  this doesn't work.  need to push and pop toolbar
-            // Doing QTc measurement
-            if (oldControls.Length > 0)
+            // always returns to previous toolbar
+            flowLayoutPanel1.Controls.Clear();
+            foreach (Control c in oldControls)
             {
-                flowLayoutPanel1.Controls.Clear();
-                flowLayoutPanel1.Controls.AddRange(oldControls);
-            }
-            else
-            {
-                ShowMainMenu();
+                flowLayoutPanel1.Controls.Add(c);
             }
         }
 
@@ -1650,6 +1646,7 @@ namespace epcalipers
 
         private void tweakToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Debug.Assert(flowLayoutPanel1.Controls.Count < maxControlNumber);
             flowLayoutPanel1.Controls.CopyTo(oldControls, 0);
             flowLayoutPanel1.Controls.Clear();
             tweakLabel.Text = "Tweak testing 123";
