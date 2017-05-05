@@ -529,12 +529,18 @@ namespace epcalipers
 
         private void CancelTweakButton_Click(object sender, EventArgs e)
         {
+            CancelTweaking();
+        }
+
+        private void CancelTweaking()
+        {
             // always returns to previous toolbar
             flowLayoutPanel1.Controls.Clear();
             foreach (Control c in oldControls)
             {
                 flowLayoutPanel1.Controls.Add(c);
             }
+            theCalipers.CancelTweaking();
         }
 
 
@@ -554,17 +560,28 @@ namespace epcalipers
             Point clickPoint = new Point(e.X, e.Y);
             if  (e.Button == MouseButtons.Right)
             {
-                contextMenuStrip1.Show(this, clickPoint);
-                contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
+                contextMenuStrip1.Hide();
                 theCalipers.SetChosenCaliper(clickPoint);
                 theCalipers.SetChosenCaliperComponent(clickPoint);
+                if (theCalipers.NoChosenCaliper() && theCalipers.tweakingComponent)
+                {
+                    CancelTweaking();
+                }
+                if (!theCalipers.tweakingComponent)
+                {
+                    contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
+                    contextMenuStrip1.Show(this, clickPoint);
+                }
+                else
+                {
+                    TweakCaliper();
+                }
+                
                 return;
             }
             // Update the mouse path with the mouse information
-            Point mouseDownLocation = clickPoint;
-            Point mouseClickLocation = clickPoint;
-            firstPoint = mouseClickLocation;
-            theCalipers.GrabCaliperIfClicked(mouseClickLocation);
+            firstPoint = clickPoint;
+            theCalipers.GrabCaliperIfClicked(clickPoint);
         }
 
         private void ecgPictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -1649,12 +1666,32 @@ namespace epcalipers
             Debug.Assert(flowLayoutPanel1.Controls.Count < maxControlNumber);
             flowLayoutPanel1.Controls.CopyTo(oldControls, 0);
             flowLayoutPanel1.Controls.Clear();
-            tweakLabel.Text = "Tweak testing 123";
             if (tweakMenu == null)
             {
                 tweakMenu = new Control[] { cancelTweakButton, tweakLabel };
             }
             flowLayoutPanel1.Controls.AddRange(tweakMenu);
+            TweakCaliper();
+        }
+
+        private void TweakCaliper()
+        {
+            if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
+            {
+                string componentName = theCalipers.GetChosenComponentName();
+                string message = string.Format("Tweak {0} with arrow keys", componentName);
+                tweakLabel.Text = message;
+                if (!theCalipers.tweakingComponent)
+                {
+                    theCalipers.tweakingComponent = true;
+                }
+            }
+            else
+            {
+                CancelTweaking();
+            }
+
+
         }
 
         #endregion

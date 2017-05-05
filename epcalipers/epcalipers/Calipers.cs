@@ -28,8 +28,8 @@ namespace epcalipers
 
         // for color and tweaking
         private Caliper chosenCaliper;
-        private CaliperComponent chosenComponent;
-        private bool tweakingComponent;
+        public CaliperComponent chosenComponent { get; set; }
+        public bool tweakingComponent { get; set; }
         // FIXME: change to lower value (0.5?) after debugging
         private float tweakDistance = 1;
  
@@ -214,6 +214,11 @@ namespace epcalipers
             chosenCaliper = getGrabbedCaliper(point);
         }
 
+        public bool NoChosenCaliper()
+        {
+            return chosenCaliper == null;
+        }
+
         // assumes chosenCaliper is not selected (e.g. highlighted)
         public void SetChosenCaliperColor(Color color)
         {
@@ -242,6 +247,11 @@ namespace epcalipers
                 return Color.Blue;
             }
             return chosenCaliper.UnselectedColor;
+        }
+
+        public string GetChosenComponentName()
+        {
+            return Caliper.ComponentName(chosenComponent);
         }
 
         public void SetChosenCaliperComponent(Point point)
@@ -279,6 +289,13 @@ namespace epcalipers
                 return CaliperComponent.NoComponent;
             }
             
+        }
+
+        public void CancelTweaking()
+        {
+            chosenComponent = CaliperComponent.NoComponent;
+            chosenCaliper = null;
+            tweakingComponent = false;
         }
 
 
