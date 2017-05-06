@@ -33,6 +33,7 @@ namespace epcalipers
         {
             Brush brush = new SolidBrush(CaliperColor);
             Pen pen = new Pen(brush, LineWidth);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             // ensure caliper always extends past the screen edges
             float length = Math.Max(rect.Size.Height, rect.Size.Width) * 2.0f;
@@ -73,6 +74,7 @@ namespace epcalipers
 
         private void DrawHandles(Graphics g, Brush brush)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             PointF apex = new PointF(Bar1Position, CrossbarPosition);
             int x1 = (int)Bar1Position;
             int y1 = (int)CrossbarPosition;

@@ -153,6 +153,7 @@ namespace epcalipers
             KillBitmap();
             theCalipers.deleteAllCalipers();
             ecgPictureBox.Image = null;
+            CancelTweaking();
             //imageButton.Enabled = !value;
             //openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
@@ -1689,7 +1690,7 @@ namespace epcalipers
             if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow keys", componentName);
+                string message = string.Format("Tweak {0} with arrow keys.  Right-click to tweak a different component.", componentName);
                 tweakLabel.Text = message;
                 if (!theCalipers.tweakingComponent)
                 {

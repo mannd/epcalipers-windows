@@ -120,6 +120,7 @@ namespace epcalipers
         {
             Brush brush = new SolidBrush(CaliperColor);
             Pen pen = new Pen(brush, LineWidth);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             if (Direction == CaliperDirection.Horizontal)
             {
                 CrossbarPosition = Math.Min(CrossbarPosition, rect.Size.Height - DELTA);
@@ -155,6 +156,7 @@ namespace epcalipers
 
         private void DrawHorizontalHandles(Graphics g, Brush brush)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
             int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
             g.FillRectangle(brush, new Rectangle(x1 - 20, (int)CrossbarPosition - 5, 20, 10));
@@ -164,6 +166,7 @@ namespace epcalipers
 
         private void DrawVerticalHandles(Graphics g, Brush brush)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
             int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
             g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 5, x1 - 20, 10, 20));
@@ -174,6 +177,7 @@ namespace epcalipers
 
         protected void CaliperText(Graphics g, Brush brush)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             string text = Measurement();
             SizeF sizeOfString = g.MeasureString(text, TextFont);
             float stringWidth = sizeOfString.Width;

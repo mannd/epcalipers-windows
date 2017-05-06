@@ -31,7 +31,7 @@ namespace epcalipers
         public CaliperComponent chosenComponent { get; set; }
         public bool tweakingComponent { get; set; }
         // FIXME: change to lower value (0.5?) after debugging
-        private float tweakDistance = 1;
+        private float tweakDistance = 0.4f;
  
 
         public Calipers()
