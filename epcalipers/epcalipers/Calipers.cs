@@ -298,6 +298,19 @@ namespace epcalipers
             tweakingComponent = false;
         }
 
+        public virtual void Move(MovementDirection movementDirection)
+        {
+            MoveChosenComponent(movementDirection);
+        }
+
+        private void MoveChosenComponent(MovementDirection movementDirection)
+        {
+            if (chosenCaliper != null)
+            {
+                chosenCaliper.MoveBarInDirection(movementDirection, tweakDistance, chosenComponent);
+            }
+        }
+
 
 
         public bool DragGrabbedCaliper(float deltaX, float deltaY, PointF location)

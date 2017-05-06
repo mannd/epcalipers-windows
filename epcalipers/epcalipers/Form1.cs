@@ -104,6 +104,9 @@ namespace epcalipers
             ecgPictureBox.MouseDown += ecgPictureBox_MouseDown;
             ecgPictureBox.MouseDoubleClick += ecgPictureBox_MouseDoubleClick;
             ecgPictureBox.MouseUp += ecgPictureBox_MouseUp;
+
+            //KeyPreview = true;
+            //this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             SetupButtons();
             ShowMainMenu();
             // form starts with no image loaded, so no pages either
@@ -909,6 +912,7 @@ namespace epcalipers
                 qtcStep1Menu = new Control[] { cancelButton, measureRRForQtcButton, measureRRForQtcMessageLabel };
             }
             flowLayoutPanel1.Controls.AddRange(qtcStep1Menu);
+            CancelButton = cancelButton;
         }
 
         private void showQTcStep2Menu()
@@ -919,6 +923,7 @@ namespace epcalipers
                 qtcStep2Menu = new Control[] { cancelButton, measureQTcButton, measureQtcMessageLabel };
             }
             flowLayoutPanel1.Controls.AddRange(qtcStep2Menu);
+            CancelButton = cancelButton;
         }
 
         private void ShowMainMenu()
@@ -1398,6 +1403,8 @@ namespace epcalipers
         #endregion
         #region Menu
 
+        #region MainMenu
+
         private void EnableImageMenuItems(bool value)
         {
             zoomInButton.Enabled = value;
@@ -1643,6 +1650,8 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
+        #endregion
+
         #region right-click menu
         private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1671,6 +1680,7 @@ namespace epcalipers
                 tweakMenu = new Control[] { cancelTweakButton, tweakLabel };
             }
             flowLayoutPanel1.Controls.AddRange(tweakMenu);
+            CancelButton = cancelTweakButton;
             TweakCaliper();
         }
 
@@ -1690,15 +1700,40 @@ namespace epcalipers
             {
                 CancelTweaking();
             }
-
-
         }
 
-        #endregion
 
 
         #endregion
 
+        #endregion
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (!theCalipers.tweakingComponent)
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+            switch(keyData)
+            {
+                case Keys.Left:
+                    theCalipers.Move(MovementDirection.Left);
+                    break; 
+                case Keys.Right:
+                    theCalipers.Move(MovementDirection.Right);
+                    break;
+                case Keys.Up:
+                    theCalipers.Move(MovementDirection.Up);
+                    break;
+                case Keys.Down:
+                    theCalipers.Move(MovementDirection.Down);
+                    break;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
+            }
+            ecgPictureBox.Refresh();
+            return true;
+        }
 
     }
 }
