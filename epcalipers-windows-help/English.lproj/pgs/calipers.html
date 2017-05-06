@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-03-22 Wed 10:26 -->
+<!-- 2017-05-06 Sat 07:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
-<meta name="generator" content="Org-mode" />
+<meta name="generator" content="Org mode" />
 <meta name="author" content="David Mann" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -53,13 +53,97 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
@@ -92,6 +176,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="description" content="How to use the electronic calipers" />
@@ -145,19 +230,19 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgef37d59" class="outline-2">
-<h2 id="orgef37d59"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Calipers</h2>
+<div id="outline-container-orgf31324e" class="outline-2">
+<h2 id="orgf31324e"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Calipers</h2>
 </div>
-<div id="outline-container-org9dfe03d" class="outline-2">
-<h2 id="org9dfe03d">Adding and deleting calipers</h2>
-<div class="outline-text-2" id="text-org9dfe03d">
+<div id="outline-container-org43b4965" class="outline-2">
+<h2 id="org43b4965">Adding and deleting calipers</h2>
+<div class="outline-text-2" id="text-org43b4965">
 <p>
 Calipers come in three flavors.  Calipers with a horizontal crossbar and vertical sidebars are used to make time measurements and are called <i>time calipers</i>.  Calipers with a vertical crossbar and horizontal sidebars are used to make amplitude measurements and are called, you guessed it, <i>amplitude calipers</i>.  Finally <i>angle calipers</i> are used to measure angles, such as the 𝞫 angle in Brugada syndrome.
 </p>
 </div>
-<div id="outline-container-org21595a9" class="outline-3">
-<h3 id="org21595a9">Add Calipers</h3>
-<div class="outline-text-3" id="text-org21595a9">
+<div id="outline-container-orgcb7f41f" class="outline-3">
+<h3 id="orgcb7f41f">Add Calipers</h3>
+<div class="outline-text-3" id="text-orgcb7f41f">
 <p>
 Add calipers by clicking on the <b>Add Caliper</b> button and then selecting a time, amplitude caliper, or angle caliper in the dialog that appears, or use the <b>Caliper</b> menu (or shortcut keys) to do this.
 </p>
@@ -165,13 +250,13 @@ Add calipers by clicking on the <b>Add Caliper</b> button and then selecting a t
 <div class="figure">
 <p><img src="../../shrd/add_caliper_dialog.png" alt="add_caliper_dialog.png" />
 </p>
-<p><span class="figure-number">Figure 1:</span> Add caliper dialog</p>
+<p><span class="figure-number">Figure 1: </span>Add caliper dialog</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd1b31c3" class="outline-3">
-<h3 id="orgd1b31c3">Selecting Calipers</h3>
-<div class="outline-text-3" id="text-orgd1b31c3">
+<div id="outline-container-org943e9f2" class="outline-3">
+<h3 id="org943e9f2">Selecting Calipers</h3>
+<div class="outline-text-3" id="text-org943e9f2">
 <p>
 In order to make measurements or calibrate, it is necessary to <i>select</i> a single caliper when there are multiple calipers on the screen.  A single mouse click on any part of a caliper selects it.  A selected calipers is evident because it is a different color (by default red, but you can change this) than unselected calipers (by default blue).  Single-clicking a selected caliper again will unselect it.  Only one caliper at a time can be selected.
 </p>
@@ -179,41 +264,50 @@ In order to make measurements or calibrate, it is necessary to <i>select</i> a s
 <div class="figure">
 <p><img src="../../shrd/selected_caliper.png" alt="selected_caliper.png" />
 </p>
-<p><span class="figure-number">Figure 2:</span> The red caliper is selected</p>
+<p><span class="figure-number">Figure 2: </span>The red caliper is selected</p>
 </div>
 
 
 <div class="figure">
 <p><img src="../../shrd/angle_caliper.png" alt="angle_caliper.png" />
 </p>
-<p><span class="figure-number">Figure 3:</span> An angle caliper</p>
+<p><span class="figure-number">Figure 3: </span>An angle caliper</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org334b6c9" class="outline-3">
-<h3 id="org334b6c9">Deleting Calipers</h3>
-<div class="outline-text-3" id="text-org334b6c9">
+<div id="outline-container-orga938183" class="outline-3">
+<h3 id="orga938183">Deleting Calipers</h3>
+<div class="outline-text-3" id="text-orga938183">
 <p>
 Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.
 </p>
 </div>
 </div>
+<div id="outline-container-org8961589" class="outline-3">
+<h3 id="org8961589">Caliper Colors</h3>
+<div class="outline-text-3" id="text-org8961589">
+<p>
+If you right-click on a caliper with your mouse, a context menu will appear.  The first item on this menu is <b>Caliper Color</b>.  Click this option, and the color selector appears.  Use the color selector to change the color of the caliper you clicked on.  The color change will only affect the individual caliper you clicked on.  You can change the default caliper color of new calipers by changing <a href="preferences.html#MissingReference">Options</a>.
+</p>
 </div>
-<div id="outline-container-orgf25361c" class="outline-2">
-<h2 id="orgf25361c">Moving calipers</h2>
-<div class="outline-text-2" id="text-orgf25361c">
-</div><div id="outline-container-orgc9d9775" class="outline-3">
-<h3 id="orgc9d9775">Moving</h3>
-<div class="outline-text-3" id="text-orgc9d9775">
+</div>
+</div>
+<div id="outline-container-orgf15b9be" class="outline-2">
+<h2 id="orgf15b9be">Moving calipers</h2>
+<div class="outline-text-2" id="text-orgf15b9be">
+</div>
+<div id="outline-container-orge1c4f18" class="outline-3">
+<h3 id="orge1c4f18">Moving</h3>
+<div class="outline-text-3" id="text-orge1c4f18">
 <p>
 Push the left mouse button while hovering over the crossbar area of a caliper.  Drag the mouse with the left button held down to move the caliper as a unit.  To move angle calipers, select the top (apex) of the angle where the two lines join together. 
 </p>
 </div>
 </div>
-<div id="outline-container-org8a52e00" class="outline-3">
-<h3 id="org8a52e00">Stretching (opening and closing)</h3>
-<div class="outline-text-3" id="text-org8a52e00">
+<div id="outline-container-orgd82230f" class="outline-3">
+<h3 id="orgd82230f">Stretching (opening and closing)</h3>
+<div class="outline-text-3" id="text-orgd82230f">
 <p>
 If the cursor is positioned over either the left or right sidebar of a time caliper (or top or bottom bars of an amplitude caliper) clicking with the left mouse button and then dragging will move that caliper bar by itself.  In this way you can widen or narrow the caliper interval.  Note that you cannot move both bars at the same time.  When you move one caliper bar, the other one always stays fixed.  With angle calipers, select either of the two bars of the angle a little distance away from the apex and drag to open and close the angle.
 </p>
@@ -223,15 +317,23 @@ By combining movements, you can place a caliper anywhere on the ECG image to mak
 </p>
 </div>
 </div>
+<div id="outline-container-orgdcfb39b" class="outline-3">
+<h3 id="orgdcfb39b">Tweaking</h3>
+<div class="outline-text-3" id="text-orgdcfb39b">
+<p>
+"Tweaking" or "micromoving" is a way to more finely control caliper movement.  When you tweak a caliper position, you use the keyboard arrow keys to move a caliper component or the entire caliper a fraction of a point in any direction.  If you right-click on a caliper with a mouse you bring up a context menu that includes the option <b>Tweak Caliper Position</b>.  Click on this option.  A message will appear showing which component of the caliper you clicked on (left bar, right bar, top bar, bottom bar, crossbar, or apex, depending of the type of caliper).  Right click on a different component to change which component you want to move.  Then use the keyboard arrow keys to move the selected caliper component.  Note that if you select the crossbar, or apex of an angle caliper, the arrow keys cause the caliper to move as a unit.  Selecting any other component just moves that component.  Select the <b>Cancel</b> button to turn off tweaking.
+</p>
 </div>
-<div id="outline-container-orgb4f04b1" class="outline-2">
-<h2 id="orgb4f04b1">Caliper handles</h2>
-<div class="outline-text-2" id="text-orgb4f04b1">
+</div>
+</div>
+<div id="outline-container-org1ea7310" class="outline-2">
+<h2 id="org1ea7310">Caliper handles</h2>
+<div class="outline-text-2" id="text-org1ea7310">
 
 <div class="figure">
 <p><img src="../../shrd/caliper_handles.png" alt="caliper_handles.png" />
 </p>
-<p><span class="figure-number">Figure 4:</span> Caliper with handles</p>
+<p><span class="figure-number">Figure 4: </span>Caliper with handles</p>
 </div>
 
 <p>

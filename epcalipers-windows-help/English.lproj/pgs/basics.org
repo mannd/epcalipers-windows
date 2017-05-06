@@ -17,9 +17,7 @@ You drag yourself out of bed and open up your laptop.  There's the ECG in questi
 ** Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your Microsoft Windows™ PC or tablet.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 ** What's new?
-- You can make the main window transparent and use *EP Calipers* to measure anything open on your Desktop.
-- Measure angles with new angle calipers.
-- Use the new /Brugadometer/ to evaluate ECGs for patterns consistent with Brugada syndrome.
+- This new version of *EP Calipers* allows for individual calipers to be colored differently, and caliper position can now be "tweaked" using keyboard arrow keys.
 ** Quick start
 After *EP Calipers* starts, the first step is to load an ECG image.
 You can use the *Open* button at the bottom of the screen, or the
@@ -56,28 +54,34 @@ Note that not all buttons will be available all the time, depending on whether c
 - *QTc* Measure corrected QT (QTc)
 ** Menus
 Not all actions are controlled by the buttons, just the common ones.  Use the menu at the top of the window as a substitute for the buttons, or in order to perform less common actions.  Nearly all the functions of the app are contained in the main menu commands at the top of the screen.  Note that there are keyboard shortcuts shown in the menu for many of the app's functions.
+This is also a context menu that opens when you right click with your mouse on a caliper.  This menu allows individual coloring of calipers, and movement of caliper components with the keyboard arrow keys.
 ** Keyboard shortcuts
 Many of these keys are combinations using the CTRL (Control) key, the SHIFT key and the ALT key.
-| Key              | Function                   |
-|------------------+----------------------------|
-| CTRL+O           | Open image file            |
-| CTRL+S           | Save image file            |
-| CTRL+P           | Print image file           |
-| CTRL+ALT+R       | Rotate image 0.1° right    |
-| CTRL+ALT+L       | Rotate image 0.1° left     |
-| CTRL+R           | Rotate image 1° right      |
-| CTRL+L           | Rotate image 1° left       |
-| CTRL+SHIFT+R     | Rotate image 90° right     |
-| CTRL+SHIFT+L     | Rotate image 90° left      |
-| CTRL+0 (zero)    | Reset image rotation       |
-| CTRL+=           | Zoom in                    |
-| CTRL+-           | Zoom out                   |
-| CTRL+T           | Add time caliper           |
-| CTRL+A           | Add amplitude caliper      |
-| CTRL+G           | Add angle caliper          |
-| Del              | Delete selected caliper    |
-| CTRL+H           | Show caliper handles       |
-| CTRL+I           | Toggle rate/interval       |
-| CTRL+Left arrow  | Prev page of multipage PDF |
-| CTRL+Right arrow | Next page of multipage PDF |
-| F1               | Help                       |
+| Key              | Function                      |
+|------------------+-------------------------------|
+| CTRL+O           | Open image file               |
+| CTRL+S           | Save image file               |
+| CTRL+P           | Print image file              |
+| CTRL+ALT+R       | Rotate image 0.1° right       |
+| CTRL+ALT+L       | Rotate image 0.1° left        |
+| CTRL+R           | Rotate image 1° right         |
+| CTRL+L           | Rotate image 1° left          |
+| CTRL+SHIFT+R     | Rotate image 90° right        |
+| CTRL+SHIFT+L     | Rotate image 90° left         |
+| CTRL+0 (zero)    | Reset image rotation          |
+| CTRL+=           | Zoom in                       |
+| CTRL+-           | Zoom out                      |
+| CTRL+T           | Add time caliper              |
+| CTRL+A           | Add amplitude caliper         |
+| CTRL+G           | Add angle caliper             |
+| Del              | Delete selected caliper       |
+| CTRL+H           | Show caliper handles          |
+| CTRL+I           | Toggle rate/interval          |
+| CTRL+Left arrow  | Prev page of multipage PDF    |
+| CTRL+Right arrow | Next page of multipage PDF    |
+| F1               | Help                          |
+| Left arrow       | Tweak caliper component left  |
+| Right arrow      | Tweak caliper component right |
+| Up arrow         | Tweak caliper component up    |
+| Down arrow       | Tweak caliper component down  |
+| Escape           | Cancel action                 |
