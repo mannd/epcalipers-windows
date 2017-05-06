@@ -400,7 +400,7 @@ namespace epcalipers
                 (movementDirection == MovementDirection.Up || movementDirection == MovementDirection.Down)) 
                 ||
                 (Direction == CaliperDirection.Vertical && 
-                (movementDirection == MovementDirection.Left || movementDirection == MovementDirection.Up));
+                (movementDirection == MovementDirection.Left || movementDirection == MovementDirection.Right));
         }
 
         private void MoveCrossbarInDirection(MovementDirection movementDirection, float distance)
@@ -436,13 +436,13 @@ namespace epcalipers
             switch (movementDirection)
             {
                 case MovementDirection.Left:
-                    return MovementDirection.Down;
-                case MovementDirection.Right:
                     return MovementDirection.Up;
+                case MovementDirection.Right:
+                    return MovementDirection.Down;
                 case MovementDirection.Up:
-                    return MovementDirection.Right;
-                case MovementDirection.Down:
                     return MovementDirection.Left;
+                case MovementDirection.Down:
+                    return MovementDirection.Right;
                 default:
                     return MovementDirection.Stationary;
             }
