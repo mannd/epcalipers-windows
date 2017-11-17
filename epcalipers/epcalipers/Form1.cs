@@ -955,6 +955,7 @@ namespace epcalipers
             deleteCaliperToolStripMenuItem.Enabled = enable;
             showHandlesToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
+            deleteAllCalipersToolStripMenuItem.Enabled = enable;
             calibrateToolStripMenuItem.Enabled = enable;
             clearCalibrationToolStripMenuItem.Enabled = enable;
         }
@@ -1581,6 +1582,21 @@ namespace epcalipers
             }
         }
 
+        private void deleteAllCalipersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            deleteAllCalipers();
+        }
+
+        private void deleteAllCalipers()
+        {
+            if (!CalipersAllowed())
+            {
+                return;
+            }
+            theCalipers.deleteAllCalipers();
+            ecgPictureBox.Refresh();
+        }
+
         private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoCalibration();
@@ -1736,5 +1752,6 @@ namespace epcalipers
             return true;
         }
 
+      
     }
 }
