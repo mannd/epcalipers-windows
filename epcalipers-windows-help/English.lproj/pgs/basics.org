@@ -75,6 +75,7 @@ Many of these keys are combinations using the CTRL (Control) key, the SHIFT key 
 | CTRL+A           | Add amplitude caliper         |
 | CTRL+G           | Add angle caliper             |
 | Del              | Delete selected caliper       |
+| SHIFT-Del        | Delete all calipers           |
 | CTRL+H           | Show caliper handles          |
 | CTRL+I           | Toggle rate/interval          |
 | CTRL+Left arrow  | Prev page of multipage PDF    |
