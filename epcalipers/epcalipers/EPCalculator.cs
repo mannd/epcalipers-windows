@@ -52,5 +52,16 @@ namespace epcalipers
         {
             return SecToMsec(QtcBazettSec(MsecToSec(qt), MsecToSec(rrInMsec)));
         }
-    }
+
+	public static double QtcFrmSec(double qtInSec, double rrInSec) {
+	    return qtInSec + 0.154 * (1 - rrInSec);
+	}
+
+	public static double QtcHdgSec(double qtInSec, double rrInSec) {
+	    return qtInSec + 0.00175 * (60.0 / rrInSec - 60);
+	}
+
+	public static double QtcFrdSec(double qtInSec, double rrInSec) {
+	    return qtInSec / Math.Pow(rrInSec, 1 / 3.0);
+	}
 }

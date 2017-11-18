@@ -305,12 +305,11 @@ namespace epcalipers
             string result = "Invalid Result";
             if (meanRR > 0)
             {
-                double qtc = EPCalculator.QtcBazettSec(qt, meanRR);
+                double qtc = calculateQtc(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs);
                 if (c.CurrentCalibration.UnitsAreMsecs)
                 {
                     meanRR *= 1000.0;
                     qt *= 1000.0;
-                    qtc *= 1000.0;
                 }
                 result = string.Format("Mean RR = {0} msec\nQT = {1} msec\nQTc = {2} msec (Bazett's formula)", meanRR.ToString("G4"),
                     qt.ToString("G4"), qtc.ToString("G4"));
@@ -318,6 +317,18 @@ namespace epcalipers
             MessageBox.Show(result, "Calculated QTc");
             ShowMainMenu();
         }
+
+	// TODO: change based on QTc formula
+	private double calculateQtc(double qt, double meanRR, bool unitsAreMsecs)
+	{
+	    double qtc = EPCalculator.QtcBazettSec(qt, meanRR);
+	    if (unitsAreMsecs)
+	    {
+		qtc *= 1000.0;
+	    }
+	    return qtc;
+	}
+	    
 
         // TODO: cancel button needs to return to QT measurement if we are doing QTc,
         // and, must keep calipers locked if doing QTc.
