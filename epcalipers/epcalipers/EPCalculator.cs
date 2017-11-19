@@ -1,11 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+Using System.Text;
 using System.Threading.Tasks;
 
 namespace epcalipers
 {
+    public class QtcCalculator
+    {
+
+	public enum QTcFormula
+	    {
+		qtcBzt,
+		qtcFrm,
+		qtcHdg,
+		qtcFrd,
+		qtcAll  // calculate all the above QTcs
+	    }
+
+	public Dictionary<QTcFormula, string> formulaNames;
+	private QtcFormula formula;
+	
+	private QtcFormula[] allFormulas = {
+            QtcFormula.qtcBzt,
+            QtcFormula.qtcFrm,
+            QtcFormula.qtcHdg,
+            QtcFormula.qtcFrd
+	};
+
+	QtcCalculator(QtcFormula formula) {
+	    this.formula = formula;
+	    // format here
+	    formulaNames = new Dictionary<QtcFormula, string>;
+	    formulaNames.Add(QtcFormula.qtcBzt, "Bazett");
+	    formulaNames.Add(QtcFormula.qtcFrm, "Framingham");
+	    formulaNames.Add(QtcFormula.qtcHdg, "Hodges");
+	    formulaNames.Add(QtcFormula.qtcFrd, "Fridericia"); 
+	}
+
+	public string Calculate(double qtInSec, double rrInSec,
+				bool convertToMsec, string units)
+	{
+
+	}
+
+	    
+    }
+
     public static class EPCalculator
     {
         public static double MsecToBpm(double interval)
