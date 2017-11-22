@@ -253,7 +253,7 @@ namespace epcalipers
             return interval;
         }
 
-        private double IntervalInSecs(double interval)
+        public double IntervalInSecs(double interval)
         {
             if (CurrentCalibration.UnitsAreSeconds)
             {
@@ -261,7 +261,7 @@ namespace epcalipers
             }
             else
             {
-                return EPCalculator.SecToMsec(interval);
+                return EPCalculator.MsecToSec(interval);
             }
         }
 

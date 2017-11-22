@@ -48,6 +48,17 @@ namespace epcalipers.Tests
             Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(500, 1000)) == 500);
             Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(371, 1000)) == 371);
             Assert.IsTrue(Math.Round(EPCalculator.QtcBazettMsec(459, 777)) == 521);
+        }
+
+        [TestMethod()]
+        public void QtcFormulaTest()
+        {
+            QtcCalculator qtcCalculator = new QtcCalculator(QtcFormula.qtcBzt);
+            string result = qtcCalculator.Calculate(0.4, 1.0, false, "sec");
+            Assert.AreEqual(result, "Mean RR = 1 sec\nQT = 0.4 sec\nQTc = 0.4 sec (Bazett formula)");
+            qtcCalculator = new QtcCalculator(QtcFormula.qtcHdg);
+            result = qtcCalculator.Calculate(0.4, 1.0, false, "sec");
+            Assert.AreEqual(result, "Mean RR = 1 sec\nQT = 0.4 sec\nQTc = 0.4 sec (Hodges formula)");
 
         }
     }

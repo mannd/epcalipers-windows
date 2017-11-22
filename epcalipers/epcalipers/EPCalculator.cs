@@ -1,50 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-Using System.Text;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace epcalipers
 {
+
+    public enum QtcFormula
+    {
+        qtcBzt,
+        qtcFrm,
+        qtcHdg,
+        qtcFrd,
+        qtcAll  // calculate all the above QTcs
+    }
+
     public class QtcCalculator
     {
-
-	public enum QTcFormula
-	    {
-		qtcBzt,
-		qtcFrm,
-		qtcHdg,
-		qtcFrd,
-		qtcAll  // calculate all the above QTcs
-	    }
-
-	public Dictionary<QTcFormula, string> formulaNames;
-	private QtcFormula formula;
-	
-	private QtcFormula[] allFormulas = {
+        private QtcFormula[] allFormulas = {
             QtcFormula.qtcBzt,
             QtcFormula.qtcFrm,
             QtcFormula.qtcHdg,
             QtcFormula.qtcFrd
-	};
+    };
 
-	QtcCalculator(QtcFormula formula) {
-	    this.formula = formula;
-	    // format here
-	    formulaNames = new Dictionary<QtcFormula, string>;
-	    formulaNames.Add(QtcFormula.qtcBzt, "Bazett");
-	    formulaNames.Add(QtcFormula.qtcFrm, "Framingham");
-	    formulaNames.Add(QtcFormula.qtcHdg, "Hodges");
-	    formulaNames.Add(QtcFormula.qtcFrd, "Fridericia"); 
-	}
+        private QtcFormula formula;
+        private Dictionary<QtcFormula, string> formulaNames;
 
-	public string Calculate(double qtInSec, double rrInSec,
-				bool convertToMsec, string units)
-	{
+        public QtcCalculator(QtcFormula formula)
+        {
+            this.formula = formula;
+            // format here
+            formulaNames = new Dictionary<QtcFormula, string>();
+            formulaNames.Add(QtcFormula.qtcBzt, "Bazett");
+            formulaNames.Add(QtcFormula.qtcFrm, "Framingham");
+            formulaNames.Add(QtcFormula.qtcHdg, "Hodges");
+            formulaNames.Add(QtcFormula.qtcFrd, "Fridericia");
+        }
 
-	}
+        public string Calculate(double qtInSec, double rrInSec,
+                    bool convertToMsec, string units)
+        {
+            double qtc;
+            switch(formula)
+            {
+                case QtcFormula.qtcBzt:
+                    qtc = EPCalculator.QtcBazettSec(qtInSec, rrInSec);
+                    break;
+                case QtcFormula.qtcFrd:
+                    qtc = EPCalculator.QtcFrdSec(qtInSec, rrInSec);
+                    break;
+                case QtcFormula.qtcFrm:
+                    qtc = EPCalculator.QtcFrmSec(qtInSec, rrInSec);
+                    break;
+                case QtcFormula.qtcHdg:
+                    qtc = EPCalculator.QtcHdgSec(qtInSec, rrInSec);
+                    break;
+                default:
+                    qtc = 0.0;
+                    break;
+            }
+            if (convertToMsec)
+            {
+                qtInSec *= 1000.0;
+                rrInSec *= 1000.0;
+                qtc *= 1000.0;
+            }
+            string result = string.Format("Mean RR = {0} {3}\nQT = {1} {3}\nQTc = {2} {3} ({4} formula)", rrInSec.ToString("G4"),
+                    qtInSec.ToString("G4"), qtc.ToString("G4"), units, formulaNames[formula]);
+            return result;
+        }
 
-	    
+
     }
 
     public static class EPCalculator
@@ -86,7 +114,7 @@ namespace epcalipers
 
         public static double QtcBazettSec(double qtInSec, double rrInSec)
         {
-            return  qtInSec / (double)Math.Sqrt(rrInSec);
+            return qtInSec / (double)Math.Sqrt(rrInSec);
         }
 
         public static double QtcBazettMsec(double qt, double rrInMsec)
@@ -94,15 +122,16 @@ namespace epcalipers
             return SecToMsec(QtcBazettSec(MsecToSec(qt), MsecToSec(rrInMsec)));
         }
 
-	public static double QtcFrmSec(double qtInSec, double rrInSec) {
-	    return qtInSec + 0.154 * (1 - rrInSec);
-	}
+        public static double QtcFrmSec(double qtInSec, double rrInSec) {
+            return qtInSec + 0.154 * (1 - rrInSec);
+        }
 
-	public static double QtcHdgSec(double qtInSec, double rrInSec) {
-	    return qtInSec + 0.00175 * (60.0 / rrInSec - 60);
-	}
+        public static double QtcHdgSec(double qtInSec, double rrInSec) {
+            return qtInSec + 0.00175 * (60.0 / rrInSec - 60);
+        }
 
-	public static double QtcFrdSec(double qtInSec, double rrInSec) {
-	    return qtInSec / Math.Pow(rrInSec, 1 / 3.0);
-	}
+        public static double QtcFrdSec(double qtInSec, double rrInSec) {
+            return qtInSec / Math.Pow(rrInSec, 1 / 3.0);
+        }
+    }
 }

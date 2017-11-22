@@ -300,19 +300,13 @@ namespace epcalipers
             {
                 return;
             }
-            double qt = Math.Abs(EPCalculator.MsecToSec(c.IntervalResult()));
-            double meanRR = Math.Abs(EPCalculator.MsecToSec(rrIntervalForQtc));
+            double qt = Math.Abs(c.IntervalInSecs(c.IntervalResult()));
+            double meanRR = Math.Abs(c.IntervalInSecs(rrIntervalForQtc));
             string result = "Invalid Result";
             if (meanRR > 0)
             {
-                double qtc = calculateQtc(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs);
-                if (c.CurrentCalibration.UnitsAreMsecs)
-                {
-                    meanRR *= 1000.0;
-                    qt *= 1000.0;
-                }
-                result = string.Format("Mean RR = {0} msec\nQT = {1} msec\nQTc = {2} msec (Bazett's formula)", meanRR.ToString("G4"),
-                    qt.ToString("G4"), qtc.ToString("G4"));
+                QtcCalculator calc = new QtcCalculator(QtcFormula.qtcBzt);
+                result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
             }
             MessageBox.Show(result, "Calculated QTc");
             ShowMainMenu();
