@@ -305,24 +305,13 @@ namespace epcalipers
             string result = "Invalid Result";
             if (meanRR > 0)
             {
-                QtcCalculator calc = new QtcCalculator(QtcFormula.qtcBzt);
+                // TODO: set QtcFormula via preferences
+                QtcCalculator calc = new QtcCalculator(QtcFormula.qtcAll);
                 result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
             }
             MessageBox.Show(result, "Calculated QTc");
             ShowMainMenu();
         }
-
-	// TODO: change based on QTc formula
-	private double calculateQtc(double qt, double meanRR, bool unitsAreMsecs)
-	{
-	    double qtc = EPCalculator.QtcBazettSec(qt, meanRR);
-	    if (unitsAreMsecs)
-	    {
-		qtc *= 1000.0;
-	    }
-	    return qtc;
-	}
-	    
 
         // TODO: cancel button needs to return to QT measurement if we are doing QTc,
         // and, must keep calipers locked if doing QTc.

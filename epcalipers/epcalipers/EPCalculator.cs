@@ -42,33 +42,55 @@ namespace epcalipers
         public string Calculate(double qtInSec, double rrInSec,
                     bool convertToMsec, string units)
         {
+            string errorResult = "Invalid Result";
+            if (rrInSec <= 0)
+            {
+                return errorResult;
+            }
+            QtcFormula[] qtcFormulas;
             double qtc;
             switch(formula)
             {
                 case QtcFormula.qtcBzt:
-                    qtc = EPCalculator.QtcBazettSec(qtInSec, rrInSec);
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcBzt };
                     break;
                 case QtcFormula.qtcFrd:
-                    qtc = EPCalculator.QtcFrdSec(qtInSec, rrInSec);
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcFrd};
                     break;
                 case QtcFormula.qtcFrm:
-                    qtc = EPCalculator.QtcFrmSec(qtInSec, rrInSec);
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcFrm };
                     break;
                 case QtcFormula.qtcHdg:
-                    qtc = EPCalculator.QtcHdgSec(qtInSec, rrInSec);
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcHdg };
+                    break;
+                case QtcFormula.qtcAll:
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcBzt, QtcFormula.qtcFrd, QtcFormula.qtcFrm, QtcFormula.qtcHdg};
                     break;
                 default:
-                    qtc = 0.0;
-                    break;
+                    return errorResult;
             }
+            double meanRR = rrInSec;
+            double qt = qtInSec;
             if (convertToMsec)
             {
-                qtInSec *= 1000.0;
-                rrInSec *= 1000.0;
-                qtc *= 1000.0;
+                qt *= 1000.0;
+                meanRR *= 1000.0;
             }
-            string result = string.Format("Mean RR = {0} {3}\nQT = {1} {3}\nQTc = {2} {3} ({4} formula)", rrInSec.ToString("G4"),
-                    qtInSec.ToString("G4"), qtc.ToString("G4"), units, formulaNames[formula]);
+            string result = string.Format("Mean RR = {0} {2}\nQT = {1} {2}", meanRR.ToString("G4"),
+                    qt.ToString("G4"),  units);
+            foreach(QtcFormula qtcFormula in qtcFormulas)
+            {
+                qtc = EPCalculator.Calculate(qtcFormula, qtInSec, rrInSec);
+                if (double.IsInfinity(qtc) || double.IsNaN(qtc))
+                {
+                    return errorResult;
+                }
+                if (convertToMsec)
+                {
+                    qtc *= 1000.0;
+                }
+                result += string.Format("\nQTc = {0} {1} ({2} formula)", qtc.ToString("G4"), units, formulaNames[qtcFormula]);
+            }
             return result;
         }
 
@@ -132,6 +154,23 @@ namespace epcalipers
 
         public static double QtcFrdSec(double qtInSec, double rrInSec) {
             return qtInSec / Math.Pow(rrInSec, 1 / 3.0);
+        }
+
+        public static double Calculate(QtcFormula formula, double qtInSec, double rrInSec)
+        {
+            switch (formula)
+            {
+                case QtcFormula.qtcBzt:
+                    return QtcBazettSec(qtInSec, rrInSec);
+                case QtcFormula.qtcFrd:
+                    return QtcFrdSec(qtInSec, rrInSec);
+                case QtcFormula.qtcFrm:
+                    return QtcFrmSec(qtInSec, rrInSec);
+                case QtcFormula.qtcHdg:
+                    return QtcHdgSec(qtInSec, rrInSec);
+                default:
+                    return 0.0;
+            }
         }
     }
 }
