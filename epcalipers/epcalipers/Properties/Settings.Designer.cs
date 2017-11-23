@@ -142,5 +142,17 @@ namespace epcalipers.Properties {
                 this["ShowHandlesTransparentMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Bazett")]
+        public string DefaultQTcFormula {
+            get {
+                return ((string)(this["DefaultQTcFormula"]));
+            }
+            set {
+                this["DefaultQTcFormula"] = value;
+            }
+        }
     }
 }
