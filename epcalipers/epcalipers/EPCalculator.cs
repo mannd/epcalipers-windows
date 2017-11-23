@@ -64,7 +64,7 @@ namespace epcalipers
                     qtcFormulas = new QtcFormula[] { QtcFormula.qtcHdg };
                     break;
                 case QtcFormula.qtcAll:
-                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcBzt, QtcFormula.qtcFrd, QtcFormula.qtcFrm, QtcFormula.qtcHdg};
+                    qtcFormulas = new QtcFormula[] { QtcFormula.qtcBzt, QtcFormula.qtcFrm, QtcFormula.qtcFrd, QtcFormula.qtcHdg};
                     break;
                 default:
                     return errorResult;

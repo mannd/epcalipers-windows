@@ -306,7 +306,7 @@ namespace epcalipers
             if (meanRR > 0)
             {
                 // TODO: set QtcFormula via preferences
-                QtcCalculator calc = new QtcCalculator(QtcFormula.qtcAll);
+                QtcCalculator calc = new QtcCalculator(preferences.ActiveQtcFormula());
                 result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
             }
             MessageBox.Show(result, "Calculated QTc");

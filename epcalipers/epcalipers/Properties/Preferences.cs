@@ -44,6 +44,25 @@ namespace epcalipers.Properties
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
         }
 
+        public QtcFormula ActiveQtcFormula()
+        {
+            switch (defaultQtcFormula)
+            {
+                case "Bazett":
+                    return QtcFormula.qtcBzt;
+                case "Hodges":
+                    return QtcFormula.qtcHdg;
+                case "Framingham":
+                    return QtcFormula.qtcFrm;
+                case "Fridericia":
+                    return QtcFormula.qtcFrd;
+                case "All":
+                    return QtcFormula.qtcAll;
+                default:
+                    return QtcFormula.qtcBzt;
+            }
+        }
+
         [Browsable(true),
             ReadOnly(false),
             Description("Unselected caliper color"),
