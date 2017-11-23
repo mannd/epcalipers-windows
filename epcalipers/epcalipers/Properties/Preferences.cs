@@ -20,7 +20,7 @@ namespace epcalipers.Properties
         private int numberOfIntervalsQtc;
         private bool showHandlesPictureMode;
         private bool showHandlesTransparentMode;
-
+        private string defaultQtcFormula;
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
 
@@ -41,7 +41,26 @@ namespace epcalipers.Properties
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
             showHandlesPictureMode = (bool)Settings.Default["ShowHandlesPictureMode"];
             showHandlesTransparentMode = (bool)Settings.Default["ShowHandlesTransparentMode"];
+            defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
+        }
 
+        public QtcFormula ActiveQtcFormula()
+        {
+            switch (defaultQtcFormula)
+            {
+                case "Bazett":
+                    return QtcFormula.qtcBzt;
+                case "Hodges":
+                    return QtcFormula.qtcHdg;
+                case "Framingham":
+                    return QtcFormula.qtcFrm;
+                case "Fridericia":
+                    return QtcFormula.qtcFrd;
+                case "All":
+                    return QtcFormula.qtcAll;
+                default:
+                    return QtcFormula.qtcBzt;
+            }
         }
 
         [Browsable(true),
@@ -185,10 +204,10 @@ namespace epcalipers.Properties
         }
 
         [Browsable(true),
-    ReadOnly(false),
-    Description("Number of intervals for RR measurement for QTc calculation (between 1 and 10)"),
-    DisplayName("Number of intervals (QTc)"),
-    Category("Measurements")]
+            ReadOnly(false),
+            Description("Number of intervals for RR measurement for QTc calculation (between 1 and 10)"),
+            DisplayName("Number of intervals (QTc)"),
+            Category("Measurements")]
         public int NumberOfIntervalsQtc
         {
             get { return numberOfIntervalsQtc; }
@@ -206,9 +225,19 @@ namespace epcalipers.Properties
             }
         }
 
+        [Browsable(true),
+            ReadOnly(false),
+            TypeConverter(typeof(QtcFormulaConverter)),
+            DisplayName("QTc formula"),
+            Description("QTc formula used for calculating QTc")
+            Category("Measurements")]
+        public string DefaultQtcFormula
+        {
+            get { return defaultQtcFormula; }
+            set { defaultQtcFormula = value; }
+        }
 
-
-        public void Save()
+         public void Save()
         {
             Settings.Default["CaliperColor"] = caliperColor;
             Settings.Default["HighlightColor"] = highlightColor;
@@ -220,8 +249,27 @@ namespace epcalipers.Properties
             Settings.Default["RoundMsecRate"] = roundMsecRate;
             Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
+            Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
             Settings.Default.Save();
         }
 
+    }
+
+    public class QtcFormulaConverter: StringConverter
+    {
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        {
+            return new StandardValuesCollection(new string[] { "Bazett",
+                                                                "Hodges",
+                                                                "Framingham",
+                                                                "Fridericia",
+                                                                "All"});
+
+        }
     }
 }

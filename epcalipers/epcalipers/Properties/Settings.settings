@@ -32,5 +32,8 @@
     <Setting Name="ShowHandlesTransparentMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="DefaultQTcFormula" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Bazett</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

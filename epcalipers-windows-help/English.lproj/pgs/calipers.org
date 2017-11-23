@@ -25,7 +25,7 @@ In order to make measurements or calibrate, it is necessary to /select/ a single
 [[../../shrd/angle_caliper.png]]
 
 ** Deleting Calipers
-Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.
+Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.  You can also delete the selected caliper or all calipers using the menu or using the shortcut keys Del (Delete) and SHIFT-Del. 
 ** Caliper Colors
 If you right-click on a caliper with your mouse, a context menu will appear.  The first item on this menu is *Caliper Color*.  Click this option, and the color selector appears.  Use the color selector to change the color of the caliper you clicked on.  The color change will only affect the individual caliper you clicked on.  You can change the default caliper color of new calipers by changing [[file:preferences.org::*Changing%20options][Options]].
 * Moving calipers

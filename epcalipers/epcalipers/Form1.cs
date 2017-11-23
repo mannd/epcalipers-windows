@@ -300,20 +300,14 @@ namespace epcalipers
             {
                 return;
             }
-            double qt = Math.Abs(EPCalculator.MsecToSec(c.IntervalResult()));
-            double meanRR = Math.Abs(EPCalculator.MsecToSec(rrIntervalForQtc));
+            double qt = Math.Abs(c.IntervalInSecs(c.IntervalResult()));
+            double meanRR = Math.Abs(c.IntervalInSecs(rrIntervalForQtc));
             string result = "Invalid Result";
             if (meanRR > 0)
             {
-                double qtc = EPCalculator.QtcBazettSec(qt, meanRR);
-                if (c.CurrentCalibration.UnitsAreMsecs)
-                {
-                    meanRR *= 1000.0;
-                    qt *= 1000.0;
-                    qtc *= 1000.0;
-                }
-                result = string.Format("Mean RR = {0} msec\nQT = {1} msec\nQTc = {2} msec (Bazett's formula)", meanRR.ToString("G4"),
-                    qt.ToString("G4"), qtc.ToString("G4"));
+                // TODO: set QtcFormula via preferences
+                QtcCalculator calc = new QtcCalculator(preferences.ActiveQtcFormula());
+                result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
             }
             MessageBox.Show(result, "Calculated QTc");
             ShowMainMenu();
@@ -955,6 +949,7 @@ namespace epcalipers
             deleteCaliperToolStripMenuItem.Enabled = enable;
             showHandlesToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
+            deleteAllCalipersToolStripMenuItem.Enabled = enable;
             calibrateToolStripMenuItem.Enabled = enable;
             clearCalibrationToolStripMenuItem.Enabled = enable;
         }
@@ -1581,6 +1576,21 @@ namespace epcalipers
             }
         }
 
+        private void deleteAllCalipersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            deleteAllCalipers();
+        }
+
+        private void deleteAllCalipers()
+        {
+            if (!CalipersAllowed())
+            {
+                return;
+            }
+            theCalipers.deleteAllCalipers();
+            ecgPictureBox.Refresh();
+        }
+
         private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DoCalibration();
@@ -1736,5 +1746,6 @@ namespace epcalipers
             return true;
         }
 
+      
     }
 }
