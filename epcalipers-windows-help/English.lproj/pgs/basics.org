@@ -16,8 +16,6 @@ It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is 
 You drag yourself out of bed and open up your laptop.  There's the ECG in question.  You look at the QT interval.  Eyeballing it, the QT looks OK.  Mentally you start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on a computer screen with a pair of mechanical calipers?
 ** Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your Microsoft Windows™ PC or tablet.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
-** What's new?
-- This new version of *EP Calipers* allows for individual calipers to be colored differently, and caliper position can now be "tweaked" using keyboard arrow keys.
 ** Quick start
 After *EP Calipers* starts, the first step is to load an ECG image.
 You can use the *Open* button at the bottom of the screen, or the

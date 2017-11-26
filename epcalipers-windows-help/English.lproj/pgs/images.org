@@ -10,9 +10,7 @@
 #+HTML_HEAD: <meta name="description" content="How to manipulate the ECG image" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * [[../../shrd/icon_32x32@2x.png]] Images
-Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  However, in order to open PDF files, it is necessary to download and install /Ghostscript/ on your computer.  /Ghostscript/ is a free, open-source PDF handling library.  It is available from [[https://www.ghostscript.com/download/gsdnld.html][this site]].  Download the Windows version (32-bit or 64-bit) that is appropriate for your computer.  You can right-click on *This PC* in a File Explorer window and then click properties to see what kind of system (32-bit or 64-bit) you are running.  You can install the download from the GNU Affero General Public License column, which is the free version.  This version can be used because *EP Calipers* is itself open-source software covered by the [[https://www.gnu.org/licenses/gpl-3.0.en.html][GNU GPL v3]].
-
-To load ECG images use one of the following methods.
+Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  Note that unlike with earlier versions of EP Calipers, it is not necessary to download and install /Ghostscript/ on your computer in order to open PDF files.  To load ECG images use one of the following methods.
 * Loading an image
 ** Open command
 Use the *File | Open* menu command (or keyboard shortcut Ctrl-O) to select an
