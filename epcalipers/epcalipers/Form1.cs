@@ -105,6 +105,10 @@ namespace epcalipers
             ecgPictureBox.MouseDoubleClick += ecgPictureBox_MouseDoubleClick;
             ecgPictureBox.MouseUp += ecgPictureBox_MouseUp;
 
+            // Ghostscript location
+            string ghostscriptDir = AppDomain.CurrentDomain.BaseDirectory;
+            MagickNET.SetGhostscriptDirectory(ghostscriptDir);
+
             //KeyPreview = true;
             //this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             SetupButtons();
