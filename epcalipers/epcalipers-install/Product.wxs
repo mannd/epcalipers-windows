@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define epcalipers_TargetDir=$(var.epcalipers.TargetDir)?>
-  <Product Id="*" Name="EP Calipers" Language="1033" Version="1.5.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
+  <Product Id="*" Name="EP Calipers" Language="1033" Version="1.6.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -67,6 +67,12 @@
       </Component>
       <Component Id="Magick.NET_Q16_x64.dll" Guid="8d5e2e1a-3810-4d23-a658-f5fa5e773486">
         <File Id="Magick.NET_Q16_x64.dll" Name="Magick.NET-Q16-x64.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.dll" />
+      </Component>
+      <Component Id="gsdll64.dll" Guid="10b07b7f-05d1-4c90-b992-083868352520">
+        <File Id="gsdll64.dll" Name="gsdll64.dll" Source="$(var.epcalipers_TargetDir)gsdll64.dll" />
+      </Component>
+      <Component Id="gswin64c.exe" Guid="23c8a20b-8f88-4f1f-8569-89244902995c">
+        <File Id="gswin64c.exe" Name="gswin64c.exe" Source="$(var.epcalipers_TargetDir)gswin64c.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>
