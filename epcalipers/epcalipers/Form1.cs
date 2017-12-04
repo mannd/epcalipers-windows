@@ -112,7 +112,7 @@ namespace epcalipers
             //KeyPreview = true;
             //this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             SetupButtons();
-            ShowMainMenu();
+           // ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
 
@@ -141,8 +141,13 @@ namespace epcalipers
                             ecgPictureBox.Image = argImage;
                         }
                         ResetBitmap(ecgPictureBox.Image);
-                        ShowMainMenu();
                     }
+                }
+                else 
+                {
+                    // if not loading a file at start, then use transparent window at start preference
+                    makeTransparent(preferences.ShowTransparentWindowAtStart);
+                    transparentWindowToolStripMenuItem.Checked = preferences.ShowTransparentWindowAtStart;
                 }
             }
             catch (Exception)
@@ -150,6 +155,7 @@ namespace epcalipers
                 lastFilename = "";
                 
             }
+            ShowMainMenu();
         }
 
         private void makeTransparent(bool value)
@@ -939,6 +945,16 @@ namespace epcalipers
             EnableImageMenuItems(ImageIsLoaded());
             EnableCaliperMenuItems(CalipersAllowed());
             EnableMeasurementMenuItems(MeasurementsAllowed());
+            // with transparent windows, next action is usually add caliper, but
+            // with regular window, next action is usually open a file
+            if (isTransparent)
+            {
+                addCalipersButton.Select();
+            }
+            else
+            {
+                imageButton.Select();
+            }
 
             theCalipers.Locked = false;
         }
