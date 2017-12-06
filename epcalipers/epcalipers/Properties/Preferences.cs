@@ -262,6 +262,7 @@ namespace epcalipers.Properties
             Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
+            Settings.Default["ShowTransparentWindowAtStart"] = showTransparentWindowAtStart;
             Settings.Default.Save();
         }
 
