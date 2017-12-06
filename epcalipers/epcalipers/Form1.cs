@@ -286,7 +286,6 @@ namespace epcalipers
             // tweakLabel text is changed on the fly
             AdjustLabel(tweakLabel);
         }
-
  
         private void AdjustLabel(Label label)
         {
@@ -1733,12 +1732,18 @@ namespace epcalipers
             }
         }
 
-
+        private void marchingCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (theCalipers.MarchCaliper())
+            {
+                ecgPictureBox.Refresh();
+            }
+        }
 
         #endregion
 
         #endregion
-
+        #region Keys
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (!theCalipers.tweakingComponent)
@@ -1766,6 +1771,8 @@ namespace epcalipers
             return true;
         }
 
-      
+        #endregion
+
+
     }
 }

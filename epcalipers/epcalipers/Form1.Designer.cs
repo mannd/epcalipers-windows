@@ -75,6 +75,7 @@ namespace epcalipers
             this.amplitudeCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.angleCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAllCalipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.calibrateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCalibrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +99,7 @@ namespace epcalipers
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.caliperColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tweakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteAllCalipersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.marchingCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -457,6 +458,14 @@ namespace epcalipers
             this.deleteCaliperToolStripMenuItem.Text = "Delete caliper";
             this.deleteCaliperToolStripMenuItem.Click += new System.EventHandler(this.deleteCaliperToolStripMenuItem_Click);
             // 
+            // deleteAllCalipersToolStripMenuItem
+            // 
+            this.deleteAllCalipersToolStripMenuItem.Name = "deleteAllCalipersToolStripMenuItem";
+            this.deleteAllCalipersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
+            this.deleteAllCalipersToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.deleteAllCalipersToolStripMenuItem.Text = "Delete all calipers";
+            this.deleteAllCalipersToolStripMenuItem.Click += new System.EventHandler(this.deleteAllCalipersToolStripMenuItem_Click);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -583,9 +592,10 @@ namespace epcalipers
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.caliperColorToolStripMenuItem,
-            this.tweakToolStripMenuItem});
+            this.tweakToolStripMenuItem,
+            this.marchingCaliperToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 92);
             // 
             // caliperColorToolStripMenuItem
             // 
@@ -601,13 +611,12 @@ namespace epcalipers
             this.tweakToolStripMenuItem.Text = "Tweak Caliper Position";
             this.tweakToolStripMenuItem.Click += new System.EventHandler(this.tweakToolStripMenuItem_Click);
             // 
-            // deleteAllCalipersToolStripMenuItem
+            // marchingCaliperToolStripMenuItem
             // 
-            this.deleteAllCalipersToolStripMenuItem.Name = "deleteAllCalipersToolStripMenuItem";
-            this.deleteAllCalipersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.Delete)));
-            this.deleteAllCalipersToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.deleteAllCalipersToolStripMenuItem.Text = "Delete all calipers";
-            this.deleteAllCalipersToolStripMenuItem.Click += new System.EventHandler(this.deleteAllCalipersToolStripMenuItem_Click);
+            this.marchingCaliperToolStripMenuItem.Name = "marchingCaliperToolStripMenuItem";
+            this.marchingCaliperToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.marchingCaliperToolStripMenuItem.Text = "Marching Caliper";
+            this.marchingCaliperToolStripMenuItem.Click += new System.EventHandler(this.marchingCaliperToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -707,6 +716,7 @@ namespace epcalipers
         private ToolStripMenuItem caliperColorToolStripMenuItem;
         private ToolStripMenuItem tweakToolStripMenuItem;
         private ToolStripMenuItem deleteAllCalipersToolStripMenuItem;
+        private ToolStripMenuItem marchingCaliperToolStripMenuItem;
     }
 }
 

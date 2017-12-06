@@ -311,8 +311,6 @@ namespace epcalipers
             }
         }
 
-
-
         public bool DragGrabbedCaliper(float deltaX, float deltaY, PointF location)
         {
             bool needsRefresh = false;
@@ -441,6 +439,7 @@ namespace epcalipers
             if (n == 1)
             {
                 return c;
+         
             }
             else
             {
@@ -475,6 +474,15 @@ namespace epcalipers
             }
         }
 
+        public bool MarchCaliper()
+        {
+            if (chosenCaliper == null)
+            {
+                return false;
+            }
+            chosenCaliper.isMarching = !chosenCaliper.isMarching;
+            return true;
+        }
     
     }
 }
