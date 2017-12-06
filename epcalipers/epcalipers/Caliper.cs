@@ -18,6 +18,9 @@ namespace epcalipers
         protected float DELTA = 20.0f;
         //private int tmpLineWidth;
         private static float differential = 0.0f;
+        // constants for marching calipers
+        private static float minDistanceForMarch = 20f;
+        private static int maxMarchingCalipers = 20;
 
         public float Bar1Position { set; get; }
         public float Bar2Position { set; get; }
@@ -38,6 +41,8 @@ namespace epcalipers
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
+
+        public bool isMarching = false;
 
         // added for AngleCaliper derived class
         public bool requiresCalibration
@@ -149,6 +154,10 @@ namespace epcalipers
                     DrawVerticalHandles(g, brush);
                 }
             }
+            if (isMarching && isTimeCaliper())
+            {
+                drawMarchingCalipers(g, brush, rect);
+            }
             CaliperText(g, brush);
             pen.Dispose();
             brush.Dispose();
@@ -192,6 +201,58 @@ namespace epcalipers
             {
                 g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
             }
+        }
+
+        public bool isTimeCaliper()
+        {
+            return Direction == CaliperDirection.Horizontal && !isAngleCaliper;
+        }
+
+        private void drawMarchingCalipers(Graphics g, Brush brush, RectangleF rect)
+        {
+            // note that pen width < 1 (e.g. 0) will always just draw as width of 1
+            Pen pen = new Pen(brush, LineWidth - 1.0f);
+            float difference = Math.Abs(Bar1Position - Bar2Position);
+            if (difference < minDistanceForMarch)
+            {
+                return;
+            }
+            float greaterBar = Math.Max(Bar1Position, Bar2Position);
+            float lesserBar = Math.Min(Bar1Position, Bar2Position);
+            float[] biggerBars = new float[maxMarchingCalipers];
+            float[] smallerBars = new float[maxMarchingCalipers];
+            float point = greaterBar + difference;
+            int index = 0;
+            while (point < rect.Size.Width && index < maxMarchingCalipers)
+            {
+                biggerBars[index] = point;
+                point += difference;
+                index++;
+            }
+            int maxBiggerBars = index;
+            index = 0;
+            point = lesserBar - difference;
+            while (point > 0 && index < maxMarchingCalipers)
+            {
+                smallerBars[index] = point;
+                point -= difference;
+                index++;
+            }
+            int maxSmallerBars = index;
+            // draw them
+            int i = 0;
+            while (i < maxBiggerBars)
+            {
+                g.DrawLine(pen, biggerBars[i], 0, biggerBars[i], rect.Size.Height);
+                i++;
+            }
+            i = 0;
+            while (i < maxSmallerBars)
+            {
+                g.DrawLine(pen, smallerBars[i], 0, smallerBars[i], rect.Size.Height);
+                i++;
+            }
+            pen.Dispose();
         }
 
 
@@ -241,6 +302,7 @@ namespace epcalipers
         {
             if (interval != 0.0)
             {
+
                 if (CurrentCalibration.UnitsAreMsecs)
                 {
                     interval = EPCalculator.MsecToBpm(interval);

@@ -154,5 +154,17 @@ namespace epcalipers.Properties {
                 this["DefaultQTcFormula"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowTransparentWindowAtStart {
+            get {
+                return ((bool)(this["ShowTransparentWindowAtStart"]));
+            }
+            set {
+                this["ShowTransparentWindowAtStart"] = value;
+            }
+        }
     }
 }

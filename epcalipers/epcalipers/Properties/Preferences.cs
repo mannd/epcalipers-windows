@@ -21,9 +21,9 @@ namespace epcalipers.Properties
         private bool showHandlesPictureMode;
         private bool showHandlesTransparentMode;
         private string defaultQtcFormula;
+        private bool showTransparentWindowAtStart = false;
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
-
         public Preferences()
         {
             Load();
@@ -42,6 +42,7 @@ namespace epcalipers.Properties
             showHandlesPictureMode = (bool)Settings.Default["ShowHandlesPictureMode"];
             showHandlesTransparentMode = (bool)Settings.Default["ShowHandlesTransparentMode"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
+            showTransparentWindowAtStart = (bool)Settings.Default["ShowTransparentWindowAtStart"];
         }
 
         public QtcFormula ActiveQtcFormula()
@@ -227,6 +228,17 @@ namespace epcalipers.Properties
 
         [Browsable(true),
             ReadOnly(false),
+            DisplayName("Transparent window at start"),
+            Description("Show transparent window at startup"),
+            Category("Miscellaneous")]
+        public bool ShowTransparentWindowAtStart
+        {
+            get { return showTransparentWindowAtStart; }
+            set { showTransparentWindowAtStart = value; }
+        }
+
+        [Browsable(true),
+            ReadOnly(false),
             TypeConverter(typeof(QtcFormulaConverter)),
             DisplayName("QTc formula"),
             Description("QTc formula used for calculating QTc")
@@ -250,6 +262,7 @@ namespace epcalipers.Properties
             Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
+            Settings.Default["ShowTransparentWindowAtStart"] = showTransparentWindowAtStart;
             Settings.Default.Save();
         }
 
