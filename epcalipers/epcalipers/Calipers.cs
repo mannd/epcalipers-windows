@@ -197,7 +197,7 @@ namespace epcalipers
             grabbedCaliper = caliper;
         }
 
-        private Caliper getGrabbedCaliper(Point point)
+        public Caliper getGrabbedCaliper(Point point)
         {
             Caliper caliper = null;
             foreach (var c in calipers)
