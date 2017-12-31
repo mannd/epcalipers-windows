@@ -314,12 +314,17 @@ namespace epcalipers
             string result = "Invalid Result";
             if (meanRR > 0)
             {
-                // TODO: set QtcFormula via preferences
                 QtcCalculator calc = new QtcCalculator(preferences.ActiveQtcFormula());
                 result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
             }
-            MessageBox.Show(result, "Calculated QTc");
-            ShowMainMenu();
+            if (MessageBox.Show(result, "Calculated QTc", MessageBoxButtons.RetryCancel) == DialogResult.Retry)
+            {
+                showQTcStep2Menu();
+            }
+            else
+            {
+                ShowMainMenu();
+            }
         }
 
         // TODO: cancel button needs to return to QT measurement if we are doing QTc,
@@ -576,7 +581,20 @@ namespace epcalipers
                 }
                 if (!theCalipers.tweakingComponent)
                 {
-                    contextMenuStrip1.Enabled = theCalipers.PointIsNearCaliper(clickPoint);
+                    bool pointNearCaliper = theCalipers.PointIsNearCaliper(clickPoint);
+                    contextMenuStrip1.Enabled = pointNearCaliper;
+                    if (pointNearCaliper)
+                    {
+                        Caliper c = theCalipers.getGrabbedCaliper(clickPoint);
+                        if (c != null)
+                        {
+                            marchingCaliperToolStripMenuItem.Checked = c.isMarching;
+                        }
+                    }
+                    else
+                    {
+                        marchingCaliperToolStripMenuItem.Checked = false;
+                    }
                     contextMenuStrip1.Show(this, clickPoint);
                 }
                 else
@@ -1737,6 +1755,11 @@ namespace epcalipers
             if (theCalipers.MarchCaliper())
             {
                 ecgPictureBox.Refresh();
+                marchingCaliperToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                marchingCaliperToolStripMenuItem.Checked = false;
             }
         }
 
