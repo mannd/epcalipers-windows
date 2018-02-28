@@ -8,7 +8,7 @@
   <Identity Name="EPStudios.EPCalipers"
 	    ProcessorArchitecture="x86"
 	    Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"
-	    Version="1.8.0.0" />
+	    Version="1.9.0.0" />
   <Properties>
     <DisplayName>EP Calipers</DisplayName>
     <PublisherDisplayName>EP Studios</PublisherDisplayName>
