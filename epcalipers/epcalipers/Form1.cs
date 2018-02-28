@@ -447,6 +447,11 @@ namespace epcalipers
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
+            SetCalibration();
+        }
+
+        private void SetCalibration()
+        {
             try
             {
                 if (NoCalipersError())
@@ -1648,7 +1653,7 @@ namespace epcalipers
 
         private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCalibration();
+            SetCalibration();
         }
 
         private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
