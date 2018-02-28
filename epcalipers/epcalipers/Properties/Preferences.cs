@@ -261,7 +261,7 @@ namespace epcalipers.Properties
 
         [Browsable(true),
             ReadOnly(false),
-            DisplayName("Transparent window always on top"),
+            DisplayName("Transparent window on top"),
             Description("Transparent window always floats above other windows"),
             Category("Transparency")]
         public bool WindowOnTopWhenTransparent
@@ -272,7 +272,7 @@ namespace epcalipers.Properties
         
         [Browsable(true),
             ReadOnly(false),
-            DisplayName("Transparency (alpha) value"),
+            DisplayName("Transparency alpha value"),
             Description("Alternative transparency method alpha value (legal values 0.2-0.8)"),
             Category("Transparency")]
         public float AlternativeTransparencyAlpha
