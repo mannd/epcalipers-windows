@@ -570,6 +570,8 @@ namespace epcalipers
         private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Point clickPoint = new Point(e.X, e.Y);
+            Debug.WriteLine(string.Format("Mouse click x={0} y={1}", e.X, e.Y));
+
             if  (e.Button == MouseButtons.Right)
             {
                 contextMenuStrip1.Hide();

@@ -241,7 +241,7 @@ namespace epcalipers.Properties
             ReadOnly(false),
             TypeConverter(typeof(QtcFormulaConverter)),
             DisplayName("QTc formula"),
-            Description("QTc formula used for calculating QTc")
+            Description("QTc formula used for calculating QTc"),
             Category("Measurements")]
         public string DefaultQtcFormula
         {

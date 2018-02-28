@@ -595,7 +595,7 @@ namespace epcalipers
             this.tweakToolStripMenuItem,
             this.marchingCaliperToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(194, 70);
             // 
             // caliperColorToolStripMenuItem
             // 
