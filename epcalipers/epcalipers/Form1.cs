@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace epcalipers
 {
@@ -87,11 +88,15 @@ namespace epcalipers
 
         #endregion
         #region Initialization
+
+        // See this post https://stackoverflow.com/questions/39855720/windows-forms-pass-clicks-through-a-partially-transparent-always-on-top-window
+        // for some info on transparency and floating windows.
         public Form1()
         {
             InitializeComponent();
             preferences = new Preferences();
             theCalipers = new Calipers();
+
 
             oldFormBackgroundColor = BackColor;
             oldTransparencyKey = TransparencyKey;
@@ -173,27 +178,39 @@ namespace epcalipers
             WindowState = FormWindowState.Normal;
             if (value)
             {
+                if (preferences.WindowOnTopWhenTransparent)
+                {
+                    this.TopMost = true;
+                }
+                if (preferences.UseAlternativeTransparency)
+                {
+                    this.Opacity = preferences.AlternativeTransparencyAlpha;
+                }
+                else
+                {
+                    ecgPictureBox.BackColor = Color.Transparent;
+                    BackColor = Color.Gray;
+                    TransparencyKey = Color.Gray;
+                }
                 ecgPictureBox.Dock = DockStyle.Fill;
                 if (preferences.ShowHandlesTransparentMode)
                 {
                     setShowHandles(true);
                 }
-                ecgPictureBox.BackColor = Color.Transparent;
-                BackColor = Color.Gray;
-                TransparencyKey = Color.Gray;
-                
             }
             else
             {
+                this.TopMost = false;
+                this.Opacity = 1.0;
+                ecgPictureBox.BackColor = Color.White;
+                BackColor = oldFormBackgroundColor;
+                TransparencyKey = oldTransparencyKey;
                 ecgPictureBox.Dock = DockStyle.None;
                 ecgPictureBox.Size = this.Size;
                 if (preferences.ShowHandlesPictureMode)
                 {
                     setShowHandles(true);
                 }
-                ecgPictureBox.BackColor = Color.White;
-                BackColor = oldFormBackgroundColor;
-                TransparencyKey = oldTransparencyKey;
             }
             ResetCalibration();
             ecgPictureBox.Refresh();
@@ -430,6 +447,11 @@ namespace epcalipers
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
         {
+            SetCalibration();
+        }
+
+        private void SetCalibration()
+        {
             try
             {
                 if (NoCalipersError())
@@ -570,6 +592,7 @@ namespace epcalipers
         private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Point clickPoint = new Point(e.X, e.Y);
+
             if  (e.Button == MouseButtons.Right)
             {
                 contextMenuStrip1.Hide();
@@ -1630,7 +1653,7 @@ namespace epcalipers
 
         private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DoCalibration();
+            SetCalibration();
         }
 
         private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)

@@ -26,7 +26,7 @@ mouse.  Expand and contract the caliper by dragging the bars on either
 end of the caliper.  Use the zoom buttons to enlarge or shrink the
 image as needed.  If the ECG is bigger than your screen, you can use
 the scrollbars to move the image around.  As an alternative to loading
-an image you can make the main window transparent and use your
+an image you can make the main window transparent or semi-transparent and use your
 electronic calipers to measure any image that is open on your Desktop.
 The rest of these help pages will go over how to load ECG images, add
 and delete calipers, calibrate the calipers and make advanced

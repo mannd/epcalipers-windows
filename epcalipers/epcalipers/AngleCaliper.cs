@@ -215,7 +215,7 @@ namespace epcalipers
         private string BaseMeasurement(double lengthInPoints)
         {
             string s = string.Format("{0} {1}", 
-                CalibratedBaseResult(lengthInPoints).ToString("G4"), CurrentCalibration.Units);
+                CalibratedBaseResult(lengthInPoints).ToString("G4"), CurrentCalibration.RawUnits);
             return s;
         }
 
