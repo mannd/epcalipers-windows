@@ -28,6 +28,20 @@ namespace epcalipers
                 }
             }
         }
+        public string RawUnits
+        {
+            get
+            {
+                if (Calibrated)
+                {
+                    return rawUnits;
+                }
+                else
+                {
+                    return "points";
+                }
+            }
+        }
         public string CalibrationString { set; get; }
         public bool CanDisplayRate
         {
