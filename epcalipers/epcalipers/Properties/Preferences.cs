@@ -21,9 +21,16 @@ namespace epcalipers.Properties
         private bool showHandlesPictureMode;
         private bool showHandlesTransparentMode;
         private string defaultQtcFormula;
-        private bool showTransparentWindowAtStart = false;
+        private bool showTransparentWindowAtStart;
+        private bool useAlternativeTransparency;
+        private bool windowOnTopWhenTransparent;
+        private float alternativeTransparencyAlpha;
+
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
+        private const float MIN_ALPHA = 0.2F;
+        private const float MAX_ALPHA = 0.8F;
+
         public Preferences()
         {
             Load();
@@ -43,6 +50,9 @@ namespace epcalipers.Properties
             showHandlesTransparentMode = (bool)Settings.Default["ShowHandlesTransparentMode"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
             showTransparentWindowAtStart = (bool)Settings.Default["ShowTransparentWindowAtStart"];
+            useAlternativeTransparency = (bool)Settings.Default["UseAlternativeTransparency"];
+            windowOnTopWhenTransparent = (bool)Settings.Default["WindowOnTopWhenTransparent"];
+            alternativeTransparencyAlpha = (float)Settings.Default["AlternativeTransparencyAlpha"];
         }
 
         public QtcFormula ActiveQtcFormula()
@@ -230,11 +240,54 @@ namespace epcalipers.Properties
             ReadOnly(false),
             DisplayName("Transparent window at start"),
             Description("Show transparent window at startup"),
-            Category("Miscellaneous")]
+            Category("Transparency")]
         public bool ShowTransparentWindowAtStart
         {
             get { return showTransparentWindowAtStart; }
             set { showTransparentWindowAtStart = value; }
+        }
+
+        [Browsable(true),
+            ReadOnly(false),
+            DisplayName("Use altenative transparency"),
+            Description("Full transparency doesn't work for some versions of Windows.  If default transparency doesn't work" +
+            ", select this option."),
+            Category("Transparency")]
+        public bool UseAlternativeTransparency
+        {
+            get { return useAlternativeTransparency; }
+            set { useAlternativeTransparency = value; }
+        }
+
+        [Browsable(true),
+            ReadOnly(false),
+            DisplayName("Transparent window always on top"),
+            Description("Transparent window always floats above other windows"),
+            Category("Transparency")]
+        public bool WindowOnTopWhenTransparent
+        {
+            get { return windowOnTopWhenTransparent; }
+            set { windowOnTopWhenTransparent = value; }
+        }
+        
+        [Browsable(true),
+            ReadOnly(false),
+            DisplayName("Transparency (alpha) value"),
+            Description("Alternative transparency method alpha value (legal values 0.2-0.8)"),
+            Category("Transparency")]
+        public float AlternativeTransparencyAlpha
+        {
+            get { return alternativeTransparencyAlpha; }
+            set {
+                if (value < MIN_ALPHA)
+                {
+                    value = MIN_ALPHA;
+                }
+                if (value > MAX_ALPHA)
+                {
+                    value = MAX_ALPHA;
+                }
+                alternativeTransparencyAlpha = value; }
         }
 
         [Browsable(true),
@@ -263,6 +316,9 @@ namespace epcalipers.Properties
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
             Settings.Default["ShowTransparentWindowAtStart"] = showTransparentWindowAtStart;
+            Settings.Default["UseAlternativeTransparency"] = useAlternativeTransparency;
+            Settings.Default["WindowOnTopWhenTransparent"] = windowOnTopWhenTransparent;
+            Settings.Default["AlternativeTransparencyAlpha"] = alternativeTransparencyAlpha;
             Settings.Default.Save();
         }
 

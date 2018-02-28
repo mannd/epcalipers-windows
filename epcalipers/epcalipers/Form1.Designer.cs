@@ -141,6 +141,7 @@ namespace epcalipers
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
             this.panel1.Controls.Add(this.thumbnail);
             this.panel1.Controls.Add(this.ecgPictureBox);
