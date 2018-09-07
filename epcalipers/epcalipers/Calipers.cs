@@ -18,6 +18,8 @@ namespace epcalipers
         private Caliper ActiveCaliper { get; set; }
         public Calibration HorizontalCalibration { get; set; }
         public Calibration VerticalCalibration { get; set; }
+        // must be able to fake red color if fully transparent
+        public bool isFullyTransparent { get; set; }
 
         // for caliper movement
         private Caliper grabbedCaliper;
@@ -44,6 +46,7 @@ namespace epcalipers
             chosenCaliper = null;
             chosenComponent = CaliperComponent.NoComponent;
             tweakingComponent = false;
+            isFullyTransparent = false;
         }
 
         public void Draw(Graphics g, RectangleF rect)
@@ -110,7 +113,14 @@ namespace epcalipers
 
         public void SelectCaliper(Caliper c)
         {
-            c.CaliperColor = c.SelectedColor;
+            if (isFullyTransparent && c.SelectedColor == Color.Red)
+            {
+                c.CaliperColor = Color.Firebrick;
+            }
+            else
+            {
+                c.CaliperColor = c.SelectedColor;
+            }
             c.IsSelected = true;
         }
 

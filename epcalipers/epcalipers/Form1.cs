@@ -84,8 +84,6 @@ namespace epcalipers
         private Color oldFormBackgroundColor;
         private Color oldTransparencyKey;
         private bool isTransparent;
-        private bool isFullyTransparent;
-
 
         #endregion
         #region Initialization
@@ -103,7 +101,6 @@ namespace epcalipers
             oldTransparencyKey = TransparencyKey;
             ecgPictureBox.BackColor = Color.White;
             isTransparent = false;
-            isFullyTransparent = false;
             FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -168,7 +165,7 @@ namespace epcalipers
             //imageButton.Enabled = !value;
             //openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
-            isFullyTransparent = value;
+            theCalipers.isFullyTransparent = value;
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
             MaximizeBox = !value;
@@ -189,7 +186,7 @@ namespace epcalipers
                     // Windows undocumented behavior allows transparency to work only if backcolor is red
                     BackColor = Color.Red;
                     TransparencyKey = Color.Red;
-                    isFullyTransparent = true;
+                    theCalipers.isFullyTransparent = true;
                 }
                 ecgPictureBox.Dock = DockStyle.Fill;
             }
@@ -1516,12 +1513,15 @@ namespace epcalipers
             {
                 preferencesDialog = new PreferencesDialog();
             }
+            // preserve TopMost value
+            bool oldTopMost = TopMost;
+            TopMost = false;
             if (preferencesDialog.ShowDialog() == DialogResult.OK)
             {
                 preferencesDialog.Save();
                 UpdatePreferences();
             }
-
+            TopMost = oldTopMost;
         }
 
         private void UpdatePreferences()
