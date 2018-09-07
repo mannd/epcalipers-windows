@@ -84,7 +84,6 @@ namespace epcalipers
             this.meanRateIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.qTcMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.showHandlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -420,10 +419,7 @@ namespace epcalipers
             this.toolStripSeparator5,
             this.toggleRateintervalToolStripMenuItem,
             this.meanRateIntervalToolStripMenuItem,
-            this.qTcMeasurementToolStripMenuItem,
-            this.toolStripSeparator6,
-            this.showHandlesToolStripMenuItem});
-            this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
+            this.qTcMeasurementToolStripMenuItem });
             this.calipersToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.calipersToolStripMenuItem.Text = "Calipers";
             // 
@@ -517,15 +513,6 @@ namespace epcalipers
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(218, 6);
-            // 
-            // showHandlesToolStripMenuItem
-            // 
-            this.showHandlesToolStripMenuItem.CheckOnClick = true;
-            this.showHandlesToolStripMenuItem.Name = "showHandlesToolStripMenuItem";
-            this.showHandlesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.showHandlesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.showHandlesToolStripMenuItem.Text = "Show handles";
-            this.showHandlesToolStripMenuItem.Click += new System.EventHandler(this.showHandlesToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -711,7 +698,6 @@ namespace epcalipers
         private ToolStripMenuItem windowToolStripMenuItem;
         private ToolStripMenuItem transparentWindowToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator6;
-        private ToolStripMenuItem showHandlesToolStripMenuItem;
         private ToolStripMenuItem angleCaliperToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem caliperColorToolStripMenuItem;

@@ -18,8 +18,6 @@ namespace epcalipers.Properties
         private bool roundMsecRate;
         private int numberOfIntervalsMeanRR;
         private int numberOfIntervalsQtc;
-        private bool showHandlesPictureMode;
-        private bool showHandlesTransparentMode;
         private string defaultQtcFormula;
         private bool showTransparentWindowAtStart;
         private bool useAlternativeTransparency;
@@ -46,8 +44,6 @@ namespace epcalipers.Properties
             roundMsecRate = (bool)Settings.Default["RoundMsecRate"];
             numberOfIntervalsMeanRR = (int)Settings.Default["NumberOfIntervalsMeanRR"];
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
-            showHandlesPictureMode = (bool)Settings.Default["ShowHandlesPictureMode"];
-            showHandlesTransparentMode = (bool)Settings.Default["ShowHandlesTransparentMode"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
             showTransparentWindowAtStart = (bool)Settings.Default["ShowTransparentWindowAtStart"];
             useAlternativeTransparency = (bool)Settings.Default["UseAlternativeTransparency"];
@@ -135,29 +131,6 @@ namespace epcalipers.Properties
                 lineWidth = value;
             }
         }
-
-        [Browsable(true),
-            ReadOnly(false),
-            Description("Show caliper handles during image mode"),
-            DisplayName("Handles image mode"),
-            Category("Calipers")]
-        public bool ShowHandlesPictureMode
-        {
-            get { return showHandlesPictureMode; }
-            set { showHandlesPictureMode = value; }
-        }
-
-        [Browsable(true),
-            ReadOnly(false),
-            Description("Show caliper handles during transparent mode"),
-            DisplayName("Handles transparent mode"),
-            Category("Calipers")]
-        public bool ShowHandlesTransparentMode
-        {
-            get { return showHandlesTransparentMode; }
-            set { showHandlesTransparentMode = value; }
-        }
-
 
         [Browsable(true),
             ReadOnly(false),
@@ -307,8 +280,6 @@ namespace epcalipers.Properties
             Settings.Default["CaliperColor"] = caliperColor;
             Settings.Default["HighlightColor"] = highlightColor;
             Settings.Default["LineWidth"] = lineWidth;
-            Settings.Default["ShowHandlesPictureMode"] = showHandlesPictureMode;
-            Settings.Default["ShowHandlesTransparentMode"] = showHandlesTransparentMode;
             Settings.Default["HorizontalCalibration"] = horizontalCalibration;
             Settings.Default["VerticalCalibration"] = verticalCalibration;
             Settings.Default["RoundMsecRate"] = roundMsecRate;

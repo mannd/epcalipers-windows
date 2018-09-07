@@ -447,14 +447,6 @@ namespace epcalipers
             }
         }
 
-        public void showHandles(bool value)
-        {
-            foreach (Caliper c in calipers)
-            {
-                c.hasHandles = value;
-            }
-        }
-
         public void UpdatePreferences(Preferences p)
         {
             foreach (Caliper caliper in calipers)

@@ -121,12 +121,6 @@ namespace epcalipers
             // form starts with no image loaded, so no pages either
             EnablePages(false);
 
-            if (preferences.ShowHandlesPictureMode)
-            {
-                showHandles(true);
-                showHandlesToolStripMenuItem.Checked = true;
-            }
-
             try
             {
                 if (Environment.GetCommandLineArgs().Length > 1)
@@ -194,10 +188,6 @@ namespace epcalipers
                     TransparencyKey = Color.Red;
                 }
                 ecgPictureBox.Dock = DockStyle.Fill;
-                if (preferences.ShowHandlesTransparentMode)
-                {
-                    setShowHandles(true);
-                }
             }
             else
             {
@@ -208,21 +198,11 @@ namespace epcalipers
                 TransparencyKey = oldTransparencyKey;
                 ecgPictureBox.Dock = DockStyle.None;
                 ecgPictureBox.Size = this.Size;
-                if (preferences.ShowHandlesPictureMode)
-                {
-                    setShowHandles(true);
-                }
             }
             ResetCalibration();
             ecgPictureBox.Refresh();
             // TODO: below sometimes called twice
             ShowMainMenu();
-        }
-
-        private void setShowHandles(bool value)
-        {
-            showHandles(value);
-            showHandlesToolStripMenuItem.Checked = value;
         }
 
         private void SetupButtons()
@@ -1008,7 +988,6 @@ namespace epcalipers
             amplitudeCaliperToolStripMenuItem.Enabled = enable;
             angleCaliperToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
-            showHandlesToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
             deleteAllCalipersToolStripMenuItem.Enabled = enable;
             calibrateToolStripMenuItem.Enabled = enable;
@@ -1181,7 +1160,6 @@ namespace epcalipers
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
             c.RoundMsecRate = preferences.RoundMsecRate;
-            c.hasHandles = showHandlesToolStripMenuItem.Checked;
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
@@ -1539,15 +1517,7 @@ namespace epcalipers
             preferences.Load();
             // update all the calipers
             theCalipers.UpdatePreferences(preferences);
-            if ((isTransparent && preferences.ShowHandlesTransparentMode) || preferences.ShowHandlesPictureMode)
-            {
-                // this method incorporates ecgPictureBox.Refresh()
-                setShowHandles(true);
-            }
-            else
-            {
-                ecgPictureBox.Refresh();
-            }
+            ecgPictureBox.Refresh();
         }
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1709,17 +1679,6 @@ namespace epcalipers
         private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             makeTransparent(transparentWindowToolStripMenuItem.Checked);
-        }
-
-        private void showHandlesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showHandles(showHandlesToolStripMenuItem.Checked);
-        }
-
-        private void showHandles(bool value)
-        {
-            theCalipers.showHandles(value);
-            ecgPictureBox.Refresh();
         }
 
         #endregion

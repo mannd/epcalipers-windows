@@ -50,11 +50,6 @@ namespace epcalipers
             PointF endPointBar2 = EndPointForPosition(new PointF(Bar2Position, CrossbarPosition),
                 angleBar2, length);
             g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
-            // TODO: handle handles!
-            if (hasHandles)
-            {
-                DrawHandles(g, brush);
-            }
 
             CaliperText(g, brush);
 
@@ -70,26 +65,6 @@ namespace epcalipers
 
             pen.Dispose();
             brush.Dispose();
-        }
-
-        private void DrawHandles(Graphics g, Brush brush)
-        {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            PointF apex = new PointF(Bar1Position, CrossbarPosition);
-            int x1 = (int)Bar1Position;
-            int y1 = (int)CrossbarPosition;
-            const float distance = 100f;
-            PointF bar1 = EndPointForPosition(apex, angleBar1, distance);
-            PointF bar2 = EndPointForPosition(apex, angleBar2, distance);
-            const int radius = 10;
-            const int diam = 2 * radius;
-            int centerX1 = (int)bar1.X - radius;
-            int centerY1 = (int)bar1.Y - radius;
-            int centerX2 = (int)bar2.X - radius;
-            int centerY2 = (int)bar2.Y - radius;
-            g.FillRectangle(brush, new Rectangle(x1 - 15, (int)CrossbarPosition - 10, 30, 10));
-            g.FillEllipse(brush, centerX1, centerY1, diam, diam);
-            g.FillEllipse(brush, centerX2, centerY2, diam, diam);
         }
 
         private PointF EndPointForPosition(PointF p, float angle, float length)

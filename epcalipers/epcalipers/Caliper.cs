@@ -37,7 +37,6 @@ namespace epcalipers
         public Calibration CurrentCalibration { set; get; }
         public Font TextFont { set; get; }
         public bool RoundMsecRate { set; get; }
-        public bool hasHandles { set; get; }
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
@@ -78,7 +77,6 @@ namespace epcalipers
             TextFont = new Font("Helvetica", 14);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
-            hasHandles = false;
         }
 
         public virtual void SetInitialPositionInRect(RectangleF rect)
@@ -135,10 +133,6 @@ namespace epcalipers
                 g.DrawLine(pen, Bar1Position, 0.0f, Bar1Position, rect.Size.Height);
                 g.DrawLine(pen, Bar2Position, 0.0f, Bar2Position, rect.Size.Height);
                 g.DrawLine(pen, Bar2Position, CrossbarPosition, Bar1Position, CrossbarPosition);
-                if (hasHandles)
-                {
-                    DrawHorizontalHandles(g, brush);
-                }
             }
             else
             {
@@ -149,10 +143,6 @@ namespace epcalipers
                 g.DrawLine(pen, 0.0f, Bar1Position, rect.Size.Width, Bar1Position);
                 g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
                 g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);
-                if (hasHandles)
-                {
-                    DrawVerticalHandles(g, brush);
-                }
             }
             if (isMarching && isTimeCaliper())
             {
@@ -161,27 +151,6 @@ namespace epcalipers
             CaliperText(g, brush);
             pen.Dispose();
             brush.Dispose();
-        }
-
-        private void DrawHorizontalHandles(Graphics g, Brush brush)
-        {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
-            int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
-            g.FillRectangle(brush, new Rectangle(x1 - 20, (int)CrossbarPosition - 5, 20, 10));
-            g.FillRectangle(brush, new Rectangle(x2, (int)CrossbarPosition - 5, 20, 10));
-            g.FillRectangle(brush, new Rectangle((int)((Bar2Position - Bar1Position) / 2.0 + Bar1Position - 10), (int)CrossbarPosition, 20, 10));
-        }
-
-        private void DrawVerticalHandles(Graphics g, Brush brush)
-        {
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            int x1 = (int)(Bar2Position >= Bar1Position ? Bar1Position : Bar2Position);
-            int x2 = (int)(Bar2Position >= Bar1Position ? Bar2Position : Bar1Position);
-            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 5, x1 - 20, 10, 20));
-            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 5, x2, 10, 20));
-            g.FillRectangle(brush, new Rectangle((int)CrossbarPosition - 10, (int)(Bar2Position - ((Bar2Position - Bar1Position) / 2.0) - 10),
-                10, 20));
         }
 
         protected void CaliperText(Graphics g, Brush brush)
