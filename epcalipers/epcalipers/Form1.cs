@@ -189,8 +189,9 @@ namespace epcalipers
                 else
                 {
                     ecgPictureBox.BackColor = Color.Transparent;
-                    BackColor = Color.Gray;
-                    TransparencyKey = Color.Gray;
+                    // Windows undocumented behavior allows transparency to work only if backcolor is red
+                    BackColor = Color.Red;
+                    TransparencyKey = Color.Red;
                 }
                 ecgPictureBox.Dock = DockStyle.Fill;
                 if (preferences.ShowHandlesTransparentMode)
