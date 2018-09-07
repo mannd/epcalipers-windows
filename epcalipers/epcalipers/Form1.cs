@@ -156,6 +156,15 @@ namespace epcalipers
             ShowMainMenu();
         }
 
+        private DialogResult GetDialogResult(Form dialog) {
+            // must make sure main window never blocks access to dialogs beneath
+            bool oldTopMost = TopMost;
+            TopMost = false;
+            DialogResult result = dialog.ShowDialog();
+            TopMost = oldTopMost;
+            return result;
+        }
+
         private void makeTransparent(bool value)
         {
             KillBitmap();
@@ -351,8 +360,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
-            DialogResult result = measureRRDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
                 try
                 {
@@ -381,7 +389,8 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
-            // opening a file removes transparency automatically
+            // Opening a file removes transparency automatically
+            // even if Open dialog is cancelled.
             if (isTransparent) { 
               makeTransparent(false);
             }
@@ -487,11 +496,7 @@ namespace epcalipers
                     }
                     calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
                 }
-                // make sure this dialog floats regardless of transparency and TopMost setting
-                bool oldTopMost = this.TopMost;
-                this.TopMost = false;
-                DialogResult result = calibrationDialog.ShowDialog();
-                this.TopMost = oldTopMost;
+                DialogResult result = GetDialogResult(calibrationDialog);
                 if (result == DialogResult.OK)
                 {
                     Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
@@ -509,13 +514,8 @@ namespace epcalipers
             {
                return;
             }
-            // allow to float even if form.TopMost is true
-            bool oldTopMost = this.TopMost;
-            this.TopMost = false;
             NewCaliperDialog dialog = new NewCaliperDialog();
-            DialogResult result = dialog.ShowDialog();
-            this.TopMost = oldTopMost;
-            if (result == DialogResult.OK)
+            if (GetDialogResult(dialog) == DialogResult.OK)
             {
                 CaliperDirection direction;
                 if (dialog.horizontalCaliperRadioButton.Checked)
@@ -861,7 +861,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            DialogResult result = measureRRDialog.ShowDialog();
+            DialogResult result = GetDialogResult(measureRRDialog);
             if (result == DialogResult.OK)
             {
                 string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
@@ -1513,15 +1513,11 @@ namespace epcalipers
             {
                 preferencesDialog = new PreferencesDialog();
             }
-            // preserve TopMost value
-            bool oldTopMost = TopMost;
-            TopMost = false;
-            if (preferencesDialog.ShowDialog() == DialogResult.OK)
+            if (GetDialogResult(preferencesDialog) == DialogResult.OK)
             {
                 preferencesDialog.Save();
                 UpdatePreferences();
             }
-            TopMost = oldTopMost;
         }
 
         private void UpdatePreferences()
@@ -1534,12 +1530,8 @@ namespace epcalipers
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Dialogs must be on top
-            bool oldWindowTopMost = this.TopMost;
-            this.TopMost = false;
             AboutBox1 box = new AboutBox1();
-            box.ShowDialog();
-            this.TopMost = oldWindowTopMost;
+            GetDialogResult(box);
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1708,6 +1700,7 @@ namespace epcalipers
             colorDialog.Color = theCalipers.GetChosenCaliperColor();
             colorDialog.AllowFullOpen = true;
             colorDialog.CustomColors = customColors;
+            // color dialogs always float, even if Form is TopMost
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
