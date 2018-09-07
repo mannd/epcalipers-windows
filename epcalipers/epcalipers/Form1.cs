@@ -84,6 +84,7 @@ namespace epcalipers
         private Color oldFormBackgroundColor;
         private Color oldTransparencyKey;
         private bool isTransparent;
+        private bool isFullyTransparent;
 
 
         #endregion
@@ -102,6 +103,7 @@ namespace epcalipers
             oldTransparencyKey = TransparencyKey;
             ecgPictureBox.BackColor = Color.White;
             isTransparent = false;
+            isFullyTransparent = false;
             FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -166,6 +168,7 @@ namespace epcalipers
             //imageButton.Enabled = !value;
             //openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
+            isFullyTransparent = value;
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
             MaximizeBox = !value;
@@ -186,6 +189,7 @@ namespace epcalipers
                     // Windows undocumented behavior allows transparency to work only if backcolor is red
                     BackColor = Color.Red;
                     TransparencyKey = Color.Red;
+                    isFullyTransparent = true;
                 }
                 ecgPictureBox.Dock = DockStyle.Fill;
             }
@@ -486,7 +490,11 @@ namespace epcalipers
                     }
                     calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
                 }
+                // make sure this dialog floats regardless of transparency and TopMost setting
+                bool oldTopMost = this.TopMost;
+                this.TopMost = false;
                 DialogResult result = calibrationDialog.ShowDialog();
+                this.TopMost = oldTopMost;
                 if (result == DialogResult.OK)
                 {
                     Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
@@ -504,8 +512,12 @@ namespace epcalipers
             {
                return;
             }
+            // allow to float even if form.TopMost is true
+            bool oldTopMost = this.TopMost;
+            this.TopMost = false;
             NewCaliperDialog dialog = new NewCaliperDialog();
             DialogResult result = dialog.ShowDialog();
+            this.TopMost = oldTopMost;
             if (result == DialogResult.OK)
             {
                 CaliperDirection direction;
@@ -1522,8 +1534,12 @@ namespace epcalipers
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Dialogs must be on top
+            bool oldWindowTopMost = this.TopMost;
+            this.TopMost = false;
             AboutBox1 box = new AboutBox1();
             box.ShowDialog();
+            this.TopMost = oldWindowTopMost;
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
