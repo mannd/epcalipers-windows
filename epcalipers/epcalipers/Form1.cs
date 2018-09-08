@@ -62,6 +62,7 @@ namespace epcalipers
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
+        double maximumZoom = 6.0;
 
         double rrIntervalForQtc = 0.0;
 
@@ -84,7 +85,6 @@ namespace epcalipers
         private Color oldFormBackgroundColor;
         private Color oldTransparencyKey;
         private bool isTransparent;
-
 
         #endregion
         #region Initialization
@@ -120,12 +120,6 @@ namespace epcalipers
            // ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
-
-            if (preferences.ShowHandlesPictureMode)
-            {
-                showHandles(true);
-                showHandlesToolStripMenuItem.Checked = true;
-            }
 
             try
             {
@@ -163,6 +157,15 @@ namespace epcalipers
             ShowMainMenu();
         }
 
+        private DialogResult GetDialogResult(Form dialog) {
+            // must make sure main window never blocks access to dialogs beneath
+            bool oldTopMost = TopMost;
+            TopMost = false;
+            DialogResult result = dialog.ShowDialog();
+            TopMost = oldTopMost;
+            return result;
+        }
+
         private void makeTransparent(bool value)
         {
             KillBitmap();
@@ -172,6 +175,7 @@ namespace epcalipers
             //imageButton.Enabled = !value;
             //openToolStripMenuItem.Enabled = !value;
             isTransparent = value;
+            theCalipers.isFullyTransparent = value;
             // when transparent, can't allow maximize, since bug in Windows makes it impossible
             // to grab the window after being maximized and restored
             MaximizeBox = !value;
@@ -189,14 +193,12 @@ namespace epcalipers
                 else
                 {
                     ecgPictureBox.BackColor = Color.Transparent;
-                    BackColor = Color.Gray;
-                    TransparencyKey = Color.Gray;
+                    // Windows undocumented behavior allows transparency to work only if backcolor is red
+                    BackColor = Color.Red;
+                    TransparencyKey = Color.Red;
+                    theCalipers.isFullyTransparent = true;
                 }
                 ecgPictureBox.Dock = DockStyle.Fill;
-                if (preferences.ShowHandlesTransparentMode)
-                {
-                    setShowHandles(true);
-                }
             }
             else
             {
@@ -207,21 +209,11 @@ namespace epcalipers
                 TransparencyKey = oldTransparencyKey;
                 ecgPictureBox.Dock = DockStyle.None;
                 ecgPictureBox.Size = this.Size;
-                if (preferences.ShowHandlesPictureMode)
-                {
-                    setShowHandles(true);
-                }
             }
             ResetCalibration();
             ecgPictureBox.Refresh();
             // TODO: below sometimes called twice
             ShowMainMenu();
-        }
-
-        private void setShowHandles(bool value)
-        {
-            showHandles(value);
-            showHandlesToolStripMenuItem.Checked = value;
         }
 
         private void SetupButtons()
@@ -369,8 +361,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
-            DialogResult result = measureRRDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
                 try
                 {
@@ -399,7 +390,8 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
-            // opening a file removes transparency automatically
+            // Opening a file removes transparency automatically
+            // even if Open dialog is cancelled.
             if (isTransparent) { 
               makeTransparent(false);
             }
@@ -505,7 +497,7 @@ namespace epcalipers
                     }
                     calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
                 }
-                DialogResult result = calibrationDialog.ShowDialog();
+                DialogResult result = GetDialogResult(calibrationDialog);
                 if (result == DialogResult.OK)
                 {
                     Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
@@ -524,8 +516,7 @@ namespace epcalipers
                return;
             }
             NewCaliperDialog dialog = new NewCaliperDialog();
-            DialogResult result = dialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (GetDialogResult(dialog) == DialogResult.OK)
             {
                 CaliperDirection direction;
                 if (dialog.horizontalCaliperRadioButton.Checked)
@@ -871,7 +862,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            DialogResult result = measureRRDialog.ShowDialog();
+            DialogResult result = GetDialogResult(measureRRDialog);
             if (result == DialogResult.OK)
             {
                 string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
@@ -1007,7 +998,6 @@ namespace epcalipers
             amplitudeCaliperToolStripMenuItem.Enabled = enable;
             angleCaliperToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
-            showHandlesToolStripMenuItem.Enabled = enable;
             deleteCaliperToolStripMenuItem.Enabled = enable;
             deleteAllCalipersToolStripMenuItem.Enabled = enable;
             calibrateToolStripMenuItem.Enabled = enable;
@@ -1179,8 +1169,7 @@ namespace epcalipers
             c.UnselectedColor = preferences.CaliperColor;
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
-            c.RoundMsecRate = preferences.RoundMsecRate;
-            c.hasHandles = showHandlesToolStripMenuItem.Checked;
+            c.rounding = preferences.RoundingParameter();
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
@@ -1244,6 +1233,10 @@ namespace epcalipers
                 return;
             }
             currentActualZoom *= zoomFactor;
+            if (currentActualZoom > maximumZoom)
+            {
+                currentActualZoom = maximumZoom;
+            }
             Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
             Bitmap zoomedBitmap = Zoom(rotatedBitmap);
             rotatedBitmap.Dispose();
@@ -1256,11 +1249,18 @@ namespace epcalipers
 
         private Bitmap Zoom(Bitmap bitmap)
         {
-
-            theCalipers.updateCalibration(currentActualZoom);
-            Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
-            Bitmap bmp = new Bitmap(bitmap, newSize);
-            return bmp;
+            try
+            {
+                theCalipers.updateCalibration(currentActualZoom);
+                Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
+                Bitmap bmp = new Bitmap(bitmap, newSize);
+                return bmp;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Image too large.");
+                return null;
+            }
         }
 
         private void ecgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -1525,12 +1525,11 @@ namespace epcalipers
             {
                 preferencesDialog = new PreferencesDialog();
             }
-            if (preferencesDialog.ShowDialog() == DialogResult.OK)
+            if (GetDialogResult(preferencesDialog) == DialogResult.OK)
             {
                 preferencesDialog.Save();
                 UpdatePreferences();
             }
-
         }
 
         private void UpdatePreferences()
@@ -1538,21 +1537,13 @@ namespace epcalipers
             preferences.Load();
             // update all the calipers
             theCalipers.UpdatePreferences(preferences);
-            if ((isTransparent && preferences.ShowHandlesTransparentMode) || preferences.ShowHandlesPictureMode)
-            {
-                // this method incorporates ecgPictureBox.Refresh()
-                setShowHandles(true);
-            }
-            else
-            {
-                ecgPictureBox.Refresh();
-            }
+            ecgPictureBox.Refresh();
         }
 
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 box = new AboutBox1();
-            box.ShowDialog();
+            GetDialogResult(box);
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1692,7 +1683,7 @@ namespace epcalipers
         {
             Debug.WriteLine(Application.StartupPath);
             Debug.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
-            Help.ShowHelp(this, "epcalipers-help.chm");
+            Help.ShowHelp(this, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
         }
 
         private void rotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1710,17 +1701,6 @@ namespace epcalipers
             makeTransparent(transparentWindowToolStripMenuItem.Checked);
         }
 
-        private void showHandlesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showHandles(showHandlesToolStripMenuItem.Checked);
-        }
-
-        private void showHandles(bool value)
-        {
-            theCalipers.showHandles(value);
-            ecgPictureBox.Refresh();
-        }
-
         #endregion
 
         #region right-click menu
@@ -1732,10 +1712,11 @@ namespace epcalipers
             colorDialog.Color = theCalipers.GetChosenCaliperColor();
             colorDialog.AllowFullOpen = true;
             colorDialog.CustomColors = customColors;
+            // color dialogs always float, even if Form is TopMost
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                theCalipers.SetChosenCaliperColor(Preferences.SneakilyAdjustColor(colorDialog.Color));
+                theCalipers.SetChosenCaliperColor(colorDialog.Color);
                 customColors = colorDialog.CustomColors;
                 ecgPictureBox.Refresh();
             }
@@ -1760,7 +1741,7 @@ namespace epcalipers
             if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow keys.  Right-click to tweak a different component.", componentName);
+                string message = string.Format("Tweak {0} with arrow or ctrl-arrow keys.  Right-click to tweak a different component.", componentName);
                 tweakLabel.Text = message;
                 if (!theCalipers.tweakingComponent)
                 {
@@ -1809,6 +1790,18 @@ namespace epcalipers
                     break;
                 case Keys.Down:
                     theCalipers.Move(MovementDirection.Down);
+                    break;
+                case Keys.Left | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Left);
+                    break; 
+                case Keys.Right | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Right);
+                    break;
+                case Keys.Up | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Up);
+                    break;
+                case Keys.Down | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Down);
                     break;
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);

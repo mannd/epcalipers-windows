@@ -17,9 +17,6 @@
     <Setting Name="VerticalCalibration" Type="System.String" Scope="User">
       <Value Profile="(Default)">10 mm</Value>
     </Setting>
-    <Setting Name="RoundMsecRate" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="NumberOfIntervalsMeanRR" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
@@ -46,6 +43,9 @@
     </Setting>
     <Setting Name="AlternativeTransparencyAlpha" Type="System.Single" Scope="User">
       <Value Profile="(Default)">0.5</Value>
+    </Setting>
+    <Setting Name="RoundTo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">To Integer</Value>
     </Setting>
   </Settings>
 </SettingsFile>

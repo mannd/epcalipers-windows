@@ -18,6 +18,8 @@ namespace epcalipers
         private Caliper ActiveCaliper { get; set; }
         public Calibration HorizontalCalibration { get; set; }
         public Calibration VerticalCalibration { get; set; }
+        // must be able to fake red color if fully transparent
+        public bool isFullyTransparent { get; set; }
 
         // for caliper movement
         private Caliper grabbedCaliper;
@@ -32,6 +34,7 @@ namespace epcalipers
         public bool tweakingComponent { get; set; }
         // FIXME: change to lower value (0.5?) after debugging
         private float tweakDistance = 0.4f;
+        private float hiresTweakDistance = 0.01f;
  
 
         public Calipers()
@@ -44,6 +47,7 @@ namespace epcalipers
             chosenCaliper = null;
             chosenComponent = CaliperComponent.NoComponent;
             tweakingComponent = false;
+            isFullyTransparent = false;
         }
 
         public void Draw(Graphics g, RectangleF rect)
@@ -108,15 +112,29 @@ namespace epcalipers
                 GetActiveCaliper().isAngleCaliper;
         }
 
+        private Color AdjustColor(Color color)
+        {
+            // We have to avoid the color red if transparency is operational.
+            // A real red color will disappear!
+            if (isFullyTransparent && color == Color.Red)
+            {
+                return Color.Firebrick;
+            }
+            else
+            {
+                return color;
+            }
+        }
+
         public void SelectCaliper(Caliper c)
         {
-            c.CaliperColor = c.SelectedColor;
+            c.CaliperColor = AdjustColor(c.SelectedColor);
             c.IsSelected = true;
         }
 
         public void UnselectCaliper(Caliper c)
         {
-            c.CaliperColor = c.UnselectedColor;
+            c.CaliperColor = AdjustColor(c.UnselectedColor);
             c.IsSelected = false;
         }
 
@@ -226,6 +244,7 @@ namespace epcalipers
             {
                 return;
             }
+            color = AdjustColor(color);
             chosenCaliper.CaliperColor = color;
             chosenCaliper.UnselectedColor = color;
         }
@@ -298,16 +317,21 @@ namespace epcalipers
             tweakingComponent = false;
         }
 
-        public virtual void Move(MovementDirection movementDirection)
+        public virtual void MicroMove(MovementDirection movementDirection)
         {
-            MoveChosenComponent(movementDirection);
+            MoveChosenComponent(movementDirection, hiresTweakDistance);
         }
 
-        private void MoveChosenComponent(MovementDirection movementDirection)
+        public virtual void Move(MovementDirection movementDirection)
+        {
+            MoveChosenComponent(movementDirection, tweakDistance);
+        }
+
+        private void MoveChosenComponent(MovementDirection movementDirection, float distance)
         {
             if (chosenCaliper != null)
             {
-                chosenCaliper.MoveBarInDirection(movementDirection, tweakDistance, chosenComponent);
+                chosenCaliper.MoveBarInDirection(movementDirection, distance, chosenComponent);
             }
         }
 
@@ -447,21 +471,13 @@ namespace epcalipers
             }
         }
 
-        public void showHandles(bool value)
-        {
-            foreach (Caliper c in calipers)
-            {
-                c.hasHandles = value;
-            }
-        }
-
         public void UpdatePreferences(Preferences p)
         {
             foreach (Caliper caliper in calipers)
             {
                 caliper.LineWidth = p.LineWidth;
                 //caliper.UnselectedColor = p.CaliperColor;
-                caliper.SelectedColor = p.HighlightColor;
+                caliper.SelectedColor = AdjustColor(p.HighlightColor);
                 if (caliper.IsSelected)
                 {
                     caliper.CaliperColor = caliper.SelectedColor;
@@ -470,7 +486,7 @@ namespace epcalipers
                 {
                     //caliper.CaliperColor = caliper.UnselectedColor;
                 }
-                caliper.RoundMsecRate = p.RoundMsecRate;
+                caliper.rounding = p.RoundingParameter();
             }
         }
 
