@@ -180,7 +180,7 @@ namespace epcalipers
         private double CalibratedBaseResult(double lengthInPoints)
         {
             lengthInPoints = lengthInPoints * CurrentCalibration.Multiplier;
-            if (RoundMsecRate && CurrentCalibration.UnitsAreMsecs)
+            if (rounding == Properties.Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
             {
                 lengthInPoints = Math.Round(lengthInPoints);
             }
@@ -189,8 +189,37 @@ namespace epcalipers
 
         private string BaseMeasurement(double lengthInPoints)
         {
-            string s = string.Format("{0} {1}", 
-                CalibratedBaseResult(lengthInPoints).ToString("G4"), CurrentCalibration.RawUnits);
+            string s;
+            string format;
+            switch (rounding) {
+                case Properties.Preferences.Rounding.ToInt:
+                    format = roundToIntString;
+                    break;
+                case Properties.Preferences.Rounding.ToFourPlaces:
+                    format = roundToFourPlacesString;
+                    break;
+                case Properties.Preferences.Rounding.ToTenths:
+                    format = roundToTenthsString;
+                    break;
+                case Properties.Preferences.Rounding.ToHundredths:
+                    format = roundToHundredthsString;
+                    break;
+                case Properties.Preferences.Rounding.None:
+                    format = noRoundingString;
+                    break;
+                default:
+                    format = roundToIntString;
+                    break;
+            }
+            if (rounding == Properties.Preferences.Rounding.ToInt)
+            {
+                s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
+                    CurrentCalibration.Units);
+            }
+            else
+            {
+                s = string.Format("{0} {1}", CalibratedBaseResult(lengthInPoints).ToString(format), CurrentCalibration.RawUnits);
+            }
             return s;
         }
 

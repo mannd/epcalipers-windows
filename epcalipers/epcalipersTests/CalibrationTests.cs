@@ -69,5 +69,14 @@ namespace epcalipers.Tests
             cal.Calibrated = true;
             Assert.IsTrue(cal.Units == "Seconds");
         }
+
+        [TestMethod()]
+        public void roundingTest()
+        {
+            double n = 455.5;
+            Assert.IsTrue(System.Math.Round(n) == 456);
+            n = 455.49;
+            Assert.IsTrue(System.Math.Round(n) == 455);
+        }
     }
 }

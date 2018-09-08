@@ -1169,7 +1169,6 @@ namespace epcalipers
             c.UnselectedColor = preferences.CaliperColor;
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
-            c.RoundMsecRate = preferences.RoundMsecRate;
             c.rounding = preferences.RoundingParameter();
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);

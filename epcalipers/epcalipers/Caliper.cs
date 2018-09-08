@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using epcalipers.Properties;
 
 namespace epcalipers
 {
@@ -22,6 +23,12 @@ namespace epcalipers
         private static float minDistanceForMarch = 20f;
         private static int maxMarchingCalipers = 20;
 
+        protected string roundToIntString = "D";
+        protected string roundToFourPlacesString = "G4";
+        protected string roundToTenthsString = "F1";
+        protected string roundToHundredthsString = "F2";
+        protected string noRoundingString = "G";
+
         public float Bar1Position { set; get; }
         public float Bar2Position { set; get; }
         public float CrossbarPosition { set; get; }
@@ -37,6 +44,7 @@ namespace epcalipers
         public Calibration CurrentCalibration { set; get; }
         public Font TextFont { set; get; }
         public bool RoundMsecRate { set; get; }
+        public Preferences.Rounding rounding { set; get; }
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
@@ -77,6 +85,7 @@ namespace epcalipers
             TextFont = new Font("Helvetica", 14);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
+            rounding = Preferences.Rounding.ToInt;
         }
 
         public virtual void SetInitialPositionInRect(RectangleF rect)
@@ -239,13 +248,41 @@ namespace epcalipers
             // mV or sec.  Consider preference to allow rounding only if UnitsAreMsec() or displaying
             // rate and apply it here.  Below shows how to do either method, depending on UnitsAreMsec()
             string s;
-            if (RoundMsecRate && (CurrentCalibration.UnitsAreMsecs || CurrentCalibration.DisplayRate))
-            {
-                s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
+            if (CurrentCalibration.unitsAreMsecOrRate()) {
+                string format;
+                switch (rounding)
+                {
+                    case Preferences.Rounding.ToInt:
+                        format = roundToIntString;
+                        break;
+                    case Preferences.Rounding.ToFourPlaces:
+                        format = roundToFourPlacesString;
+                        break;
+                    case Preferences.Rounding.ToTenths:
+                        format = roundToTenthsString;
+                        break;
+                    case Preferences.Rounding.ToHundredths:
+                        format = roundToHundredthsString;
+                        break;
+                    case Preferences.Rounding.None:
+                        format = noRoundingString;
+                        break;
+                    default:
+                        format = roundToIntString;
+                        break;
+                }
+                if (rounding == Preferences.Rounding.ToInt)
+                {
+                    s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
                     CurrentCalibration.Units);
+                }
+                else
+                {
+                    s = string.Format("{0} {1}", CalibratedResult().ToString(format), CurrentCalibration.Units);
+                }
             }
             else
-            { 
+            {
                 s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
             }
             return s;

@@ -85,18 +85,6 @@ namespace epcalipers.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool RoundMsecRate {
-            get {
-                return ((bool)(this["RoundMsecRate"]));
-            }
-            set {
-                this["RoundMsecRate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int NumberOfIntervalsMeanRR {
             get {

@@ -298,7 +298,7 @@ namespace epcalipers
             this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
             this.zoomInToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
             this.zoomInToolStripMenuItem.ShowShortcutKeys = false;
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.zoomInToolStripMenuItem.Text = "Zoom in";
             this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click);
             // 
@@ -307,28 +307,28 @@ namespace epcalipers
             this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
             this.zoomOutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
             this.zoomOutToolStripMenuItem.ShowShortcutKeys = false;
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.zoomOutToolStripMenuItem.Text = "Zoom out";
             this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click);
             // 
             // resetZoomToolStripMenuItem
             // 
             this.resetZoomToolStripMenuItem.Name = "resetZoomToolStripMenuItem";
-            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.resetZoomToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.resetZoomToolStripMenuItem.Text = "Reset zoom";
             this.resetZoomToolStripMenuItem.Click += new System.EventHandler(this.resetZoomToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(219, 6);
             // 
             // rotate90RToolStripMenuItem
             // 
             this.rotate90RToolStripMenuItem.Name = "rotate90RToolStripMenuItem";
             this.rotate90RToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.R)));
-            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotate90RToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotate90RToolStripMenuItem.Text = "Rotate 90° R";
             this.rotate90RToolStripMenuItem.Click += new System.EventHandler(this.rotate90RToolStripMenuItem_Click_1);
             // 
@@ -337,7 +337,7 @@ namespace epcalipers
             this.rotate90LToolStripMenuItem.Name = "rotate90LToolStripMenuItem";
             this.rotate90LToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.L)));
-            this.rotate90LToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotate90LToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotate90LToolStripMenuItem.Text = "Rotate 90° L";
             this.rotate90LToolStripMenuItem.Click += new System.EventHandler(this.rotate90LToolStripMenuItem_Click);
             // 
@@ -345,7 +345,7 @@ namespace epcalipers
             // 
             this.rotate1RToolStripMenuItem.Name = "rotate1RToolStripMenuItem";
             this.rotate1RToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.rotate1RToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotate1RToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotate1RToolStripMenuItem.Text = "Rotate 1°R";
             this.rotate1RToolStripMenuItem.Click += new System.EventHandler(this.rotate1RToolStripMenuItem_Click);
             // 
@@ -353,7 +353,7 @@ namespace epcalipers
             // 
             this.rotate1LToolStripMenuItem.Name = "rotate1LToolStripMenuItem";
             this.rotate1LToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.rotate1LToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotate1LToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotate1LToolStripMenuItem.Text = "Rotate 1°L";
             this.rotate1LToolStripMenuItem.Click += new System.EventHandler(this.rotate1LToolStripMenuItem_Click);
             // 
@@ -362,7 +362,7 @@ namespace epcalipers
             this.rotateTinyRToolStripMenuItem.Name = "rotateTinyRToolStripMenuItem";
             this.rotateTinyRToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.R)));
-            this.rotateTinyRToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyRToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotateTinyRToolStripMenuItem.Text = "Rotate 0.1°R";
             this.rotateTinyRToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyRToolStripMenuItem_Click);
             // 
@@ -371,7 +371,7 @@ namespace epcalipers
             this.rotateTinyLToolStripMenuItem.Name = "rotateTinyLToolStripMenuItem";
             this.rotateTinyLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.L)));
-            this.rotateTinyLToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.rotateTinyLToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rotateTinyLToolStripMenuItem.Text = "Rotate 0.1°L";
             this.rotateTinyLToolStripMenuItem.Click += new System.EventHandler(this.rotateTinyLToolStripMenuItem_Click);
             // 
@@ -379,26 +379,28 @@ namespace epcalipers
             // 
             this.resetImageToolStripMenuItem1.Name = "resetImageToolStripMenuItem1";
             this.resetImageToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
-            this.resetImageToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.resetImageToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
             this.resetImageToolStripMenuItem1.Text = "Reset image";
             this.resetImageToolStripMenuItem1.Click += new System.EventHandler(this.resetImageToolStripMenuItem1_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(219, 6);
             // 
             // nextPageToolStripMenuItem1
             // 
             this.nextPageToolStripMenuItem1.Name = "nextPageToolStripMenuItem1";
-            this.nextPageToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.nextPageToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Right)));
+            this.nextPageToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
             this.nextPageToolStripMenuItem1.Text = "Next PDF page";
             this.nextPageToolStripMenuItem1.Click += new System.EventHandler(this.nextPageToolStripMenuItem1_Click);
             // 
             // previousPageToolStripMenuItem1
             // 
             this.previousPageToolStripMenuItem1.Name = "previousPageToolStripMenuItem1";
-            this.previousPageToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.previousPageToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Left)));
+            this.previousPageToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
             this.previousPageToolStripMenuItem1.Text = "Previous PDF page";
             this.previousPageToolStripMenuItem1.Click += new System.EventHandler(this.previousPageToolStripMenuItem1_Click);
             // 

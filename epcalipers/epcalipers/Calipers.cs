@@ -486,7 +486,7 @@ namespace epcalipers
                 {
                     //caliper.CaliperColor = caliper.UnselectedColor;
                 }
-                caliper.RoundMsecRate = p.RoundMsecRate;
+                caliper.rounding = p.RoundingParameter();
             }
         }
 

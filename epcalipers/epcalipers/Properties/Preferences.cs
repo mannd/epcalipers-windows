@@ -15,7 +15,6 @@ namespace epcalipers.Properties
         private int lineWidth;
         private string horizontalCalibration;
         private string verticalCalibration;
-        private bool roundMsecRate;
         private int numberOfIntervalsMeanRR;
         private int numberOfIntervalsQtc;
         private string defaultQtcFormula;
@@ -51,7 +50,6 @@ namespace epcalipers.Properties
             lineWidth = (int)Settings.Default["LineWidth"];
             horizontalCalibration = (string)Settings.Default["HorizontalCalibration"];
             verticalCalibration = (string)Settings.Default["VerticalCalibration"];
-            roundMsecRate = (bool)Settings.Default["RoundMsecRate"];
             numberOfIntervalsMeanRR = (int)Settings.Default["NumberOfIntervalsMeanRR"];
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
@@ -165,22 +163,11 @@ namespace epcalipers.Properties
             set { verticalCalibration = value; }
         }
 
-        [Browsable(true),
-            ReadOnly(false),
-            Description("Round msec and rates to nearest integer"),
-            DisplayName("Round msec and rates"),
-            Category("Measurements")]
-        public bool RoundMsecRate
-        {
-            get { return roundMsecRate; }
-            set { roundMsecRate = value; }
-        }
-
-        [Browsable(true),
+         [Browsable(true),
             ReadOnly(false),
             TypeConverter(typeof(RoundingConverter)),
             Description("Rounding to integer or number of places"),
-            DisplayName("Round msec and rates*"),
+            DisplayName("Round msec and rates"),
             Category("Measurements")]
         public string RoundTo
         {
@@ -306,7 +293,6 @@ namespace epcalipers.Properties
             Settings.Default["LineWidth"] = lineWidth;
             Settings.Default["HorizontalCalibration"] = horizontalCalibration;
             Settings.Default["VerticalCalibration"] = verticalCalibration;
-            Settings.Default["RoundMsecRate"] = roundMsecRate;
             Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
