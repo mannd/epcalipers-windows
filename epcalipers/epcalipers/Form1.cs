@@ -1683,7 +1683,7 @@ namespace epcalipers
         {
             Debug.WriteLine(Application.StartupPath);
             Debug.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
-            Help.ShowHelp(this, "epcalipers-help.chm");
+            Help.ShowHelp(this, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
         }
 
         private void rotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
