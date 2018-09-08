@@ -62,6 +62,7 @@ namespace epcalipers
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
+        double maximumZoom = 6.0;
 
         double rrIntervalForQtc = 0.0;
 
@@ -1169,6 +1170,7 @@ namespace epcalipers
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
             c.RoundMsecRate = preferences.RoundMsecRate;
+            c.rounding = preferences.RoundingParameter();
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
@@ -1232,6 +1234,10 @@ namespace epcalipers
                 return;
             }
             currentActualZoom *= zoomFactor;
+            if (currentActualZoom > maximumZoom)
+            {
+                currentActualZoom = maximumZoom;
+            }
             Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
             Bitmap zoomedBitmap = Zoom(rotatedBitmap);
             rotatedBitmap.Dispose();
@@ -1244,11 +1250,18 @@ namespace epcalipers
 
         private Bitmap Zoom(Bitmap bitmap)
         {
-
-            theCalipers.updateCalibration(currentActualZoom);
-            Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
-            Bitmap bmp = new Bitmap(bitmap, newSize);
-            return bmp;
+            try
+            {
+                theCalipers.updateCalibration(currentActualZoom);
+                Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
+                Bitmap bmp = new Bitmap(bitmap, newSize);
+                return bmp;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Image too large.");
+                return null;
+            }
         }
 
         private void ecgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
