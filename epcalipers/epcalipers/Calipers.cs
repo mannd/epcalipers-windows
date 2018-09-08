@@ -111,22 +111,29 @@ namespace epcalipers
                 GetActiveCaliper().isAngleCaliper;
         }
 
-        public void SelectCaliper(Caliper c)
+        private Color AdjustColor(Color color)
         {
-            if (isFullyTransparent && c.SelectedColor == Color.Red)
+            // We have to avoid the color red if transparency is operational.
+            // A real red color will disappear!
+            if (isFullyTransparent && color == Color.Red)
             {
-                c.CaliperColor = Color.Firebrick;
+                return Color.Firebrick;
             }
             else
             {
-                c.CaliperColor = c.SelectedColor;
+                return color;
             }
+        }
+
+        public void SelectCaliper(Caliper c)
+        {
+            c.CaliperColor = AdjustColor(c.SelectedColor);
             c.IsSelected = true;
         }
 
         public void UnselectCaliper(Caliper c)
         {
-            c.CaliperColor = c.UnselectedColor;
+            c.CaliperColor = AdjustColor(c.UnselectedColor);
             c.IsSelected = false;
         }
 
@@ -236,6 +243,7 @@ namespace epcalipers
             {
                 return;
             }
+            color = AdjustColor(color);
             chosenCaliper.CaliperColor = color;
             chosenCaliper.UnselectedColor = color;
         }

@@ -23,11 +23,21 @@ namespace epcalipers.Properties
         private bool useAlternativeTransparency;
         private bool windowOnTopWhenTransparent;
         private float alternativeTransparencyAlpha;
+        private string rounding;
 
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
         private const float MIN_ALPHA = 0.2F;
         private const float MAX_ALPHA = 0.8F;
+
+        public enum Rounding
+        {
+            ToInt,
+            ToFourPlaces,
+            ToTenths,
+            ToHundredths,
+            None
+        }
 
         public Preferences()
         {
@@ -49,6 +59,7 @@ namespace epcalipers.Properties
             useAlternativeTransparency = (bool)Settings.Default["UseAlternativeTransparency"];
             windowOnTopWhenTransparent = (bool)Settings.Default["WindowOnTopWhenTransparent"];
             alternativeTransparencyAlpha = (float)Settings.Default["AlternativeTransparencyAlpha"];
+            rounding = (string)Settings.Default["RoundTo"];
         }
 
         public QtcFormula ActiveQtcFormula()
@@ -70,6 +81,24 @@ namespace epcalipers.Properties
             }
         }
 
+        public Rounding RoundingParameter()
+        {
+            switch (rounding)
+            {
+                case "To Integer":
+                    return Rounding.ToInt;
+                case "To Four Places":
+                    return Rounding.ToFourPlaces;
+                case "To Tenths":
+                    return Rounding.ToTenths;
+                case "To Hundredths":
+                    return Rounding.ToHundredths;
+                case "No Rounding":
+                    return Rounding.None;
+                default:
+                    return Rounding.ToInt;
+            }
+        }
         [Browsable(true),
             ReadOnly(false),
             Description("Unselected caliper color"),
@@ -77,23 +106,8 @@ namespace epcalipers.Properties
             Category("Calipers")]
         public Color CaliperColor
         {
-            
-            get {
-                caliperColor = SneakilyAdjustColor(caliperColor);
-                return caliperColor;
-            }
+            get { return caliperColor; }
             set { caliperColor = value; }
-        }
-
-        // We have to cheat a little here so that our secret TransparencyKey color (gray)
-        // doesn't disappear with transparent windows.
-        public static Color SneakilyAdjustColor(Color color)
-        {
-            if (color == Color.Gray)
-            {
-                color = Color.LightGray;
-            }
-            return color;
         }
 
         [Browsable(true),
@@ -103,10 +117,7 @@ namespace epcalipers.Properties
             Category("Calipers")]
         public Color HighlightColor
         {
-            get {
-                caliperColor = SneakilyAdjustColor(caliperColor);
-                return highlightColor;
-            }
+            get { return highlightColor; }
             set { highlightColor = value; }
         }
 
@@ -164,6 +175,19 @@ namespace epcalipers.Properties
             get { return roundMsecRate; }
             set { roundMsecRate = value; }
         }
+
+        [Browsable(true),
+            ReadOnly(false),
+            TypeConverter(typeof(RoundingConverter)),
+            Description("Rounding to integer or number of places"),
+            DisplayName("Round msec and rates*"),
+            Category("Measurements")]
+        public string RoundTo
+        {
+            get { return rounding; }
+            set { rounding = value; }
+        }
+
 
         [Browsable(true),
             ReadOnly(false),
@@ -290,6 +314,7 @@ namespace epcalipers.Properties
             Settings.Default["UseAlternativeTransparency"] = useAlternativeTransparency;
             Settings.Default["WindowOnTopWhenTransparent"] = windowOnTopWhenTransparent;
             Settings.Default["AlternativeTransparencyAlpha"] = alternativeTransparencyAlpha;
+            Settings.Default["RoundTo"] = rounding;
             Settings.Default.Save();
         }
 
@@ -309,6 +334,24 @@ namespace epcalipers.Properties
                                                                 "Framingham",
                                                                 "Fridericia",
                                                                 "All"});
+
+        }
+    }
+
+    public class RoundingConverter: StringConverter
+    {
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        {
+            return new StandardValuesCollection(new string[] { "To Integer",
+                                                                "To Four Places",
+                                                                "To Tenths",
+                                                                "To Hundredths",
+                                                                "No Rounding"});
 
         }
     }

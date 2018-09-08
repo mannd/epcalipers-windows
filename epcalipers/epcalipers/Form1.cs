@@ -1704,7 +1704,7 @@ namespace epcalipers
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                theCalipers.SetChosenCaliperColor(Preferences.SneakilyAdjustColor(colorDialog.Color));
+                theCalipers.SetChosenCaliperColor(colorDialog.Color);
                 customColors = colorDialog.CustomColors;
                 ecgPictureBox.Refresh();
             }
