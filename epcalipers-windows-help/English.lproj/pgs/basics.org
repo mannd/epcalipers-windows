@@ -55,32 +55,36 @@ Not all actions are controlled by the buttons, just the common ones.  Use the me
 This is also a context menu that opens when you right click with your mouse on a caliper.  This menu allows individual coloring of calipers, movement of caliper components with the keyboard arrow keys, and conversion of time calipers to marching calipers in order to march out rhythms.
 ** Keyboard shortcuts
 Many of these keys are combinations using the CTRL (Control) key, the SHIFT key and the ALT key.
-| Key              | Function                      |
-|------------------+-------------------------------|
-| CTRL+O           | Open image file               |
-| CTRL+S           | Save image file               |
-| CTRL+P           | Print image file              |
-| CTRL+ALT+R       | Rotate image 0.1° right       |
-| CTRL+ALT+L       | Rotate image 0.1° left        |
-| CTRL+R           | Rotate image 1° right         |
-| CTRL+L           | Rotate image 1° left          |
-| CTRL+SHIFT+R     | Rotate image 90° right        |
-| CTRL+SHIFT+L     | Rotate image 90° left         |
-| CTRL+0 (zero)    | Reset image rotation          |
-| CTRL+=           | Zoom in                       |
-| CTRL+-           | Zoom out                      |
-| CTRL+T           | Add time caliper              |
-| CTRL+A           | Add amplitude caliper         |
-| CTRL+G           | Add angle caliper             |
-| Del              | Delete selected caliper       |
-| SHIFT-Del        | Delete all calipers           |
-| CTRL+H           | Show caliper handles          |
-| CTRL+I           | Toggle rate/interval          |
-| CTRL+Left arrow  | Prev page of multipage PDF    |
-| CTRL+Right arrow | Next page of multipage PDF    |
-| F1               | Help                          |
-| Left arrow       | Tweak caliper component left  |
-| Right arrow      | Tweak caliper component right |
-| Up arrow         | Tweak caliper component up    |
-| Down arrow       | Tweak caliper component down  |
-| Escape           | Cancel action                 |
+| Key              | Function                             |
+|------------------+--------------------------------------|
+| CTRL+O           | Open image file                      |
+| CTRL+S           | Save image file                      |
+| CTRL+P           | Print image file                     |
+| CTRL+ALT+R       | Rotate image 0.1° right              |
+| CTRL+ALT+L       | Rotate image 0.1° left               |
+| CTRL+R           | Rotate image 1° right                |
+| CTRL+L           | Rotate image 1° left                 |
+| CTRL+SHIFT+R     | Rotate image 90° right               |
+| CTRL+SHIFT+L     | Rotate image 90° left                |
+| CTRL+0 (zero)    | Reset image rotation                 |
+| CTRL+=           | Zoom in                              |
+| CTRL+-           | Zoom out                             |
+| CTRL+T           | Add time caliper                     |
+| CTRL+A           | Add amplitude caliper                |
+| CTRL+G           | Add angle caliper                    |
+| Del              | Delete selected caliper              |
+| SHIFT-Del        | Delete all calipers                  |
+| CTRL+H           | Show caliper handles                 |
+| CTRL+I           | Toggle rate/interval                 |
+| ALT+Left arrow   | Prev page of multipage PDF           |
+| ALT+Right arrow  | Next page of multipage PDF           |
+| F1               | Help                                 |
+| Left arrow       | Tweak caliper component left         |
+| Right arrow      | Tweak caliper component right        |
+| Up arrow         | Tweak caliper component up           |
+| Down arrow       | Tweak caliper component down         |
+| CTRL+Left arrow  | Finely tweak caliper component left  |
+| CTRL+Right arrow | Finely tweak caliper component right |
+| CTRL+Up arrow    | Finely tweak caliper component up    |
+| CTRL+Down arrow  | Finely tweak caliper component down  |
+| Escape           | Cancel action                        |

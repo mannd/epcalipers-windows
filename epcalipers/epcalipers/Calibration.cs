@@ -110,6 +110,11 @@ namespace epcalipers
             Calibrated = false;
         }
 
+        public bool unitsAreMsecOrRate()
+        {
+            return _unitsAreMsecs() || DisplayRate;
+        }
+
         private bool _unitsAreSeconds()
         {
             if (rawUnits.Length < 1)

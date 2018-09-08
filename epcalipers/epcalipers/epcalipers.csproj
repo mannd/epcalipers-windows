@@ -60,10 +60,10 @@
     <ApplicationIcon>epcalipers-test-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D5A905C64D861AA876F2A57DB68099611591A316</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>9A961CA1ADC582BE6F8844E51B4C587EA92A9B59</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>epcalipers_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>epcalipers_3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -182,6 +182,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="epcalipers_1_TemporaryKey.pfx" />
+    <None Include="epcalipers_3_TemporaryKey.pfx" />
     <None Include="epcalipers_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
