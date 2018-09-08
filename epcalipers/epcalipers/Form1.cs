@@ -1729,7 +1729,7 @@ namespace epcalipers
             if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow keys.  Right-click to tweak a different component.", componentName);
+                string message = string.Format("Tweak {0} with arrow or ctrl-arrow keys.  Right-click to tweak a different component.", componentName);
                 tweakLabel.Text = message;
                 if (!theCalipers.tweakingComponent)
                 {
@@ -1778,6 +1778,18 @@ namespace epcalipers
                     break;
                 case Keys.Down:
                     theCalipers.Move(MovementDirection.Down);
+                    break;
+                case Keys.Left | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Left);
+                    break; 
+                case Keys.Right | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Right);
+                    break;
+                case Keys.Up | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Up);
+                    break;
+                case Keys.Down | Keys.Control:
+                    theCalipers.MicroMove(MovementDirection.Down);
                     break;
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);

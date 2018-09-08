@@ -34,6 +34,7 @@ namespace epcalipers
         public bool tweakingComponent { get; set; }
         // FIXME: change to lower value (0.5?) after debugging
         private float tweakDistance = 0.4f;
+        private float hiresTweakDistance = 0.01f;
  
 
         public Calipers()
@@ -316,16 +317,21 @@ namespace epcalipers
             tweakingComponent = false;
         }
 
-        public virtual void Move(MovementDirection movementDirection)
+        public virtual void MicroMove(MovementDirection movementDirection)
         {
-            MoveChosenComponent(movementDirection);
+            MoveChosenComponent(movementDirection, hiresTweakDistance);
         }
 
-        private void MoveChosenComponent(MovementDirection movementDirection)
+        public virtual void Move(MovementDirection movementDirection)
+        {
+            MoveChosenComponent(movementDirection, tweakDistance);
+        }
+
+        private void MoveChosenComponent(MovementDirection movementDirection, float distance)
         {
             if (chosenCaliper != null)
             {
-                chosenCaliper.MoveBarInDirection(movementDirection, tweakDistance, chosenComponent);
+                chosenCaliper.MoveBarInDirection(movementDirection, distance, chosenComponent);
             }
         }
 
@@ -471,7 +477,7 @@ namespace epcalipers
             {
                 caliper.LineWidth = p.LineWidth;
                 //caliper.UnselectedColor = p.CaliperColor;
-                caliper.SelectedColor = p.HighlightColor;
+                caliper.SelectedColor = AdjustColor(p.HighlightColor);
                 if (caliper.IsSelected)
                 {
                     caliper.CaliperColor = caliper.SelectedColor;
