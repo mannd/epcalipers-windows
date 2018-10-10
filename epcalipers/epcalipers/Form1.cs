@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
 
 namespace epcalipers
@@ -434,7 +435,11 @@ namespace epcalipers
 
         private void calibrateButton_Click(object sender, EventArgs e)
         {
-            DoCalibration();
+            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
+            var transWindow = new WpfTransparentWindow.Window1();
+            ElementHost.EnableModelessKeyboardInterop(transWindow);
+            transWindow.Show();
+            //DoCalibration();
         }
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
