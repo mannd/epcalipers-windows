@@ -85,7 +85,6 @@ namespace epcalipers
         // transparency stuff
         private Color oldFormBackgroundColor;
         private Color oldTransparencyKey;
-        private bool isTransparent;
 
         #endregion
         #region Initialization
@@ -102,7 +101,6 @@ namespace epcalipers
             oldFormBackgroundColor = BackColor;
             oldTransparencyKey = TransparencyKey;
             ecgPictureBox.BackColor = Color.White;
-            isTransparent = false;
             FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -143,13 +141,7 @@ namespace epcalipers
                         ResetBitmap(ecgPictureBox.Image);
                     }
                 }
-                else 
-                {
-                    // if not loading a file at start, then use transparent window at start preference
-                    makeTransparent(preferences.ShowTransparentWindowAtStart);
-                    transparentWindowToolStripMenuItem.Checked = preferences.ShowTransparentWindowAtStart;
-                }
-            }
+           }
             catch (Exception)
             {
                 lastFilename = "";
@@ -167,60 +159,9 @@ namespace epcalipers
             return result;
         }
 
-        private void makeTransparent(bool value)
-        {
-            KillBitmap();
-            theCalipers.deleteAllCalipers();
-            ecgPictureBox.Image = null;
-            CancelTweaking();
-            //imageButton.Enabled = !value;
-            //openToolStripMenuItem.Enabled = !value;
-            isTransparent = value;
-            theCalipers.isFullyTransparent = value;
-            // when transparent, can't allow maximize, since bug in Windows makes it impossible
-            // to grab the window after being maximized and restored
-            MaximizeBox = !value;
-            WindowState = FormWindowState.Normal;
-            if (value)
-            {
-                if (preferences.WindowOnTopWhenTransparent)
-                {
-                    this.TopMost = true;
-                }
-                if (preferences.UseAlternativeTransparency)
-                {
-                    this.Opacity = preferences.AlternativeTransparencyAlpha;
-                }
-                else
-                {
-                    ecgPictureBox.BackColor = Color.Transparent;
-                    // Windows undocumented behavior allows transparency to work only if backcolor is red
-                    BackColor = Color.Red;
-                    TransparencyKey = Color.Red;
-                    theCalipers.isFullyTransparent = true;
-                }
-                ecgPictureBox.Dock = DockStyle.Fill;
-            }
-            else
-            {
-                this.TopMost = false;
-                this.Opacity = 1.0;
-                ecgPictureBox.BackColor = Color.White;
-                BackColor = oldFormBackgroundColor;
-                TransparencyKey = oldTransparencyKey;
-                ecgPictureBox.Dock = DockStyle.None;
-                ecgPictureBox.Size = this.Size;
-            }
-            ResetCalibration();
-            ecgPictureBox.Refresh();
-            // TODO: below sometimes called twice
-            ShowMainMenu();
-        }
-
         private void SetupButtons()
         {
             imageButton = new Button();
-           // imageButton.BackColor = Control.DefaultBackColor;
             imageButton.Text = "Open";
             toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
             imageButton.Click += imageButton_Click;
@@ -391,12 +332,6 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
-            // Opening a file removes transparency automatically
-            // even if Open dialog is cancelled.
-            if (isTransparent) { 
-              makeTransparent(false);
-            }
-            transparentWindowToolStripMenuItem.Checked = false;
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
             bool isPDF = false;
@@ -435,11 +370,7 @@ namespace epcalipers
 
         private void calibrateButton_Click(object sender, EventArgs e)
         {
-            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
-            var transWindow = new WpfTransparentWindow.Window1();
-            ElementHost.EnableModelessKeyboardInterop(transWindow);
-            transWindow.Show();
-            //DoCalibration();
+            DoCalibration();
         }
 
         private void setCalibrationButton_Click(object sender, EventArgs e)
@@ -516,7 +447,7 @@ namespace epcalipers
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null && !isTransparent)
+            if (ecgPictureBox.Image == null)
             {
                return;
             }
@@ -659,10 +590,6 @@ namespace epcalipers
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
-            if (isTransparent)
-            {
-                makeTransparent(false);
-            }
             try
             {
                 if (validData)
@@ -981,17 +908,7 @@ namespace epcalipers
             EnableImageMenuItems(ImageIsLoaded());
             EnableCaliperMenuItems(CalipersAllowed());
             EnableMeasurementMenuItems(MeasurementsAllowed());
-            // with transparent windows, next action is usually add caliper, but
-            // with regular window, next action is usually open a file
-            if (isTransparent)
-            {
-                addCalipersButton.Select();
-            }
-            else
-            {
-                imageButton.Select();
-            }
-
+            imageButton.Select();
             theCalipers.Locked = false;
         }
 
@@ -1196,7 +1113,7 @@ namespace epcalipers
 
         private bool CalipersAllowed()
         {
-            return ImageIsLoaded() || isTransparent;
+            return ImageIsLoaded();
         }
 
         private bool MeasurementsAllowed()
@@ -1701,11 +1618,6 @@ namespace epcalipers
             RotateEcgImage(-0.1f);
         }
 
-        private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            makeTransparent(transparentWindowToolStripMenuItem.Checked);
-        }
-
         #endregion
 
         #region right-click menu
@@ -1815,8 +1727,15 @@ namespace epcalipers
             return true;
         }
 
+
         #endregion
 
-
+        private void transparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
+            var transWindow = new WpfTransparentWindow.Window1();
+            ElementHost.EnableModelessKeyboardInterop(transWindow);
+            transWindow.Show();
+        }
     }
 }

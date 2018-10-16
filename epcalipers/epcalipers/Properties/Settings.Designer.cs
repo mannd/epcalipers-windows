@@ -109,30 +109,6 @@ namespace epcalipers.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowHandlesPictureMode {
-            get {
-                return ((bool)(this["ShowHandlesPictureMode"]));
-            }
-            set {
-                this["ShowHandlesPictureMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowHandlesTransparentMode {
-            get {
-                return ((bool)(this["ShowHandlesTransparentMode"]));
-            }
-            set {
-                this["ShowHandlesTransparentMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Bazett")]
         public string DefaultQTcFormula {
             get {
@@ -145,30 +121,6 @@ namespace epcalipers.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ShowTransparentWindowAtStart {
-            get {
-                return ((bool)(this["ShowTransparentWindowAtStart"]));
-            }
-            set {
-                this["ShowTransparentWindowAtStart"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool UseAlternativeTransparency {
-            get {
-                return ((bool)(this["UseAlternativeTransparency"]));
-            }
-            set {
-                this["UseAlternativeTransparency"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WindowOnTopWhenTransparent {
             get {
@@ -176,18 +128,6 @@ namespace epcalipers.Properties {
             }
             set {
                 this["WindowOnTopWhenTransparent"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
-        public float AlternativeTransparencyAlpha {
-            get {
-                return ((float)(this["AlternativeTransparencyAlpha"]));
-            }
-            set {
-                this["AlternativeTransparencyAlpha"] = value;
             }
         }
         

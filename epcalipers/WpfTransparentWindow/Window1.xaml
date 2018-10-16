@@ -15,10 +15,9 @@
         </LinearGradientBrush>
     </Window.Resources>
     <Border Background="#01FFFFFF" CornerRadius="5" BorderBrush="{StaticResource WindowFrameBrush}" BorderThickness="2,0,2,2">
-        <Grid MouseDown="Grid_MouseDown">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="309*"/>
-                <ColumnDefinition Width="89*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -33,11 +32,9 @@
                   Width="15" Height="15" Padding="0" Command="ApplicationCommands.Close"/>
                 </Grid>
             </Border>
-            <TextBlock Text="This is some text in the window" Grid.Row="1" HorizontalAlignment="Center"
-                 VerticalAlignment="Center" TextWrapping="Wrap" FontSize="32" Grid.ColumnSpan="2" Margin="177,188,177,187"/>
             <Button Content="Click for new window" Click="ButtonClicked" HorizontalAlignment="Center"
-              VerticalAlignment="Bottom" Grid.Row="1" Margin="340,0,162.37,0"/>
-            <Image x:Name="image" HorizontalAlignment="Left" Height="326" Margin="80,48,0,0" Grid.Row="1" VerticalAlignment="Top" Width="641" MouseDown="Image_MouseDown" Grid.ColumnSpan="2"/>
+              VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,0,0"/>
+            <Canvas Name="canvas" Background="Transparent" HorizontalAlignment="Stretch" Margin="0,0, 0,20" Grid.Row="1" VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown"/>
         </Grid>
     </Border>
 </Window>

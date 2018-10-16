@@ -37,16 +37,26 @@ namespace WpfTransparentWindow
             //CrazyWindow win2 = new CrazyWindow();
             //win2.ShowDialog();
             Debug.Write("button clicked.");
+            var myLine = new Line
+            {
+                Stroke = System.Windows.Media.Brushes.Black,
+
+                X1 = 100,
+                X2 = 140,  // 150 too far
+                Y1 = 200,
+                Y2 = 200,
+
+                StrokeThickness = 1
+            };
+
+            canvas.Children.Add(myLine);
+
+          
         }
 
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Debug.Write("mouse clicked over image.");
-        }
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Debug.Write("mouse clicked over grid.");
+            Debug.Write("mouse clicked over canvas.");
 
         }
     }

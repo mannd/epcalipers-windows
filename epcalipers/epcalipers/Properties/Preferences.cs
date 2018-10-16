@@ -53,10 +53,6 @@ namespace epcalipers.Properties
             numberOfIntervalsMeanRR = (int)Settings.Default["NumberOfIntervalsMeanRR"];
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
-            showTransparentWindowAtStart = (bool)Settings.Default["ShowTransparentWindowAtStart"];
-            useAlternativeTransparency = (bool)Settings.Default["UseAlternativeTransparency"];
-            windowOnTopWhenTransparent = (bool)Settings.Default["WindowOnTopWhenTransparent"];
-            alternativeTransparencyAlpha = (float)Settings.Default["AlternativeTransparencyAlpha"];
             rounding = (string)Settings.Default["RoundTo"];
         }
 
@@ -220,59 +216,6 @@ namespace epcalipers.Properties
             }
         }
 
-        [Browsable(true),
-            ReadOnly(false),
-            DisplayName("Transparent window at start"),
-            Description("Show transparent window at startup"),
-            Category("Transparency")]
-        public bool ShowTransparentWindowAtStart
-        {
-            get { return showTransparentWindowAtStart; }
-            set { showTransparentWindowAtStart = value; }
-        }
-
-        [Browsable(true),
-            ReadOnly(false),
-            DisplayName("Use altenative transparency"),
-            Description("Full transparency doesn't work for some versions of Windows.  If default transparency doesn't work" +
-            ", select this option."),
-            Category("Transparency")]
-        public bool UseAlternativeTransparency
-        {
-            get { return useAlternativeTransparency; }
-            set { useAlternativeTransparency = value; }
-        }
-
-        [Browsable(true),
-            ReadOnly(false),
-            DisplayName("Transparent window on top"),
-            Description("Transparent window always floats above other windows"),
-            Category("Transparency")]
-        public bool WindowOnTopWhenTransparent
-        {
-            get { return windowOnTopWhenTransparent; }
-            set { windowOnTopWhenTransparent = value; }
-        }
-        
-        [Browsable(true),
-            ReadOnly(false),
-            DisplayName("Transparency alpha value"),
-            Description("Alternative transparency method alpha value (legal values 0.2-0.8)"),
-            Category("Transparency")]
-        public float AlternativeTransparencyAlpha
-        {
-            get { return alternativeTransparencyAlpha; }
-            set {
-                if (value < MIN_ALPHA)
-                {
-                    value = MIN_ALPHA;
-                }
-                if (value > MAX_ALPHA)
-                {
-                    value = MAX_ALPHA;
-                }
-                alternativeTransparencyAlpha = value; }
-        }
 
         [Browsable(true),
             ReadOnly(false),
