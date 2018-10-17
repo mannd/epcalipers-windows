@@ -88,6 +88,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CalibrationTests.cs" />
     <Compile Include="CaliperTests.cs" />
     <Compile Include="EPCalculatorTests.cs" />
