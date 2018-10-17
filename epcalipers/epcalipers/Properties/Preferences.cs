@@ -18,16 +18,10 @@ namespace epcalipers.Properties
         private int numberOfIntervalsMeanRR;
         private int numberOfIntervalsQtc;
         private string defaultQtcFormula;
-        private bool showTransparentWindowAtStart;
-        private bool useAlternativeTransparency;
-        private bool windowOnTopWhenTransparent;
-        private float alternativeTransparencyAlpha;
         private string rounding;
 
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
-        private const float MIN_ALPHA = 0.2F;
-        private const float MAX_ALPHA = 0.8F;
 
         public enum Rounding
         {
@@ -239,10 +233,6 @@ namespace epcalipers.Properties
             Settings.Default["NumberOfIntervalsMeanRR"] = numberOfIntervalsMeanRR;
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
-            Settings.Default["ShowTransparentWindowAtStart"] = showTransparentWindowAtStart;
-            Settings.Default["UseAlternativeTransparency"] = useAlternativeTransparency;
-            Settings.Default["WindowOnTopWhenTransparent"] = windowOnTopWhenTransparent;
-            Settings.Default["AlternativeTransparencyAlpha"] = alternativeTransparencyAlpha;
             Settings.Default["RoundTo"] = rounding;
             Settings.Default.Save();
         }
