@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using EPCalipersCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace epcalipers.Tests
 {

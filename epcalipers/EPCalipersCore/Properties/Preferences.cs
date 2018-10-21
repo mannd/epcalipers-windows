@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace epcalipers.Properties
+namespace EPCalipersCore.Properties
 {
     public class Preferences
     {

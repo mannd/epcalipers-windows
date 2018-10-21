@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
 using EPCalipersCore;
+using EPCalipersCore.Properties;
 
 namespace epcalipers
 {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPCalipersCore;
+using EPCalipersCore.Properties;
 
 namespace epcalipers
 {
@@ -181,7 +182,7 @@ namespace epcalipers
         private double CalibratedBaseResult(double lengthInPoints)
         {
             lengthInPoints = lengthInPoints * CurrentCalibration.Multiplier;
-            if (rounding == Properties.Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
+            if (rounding == Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
             {
                 lengthInPoints = Math.Round(lengthInPoints);
             }
@@ -193,26 +194,26 @@ namespace epcalipers
             string s;
             string format;
             switch (rounding) {
-                case Properties.Preferences.Rounding.ToInt:
+                case Preferences.Rounding.ToInt:
                     format = roundToIntString;
                     break;
-                case Properties.Preferences.Rounding.ToFourPlaces:
+                case Preferences.Rounding.ToFourPlaces:
                     format = roundToFourPlacesString;
                     break;
-                case Properties.Preferences.Rounding.ToTenths:
+                case Preferences.Rounding.ToTenths:
                     format = roundToTenthsString;
                     break;
-                case Properties.Preferences.Rounding.ToHundredths:
+                case Preferences.Rounding.ToHundredths:
                     format = roundToHundredthsString;
                     break;
-                case Properties.Preferences.Rounding.None:
+                case Preferences.Rounding.None:
                     format = noRoundingString;
                     break;
                 default:
                     format = roundToIntString;
                     break;
             }
-            if (rounding == Properties.Preferences.Rounding.ToInt)
+            if (rounding == Preferences.Rounding.ToInt)
             {
                 s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
                     CurrentCalibration.Units);

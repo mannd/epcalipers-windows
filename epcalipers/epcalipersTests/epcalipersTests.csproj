@@ -97,6 +97,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EPCalipersCore\EPCalipersCore.csproj">
+      <Project>{40025627-4d6c-4449-b66a-e04bb1aa9814}</Project>
+      <Name>EPCalipersCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\epcalipers\epcalipers.csproj">
       <Project>{6FA709A0-D676-4F08-B2E9-A30582E78434}</Project>
       <Name>epcalipers</Name>

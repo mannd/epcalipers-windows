@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EPCalipersCore;
 using System.Drawing;
 
 namespace epcalipers.Tests
@@ -13,7 +14,7 @@ namespace epcalipers.Tests
     public class CaliperTests
     {
         [TestMethod()]
-        public void barCoordTest()
+        public void BarCoordTest()
         {
             Caliper c = new Caliper();
             Assert.IsTrue(c.Bar1Position == 0);

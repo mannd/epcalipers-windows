@@ -4,8 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using epcalipers.Properties;
 using EPCalipersCore;
+using EPCalipersCore.Properties;
 
 namespace epcalipers
 {
