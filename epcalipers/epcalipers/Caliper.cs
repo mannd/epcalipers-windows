@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using epcalipers.Properties;
+using EPCalipersCore;
 
 namespace epcalipers
 {
-    public enum CaliperDirection { Horizontal, Vertical };
+//    public enum CaliperDirection { Horizontal, Vertical };
 
     public enum CaliperComponent { LeftBar, RightBar, CrossBar, LowerBar, UpperBar, Apex, NoComponent};
 
@@ -20,8 +21,8 @@ namespace epcalipers
         //private int tmpLineWidth;
         private static float differential = 0.0f;
         // constants for marching calipers
-        private static float minDistanceForMarch = 20f;
-        private static int maxMarchingCalipers = 20;
+        private static readonly float minDistanceForMarch = 20f;
+        private static readonly int maxMarchingCalipers = 20;
 
         protected string roundToIntString = "D";
         protected string roundToFourPlacesString = "G4";

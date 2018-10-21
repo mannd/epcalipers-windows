@@ -144,7 +144,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AngleCaliper.cs" />
-    <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +268,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EPCalipersCore\EPCalipersCore.csproj">
+      <Project>{40025627-4d6c-4449-b66a-e04bb1aa9814}</Project>
+      <Name>EPCalipersCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfTransparentWindow\WpfTransparentWindow.csproj">
       <Project>{7c85aaa4-7a4d-42d1-bcb7-92c80f3b31ac}</Project>
       <Name>WpfTransparentWindow</Name>

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
+using EPCalipersCore;
 
 namespace epcalipers
 {
