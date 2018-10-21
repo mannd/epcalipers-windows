@@ -1,3 +1,7 @@
+param (
+    [string]$platform = "x86",
+    [string]$version = "1.10.0.0"
+)
 # Make sure powershell is running as admin
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
     [Security.Principal.WindowsBuiltInRole] "Administrator"))
@@ -14,7 +18,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Remove-Item $destinationDirectory -Recurse -ErrorAction Ignore -Verbose
 cd $scriptsDirectory
 # Convert app
-.\convert_app.ps1
+.\convert_app.ps1 -platform $platform -version $version
 # Copy assets files to PackageFiles directory
 Copy-Item $assetsFiles -Destination $packageFilesPath -Recurse -Force -Verbose
 # Delete original epcalipers.appx
