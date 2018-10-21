@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.10</ProductVersion>
-    <ProjectGuid>143a807e-54c9-4675-b9e3-2af86bf73149</ProjectGuid>
+    <ProjectGuid>{fb34494e-1646-498c-9394-363fd7fbb37b}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>epcalipers_install</OutputName>
     <OutputType>Package</OutputType>
