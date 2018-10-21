@@ -1618,6 +1618,13 @@ namespace epcalipers
             RotateEcgImage(-0.1f);
         }
 
+        private void transparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
+            var transWindow = new WpfTransparentWindow.Window1();
+            ElementHost.EnableModelessKeyboardInterop(transWindow);
+            transWindow.Show();
+        }
         #endregion
 
         #region right-click menu
@@ -1729,13 +1736,5 @@ namespace epcalipers
 
 
         #endregion
-
-        private void transparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
-            var transWindow = new WpfTransparentWindow.Window1();
-            ElementHost.EnableModelessKeyboardInterop(transWindow);
-            transWindow.Show();
-        }
     }
 }

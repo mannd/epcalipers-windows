@@ -239,9 +239,11 @@
     <Content Include="gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="gsdll64.dll" />
     <Content Include="gswin32c.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="gswin64c.exe" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
