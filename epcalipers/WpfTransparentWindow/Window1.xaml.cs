@@ -20,6 +20,8 @@ namespace WpfTransparentWindow
     /// </summary>
     public partial class Window1 : Window
     {
+        Point firstPoint;
+
         public Window1()
         {
             InitializeComponent();
@@ -34,8 +36,6 @@ namespace WpfTransparentWindow
 
         public void ButtonClicked(object sender, RoutedEventArgs args)
         {
-            //CrazyWindow win2 = new CrazyWindow();
-            //win2.ShowDialog();
             Debug.Write("button clicked.");
             var myLine = new Line
             {
@@ -56,8 +56,24 @@ namespace WpfTransparentWindow
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Debug.Write("mouse clicked over canvas.");
+            Point clickPoint = new Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
 
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                Debug.Write("right button clicked");
+                Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
+                return;
+            }
+            Debug.Write("left mouse clicked over canvas.");
+            Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
+            firstPoint = clickPoint;
+        }
+
+        private void canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point newPoint = new Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
+            double deltaX = newPoint.X - firstPoint.X;
+            double detalY = newPoint.Y - firstPoint.Y;
         }
     }
 }

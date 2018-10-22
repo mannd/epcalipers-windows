@@ -1,37 +1,35 @@
-﻿using epcalipers.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EPCalipersCore;
 using EPCalipersCore.Properties;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
     // This class manages the set of calipers on the screen
-    public class Calipers
+    public class BaseCalipers
     {
-        List<Caliper> calipers = new List<Caliper>();
+        List<BaseCaliper> calipers = new List<BaseCaliper>();
         public bool Locked { get; set; }
         // this is the (sole) caliper that is selected/highlighted
         /// TODO: check - replaced by GetActiveCaliper()?
-        private Caliper ActiveCaliper { get; set; }
+        private BaseCaliper ActiveCaliper { get; set; }
         public Calibration HorizontalCalibration { get; set; }
         public Calibration VerticalCalibration { get; set; }
         // must be able to fake red color if fully transparent
         public bool isFullyTransparent { get; set; }
 
         // for caliper movement
-        private Caliper grabbedCaliper;
+        private BaseCaliper grabbedCaliper;
         private bool crossbarGrabbed = false;
         private bool bar1Grabbed = false;
         private bool bar2Grabbed = false;
         private bool caliperWasDragged = false;
 
         // for color and tweaking
-        private Caliper chosenCaliper;
+        private BaseCaliper chosenCaliper;
         public CaliperComponent chosenComponent { get; set; }
         public bool tweakingComponent { get; set; }
         // FIXME: change to lower value (0.5?) after debugging
@@ -39,7 +37,7 @@ namespace epcalipers
         private float hiresTweakDistance = 0.01f;
  
 
-        public Calipers()
+        public BaseCalipers()
         {
             Locked = false;
             ActiveCaliper = null;
@@ -60,12 +58,12 @@ namespace epcalipers
             } 
         }
 
-        public void addCaliper(Caliper c)
+        public void addCaliper(BaseCaliper c)
         {
             calipers.Add(c);
         }
 
-        public void deleteCaliper(Caliper c)
+        public void deleteCaliper(BaseCaliper c)
         {
             calipers.Remove(c);
         }
@@ -76,9 +74,9 @@ namespace epcalipers
         }
 
         // this is the highlighted/selected caliper used for calibration or measurements
-        public Caliper GetActiveCaliper()
+        public BaseCaliper GetActiveCaliper()
         {
-            Caliper c = null;
+            BaseCaliper c = null;
             for (int i = calipers.Count -1; i >= 0 && c == null; i--)
             {
                 if (calipers[i].IsSelected)
@@ -128,13 +126,13 @@ namespace epcalipers
             }
         }
 
-        public void SelectCaliper(Caliper c)
+        public void SelectCaliper(BaseCaliper c)
         {
             c.CaliperColor = AdjustColor(c.SelectedColor);
             c.IsSelected = true;
         }
 
-        public void UnselectCaliper(Caliper c)
+        public void UnselectCaliper(BaseCaliper c)
         {
             c.CaliperColor = AdjustColor(c.UnselectedColor);
             c.IsSelected = false;
@@ -195,7 +193,7 @@ namespace epcalipers
         // This shortens the caliper grabbing process c/w the other versions of EP Calipers
         public void GrabCaliperIfClicked(Point point)
         {
-            Caliper caliper = null;
+            BaseCaliper caliper = null;
             foreach (var c in calipers)
             {
                 if (c.PointNearCrossbar(point) && caliper == null)
@@ -217,9 +215,9 @@ namespace epcalipers
             grabbedCaliper = caliper;
         }
 
-        public Caliper getGrabbedCaliper(Point point)
+        public BaseCaliper getGrabbedCaliper(Point point)
         {
-            Caliper caliper = null;
+            BaseCaliper caliper = null;
             foreach (var c in calipers)
             {
                 if (c.PointNearCaliper(point) && caliper == null) {
@@ -272,7 +270,7 @@ namespace epcalipers
 
         public string GetChosenComponentName()
         {
-            return Caliper.ComponentName(chosenComponent);
+            return BaseCaliper.ComponentName(chosenComponent);
         }
 
         public void SetChosenCaliperComponent(Point point)
@@ -287,7 +285,7 @@ namespace epcalipers
             }
         }
 
-        private CaliperComponent GetCaliperComponent(Caliper caliper, Point point)
+        private CaliperComponent GetCaliperComponent(BaseCaliper caliper, Point point)
         {
             if (caliper == null)
             {
@@ -389,7 +387,7 @@ namespace epcalipers
             return needsRefresh;
         }
 
-        private void ToggleCaliperState(Caliper c)
+        private void ToggleCaliperState(BaseCaliper c)
         {
             if (c == null)
             {
@@ -406,7 +404,7 @@ namespace epcalipers
             UnselectCalipersExcept(c);
         }
 
-        public void UnselectCalipersExcept(Caliper c)
+        public void UnselectCalipersExcept(BaseCaliper c)
         {
             foreach (var caliper in calipers)
             {
@@ -446,13 +444,13 @@ namespace epcalipers
             return NumberOfCalipers() > 0;
         }
 
-        public Caliper getLoneTimeCaliper()
+        public BaseCaliper getLoneTimeCaliper()
         {
-            Caliper c = null;
+            BaseCaliper c = null;
             int n = 0;
             if (calipers.Count > 0)
             {
-                foreach (Caliper caliper in calipers)
+                foreach (BaseCaliper caliper in calipers)
                 {
                     if (caliper.Direction == CaliperDirection.Horizontal
                         && !caliper.isAngleCaliper)
@@ -475,7 +473,7 @@ namespace epcalipers
 
         public void UpdatePreferences(Preferences p)
         {
-            foreach (Caliper caliper in calipers)
+            foreach (BaseCaliper caliper in calipers)
             {
                 caliper.LineWidth = p.LineWidth;
                 //caliper.UnselectedColor = p.CaliperColor;
@@ -501,6 +499,5 @@ namespace epcalipers
             chosenCaliper.isMarching = !chosenCaliper.isMarching;
             return true;
         }
-    
     }
 }

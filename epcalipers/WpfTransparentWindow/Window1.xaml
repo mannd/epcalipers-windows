@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:custom="clr-namespace:WpfTransparentWindow;assembly="
         xmlns:local="clr-namespace:WpfTransparentWindow"
         mc:Ignorable="d"
         Title="Floating EP Calipers" Height="450" Width="800"
@@ -10,14 +11,14 @@
     ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <LinearGradientBrush x:Key="WindowFrameBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-            <GradientStop Color="CadetBlue" Offset="0.4"/>
+            <GradientStop Color="Black" Offset="0.4"/>
             <GradientStop Color="Gray" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
     <Border Background="#01FFFFFF" CornerRadius="5" BorderBrush="{StaticResource WindowFrameBrush}" BorderThickness="2,0,2,2">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="309*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -32,9 +33,32 @@
                   Width="15" Height="15" Padding="0" Command="ApplicationCommands.Close"/>
                 </Grid>
             </Border>
-            <Button Content="Click for new window" Click="ButtonClicked" HorizontalAlignment="Center"
-              VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,0,0"/>
-            <Canvas Name="canvas" Background="Transparent" HorizontalAlignment="Stretch" Margin="0,0, 0,20" Grid.Row="1" VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown"/>
+            <custom:CalipersCanvas 
+                x:Name="canvas" Background="Transparent" HorizontalAlignment="Stretch" Margin="0,0, 0,30" Grid.Row="1" VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown" MouseMove="canvas_MouseMove"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Add Caliper" Click="ButtonClicked" 
+                  Grid.Column="0" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Content="Calibrate" Click="ButtonClicked" 
+                  Grid.Column="1" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Content="Clear" Click="ButtonClicked" 
+                  Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Content="Rate/Int" Click="ButtonClicked" 
+                  Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Content="Mean Rate" Click="ButtonClicked" 
+                  Grid.Column="4" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Content="QTc" Click="ButtonClicked" 
+                  Grid.Column="5" Width="80" Margin="10, 10, 10, 10"/>
+                </Grid>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

@@ -18,7 +18,7 @@ namespace epcalipers
     {
         #region Fields
         Bitmap theBitmap;
-        Calipers theCalipers;
+        BaseCalipers theCalipers;
         Button imageButton;
         Button addCalipersButton;
         Button calibrateButton;
@@ -97,7 +97,7 @@ namespace epcalipers
         {
             InitializeComponent();
             preferences = new Preferences();
-            theCalipers = new Calipers();
+            theCalipers = new BaseCalipers();
 
 
             oldFormBackgroundColor = BackColor;
@@ -257,7 +257,7 @@ namespace epcalipers
                 NoTimeCaliperError();
                 return;
             }
-            Caliper c = theCalipers.GetActiveCaliper();
+            BaseCaliper c = theCalipers.GetActiveCaliper();
             if (c == null)
             {
                 return;
@@ -407,7 +407,7 @@ namespace epcalipers
                 {
                     calibrationDialog = new CalibrationDialog();
                 }
-                Caliper c = theCalipers.GetActiveCaliper();
+                BaseCaliper c = theCalipers.GetActiveCaliper();
                 if (c == null)
                 {
                     throw new Exception("No caliper for calibration");
@@ -537,7 +537,7 @@ namespace epcalipers
                     contextMenuStrip1.Enabled = pointNearCaliper;
                     if (pointNearCaliper)
                     {
-                        Caliper c = theCalipers.getGrabbedCaliper(clickPoint);
+                        BaseCaliper c = theCalipers.getGrabbedCaliper(clickPoint);
                         if (c != null)
                         {
                             marchingCaliperToolStripMenuItem.Checked = c.isMarching;
@@ -773,7 +773,7 @@ namespace epcalipers
             {
                 return;
             }
-            Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
+            BaseCaliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
             if (singleHorizontalCaliper != null)
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
@@ -785,7 +785,7 @@ namespace epcalipers
                 NoTimeCaliperError();
                 return;
             }
-            Caliper c = theCalipers.GetActiveCaliper();
+            BaseCaliper c = theCalipers.GetActiveCaliper();
             if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
             {
                 NoTimeCaliperError();
@@ -817,7 +817,7 @@ namespace epcalipers
             }
         }
 
-        private Tuple<double, double> getMeanRRMeanRate(string rawValue, Caliper c)
+        private Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
         {
 
             if (rawValue.Length < 1)
@@ -856,7 +856,7 @@ namespace epcalipers
         private void QTcInterval()
         {
             theCalipers.HorizontalCalibration.DisplayRate = false;
-            Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
+            BaseCaliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
             if (singleHorizontalCaliper != null)
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
@@ -1003,7 +1003,7 @@ namespace epcalipers
                 {
                     throw new Exception("Calibration can't be zero.");
                 }
-                Caliper c = theCalipers.GetActiveCaliper();
+                BaseCaliper c = theCalipers.GetActiveCaliper();
                 if (c == null)
                 {
                     // this really shouldn't happen
@@ -1543,7 +1543,7 @@ namespace epcalipers
             {
                 return;
             }
-            Caliper c = theCalipers.GetActiveCaliper();
+            BaseCaliper c = theCalipers.GetActiveCaliper();
             if (c != null)
             {
                 theCalipers.deleteCaliper(c);

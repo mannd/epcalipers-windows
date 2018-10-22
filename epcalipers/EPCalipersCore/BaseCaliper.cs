@@ -129,6 +129,8 @@ namespace EPCalipersCore
             }
         }
 
+        public virtual void Draw(Graphics g, RectangleF rect) { }
+
         //public virtual void Draw(Graphics g, RectangleF rect)
         //{
         //    Brush brush = new SolidBrush(CaliperColor);

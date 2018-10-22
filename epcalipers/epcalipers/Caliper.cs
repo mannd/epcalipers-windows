@@ -15,7 +15,7 @@ namespace epcalipers
         {
         }
 
-        public virtual void Draw(Graphics g, RectangleF rect)
+        public override void Draw(Graphics g, RectangleF rect)
         {
             Brush brush = new SolidBrush(CaliperColor);
             Pen pen = new Pen(brush, LineWidth);

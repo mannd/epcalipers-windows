@@ -151,7 +151,6 @@
       <DependentUpon>CalibrationDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Caliper.cs" />
-    <Compile Include="Calipers.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
