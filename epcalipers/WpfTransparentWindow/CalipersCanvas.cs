@@ -10,22 +10,49 @@ namespace WpfTransparentWindow
 {
     class CalipersCanvas: Canvas
     {
-        List<BaseCaliper> calipers = new List<BaseCaliper>();
-        public bool Locked { get; set; }
-        public Calibration HorizontalCalibration { get; set; }
-        public Calibration VerticalCalibration { get; set; }
-
-        // for caliper movement
-        private BaseCaliper grabbedCaliper;
-        private bool crossbarGrabbed = false;
-        private bool bar1Grabbed = false;
-        private bool bar2Grabbed = false;
-        private bool caliperWasDragged = false;
-
+        BaseCalipers calipers = new BaseCalipers();
+        public Calibration HorizontalCalibration {
+            get
+            {
+                return calipers.HorizontalCalibration;
+            }
+            set
+            {
+                calipers.HorizontalCalibration = value;
+            }
+        }
+        public Calibration VerticalCalibration {
+            get
+            {
+                return calipers.VerticalCalibration;
+            }
+            set
+            {
+                calipers.VerticalCalibration = value;
+            }
+        }
 
         public CalipersCanvas(): base()
         {
 
+        }
+
+        public void AddCaliper(BaseCaliper c)
+        {
+            calipers.addCaliper(c);
+        }
+
+        public void DrawCalipers()
+        {
+            foreach(BaseCaliper c in calipers.GetCalipers())
+            {
+                DrawCaliper(c);
+            }
+        }
+
+        private void DrawCaliper(BaseCaliper c)
+        {
+            c.Draw(this);
         }
     }
 }

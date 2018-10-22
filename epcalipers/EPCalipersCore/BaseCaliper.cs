@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EPCalipersCore;
 using EPCalipersCore.Properties;
+using System.Windows.Controls;
 
 namespace EPCalipersCore
 {
@@ -44,6 +45,7 @@ namespace EPCalipersCore
         public bool IsSelected { set; get; }
         public Calibration CurrentCalibration { set; get; }
         public Font TextFont { set; get; }
+        public int TextFontSize { set; get; }
         public bool RoundMsecRate { set; get; }
         public Preferences.Rounding rounding { set; get; }
 
@@ -84,41 +86,20 @@ namespace EPCalipersCore
             CaliperColor = Color.Blue;
             LineWidth = 2;
             IsSelected = false;
-            TextFont = new Font("Helvetica", 14);
+            TextFontSize = 14;
+            TextFont = new Font("Helvetica", TextFontSize);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
             rounding = Preferences.Rounding.ToInt;
         }
 
-        public virtual void SetInitialPositionInRect(RectangleF rect)
+        public virtual void SetInitialPosition()
         {
             // This is better than setting in middle, because caliper can become lost.
-            SetInitialPositionNearCorner(rect);
-            return;
+            SetInitialPositionNearCorner();
         }
 
-        private void setInitialPositionNearMiddle(RectangleF rect)
-        {
-            if (Direction == CaliperDirection.Horizontal)
-            {
-                Bar1Position = (rect.Size.Width / 3.0f) + differential;
-                Bar2Position = ((1.5f * rect.Size.Width) / 3.0f) + differential;
-                CrossbarPosition = (rect.Size.Height / 2.0f) + differential;
-            }
-            else
-            {
-                Bar1Position = (rect.Size.Height / 3.0f) + differential;
-                Bar2Position = ((1.5f * rect.Size.Height) / 3.0f) + differential;
-                CrossbarPosition = (rect.Size.Width / 2.0f) + differential;
-            }
-            differential += 15.0f;
-            if (differential > 80.0f)
-            {
-                differential = 0.0f;
-            }
-        }
-
-        private void SetInitialPositionNearCorner(RectangleF rect)
+        private void SetInitialPositionNearCorner()
         {
             Bar1Position = 50 + differential;
             Bar2Position = 100 + differential;
@@ -131,6 +112,8 @@ namespace EPCalipersCore
         }
 
         public virtual void Draw(Graphics g, RectangleF rect) { }
+        
+        public virtual void Draw(Canvas canvas) { }
 
         //public virtual void Draw(Graphics g, RectangleF rect)
         //{

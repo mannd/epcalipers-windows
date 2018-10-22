@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Floating EP Calipers" Height="450" Width="800"
         AllowsTransparency="True" WindowStyle="None" Background="Transparent"
-    ResizeMode="CanResizeWithGrip">
+    ResizeMode="CanResizeWithGrip" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <LinearGradientBrush x:Key="WindowFrameBrush" StartPoint="0,0.5" EndPoint="1,0.5">
             <GradientStop Color="Black" Offset="0.4"/>

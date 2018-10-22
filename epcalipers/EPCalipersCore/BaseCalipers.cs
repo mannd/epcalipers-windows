@@ -50,6 +50,11 @@ namespace EPCalipersCore
             isFullyTransparent = false;
         }
 
+        public List<BaseCaliper> GetCalipers()
+        {
+            return calipers;
+        }
+
         public void Draw(Graphics g, RectangleF rect)
         {
             foreach (var c in calipers)

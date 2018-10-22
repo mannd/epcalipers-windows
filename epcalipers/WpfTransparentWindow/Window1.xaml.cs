@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EPCalipersCore;
+using EPCalipersCore.Properties;
+using System.Drawing;
 
 namespace WpfTransparentWindow
 {
@@ -20,43 +23,57 @@ namespace WpfTransparentWindow
     /// </summary>
     public partial class Window1 : Window
     {
-        Point firstPoint;
+        System.Windows.Point firstPoint;
+        Preferences preferences;
+         
 
         public Window1()
         {
             InitializeComponent();
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
                        new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
+            preferences = new Preferences();
         }
 
         public void DragWindow(object sender, MouseButtonEventArgs args)
         {
             DragMove();
+            //canvas.drawCalipers();
         }
 
         public void ButtonClicked(object sender, RoutedEventArgs args)
         {
             Debug.Write("button clicked.");
-            var myLine = new Line
+            Caliper c = new Caliper();
+            c.Direction = CaliperDirection.Vertical;
+            if (c.Direction == CaliperDirection.Horizontal)
             {
-                Stroke = System.Windows.Media.Brushes.Black,
+                c.CurrentCalibration = canvas.HorizontalCalibration;
+            }
+            else
+            {
+                c.CurrentCalibration = canvas.VerticalCalibration;
+            }
+            SetupCaliper(c);
+            canvas.AddCaliper(c);
+            canvas.DrawCalipers();
+        }
 
-                X1 = 100,
-                X2 = 140,  // 150 too far
-                Y1 = 200,
-                Y2 = 200,
-
-                StrokeThickness = 1
-            };
-
-            canvas.Children.Add(myLine);
-
-          
+        private void SetupCaliper(Caliper c)
+        {
+            c.LineWidth = preferences.LineWidth;
+            c.UnselectedColor = preferences.CaliperColor;
+            c.SelectedColor = preferences.HighlightColor;
+            c.CaliperColor = c.UnselectedColor;
+            c.rounding = preferences.RoundingParameter();
+            c.SetInitialPosition();
+            canvas.AddCaliper(c);
+            canvas.DrawCalipers();
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Point clickPoint = new Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
+            var clickPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
 
             if (e.ChangedButton == MouseButton.Right)
             {
@@ -71,9 +88,14 @@ namespace WpfTransparentWindow
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            Point newPoint = new Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
+            var newPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
             double deltaX = newPoint.X - firstPoint.X;
             double detalY = newPoint.Y - firstPoint.Y;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvas.DrawCalipers();
         }
     }
 }

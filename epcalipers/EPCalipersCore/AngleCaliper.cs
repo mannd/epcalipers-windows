@@ -24,9 +24,9 @@ namespace EPCalipersCore
             caliperRequiresCalibration = false;
         }
 
-        public override void SetInitialPositionInRect(RectangleF rect)
+        public override void SetInitialPosition()
         {
-            base.SetInitialPositionInRect(rect);
+            base.SetInitialPosition();
             Bar2Position = Bar1Position;
         }
 
