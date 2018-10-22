@@ -65,7 +65,7 @@ namespace epcalipers
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
-        double maximumZoom = 6.0;
+        double maximumZoom = 5.0;
 
         double rrIntervalForQtc = 0.0;
 
@@ -1160,6 +1160,8 @@ namespace epcalipers
             if (currentActualZoom > maximumZoom)
             {
                 currentActualZoom = maximumZoom;
+                // no further processing, or can get memory overflow
+                return;
             }
             Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
             Bitmap zoomedBitmap = Zoom(rotatedBitmap);

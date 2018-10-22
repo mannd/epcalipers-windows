@@ -63,9 +63,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AngleCaliper.cs" />
     <Compile Include="BaseCalipers.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="BaseCaliper.cs" />
+    <Compile Include="Caliper.cs" />
     <Compile Include="EPCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Preferences.cs" />

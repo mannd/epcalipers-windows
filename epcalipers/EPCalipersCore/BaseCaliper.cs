@@ -63,7 +63,8 @@ namespace EPCalipersCore
             get { return caliperIsAngleCaliper; }
         }
 
-        public BaseCaliper()
+        // Shouldn't directly init BaseCaliper
+        protected BaseCaliper()
         {
             InitWithDirection(CaliperDirection.Horizontal, 0.0f, 0.0f, 100.0f);
         }

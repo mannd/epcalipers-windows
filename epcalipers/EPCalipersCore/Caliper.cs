@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EPCalipersCore;
-using EPCalipersCore.Properties;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
     public class Caliper: BaseCaliper
     {

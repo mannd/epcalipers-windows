@@ -4,12 +4,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EPCalipersCore;
 using EPCalipersCore.Properties;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
-    class AngleCaliper : Caliper
+    public class AngleCaliper : Caliper
     {
        // private static float differential = 0.0f;
 
@@ -216,7 +215,7 @@ namespace epcalipers
             if (rounding == Preferences.Rounding.ToInt)
             {
                 s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
-                    CurrentCalibration.Units);
+                    CurrentCalibration.RawUnits);
             }
             else
             {
