@@ -44,6 +44,8 @@ namespace WpfTransparentWindow
 
         public void DrawCalipers()
         {
+            // This ensures deleted caliper disappears
+            Children.Clear();
             foreach(BaseCaliper c in calipers.GetCalipers())
             {
                 DrawCaliper(c);
@@ -53,6 +55,31 @@ namespace WpfTransparentWindow
         private void DrawCaliper(BaseCaliper c)
         {
             c.Draw(this);
+        }
+
+        public void GrabCaliperIfClicked(System.Windows.Point point) 
+        {
+            calipers.GrabCaliperIfClicked(ConvertPoint(point));
+        }
+
+        private System.Drawing.Point ConvertPoint(System.Windows.Point point)
+        {
+            return new System.Drawing.Point((int)point.X, (int)point.Y);
+        }
+
+        public bool DragGrabbedCaliper(float deltaX, float deltaY, System.Windows.Point location)
+        {
+            return calipers.DragGrabbedCaliper(deltaX, deltaY, new System.Drawing.PointF((float)location.X, (float)location.Y));
+        }
+
+        public bool ReleaseGrabbedCaliper(int clickCount)
+        {
+            return calipers.ReleaseGrabbedCaliper(clickCount);
+        }
+
+        public bool DeleteCaliperIfClicked(System.Windows.Point point)
+        {
+            return calipers.DeleteCaliperIfClicked(ConvertPoint(point));
         }
     }
 }

@@ -181,7 +181,7 @@ namespace EPCalipersCore
         {
             if (Locked)
             {
-                return false; ;
+                return false; 
             }
             bool deleted = false;
             for (int i = calipers.Count - 1; i >= 0; i--)

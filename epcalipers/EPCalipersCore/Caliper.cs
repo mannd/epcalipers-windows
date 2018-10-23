@@ -11,30 +11,37 @@ using System.Globalization;
 
 namespace EPCalipersCore
 {
-    public class Caliper: BaseCaliper
+    public class Caliper : BaseCaliper
     {
-        public Caliper() : base() { }
+        Line bar1Line = new Line();
+        Line bar2Line = new Line();
+        Line crossbarLine = new Line();
+        TextBlock textBlock = new TextBlock();
+
+        public Caliper() : base()
+        {
+        }
 
         public override void Draw(Canvas canvas)
         {
             var brush = new SolidColorBrush(ConvertColor(CaliperColor));
+            canvas.Children.Remove(bar1Line);
+            canvas.Children.Remove(bar2Line);
+            canvas.Children.Remove(crossbarLine);
             if (Direction == CaliperDirection.Horizontal)
             {
                 CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
                 CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
                 Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
                 Bar2Position = Math.Max(Bar2Position, DELTA);
-                Line bar1Line = new Line();
                 MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight);
                 bar1Line.StrokeThickness = LineWidth;
                 bar1Line.Stroke = brush;
                 canvas.Children.Add(bar1Line);
-                Line bar2Line = new Line();
                 MakeLine(ref bar2Line, Bar2Position, Bar2Position, 0, canvas.ActualHeight);
                 bar2Line.StrokeThickness = LineWidth;
                 bar2Line.Stroke = brush;
                 canvas.Children.Add(bar2Line);
-                Line crossbarLine = new Line();
                 MakeLine(ref crossbarLine, Bar2Position, Bar1Position, CrossbarPosition, CrossbarPosition);
                 crossbarLine.StrokeThickness = LineWidth;
                 crossbarLine.Stroke = brush;
@@ -46,17 +53,14 @@ namespace EPCalipersCore
                 CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
                 Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualHeight - DELTA);
                 Bar2Position = Math.Max(Bar2Position, DELTA);
-                Line bar1Line = new Line();
                 MakeLine(ref bar1Line, 0, canvas.ActualWidth, Bar1Position, Bar1Position);
                 bar1Line.StrokeThickness = LineWidth;
                 bar1Line.Stroke = brush;
                 canvas.Children.Add(bar1Line);
-                Line bar2Line = new Line();
                 MakeLine(ref bar2Line, 0, canvas.ActualWidth, Bar2Position, Bar2Position);
                 bar2Line.StrokeThickness = LineWidth;
                 bar2Line.Stroke = brush;
                 canvas.Children.Add(bar2Line);
-                Line crossbarLine = new Line();
                 MakeLine(ref crossbarLine, CrossbarPosition, CrossbarPosition, Bar2Position, Bar1Position);
                 crossbarLine.StrokeThickness = LineWidth;
                 crossbarLine.Stroke = brush;
@@ -76,6 +80,7 @@ namespace EPCalipersCore
 
         protected void CaliperText(Canvas canvas, System.Windows.Media.Brush brush)
         {
+            canvas.Children.Remove(textBlock);
             string text = Measurement();
             var formattedText = new FormattedText(text, CultureInfo.CurrentCulture,
                 System.Windows.FlowDirection.LeftToRight,
@@ -85,7 +90,6 @@ namespace EPCalipersCore
             double stringHeight = formattedText.Height;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
-            TextBlock textBlock = new TextBlock();
             textBlock.Text = text;
             textBlock.Foreground = brush;
             if (Direction == CaliperDirection.Horizontal)

@@ -25,7 +25,6 @@ namespace WpfTransparentWindow
     {
         System.Windows.Point firstPoint;
         Preferences preferences;
-         
 
         public Window1()
         {
@@ -38,14 +37,13 @@ namespace WpfTransparentWindow
         public void DragWindow(object sender, MouseButtonEventArgs args)
         {
             DragMove();
-            //canvas.drawCalipers();
         }
 
         public void ButtonClicked(object sender, RoutedEventArgs args)
         {
             Debug.Write("button clicked.");
             Caliper c = new Caliper();
-            c.Direction = CaliperDirection.Vertical;
+            c.Direction = CaliperDirection.Horizontal;
             if (c.Direction == CaliperDirection.Horizontal)
             {
                 c.CurrentCalibration = canvas.HorizontalCalibration;
@@ -55,8 +53,6 @@ namespace WpfTransparentWindow
                 c.CurrentCalibration = canvas.VerticalCalibration;
             }
             SetupCaliper(c);
-            canvas.AddCaliper(c);
-            canvas.DrawCalipers();
         }
 
         private void SetupCaliper(Caliper c)
@@ -73,29 +69,54 @@ namespace WpfTransparentWindow
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var clickPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
-
+            var clickPoint = e.GetPosition(canvas);
             if (e.ChangedButton == MouseButton.Right)
             {
                 Debug.Write("right button clicked");
                 Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
                 return;
             }
-            Debug.Write("left mouse clicked over canvas.");
-            Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
-            firstPoint = clickPoint;
+            if (e.ClickCount == 2)
+            {
+                Debug.Print("Double Click!"); //handle the double click event here...
+                if (canvas.DeleteCaliperIfClicked(clickPoint))
+                {
+                    Debug.Print("Trying to delete caliper...");
+                    canvas.DrawCalipers();
+                }
+            }
+            else
+            {
+                firstPoint = clickPoint;
+                canvas.GrabCaliperIfClicked(clickPoint);
+            }
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             var newPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
-            double deltaX = newPoint.X - firstPoint.X;
-            double detalY = newPoint.Y - firstPoint.Y;
+            float deltaX = (float)(newPoint.X - firstPoint.X);
+            float deltaY = (float)(newPoint.Y - firstPoint.Y);
+            if (canvas.DragGrabbedCaliper(deltaX, deltaY, firstPoint))
+            {
+                firstPoint = newPoint;
+                canvas.DrawCalipers();
+            }
+        }
+
+        private void canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Debug.Print("Mouse up");
+            if (canvas.ReleaseGrabbedCaliper(e.ClickCount))
+            {
+                canvas.DrawCalipers();
+            }
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             canvas.DrawCalipers();
         }
+
     }
 }
