@@ -25,6 +25,8 @@ namespace WpfTransparentWindow
     {
         System.Windows.Point firstPoint;
         Preferences preferences;
+        MeasureRRDialog measureRRDialog;
+        CalibrationDialog calibrationDialog;
 
         #region Window
         public Window1()
@@ -105,6 +107,7 @@ namespace WpfTransparentWindow
         private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Calibrate clicked");
+            CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, canvas.DrawCalipers);
         }
 
         private void ClearButtonClicked(object sender, RoutedEventArgs e)

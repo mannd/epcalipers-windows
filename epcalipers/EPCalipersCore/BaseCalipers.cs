@@ -9,7 +9,7 @@ using EPCalipersCore.Properties;
 namespace EPCalipersCore
 {
     // This class manages the set of calipers on the screen
-    public class BaseCalipers
+    public class BaseCalipers: ICalipers
     {
         List<BaseCaliper> calipers = new List<BaseCaliper>();
         public bool Locked { get; set; }

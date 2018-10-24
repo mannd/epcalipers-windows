@@ -8,7 +8,7 @@ using EPCalipersCore;
 
 namespace WpfTransparentWindow
 {
-    class CalipersCanvas: Canvas
+    class CalipersCanvas: Canvas, ICalipers
     {
         BaseCalipers calipers = new BaseCalipers();
         public Calibration HorizontalCalibration {
@@ -80,6 +80,26 @@ namespace WpfTransparentWindow
         public bool DeleteCaliperIfClicked(System.Windows.Point point)
         {
             return calipers.DeleteCaliperIfClicked(ConvertPoint(point));
+        }
+
+        public int NumberOfCalipers()
+        {
+            return calipers.NumberOfCalipers();
+        }
+
+        public bool NoCaliperIsSelected()
+        {
+            return calipers.NoCaliperIsSelected();
+        }
+
+        public void SelectSoleCaliper()
+        {
+            calipers.SelectSoleCaliper();
+        }
+
+        public BaseCaliper GetActiveCaliper()
+        {
+            return calipers.GetActiveCaliper();
         }
     }
 }

@@ -80,6 +80,7 @@
     <Compile Include="Caliper.cs" />
     <Compile Include="CommonCaliper.cs" />
     <Compile Include="EPCalculator.cs" />
+    <Compile Include="ICalipers.cs" />
     <Compile Include="MeasureRRDialog.cs">
       <SubType>Form</SubType>
     </Compile>

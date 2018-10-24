@@ -83,25 +83,14 @@ namespace epcalipers
         private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
-
-        // transparency stuff
-        private Color oldFormBackgroundColor;
-        private Color oldTransparencyKey;
-
         #endregion
         #region Initialization
-
-        // See this post https://stackoverflow.com/questions/39855720/windows-forms-pass-clicks-through-a-partially-transparent-always-on-top-window
-        // for some info on transparency and floating windows.
         public Form1()
         {
             InitializeComponent();
             preferences = new Preferences();
             theCalipers = new BaseCalipers();
 
-
-            oldFormBackgroundColor = BackColor;
-            oldTransparencyKey = TransparencyKey;
             ecgPictureBox.BackColor = Color.White;
             FormBorderStyle = FormBorderStyle.Sizable;
 
@@ -115,10 +104,7 @@ namespace epcalipers
             string ghostscriptDir = AppDomain.CurrentDomain.BaseDirectory;
             MagickNET.SetGhostscriptDirectory(ghostscriptDir);
 
-            //KeyPreview = true;
-            //this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             SetupButtons();
-           // ShowMainMenu();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
 
@@ -143,11 +129,10 @@ namespace epcalipers
                         ResetBitmap(ecgPictureBox.Image);
                     }
                 }
-           }
+            }
             catch (Exception)
             {
                 lastFilename = "";
-                
             }
             ShowMainMenu();
         }
@@ -271,8 +256,6 @@ namespace epcalipers
             }
         }
 
-        // TODO: cancel button needs to return to QT measurement if we are doing QTc,
-        // and, must keep calipers locked if doing QTc.
         private void CancelButton_Click(object sender, EventArgs e)
         {
             theCalipers.Locked = false;
@@ -358,7 +341,6 @@ namespace epcalipers
                     MessageBox.Show(String.Format("Could not open {0} from disk. {1}", openFileDialog1.FileName, pdfWarning) + "\n\nDetailed error: " +
                         exception.Message, "Error");
                 }
-
         }
 
         private void calibrateButton_Click(object sender, EventArgs e)
@@ -375,7 +357,7 @@ namespace epcalipers
         {
             try
             {
-                if (NoCalipersError())
+                if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
                 {
                     return;
                 }
@@ -495,8 +477,6 @@ namespace epcalipers
             }
             theCalipers.CancelTweaking();
         }
-
-
         #endregion
         #region Mouse
         private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -561,7 +541,6 @@ namespace epcalipers
                 firstPoint = newPoint;
                 ecgPictureBox.Refresh();
             }
-
         }
 
         private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -759,7 +738,7 @@ namespace epcalipers
         #region Calipers
         private void MeasureMeanIntervalRate()
         {
-            if (NoCalipersError())
+            if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
             {
                 return;
             }
@@ -809,7 +788,6 @@ namespace epcalipers
 
         private Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
         {
-
             if (rawValue.Length < 1)
             {
                 throw new Exception("Number of intervals not entered.");
@@ -942,7 +920,7 @@ namespace epcalipers
 
         private void DoCalibration()
         {
-            if (NoCalipersError())
+            if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
             {
                 return;
             }
@@ -951,23 +929,6 @@ namespace epcalipers
             {
                 ecgPictureBox.Refresh();
             }
-        }
-
-        private bool NoCalipersError()
-        {
-            bool noCalipers = false;
-            if (theCalipers.NumberOfCalipers() < 1)
-            {
-                ShowNoCalipersDialog();
-                noCalipers = true; ;
-            }
-            return noCalipers;
-        }
-
-        private void ShowNoCalipersDialog()
-        {
-            MessageBox.Show("Add one or more calipers first before proceeding.",
-                "No Calipers To Use");
         }
 
         private void Calibrate(string rawCalibration)
