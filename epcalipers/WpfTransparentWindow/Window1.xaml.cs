@@ -25,8 +25,8 @@ namespace WpfTransparentWindow
     {
         System.Windows.Point firstPoint;
         Preferences preferences;
-        MeasureRRDialog measureRRDialog;
-        CalibrationDialog calibrationDialog;
+        MeasureRRDialog measureRRDialog = new MeasureRRDialog();
+        CalibrationDialog calibrationDialog = new CalibrationDialog();
 
         #region Window
         public Window1()
@@ -52,51 +52,8 @@ namespace WpfTransparentWindow
         #region Buttons
         public void AddButtonClicked(object sender, RoutedEventArgs args)
         {
-            var dialog = new NewCaliperDialog();
-            if (CommonCaliper.GetDialogResult(dialog) == System.Windows.Forms.DialogResult.OK)
-            {
-                CaliperDirection direction;
-                if (dialog.horizontalCaliperRadioButton.Checked)
-                {
-                    direction = CaliperDirection.Horizontal;
-                    AddCaliper(direction);
-                }
-                else if (dialog.VerticalCaliperRadioButton.Checked)
-                {
-                    direction = CaliperDirection.Vertical;
-                    AddCaliper(direction);
-                }
-                else
-                {
-                    AddAngleCaliper();
-                }
-            }
+            CommonCaliper.PickAndAddCaliper(canvas, SetupCaliper);
         }
-
-        private void AddCaliper(CaliperDirection direction)
-        {
-            Caliper c = new Caliper();
-            c.Direction = direction;
-            if (direction == CaliperDirection.Horizontal)
-            {
-                c.CurrentCalibration = canvas.HorizontalCalibration;
-            }
-            else
-            {
-                c.CurrentCalibration = canvas.VerticalCalibration;
-            }
-            SetupCaliper(c);
-        }
-
-        private void AddAngleCaliper()
-        {
-            AngleCaliper c = new AngleCaliper();
-            c.Direction = CaliperDirection.Horizontal;
-            c.CurrentCalibration = canvas.HorizontalCalibration;
-            c.VerticalCalibration = canvas.VerticalCalibration;
-            SetupCaliper(c);
-        }
-
 
         private void SetupCaliper(Caliper c)
         {

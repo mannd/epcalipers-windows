@@ -1,6 +1,7 @@
 ﻿using EPCalipersCore.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,64 @@ namespace EPCalipersCore
     // Any common static methods I can extract will go here
     public class CommonCaliper
     {
+        public delegate void RefreshCaliperScreen();
+        public delegate void ShowMainMenu();
+        public delegate void ToggleMeasurementItems(bool value);
+
         public static DialogResult GetDialogResult(Form dialog) {
             return dialog.ShowDialog();
         }
             
+        public delegate void SetupCaliperMethod(Caliper c);
+
+        public static void PickAndAddCaliper(ICalipers calipers, SetupCaliperMethod setupCaliperMethod)
+        {
+            var dialog = new NewCaliperDialog();
+            if (GetDialogResult(dialog) == DialogResult.OK)
+            {
+                CaliperDirection direction;
+                if (dialog.horizontalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Horizontal;
+                    AddCaliper(calipers, direction, setupCaliperMethod);
+                }
+                else if (dialog.VerticalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Vertical;
+                    AddCaliper(calipers, direction, setupCaliperMethod);
+                }
+                else    
+                {
+                    AddAngleCaliper(calipers, setupCaliperMethod);
+                }
+            }
+
+        }
+
+        public static void AddCaliper(ICalipers calipers, CaliperDirection direction, SetupCaliperMethod setupCaliperMethod)
+        {
+            Caliper c = new Caliper();
+            c.Direction = direction;
+            if (direction == CaliperDirection.Horizontal)
+            {
+                c.CurrentCalibration = calipers.HorizontalCalibration;
+            }
+            else
+            {
+                c.CurrentCalibration = calipers.VerticalCalibration;
+            }
+            setupCaliperMethod(c);
+        }
+
+        public static void AddAngleCaliper(ICalipers calipers, SetupCaliperMethod setupCaliperMethod)
+        {
+            AngleCaliper c = new AngleCaliper();
+            c.Direction = CaliperDirection.Horizontal;
+            c.CurrentCalibration = calipers.HorizontalCalibration;
+            c.VerticalCalibration = calipers.VerticalCalibration;
+            setupCaliperMethod(c);
+        }
+
         public static bool NoCalipersError(int numberOfCalipers)
         {
             bool noCalipers = false;
@@ -32,16 +87,14 @@ namespace EPCalipersCore
                 "No Calipers To Use");
         }
 
-        public delegate void Refresh();
-        public delegate void ShowMainMenu();
-
         public static void SetCalibration(ICalipers calipers, Preferences preferences, 
-            CalibrationDialog calibrationDialog, double currentActualZoom, Refresh refresh, 
+            CalibrationDialog calibrationDialog, double currentActualZoom, RefreshCaliperScreen refresh, 
             ShowMainMenu showMainMenu)
         {
+            Debug.Assert(calibrationDialog != null);
             try
             {
-                if (CommonCaliper.NoCalipersError(calipers.NumberOfCalipers()))
+                if (NoCalipersError(calipers.NumberOfCalipers()))
                 {
                     return;
                 }
@@ -59,10 +112,6 @@ namespace EPCalipersCore
                             "No Caliper Selected");
                         return;
                     }
-                }
-                if (calibrationDialog == null)
-                {
-                    calibrationDialog = new CalibrationDialog();
                 }
                 BaseCaliper c = calipers.GetActiveCaliper();
                 if (c == null)
@@ -92,7 +141,7 @@ namespace EPCalipersCore
                     }
                     calibrationDialog.calibrationMeasurementTextBox.Text = calipers.VerticalCalibration.CalibrationString;
                 }
-                if (CommonCaliper.GetDialogResult(calibrationDialog) == System.Windows.Forms.DialogResult.OK)
+                if (GetDialogResult(calibrationDialog) == DialogResult.OK)
                 {
                     Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text, calipers, currentActualZoom, 
                         refresh, showMainMenu);
@@ -105,7 +154,7 @@ namespace EPCalipersCore
         }
 
         private static void Calibrate(string rawCalibration, ICalipers calipers,
-            double currentActualZoom, Refresh refresh, ShowMainMenu showMainMenu)
+            double currentActualZoom, RefreshCaliperScreen refresh, ShowMainMenu showMainMenu)
         {
             try
             {
@@ -174,8 +223,6 @@ namespace EPCalipersCore
             return calipers.HorizontalCalibration.CanDisplayRate;
         }
 
-        public delegate void ToggleMeasurementItems(bool value);
-
         public static void ResetCalibration(ICalipers calipers, ToggleMeasurementItems toggleMeasurementItems)
         {
             if (calipers.HorizontalCalibration.Calibrated ||
@@ -187,10 +234,10 @@ namespace EPCalipersCore
             }
         }
 
-        public static void ClearCalibration(ICalipers calipers, CommonCaliper.Refresh refresh, 
-            CommonCaliper.ToggleMeasurementItems toggle)
+        public static void ClearCalibration(ICalipers calipers, RefreshCaliperScreen refresh, 
+            ToggleMeasurementItems toggle)
         {
-            CommonCaliper.ResetCalibration(calipers, toggle);
+            ResetCalibration(calipers, toggle);
             refresh();
         }
     }

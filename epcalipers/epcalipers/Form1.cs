@@ -46,8 +46,8 @@ namespace epcalipers
 
         Preferences preferences;
         PreferencesDialog preferencesDialog;
-        MeasureRRDialog measureRRDialog;
-        CalibrationDialog calibrationDialog;
+        MeasureRRDialog measureRRDialog = new MeasureRRDialog();
+        CalibrationDialog calibrationDialog = new CalibrationDialog();
 
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.Transparent;
@@ -274,10 +274,7 @@ namespace epcalipers
 
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
-            if (measureRRDialog == null)
-            {
-                measureRRDialog = new MeasureRRDialog();
-            }
+            Debug.Assert(measureRRDialog != null);
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
             if (CommonCaliper.GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
@@ -365,25 +362,7 @@ namespace epcalipers
             {
                return;
             }
-            var dialog = new NewCaliperDialog();
-            if (CommonCaliper.GetDialogResult(dialog) == DialogResult.OK)
-            {
-                CaliperDirection direction;
-                if (dialog.horizontalCaliperRadioButton.Checked)
-                {
-                    direction = CaliperDirection.Horizontal;
-                    AddCaliper(direction);
-                }
-                else if (dialog.VerticalCaliperRadioButton.Checked)
-                {
-                    direction = CaliperDirection.Vertical;
-                    AddCaliper(direction);
-                }
-                else    
-                {
-                    AddAngleCaliper();
-                }
-            }
+            CommonCaliper.PickAndAddCaliper(theCalipers, SetupCaliper);
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
@@ -677,6 +656,7 @@ namespace epcalipers
         #region Calipers
         private void MeasureMeanIntervalRate()
         {
+            Debug.Assert(measureRRDialog != null);
             if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
             {
                 return;
@@ -698,10 +678,6 @@ namespace epcalipers
             {
                 NoTimeCaliperError();
                 return;
-            }
-            if (measureRRDialog == null)
-            {
-                measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
             DialogResult result = CommonCaliper.GetDialogResult(measureRRDialog);
@@ -873,51 +849,6 @@ namespace epcalipers
         private void ImageRefresh()
         {
             ecgPictureBox.Refresh();
-        }
-
-        ////private void ClearCalibration(ICalipers calipers, CommonCaliper.Refresh refresh, 
-        ////    CommonCaliper.ToggleMeasurementItems toggle)
-        ////{
-        ////    CommonCaliper.ResetCalibration(theCalipers, toggle);
-        ////    refresh();
-        ////}
-
-        //public delegate void ToggleMeasurementItems(bool value);
-
-        //private void ResetCalibration(ICalipers calipers, ToggleMeasurementItems toggleMeasurementItems)
-        //{
-        //    if (calipers.HorizontalCalibration.Calibrated ||
-        //        calipers.VerticalCalibration.Calibrated)
-        //    {
-        //        calipers.HorizontalCalibration.Reset();
-        //        calipers.VerticalCalibration.Reset();
-        //        toggleMeasurementItems(false);
-        //    }
-        //}
-
-        private void AddCaliper(CaliperDirection direction)
-        {
-            Caliper c = new Caliper();
-            c.Direction = direction;
-            if (direction == CaliperDirection.Horizontal)
-            {
-                c.CurrentCalibration = theCalipers.HorizontalCalibration;
-            }
-            else
-            {
-                c.CurrentCalibration = theCalipers.VerticalCalibration;
-            }
-            SetupCaliper(c);
-        }
-
-        private void AddAngleCaliper()
-        {
-            AngleCaliper c = new AngleCaliper();
-            // TODO: refactor common code
-            c.Direction = CaliperDirection.Horizontal;
-            c.CurrentCalibration = theCalipers.HorizontalCalibration;
-            c.VerticalCalibration = theCalipers.VerticalCalibration;
-            SetupCaliper(c);
         }
 
         private void SetupCaliper(Caliper c)
@@ -1341,7 +1272,7 @@ namespace epcalipers
             {
                 return;
             }
-            AddCaliper(CaliperDirection.Horizontal);
+            CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Horizontal, SetupCaliper);
         }
 
         private void amplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1350,7 +1281,7 @@ namespace epcalipers
             {
                 return;
             }
-            AddCaliper(CaliperDirection.Vertical);
+            CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Vertical, SetupCaliper);
         }
 
         private void angleCaliperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1359,7 +1290,7 @@ namespace epcalipers
             {
                 return;
             }
-            AddAngleCaliper();
+            CommonCaliper.AddAngleCaliper(theCalipers, SetupCaliper);
         }
 
         private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
