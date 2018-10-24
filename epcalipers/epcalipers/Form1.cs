@@ -453,7 +453,7 @@ namespace epcalipers
             {
                return;
             }
-            NewCaliperDialog dialog = new NewCaliperDialog();
+            var dialog = new EPCalipersCore.NewCaliperDialog();
             if (GetDialogResult(dialog) == DialogResult.OK)
             {
                 CaliperDirection direction;

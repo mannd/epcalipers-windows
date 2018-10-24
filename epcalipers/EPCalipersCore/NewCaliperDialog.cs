@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
     public partial class NewCaliperDialog : Form
     {

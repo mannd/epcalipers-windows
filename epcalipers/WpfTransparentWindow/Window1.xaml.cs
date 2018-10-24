@@ -41,10 +41,32 @@ namespace WpfTransparentWindow
 
         public void ButtonClicked(object sender, RoutedEventArgs args)
         {
-            Debug.Write("button clicked.");
-            Caliper c = new AngleCaliper();
-            c.Direction = CaliperDirection.Horizontal;
-            if (c.Direction == CaliperDirection.Horizontal)
+            var dialog = new NewCaliperDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                CaliperDirection direction;
+                if (dialog.horizontalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Horizontal;
+                    AddCaliper(direction);
+                }
+                else if (dialog.VerticalCaliperRadioButton.Checked)
+                {
+                    direction = CaliperDirection.Vertical;
+                    AddCaliper(direction);
+                }
+                else    
+                {
+                    AddAngleCaliper();
+                }
+            }
+        }
+
+        private void AddCaliper(CaliperDirection direction)
+        {
+            Caliper c = new Caliper();
+            c.Direction = direction;
+            if (direction == CaliperDirection.Horizontal)
             {
                 c.CurrentCalibration = canvas.HorizontalCalibration;
             }
@@ -54,6 +76,16 @@ namespace WpfTransparentWindow
             }
             SetupCaliper(c);
         }
+
+        private void AddAngleCaliper()
+        {
+            AngleCaliper c = new AngleCaliper();
+            c.Direction = CaliperDirection.Horizontal;
+            c.CurrentCalibration = canvas.HorizontalCalibration;
+            c.VerticalCalibration = canvas.VerticalCalibration;
+            SetupCaliper(c);
+        }
+
 
         private void SetupCaliper(Caliper c)
         {
@@ -113,5 +145,9 @@ namespace WpfTransparentWindow
             canvas.DrawCalipers();
         }
 
+        private void AddButtonClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
