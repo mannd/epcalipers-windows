@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
-    public partial class CalibrationDialog : Form
+    public partial class MeasureRRDialog : Form
     {
-        public CalibrationDialog()
+        public MeasureRRDialog()
         {
             InitializeComponent();
         }

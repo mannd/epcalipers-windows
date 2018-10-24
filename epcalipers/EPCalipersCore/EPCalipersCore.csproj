@@ -71,8 +71,21 @@
     <Compile Include="BaseCalipers.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="BaseCaliper.cs" />
+    <Compile Include="CalibrationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalibrationDialog.designer.cs">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Caliper.cs" />
+    <Compile Include="CommonCaliper.cs" />
     <Compile Include="EPCalculator.cs" />
+    <Compile Include="MeasureRRDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MeasureRRDialog.designer.cs">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewCaliperDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +107,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CalibrationDialog.resx">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MeasureRRDialog.resx">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewCaliperDialog.resx">
       <DependentUpon>NewCaliperDialog.cs</DependentUpon>
     </EmbeddedResource>

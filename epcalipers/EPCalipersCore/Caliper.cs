@@ -39,11 +39,12 @@ namespace EPCalipersCore
                 CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
                 Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
                 Bar2Position = Math.Max(Bar2Position, DELTA);
-                MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight);
+                MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
                 bar1Line.StrokeThickness = LineWidth;
                 bar1Line.Stroke = brush;
                 canvas.Children.Add(bar1Line);
-                MakeLine(ref bar2Line, Bar2Position, Bar2Position, 0, canvas.ActualHeight);
+                // Adding 30 ensures bars reach down to bottom of window, beyond canvas!
+                MakeLine(ref bar2Line, Bar2Position, Bar2Position, 0, canvas.ActualHeight + 30);
                 bar2Line.StrokeThickness = LineWidth;
                 bar2Line.Stroke = brush;
                 canvas.Children.Add(bar2Line);
@@ -128,10 +129,10 @@ namespace EPCalipersCore
             while (i < maxBiggerBars)
             {
                 Line line = new Line();
-                MakeLine(ref line, biggerBars[i], biggerBars[i], 0, canvas.ActualHeight);
+                // Adding 30 makes the bottom of each line extend to bottom of window, beyond canvas
+                MakeLine(ref line, biggerBars[i], biggerBars[i], 0, canvas.ActualHeight + 30);
                 line.StrokeThickness = LineWidth / 2.0;
                 line.Stroke = brush;
-                //                g.DrawLine(pen, biggerBars[i], 0, biggerBars[i], rect.Size.Height);
                 canvas.Children.Add(line);
                 i++;
             }

@@ -1,4 +1,4 @@
-﻿namespace epcalipers
+﻿namespace EPCalipersCore
 {
     partial class MeasureRRDialog
     {

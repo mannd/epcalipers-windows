@@ -26,6 +26,7 @@ namespace WpfTransparentWindow
         System.Windows.Point firstPoint;
         Preferences preferences;
 
+        #region Window
         public Window1()
         {
             InitializeComponent();
@@ -39,10 +40,17 @@ namespace WpfTransparentWindow
             DragMove();
         }
 
-        public void ButtonClicked(object sender, RoutedEventArgs args)
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvas.DrawCalipers();
+        }
+
+        #endregion
+        #region Buttons
+        public void AddButtonClicked(object sender, RoutedEventArgs args)
         {
             var dialog = new NewCaliperDialog();
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (CommonCaliper.GetDialogResult(dialog) == System.Windows.Forms.DialogResult.OK)
             {
                 CaliperDirection direction;
                 if (dialog.horizontalCaliperRadioButton.Checked)
@@ -55,7 +63,7 @@ namespace WpfTransparentWindow
                     direction = CaliperDirection.Vertical;
                     AddCaliper(direction);
                 }
-                else    
+                else
                 {
                     AddAngleCaliper();
                 }
@@ -94,6 +102,32 @@ namespace WpfTransparentWindow
             canvas.DrawCalipers();
         }
 
+        private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Calibrate clicked");
+        }
+
+        private void ClearButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Clear clicked.");
+        }
+
+        private void RateIntButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Rate/Int clicked");
+        }
+
+        private void MeanRateButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Mean rate clicked");
+        }
+
+        private void QTcButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("QTc clicked");
+        }
+        #endregion
+        #region Mouse
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var clickPoint = e.GetPosition(canvas);
@@ -139,15 +173,6 @@ namespace WpfTransparentWindow
                 canvas.DrawCalipers();
             }
         }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            canvas.DrawCalipers();
-        }
-
-        private void AddButtonClicked(object sender, RoutedEventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

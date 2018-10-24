@@ -152,15 +152,6 @@ namespace epcalipers
             ShowMainMenu();
         }
 
-        private DialogResult GetDialogResult(Form dialog) {
-            // must make sure main window never blocks access to dialogs beneath
-            bool oldTopMost = TopMost;
-            TopMost = false;
-            DialogResult result = dialog.ShowDialog();
-            TopMost = oldTopMost;
-            return result;
-        }
-
         private void SetupButtons()
         {
             imageButton = new Button();
@@ -305,7 +296,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
-            if (GetDialogResult(measureRRDialog) == DialogResult.OK)
+            if (CommonCaliper.GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
                 try
                 {
@@ -435,7 +426,7 @@ namespace epcalipers
                     }
                     calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
                 }
-                DialogResult result = GetDialogResult(calibrationDialog);
+                DialogResult result = CommonCaliper.GetDialogResult(calibrationDialog);
                 if (result == DialogResult.OK)
                 {
                     Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
@@ -453,8 +444,8 @@ namespace epcalipers
             {
                return;
             }
-            var dialog = new EPCalipersCore.NewCaliperDialog();
-            if (GetDialogResult(dialog) == DialogResult.OK)
+            var dialog = new NewCaliperDialog();
+            if (CommonCaliper.GetDialogResult(dialog) == DialogResult.OK)
             {
                 CaliperDirection direction;
                 if (dialog.horizontalCaliperRadioButton.Checked)
@@ -467,9 +458,8 @@ namespace epcalipers
                     direction = CaliperDirection.Vertical;
                     AddCaliper(direction);
                 }
-                else    //if (dialog.angleCaliperRadioButton.Checked)
+                else    
                 {
-                    // angle caliper checked
                     AddAngleCaliper();
                 }
             }
@@ -796,7 +786,7 @@ namespace epcalipers
                 measureRRDialog = new MeasureRRDialog();
             }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            DialogResult result = GetDialogResult(measureRRDialog);
+            DialogResult result = CommonCaliper.GetDialogResult(measureRRDialog);
             if (result == DialogResult.OK)
             {
                 string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
@@ -1446,7 +1436,7 @@ namespace epcalipers
             {
                 preferencesDialog = new PreferencesDialog();
             }
-            if (GetDialogResult(preferencesDialog) == DialogResult.OK)
+            if (CommonCaliper.GetDialogResult(preferencesDialog) == DialogResult.OK)
             {
                 preferencesDialog.Save();
                 UpdatePreferences();
@@ -1464,7 +1454,7 @@ namespace epcalipers
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 box = new AboutBox1();
-            GetDialogResult(box);
+            CommonCaliper.GetDialogResult(box);
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
