@@ -35,6 +35,7 @@ namespace WpfTransparentWindow
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
                        new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
             preferences = new Preferences();
+            ShowMainMenu();
         }
 
         public void DragWindow(object sender, MouseButtonEventArgs args)
@@ -105,7 +106,19 @@ namespace WpfTransparentWindow
         }
 
         // this is a no-op in a transparent window
-        private void ShowMainMenu() { }
+        private void ShowMainMenu()
+        {
+            EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
+        }
+
+        private void EnableMeasurementMenuItems(bool enable)
+        {
+            
+            RateIntButton.IsEnabled = enable;
+            MeanRateButton.IsEnabled = enable;
+            QTcButton.IsEnabled = enable;
+        }
+
 
         private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
         {
@@ -116,6 +129,7 @@ namespace WpfTransparentWindow
         private void ClearButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Clear clicked.");
+            CommonCaliper.ClearCalibration(canvas, canvas.DrawCalipers, EnableMeasurementMenuItems);
         }
 
         private void RateIntButtonClicked(object sender, RoutedEventArgs e)

@@ -168,5 +168,30 @@ namespace EPCalipersCore
                 MessageBox.Show(e.Message, "Calibration Error");
             }
         }
+
+        public static bool MeasurementsAllowed(ICalipers calipers)
+        {
+            return calipers.HorizontalCalibration.CanDisplayRate;
+        }
+
+        public delegate void ToggleMeasurementItems(bool value);
+
+        public static void ResetCalibration(ICalipers calipers, ToggleMeasurementItems toggleMeasurementItems)
+        {
+            if (calipers.HorizontalCalibration.Calibrated ||
+                calipers.VerticalCalibration.Calibrated)
+            {
+                calipers.HorizontalCalibration.Reset();
+                calipers.VerticalCalibration.Reset();
+                toggleMeasurementItems(false);
+            }
+        }
+
+        public static void ClearCalibration(ICalipers calipers, CommonCaliper.Refresh refresh, 
+            CommonCaliper.ToggleMeasurementItems toggle)
+        {
+            CommonCaliper.ResetCalibration(calipers, toggle);
+            refresh();
+        }
     }
 }

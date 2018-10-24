@@ -298,7 +298,7 @@ namespace epcalipers
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
         {
-            ClearCalibration();
+            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
         private void backCalibrationButton_Click(object sender, EventArgs e)
@@ -816,7 +816,7 @@ namespace epcalipers
             flowLayoutPanel1.Controls.AddRange(mainMenu);
             EnableImageMenuItems(ImageIsLoaded());
             EnableCaliperMenuItems(CalipersAllowed());
-            EnableMeasurementMenuItems(MeasurementsAllowed());
+            EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(theCalipers));
             imageButton.Select();
             theCalipers.Locked = false;
         }
@@ -875,23 +875,25 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
-        private void ClearCalibration()
-        {
-            ResetCalibration();
-            ImageRefresh();
+        ////private void ClearCalibration(ICalipers calipers, CommonCaliper.Refresh refresh, 
+        ////    CommonCaliper.ToggleMeasurementItems toggle)
+        ////{
+        ////    CommonCaliper.ResetCalibration(theCalipers, toggle);
+        ////    refresh();
+        ////}
 
-        }
+        //public delegate void ToggleMeasurementItems(bool value);
 
-        private void ResetCalibration()
-        {
-            if (theCalipers.HorizontalCalibration.Calibrated ||
-                theCalipers.VerticalCalibration.Calibrated)
-            {
-                theCalipers.HorizontalCalibration.Reset();
-                theCalipers.VerticalCalibration.Reset();
-                EnableMeasurementMenuItems(false);
-            }
-        }
+        //private void ResetCalibration(ICalipers calipers, ToggleMeasurementItems toggleMeasurementItems)
+        //{
+        //    if (calipers.HorizontalCalibration.Calibrated ||
+        //        calipers.VerticalCalibration.Calibrated)
+        //    {
+        //        calipers.HorizontalCalibration.Reset();
+        //        calipers.VerticalCalibration.Reset();
+        //        toggleMeasurementItems(false);
+        //    }
+        //}
 
         private void AddCaliper(CaliperDirection direction)
         {
@@ -942,11 +944,6 @@ namespace epcalipers
         private bool CalipersAllowed()
         {
             return ImageIsLoaded();
-        }
-
-        private bool MeasurementsAllowed()
-        {
-            return theCalipers.HorizontalCalibration.CanDisplayRate;
         }
 
         private void ZoomIn()
@@ -1035,7 +1032,7 @@ namespace epcalipers
             theBitmap = new Bitmap(image);
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
-            ClearCalibration();
+            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
         // rotation
@@ -1057,7 +1054,7 @@ namespace epcalipers
             }
             ecgPictureBox.Image = zoomedBitmap;
             // calibration can't be maintained with rotation
-            ResetCalibration();
+            CommonCaliper.ResetCalibration(theCalipers, EnableMeasurementMenuItems);
 
         }
 
@@ -1070,7 +1067,7 @@ namespace epcalipers
                     ecgPictureBox.Image.Dispose();
                 }
                 ecgPictureBox.Image = theBitmap;
-                ResetCalibration();
+                CommonCaliper.ResetCalibration(theCalipers, EnableMeasurementMenuItems);
                 currentActualZoom = 1.0;
                 rotationAngle = 0.0f;
                 // not necessary to refresh image when image updated
@@ -1401,7 +1398,7 @@ namespace epcalipers
 
         private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClearCalibration();
+            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
         private void nextPageToolStripMenuItem1_Click(object sender, EventArgs e)
