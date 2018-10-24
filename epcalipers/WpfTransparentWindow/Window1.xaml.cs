@@ -92,6 +92,8 @@ namespace WpfTransparentWindow
         private void RateIntButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Rate/Int clicked");
+            canvas.HorizontalCalibration.DisplayRate = !canvas.HorizontalCalibration.DisplayRate;
+            canvas.DrawCalipers();
         }
 
         private void MeanRateButtonClicked(object sender, RoutedEventArgs e)
