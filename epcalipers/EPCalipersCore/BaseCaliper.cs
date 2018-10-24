@@ -86,7 +86,7 @@ namespace EPCalipersCore
             CaliperColor = Color.Blue;
             LineWidth = 2;
             IsSelected = false;
-            TextFontSize = 14;
+            TextFontSize = 12;
             TextFont = new Font("Helvetica", TextFontSize);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;

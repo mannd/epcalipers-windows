@@ -42,7 +42,7 @@ namespace WpfTransparentWindow
         public void ButtonClicked(object sender, RoutedEventArgs args)
         {
             Debug.Write("button clicked.");
-            Caliper c = new Caliper();
+            Caliper c = new AngleCaliper();
             c.Direction = CaliperDirection.Horizontal;
             if (c.Direction == CaliperDirection.Horizontal)
             {
@@ -57,12 +57,7 @@ namespace WpfTransparentWindow
 
         private void SetupCaliper(Caliper c)
         {
-            c.LineWidth = preferences.LineWidth;
-            c.UnselectedColor = preferences.CaliperColor;
-            c.SelectedColor = preferences.HighlightColor;
-            c.CaliperColor = c.UnselectedColor;
-            c.rounding = preferences.RoundingParameter();
-            c.SetInitialPosition();
+            c.Setup(preferences);
             canvas.AddCaliper(c);
             canvas.DrawCalipers();
         }

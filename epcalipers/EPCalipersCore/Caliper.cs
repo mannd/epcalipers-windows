@@ -8,9 +8,14 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Globalization;
+using System.Diagnostics;
+using EPCalipersCore.Properties;
 
 namespace EPCalipersCore
 {
+    using MBrush = System.Windows.Media.Brush;
+    using DBrush = System.Drawing.Brush;
+
     public class Caliper : BaseCaliper
     {
         Line bar1Line = new Line();
@@ -73,41 +78,41 @@ namespace EPCalipersCore
             CaliperText(canvas, brush);
         }
 
-        private void MakeLine(ref Line line, double X1, double X2, double Y1, double Y2)
+        protected void MakeLine(ref Line line, double X1, double X2, double Y1, double Y2)
         {
             line.X1 = X1; line.X2 = X2; line.Y1 = Y1; line.Y2 = Y2;
         }
 
-        protected void CaliperText(Canvas canvas, System.Windows.Media.Brush brush)
+        protected void CaliperText(Canvas canvas, MBrush brush)
         {
             canvas.Children.Remove(textBlock);
             string text = Measurement();
-            var formattedText = new FormattedText(text, CultureInfo.CurrentCulture,
-                System.Windows.FlowDirection.LeftToRight,
-                new Typeface("Helvetica"), 14,
-                brush, new NumberSubstitution(), TextFormattingMode.Display);
-            double stringWidth = formattedText.Width;
-            double stringHeight = formattedText.Height;
+            double stringWidth = 100;
+            double stringHeight = 20;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
+            textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
+            textBlock.FontSize = 14;
             textBlock.Text = text;
+            textBlock.TextAlignment = System.Windows.TextAlignment.Center;
+            textBlock.MinWidth = stringWidth;
+            textBlock.MinHeight = stringHeight;
+            //textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
             textBlock.Foreground = brush;
             if (Direction == CaliperDirection.Horizontal)
             {
                 Canvas.SetLeft(textBlock, center - stringWidth / 2);
-                Canvas.SetTop(textBlock, CrossbarPosition - 30);
-                //g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 30);
+                Canvas.SetTop(textBlock, CrossbarPosition - 20);
             }
             else
             {
                 Canvas.SetLeft(textBlock, CrossbarPosition + 5);
                 Canvas.SetTop(textBlock, center - stringHeight / 2);
-                //g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
             }
             canvas.Children.Add(textBlock);
         }
 
-        private void DrawMarchingCalipers(Canvas canvas, System.Windows.Media.Brush brush)
+        private void DrawMarchingCalipers(Canvas canvas, MBrush brush)
         {
             float difference = Math.Abs(Bar1Position - Bar2Position);
             if (difference < minDistanceForMarch)
@@ -168,14 +173,14 @@ namespace EPCalipersCore
             maxSmallerBars = index;
         }
 
-        private System.Windows.Media.Color ConvertColor(System.Drawing.Color color)
+        protected System.Windows.Media.Color ConvertColor(System.Drawing.Color color)
         {
             return System.Windows.Media.Color.FromArgb(color.A, color.R, color.G, color.B);
         }
 
         public override void Draw(Graphics g, RectangleF rect)
         {
-            System.Drawing.Brush brush = new SolidBrush(CaliperColor);
+            DBrush brush = new SolidBrush(CaliperColor);
             var pen = new System.Drawing.Pen(brush, LineWidth);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             if (Direction == CaliperDirection.Horizontal)
@@ -207,7 +212,7 @@ namespace EPCalipersCore
             brush.Dispose();
         }
 
-        protected void CaliperText(Graphics g, System.Drawing.Brush brush)
+        protected void CaliperText(Graphics g, DBrush brush)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             string text = Measurement();
@@ -226,7 +231,7 @@ namespace EPCalipersCore
             }
         }
 
-        private void DrawMarchingCalipers(Graphics g, System.Drawing.Brush brush, RectangleF rect)
+        private void DrawMarchingCalipers(Graphics g, DBrush brush, RectangleF rect)
         {
             // note that pen width < 1 (e.g. 0) will always just draw as width of 1
             var pen = new System.Drawing.Pen(brush, LineWidth - 1.0f);
@@ -253,6 +258,16 @@ namespace EPCalipersCore
                 i++;
             }
             pen.Dispose();
+        }
+
+        public void Setup(Preferences preferences)
+        {
+            LineWidth = preferences.LineWidth;
+            UnselectedColor = preferences.CaliperColor;
+            SelectedColor = preferences.HighlightColor;
+            CaliperColor = UnselectedColor;
+            rounding = preferences.RoundingParameter();
+            SetInitialPosition();
         }
     }
 }

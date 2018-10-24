@@ -1089,12 +1089,7 @@ namespace epcalipers
 
         private void SetupCaliper(Caliper c)
         {
-            c.LineWidth = preferences.LineWidth;
-            c.UnselectedColor = preferences.CaliperColor;
-            c.SelectedColor = preferences.HighlightColor;
-            c.CaliperColor = c.UnselectedColor;
-            c.rounding = preferences.RoundingParameter();
-            c.SetInitialPosition();
+            c.Setup(preferences);
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
         }

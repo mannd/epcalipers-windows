@@ -4,13 +4,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using EPCalipersCore.Properties;
 
 namespace EPCalipersCore
 {
+    using MBrush = System.Windows.Media.Brush;
+    using DBrush = System.Drawing.Brush;
+
     public class AngleCaliper : Caliper
     {
-       // private static float differential = 0.0f;
+        Line bar1Line = new Line();
+        Line bar2Line = new Line();
+        Line crossbarLine = new Line();
+        TextBlock textBlock = new TextBlock();
+        TextBlock baseTextBlock = new TextBlock();
+        
+        // private static float differential = 0.0f;
 
         float angleBar1 = (float)(0.5 * Math.PI);
         float angleBar2 = (float)(0.25 * Math.PI);
@@ -32,8 +44,8 @@ namespace EPCalipersCore
 
         public override void Draw(Graphics g, RectangleF rect)
         {
-            Brush brush = new SolidBrush(CaliperColor);
-            Pen pen = new Pen(brush, LineWidth);
+            DBrush brush = new SolidBrush(CaliperColor);
+            var pen = new System.Drawing.Pen(brush, LineWidth);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
             // ensure caliper always extends past the screen edges
@@ -66,6 +78,45 @@ namespace EPCalipersCore
 
             pen.Dispose();
             brush.Dispose();
+        }
+
+        public override void Draw(Canvas canvas)
+        {
+            var brush = new SolidColorBrush(ConvertColor(CaliperColor));
+            canvas.Children.Remove(bar1Line);
+            canvas.Children.Remove(bar2Line);
+            canvas.Children.Remove(crossbarLine);
+            // ensure caliper always extends past the screen edges
+            float length = (float)Math.Max(canvas.ActualHeight, canvas.ActualWidth) * 2.0f;
+            CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
+            CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
+            Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
+            Bar2Position = Bar1Position;
+
+            PointF endPointBar1 = EndPointForPosition(new PointF(Bar1Position, CrossbarPosition),
+                angleBar1, length);
+            MakeLine(ref bar1Line, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
+            bar1Line.StrokeThickness = LineWidth;
+            bar1Line.Stroke = brush;
+            canvas.Children.Add(bar1Line);
+            PointF endPointBar2 = EndPointForPosition(new PointF(Bar2Position, CrossbarPosition),
+                angleBar2, length);
+            MakeLine(ref bar2Line, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
+            bar2Line.StrokeThickness = LineWidth;
+            bar2Line.Stroke = brush;
+            canvas.Children.Add(bar2Line);
+
+            CaliperText(canvas, brush);
+
+            if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
+            {
+                // show Brugada triangle
+                if (angleInSouthernHemisphere(angleBar1) && angleInSouthernHemisphere(angleBar2))
+                {
+                    double pointsPerMM = 1.0 / VerticalCalibration.Multiplier;
+                    DrawTriangleBase(canvas, brush, 5 * pointsPerMM);
+                }
+            }
         }
 
         private PointF EndPointForPosition(PointF p, float angle, float length)
@@ -137,8 +188,36 @@ namespace EPCalipersCore
             // Note can't be <= because we get divide by zero error with Sin(angle) == 0
             return (0 < (double)angle && angle < Math.PI);
         }
+        
+        private void DrawTriangleBase(Canvas canvas, MBrush brush, double height)
+        {
+            canvas.Children.Remove(baseTextBlock);
+            PointF point1 = GetBasePoint1ForHeight(height);
+            PointF point2 = GetBasePoint2ForHeight(height);
+            double lengthInPoints = point2.X - point1.X;
+            MakeLine(ref crossbarLine, point1.X, point2.X, point1.Y, point2.Y);
+            crossbarLine.StrokeThickness = LineWidth;
+            crossbarLine.Stroke = brush;
+            canvas.Children.Add(crossbarLine);
 
-        private void DrawTriangleBase(Graphics g, Pen pen, Brush brush, double height)
+            string text = BaseMeasurement(lengthInPoints);
+            // we put the label below the base
+            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 20),
+                point1.Y + 5, 
+               (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
+               20.0f);
+            baseTextBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
+            baseTextBlock.FontSize = 14;
+            baseTextBlock.Text = text;
+            baseTextBlock.TextAlignment = System.Windows.TextAlignment.Center;
+            baseTextBlock.Foreground = brush;
+            Canvas.SetLeft(baseTextBlock, rect.X);
+            Canvas.SetTop(baseTextBlock, rect.Y);
+            canvas.Children.Add(textBlock);
+        }
+
+
+        private void DrawTriangleBase(Graphics g, System.Drawing.Pen pen, DBrush brush, double height)
         {
             PointF point1 = GetBasePoint1ForHeight(height);
             PointF point2 = GetBasePoint2ForHeight(height);
@@ -276,7 +355,5 @@ namespace EPCalipersCore
         }
 
         #endregion
-
-
     }
 }
