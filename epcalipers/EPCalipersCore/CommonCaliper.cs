@@ -33,9 +33,11 @@ namespace EPCalipersCore
         }
 
         public delegate void Refresh();
+        public delegate void ShowMainMenu();
 
         public static void SetCalibration(ICalipers calipers, Preferences preferences, 
-            CalibrationDialog calibrationDialog, Refresh refresh)
+            CalibrationDialog calibrationDialog, double currentActualZoom, Refresh refresh, 
+            ShowMainMenu showMainMenu)
         {
             try
             {
@@ -92,7 +94,8 @@ namespace EPCalipersCore
                 }
                 if (CommonCaliper.GetDialogResult(calibrationDialog) == System.Windows.Forms.DialogResult.OK)
                 {
-                    Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
+                    Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text, calipers, currentActualZoom, 
+                        refresh, showMainMenu);
                 }
             }
             catch (Exception ex)
@@ -101,7 +104,69 @@ namespace EPCalipersCore
             }
         }
 
-        private static void Calibrate(string rawCalibration) { }
-
+        private static void Calibrate(string rawCalibration, ICalipers calipers,
+            double currentActualZoom, Refresh refresh, ShowMainMenu showMainMenu)
+        {
+            try
+            {
+                if (rawCalibration.Length < 1)
+                {
+                    throw new Exception("No calibration measurement entered.");
+                }
+                float value = 0.0f;
+                string units = "";
+                char[] delimiters = { ' ' };
+                string[] parts = rawCalibration.Split(delimiters);
+                value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                value = Math.Abs(value);
+                if (parts.Length > 1)
+                {
+                    // assume second substring is units
+                    units = parts[1];
+                }
+                if (value == 0)
+                {
+                    throw new Exception("Calibration can't be zero.");
+                }
+                BaseCaliper c = calipers.GetActiveCaliper();
+                if (c == null)
+                {
+                    // this really shouldn't happen
+                    throw new Exception("No caliper for calibration.");
+                }
+                if (c.ValueInPoints <= 0)
+                {
+                    // this could happen
+                    throw new Exception("Caliper must be positive to calibrate.");
+                }
+                Calibration calibration;
+                if (c.Direction == CaliperDirection.Horizontal)
+                {
+                    calibration = calipers.HorizontalCalibration;
+                }
+                else
+                {
+                    calibration = calipers.VerticalCalibration;
+                }
+                calibration.CalibrationString = rawCalibration;
+                calibration.Units = units;
+                if (!calibration.CanDisplayRate)
+                {
+                    calibration.DisplayRate = false;
+                }
+                calibration.OriginalZoom = currentActualZoom;
+                calibration.OriginalCalFactor = value / c.ValueInPoints;
+                calibration.CurrentZoom = calibration.OriginalZoom;
+                calibration.Calibrated = true;
+                refresh();
+                // return to main menu after successful calibration
+                // = behavior in mobile versions
+                showMainMenu();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Calibration Error");
+            }
+        }
     }
 }

@@ -355,69 +355,8 @@ namespace epcalipers
 
         private void SetCalibration()
         {
-            try
-            {
-                if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
-                {
-                    return;
-                }
-                if (theCalipers.NoCaliperIsSelected())
-                {
-                    if (theCalipers.NumberOfCalipers() == 1)
-                    {
-                        // assume user wants to calibrate sole caliper so select it
-                        theCalipers.SelectSoleCaliper();
-                        ecgPictureBox.Refresh();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Select (by single-clicking it) the caliper that you want to calibrate, and then set it to a known interval.",
-                            "No Caliper Selected");
-                        return;
-                    }
-                }
-                if (calibrationDialog == null)
-                {
-                    calibrationDialog = new CalibrationDialog();
-                }
-                BaseCaliper c = theCalipers.GetActiveCaliper();
-                if (c == null)
-                {
-                    throw new Exception("No caliper for calibration");
-                }
-                if (c.isAngleCaliper)
-                {
-                    throw new Exception("Angle calipers don't require calibration.  " +
-                        "Only time or amplitude calipers need to be calibrated.\n\n" +
-                        "If you want to use an angle caliper as a Brugadometer, " +
-                        "you must first calibrate time and amplitude calipers.");
-                }
-                if (c.Direction == CaliperDirection.Horizontal)
-                {
-                    if (theCalipers.HorizontalCalibration.CalibrationString == null)
-                    {
-                        theCalipers.HorizontalCalibration.CalibrationString = preferences.HorizontalCalibration;
-                    }
-                    calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.HorizontalCalibration.CalibrationString;
-                }
-                else
-                {
-                    if (theCalipers.VerticalCalibration.CalibrationString == null)
-                    {
-                        theCalipers.VerticalCalibration.CalibrationString = preferences.VerticalCalibration;
-                    }
-                    calibrationDialog.calibrationMeasurementTextBox.Text = theCalipers.VerticalCalibration.CalibrationString;
-                }
-                DialogResult result = CommonCaliper.GetDialogResult(calibrationDialog);
-                if (result == DialogResult.OK)
-                {
-                    Calibrate(calibrationDialog.calibrationMeasurementTextBox.Text);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Calibration Error");
-            }
+            CommonCaliper.SetCalibration(theCalipers, preferences, calibrationDialog, currentActualZoom,
+                ImageRefresh, ShowMainMenu);
         }
 
         private void addCaliper_Click(object sender, EventArgs e)
@@ -931,74 +870,15 @@ namespace epcalipers
             }
         }
 
-        private void Calibrate(string rawCalibration)
+        private void ImageRefresh()
         {
-            try
-            {
-                if (rawCalibration.Length < 1)
-                {
-                    throw new Exception("No calibration measurement entered.");
-                }
-                float value = 0.0f;
-                string units = "";
-                char[] delimiters = { ' ' };
-                string[] parts = rawCalibration.Split(delimiters);
-                value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                value = Math.Abs(value);
-                if (parts.Length > 1)
-                {
-                    // assume second substring is units
-                    units = parts[1];
-                }
-                if (value == 0)
-                {
-                    throw new Exception("Calibration can't be zero.");
-                }
-                BaseCaliper c = theCalipers.GetActiveCaliper();
-                if (c == null)
-                {
-                    // this really shouldn't happen
-                    throw new Exception("No caliper for calibration.");
-                }
-                if (c.ValueInPoints <= 0)
-                {
-                    // this could happen
-                    throw new Exception("Caliper must be positive to calibrate.");
-                }
-                Calibration calibration;
-                if (c.Direction == CaliperDirection.Horizontal)
-                {
-                    calibration = theCalipers.HorizontalCalibration;
-                }
-                else
-                {
-                    calibration = theCalipers.VerticalCalibration;
-                }
-                calibration.CalibrationString = rawCalibration;
-                calibration.Units = units;
-                if (!calibration.CanDisplayRate)
-                {
-                    calibration.DisplayRate = false;
-                }
-                calibration.OriginalZoom = currentActualZoom;
-                calibration.OriginalCalFactor = value / c.ValueInPoints;
-                calibration.CurrentZoom = calibration.OriginalZoom;
-                calibration.Calibrated = true;
-                ecgPictureBox.Refresh();
-                // return to main menu after successful calibration
-                // = behavior in mobile versions
-                ShowMainMenu();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Calibration Error");
-            }
+            ecgPictureBox.Refresh();
         }
 
         private void ClearCalibration()
         {
             ResetCalibration();
-            ecgPictureBox.Refresh();
+            ImageRefresh();
 
         }
 

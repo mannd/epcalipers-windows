@@ -104,10 +104,13 @@ namespace WpfTransparentWindow
             canvas.DrawCalipers();
         }
 
+        // this is a no-op in a transparent window
+        private void ShowMainMenu() { }
+
         private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Calibrate clicked");
-            CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, canvas.DrawCalipers);
+            CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, 1, canvas.DrawCalipers, ShowMainMenu);
         }
 
         private void ClearButtonClicked(object sender, RoutedEventArgs e)

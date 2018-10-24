@@ -202,7 +202,7 @@ namespace EPCalipersCore
 
             string text = BaseMeasurement(lengthInPoints);
             // we put the label below the base
-            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 20),
+            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 25),
                 point1.Y + 5, 
                (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
                20.0f);
@@ -211,9 +211,9 @@ namespace EPCalipersCore
             baseTextBlock.Text = text;
             baseTextBlock.TextAlignment = System.Windows.TextAlignment.Center;
             baseTextBlock.Foreground = brush;
-            Canvas.SetLeft(baseTextBlock, rect.X);
+            Canvas.SetLeft(baseTextBlock, rect.X + 25);
             Canvas.SetTop(baseTextBlock, rect.Y);
-            canvas.Children.Add(textBlock);
+            canvas.Children.Add(baseTextBlock);
         }
 
 
@@ -226,7 +226,7 @@ namespace EPCalipersCore
 
             string text = BaseMeasurement(lengthInPoints);
             // we put the label below the base
-            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 20),
+            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 25),
                 point1.Y + 5, 
                (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
                20.0f);
