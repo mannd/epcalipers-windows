@@ -93,7 +93,7 @@ namespace EPCalipersCore
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-            textBlock.FontSize = 14;
+            textBlock.FontSize = defaultFontSize;
             textBlock.Text = text;
             textBlock.TextAlignment = System.Windows.TextAlignment.Center;
             textBlock.MinWidth = stringWidth;

@@ -207,7 +207,7 @@ namespace EPCalipersCore
                (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
                20.0f);
             baseTextBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-            baseTextBlock.FontSize = 14;
+            baseTextBlock.FontSize = defaultFontSize;
             baseTextBlock.Text = text;
             baseTextBlock.TextAlignment = System.Windows.TextAlignment.Center;
             baseTextBlock.Foreground = brush;

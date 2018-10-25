@@ -28,6 +28,9 @@ namespace WpfTransparentWindow
         MeasureRRDialog measureRRDialog = new MeasureRRDialog();
         CalibrationDialog calibrationDialog = new CalibrationDialog();
 
+        Button[] mainMenu;
+        Button[] secondaryMenu;
+
         #region Window
         public Window1()
         {
@@ -35,6 +38,8 @@ namespace WpfTransparentWindow
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
                        new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
             preferences = new Preferences();
+            mainMenu = new Button[] { AddButton, CalibrateButton, ClearButton, RateIntButton, MeanRateButton, QTcButton };
+            secondaryMenu = new Button[] { MeasureButton, CancelButton };
             ShowMainMenu();
         }
 
@@ -50,6 +55,34 @@ namespace WpfTransparentWindow
 
         #endregion
         #region Buttons
+
+        public void HideMainMenu(bool hide)
+        {
+            Visibility visibility = Visibility.Visible;
+            if (hide)
+            {
+                visibility = Visibility.Hidden;
+            }
+            foreach (Button b in mainMenu)
+            {
+                b.Visibility = visibility;
+            }
+        }
+
+        public void HideSecondaryMenu(bool hide)
+        {
+            Visibility visibility = Visibility.Visible;
+            if (hide)
+            {
+                visibility = Visibility.Hidden;
+            }
+            foreach (Button b in secondaryMenu)
+            {
+                b.Visibility = visibility;
+            }
+            MessageTextBlock.Visibility = visibility;
+        }
+
         public void AddButtonClicked(object sender, RoutedEventArgs args)
         {
             CommonCaliper.PickAndAddCaliper(canvas, SetupCaliper);
@@ -62,10 +95,17 @@ namespace WpfTransparentWindow
             canvas.DrawCalipers();
         }
 
-        // this is a no-op in a transparent window
         private void ShowMainMenu()
         {
+            HideMainMenu(false);
+            HideSecondaryMenu(true);
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
+        }
+
+        private void ShowSecondaryMenu()
+        {
+            HideMainMenu(true);
+            HideSecondaryMenu(false);
         }
 
         private void EnableMeasurementMenuItems(bool enable)
@@ -104,6 +144,18 @@ namespace WpfTransparentWindow
         private void QTcButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("QTc clicked");
+            ShowSecondaryMenu();
+        }
+
+        private void CancelButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Cancel clicked");
+            ShowMainMenu();
+        }
+
+        private void MeasureButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Measure clicked");
         }
         #endregion
         #region Mouse
@@ -153,5 +205,6 @@ namespace WpfTransparentWindow
             }
         }
         #endregion
+
     }
 }
