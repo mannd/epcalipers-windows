@@ -230,7 +230,7 @@ namespace epcalipers
         {
             if (theCalipers.NoTimeCaliperSelected())
             {
-                NoTimeCaliperError();
+                CommonCaliper.NoTimeCaliperError();
                 return;
             }
             BaseCaliper c = theCalipers.GetActiveCaliper();
@@ -269,7 +269,7 @@ namespace epcalipers
 
         private void MeanRRButton_Click(object sender, EventArgs e)
         {
-            MeasureMeanIntervalRate();
+            CommonCaliper.MeasureMeanIntervalRate(theCalipers, ImageRefresh, measureRRDialog, preferences);
         }
 
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
@@ -281,7 +281,7 @@ namespace epcalipers
                 try
                 {
                     string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
-                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, theCalipers.GetActiveCaliper());
+                    Tuple<double, double> tuple = CommonCaliper.getMeanRRMeanRate(rawValue, theCalipers.GetActiveCaliper());
                     rrIntervalForQtc = tuple.Item1;
                     showQTcStep2Menu();
                 }
@@ -654,92 +654,11 @@ namespace epcalipers
         }
         #endregion
         #region Calipers
-        private void MeasureMeanIntervalRate()
-        {
-            Debug.Assert(measureRRDialog != null);
-            if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
-            {
-                return;
-            }
-            BaseCaliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
-            if (singleHorizontalCaliper != null)
-            {
-                theCalipers.SelectCaliper(singleHorizontalCaliper);
-                theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
-                ecgPictureBox.Refresh();
-            }
-            if (theCalipers.NoCaliperIsSelected())
-            {
-                NoTimeCaliperError();
-                return;
-            }
-            BaseCaliper c = theCalipers.GetActiveCaliper();
-            if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
-            {
-                NoTimeCaliperError();
-                return;
-            }
-            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            DialogResult result = CommonCaliper.GetDialogResult(measureRRDialog);
-            if (result == DialogResult.OK)
-            {
-                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
-                try
-                {
-                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, c);
-                    double meanRR = tuple.Item1;
-                    double meanRate = tuple.Item2;
-                    string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
-                    message += Environment.NewLine;
-                    message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
-                    MessageBox.Show(message, "Mean Interval and Rate");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Measurement Error");
-                }
-            }
-        }
-
-        private Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
-        {
-            if (rawValue.Length < 1)
-            {
-                throw new Exception("Number of intervals not entered.");
-            }
-            int divisor = int.Parse(rawValue);
-            divisor = Math.Abs(divisor);
-            if (divisor == 0)
-            {
-                throw new Exception("Number of intervals can't be zero.");
-            }
-            if (c == null)
-            {
-                throw new Exception("Can't find a selected caliper.");
-            }
-            double intervalResult = Math.Abs(c.IntervalResult());
-            double meanRR = intervalResult / divisor;
-            double meanRate;
-            if (c.CurrentCalibration.UnitsAreMsecs)
-            {
-                meanRate = EPCalculator.MsecToBpm(meanRR);
-            }
-            else
-            {
-                meanRate = EPCalculator.SecToBpm(meanRR);
-            }
-            return Tuple.Create(meanRR, meanRate);
-        }
-
-        private void NoTimeCaliperError()
-        {
-            MessageBox.Show("Select a time caliper.", "Measurement Error");
-        }
 
         private void QTcInterval()
         {
             theCalipers.HorizontalCalibration.DisplayRate = false;
-            BaseCaliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
+            BaseCaliper singleHorizontalCaliper = theCalipers.GetLoneTimeCaliper();
             if (singleHorizontalCaliper != null)
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
@@ -748,7 +667,7 @@ namespace epcalipers
             }
             if (theCalipers.NoTimeCaliperSelected())
             {
-                NoTimeCaliperError();
+                CommonCaliper.NoTimeCaliperError();
             }
             else
             {
@@ -1351,7 +1270,7 @@ namespace epcalipers
 
         private void meanRateIntervalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MeasureMeanIntervalRate();
+            CommonCaliper.MeasureMeanIntervalRate(theCalipers, ImageRefresh, measureRRDialog, preferences);
         }
 
         private void qTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)

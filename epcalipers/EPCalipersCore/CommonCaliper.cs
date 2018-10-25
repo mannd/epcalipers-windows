@@ -240,5 +240,89 @@ namespace EPCalipersCore
             ResetCalibration(calipers, toggle);
             refresh();
         }
+
+        public static void NoTimeCaliperError()
+        {
+            MessageBox.Show("Select a time caliper.", "Measurement Error");
+        }
+
+        public static void MeasureMeanIntervalRate(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen,
+            MeasureRRDialog measureRRDialog, Preferences preferences)
+        {
+            Debug.Assert(measureRRDialog != null);
+            if (NoCalipersError(calipers.NumberOfCalipers()))
+            {
+                return;
+            }
+            BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
+            if (singleHorizontalCaliper != null)
+            {
+                calipers.SelectCaliper(singleHorizontalCaliper);
+                calipers.UnselectCalipersExcept(singleHorizontalCaliper);
+                refreshCaliperScreen();
+            }
+            if (calipers.NoCaliperIsSelected())
+            {
+                NoTimeCaliperError();
+                return;
+            }
+            BaseCaliper c = calipers.GetActiveCaliper();
+            if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
+            {
+                NoTimeCaliperError();
+                return;
+            }
+            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
+            if (GetDialogResult(measureRRDialog) == DialogResult.OK)
+            {
+                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
+                try
+                {
+                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, c);
+                    double meanRR = tuple.Item1;
+                    double meanRate = tuple.Item2;
+                    string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
+                    message += Environment.NewLine;
+                    message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
+                    MessageBox.Show(message, "Mean Interval and Rate");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Measurement Error");
+                }
+            }
+        }
+
+
+
+        public static Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
+        {
+            if (rawValue.Length < 1)
+            {
+                throw new Exception("Number of intervals not entered.");
+            }
+            int divisor = int.Parse(rawValue);
+            divisor = Math.Abs(divisor);
+            if (divisor == 0)
+            {
+                throw new Exception("Number of intervals can't be zero.");
+            }
+            if (c == null)
+            {
+                throw new Exception("Can't find a selected caliper.");
+            }
+            double intervalResult = Math.Abs(c.IntervalResult());
+            double meanRR = intervalResult / divisor;
+            double meanRate;
+            if (c.CurrentCalibration.UnitsAreMsecs)
+            {
+                meanRate = EPCalculator.MsecToBpm(meanRR);
+            }
+            else
+            {
+                meanRate = EPCalculator.SecToBpm(meanRR);
+            }
+            return Tuple.Create(meanRR, meanRate);
+        }
     }
 }

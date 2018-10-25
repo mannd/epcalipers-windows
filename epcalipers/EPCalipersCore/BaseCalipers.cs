@@ -449,7 +449,7 @@ namespace EPCalipersCore
             return NumberOfCalipers() > 0;
         }
 
-        public BaseCaliper getLoneTimeCaliper()
+        public BaseCaliper GetLoneTimeCaliper()
         {
             BaseCaliper c = null;
             int n = 0;

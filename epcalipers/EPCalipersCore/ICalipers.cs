@@ -12,7 +12,9 @@ namespace EPCalipersCore
         bool NoCaliperIsSelected();
         void SelectSoleCaliper();
         BaseCaliper GetActiveCaliper();
-
+        BaseCaliper GetLoneTimeCaliper();
+        void SelectCaliper(BaseCaliper c);
+        void UnselectCalipersExcept(BaseCaliper c);
         
         Calibration HorizontalCalibration { get; set; }
         Calibration VerticalCalibration { get; set; }

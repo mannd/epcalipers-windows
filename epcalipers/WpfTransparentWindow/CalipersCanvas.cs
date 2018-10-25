@@ -101,5 +101,20 @@ namespace WpfTransparentWindow
         {
             return calipers.GetActiveCaliper();
         }
+
+        public BaseCaliper GetLoneTimeCaliper()
+        {
+            return calipers.GetLoneTimeCaliper();
+        }
+
+        public void SelectCaliper(BaseCaliper c)
+        {
+            calipers.SelectCaliper(c);
+        }
+
+        public void UnselectCalipersExcept(BaseCaliper c)
+        {
+            calipers.UnselectCalipersExcept(c);
+        }
     }
 }

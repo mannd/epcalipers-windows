@@ -139,6 +139,53 @@ namespace WpfTransparentWindow
         private void MeanRateButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Mean rate clicked");
+            CommonCaliper.MeasureMeanIntervalRate(canvas, canvas.DrawCalipers, measureRRDialog, preferences);
+        }
+
+        private void MeasureMeanIntervalRate(ICalipers calipers, CommonCaliper.RefreshCaliperScreen refreshCaliperScreen)
+        {
+            Debug.Assert(measureRRDialog != null);
+            if (CommonCaliper.NoCalipersError(calipers.NumberOfCalipers()))
+            {
+                return;
+            }
+            BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
+            if (singleHorizontalCaliper != null)
+            {
+                calipers.SelectCaliper(singleHorizontalCaliper);
+                calipers.UnselectCalipersExcept(singleHorizontalCaliper);
+                refreshCaliperScreen();
+            }
+            if (calipers.NoCaliperIsSelected())
+            {
+                CommonCaliper.NoTimeCaliperError();
+                return;
+            }
+            BaseCaliper c = calipers.GetActiveCaliper();
+            if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
+            {
+                CommonCaliper.NoTimeCaliperError();
+                return;
+            }
+            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
+            if (CommonCaliper.GetDialogResult(measureRRDialog) == System.Windows.Forms.DialogResult.OK)
+            {
+                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
+                try
+                {
+                    Tuple<double, double> tuple = CommonCaliper.getMeanRRMeanRate(rawValue, c);
+                    double meanRR = tuple.Item1;
+                    double meanRate = tuple.Item2;
+                    string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
+                    message += Environment.NewLine;
+                    message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
+                    MessageBox.Show(message, "Mean Interval and Rate");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Measurement Error");
+                }
+            }
         }
 
         private void QTcButtonClicked(object sender, RoutedEventArgs e)
