@@ -43,7 +43,6 @@ namespace epcalipers
         static int maxControlNumber = 10;
         Control[] oldControls = new Control[maxControlNumber];
 
-
         Preferences preferences;
         PreferencesDialog preferencesDialog;
         MeasureRRDialog measureRRDialog = new MeasureRRDialog();
@@ -51,10 +50,6 @@ namespace epcalipers
 
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.Transparent;
-
-        // allow users to retain custom colors per session
-        int[] customColors;
-
         Point firstPoint;
 
         string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
@@ -1267,20 +1262,7 @@ namespace epcalipers
         #region right-click menu
         private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            theCalipers.UnselectChosenCaliper();
-            ecgPictureBox.Refresh();
-            ColorDialog colorDialog = new ColorDialog();
-            colorDialog.Color = theCalipers.GetChosenCaliperColor();
-            colorDialog.AllowFullOpen = true;
-            colorDialog.CustomColors = customColors;
-            // color dialogs always float, even if Form is TopMost
-            DialogResult result = colorDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                theCalipers.SetChosenCaliperColor(colorDialog.Color);
-                customColors = colorDialog.CustomColors;
-                ecgPictureBox.Refresh();
-            }
+            CommonCaliper.SelectCaliperColor(theCalipers, ImageRefresh);
         }
 
         private void tweakToolStripMenuItem_Click(object sender, EventArgs e)

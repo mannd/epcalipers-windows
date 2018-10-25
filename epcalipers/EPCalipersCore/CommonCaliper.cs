@@ -17,13 +17,14 @@ namespace EPCalipersCore
         public delegate void ToggleMeasurementItems(bool value);
         public delegate void ShowQTcStep1Menu();
         public delegate void ShowQTcStep2Menu();
+        public delegate void SetupCaliperMethod(Caliper c);
 
         public static DialogResult GetDialogResult(Form dialog) {
             return dialog.ShowDialog();
         }
         private static double rrIntervalForQtc;
-            
-        public delegate void SetupCaliperMethod(Caliper c);
+
+        private static int[] customColors;
 
         public static void PickAndAddCaliper(ICalipers calipers, SetupCaliperMethod setupCaliperMethod)
         {
@@ -48,6 +49,7 @@ namespace EPCalipersCore
             }
 
         }
+            
 
         public static void AddCaliper(ICalipers calipers, CaliperDirection direction, SetupCaliperMethod setupCaliperMethod)
         {
@@ -296,8 +298,6 @@ namespace EPCalipersCore
             }
         }
 
-
-
         public static Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
         {
             if (rawValue.Length < 1)
@@ -326,6 +326,24 @@ namespace EPCalipersCore
                 meanRate = EPCalculator.SecToBpm(meanRR);
             }
             return Tuple.Create(meanRR, meanRate);
+        }
+
+        public static void SelectCaliperColor(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen)
+        {
+            calipers.UnselectChosenCaliper();
+            refreshCaliperScreen();
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.Color = calipers.GetChosenCaliperColor();
+            colorDialog.AllowFullOpen = true;
+            colorDialog.CustomColors = customColors;
+            // color dialogs always float, even if Form is TopMost
+            DialogResult result = colorDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                calipers.SetChosenCaliperColor(colorDialog.Color);
+                customColors = colorDialog.CustomColors;
+                refreshCaliperScreen();
+            }
         }
 
         #region QTc

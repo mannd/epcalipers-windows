@@ -8,10 +8,11 @@ using EPCalipersCore;
 
 namespace WpfTransparentWindow
 {
-    class CalipersCanvas: Canvas, ICalipers
+    class CalipersCanvas : Canvas, ICalipers
     {
         BaseCalipers calipers = new BaseCalipers();
-        public Calibration HorizontalCalibration {
+        public Calibration HorizontalCalibration
+        {
             get
             {
                 return calipers.HorizontalCalibration;
@@ -21,7 +22,8 @@ namespace WpfTransparentWindow
                 calipers.HorizontalCalibration = value;
             }
         }
-        public Calibration VerticalCalibration {
+        public Calibration VerticalCalibration
+        {
             get
             {
                 return calipers.VerticalCalibration;
@@ -44,7 +46,19 @@ namespace WpfTransparentWindow
             }
         }
 
-        public CalipersCanvas(): base()
+        public bool tweakingComponent
+        {
+            get
+            {
+                return calipers.tweakingComponent;
+            }
+            set
+            {
+                calipers.tweakingComponent = value;
+            }
+        }
+
+        public CalipersCanvas() : base()
         {
 
         }
@@ -58,7 +72,7 @@ namespace WpfTransparentWindow
         {
             // This ensures deleted caliper disappears
             Children.Clear();
-            foreach(BaseCaliper c in calipers.GetCalipers())
+            foreach (BaseCaliper c in calipers.GetCalipers())
             {
                 DrawCaliper(c);
             }
@@ -69,7 +83,7 @@ namespace WpfTransparentWindow
             c.Draw(this);
         }
 
-        public void GrabCaliperIfClicked(System.Windows.Point point) 
+        public void GrabCaliperIfClicked(System.Windows.Point point)
         {
             calipers.GrabCaliperIfClicked(ConvertPoint(point));
         }
@@ -133,5 +147,44 @@ namespace WpfTransparentWindow
         {
             return calipers.NoTimeCaliperSelected();
         }
-    }
+
+        public void SetChosenCaliper(System.Windows.Point point)
+        {
+            calipers.SetChosenCaliper(ConvertPoint(point));
+        }
+
+        public void SetChosenCaliperComponent(System.Windows.Point point)
+        {
+            calipers.SetChosenCaliperComponent(ConvertPoint(point));
+        }
+
+        public bool NoChosenCaliper()
+        {
+            return calipers.NoChosenCaliper();
+        }
+
+        public BaseCaliper getGrabbedCaliper(System.Windows.Point point)
+        {
+            return calipers.getGrabbedCaliper(ConvertPoint(point));
+        }
+
+        public bool PointIsNearCaliper(System.Windows.Point point)
+        {
+            return calipers.PointIsNearCaliper(ConvertPoint(point));
+        }
+
+        public void UnselectChosenCaliper()
+        {
+            calipers.UnselectChosenCaliper();
+        }
+        public System.Drawing.Color GetChosenCaliperColor()
+        {
+            return calipers.GetChosenCaliperColor();
+        }
+
+        public void SetChosenCaliperColor(System.Drawing.Color color)
+        {
+            calipers.SetChosenCaliperColor(color);
+        }
+    }  
 }

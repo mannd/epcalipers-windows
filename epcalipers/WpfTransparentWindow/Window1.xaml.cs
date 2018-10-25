@@ -23,6 +23,7 @@ namespace WpfTransparentWindow
     /// </summary>
     public partial class Window1 : Window
     {
+        #region Fields
         System.Windows.Point firstPoint;
         Preferences preferences;
         MeasureRRDialog measureRRDialog = new MeasureRRDialog();
@@ -33,8 +34,7 @@ namespace WpfTransparentWindow
         Button[] calibrationMenu;
 
         bool inQTcStep1 = false;
-        double rrIntervalForQtc;
-
+        #endregion
         #region Window
         public Window1()
         {
@@ -210,6 +210,18 @@ namespace WpfTransparentWindow
         }
 
         #endregion
+        #region Right click menu
+        private void MarchingCaliperMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Marching caliper menu item clicked");
+        }
+
+        private void CaliperColorMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Color menu item clicked");
+            CommonCaliper.SelectCaliperColor(canvas, canvas.DrawCalipers);
+        }
+        #endregion
         #region QTc
         public void ShowQTcStep1Menu()
         {
@@ -233,6 +245,39 @@ namespace WpfTransparentWindow
             {
                 Debug.Write("right button clicked");
                 Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
+                RightClickMenu.Visibility = Visibility.Hidden;
+                canvas.SetChosenCaliper(clickPoint);
+                canvas.SetChosenCaliperComponent(clickPoint);
+                if (canvas.NoChosenCaliper() && canvas.tweakingComponent)
+                {
+                    CancelTweaking();
+                }
+                if (!canvas.tweakingComponent)
+                {
+                    bool pointNearCaliper = canvas.PointIsNearCaliper(clickPoint);
+                    // Can't disable whole context menu, or it won't disappear with another click
+                    TweakCaliperPositionMenuItem.IsEnabled = pointNearCaliper;
+                    CaliperColorMenuItem.IsEnabled = pointNearCaliper;
+                    MarchingCaliperMenuItem.IsEnabled = pointNearCaliper;
+                    if (pointNearCaliper)
+                    {
+                        BaseCaliper c = canvas.getGrabbedCaliper(clickPoint);
+                        if (c != null)
+                        {
+                            MarchingCaliperMenuItem.IsChecked = c.isMarching;
+                        }
+                    }
+                    else
+                    {
+                        MarchingCaliperMenuItem.IsChecked = false;
+                    }
+                    RightClickMenu.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    TweakCaliper();
+                }
+
                 return;
             }
             if (e.ClickCount == 2)
@@ -249,6 +294,16 @@ namespace WpfTransparentWindow
                 firstPoint = clickPoint;
                 canvas.GrabCaliperIfClicked(clickPoint);
             }
+        }
+
+        private void CancelTweaking()
+        {
+
+        }
+
+        private void TweakCaliper()
+        {
+
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
@@ -272,5 +327,6 @@ namespace WpfTransparentWindow
             }
         }
         #endregion
+
     }
 }
