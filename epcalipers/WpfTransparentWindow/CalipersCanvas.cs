@@ -32,6 +32,18 @@ namespace WpfTransparentWindow
             }
         }
 
+        public bool Locked
+        {
+            get
+            {
+                return calipers.Locked;
+            }
+            set
+            {
+                calipers.Locked = value;
+            }
+        }
+
         public CalipersCanvas(): base()
         {
 
@@ -115,6 +127,11 @@ namespace WpfTransparentWindow
         public void UnselectCalipersExcept(BaseCaliper c)
         {
             calipers.UnselectCalipersExcept(c);
+        }
+
+        public bool NoTimeCaliperSelected()
+        {
+            return calipers.NoTimeCaliperSelected();
         }
     }
 }

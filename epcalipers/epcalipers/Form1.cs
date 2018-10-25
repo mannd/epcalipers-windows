@@ -228,32 +228,7 @@ namespace epcalipers
         #region Buttons
         private void MeasureQTcButton_Click(object sender, EventArgs e)
         {
-            if (theCalipers.NoTimeCaliperSelected())
-            {
-                CommonCaliper.NoTimeCaliperError();
-                return;
-            }
-            BaseCaliper c = theCalipers.GetActiveCaliper();
-            if (c == null)
-            {
-                return;
-            }
-            double qt = Math.Abs(c.IntervalInSecs(c.IntervalResult()));
-            double meanRR = Math.Abs(c.IntervalInSecs(rrIntervalForQtc));
-            string result = "Invalid Result";
-            if (meanRR > 0)
-            {
-                QtcCalculator calc = new QtcCalculator(preferences.ActiveQtcFormula());
-                result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
-            }
-            if (MessageBox.Show(result, "Calculated QTc", MessageBoxButtons.RetryCancel) == DialogResult.Retry)
-            {
-                showQTcStep2Menu();
-            }
-            else
-            {
-                ShowMainMenu();
-            }
+            CommonCaliper.MeasureQTc(theCalipers, ShowMainMenu, ShowQTcStep2Menu, preferences);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -264,7 +239,8 @@ namespace epcalipers
 
         private void QtcButton_Click(object sender, EventArgs e)
         {
-            QTcInterval();
+            CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu);
+            //QTcInterval();
         }
 
         private void MeanRRButton_Click(object sender, EventArgs e)
@@ -274,23 +250,7 @@ namespace epcalipers
 
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
-            Debug.Assert(measureRRDialog != null);
-            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
-            if (CommonCaliper.GetDialogResult(measureRRDialog) == DialogResult.OK)
-            {
-                try
-                {
-                    string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
-                    Tuple<double, double> tuple = CommonCaliper.getMeanRRMeanRate(rawValue, theCalipers.GetActiveCaliper());
-                    rrIntervalForQtc = tuple.Item1;
-                    showQTcStep2Menu();
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message, "Measurement Error");
-                    ShowMainMenu();
-                }
-            }
+            CommonCaliper.MeasureRRForQTc(theCalipers, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences);
         }
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
@@ -671,12 +631,12 @@ namespace epcalipers
             }
             else
             {
-                showQTcStep1Menu();
+                ShowQTcStep1Menu();
                 theCalipers.Locked = true;
             }
         }
 
-        private void showQTcStep1Menu()
+        private void ShowQTcStep1Menu()
         {
             flowLayoutPanel1.Controls.Clear();
             if (qtcStep1Menu == null)
@@ -687,7 +647,7 @@ namespace epcalipers
             CancelButton = cancelButton;
         }
 
-        private void showQTcStep2Menu()
+        private void ShowQTcStep2Menu()
         {
             flowLayoutPanel1.Controls.Clear();
             if (qtcStep2Menu == null)

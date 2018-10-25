@@ -15,10 +15,13 @@ namespace EPCalipersCore
         public delegate void RefreshCaliperScreen();
         public delegate void ShowMainMenu();
         public delegate void ToggleMeasurementItems(bool value);
+        public delegate void ShowQTcStep1Menu();
+        public delegate void ShowQTcStep2Menu();
 
         public static DialogResult GetDialogResult(Form dialog) {
             return dialog.ShowDialog();
         }
+        private static double rrIntervalForQtc;
             
         public delegate void SetupCaliperMethod(Caliper c);
 
@@ -324,5 +327,82 @@ namespace EPCalipersCore
             }
             return Tuple.Create(meanRR, meanRate);
         }
+
+        #region QTc
+
+        public static void QTcInterval(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen, ShowQTcStep1Menu showQTcStep1Menu)
+        {
+            calipers.HorizontalCalibration.DisplayRate = false;
+            BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
+            if (singleHorizontalCaliper != null)
+            {
+                calipers.SelectCaliper(singleHorizontalCaliper);
+                calipers.UnselectCalipersExcept(singleHorizontalCaliper);
+                refreshCaliperScreen();
+            }
+            if (calipers.NoTimeCaliperSelected())
+            {
+                NoTimeCaliperError();
+            }
+            else
+            {
+                showQTcStep1Menu();
+                calipers.Locked = true;
+            }
+        }
+
+        public static void MeasureRRForQTc(ICalipers calipers, MeasureRRDialog measureRRDialog, ShowMainMenu showMainMenu,
+            ShowQTcStep2Menu showQTcStep2Menu, Preferences preferences)
+        {
+            Debug.Assert(measureRRDialog != null);
+            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
+            if (GetDialogResult(measureRRDialog) == DialogResult.OK)
+            {
+                try
+                {
+                    string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
+                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, calipers.GetActiveCaliper());
+                    rrIntervalForQtc = tuple.Item1;
+                    showQTcStep2Menu();
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message, "Measurement Error");
+                    showMainMenu();
+                }
+            }
+        }
+
+        public static void MeasureQTc(ICalipers calipers, ShowMainMenu showMainMenu, 
+            ShowQTcStep2Menu showQTcStep2Menu, Preferences preferences)
+        {
+            if (calipers.NoTimeCaliperSelected())
+            {
+                NoTimeCaliperError();
+                return;
+            }
+            BaseCaliper c = calipers.GetActiveCaliper();
+            if (c == null)
+            {
+                return;
+            }
+            double qt = Math.Abs(c.IntervalInSecs(c.IntervalResult()));
+            double meanRR = Math.Abs(c.IntervalInSecs(rrIntervalForQtc));
+            string result = "Invalid Result";
+            if (meanRR > 0)
+            {
+                QtcCalculator calc = new QtcCalculator(preferences.ActiveQtcFormula());
+                result = calc.Calculate(qt, meanRR, c.CurrentCalibration.UnitsAreMsecs, c.CurrentCalibration.Units);
+            }
+            if (MessageBox.Show(result, "Calculated QTc", MessageBoxButtons.RetryCancel) == DialogResult.Retry)
+            {
+                showQTcStep2Menu();
+            }
+            else
+            {
+                showMainMenu();
+            }
+        }
+        #endregion
     }
 }

@@ -32,6 +32,9 @@ namespace WpfTransparentWindow
         Button[] secondaryMenu;
         Button[] calibrationMenu;
 
+        bool inQTcStep1 = false;
+        double rrIntervalForQtc;
+
         #region Window
         public Window1()
         {
@@ -116,6 +119,8 @@ namespace WpfTransparentWindow
             HideSecondaryMenu(true);
             HideCalibrationMenu(true);
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
+            canvas.Locked = false;
+            inQTcStep1 = false;
         }
 
         private void ShowSecondaryMenu()
@@ -143,6 +148,7 @@ namespace WpfTransparentWindow
 
         private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
         {
+
             Debug.Print("Calibrate clicked");
             ShowCalibrationMenu();
         }
@@ -166,56 +172,10 @@ namespace WpfTransparentWindow
             CommonCaliper.MeasureMeanIntervalRate(canvas, canvas.DrawCalipers, measureRRDialog, preferences);
         }
 
-        private void MeasureMeanIntervalRate(ICalipers calipers, CommonCaliper.RefreshCaliperScreen refreshCaliperScreen)
-        {
-            Debug.Assert(measureRRDialog != null);
-            if (CommonCaliper.NoCalipersError(calipers.NumberOfCalipers()))
-            {
-                return;
-            }
-            BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
-            if (singleHorizontalCaliper != null)
-            {
-                calipers.SelectCaliper(singleHorizontalCaliper);
-                calipers.UnselectCalipersExcept(singleHorizontalCaliper);
-                refreshCaliperScreen();
-            }
-            if (calipers.NoCaliperIsSelected())
-            {
-                CommonCaliper.NoTimeCaliperError();
-                return;
-            }
-            BaseCaliper c = calipers.GetActiveCaliper();
-            if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
-            {
-                CommonCaliper.NoTimeCaliperError();
-                return;
-            }
-            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
-            if (CommonCaliper.GetDialogResult(measureRRDialog) == System.Windows.Forms.DialogResult.OK)
-            {
-                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
-                try
-                {
-                    Tuple<double, double> tuple = CommonCaliper.getMeanRRMeanRate(rawValue, c);
-                    double meanRR = tuple.Item1;
-                    double meanRate = tuple.Item2;
-                    string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
-                    message += Environment.NewLine;
-                    message += string.Format("Mean rate = {0} bpm", meanRate.ToString("G4"));
-                    MessageBox.Show(message, "Mean Interval and Rate");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Measurement Error");
-                }
-            }
-        }
-
         private void QTcButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("QTc clicked");
-            ShowSecondaryMenu();
+            CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu);
         }
 
         private void CancelButtonClicked(object sender, RoutedEventArgs e)
@@ -239,7 +199,31 @@ namespace WpfTransparentWindow
         private void MeasureButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Measure clicked");
+            if (inQTcStep1)
+            {
+                CommonCaliper.MeasureRRForQTc(canvas, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences); 
+            }
+            else // in QTc step 2
+            {
+                CommonCaliper.MeasureQTc(canvas, ShowMainMenu, ShowQTcStep2Menu, preferences);
+            }
         }
+
+        #endregion
+        #region QTc
+        public void ShowQTcStep1Menu()
+        {
+            ShowSecondaryMenu();
+            MessageTextBlock.Text = "Measure one or more RR intervals";
+            inQTcStep1 = true;
+        }
+
+        private void ShowQTcStep2Menu()
+        {
+            inQTcStep1 = false;
+            MessageTextBlock.Text = "Measure QT";
+        }
+
         #endregion
         #region Mouse
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -288,6 +272,5 @@ namespace WpfTransparentWindow
             }
         }
         #endregion
-
     }
 }

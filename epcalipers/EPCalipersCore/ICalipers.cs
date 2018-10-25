@@ -8,6 +8,10 @@ namespace EPCalipersCore
 {
     public interface ICalipers
     {
+        Calibration HorizontalCalibration { get; set; }
+        Calibration VerticalCalibration { get; set; }
+        bool Locked { get; set; }
+
         int NumberOfCalipers();
         bool NoCaliperIsSelected();
         void SelectSoleCaliper();
@@ -15,8 +19,6 @@ namespace EPCalipersCore
         BaseCaliper GetLoneTimeCaliper();
         void SelectCaliper(BaseCaliper c);
         void UnselectCalipersExcept(BaseCaliper c);
-        
-        Calibration HorizontalCalibration { get; set; }
-        Calibration VerticalCalibration { get; set; }
+        bool NoTimeCaliperSelected();
     }
 }
