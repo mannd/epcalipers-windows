@@ -167,7 +167,7 @@ namespace epcalipers
 
             backCalibrationButton = new Button();
             toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
-            backCalibrationButton.Text = "Back";
+            backCalibrationButton.Text = "Done";
             backCalibrationButton.Click += backCalibrationButton_Click;
 
             intervalRateButton = new Button();

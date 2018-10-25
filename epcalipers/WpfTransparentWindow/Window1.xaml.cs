@@ -30,6 +30,7 @@ namespace WpfTransparentWindow
 
         Button[] mainMenu;
         Button[] secondaryMenu;
+        Button[] calibrationMenu;
 
         #region Window
         public Window1()
@@ -40,6 +41,7 @@ namespace WpfTransparentWindow
             preferences = new Preferences();
             mainMenu = new Button[] { AddButton, CalibrateButton, ClearButton, RateIntButton, MeanRateButton, QTcButton };
             secondaryMenu = new Button[] { MeasureButton, CancelButton };
+            calibrationMenu = new Button[] { SetButton, ClearButton, CancelCalibrationButton };
             ShowMainMenu();
         }
 
@@ -83,6 +85,19 @@ namespace WpfTransparentWindow
             MessageTextBlock.Visibility = visibility;
         }
 
+        public void HideCalibrationMenu(bool hide)
+        {
+            Visibility visibility = Visibility.Visible;
+            if (hide)
+            {
+                visibility = Visibility.Hidden;
+            }
+            foreach (Button b in calibrationMenu)
+            {
+                b.Visibility = visibility;
+            }
+       }
+
         public void AddButtonClicked(object sender, RoutedEventArgs args)
         {
             CommonCaliper.PickAndAddCaliper(canvas, SetupCaliper);
@@ -99,6 +114,7 @@ namespace WpfTransparentWindow
         {
             HideMainMenu(false);
             HideSecondaryMenu(true);
+            HideCalibrationMenu(true);
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
         }
 
@@ -106,6 +122,14 @@ namespace WpfTransparentWindow
         {
             HideMainMenu(true);
             HideSecondaryMenu(false);
+            HideCalibrationMenu(true);
+        }
+
+        private void ShowCalibrationMenu()
+        {
+            HideMainMenu(true);
+            HideSecondaryMenu(true);
+            HideCalibrationMenu(false);
         }
 
         private void EnableMeasurementMenuItems(bool enable)
@@ -120,7 +144,7 @@ namespace WpfTransparentWindow
         private void CalibrateButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("Calibrate clicked");
-            CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, 1, canvas.DrawCalipers, ShowMainMenu);
+            ShowCalibrationMenu();
         }
 
         private void ClearButtonClicked(object sender, RoutedEventArgs e)
@@ -198,6 +222,18 @@ namespace WpfTransparentWindow
         {
             Debug.Print("Cancel clicked");
             ShowMainMenu();
+        }
+
+        private void CancelCalibrationButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Cancel calibration clicked");
+            ShowMainMenu();
+        }
+
+        private void SetButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Debug.Print("Set calibration clicked");
+            CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, 1, canvas.DrawCalipers, ShowMainMenu);
         }
 
         private void MeasureButtonClicked(object sender, RoutedEventArgs e)

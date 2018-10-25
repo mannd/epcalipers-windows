@@ -43,26 +43,29 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button Name="AddButton" Content="Add Caliper" Click="AddButtonClicked" 
                         Grid.Column="0" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="CalibrateButton" Content="Calibrate" Click="CalibrateButtonClicked" 
                         Grid.Column="1" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="ClearButton" Content="Clear" Click="ClearButtonClicked" 
-                        Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="RateIntButton" Content="Rate/Int" Click="RateIntButtonClicked" 
-                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="MeanRateButton" Content="Mean Rate" Click="MeanRateButtonClicked" 
-                        Grid.Column="4" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="QTcButton" Content="QTc" Click="QTcButtonClicked" 
-                        Grid.Column="5" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="CancelButton" Content="Cancel" Click="CancelButtonClicked" 
-                        Grid.Column="5" Width="80" Margin="10,10,10,10" />
-                    <Button Name="MeasureButton" Content="Measure" Click="MeasureButtonClicked" 
                         Grid.Column="4" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Name="CancelButton" Content="Cancel" Click="CancelButtonClicked" 
+                        Grid.Column="4" Width="80" Margin="10,10,10,10" />
+                    <Button Name="MeasureButton" Content="Measure" Click="MeasureButtonClicked" 
+                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
                     <TextBlock Name="MessageTextBlock" Width="160" Margin="10, 10, 10, 10"
-                        Grid.Column="2" Grid.ColumnSpan="2" TextAlignment="Right">Message</TextBlock> 
+                        Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Right">Message</TextBlock>
+                    <Button Name="SetButton" Content="Set" Click="SetButtonClicked" 
+                        Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Name="ClearButton" Content="Clear" Click="ClearButtonClicked" 
+                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Name="CancelCalibrationButton" Content="Done" Click="CancelCalibrationButtonClicked" 
+                        Grid.Column="4" Width="80" Margin="10,10,10,10" />
                 </Grid>
             </StackPanel>
         </Grid>
