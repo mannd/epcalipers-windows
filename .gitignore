@@ -278,6 +278,3 @@ flycheck_*.el
 
 # projectiles files
 .projectile
-
-#Migration backup
-epcalipers/MigrationBackup/

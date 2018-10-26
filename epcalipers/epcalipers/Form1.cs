@@ -7,14 +7,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-<<<<<<< HEAD
 using System.Runtime.InteropServices;
-=======
-using System.Windows.Forms.Integration;
-using System.Runtime.InteropServices;
-using EPCalipersCore;
-using EPCalipersCore.Properties;
->>>>>>> epcalipers-2
 
 namespace epcalipers
 {
@@ -22,7 +15,7 @@ namespace epcalipers
     {
         #region Fields
         Bitmap theBitmap;
-        BaseCalipers theCalipers;
+        Calipers theCalipers;
         Button imageButton;
         Button addCalipersButton;
         Button calibrateButton;
@@ -47,13 +40,18 @@ namespace epcalipers
         static int maxControlNumber = 10;
         Control[] oldControls = new Control[maxControlNumber];
 
+
         Preferences preferences;
         PreferencesDialog preferencesDialog;
-        MeasureRRDialog measureRRDialog = new MeasureRRDialog();
-        CalibrationDialog calibrationDialog = new CalibrationDialog();
+        MeasureRRDialog measureRRDialog;
+        CalibrationDialog calibrationDialog;
 
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.Transparent;
+
+        // allow users to retain custom colors per session
+        int[] customColors;
+
         Point firstPoint;
 
         string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
@@ -64,11 +62,7 @@ namespace epcalipers
         double zoomInFactor = 1.414214;
         double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
-<<<<<<< HEAD
         double maximumZoom = 6.0;
-=======
-        double maximumZoom = 5.0;
->>>>>>> epcalipers-2
 
         double rrIntervalForQtc = 0.0;
 
@@ -86,15 +80,12 @@ namespace epcalipers
         private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
-<<<<<<< HEAD
 
         // transparency stuff
         private Color oldFormBackgroundColor;
         private Color oldTransparencyKey;
         private bool isTransparent;
 
-=======
->>>>>>> epcalipers-2
         #endregion
         #region Initialization
 
@@ -104,15 +95,13 @@ namespace epcalipers
         {
             InitializeComponent();
             preferences = new Preferences();
-            theCalipers = new BaseCalipers();
+            theCalipers = new Calipers();
 
-<<<<<<< HEAD
 
             oldFormBackgroundColor = BackColor;
             oldTransparencyKey = TransparencyKey;
-=======
->>>>>>> epcalipers-2
             ecgPictureBox.BackColor = Color.White;
+            isTransparent = false;
             FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -125,11 +114,10 @@ namespace epcalipers
             string ghostscriptDir = AppDomain.CurrentDomain.BaseDirectory;
             MagickNET.SetGhostscriptDirectory(ghostscriptDir);
 
+            //KeyPreview = true;
+            //this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             SetupButtons();
-<<<<<<< HEAD
            // ShowMainMenu();
-=======
->>>>>>> epcalipers-2
             // form starts with no image loaded, so no pages either
             EnablePages(false);
 
@@ -164,8 +152,8 @@ namespace epcalipers
             catch (Exception)
             {
                 lastFilename = "";
+                
             }
-<<<<<<< HEAD
             ShowMainMenu();
         }
 
@@ -225,14 +213,13 @@ namespace epcalipers
             ResetCalibration();
             ecgPictureBox.Refresh();
             // TODO: below sometimes called twice
-=======
->>>>>>> epcalipers-2
             ShowMainMenu();
         }
 
         private void SetupButtons()
         {
             imageButton = new Button();
+           // imageButton.BackColor = Control.DefaultBackColor;
             imageButton.Text = "Open";
             toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
             imageButton.Click += imageButton_Click;
@@ -260,7 +247,7 @@ namespace epcalipers
 
             backCalibrationButton = new Button();
             toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
-            backCalibrationButton.Text = "Done";
+            backCalibrationButton.Text = "Back";
             backCalibrationButton.Click += backCalibrationButton_Click;
 
             intervalRateButton = new Button();
@@ -294,7 +281,7 @@ namespace epcalipers
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
 
             cancelTweakButton = new Button();
-            cancelTweakButton.Text = "Done";
+            cancelTweakButton.Text = "Cancel";
             cancelTweakButton.Click += CancelTweakButton_Click;
             toolTip1.SetToolTip(cancelTweakButton, "Cancel tweaking");
   
@@ -321,7 +308,6 @@ namespace epcalipers
         #region Buttons
         private void MeasureQTcButton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             if (theCalipers.NoTimeCaliperSelected())
             {
                 NoTimeCaliperError();
@@ -348,11 +334,10 @@ namespace epcalipers
             {
                 ShowMainMenu();
             }
-=======
-            CommonCaliper.MeasureQTc(theCalipers, ShowMainMenu, ShowQTcStep2Menu, preferences);
->>>>>>> epcalipers-2
         }
 
+        // TODO: cancel button needs to return to QT measurement if we are doing QTc,
+        // and, must keep calipers locked if doing QTc.
         private void CancelButton_Click(object sender, EventArgs e)
         {
             theCalipers.Locked = false;
@@ -361,18 +346,16 @@ namespace epcalipers
 
         private void QtcButton_Click(object sender, EventArgs e)
         {
-            CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu);
-            //QTcInterval();
+            QTcInterval();
         }
 
         private void MeanRRButton_Click(object sender, EventArgs e)
         {
-            CommonCaliper.MeasureMeanIntervalRate(theCalipers, ImageRefresh, measureRRDialog, preferences);
+            MeasureMeanIntervalRate();
         }
 
         private void MeasureRRForQtcButton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             if (measureRRDialog == null)
             {
                 measureRRDialog = new MeasureRRDialog();
@@ -393,14 +376,11 @@ namespace epcalipers
                     ShowMainMenu();
                 }
             }
-=======
-            CommonCaliper.MeasureRRForQTc(theCalipers, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences);
->>>>>>> epcalipers-2
         }
 
         private void clearCalibrationButton_Click(object sender, EventArgs e)
         {
-            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+            ClearCalibration();
         }
 
         private void backCalibrationButton_Click(object sender, EventArgs e)
@@ -410,15 +390,12 @@ namespace epcalipers
 
         private void imageButton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             // Opening a file removes transparency automatically
             // even if Open dialog is cancelled.
             if (isTransparent) { 
               makeTransparent(false);
             }
             transparentWindowToolStripMenuItem.Checked = false;
-=======
->>>>>>> epcalipers-2
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
             bool isPDF = false;
@@ -452,6 +429,7 @@ namespace epcalipers
                     MessageBox.Show(String.Format("Could not open {0} from disk. {1}", openFileDialog1.FileName, pdfWarning) + "\n\nDetailed error: " +
                         exception.Message, "Error");
                 }
+
         }
 
         private void calibrateButton_Click(object sender, EventArgs e)
@@ -466,7 +444,6 @@ namespace epcalipers
 
         private void SetCalibration()
         {
-<<<<<<< HEAD
             try
             {
                 if (NoCalipersError())
@@ -530,19 +507,14 @@ namespace epcalipers
             {
                 MessageBox.Show(ex.Message, "Calibration Error");
             }
-=======
-            CommonCaliper.SetCalibration(theCalipers, preferences, calibrationDialog, currentActualZoom,
-                ImageRefresh, ShowMainMenu);
->>>>>>> epcalipers-2
         }
 
         private void addCaliper_Click(object sender, EventArgs e)
         {
-            if (ecgPictureBox.Image == null)
+            if (ecgPictureBox.Image == null && !isTransparent)
             {
                return;
             }
-<<<<<<< HEAD
             NewCaliperDialog dialog = new NewCaliperDialog();
             if (GetDialogResult(dialog) == DialogResult.OK)
             {
@@ -563,9 +535,6 @@ namespace epcalipers
                     AddAngleCaliper();
                 }
             }
-=======
-            CommonCaliper.PickAndAddCaliper(theCalipers, SetupCaliper);
->>>>>>> epcalipers-2
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
@@ -598,6 +567,8 @@ namespace epcalipers
             }
             theCalipers.CancelTweaking();
         }
+
+
         #endregion
         #region Mouse
         private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -628,18 +599,10 @@ namespace epcalipers
                     contextMenuStrip1.Enabled = pointNearCaliper;
                     if (pointNearCaliper)
                     {
-<<<<<<< HEAD
                         Caliper c = theCalipers.getGrabbedCaliper(clickPoint);
                         if (c != null)
                         {
                             marchingCaliperToolStripMenuItem.Checked = c.isMarching;
-=======
-                        BaseCaliper c = theCalipers.getGrabbedCaliper(clickPoint);
-                        if (c != null)
-                        {
-                            marchingCaliperToolStripMenuItem.Checked = c.isMarching && c.isTimeCaliper();
-                            marchingCaliperToolStripMenuItem.Enabled = c.isTimeCaliper();
->>>>>>> epcalipers-2
                         }
                     }
                     else
@@ -670,6 +633,7 @@ namespace epcalipers
                 firstPoint = newPoint;
                 ecgPictureBox.Refresh();
             }
+
         }
 
         private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -690,6 +654,10 @@ namespace epcalipers
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
+            if (isTransparent)
+            {
+                makeTransparent(false);
+            }
             try
             {
                 if (validData)
@@ -865,7 +833,6 @@ namespace epcalipers
         }
         #endregion
         #region Calipers
-<<<<<<< HEAD
         private void MeasureMeanIntervalRate()
         {
             if (NoCalipersError())
@@ -951,13 +918,11 @@ namespace epcalipers
         {
             MessageBox.Show("Select a time caliper.", "Measurement Error");
         }
-=======
->>>>>>> epcalipers-2
 
         private void QTcInterval()
         {
             theCalipers.HorizontalCalibration.DisplayRate = false;
-            BaseCaliper singleHorizontalCaliper = theCalipers.GetLoneTimeCaliper();
+            Caliper singleHorizontalCaliper = theCalipers.getLoneTimeCaliper();
             if (singleHorizontalCaliper != null)
             {
                 theCalipers.SelectCaliper(singleHorizontalCaliper);
@@ -966,16 +931,16 @@ namespace epcalipers
             }
             if (theCalipers.NoTimeCaliperSelected())
             {
-                CommonCaliper.NoTimeCaliperError();
+                NoTimeCaliperError();
             }
             else
             {
-                ShowQTcStep1Menu();
+                showQTcStep1Menu();
                 theCalipers.Locked = true;
             }
         }
 
-        private void ShowQTcStep1Menu()
+        private void showQTcStep1Menu()
         {
             flowLayoutPanel1.Controls.Clear();
             if (qtcStep1Menu == null)
@@ -986,7 +951,7 @@ namespace epcalipers
             CancelButton = cancelButton;
         }
 
-        private void ShowQTcStep2Menu()
+        private void showQTcStep2Menu()
         {
             flowLayoutPanel1.Controls.Clear();
             if (qtcStep2Menu == null)
@@ -1010,7 +975,6 @@ namespace epcalipers
             flowLayoutPanel1.Controls.AddRange(mainMenu);
             EnableImageMenuItems(ImageIsLoaded());
             EnableCaliperMenuItems(CalipersAllowed());
-<<<<<<< HEAD
             EnableMeasurementMenuItems(MeasurementsAllowed());
             // with transparent windows, next action is usually add caliper, but
             // with regular window, next action is usually open a file
@@ -1023,10 +987,6 @@ namespace epcalipers
                 imageButton.Select();
             }
 
-=======
-            EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(theCalipers));
-            imageButton.Select();
->>>>>>> epcalipers-2
             theCalipers.Locked = false;
         }
 
@@ -1068,7 +1028,7 @@ namespace epcalipers
 
         private void DoCalibration()
         {
-            if (CommonCaliper.NoCalipersError(theCalipers.NumberOfCalipers()))
+            if (NoCalipersError())
             {
                 return;
             }
@@ -1079,23 +1039,138 @@ namespace epcalipers
             }
         }
 
-        private void ImageRefresh()
+        private bool NoCalipersError()
         {
+            bool noCalipers = false;
+            if (theCalipers.NumberOfCalipers() < 1)
+            {
+                ShowNoCalipersDialog();
+                noCalipers = true; ;
+            }
+            return noCalipers;
+        }
+
+        private void ShowNoCalipersDialog()
+        {
+            MessageBox.Show("Add one or more calipers first before proceeding.",
+                "No Calipers To Use");
+        }
+
+        private void Calibrate(string rawCalibration)
+        {
+            try
+            {
+                if (rawCalibration.Length < 1)
+                {
+                    throw new Exception("No calibration measurement entered.");
+                }
+                float value = 0.0f;
+                string units = "";
+                char[] delimiters = { ' ' };
+                string[] parts = rawCalibration.Split(delimiters);
+                value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                value = Math.Abs(value);
+                if (parts.Length > 1)
+                {
+                    // assume second substring is units
+                    units = parts[1];
+                }
+                if (value == 0)
+                {
+                    throw new Exception("Calibration can't be zero.");
+                }
+                Caliper c = theCalipers.GetActiveCaliper();
+                if (c == null)
+                {
+                    // this really shouldn't happen
+                    throw new Exception("No caliper for calibration.");
+                }
+                if (c.ValueInPoints <= 0)
+                {
+                    // this could happen
+                    throw new Exception("Caliper must be positive to calibrate.");
+                }
+                Calibration calibration;
+                if (c.Direction == CaliperDirection.Horizontal)
+                {
+                    calibration = theCalipers.HorizontalCalibration;
+                }
+                else
+                {
+                    calibration = theCalipers.VerticalCalibration;
+                }
+                calibration.CalibrationString = rawCalibration;
+                calibration.Units = units;
+                if (!calibration.CanDisplayRate)
+                {
+                    calibration.DisplayRate = false;
+                }
+                calibration.OriginalZoom = currentActualZoom;
+                calibration.OriginalCalFactor = value / c.ValueInPoints;
+                calibration.CurrentZoom = calibration.OriginalZoom;
+                calibration.Calibrated = true;
+                ecgPictureBox.Refresh();
+                // return to main menu after successful calibration
+                // = behavior in mobile versions
+                ShowMainMenu();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Calibration Error");
+            }
+        }
+
+        private void ClearCalibration()
+        {
+            ResetCalibration();
             ecgPictureBox.Refresh();
+
+        }
+
+        private void ResetCalibration()
+        {
+            if (theCalipers.HorizontalCalibration.Calibrated ||
+                theCalipers.VerticalCalibration.Calibrated)
+            {
+                theCalipers.HorizontalCalibration.Reset();
+                theCalipers.VerticalCalibration.Reset();
+                EnableMeasurementMenuItems(false);
+            }
+        }
+
+        private void AddCaliper(CaliperDirection direction)
+        {
+            Caliper c = new Caliper();
+            c.Direction = direction;
+            if (direction == CaliperDirection.Horizontal)
+            {
+                c.CurrentCalibration = theCalipers.HorizontalCalibration;
+            }
+            else
+            {
+                c.CurrentCalibration = theCalipers.VerticalCalibration;
+            }
+            SetupCaliper(c);
+        }
+
+        private void AddAngleCaliper()
+        {
+            AngleCaliper c = new AngleCaliper();
+            // TODO: refactor common code
+            c.Direction = CaliperDirection.Horizontal;
+            c.CurrentCalibration = theCalipers.HorizontalCalibration;
+            c.VerticalCalibration = theCalipers.VerticalCalibration;
+            SetupCaliper(c);
         }
 
         private void SetupCaliper(Caliper c)
         {
-<<<<<<< HEAD
             c.LineWidth = preferences.LineWidth;
             c.UnselectedColor = preferences.CaliperColor;
             c.SelectedColor = preferences.HighlightColor;
             c.CaliperColor = c.UnselectedColor;
             c.rounding = preferences.RoundingParameter();
             c.SetInitialPositionInRect(ecgPictureBox.DisplayRectangle);
-=======
-            c.Setup(preferences);
->>>>>>> epcalipers-2
             theCalipers.addCaliper(c);
             ecgPictureBox.Refresh();
         }
@@ -1116,7 +1191,12 @@ namespace epcalipers
 
         private bool CalipersAllowed()
         {
-            return ImageIsLoaded();
+            return ImageIsLoaded() || isTransparent;
+        }
+
+        private bool MeasurementsAllowed()
+        {
+            return theCalipers.HorizontalCalibration.CanDisplayRate;
         }
 
         private void ZoomIn()
@@ -1156,11 +1236,6 @@ namespace epcalipers
             if (currentActualZoom > maximumZoom)
             {
                 currentActualZoom = maximumZoom;
-<<<<<<< HEAD
-=======
-                // no further processing, or can get memory overflow
-                return;
->>>>>>> epcalipers-2
             }
             Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
             Bitmap zoomedBitmap = Zoom(rotatedBitmap);
@@ -1208,7 +1283,7 @@ namespace epcalipers
             theBitmap = new Bitmap(image);
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
-            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+            ClearCalibration();
         }
 
         // rotation
@@ -1230,7 +1305,7 @@ namespace epcalipers
             }
             ecgPictureBox.Image = zoomedBitmap;
             // calibration can't be maintained with rotation
-            CommonCaliper.ResetCalibration(theCalipers, EnableMeasurementMenuItems);
+            ResetCalibration();
 
         }
 
@@ -1243,7 +1318,7 @@ namespace epcalipers
                     ecgPictureBox.Image.Dispose();
                 }
                 ecgPictureBox.Image = theBitmap;
-                CommonCaliper.ResetCalibration(theCalipers, EnableMeasurementMenuItems);
+                ResetCalibration();
                 currentActualZoom = 1.0;
                 rotationAngle = 0.0f;
                 // not necessary to refresh image when image updated
@@ -1450,11 +1525,7 @@ namespace epcalipers
             {
                 preferencesDialog = new PreferencesDialog();
             }
-<<<<<<< HEAD
             if (GetDialogResult(preferencesDialog) == DialogResult.OK)
-=======
-            if (CommonCaliper.GetDialogResult(preferencesDialog) == DialogResult.OK)
->>>>>>> epcalipers-2
             {
                 preferencesDialog.Save();
                 UpdatePreferences();
@@ -1472,11 +1543,7 @@ namespace epcalipers
         private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 box = new AboutBox1();
-<<<<<<< HEAD
             GetDialogResult(box);
-=======
-            CommonCaliper.GetDialogResult(box);
->>>>>>> epcalipers-2
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1525,7 +1592,7 @@ namespace epcalipers
             {
                 return;
             }
-            CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Horizontal, SetupCaliper);
+            AddCaliper(CaliperDirection.Horizontal);
         }
 
         private void amplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1534,7 +1601,7 @@ namespace epcalipers
             {
                 return;
             }
-            CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Vertical, SetupCaliper);
+            AddCaliper(CaliperDirection.Vertical);
         }
 
         private void angleCaliperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1543,7 +1610,7 @@ namespace epcalipers
             {
                 return;
             }
-            CommonCaliper.AddAngleCaliper(theCalipers, SetupCaliper);
+            AddAngleCaliper();
         }
 
         private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1552,7 +1619,7 @@ namespace epcalipers
             {
                 return;
             }
-            BaseCaliper c = theCalipers.GetActiveCaliper();
+            Caliper c = theCalipers.GetActiveCaliper();
             if (c != null)
             {
                 theCalipers.deleteCaliper(c);
@@ -1582,7 +1649,7 @@ namespace epcalipers
 
         private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+            ClearCalibration();
         }
 
         private void nextPageToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1604,7 +1671,7 @@ namespace epcalipers
 
         private void meanRateIntervalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CommonCaliper.MeasureMeanIntervalRate(theCalipers, ImageRefresh, measureRRDialog, preferences);
+            MeasureMeanIntervalRate();
         }
 
         private void qTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1629,27 +1696,16 @@ namespace epcalipers
             RotateEcgImage(-0.1f);
         }
 
-<<<<<<< HEAD
         private void transparentWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             makeTransparent(transparentWindowToolStripMenuItem.Checked);
         }
 
-=======
-        private void transparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
-            var transWindow = new WpfTransparentWindow.Window1();
-            ElementHost.EnableModelessKeyboardInterop(transWindow);
-            transWindow.Show();
-        }
->>>>>>> epcalipers-2
         #endregion
 
         #region right-click menu
         private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             theCalipers.UnselectChosenCaliper();
             ecgPictureBox.Refresh();
             ColorDialog colorDialog = new ColorDialog();
@@ -1664,9 +1720,6 @@ namespace epcalipers
                 customColors = colorDialog.CustomColors;
                 ecgPictureBox.Refresh();
             }
-=======
-            CommonCaliper.SelectCaliperColor(theCalipers, ImageRefresh);
->>>>>>> epcalipers-2
         }
 
         private void tweakToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1757,13 +1810,8 @@ namespace epcalipers
             return true;
         }
 
-<<<<<<< HEAD
         #endregion
 
 
-=======
-
-        #endregion
->>>>>>> epcalipers-2
     }
 }

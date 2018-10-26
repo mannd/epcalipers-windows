@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\Documents\publish\epcalipers-test\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\Documents\publish\epcalipers-v1.5-anyCPU\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -30,8 +30,8 @@
     <ProductName>EP Calipers</ProductName>
     <PublisherName>EP Studios</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>5</ApplicationRevision>
-    <ApplicationVersion>1.10.0.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,17 +60,10 @@
     <ApplicationIcon>epcalipers-test-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-<<<<<<< HEAD
     <ManifestCertificateThumbprint>8C100AE24D0F715BF90884247B82A43AA4982F0A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>epcalipers_5_TemporaryKey.pfx</ManifestKeyFile>
-=======
-    <ManifestCertificateThumbprint>70388F6099220F71112571383D94B6F57C992776</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>epcalipers_2_TemporaryKey.pfx</ManifestKeyFile>
->>>>>>> epcalipers-2
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -98,42 +91,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>epcalipers_1_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="Magick.NET-Q16-x64, Version=7.1.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=AMD64">
+      <HintPath>..\packages\Magick.NET-Q16-x64.7.1.0\lib\net40\Magick.NET-Q16-x64.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -143,18 +107,36 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    <Compile Include="AngleCaliper.cs" />
+    <Compile Include="Calibration.cs" />
+    <Compile Include="CalibrationDialog.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CalibrationDialog.Designer.cs">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Caliper.cs" />
+    <Compile Include="Calipers.cs" />
+    <Compile Include="EPCalculator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MeasureRRDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MeasureRRDialog.Designer.cs">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewCaliperDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCaliperDialog.Designer.cs">
+      <DependentUpon>NewCaliperDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="PreferencesDialog.cs">
       <SubType>Form</SubType>
@@ -171,8 +153,17 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="CalibrationDialog.resx">
+      <DependentUpon>CalibrationDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MeasureRRDialog.resx">
+      <DependentUpon>MeasureRRDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCaliperDialog.resx">
+      <DependentUpon>NewCaliperDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PreferencesDialog.resx">
       <DependentUpon>PreferencesDialog.cs</DependentUpon>
@@ -185,19 +176,25 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="Properties\Preferences.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="epcalipers_1_TemporaryKey.pfx" />
-<<<<<<< HEAD
     <None Include="epcalipers_5_TemporaryKey.pfx" />
-=======
-    <None Include="epcalipers_2_TemporaryKey.pfx" />
->>>>>>> epcalipers-2
     <None Include="epcalipers_TemporaryKey.pfx" />
-    <None Include="newtemporarykey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -211,13 +208,7 @@
     <Content Include="epcalipers-test-icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="gsdll32.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="gsdll64.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="gswin32c.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="gswin64c.exe">
@@ -240,21 +231,25 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EPCalipersCore\EPCalipersCore.csproj">
-      <Project>{40025627-4d6c-4449-b66a-e04bb1aa9814}</Project>
-      <Name>EPCalipersCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WpfTransparentWindow\WpfTransparentWindow.csproj">
-      <Project>{7c85aaa4-7a4d-42d1-bcb7-92c80f3b31ac}</Project>
-      <Name>WpfTransparentWindow</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-x64">
-      <Version>7.9.0</Version>
-    </PackageReference>
+    <PublishFile Include="Magick.NET-Q16-x64.Native.dll">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Magick.NET-Q16-x64.7.1.0\build\net40\Magick.NET-Q16-x64.targets" Condition="Exists('..\packages\Magick.NET-Q16-x64.7.1.0\build\net40\Magick.NET-Q16-x64.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Magick.NET-Q16-x64.7.1.0\build\net40\Magick.NET-Q16-x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Magick.NET-Q16-x64.7.1.0\build\net40\Magick.NET-Q16-x64.targets'))" />
+  </Target>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>

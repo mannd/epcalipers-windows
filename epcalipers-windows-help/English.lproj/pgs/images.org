@@ -37,16 +37,15 @@ You can also use the Zoom buttons (*+* and *-*) at the lower left of the window 
 * Saving or printing an edited image
 Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.
 * Transparent windows
-** What are transparent windows?
-Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent windows/.  You can launch one or more transparent windows which allow you to measure whatever is underneath the window using calipers.  A transparent window looks like this:
-#+CAPTION: Transparent window floating over a browser web page
+** What is transparent window mode?
+Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent window mode/.  In this mode, the main window is transparent, allowing you to measure whatever is underneath the window using calipers.  Transparent window mode looks like this:
+#+CAPTION: Transparent window mode
 [[../../shrd/transparent_window.png]]
 
-** Lauching a transparent window
-Use the *Options | Transparent window* menu item to lauch a transparent window.  This window has the same functionality as the main window, with buttons to add calipers, calibrate, measure rates, mean rates, and QTc intervals.  The right-click menu is the same as the main window, allowing you to change individual caliper colors, march calipers, and tweak caliper positioning.
+** Activating transparent window mode
+Use the *Window | Transparent window* menu item to activate and inactivate transparent window mode.  
 ** Things to watch out for with transparent windows
 *** Calibration implications
-<<<<<<< HEAD
 When you load an image into *EP Calipers* the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  In transparent window mode the program has no way to figure out if you zoom the underlying image and invalidate calibration.  Take care to recalibrate your calipers if you zoom your image in a program external to *EP Calipers*.
 *** Change modes
 All calipers and calibration are cleared when changing modes.  While in transparent window mode, if you open an image file, the program reverts to normal image mode.
@@ -54,6 +53,3 @@ All calipers and calibration are cleared when changing modes.  While in transpar
 When in transparent mode, the transparent parts of the window are also transparent to mouse clicks.  If you click on the underlying window, it becomes the active window on top, and the *EP Calipers* window may disappear underneath.  In order to help prevent this, you can add [[file:calipers.org::*Caliper%20handles][handles]] to calipers, making them easy to click and move.  [[file:preferences.org::*Changing%20options][Options]] can be set to add the handles automatically each time you enter transparent mode.  The default setting for this option is to add caliper handles whenever you activate transparent mode.  Alternatively there is now an option -- *Transparent window on top* -- that makes the window stay on top during transparent window mode.
 ** Alternative transparency
 On newer versions of Windows 10 (the Creators Update, version 1709, and possible other versions), full transparency doesn't seem to work.  Symptoms include not being able to move calipers or click buttons while in transparent window mode.  If this occurs, or if you prefer a different transparency mode, active alternative transparency mode using the option *Use alternative transparency*.  This creates a semi-transparent window, and you can adjust the degree of transparency using the *Transparency alpha value* option.
-=======
-When you load an image into *EP Calipers* the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  With transparent windows the program has no way to figure out if you zoom the underlying image and invalidate calibration.  Take care to recalibrate your calipers if you zoom your image in a program external to *EP Calipers*.
->>>>>>> epcalipers-2

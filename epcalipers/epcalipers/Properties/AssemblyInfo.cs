@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -7,17 +8,18 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EP Calipers")]
 [assembly: AssemblyDescription("Electronic calipers for cardiologists and electrophysiologists.  For further information please select the Help menu item or visit the EP Studios website.")]
 [assembly: AssemblyConfiguration("")]
-<<<<<<< HEAD
 [assembly: AssemblyCompany("EP Studios, Inc.")]
 [assembly: AssemblyProduct("EP Calipers")]
 [assembly: AssemblyCopyright("Copyright © 2016-2018 EP Studios, Inc.")]
 [assembly: AssemblyTrademark("")]
-=======
->>>>>>> epcalipers-2
 [assembly: AssemblyCulture("")]
 
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-<<<<<<< HEAD
 [assembly: Guid("6fa709a0-d676-4f08-b2e9-a30582e78434")]
 
 // Version information for an assembly consists of the following four values:
@@ -32,6 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.10.0.*")]
 [assembly: AssemblyFileVersion("1.10.0.0")]
-=======
-[assembly: Guid("6fa709a0-d676-4f08-b2e9-a30582e78434")]
->>>>>>> epcalipers-2

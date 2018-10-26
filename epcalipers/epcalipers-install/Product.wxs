@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define epcalipers_TargetDir=$(var.epcalipers.TargetDir)?>
-<<<<<<< HEAD
   <Product Id="*" Name="EP Calipers" Language="1033" Version="1.10.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
-=======
-  <Product Id="*" Name="EP Calipers" Language="1033" Version="2.0.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
->>>>>>> epcalipers-2
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -20,7 +16,7 @@
 
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFilesFolder">
+      <Directory Id="ProgramFiles64Folder">
         <Directory Id="INSTALLFOLDER" Name="epcalipers" />
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -66,20 +62,17 @@
       <Component Id="epcalipers.exe.config" Guid="ddf6d839-c675-465b-b73f-ba28e6843066">
         <File Id="epcalipers.exe.config" Name="epcalipers.exe.config" Source="$(var.epcalipers_TargetDir)epcalipers.exe.config" />
       </Component>
-      <Component Id="gsdll32.dll" Guid="33db4a8b-a551-402f-8307-b5f4176e627a">
-        <File Id="gsdll32.dll" Name="gsdll32.dll" Source="$(var.epcalipers_TargetDir)gsdll32.dll" />
+      <Component Id="Magick.NET_Q16_x64.Native.dll" Guid="77f1ceb0-baa6-4c6d-8ed9-7982a7ed7b48">
+        <File Id="Magick.NET_Q16_x64.Native.dll" Name="Magick.NET-Q16-x64.Native.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.Native.dll" />
       </Component>
-      <Component Id="gswin32c.exe" Guid="ed92d8c9-69ba-4464-8ff8-5ddaf926be58">
-        <File Id="gswin32c.exe" Name="gswin32c.exe" Source="$(var.epcalipers_TargetDir)gswin32c.exe" />
+      <Component Id="Magick.NET_Q16_x64.dll" Guid="8d5e2e1a-3810-4d23-a658-f5fa5e773486">
+        <File Id="Magick.NET_Q16_x64.dll" Name="Magick.NET-Q16-x64.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.dll" />
       </Component>
-      <Component Id="Magick.NET_Q16_x86.Native.dll" Guid="1ab6eb34-4acf-4fb5-9ced-f0848848b50f">
-        <File Id="Magick.NET_Q16_x86.Native.dll" Name="Magick.NET-Q16-x86.Native.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x86.Native.dll" />
+      <Component Id="gsdll64.dll" Guid="10b07b7f-05d1-4c90-b992-083868352520">
+        <File Id="gsdll64.dll" Name="gsdll64.dll" Source="$(var.epcalipers_TargetDir)gsdll64.dll" />
       </Component>
-      <Component Id="Magick.NET_Q16_x86.dll" Guid="1eca1a9b-cf56-4e01-a91f-0f4190f89f7e">
-        <File Id="Magick.NET_Q16_x86.dll" Name="Magick.NET-Q16-x86.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x86.dll" />
-      </Component>
-      <Component Id="WpfTransparentWindow.dll" Guid="f8674db9-401c-43d0-9c5c-7a56764ae8b0">
-        <File Id="WpfTransparentWindow.dll" Name="WpfTransparentWindow.dll" Source="$(var.epcalipers_TargetDir)WpfTransparentWindow.dll" />
+      <Component Id="gswin64c.exe" Guid="23c8a20b-8f88-4f1f-8569-89244902995c">
+        <File Id="gswin64c.exe" Name="gswin64c.exe" Source="$(var.epcalipers_TargetDir)gswin64c.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>
