@@ -33,6 +33,19 @@ namespace WpfTransparentWindow
         Button[] secondaryMenu;
         Button[] calibrationMenu;
 
+        enum Menu
+        {
+            Main,
+            Secondary,
+            Calibration,
+            Qt1,
+            Qt2,
+            Tweak
+        }
+
+        Menu currentMenu = Menu.Main;
+        Menu previousMenu = Menu.Main;
+
         bool inQTcStep1 = false;
         #endregion
         #region Window
@@ -60,6 +73,34 @@ namespace WpfTransparentWindow
 
         #endregion
         #region Buttons
+
+        private void ShowMenu(Menu menu)
+        {
+            switch (menu)
+            {
+                case Menu.Main:
+                    ShowMainMenu();
+                    break;
+                case Menu.Secondary:
+                    ShowSecondaryMenu();
+                    break;
+                case Menu.Calibration:
+                    ShowCalibrationMenu();
+                    break;
+                case Menu.Tweak:
+                    ShowTweakMenu();
+                    break;
+                case Menu.Qt1:
+                    ShowQTcStep1Menu();
+                    break;
+                case Menu.Qt2:
+                    ShowQTcStep2Menu();
+                    break;
+                default:
+                    ShowMainMenu();
+                    break;
+            }
+        }
 
         public void HideMainMenu(bool hide)
         {
@@ -99,7 +140,18 @@ namespace WpfTransparentWindow
             {
                 b.Visibility = visibility;
             }
-       }
+        }
+
+        public void HideTweakMenu(bool hide)
+        {
+            Visibility visibility = Visibility.Visible;
+            if (hide)
+            {
+                visibility = Visibility.Hidden;
+            }
+            CancelTweakButton.Visibility = visibility;
+            TweakTextBlock.Visibility = visibility;
+        }
 
         public void AddButtonClicked(object sender, RoutedEventArgs args)
         {
@@ -118,28 +170,44 @@ namespace WpfTransparentWindow
             HideMainMenu(false);
             HideSecondaryMenu(true);
             HideCalibrationMenu(true);
+            HideTweakMenu(true);
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
             canvas.Locked = false;
             inQTcStep1 = false;
+            currentMenu = Menu.Main;
         }
 
         private void ShowSecondaryMenu()
         {
             HideMainMenu(true);
             HideSecondaryMenu(false);
+            HideTweakMenu(true);
             HideCalibrationMenu(true);
+            currentMenu = Menu.Secondary;
         }
 
         private void ShowCalibrationMenu()
         {
             HideMainMenu(true);
             HideSecondaryMenu(true);
+            HideTweakMenu(true);
             HideCalibrationMenu(false);
+            currentMenu = Menu.Calibration;
+        }
+
+        private void ShowTweakMenu()
+        {
+            HideMainMenu(true);
+            HideSecondaryMenu(true);
+            HideCalibrationMenu(true);
+            HideTweakMenu(false);
+            previousMenu = currentMenu;
+            currentMenu = Menu.Tweak;
         }
 
         private void EnableMeasurementMenuItems(bool enable)
         {
-            
+
             RateIntButton.IsEnabled = enable;
             MeanRateButton.IsEnabled = enable;
             QTcButton.IsEnabled = enable;
@@ -201,12 +269,17 @@ namespace WpfTransparentWindow
             Debug.Print("Measure clicked");
             if (inQTcStep1)
             {
-                CommonCaliper.MeasureRRForQTc(canvas, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences); 
+                CommonCaliper.MeasureRRForQTc(canvas, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences);
             }
             else // in QTc step 2
             {
                 CommonCaliper.MeasureQTc(canvas, ShowMainMenu, ShowQTcStep2Menu, preferences);
             }
+        }
+
+        private void CancelTweakButtonClicked(object sender, RoutedEventArgs e)
+        {
+            CancelTweaking();
         }
 
         #endregion
@@ -230,6 +303,13 @@ namespace WpfTransparentWindow
             Debug.Print("Color menu item clicked");
             CommonCaliper.SelectCaliperColor(canvas, canvas.DrawCalipers);
         }
+
+        private void TweakCaliperPositionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowTweakMenu();
+            TweakCaliper();
+        }
+
         #endregion
         #region QTc
         public void ShowQTcStep1Menu()
@@ -237,12 +317,15 @@ namespace WpfTransparentWindow
             ShowSecondaryMenu();
             MessageTextBlock.Text = "Measure one or more RR intervals";
             inQTcStep1 = true;
+            currentMenu = Menu.Qt1;
         }
 
         private void ShowQTcStep2Menu()
         {
+            ShowSecondaryMenu();
             inQTcStep1 = false;
             MessageTextBlock.Text = "Measure QT";
+            currentMenu = Menu.Qt2;
         }
 
         #endregion
@@ -254,6 +337,7 @@ namespace WpfTransparentWindow
             {
                 Debug.Write("right button clicked");
                 Debug.WriteLine("X={0}, Y={1}", clickPoint.X, clickPoint.Y);
+                canvas.Focus();
                 RightClickMenu.Visibility = Visibility.Hidden;
                 canvas.SetChosenCaliper(clickPoint);
                 canvas.SetChosenCaliperComponent(clickPoint);
@@ -273,7 +357,8 @@ namespace WpfTransparentWindow
                         BaseCaliper c = canvas.getGrabbedCaliper(clickPoint);
                         if (c != null)
                         {
-                            MarchingCaliperMenuItem.IsChecked = c.isMarching;
+                            MarchingCaliperMenuItem.IsChecked = c.isMarching && c.isTimeCaliper();
+                            MarchingCaliperMenuItem.IsEnabled = c.isTimeCaliper();
                         }
                     }
                     else
@@ -305,16 +390,6 @@ namespace WpfTransparentWindow
             }
         }
 
-        private void CancelTweaking()
-        {
-
-        }
-
-        private void TweakCaliper()
-        {
-
-        }
-
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             var newPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
@@ -335,6 +410,134 @@ namespace WpfTransparentWindow
                 canvas.DrawCalipers();
             }
         }
+        #endregion
+
+        #region Keys
+
+        private void TweakCaliper()
+        {
+            if (canvas.chosenComponent != CaliperComponent.NoComponent)
+            {
+                string componentName = canvas.GetChosenComponentName();
+                string message = string.Format("Tweak {0} with arrow or ctrl-arrow key.  Right-click to tweak a different component.", 
+                    componentName);
+                TweakTextBlock.Text = message;
+                if (!canvas.tweakingComponent)
+                {
+                    canvas.tweakingComponent = true;
+                }
+            }
+            else
+            {
+                CancelTweaking();
+            }
+        }
+
+        private void CancelTweaking()
+        {
+            ShowMenu(previousMenu);
+            canvas.CancelTweaking();
+        }
+
+        private void canvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!canvas.tweakingComponent)
+            {
+                e.Handled = false;
+                return;
+            }
+            switch (e.Key)
+            {
+                case Key.Left:
+                    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+                    {
+                        canvas.MicroMove(MovementDirection.Left);
+                    }
+                    else
+                    {
+                        canvas.Move(MovementDirection.Left);
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Right:
+                    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+                    {
+                        canvas.MicroMove(MovementDirection.Right);
+                    }
+                    else
+                    {
+                        canvas.Move(MovementDirection.Right);
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+                    {
+                        canvas.MicroMove(MovementDirection.Up);
+                    }
+                    else
+                    {
+                        canvas.Move(MovementDirection.Up);
+                    }
+                    e.Handled = true;
+                    break;
+                case Key.Down:
+                    if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+                    {
+                        canvas.MicroMove(MovementDirection.Down);
+                    }
+                    else
+                    {
+                        canvas.Move(MovementDirection.Down);
+                    }
+                    e.Handled = true;
+                    break;
+                default:
+                    Debug.Print("misc key pressed");
+                    e.Handled = false;
+                    break;
+            }
+            canvas.DrawCalipers();
+        }
+
+        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        //{
+        //    if (!theCalipers.tweakingComponent)
+        //    {
+        //        return base.ProcessCmdKey(ref msg, keyData);
+        //    }
+        //    switch (keyData)
+        //    {
+        //        case Keys.Left:
+        //            theCalipers.Move(MovementDirection.Left);
+        //            break;
+        //        case Keys.Right:
+        //            theCalipers.Move(MovementDirection.Right);
+        //            break;
+        //        case Keys.Up:
+        //            theCalipers.Move(MovementDirection.Up);
+        //            break;
+        //        case Keys.Down:
+        //            theCalipers.Move(MovementDirection.Down);
+        //            break;
+        //        case Keys.Left | Keys.Control:
+        //            theCalipers.MicroMove(MovementDirection.Left);
+        //            break;
+        //        case Keys.Right | Keys.Control:
+        //            theCalipers.MicroMove(MovementDirection.Right);
+        //            break;
+        //        case Keys.Up | Keys.Control:
+        //            theCalipers.MicroMove(MovementDirection.Up);
+        //            break;
+        //        case Keys.Down | Keys.Control:
+        //            theCalipers.MicroMove(MovementDirection.Down);
+        //            break;
+        //        default:
+        //            return base.ProcessCmdKey(ref msg, keyData);
+        //    }
+        //    ecgPictureBox.Refresh();
+        //    return true;
+        //}
         #endregion
 
     }

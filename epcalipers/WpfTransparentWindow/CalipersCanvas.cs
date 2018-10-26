@@ -58,6 +58,18 @@ namespace WpfTransparentWindow
             }
         }
 
+        public CaliperComponent chosenComponent
+        {
+            get
+            {
+                return calipers.chosenComponent;
+            }
+            set
+            {
+                calipers.chosenComponent = value;
+            }
+        }
+
         public CalipersCanvas() : base()
         {
 
@@ -190,6 +202,26 @@ namespace WpfTransparentWindow
         public bool MarchCaliper()
         {
             return calipers.MarchCaliper();
+        }
+
+        public void CancelTweaking()
+        {
+            calipers.CancelTweaking();
+        }
+
+        public string GetChosenComponentName()
+        {
+            return calipers.GetChosenComponentName();
+        }
+
+        public void Move(MovementDirection movementDirection)
+        {
+            calipers.Move(movementDirection);
+        }
+
+        public void MicroMove(MovementDirection movementDirection)
+        {
+            calipers.MicroMove(movementDirection);
         }
     }  
 }

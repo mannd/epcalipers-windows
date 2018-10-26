@@ -196,7 +196,7 @@ namespace epcalipers
             toolTip1.SetToolTip(cancelButton, "Cancel measurement");
 
             cancelTweakButton = new Button();
-            cancelTweakButton.Text = "Cancel";
+            cancelTweakButton.Text = "Done";
             cancelTweakButton.Click += CancelTweakButton_Click;
             toolTip1.SetToolTip(cancelTweakButton, "Cancel tweaking");
   
@@ -383,7 +383,8 @@ namespace epcalipers
                         BaseCaliper c = theCalipers.getGrabbedCaliper(clickPoint);
                         if (c != null)
                         {
-                            marchingCaliperToolStripMenuItem.Checked = c.isMarching;
+                            marchingCaliperToolStripMenuItem.Checked = c.isMarching && c.isTimeCaliper();
+                            marchingCaliperToolStripMenuItem.Enabled = c.isTimeCaliper();
                         }
                     }
                     else
