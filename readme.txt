@@ -1,6 +1,6 @@
 EP Calipers for Microsoft Windows
 
-Copyright © 2016 EP Studios, Inc.
+Copyright © 2016-2018 EP Studios, Inc.
 
 Description
 This is the Microsoft Windows version of EP Calipers.
@@ -11,11 +11,7 @@ rate and corrected QT intervals can be performed directly in the app.
 
 
 Installation
-Unzip the zip file and double click the setup file.  To
-use with PDF files, it is necessary to install Ghostscript on your
-computer.  This is free and the download can be found at
-http://www.ghostscript.com/download/gsdnld.html.  Without Ghostscript
-the program can still load image files (JPG, BMP, PNG).
+Unzip the zip file and double click the setup file. 
 
 License
 EP Calipers is open source and licensed under the GNU GPL v3

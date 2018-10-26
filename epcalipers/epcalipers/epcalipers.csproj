@@ -237,7 +237,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-x64">
+    <PackageReference Include="Magick.NET-Q16-AnyCPU">
       <Version>7.9.0</Version>
     </PackageReference>
   </ItemGroup>
