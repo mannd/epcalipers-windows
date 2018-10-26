@@ -23,6 +23,9 @@ EP Calipers also uses Magick.NET, with source code available at https://github.c
 
 The Apache 2.0 license is [compatible](http://www.apache.org/licenses/GPL-compatibility.html) with the GNU GPL v3 license, as is the AGPL v3 license.  See https://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses for details.
 
+## Development
+All branches of the GitHub repository except for the epcalipers-2 branch are now closed branches and contain code for the first version of EP Calipers for Windows, ending with version 1.10.  At present all new development and releases will be on the epcalipers-2 branch.
+
 ## Copyright
 Copyright © 2016-2018 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
