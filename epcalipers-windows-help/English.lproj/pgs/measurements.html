@@ -3,11 +3,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<<<<<<< HEAD
 <!-- 2017-12-17 Sun 12:28 -->
+=======
+<!-- 2018-10-25 Thu 21:17 -->
+>>>>>>> epcalipers-2
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
-<meta name="generator" content="Org-mode" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
 <meta name="author" content="David Mann" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -53,13 +57,98 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
@@ -92,6 +181,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="description" content="Using calipers to make measurements" />
@@ -101,7 +191,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -145,28 +235,44 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<<<<<<< HEAD
 <div id="outline-container-org7348d55" class="outline-2">
 <h2 id="org7348d55"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Making measurements</h2>
 <div class="outline-text-2" id="text-org7348d55">
 </div><div id="outline-container-orgc256e2a" class="outline-3">
 <h3 id="orgc256e2a">Caliper interval</h3>
 <div class="outline-text-3" id="text-orgc256e2a">
+=======
+<div id="outline-container-org6714147" class="outline-2">
+<h2 id="org6714147"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Making measurements</h2>
+<div class="outline-text-2" id="text-org6714147">
+</div>
+<div id="outline-container-org8a6e172" class="outline-3">
+<h3 id="org8a6e172">Caliper interval</h3>
+<div class="outline-text-3" id="text-org8a6e172">
+>>>>>>> epcalipers-2
 <p>
 The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 </p>
 </div>
 </div>
+<<<<<<< HEAD
 <div id="outline-container-orge6caf6b" class="outline-3">
 <h3 id="orge6caf6b">Calibration</h3>
 <div class="outline-text-3" id="text-orge6caf6b">
+=======
+<div id="outline-container-orgd20c593" class="outline-3">
+<h3 id="orgd20c593">Calibration</h3>
+<div class="outline-text-3" id="text-orgd20c593">
+>>>>>>> epcalipers-2
 <p>
-Calibration is necessary before any measurements can be made! Select the <b>Calibrate</b> button or the <b>Caliper | Calibrate</b> menu item.  Follow the prompts to select a caliper and stretch it over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select the <b>Set</b> button.  In the dialog box that appears, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 1000 msec,  or 1 mV).  Select the <b>OK</b> button in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+Calibration is necessary before any measurements can be made! Select the <b>Calibrate</b> button or the <b>Caliper | Calibrate</b> menu item.  Select a caliper and stretch it over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select the <b>Set</b> button.  In the dialog box that appears, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 1000 msec,  or 1 mV).  Select the <b>OK</b> button in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 </p>
 
 <div class="figure">
 <p><img src="../../shrd/calibration_dialog.png" alt="calibration_dialog.png" />
 </p>
-<p><span class="figure-number">Figure 1:</span> Calibration dialog</p>
+<p><span class="figure-number">Figure 1: </span>Calibration dialog</p>
 </div>
 
 <p>
@@ -174,25 +280,43 @@ It is important to use time units such as <i>msec</i> or <i>sec</i> when providi
 </p>
 </div>
 </div>
+<<<<<<< HEAD
 <div id="outline-container-org26e97f6" class="outline-3">
 <h3 id="org26e97f6">Changing calibration</h3>
 <div class="outline-text-3" id="text-org26e97f6">
+=======
+<div id="outline-container-orgaf332ac" class="outline-3">
+<h3 id="orgaf332ac">Changing calibration</h3>
+<div class="outline-text-3" id="text-orgaf332ac">
+>>>>>>> epcalipers-2
 <p>
-You can recalibrate at any time just by repeating the calibration process..  You can clear all calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the image is zoomed.  Selecting a new image will reset calibration.  Rotating the image will reset calibration.  Changing PDF pages will reset calibration.  Switching to transparent mode or back will also reset calibration.
+You can recalibrate at any time just by repeating the calibration process.  You can clear all calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the image is zoomed.  Selecting a new image will reset calibration.  Rotating the image will reset calibration.  Changing PDF pages will reset calibration.  Switching to transparent mode or back will also reset calibration.
 </p>
 </div>
 </div>
+<<<<<<< HEAD
 <div id="outline-container-org334c360" class="outline-3">
 <h3 id="org334c360">Interval/Rate</h3>
 <div class="outline-text-3" id="text-org334c360">
+=======
+<div id="outline-container-orga907e25" class="outline-3">
+<h3 id="orga907e25">Interval/Rate</h3>
+<div class="outline-text-3" id="text-orga907e25">
+>>>>>>> epcalipers-2
 <p>
 Once a time caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting the <b>Rate/Int</b> button or <b>Caliper | Toggle rate/interval</b> menu command.
 </p>
 </div>
 </div>
+<<<<<<< HEAD
 <div id="outline-container-org84eb235" class="outline-3">
 <h3 id="org84eb235">Mean rate and interval calculation</h3>
 <div class="outline-text-3" id="text-org84eb235">
+=======
+<div id="outline-container-org3b7f7ab" class="outline-3">
+<h3 id="org3b7f7ab">Mean rate and interval calculation</h3>
+<div class="outline-text-3" id="text-org3b7f7ab">
+>>>>>>> epcalipers-2
 <p>
 Select a calibrated time  caliper and stretch it over a number of intervals.  Select the <b>Mean Rate</b> button or <b>Caliper | Mean rate interval</b> menu command and enter the number of intervals measured in the dialog box that appears.  Select the Calculate button to see the result.  Using <b>EP Calipers</b> to calculate mean rates and intervals is very useful in irregular rhythms, such as atrial fibrillation.
 </p>
@@ -200,14 +324,20 @@ Select a calibrated time  caliper and stretch it over a number of intervals.  Se
 <div class="figure">
 <p><img src="../../shrd/mean_rr.png" alt="mean_rr.png" /> 
 </p>
-<p><span class="figure-number">Figure 2:</span> Mean RR measurement</p>
+<p><span class="figure-number">Figure 2: </span>Mean RR measurement</p>
 </div>
 </div>
 </div>
 
+<<<<<<< HEAD
 <div id="outline-container-org72b6ece" class="outline-3">
 <h3 id="org72b6ece">QTc calculation</h3>
 <div class="outline-text-3" id="text-org72b6ece">
+=======
+<div id="outline-container-org6ba6a4c" class="outline-3">
+<h3 id="org6ba6a4c">QTc calculation</h3>
+<div class="outline-text-3" id="text-org6ba6a4c">
+>>>>>>> epcalipers-2
 <p>
 QTc measurement is a multiple step process.  Select the <b>QTc</b> button on the toolbar or the <b>Caliper | QTc measurement</b> menu command.  Follow the prompt to stretch the selected caliper over one or more RR intervals and select the <b>Measure</b> button.  Enter the number of intervals the caliper is stretched over and select <b>OK</b>.  Then use the same caliper to measure the QT interval.  Select <b>Measure</b>.  A dialog box will give the calculated QTc using Bazett's formula by default.  Click <b>Retry</b> to measure another QT interval and calculate the QTc while keeping the same RR interval.  Click <b>Cancel</b> to end the QTc calculation.  You can change the QTc formula using <a href="./preferences.html">Options</a>.
 </p>
@@ -215,14 +345,20 @@ QTc measurement is a multiple step process.  Select the <b>QTc</b> button on the
 <div class="figure">
 <p><img src="../../shrd/qtc_calculation.png" alt="qtc_calculation.png" />
 </p>
-<p><span class="figure-number">Figure 3:</span> QTc measurement</p>
+<p><span class="figure-number">Figure 3: </span>QTc measurement</p>
 </div>
 </div>
 </div>
 
+<<<<<<< HEAD
 <div id="outline-container-org8c728cf" class="outline-3">
 <h3 id="org8c728cf">Brugadometer</h3>
 <div class="outline-text-3" id="text-org8c728cf">
+=======
+<div id="outline-container-org84f4a56" class="outline-3">
+<h3 id="org84f4a56">Brugadometer</h3>
+<div class="outline-text-3" id="text-org84f4a56">
+>>>>>>> epcalipers-2
 <p>
 The <b>Brugadometer</b> is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in <b>EP Calipers</b> and will likely evolve in future updates.  In order to use the <b>Brugadometer</b>, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
 </p>
@@ -230,7 +366,7 @@ The <b>Brugadometer</b> is a diagnostic tool for Brugada syndrome developed in c
 <div class="figure">
 <p><img src="../../shrd/brugadometer.png" alt="brugadometer.png" />
 </p>
-<p><span class="figure-number">Figure 4:</span> Brugadometer showing triangle base 5 mm below apex of caliper</p>
+<p><span class="figure-number">Figure 4: </span>Brugadometer showing triangle base 5 mm below apex of caliper</p>
 </div>
 
 <p>

@@ -2,14 +2,14 @@
 
 ## Description 
 This is the Microsoft Windows™ version of EP Calipers.
-Versions for Android, iOS and Mac OS X are also available.
+Versions for Android, iOS and macOS are also available.
 
 EP Calipers provides electronic calipers for making measurements on
 images of ECGs or other recordings.  Calculations such as mean
 heart rate and corrected QT intervals can be performed directly in the
 app.
 
-This is a Windows Forms application developed in C# using the .NET framework.
+This is a mixed Windows Forms and WPF application developed in C# using the .NET framework.
 
 EP Calipers is open source, and licensed under the
 [GNU GPL v3 license.](http://www.gnu.org/licenses/gpl.html).
@@ -24,7 +24,7 @@ EP Calipers also uses Magick.NET, with source code available at https://github.c
 The Apache 2.0 license is [compatible](http://www.apache.org/licenses/GPL-compatibility.html) with the GNU GPL v3 license, as is the AGPL v3 license.  See https://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses for details.
 
 ## Copyright
-Copyright © 2016, 2017 [EP Studios, Inc.](https://www.epstudiossoftware.com)
+Copyright © 2016-2018 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann, MD

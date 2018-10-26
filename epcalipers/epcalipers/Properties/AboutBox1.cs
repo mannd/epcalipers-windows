@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace epcalipers.Properties
 {
@@ -45,7 +46,8 @@ namespace epcalipers.Properties
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                return FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
             }
         }
 

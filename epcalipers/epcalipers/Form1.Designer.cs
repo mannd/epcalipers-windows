@@ -85,8 +85,6 @@ namespace epcalipers
             this.qTcMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.transparentWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -99,6 +97,11 @@ namespace epcalipers
             this.caliperColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tweakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.marchingCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+<<<<<<< HEAD
+=======
+            this.transparentWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+>>>>>>> epcalipers-2
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -216,7 +219,6 @@ namespace epcalipers
             this.zoomToolStripMenuItem,
             this.calipersToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.windowToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -512,6 +514,8 @@ namespace epcalipers
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.transparentWindowToolStripMenuItem1,
+            this.toolStripSeparator7,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -520,26 +524,10 @@ namespace epcalipers
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.optionsToolStripMenuItem.Text = "Options...";
             this.optionsToolStripMenuItem.ToolTipText = "Change options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-            // 
-            // windowToolStripMenuItem
-            // 
-            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.transparentWindowToolStripMenuItem});
-            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.windowToolStripMenuItem.Text = "Window";
-            // 
-            // transparentWindowToolStripMenuItem
-            // 
-            this.transparentWindowToolStripMenuItem.CheckOnClick = true;
-            this.transparentWindowToolStripMenuItem.Name = "transparentWindowToolStripMenuItem";
-            this.transparentWindowToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.transparentWindowToolStripMenuItem.Text = "Transparent window";
-            this.transparentWindowToolStripMenuItem.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -555,19 +543,19 @@ namespace epcalipers
             // 
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
             this.viewHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.viewHelpToolStripMenuItem.Text = "EP Calipers help";
             this.viewHelpToolStripMenuItem.Click += new System.EventHandler(this.viewHelpToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // aboutEPCalipersToolStripMenuItem
             // 
             this.aboutEPCalipersToolStripMenuItem.Name = "aboutEPCalipersToolStripMenuItem";
-            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
             this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
             // 
@@ -605,6 +593,21 @@ namespace epcalipers
             this.marchingCaliperToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.marchingCaliperToolStripMenuItem.Text = "Marching Caliper";
             this.marchingCaliperToolStripMenuItem.Click += new System.EventHandler(this.marchingCaliperToolStripMenuItem_Click);
+<<<<<<< HEAD
+=======
+            // 
+            // transparentWindowToolStripMenuItem1
+            // 
+            this.transparentWindowToolStripMenuItem1.Name = "transparentWindowToolStripMenuItem1";
+            this.transparentWindowToolStripMenuItem1.Size = new System.Drawing.Size(183, 22);
+            this.transparentWindowToolStripMenuItem1.Text = "Transparent Window";
+            this.transparentWindowToolStripMenuItem1.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(180, 6);
+>>>>>>> epcalipers-2
             // 
             // Form1
             // 
@@ -695,8 +698,6 @@ namespace epcalipers
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem rotateTinyRToolStripMenuItem;
         private ToolStripMenuItem rotateTinyLToolStripMenuItem;
-        private ToolStripMenuItem windowToolStripMenuItem;
-        private ToolStripMenuItem transparentWindowToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripMenuItem angleCaliperToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
@@ -704,6 +705,11 @@ namespace epcalipers
         private ToolStripMenuItem tweakToolStripMenuItem;
         private ToolStripMenuItem deleteAllCalipersToolStripMenuItem;
         private ToolStripMenuItem marchingCaliperToolStripMenuItem;
+<<<<<<< HEAD
+=======
+        private ToolStripMenuItem transparentWindowToolStripMenuItem1;
+        private ToolStripSeparator toolStripSeparator7;
+>>>>>>> epcalipers-2
     }
 }
 

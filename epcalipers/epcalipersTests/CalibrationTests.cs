@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using EPCalipersCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace epcalipers.Tests
 {
@@ -68,6 +70,15 @@ namespace epcalipers.Tests
             Assert.IsTrue(cal.Units == "points");
             cal.Calibrated = true;
             Assert.IsTrue(cal.Units == "Seconds");
+        }
+
+        [TestMethod()]
+        public void roundingTest()
+        {
+            double n = 455.5;
+            Assert.IsTrue(System.Math.Round(n) == 456);
+            n = 455.49;
+            Assert.IsTrue(System.Math.Round(n) == 455);
         }
     }
 }
