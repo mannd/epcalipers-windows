@@ -3,11 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-09-08 Sat 12:54 -->
+<!-- 2018-10-25 Thu 21:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title></title>
-<meta name="generator" content="Org-mode" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
 <meta name="author" content="David Mann" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -53,13 +53,98 @@
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
@@ -92,6 +177,7 @@
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="description" content="Changing default settings" />
@@ -101,7 +187,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -145,12 +231,13 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-orgeb06bb7" class="outline-2">
-<h2 id="orgeb06bb7"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Options</h2>
-<div class="outline-text-2" id="text-orgeb06bb7">
-</div><div id="outline-container-org781b287" class="outline-3">
-<h3 id="org781b287">Changing options</h3>
-<div class="outline-text-3" id="text-org781b287">
+<div id="outline-container-org731b8c1" class="outline-2">
+<h2 id="org731b8c1"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Options</h2>
+<div class="outline-text-2" id="text-org731b8c1">
+</div>
+<div id="outline-container-org3eb0a26" class="outline-3">
+<h3 id="org3eb0a26">Changing options</h3>
+<div class="outline-text-3" id="text-org3eb0a26">
 <p>
 Options can be selected using the <b>Tools | Options</b> menu item.  You can change default settings as you prefer, including caliper colors, line width of the calipers, default calibration intervals and number of intervals used to calculate mean intervals.  For example, if you usually use just 1 RR interval to calculate the QTc, set the number of mean RR intervals for the QTc measurement to 1 interval.  Remember though you can override any of these values when you actually do the measurements.
 </p>
@@ -158,13 +245,13 @@ Options can be selected using the <b>Tools | Options</b> menu item.  You can cha
 <div class="figure">
 <p><img src="../../shrd/preferences_dialog.png" alt="preferences_dialog.png" />
 </p>
-<p><span class="figure-number">Figure 1:</span> Options dialog</p>
+<p><span class="figure-number">Figure 1: </span>Options dialog</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orga8b91e1" class="outline-3">
-<h3 id="orga8b91e1">Options explained</h3>
-<div class="outline-text-3" id="text-orga8b91e1">
+<div id="outline-container-org926a19d" class="outline-3">
+<h3 id="org926a19d">Options explained</h3>
+<div class="outline-text-3" id="text-org926a19d">
 <ul class="org-ul">
 <li><b>Caliper color</b> This is the color of unselected newly added calipers.  Note that this color can be overwritten by right-clicking on a caliper and selecting <b>Caliper Color</b>.</li>
 <li><b>Selected caliper color</b> This is the color of the selected caliper.</li>
@@ -175,10 +262,6 @@ Options can be selected using the <b>Tools | Options</b> menu item.  You can cha
 <li><b>Number of intervals (QTc)</b> The default number of intervals you use to measure the mean RR interval when making QTc measurements.</li>
 <li><b>QTc formula</b> Select the QTc formula you want to use for QTc calculations.  The 4 most commonly used formulas are available: Bazett, Framingham, Fridercia, and Hodges.  Selecting <i>All</i> will display the results of all 4 formulas when calculating the QTc.</li>
 <li><b>Round msec and rates</b> Choose how msec and rate values are displayed.  Choices include round to the nearest integer (e.g. 305.463 becomes 305, 1010.728 becomes 1011), display 4 digits (e.g. 305.5 and 1011), round to tenths (e.g. 305.5 and 1010.7), and round to hundredths (305.46 and 1010.73).  Note that values in secs or values using other units and calculated values such as QTc are always shown using 4 digits.</li>
-<li><b>Transparent window at start</b> Set this if you want the app to always start off with a transparent window.</li>
-<li><b>Use alternative transparency</b> Rather than a fully transparent window, alternative transparency makes the whole window semi-transparent.  Use this if for some reason fully transparent windows are working for you.  You can adjust how transparent the window is using the <b>Transparency alpha value</b> setting.</li>
-<li><b>Transparency alpha value</b> When using alternative transparency, you can set the window very transparent to not too transparent by varying this value from 0.2-0.8.</li>
-<li><b>Transparent window on top</b> When set, the transparent window will "float" above the other windows on your desktop.</li>
 </ul>
 </div>
 </div>
