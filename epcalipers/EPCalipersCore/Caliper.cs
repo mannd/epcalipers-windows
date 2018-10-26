@@ -93,7 +93,7 @@ namespace EPCalipersCore
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-            textBlock.FontSize = defaultFontSize;
+            textBlock.FontSize = defaultCanvasFontSize;
             textBlock.Text = text;
             textBlock.TextAlignment = System.Windows.TextAlignment.Center;
             textBlock.MinWidth = stringWidth;
@@ -225,7 +225,7 @@ namespace EPCalipersCore
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             if (Direction == CaliperDirection.Horizontal)
             {
-                g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 30);
+                g.DrawString(text, TextFont, brush, center - stringWidth / 2, CrossbarPosition - 20);
             }
             else
             {

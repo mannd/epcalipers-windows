@@ -38,8 +38,8 @@ You can also use the Zoom buttons (*+* and *-*) at the lower left of the window 
 Use the *File | Save* menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from *EP Calipers* using the *File | Print* menu item.
 * Transparent windows
 ** What are transparent windows?
-Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent windows/.  You can launch one or more transparent windows which allow you to measure whatever is underneath the window using calipers.  Transparent windows look like this:
-#+CAPTION: Transparent window mode
+Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  *EP Calipers* allows you do this using /transparent windows/.  You can launch one or more transparent windows which allow you to measure whatever is underneath the window using calipers.  A transparent window looks like this:
+#+CAPTION: Transparent window floating over a browser web page
 [[../../shrd/transparent_window.png]]
 
 ** Lauching a transparent window

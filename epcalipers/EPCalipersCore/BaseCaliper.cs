@@ -51,7 +51,8 @@ namespace EPCalipersCore
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
-        protected readonly int defaultFontSize = 14;
+        protected readonly int defaultFontSize = 12;
+        protected readonly int defaultCanvasFontSize = 16;
 
         public bool isMarching = false;
 
