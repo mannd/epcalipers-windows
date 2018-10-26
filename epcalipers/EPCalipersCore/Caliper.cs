@@ -140,8 +140,9 @@ namespace EPCalipersCore
             while (i < maxSmallerBars)
             {
                 Line line = new Line();
-                MakeLine(ref line, smallerBars[i], smallerBars[i], 0, canvas.ActualHeight);
+                MakeLine(ref line, smallerBars[i], smallerBars[i], 0, canvas.ActualHeight + 30);
                 line.StrokeThickness = LineWidth / 2.0;
+                line.Stroke = brush;
                 canvas.Children.Add(line);
                 i++;
             }

@@ -214,6 +214,15 @@ namespace WpfTransparentWindow
         private void MarchingCaliperMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Debug.Print("Marching caliper menu item clicked");
+            if (canvas.MarchCaliper())
+            {
+                canvas.DrawCalipers();
+                MarchingCaliperMenuItem.IsChecked = true;
+            }
+            else
+            {
+                MarchingCaliperMenuItem.IsChecked = false;
+            }
         }
 
         private void CaliperColorMenuItem_Click(object sender, RoutedEventArgs e)

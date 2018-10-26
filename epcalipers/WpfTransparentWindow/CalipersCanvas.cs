@@ -186,5 +186,10 @@ namespace WpfTransparentWindow
         {
             calipers.SetChosenCaliperColor(color);
         }
+
+        public bool MarchCaliper()
+        {
+            return calipers.MarchCaliper();
+        }
     }  
 }
