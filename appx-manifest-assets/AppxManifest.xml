@@ -6,7 +6,7 @@
 	 xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
 	 xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
   <Identity Name="EPStudios.EPCalipers"
-	    ProcessorArchitecture="x86"
+	    ProcessorArchitecture="x64"
 	    Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"
 	    Version="2.0.0.0" />
   <Properties>

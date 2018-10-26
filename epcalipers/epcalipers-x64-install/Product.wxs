@@ -77,6 +77,9 @@
       <Component Id="WpfTransparentWindow.dll" Guid="f8674db9-401c-43d0-9c5c-7a56764ae8b0">
         <File Id="WpfTransparentWindow.dll" Name="WpfTransparentWindow.dll" Source="$(var.epcalipers_TargetDir)WpfTransparentWindow.dll" />
       </Component>
+      <Component Id="EPCalipersCore.dll" Guid="f588a079-33b5-4ac3-b8ea-684b800704a7">
+        <File Id="EPCalipersCore.dll" Name="EPCalipersCore.dll" Source="$(var.epcalipers_TargetDir)EPCalipersCore.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>
