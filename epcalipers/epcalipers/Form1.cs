@@ -62,8 +62,6 @@ namespace epcalipers
         double currentActualZoom = 1.0;
         double maximumZoom = 5.0;
 
-        double rrIntervalForQtc = 0.0;
-
         // Drag and drop variables
         protected Thread getImageThread;
         protected bool validData;
