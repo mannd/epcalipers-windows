@@ -89,7 +89,7 @@ namespace EPCalipersCore
             LineWidth = 2;
             IsSelected = false;
             TextFontSize = defaultFontSize;
-            TextFont = new Font("Helvetica", TextFontSize);
+            TextFont = new Font("Segoe UI", TextFontSize);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
             rounding = Preferences.Rounding.ToInt;
