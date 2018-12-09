@@ -133,70 +133,44 @@ namespace epcalipers
         private void SetupButtons()
         {
             imageButton = new Button();
-            imageButton.Text = "Open";
-            toolTip1.SetToolTip(imageButton, "Open ECG image file or PDF");
-            imageButton.Click += imageButton_Click;
+            InitButton(imageButton, "Open", "Open ECG image file or PDF", imageButton_Click);
 
             addCalipersButton = new Button();
-            addCalipersButton.Text = "Add Caliper";
-            toolTip1.SetToolTip(addCalipersButton, "Add new caliper");
-            addCalipersButton.Click += addCaliper_Click;
+            InitButton(addCalipersButton, "Add Caliper", "Add new caliper", addCaliper_Click);
 
             calibrateButton = new Button();
-            calibrateButton.Text = "Calibrate";
-            toolTip1.SetToolTip(calibrateButton, "Calibrate calipers");
-            calibrateButton.Click += calibrateButton_Click;
+            InitButton(calibrateButton, "Calibrate", "Calibrate calipers", calibrateButton_Click);
 
             setCalibrationButton = new Button();
-            setCalibrationButton.Text = "Set";
-            toolTip1.SetToolTip(setCalibrationButton, "Set calibration interval");
-            setCalibrationButton.Click += setCalibrationButton_Click;
+            InitButton(setCalibrationButton, "Set", "Set calibration interval", setCalibrationButton_Click);
 
             clearCalibrationButton = new Button();
-            clearCalibrationButton.Text = "Clear";
-            toolTip1.SetToolTip(clearCalibrationButton, "Clear all calibration");
-            clearCalibrationButton.AutoSize = true;
-            clearCalibrationButton.Click += clearCalibrationButton_Click;
+            InitButton(clearCalibrationButton, "Clear", "Clear all calibration", clearCalibrationButton_Click);
 
             backCalibrationButton = new Button();
-            toolTip1.SetToolTip(backCalibrationButton, "Done with calibration");
-            backCalibrationButton.Text = "Done";
-            backCalibrationButton.Click += backCalibrationButton_Click;
+            InitButton(backCalibrationButton, "Done", "Done with calibration", backCalibrationButton_Click);
 
             intervalRateButton = new Button();
-            intervalRateButton.Text = "Rate/Int";
-            intervalRateButton.Click += intervalRateButton_Click;
-            toolTip1.SetToolTip(intervalRateButton, "Toggle between rate and interval");
+            InitButton(intervalRateButton, "Rate/Int", "Toggle between rate and interval", intervalRateButton_Click);
 
             measureRRForQtcButton = new Button();
-            measureRRForQtcButton.Text = "Measure";
-            measureRRForQtcButton.Click += MeasureRRForQtcButton_Click;
-            toolTip1.SetToolTip(measureRRForQtcButton, "Measure 1 or more RR intervals for QTc");
+            InitButton(measureRRForQtcButton, "Measure", "Measure 1 or more RR intervals for QTc", 
+                MeasureRRForQtcButton_Click);
 
             measureQTcButton = new Button();
-            measureQTcButton.Text = "Measure";
-            measureQTcButton.Click += MeasureQTcButton_Click;
-            toolTip1.SetToolTip(measureQTcButton, "Measure QT interval");
+            InitButton(measureQTcButton, "Measure", "Measure QT interval", MeasureQTcButton_Click);
 
             meanRRButton = new Button();
-            meanRRButton.Text = "Mean Rate";
-            meanRRButton.Click += MeanRRButton_Click;
-            toolTip1.SetToolTip(meanRRButton, "Measure mean rate and interval");
+            InitButton(meanRRButton, "Mean Rate", "Measure mean rate and interval", MeanRRButton_Click);
 
             qtcButton = new Button();
-            qtcButton.Text = "QTc";
-            qtcButton.Click += QtcButton_Click;
-            toolTip1.SetToolTip(qtcButton, "Measure corrected QT (QTc)");
+            InitButton(qtcButton, "QTc", "Measure corrected QT (QTc)", QtcButton_Click);
 
             cancelButton = new Button();
-            cancelButton.Text = "Cancel";
-            cancelButton.Click += CancelButton_Click;
-            toolTip1.SetToolTip(cancelButton, "Cancel measurement");
+            InitButton(cancelButton, "Cancel", "Cancel measurement", CancelButton_Click);
 
             cancelTweakButton = new Button();
-            cancelTweakButton.Text = "Done";
-            cancelTweakButton.Click += CancelTweakButton_Click;
-            toolTip1.SetToolTip(cancelTweakButton, "Cancel tweaking");
+            InitButton(cancelTweakButton, "Done", "Cancel tweaking", CancelTweakButton_Click);
   
             measureRRForQtcMessageLabel = new Label();
             measureRRForQtcMessageLabel.Text = "Measure one or more RR intervals";
@@ -207,6 +181,14 @@ namespace epcalipers
             tweakLabel = new Label();
             // tweakLabel text is changed on the fly
             AdjustLabel(tweakLabel);
+        }
+
+        private void InitButton(Button button, String label, String toolTip, EventHandler onClickFunc)
+        {
+            button.Text = label;
+            toolTip1.SetToolTip(button, toolTip);
+            button.Click += onClickFunc;
+            button.AutoSize = true;
         }
  
         private void AdjustLabel(Label label)

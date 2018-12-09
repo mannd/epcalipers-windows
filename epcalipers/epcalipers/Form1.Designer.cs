@@ -84,6 +84,8 @@ namespace epcalipers
             this.meanRateIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.qTcMeasurementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transparentWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,8 +99,6 @@ namespace epcalipers
             this.caliperColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tweakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.marchingCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.transparentWindowToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -183,6 +183,7 @@ namespace epcalipers
             // 
             // zoomInButton
             // 
+            this.zoomInButton.AutoSize = true;
             this.zoomInButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.zoomInButton.Location = new System.Drawing.Point(3, 3);
             this.zoomInButton.Name = "zoomInButton";
@@ -195,10 +196,11 @@ namespace epcalipers
             // 
             // zoomOutButton
             // 
+            this.zoomOutButton.AutoSize = true;
             this.zoomOutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.zoomOutButton.Location = new System.Drawing.Point(32, 3);
             this.zoomOutButton.Name = "zoomOutButton";
-            this.zoomOutButton.Size = new System.Drawing.Size(23, 23);
+            this.zoomOutButton.Size = new System.Drawing.Size(20, 23);
             this.zoomOutButton.TabIndex = 1;
             this.zoomOutButton.Text = "-";
             this.toolTip1.SetToolTip(this.zoomOutButton, "Zoom out");
@@ -518,6 +520,18 @@ namespace epcalipers
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
+            // transparentWindowToolStripMenuItem1
+            // 
+            this.transparentWindowToolStripMenuItem1.Name = "transparentWindowToolStripMenuItem1";
+            this.transparentWindowToolStripMenuItem1.Size = new System.Drawing.Size(183, 22);
+            this.transparentWindowToolStripMenuItem1.Text = "Transparent Window";
+            this.transparentWindowToolStripMenuItem1.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(180, 6);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -540,19 +554,19 @@ namespace epcalipers
             // 
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
             this.viewHelpToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.viewHelpToolStripMenuItem.Text = "EP Calipers help";
             this.viewHelpToolStripMenuItem.Click += new System.EventHandler(this.viewHelpToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(174, 6);
             // 
             // aboutEPCalipersToolStripMenuItem
             // 
             this.aboutEPCalipersToolStripMenuItem.Name = "aboutEPCalipersToolStripMenuItem";
-            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutEPCalipersToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.aboutEPCalipersToolStripMenuItem.Text = "About EP Calipers";
             this.aboutEPCalipersToolStripMenuItem.Click += new System.EventHandler(this.aboutEPCalipersToolStripMenuItem_Click);
             // 
@@ -591,18 +605,6 @@ namespace epcalipers
             this.marchingCaliperToolStripMenuItem.Text = "Marching Caliper";
             this.marchingCaliperToolStripMenuItem.Click += new System.EventHandler(this.marchingCaliperToolStripMenuItem_Click);
             // 
-            // transparentWindowToolStripMenuItem1
-            // 
-            this.transparentWindowToolStripMenuItem1.Name = "transparentWindowToolStripMenuItem1";
-            this.transparentWindowToolStripMenuItem1.Size = new System.Drawing.Size(183, 22);
-            this.transparentWindowToolStripMenuItem1.Text = "Transparent Window";
-            this.transparentWindowToolStripMenuItem1.Click += new System.EventHandler(this.transparentWindowToolStripMenuItem1_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(180, 6);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -626,6 +628,7 @@ namespace epcalipers
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ecgPictureBox)).EndInit();
             this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
