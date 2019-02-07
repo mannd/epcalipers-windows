@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyCompany("EP Studios, Inc.")]
 [assembly: AssemblyProduct("EP Calipers")]
-[assembly: AssemblyCopyright("Copyright © 2016-2018 EP Studios, Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2016-2019 EP Studios, Inc.")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -24,6 +24,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
-[assembly: AssemblyVersion("2.1.0.0")]
-[assembly: AssemblyInformationalVersion("2.1.0")] // a.k.a. "Product version"	
+[assembly: AssemblyFileVersion("2.1.1.0")]
+[assembly: AssemblyVersion("2.1.1.0")]
+[assembly: AssemblyInformationalVersion("2.1.1")] // a.k.a. "Product version"	

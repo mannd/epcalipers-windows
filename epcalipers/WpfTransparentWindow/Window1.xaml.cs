@@ -42,7 +42,6 @@ namespace WpfTransparentWindow
             Qt2,
             Tweak
         }
-
         Menu currentMenu = Menu.Main;
         Menu previousMenu = Menu.Main;
 
