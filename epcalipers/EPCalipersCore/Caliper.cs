@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Diagnostics;
 using EPCalipersCore.Properties;
+using TextPosition = EPCalipersCore.Properties.Preferences.TextPosition;
 
 namespace EPCalipersCore
 {
@@ -83,6 +84,13 @@ namespace EPCalipersCore
         {
             line.X1 = X1; line.X2 = X2; line.Y1 = Y1; line.Y2 = Y2;
         }
+
+        protected void CaliperText(Canvas canvas, MBrush brush, TextPosition textPosition,
+            bool optimizeTextPosition)
+        {
+
+        }
+            
 
         protected void CaliperText(Canvas canvas, MBrush brush)
         {

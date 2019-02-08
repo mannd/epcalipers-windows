@@ -48,6 +48,8 @@ namespace EPCalipersCore
         public int TextFontSize { set; get; }
         public bool RoundMsecRate { set; get; }
         public Preferences.Rounding rounding { set; get; }
+        public bool AutoPositionText { set; get; }
+        public Preferences.TextPosition CaliperTextPosition { set; get; }
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
@@ -93,6 +95,8 @@ namespace EPCalipersCore
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
             rounding = Preferences.Rounding.ToInt;
+            AutoPositionText = true;
+            CaliperTextPosition = Preferences.TextPosition.Right;
         }
 
         public virtual void SetInitialPosition()
