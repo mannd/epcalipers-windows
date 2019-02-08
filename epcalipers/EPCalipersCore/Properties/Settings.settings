@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="epcalipers.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EPCalipersCore.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="CaliperColor" Type="System.Drawing.Color" Scope="User">
@@ -31,6 +31,15 @@
     </Setting>
     <Setting Name="RoundTo" Type="System.String" Scope="User">
       <Value Profile="(Default)">To Integer</Value>
+    </Setting>
+    <Setting Name="AutoPositionText" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TimeCaliperTextPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Center Above</Value>
+    </Setting>
+    <Setting Name="AmplitudeCaliperTextPosition" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Right</Value>
     </Setting>
   </Settings>
 </SettingsFile>

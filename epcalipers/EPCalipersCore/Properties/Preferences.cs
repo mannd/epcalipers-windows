@@ -19,6 +19,9 @@ namespace EPCalipersCore.Properties
         private int numberOfIntervalsQtc;
         private string defaultQtcFormula;
         private string rounding;
+        private bool autoPositionText;
+        private string timeCaliperTextPosition;
+        private string amplitudeCaliperTextPosition;
 
         private const int MAX_LINEWIDTH = 3;
         private const int MAX_NUMBER_OF_INTERVALS = 10;
@@ -30,6 +33,16 @@ namespace EPCalipersCore.Properties
             ToTenths,
             ToHundredths,
             None
+        }
+
+        public enum TextPosition
+        {
+            CenterAbove,
+            CenterBelow,
+            Left,
+            Right,
+            Top,
+            Bottom
         }
 
         public Preferences()
@@ -48,6 +61,9 @@ namespace EPCalipersCore.Properties
             numberOfIntervalsQtc = (int)Settings.Default["NumberOfIntervalsQtc"];
             defaultQtcFormula = (string)Settings.Default["DefaultQtcFormula"];
             rounding = (string)Settings.Default["RoundTo"];
+            autoPositionText = (bool)Settings.Default["AutoPositionText"];
+            timeCaliperTextPosition = (string)Settings.Default["TimeCaliperTextPosition"];
+            amplitudeCaliperTextPosition = (string)Settings.Default["AmplitudeCaliperTextPosition"];
         }
 
         public QtcFormula ActiveQtcFormula()
@@ -87,6 +103,50 @@ namespace EPCalipersCore.Properties
                     return Rounding.ToInt;
             }
         }
+
+        public TextPosition TimeCaliperTextPositionParameter()
+        {
+            return GetTextPosition(timeCaliperTextPosition);
+        }
+
+        public TextPosition AmplitudeCaliperTextPositionParameter()
+        {
+            return GetTextPosition(amplitudeCaliperTextPosition);
+        }
+
+        private TextPosition GetTextPosition(string position)
+        {
+            switch (position)
+            {
+                case "Center Above":
+                    return TextPosition.CenterAbove;
+                case "Center Below":
+                    return TextPosition.CenterBelow;
+                case "Right":
+                    return TextPosition.Right;
+                case "Left":
+                    return TextPosition.Left;
+                case "Top":
+                    return TextPosition.Top;
+                case "Bottom":
+                    return TextPosition.Bottom;
+                default:
+                    return TextPosition.CenterAbove;
+            }
+
+        }
+
+        [Browsable(true),
+            ReadOnly(false),
+            Description("Position caliper text automatically"),
+            DisplayName("Auto-position text"),
+            Category("Calipers")]
+        public bool AutoPositionText
+        {
+            get { return autoPositionText; }
+            set { autoPositionText = value; }
+        }
+
         [Browsable(true),
             ReadOnly(false),
             Description("Unselected caliper color"),
@@ -165,6 +225,29 @@ namespace EPCalipersCore.Properties
             set { rounding = value; }
         }
 
+         [Browsable(true),
+            ReadOnly(false),
+            TypeConverter(typeof(TimeCaliperTextPositionConverter)),
+            Description("Time caliper text position"),
+            DisplayName("Time text position"),
+            Category("Calipers")]
+        public string TimeCaliperTextPosition
+        {
+            get { return timeCaliperTextPosition; }
+            set { timeCaliperTextPosition = value; }
+        }
+
+         [Browsable(true),
+            ReadOnly(false),
+            TypeConverter(typeof(AmplitudeCaliperTextPositionConverter)),
+            Description("Amplitude caliper text position"),
+            DisplayName("Amplitude text position"),
+            Category("Calipers")]
+        public string AmplitudeCaliperTextPosition
+        {
+            get { return amplitudeCaliperTextPosition; }
+            set { amplitudeCaliperTextPosition = value; }
+        }
 
         [Browsable(true),
             ReadOnly(false),
@@ -210,7 +293,6 @@ namespace EPCalipersCore.Properties
             }
         }
 
-
         [Browsable(true),
             ReadOnly(false),
             TypeConverter(typeof(QtcFormulaConverter)),
@@ -234,6 +316,9 @@ namespace EPCalipersCore.Properties
             Settings.Default["NumberOfIntervalsQtc"] = numberOfIntervalsQtc;
             Settings.Default["DefaultQtcFormula"] = defaultQtcFormula;
             Settings.Default["RoundTo"] = rounding;
+            Settings.Default["AutoPositionText"] = autoPositionText;
+            Settings.Default["TimeCaliperTextPosition"] = timeCaliperTextPosition;
+            Settings.Default["AmplitudeCaliperTextPosition"] = amplitudeCaliperTextPosition;
             Settings.Default.Save();
         }
 
@@ -271,6 +356,40 @@ namespace EPCalipersCore.Properties
                                                                 "To Tenths",
                                                                 "To Hundredths",
                                                                 "No Rounding"});
+
+        }
+    }
+
+    public class TimeCaliperTextPositionConverter: StringConverter
+    {
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        {
+            return new StandardValuesCollection(new string[] { "Center Above",
+                                                                "Center Below",
+                                                                "Right",
+                                                                "Left"});
+
+        }
+    }
+
+    public class AmplitudeCaliperTextPositionConverter: StringConverter
+    {
+        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        {
+            return true;
+        }
+
+        public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        {
+            return new StandardValuesCollection(new string[] { "Top",
+                                                                "Bottom",
+                                                                "Right",
+                                                                "Left"});
 
         }
     }
