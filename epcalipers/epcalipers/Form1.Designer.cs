@@ -473,7 +473,7 @@ namespace epcalipers
             // 
             this.calibrateToolStripMenuItem.Name = "calibrateToolStripMenuItem";
             this.calibrateToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.calibrateToolStripMenuItem.Text = "Calibrate";
+            this.calibrateToolStripMenuItem.Text = "Set calibration";
             this.calibrateToolStripMenuItem.Click += new System.EventHandler(this.calibrateToolStripMenuItem_Click);
             // 
             // clearCalibrationToolStripMenuItem
