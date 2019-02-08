@@ -142,10 +142,10 @@ namespace epcalipers
             InitButton(calibrateButton, "Calibration", "Calibrate, recalibrate or clear calibration", calibrateButton_Click);
 
             setCalibrationButton = new Button();
-            InitButton(setCalibrationButton, "Set calibration", "Set calibration interval", setCalibrationButton_Click);
+            InitButton(setCalibrationButton, "Set Calibration", "Set calibration interval", setCalibrationButton_Click);
 
             clearCalibrationButton = new Button();
-            InitButton(clearCalibrationButton, "Clear calibration", "Clear all calibration", clearCalibrationButton_Click);
+            InitButton(clearCalibrationButton, "Clear Calibration", "Clear all calibration", clearCalibrationButton_Click);
 
             backCalibrationButton = new Button();
             InitButton(backCalibrationButton, "Done", "Done with calibration", backCalibrationButton_Click);

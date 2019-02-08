@@ -57,7 +57,7 @@
                     </Grid.ColumnDefinitions>
                     <Button Name="AddButton" Content="Add Caliper" Click="AddButtonClicked" ToolTip="Add a new caliper"
                         Grid.Column="0" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="CalibrateButton" Content="Calibrate" Click="CalibrateButtonClicked" ToolTip="Calibrate calipers"
+                    <Button Name="CalibrateButton" Content="Calibration" Click="CalibrateButtonClicked" ToolTip="Calibrate, recalibrate, or clear calibration"
                         Grid.Column="1" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="RateIntButton" Content="Rate/Int" Click="RateIntButtonClicked" ToolTip="Toggle between rate and interval"
                         Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
@@ -71,10 +71,10 @@
                         Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
                     <TextBlock Name="MessageTextBlock" Width="180" Margin="10, 10, 10, 10"
                         Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Right" VerticalAlignment="Bottom">Message</TextBlock>
-                    <Button Name="SetButton" Content="Set" Click="SetButtonClicked" ToolTip="Set calibration interval"
-                        Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="ClearButton" Content="Clear" Click="ClearButtonClicked" ToolTip="Clear all calibration"
-                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                    <Button Name="SetButton" Content="Set Calibration" Click="SetButtonClicked" ToolTip="Set calibration interval"
+                        Grid.Column="2" Margin="10, 10, 10, 10"/>
+                    <Button Name="ClearButton" Content="Clear Calibration" Click="ClearButtonClicked" ToolTip="Clear all calibration"
+                        Grid.Column="3" Margin="10, 10, 10, 10"/>
                     <Button Name="CancelCalibrationButton" Content="Done" Click="CancelCalibrationButtonClicked" ToolTip="Done with calibration"
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
                     <Button Name="CancelTweakButton" Content="Done" Click="CancelTweakButtonClicked" ToolTip="Done tweaking"
