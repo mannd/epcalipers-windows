@@ -49,7 +49,7 @@ namespace EPCalipersCore
         public bool RoundMsecRate { set; get; }
         public Preferences.Rounding rounding { set; get; }
         public bool AutoPositionText { set; get; }
-        public Preferences.TextPosition CaliperTextPosition { set; get; }
+        virtual public Preferences.TextPosition CaliperTextPosition { set; get; }
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using EPCalipersCore.Properties;
+using TextPosition = EPCalipersCore.Properties.Preferences.TextPosition;
 
 namespace EPCalipersCore
 {
@@ -21,12 +22,19 @@ namespace EPCalipersCore
         Line crossbarLine = new Line();
         TextBlock textBlock = new TextBlock();
         TextBlock baseTextBlock = new TextBlock();
-        
+
         // private static float differential = 0.0f;
 
         float angleBar1 = (float)(0.5 * Math.PI);
         float angleBar2 = (float)(0.25 * Math.PI);
         public Calibration VerticalCalibration { get; set; }
+        TextPosition triangleBaseTextPosition = TextPosition.CenterAbove;
+
+        override public TextPosition CaliperTextPosition {
+            //get { return BaseCaliper.CaliperTextPosition; }
+            set { triangleBaseTextPosition = value; }
+}
+
        
         const double angleDelta = 0.15;
 
@@ -34,6 +42,7 @@ namespace EPCalipersCore
         {
             caliperIsAngleCaliper = true;
             caliperRequiresCalibration = false;
+            triangleBaseTextPosition = CaliperTextPosition;
         }
 
         public override void SetInitialPosition()
@@ -64,7 +73,7 @@ namespace EPCalipersCore
                 angleBar2, length);
             g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
 
-            CaliperText(g, brush);
+            CaliperText(g, brush, rect, TextPosition.CenterAbove, false);
 
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
@@ -72,7 +81,7 @@ namespace EPCalipersCore
                 if (angleInSouthernHemisphere(angleBar1) && angleInSouthernHemisphere(angleBar2))
                 {
                     double pointsPerMM = 1.0 / VerticalCalibration.Multiplier;
-                    DrawTriangleBase(g, pen, brush, 5 * pointsPerMM);
+                    DrawTriangleBase(g, pen, brush, 5 * pointsPerMM, rect);
                 }
             }
 
@@ -106,7 +115,7 @@ namespace EPCalipersCore
             bar2Line.Stroke = brush;
             canvas.Children.Add(bar2Line);
 
-            CaliperText(canvas, brush);
+            CaliperText(canvas, brush, TextPosition.CenterAbove, false);
 
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
@@ -210,14 +219,26 @@ namespace EPCalipersCore
             baseTextBlock.FontSize = defaultCanvasFontSize;
             baseTextBlock.Text = text;
             baseTextBlock.TextAlignment = System.Windows.TextAlignment.Center;
+            baseTextBlock.Padding = new System.Windows.Thickness(3);
             baseTextBlock.Foreground = brush;
-            Canvas.SetLeft(baseTextBlock, rect.X + 25);
-            Canvas.SetTop(baseTextBlock, rect.Y);
+            Font font = new Font("Helvetica", defaultCanvasFontSize);
+            Size size = System.Windows.Forms.TextRenderer.MeasureText(text, font);
+            baseTextBlock.MinWidth = size.Width;
+            baseTextBlock.MinHeight = size.Height;
+            //baseTextBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
+
+            RectangleF textRect = GetCaliperTextPosition(triangleBaseTextPosition, Math.Min(point1.X, point2.X),
+                      Math.Max(point1.X, point2.X), point1.Y, size,
+                      new RectangleF(0, 0, (float)canvas.ActualWidth, (float)canvas.ActualHeight),
+                      true);
+
+            Canvas.SetLeft(baseTextBlock, textRect.X);
+            Canvas.SetTop(baseTextBlock, textRect.Y);
             canvas.Children.Add(baseTextBlock);
         }
 
 
-        private void DrawTriangleBase(Graphics g, System.Drawing.Pen pen, DBrush brush, double height)
+        private void DrawTriangleBase(Graphics g, System.Drawing.Pen pen, DBrush brush, double height, RectangleF rect)
         {
             PointF point1 = GetBasePoint1ForHeight(height);
             PointF point2 = GetBasePoint2ForHeight(height);
@@ -225,14 +246,14 @@ namespace EPCalipersCore
             g.DrawLine(pen, point1.X, point1.Y, point2.X, point2.Y);
 
             string text = BaseMeasurement(lengthInPoints);
-            // we put the label below the base
-            RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 25),
-                point1.Y + 5, 
-               (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50), 
-               20.0f);
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Center;
-            g.DrawString(text, TextFont, brush, rect, format);
+            var size = g.MeasureString(text, TextFont);
+            var textRect = GetCaliperTextPosition(triangleBaseTextPosition,
+                        Math.Min(point1.X, point2.X), Math.Max(point1.X, point2.X),
+                        point1.Y, size, rect, true);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            g.DrawString(text, TextFont, brush, textRect, format);
         }
 
         private PointF GetBasePoint1ForHeight(double height)

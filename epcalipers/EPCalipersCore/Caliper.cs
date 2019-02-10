@@ -92,8 +92,6 @@ namespace EPCalipersCore
         {
             canvas.Children.Remove(textBlock);
             string text = Measurement();
-            float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
-            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
             textBlock.FontSize = defaultCanvasFontSize;
             textBlock.Text = text;
@@ -290,7 +288,7 @@ namespace EPCalipersCore
             g.DrawString(text, TextFont, brush, textRect);
         }
 
-        private RectangleF GetCaliperTextPosition(TextPosition textPosition, float left, float right, float center,
+        protected RectangleF GetCaliperTextPosition(TextPosition textPosition, float left, float right, float center,
                         SizeF size, RectangleF rect, bool optimizeTextPosition)
         {
             // Assumes X is center of text block and y is text baseline.
