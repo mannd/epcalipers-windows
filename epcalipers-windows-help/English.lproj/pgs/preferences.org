@@ -15,11 +15,14 @@ Options can be selected using the *Tools | Options* menu item.  You can change d
 #+CAPTION: Options dialog
 [[../../shrd/preferences_dialog.png]]
 ** Options explained
+- *Default amplitude calibration* This is the default value for calibration of amplitude calipers.  Put whatever value you usually use to calibrate here.
+- *Default time calibration* This is the default value that appears in the text box when calibrating time calipers.  If you usually calibrate to a certain value (say 200 msec) then it is useful to change this default value.
+- *Amplitude text position* Position of amplitude caliper text labels in relation to caliper.
+- *Auto-position text* When set to true, caliper text labels will automatically reposition themselves to avoid being obscured by the caliper or by the edges of the windows.
 - *Caliper color* This is the color of unselected newly added calipers.  Note that this color can be overwritten by right-clicking on a caliper and selecting *Caliper Color*.
 - *Selected caliper color* This is the color of the selected caliper.
 - *Line width* Increase or decrease this value to make the caliper lines thicker or thinner.
-- *Time calibration* This is the default value that appears in the text box when calibrating time calipers.  If you usually calibrate to a certain value (say 200 msec) then it is useful to change this default value.
-- *Amplitude calibration* This is the default value for calibration of amplitude calipers.  Put whatever value you usually use to calibrate here.
+- *Time text position* Position of time caliper text labels in relation to caliper.
 - *Number of intervals (mean RR)* The default number of intervals you use to measure mean RR intervals.
 - *Number of intervals (QTc)* The default number of intervals you use to measure the mean RR interval when making QTc measurements.
 - *QTc formula* Select the QTc formula you want to use for QTc calculations.  The 4 most commonly used formulas are available: Bazett, Framingham, Fridercia, and Hodges.  Selecting /All/ will display the results of all 4 formulas when calculating the QTc.
