@@ -418,7 +418,7 @@ namespace WpfTransparentWindow
             if (canvas.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = canvas.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow or ctrl-arrow key.  Right-click to tweak a different component.", 
+                string message = string.Format("Tweak {0} with arrow or ctrl-arrow key.", 
                     componentName);
                 TweakTextBlock.Text = message;
                 if (!canvas.tweakingComponent)

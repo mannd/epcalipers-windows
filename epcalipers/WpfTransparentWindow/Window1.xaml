@@ -80,7 +80,7 @@
                     <Button Name="CancelTweakButton" Content="Done" Click="CancelTweakButtonClicked" ToolTip="Done tweaking"
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
                     <TextBlock Name="TweakTextBlock" Width="380" Margin="10, 10, 10, 10"
-                        Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Left"
+                        Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right"
                                TextWrapping="Wrap">Message</TextBlock>
                     
                 </Grid>
