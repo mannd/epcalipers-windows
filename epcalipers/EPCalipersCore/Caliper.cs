@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Diagnostics;
 using EPCalipersCore.Properties;
 using TextPosition = EPCalipersCore.Properties.Preferences.TextPosition;
+using System.Windows.Forms;
 
 namespace EPCalipersCore
 {
@@ -77,7 +78,8 @@ namespace EPCalipersCore
             {
                 DrawMarchingCalipers(canvas, brush);
             }
-            CaliperText(canvas, brush);
+            //CaliperText(canvas, brush);
+            CaliperText(canvas, brush, CaliperTextPosition, true);
         }
 
         protected void MakeLine(ref Line line, double X1, double X2, double Y1, double Y2)
@@ -88,22 +90,54 @@ namespace EPCalipersCore
         protected void CaliperText(Canvas canvas, MBrush brush, TextPosition textPosition,
             bool optimizeTextPosition)
         {
-
-        }
-            
-
-        protected void CaliperText(Canvas canvas, MBrush brush)
-        {
             canvas.Children.Remove(textBlock);
             string text = Measurement();
-            double stringWidth = 100;
-            double stringHeight = 20;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
             textBlock.FontSize = defaultCanvasFontSize;
             textBlock.Text = text;
             textBlock.TextAlignment = System.Windows.TextAlignment.Center;
+            textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            Font font = new Font("Helvetica", defaultCanvasFontSize);
+            Size size = TextRenderer.MeasureText(text, font);
+            double stringWidth = size.Width;
+            double stringHeight = size.Height;
+            textBlock.MinWidth = stringWidth;
+            textBlock.MinHeight = stringHeight;
+            // Adding padding to a textBlock centers its content.
+            textBlock.Padding = new System.Windows.Thickness(3);
+            // Shade the textBlock for debugging purposes if necessary.
+            //textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
+            textBlock.Foreground = brush;
+
+            RectangleF textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
+                            Math.Max(Bar1Position, Bar2Position), CrossbarPosition, size,
+                            new RectangleF(0, 0, (float)canvas.ActualWidth, (float)canvas.ActualHeight),
+                            optimizeTextPosition);
+
+            Canvas.SetLeft(textBlock, textRect.X);
+            Canvas.SetTop(textBlock, textRect.Y);
+            canvas.Children.Add(textBlock);
+        }
+
+        // This is used for transparent window.
+        protected void CaliperText(Canvas canvas, MBrush brush)
+        {
+            canvas.Children.Remove(textBlock);
+            string text = Measurement();
+            //double stringWidth = 100;
+            //double stringHeight = 20;
+            float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
+            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
+            textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
+            textBlock.FontSize = defaultCanvasFontSize;
+            textBlock.Text = text;
+            textBlock.TextAlignment = System.Windows.TextAlignment.Center;
+            Font font = new Font("Helvetica", defaultCanvasFontSize);
+            Size size = TextRenderer.MeasureText(text, font);
+            double stringWidth = size.Width;
+            double stringHeight = size.Height;
             textBlock.MinWidth = stringWidth;
             textBlock.MinHeight = stringHeight;
             //textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
@@ -217,16 +251,19 @@ namespace EPCalipersCore
             {
                 DrawMarchingCalipers(g, brush, rect);
             }
-            CaliperText(g, brush);
+            //CaliperText(g, brush);
+            CaliperText(g, brush, rect, CaliperTextPosition, true);
             pen.Dispose();
             brush.Dispose();
         }
 
+        // This is the WinForm version
         protected void CaliperText(Graphics g, DBrush brush)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             string text = Measurement();
             SizeF sizeOfString = g.MeasureString(text, TextFont);
+            Console.WriteLine($"size = {sizeOfString.Height} {sizeOfString.Width}");
             float stringWidth = sizeOfString.Width;
             float stringHeight = sizeOfString.Height;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
@@ -239,6 +276,177 @@ namespace EPCalipersCore
             {
                 g.DrawString(text, TextFont, brush, CrossbarPosition + 5, center - stringHeight / 2);
             }
+        }
+
+        protected void CaliperText(Graphics g, DBrush brush, RectangleF rect, TextPosition textPosition, bool optimizeTextPosition)
+        {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            string text = Measurement();
+            SizeF size = g.MeasureString(text, TextFont);
+            float stringWidth = size.Width;
+            float stringHeight = size.Height;
+            var textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
+                Math.Max(Bar1Position, Bar2Position), CrossbarPosition, size, rect, optimizeTextPosition);
+            g.DrawString(text, TextFont, brush, textRect);
+        }
+
+        private RectangleF GetCaliperTextPosition(TextPosition textPosition, float left, float right, float center,
+                        SizeF size, RectangleF rect, bool optimizeTextPosition)
+        {
+            // Assumes X is center of text block and y is text baseline.
+            var textOrigin = new PointF();
+            var origin = new PointF();
+            var textHeight = size.Height;
+            var textWidth = size.Width;
+            const float xOffset = 5;
+            const float yOffset = 5;
+            var optimizedPosition = OptimizedTextPosition(left, right, center, rect.Width, rect.Height, textPosition, 
+                                                            textWidth, textHeight, optimizeTextPosition);
+            if (Direction == CaliperDirection.Horizontal)
+            {
+                origin.Y = center;
+                switch (optimizedPosition)
+                {
+                    case TextPosition.CenterAbove:
+                        origin.X = left + (right - left) / 2;
+                        textOrigin.X = origin.X;
+                        textOrigin.Y = origin.Y - yOffset;
+                        break;
+                    case TextPosition.CenterBelow:
+                        origin.X = left + (right - left) / 2;
+                        textOrigin.X = origin.X;
+                        textOrigin.Y = origin.Y + yOffset + textHeight;
+                        break;
+                    case TextPosition.Left:
+                        origin.X = left;
+                        textOrigin.X = origin.X - xOffset - textWidth / 2;
+                        textOrigin.Y = origin.Y - yOffset;
+                        break;
+                    case TextPosition.Right:
+                        origin.X = right;
+                        textOrigin.X = origin.X + xOffset + textWidth / 2;
+                        textOrigin.Y = origin.Y - yOffset;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                textOrigin.Y = textHeight / 2 + left + (right - left) / 2;
+                switch (optimizedPosition)
+                {
+                    case TextPosition.Left:
+                        textOrigin.X = center - xOffset - textWidth / 2;
+                        break;
+                    case TextPosition.Right:
+                        textOrigin.X = center + xOffset + textWidth / 2;
+                        break;
+                    case TextPosition.Top:
+                        textOrigin.Y = left - yOffset;
+                        textOrigin.X = center;
+                        break;
+                    case TextPosition.Bottom:
+                        textOrigin.Y = right + yOffset + textHeight;
+                        textOrigin.X = center;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return new RectangleF(textOrigin.X - textWidth / 2, textOrigin.Y - textHeight, textWidth, textHeight);
+        }
+
+        private TextPosition OptimizedTextPosition(float left, double right, double center,
+                                                    double windowWidth, double windowHeight,
+                                                    TextPosition textPosition,
+                                                    double textWidth, double textHeight,
+                                                    bool optimizeTextPosition)
+        {
+            if (!AutoPositionText || !optimizeTextPosition)
+            {
+                return textPosition;
+            }
+            const double offset = 4;
+            var optimizedPosition = textPosition;
+            if (Direction == CaliperDirection.Horizontal)
+            {
+                switch (optimizedPosition)
+                {
+                    case TextPosition.CenterAbove:
+                    case TextPosition.CenterBelow:
+                        // Avoid squeezing label.
+                        if (textWidth + offset > right - left)
+                        {
+                            optimizedPosition = (textWidth + right + offset > windowWidth)
+                                ? TextPosition.Left : TextPosition.Right;
+                        }
+                        break;
+                    case TextPosition.Left:
+                        if (textWidth + offset > left)
+                        {
+                            optimizedPosition = (textWidth + right + offset > windowWidth)
+                                ? TextPosition.CenterAbove : TextPosition.Right;
+                        }
+                        break;
+                    case TextPosition.Right:
+                        if (textWidth + right + offset > windowWidth)
+                        {
+                            optimizedPosition = (textWidth + offset > left)
+                                ? TextPosition.CenterAbove : TextPosition.Left;
+                        }
+                        break;
+                    default:
+                        optimizedPosition = textPosition;
+                        break;
+                }
+            }
+            else if (Direction == CaliperDirection.Vertical)
+            {
+                // watch for squeeze
+                if ((optimizedPosition == TextPosition.Left || optimizedPosition == TextPosition.Right)
+                    && textHeight + offset > right - left)
+                {
+                    optimizedPosition = (left - textHeight - offset < 0)
+                        ? TextPosition.Bottom : TextPosition.Top;
+                }
+                else
+                {
+                    switch (optimizedPosition)
+                    {
+                        case TextPosition.Left:
+                            if (textWidth + offset > center)
+                            {
+                                optimizedPosition = TextPosition.Right;
+                            }
+                            break;
+                        case TextPosition.Right:
+                            if (textWidth + center + offset > windowWidth)
+                            {
+                                optimizedPosition = TextPosition.Left;
+                            }
+                            break;
+                        case TextPosition.Top:
+                            if (left - textHeight - offset < 0)
+                            {
+                                optimizedPosition = (right + textHeight - offset < 0)
+                                    ? TextPosition.Right : TextPosition.Bottom;
+                            }
+                            break;
+                        case TextPosition.Bottom:
+                            if (right + textHeight + offset > windowHeight)
+                            {
+                                optimizedPosition = (left - textHeight - offset < 0)
+                                    ? TextPosition.Right : TextPosition.Top;
+                            }
+                            break;
+                        default:
+                            optimizedPosition = textPosition;
+                            break;
+                    }
+                }
+            }
+            return optimizedPosition;
         }
 
         private void DrawMarchingCalipers(Graphics g, DBrush brush, RectangleF rect)
@@ -277,6 +485,15 @@ namespace EPCalipersCore
             SelectedColor = preferences.HighlightColor;
             CaliperColor = UnselectedColor;
             rounding = preferences.RoundingParameter();
+            AutoPositionText = preferences.AutoPositionText;
+            if (Direction == CaliperDirection.Horizontal)
+            {
+                CaliperTextPosition = preferences.TimeCaliperTextPositionParameter();
+            }
+            else
+            {
+                CaliperTextPosition = preferences.AmplitudeCaliperTextPositionParameter();
+            }
             SetInitialPosition();
         }
     }

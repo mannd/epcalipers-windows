@@ -492,6 +492,15 @@ namespace EPCalipersCore
                     //caliper.CaliperColor = caliper.UnselectedColor;
                 }
                 caliper.rounding = p.RoundingParameter();
+                caliper.AutoPositionText = p.AutoPositionText;
+                if (caliper.Direction == CaliperDirection.Horizontal)
+                {
+                    caliper.CaliperTextPosition = p.TimeCaliperTextPositionParameter();
+                }
+                else if (caliper.Direction == CaliperDirection.Vertical)
+                {
+                    caliper.CaliperTextPosition = p.AmplitudeCaliperTextPositionParameter();
+                }
             }
         }
 
