@@ -32,9 +32,8 @@ namespace EPCalipersCore
         private BaseCaliper chosenCaliper;
         public CaliperComponent chosenComponent { get; set; }
         public bool tweakingComponent { get; set; }
-        // FIXME: change to lower value (0.5?) after debugging
-        private float tweakDistance = 0.4f;
-        private float hiresTweakDistance = 0.01f;
+        private readonly float tweakDistance = 0.4f;
+        private readonly float hiresTweakDistance = 0.01f;
  
 
         public BaseCalipers()
@@ -491,7 +490,7 @@ namespace EPCalipersCore
                 {
                     //caliper.CaliperColor = caliper.UnselectedColor;
                 }
-                caliper.rounding = p.RoundingParameter();
+                caliper.Rounding = p.RoundingParameter();
                 caliper.AutoPositionText = p.AutoPositionText;
                 if (caliper.Direction == CaliperDirection.Horizontal)
                 {

@@ -171,12 +171,16 @@ namespace epcalipers
 
             cancelTweakButton = new Button();
             InitButton(cancelTweakButton, "Done", "Cancel tweaking", CancelTweakButton_Click);
-  
-            measureRRForQtcMessageLabel = new Label();
-            measureRRForQtcMessageLabel.Text = "Measure one or more RR intervals";
+
+            measureRRForQtcMessageLabel = new Label
+            {
+                Text = "Measure one or more RR intervals"
+            };
             AdjustLabel(measureRRForQtcMessageLabel);
-            measureQtcMessageLabel = new Label();
-            measureQtcMessageLabel.Text = "Measure QT";
+            measureQtcMessageLabel = new Label
+            {
+                Text = "Measure QT"
+            };
             AdjustLabel(measureQtcMessageLabel);
             tweakLabel = new Label();
             // tweakLabel text is changed on the fly
@@ -461,8 +465,7 @@ namespace epcalipers
         private void OnDragEnter(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragEnter");
-            string filename;
-            validData = GetFilename(out filename, e);
+            validData = GetFilename(out string filename, e);
             if (validData)
             {
                 if (lastFilename != filename)
@@ -517,8 +520,7 @@ namespace epcalipers
 
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
             {
-                Array data = ((IDataObject)e.Data).GetData("FileDrop") as Array;
-                if (data != null)
+                if (((IDataObject)e.Data).GetData("FileDrop") is Array data)
                 {
                     if ((data.Length == 1) && (data.GetValue(0) is String))
                     {
@@ -922,8 +924,10 @@ namespace epcalipers
         // PDF stuff
         private void OpenPdf(string filename)
         {
-            MagickReadSettings settings = new MagickReadSettings();
-            settings.Density = new Density(300, 300);
+            MagickReadSettings settings = new MagickReadSettings
+            {
+                Density = new Density(300, 300)
+            };
             PdfReadDefines defines = new PdfReadDefines();
 
             using (pdfImages)

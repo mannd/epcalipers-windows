@@ -53,8 +53,10 @@ namespace EPCalipersCore
 
         public static void AddCaliper(ICalipers calipers, CaliperDirection direction, SetupCaliperMethod setupCaliperMethod)
         {
-            Caliper c = new Caliper();
-            c.Direction = direction;
+            Caliper c = new Caliper
+            {
+                Direction = direction
+            };
             if (direction == CaliperDirection.Horizontal)
             {
                 c.CurrentCalibration = calipers.HorizontalCalibration;
@@ -68,10 +70,12 @@ namespace EPCalipersCore
 
         public static void AddAngleCaliper(ICalipers calipers, SetupCaliperMethod setupCaliperMethod)
         {
-            AngleCaliper c = new AngleCaliper();
-            c.Direction = CaliperDirection.Horizontal;
-            c.CurrentCalibration = calipers.HorizontalCalibration;
-            c.VerticalCalibration = calipers.VerticalCalibration;
+            AngleCaliper c = new AngleCaliper
+            {
+                Direction = CaliperDirection.Horizontal,
+                CurrentCalibration = calipers.HorizontalCalibration,
+                VerticalCalibration = calipers.VerticalCalibration
+            };
             setupCaliperMethod(c);
         }
 
@@ -332,10 +336,12 @@ namespace EPCalipersCore
         {
             calipers.UnselectChosenCaliper();
             refreshCaliperScreen();
-            ColorDialog colorDialog = new ColorDialog();
-            colorDialog.Color = calipers.GetChosenCaliperColor();
-            colorDialog.AllowFullOpen = true;
-            colorDialog.CustomColors = customColors;
+            ColorDialog colorDialog = new ColorDialog
+            {
+                Color = calipers.GetChosenCaliperColor(),
+                AllowFullOpen = true,
+                CustomColors = customColors
+            };
             // color dialogs always float, even if Form is TopMost
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)

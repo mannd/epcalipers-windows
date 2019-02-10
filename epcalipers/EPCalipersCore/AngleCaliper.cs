@@ -20,7 +20,7 @@ namespace EPCalipersCore
         Line bar1Line = new Line();
         Line bar2Line = new Line();
         Line crossbarLine = new Line();
-        TextBlock textBlock = new TextBlock();
+        readonly TextBlock textBlock = new TextBlock();
         TextBlock baseTextBlock = new TextBlock();
 
         // private static float differential = 0.0f;
@@ -42,7 +42,7 @@ namespace EPCalipersCore
         {
             caliperIsAngleCaliper = true;
             caliperRequiresCalibration = false;
-            triangleBaseTextPosition = CaliperTextPosition;
+            triangleBaseTextPosition = TextPosition.Right;
         }
 
         public override void SetInitialPosition()
@@ -78,7 +78,7 @@ namespace EPCalipersCore
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
                 // show Brugada triangle
-                if (angleInSouthernHemisphere(angleBar1) && angleInSouthernHemisphere(angleBar2))
+                if (AngleInSouthernHemisphere(angleBar1) && AngleInSouthernHemisphere(angleBar2))
                 {
                     double pointsPerMM = 1.0 / VerticalCalibration.Multiplier;
                     DrawTriangleBase(g, pen, brush, 5 * pointsPerMM, rect);
@@ -120,7 +120,7 @@ namespace EPCalipersCore
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
                 // show Brugada triangle
-                if (angleInSouthernHemisphere(angleBar1) && angleInSouthernHemisphere(angleBar2))
+                if (AngleInSouthernHemisphere(angleBar1) && AngleInSouthernHemisphere(angleBar2))
                 {
                     double pointsPerMM = 1.0 / VerticalCalibration.Multiplier;
                     DrawTriangleBase(canvas, brush, 5 * pointsPerMM);
@@ -139,12 +139,12 @@ namespace EPCalipersCore
 
         public bool PointNearBar(PointF p, float barAngle)
         {
-            double theta = relativeTheta(p);
+            double theta = RelativeTheta(p);
             return theta < (double)barAngle + angleDelta &&
                 theta > (double)barAngle - angleDelta;
         }
 
-        private double relativeTheta(PointF p)
+        private double RelativeTheta(PointF p)
         {
             float x = p.X - Bar1Position;
             float y = p.Y - CrossbarPosition;
@@ -192,7 +192,7 @@ namespace EPCalipersCore
         }
 
         #region Brugada
-        private bool angleInSouthernHemisphere(float angle)
+        private bool AngleInSouthernHemisphere(float angle)
         {
             // Note can't be <= because we get divide by zero error with Sin(angle) == 0
             return (0 < (double)angle && angle < Math.PI);
@@ -246,8 +246,10 @@ namespace EPCalipersCore
             g.DrawLine(pen, point1.X, point1.Y, point2.X, point2.Y);
 
             string text = BaseMeasurement(lengthInPoints);
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Center;
+            StringFormat format = new StringFormat
+            {
+                Alignment = StringAlignment.Center
+            };
             var size = g.MeasureString(text, TextFont);
             var textRect = GetCaliperTextPosition(triangleBaseTextPosition,
                         Math.Min(point1.X, point2.X), Math.Max(point1.X, point2.X),
@@ -281,7 +283,7 @@ namespace EPCalipersCore
         private double CalibratedBaseResult(double lengthInPoints)
         {
             lengthInPoints = lengthInPoints * CurrentCalibration.Multiplier;
-            if (rounding == Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
+            if (Rounding == Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
             {
                 lengthInPoints = Math.Round(lengthInPoints);
             }
@@ -292,7 +294,7 @@ namespace EPCalipersCore
         {
             string s;
             string format;
-            switch (rounding) {
+            switch (Rounding) {
                 case Preferences.Rounding.ToInt:
                     format = roundToIntString;
                     break;
@@ -312,7 +314,7 @@ namespace EPCalipersCore
                     format = roundToIntString;
                     break;
             }
-            if (rounding == Preferences.Rounding.ToInt)
+            if (Rounding == Preferences.Rounding.ToInt)
             {
                 s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
                     CurrentCalibration.RawUnits);
@@ -331,7 +333,7 @@ namespace EPCalipersCore
         private double MoveBarAngle(PointF delta, PointF location)
         {
             PointF newPosition = new PointF(location.X + delta.X, location.Y + delta.Y);
-            return relativeTheta(newPosition);
+            return RelativeTheta(newPosition);
         }
 
         public override void MoveBar1(PointF delta, PointF location)

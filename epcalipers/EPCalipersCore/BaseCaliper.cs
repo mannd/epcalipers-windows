@@ -47,9 +47,20 @@ namespace EPCalipersCore
         public Font TextFont { set; get; }
         public int TextFontSize { set; get; }
         public bool RoundMsecRate { set; get; }
-        public Preferences.Rounding rounding { set; get; }
+        public Preferences.Rounding Rounding { set; get; }
         public bool AutoPositionText { set; get; }
-        virtual public Preferences.TextPosition CaliperTextPosition { set; get; }
+        private Preferences.TextPosition _caliperTextPosition;
+        virtual public Preferences.TextPosition CaliperTextPosition
+        {
+            set
+            {
+                _caliperTextPosition = value;
+            }
+            get
+            {
+                return _caliperTextPosition;
+            }
+        }
 
         protected bool caliperIsAngleCaliper = false;
         protected bool caliperRequiresCalibration = true;
@@ -94,9 +105,9 @@ namespace EPCalipersCore
             TextFont = new Font("Segoe UI", TextFontSize);
             CurrentCalibration = new Calibration();
             RoundMsecRate = true;
-            rounding = Preferences.Rounding.ToInt;
+            Rounding = Preferences.Rounding.ToInt;
             AutoPositionText = true;
-            CaliperTextPosition = Preferences.TextPosition.Right;
+            _caliperTextPosition = Preferences.TextPosition.Right;
         }
 
         public virtual void SetInitialPosition()
@@ -142,7 +153,7 @@ namespace EPCalipersCore
             string s;
             if (CurrentCalibration.unitsAreMsecOrRate()) {
                 string format;
-                switch (rounding)
+                switch (Rounding)
                 {
                     case Preferences.Rounding.ToInt:
                         format = roundToIntString;
@@ -163,7 +174,7 @@ namespace EPCalipersCore
                         format = roundToIntString;
                         break;
                 }
-                if (rounding == Preferences.Rounding.ToInt)
+                if (Rounding == Preferences.Rounding.ToInt)
                 {
                     s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
                     CurrentCalibration.Units);

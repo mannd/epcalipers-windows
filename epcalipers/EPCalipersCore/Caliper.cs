@@ -96,13 +96,11 @@ namespace EPCalipersCore
             textBlock.FontSize = defaultCanvasFontSize;
             textBlock.Text = text;
             textBlock.TextAlignment = System.Windows.TextAlignment.Center;
-            textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            //textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
             Font font = new Font("Helvetica", defaultCanvasFontSize);
             Size size = TextRenderer.MeasureText(text, font);
-            double stringWidth = size.Width;
-            double stringHeight = size.Height;
-            textBlock.MinWidth = stringWidth;
-            textBlock.MinHeight = stringHeight;
+            textBlock.Width = size.Width;
+            textBlock.Height = size.Height;
             // Adding padding to a textBlock centers its content.
             textBlock.Padding = new System.Windows.Thickness(3);
             // Shade the textBlock for debugging purposes if necessary.
@@ -124,8 +122,6 @@ namespace EPCalipersCore
         {
             canvas.Children.Remove(textBlock);
             string text = Measurement();
-            //double stringWidth = 100;
-            //double stringHeight = 20;
             float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
             float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
             textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
@@ -160,10 +156,9 @@ namespace EPCalipersCore
             {
                 return;
             }
-            float[] biggerBars, smallerBars;
-            int maxBiggerBars, maxSmallerBars;
-            CreateMarchingBars(canvas.ActualWidth, difference, out biggerBars, 
-                out smallerBars, out maxBiggerBars, out maxSmallerBars);
+
+            CreateMarchingBars(canvas.ActualWidth, difference, out float[] biggerBars, 
+                out float[] smallerBars, out int maxBiggerBars, out int maxSmallerBars);
             // draw them
             int i = 0;
             while (i < maxBiggerBars)
@@ -456,10 +451,9 @@ namespace EPCalipersCore
             {
                 return;
             }
-            float[] biggerBars, smallerBars;
-            int maxBiggerBars, maxSmallerBars;
-            CreateMarchingBars(rect.Size.Width, difference, out biggerBars, out smallerBars, 
-                out maxBiggerBars, out maxSmallerBars);
+
+            CreateMarchingBars(rect.Size.Width, difference, out float[] biggerBars, out float[] smallerBars, 
+                out int maxBiggerBars, out int maxSmallerBars);
             // draw them
             int i = 0;
             while (i < maxBiggerBars)
@@ -482,7 +476,7 @@ namespace EPCalipersCore
             UnselectedColor = preferences.CaliperColor;
             SelectedColor = preferences.HighlightColor;
             CaliperColor = UnselectedColor;
-            rounding = preferences.RoundingParameter();
+            Rounding = preferences.RoundingParameter();
             AutoPositionText = preferences.AutoPositionText;
             if (Direction == CaliperDirection.Horizontal)
             {

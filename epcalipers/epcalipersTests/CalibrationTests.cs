@@ -10,9 +10,11 @@ namespace epcalipers.Tests
         [TestMethod()]
         public void CalibrationTest()
         {
-            Calibration cal = new Calibration();
-            cal.Calibrated = true;
-            cal.Units = "msec";
+            Calibration cal = new Calibration
+            {
+                Calibrated = true,
+                Units = "msec"
+            };
             Assert.IsTrue(cal.CanDisplayRate);
             cal.Units = "milliseconds";
             Assert.IsTrue(cal.CanDisplayRate);
@@ -47,10 +49,12 @@ namespace epcalipers.Tests
         [TestMethod()]
         public void currentHorizontalCalFactorTest()
         {
-            Calibration cal = new Calibration();
-            cal.OriginalZoom = 1.0f;
-            cal.OriginalCalFactor = 0.5f;
-            cal.CurrentZoom = 1.0f;
+            Calibration cal = new Calibration
+            {
+                OriginalZoom = 1.0f,
+                OriginalCalFactor = 0.5f,
+                CurrentZoom = 1.0f
+            };
             Assert.IsTrue(cal.CurrentCalFactor == 0.5f);
             cal.CurrentZoom = 2.0f;
             Assert.IsTrue(cal.CurrentCalFactor == 0.25f);
@@ -59,9 +63,11 @@ namespace epcalipers.Tests
         [TestMethod()]
         public void complexCalibrationTest()
         {
-            Calibration cal = new Calibration();
-            cal.Units = "Seconds";
-            cal.DisplayRate = true;
+            Calibration cal = new Calibration
+            {
+                Units = "Seconds",
+                DisplayRate = true
+            };
             Assert.IsTrue(cal.Units == "points");
             cal.Calibrated = true;
             Assert.IsTrue(cal.Units == "bpm");

@@ -21,7 +21,7 @@ namespace WpfTransparentWindow
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Window1 : Window, IDisposable
     {
         #region Fields
         System.Windows.Point firstPoint;
@@ -499,6 +499,22 @@ namespace WpfTransparentWindow
             canvas.DrawCalipers();
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (measureRRDialog != null) measureRRDialog.Dispose();
+                if (calibrationDialog != null) calibrationDialog.Dispose();
+            }
+        }
+        
+        
         //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         //{
         //    if (!theCalipers.tweakingComponent)
