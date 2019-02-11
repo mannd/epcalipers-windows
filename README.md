@@ -26,6 +26,11 @@ The Apache 2.0 license is [compatible](http://www.apache.org/licenses/GPL-compat
 ## Development
 All branches of the GitHub repository except for the epcalipers-2 branch are now closed branches and contain code for the first version of EP Calipers for Windows, ending with version 1.10.  At present all new development and releases will be on the epcalipers-2 branch.
 
+## Acknowledgments
+The Brugadometer is based on the work of Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada. It is used with Dr. Baranchuk's permission and encouragement. Please see [this article][http://europace.oxfordjournals.org/content/16/11/1639] for more information.
+
+Thanks to Dr. Michael Katz for the original concept, to Scott Krankkala for the idea behind marching calipers, and to Fred Cohen for helping to troubleshoot the application.
+
 ## Copyright
 Copyright © 2016-2018 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
