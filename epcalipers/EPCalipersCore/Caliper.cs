@@ -120,38 +120,6 @@ namespace EPCalipersCore
             canvas.Children.Add(textBlock);
         }
 
-        // This is used for transparent window.
-        protected void CaliperText(Canvas canvas, MBrush brush)
-        {
-            canvas.Children.Remove(textBlock);
-            string text = Measurement();
-            float firstBarPosition = Bar2Position > Bar1Position ? Bar1Position : Bar2Position;
-            float center = firstBarPosition + (Math.Abs(Bar2Position - Bar1Position) / 2);
-            textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-            textBlock.FontSize = defaultCanvasFontSize;
-            textBlock.Text = text;
-            textBlock.TextAlignment = System.Windows.TextAlignment.Center;
-            Font font = new Font("Helvetica", defaultCanvasFontSize);
-            Size size = TextRenderer.MeasureText(text, font);
-            double stringWidth = size.Width;
-            double stringHeight = size.Height;
-            textBlock.MinWidth = stringWidth;
-            textBlock.MinHeight = stringHeight;
-            //textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
-            textBlock.Foreground = brush;
-            if (Direction == CaliperDirection.Horizontal)
-            {
-                Canvas.SetLeft(textBlock, center - stringWidth / 2);
-                Canvas.SetTop(textBlock, CrossbarPosition - 20);
-            }
-            else
-            {
-                Canvas.SetLeft(textBlock, CrossbarPosition + 5);
-                Canvas.SetTop(textBlock, center - stringHeight / 2);
-            }
-            canvas.Children.Add(textBlock);
-        }
-
         private void DrawMarchingCalipers(Canvas canvas, MBrush brush)
         {
             float difference = Math.Abs(Bar1Position - Bar2Position);

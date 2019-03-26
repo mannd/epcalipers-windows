@@ -296,34 +296,42 @@ namespace EPCalipersCore
         {
             string s;
             string format;
-            switch (Rounding) {
-                case Preferences.Rounding.ToInt:
-                    format = roundToIntString;
-                    break;
-                case Preferences.Rounding.ToFourPlaces:
-                    format = roundToFourPlacesString;
-                    break;
-                case Preferences.Rounding.ToTenths:
-                    format = roundToTenthsString;
-                    break;
-                case Preferences.Rounding.ToHundredths:
-                    format = roundToHundredthsString;
-                    break;
-                case Preferences.Rounding.None:
-                    format = noRoundingString;
-                    break;
-                default:
-                    format = roundToIntString;
-                    break;
-            }
-            if (Rounding == Preferences.Rounding.ToInt)
+            if (CurrentCalibration.UnitsAreMsecs)
             {
-                s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
-                    CurrentCalibration.RawUnits);
+                switch (Rounding)
+                {
+                    case Preferences.Rounding.ToInt:
+                        format = roundToIntString;
+                        break;
+                    case Preferences.Rounding.ToFourPlaces:
+                        format = roundToFourPlacesString;
+                        break;
+                    case Preferences.Rounding.ToTenths:
+                        format = roundToTenthsString;
+                        break;
+                    case Preferences.Rounding.ToHundredths:
+                        format = roundToHundredthsString;
+                        break;
+                    case Preferences.Rounding.None:
+                        format = noRoundingString;
+                        break;
+                    default:
+                        format = roundToIntString;
+                        break;
+                }
+                if (Rounding == Preferences.Rounding.ToInt)
+                {
+                    s = string.Format("{0} {1}", (int)(CalibratedBaseResult(lengthInPoints)),
+                        CurrentCalibration.RawUnits);
+                }
+                else
+                {
+                    s = string.Format("{0} {1}", CalibratedBaseResult(lengthInPoints).ToString(format), CurrentCalibration.RawUnits);
+                }
             }
             else
             {
-                s = string.Format("{0} {1}", CalibratedBaseResult(lengthInPoints).ToString(format), CurrentCalibration.RawUnits);
+                s = string.Format("{0} {1}", CalibratedBaseResult(lengthInPoints).ToString("G4"), CurrentCalibration.Units);
             }
             return s;
         }
