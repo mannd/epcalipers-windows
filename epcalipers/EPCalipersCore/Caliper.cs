@@ -24,6 +24,7 @@ namespace EPCalipersCore
         Line bar2Line = new Line();
         Line crossbarLine = new Line();
         TextBlock textBlock = new TextBlock();
+        protected double horizontalSizeAdjustment = 0.8;
 
         public Caliper() : base()
         {
@@ -99,6 +100,8 @@ namespace EPCalipersCore
             //textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
             Font font = new Font("Helvetica", defaultCanvasFontSize);
             Size size = TextRenderer.MeasureText(text, font);
+            // The textblocks based on TextRenderer.MeasureTest are too wide, so adjust.
+            size.Width = (int)Math.Round(horizontalSizeAdjustment * size.Width);
             textBlock.Width = size.Width;
             textBlock.Height = size.Height;
             // Adding padding to a textBlock centers its content.

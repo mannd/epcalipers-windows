@@ -223,6 +223,8 @@ namespace EPCalipersCore
             baseTextBlock.Foreground = brush;
             Font font = new Font("Helvetica", defaultCanvasFontSize);
             Size size = System.Windows.Forms.TextRenderer.MeasureText(text, font);
+            // Width of text block needs to be a little narrower.
+            size.Width = (int)Math.Round(horizontalSizeAdjustment * size.Width);
             baseTextBlock.MinWidth = size.Width;
             baseTextBlock.MinHeight = size.Height;
             //baseTextBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));

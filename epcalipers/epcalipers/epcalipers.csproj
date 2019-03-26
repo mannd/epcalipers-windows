@@ -242,8 +242,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-AnyCPU">
-      <Version>7.10.2</Version>
+    <PackageReference Include="Magick.NET-Q16-x86">
+      <Version>7.11.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
