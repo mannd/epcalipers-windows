@@ -38,7 +38,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 103);
+            this.label1.Location = new System.Drawing.Point(14, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 26);
             this.label1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // calibrationMeasurementTextBox
             // 
-            this.calibrationMeasurementTextBox.Location = new System.Drawing.Point(14, 138);
+            this.calibrationMeasurementTextBox.Location = new System.Drawing.Point(14, 86);
             this.calibrationMeasurementTextBox.Name = "calibrationMeasurementTextBox";
             this.calibrationMeasurementTextBox.Size = new System.Drawing.Size(257, 20);
             this.calibrationMeasurementTextBox.TabIndex = 1;
@@ -54,7 +54,7 @@
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(197, 226);
+            this.okButton.Location = new System.Drawing.Point(196, 193);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -64,7 +64,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(116, 226);
+            this.cancelButton.Location = new System.Drawing.Point(115, 193);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;

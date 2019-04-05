@@ -63,7 +63,7 @@
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(197, 226);
+            this.okButton.Location = new System.Drawing.Point(182, 192);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -73,7 +73,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(116, 226);
+            this.cancelButton.Location = new System.Drawing.Point(101, 192);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -85,7 +85,7 @@
             this.groupBox1.Controls.Add(this.angleCaliperRadioButton);
             this.groupBox1.Controls.Add(this.horizontalCaliperRadioButton);
             this.groupBox1.Controls.Add(this.VerticalCaliperRadioButton);
-            this.groupBox1.Location = new System.Drawing.Point(42, 79);
+            this.groupBox1.Location = new System.Drawing.Point(27, 45);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 102);
             this.groupBox1.TabIndex = 4;

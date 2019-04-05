@@ -281,13 +281,13 @@ namespace EPCalipersCore
                 NoTimeCaliperError();
                 return;
             }
-            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsMeanRR.ToString();
+            measureRRDialog.numericUpDown.Value = preferences.NumberOfIntervalsMeanRR;
             if (GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
-                string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
+                int value = (int)measureRRDialog.numericUpDown.Value;
                 try
                 {
-                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, c);
+                    Tuple<double, double> tuple = getMeanRRMeanRate(value, c);
                     double meanRR = tuple.Item1;
                     double meanRate = tuple.Item2;
                     string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
@@ -302,13 +302,9 @@ namespace EPCalipersCore
             }
         }
 
-        public static Tuple<double, double> getMeanRRMeanRate(string rawValue, BaseCaliper c)
+        public static Tuple<double, double> getMeanRRMeanRate(int value, BaseCaliper c)
         {
-            if (rawValue.Length < 1)
-            {
-                throw new Exception("Number of intervals not entered.");
-            }
-            int divisor = int.Parse(rawValue);
+            int divisor = value;
             divisor = Math.Abs(divisor);
             if (divisor == 0)
             {
@@ -357,7 +353,12 @@ namespace EPCalipersCore
         public static void QTcInterval(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen, 
             ShowQTcStep1Menu showQTcStep1Menu, ShowMainMenu showMainMenu)
         {
+            if (NoCalipersError(calipers.NumberOfCalipers()))
+            {
+                return;
+            }
             calipers.HorizontalCalibration.DisplayRate = false;
+            refreshCaliperScreen();
             BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
             if (singleHorizontalCaliper != null)
             {
@@ -385,13 +386,13 @@ namespace EPCalipersCore
                 NoTimeCaliperError();
                 return;
             }
-            measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
+            measureRRDialog.numericUpDown.Value = preferences.NumberOfIntervalsQtc;
             if (GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
                 try
                 {
-                    string rawValue = measureRRDialog.numberOfIntervalsTextBox.Text;
-                    Tuple<double, double> tuple = getMeanRRMeanRate(rawValue, calipers.GetActiveCaliper());
+                    int value = (int)measureRRDialog.numericUpDown.Value;
+                    Tuple<double, double> tuple = getMeanRRMeanRate(value, calipers.GetActiveCaliper());
                     rrIntervalForQtc = tuple.Item1;
                     showQTcStep2Menu();
                 }
