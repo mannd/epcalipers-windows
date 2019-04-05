@@ -99,6 +99,7 @@ namespace epcalipers
             this.caliperColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tweakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.marchingCaliperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gotoPDFPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.thumbnail)).BeginInit();
@@ -289,7 +290,8 @@ namespace epcalipers
             this.resetImageToolStripMenuItem1,
             this.toolStripSeparator3,
             this.nextPageToolStripMenuItem1,
-            this.previousPageToolStripMenuItem1});
+            this.previousPageToolStripMenuItem1,
+            this.gotoPDFPageToolStripMenuItem});
             this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
             this.zoomToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.zoomToolStripMenuItem.Text = "Image";
@@ -605,6 +607,13 @@ namespace epcalipers
             this.marchingCaliperToolStripMenuItem.Text = "Marching Caliper";
             this.marchingCaliperToolStripMenuItem.Click += new System.EventHandler(this.marchingCaliperToolStripMenuItem_Click);
             // 
+            // gotoPDFPageToolStripMenuItem
+            // 
+            this.gotoPDFPageToolStripMenuItem.Name = "gotoPDFPageToolStripMenuItem";
+            this.gotoPDFPageToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.gotoPDFPageToolStripMenuItem.Text = "Go to PDF page";
+            this.gotoPDFPageToolStripMenuItem.Click += new System.EventHandler(this.gotoPDFPageToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -705,6 +714,7 @@ namespace epcalipers
         private ToolStripMenuItem marchingCaliperToolStripMenuItem;
         private ToolStripMenuItem transparentWindowToolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator7;
+        private ToolStripMenuItem gotoPDFPageToolStripMenuItem;
     }
 }
 

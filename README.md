@@ -9,8 +9,6 @@ images of ECGs or other recordings.  Calculations such as mean
 heart rate and corrected QT intervals can be performed directly in the
 app.
 
-This is a mixed Windows Forms and WPF application developed in C# using the .NET framework.
-
 EP Calipers is open source, and licensed under the
 [GNU GPL v3 license.](http://www.gnu.org/licenses/gpl.html).
 
@@ -32,7 +30,7 @@ The Brugadometer is based on the work of Dr. Adrian Baranchuk and his colleagues
 Thanks to Dr. Michael Katz for the original concept, to Scott Krankkala for the idea behind marching calipers, and to Fred Cohen for helping to troubleshoot the application.
 
 ## Copyright
-Copyright © 2016-2018 [EP Studios, Inc.](https://www.epstudiossoftware.com)
+Copyright © 2016-2019 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann, MD

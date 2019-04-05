@@ -47,6 +47,7 @@ namespace epcalipers
         PreferencesDialog preferencesDialog;
         MeasureRRDialog measureRRDialog = new MeasureRRDialog();
         CalibrationDialog calibrationDialog = new CalibrationDialog();
+        GotoPDFPageForm gotoPdfPageForm = new GotoPDFPageForm();
 
         float rotationAngle = 0.0f;
         Color BACKGROUND_COLOR = Color.Transparent;
@@ -938,6 +939,7 @@ namespace epcalipers
         {
             nextPageToolStripMenuItem1.Enabled = enable;
             previousPageToolStripMenuItem1.Enabled = enable;
+            gotoPDFPageToolStripMenuItem.Enabled = enable;
         }
 
         private void ClearPdf()
@@ -954,7 +956,7 @@ namespace epcalipers
 
         private void NextPdfPage()
         {
-            if (pdfImages == null || ecgPictureBox.Image == null)
+            if (NoPdfIsLoaded())
             {
                 return;
             }
@@ -969,7 +971,7 @@ namespace epcalipers
 
         private void PreviousPdfPage()
         {
-            if (pdfImages == null || ecgPictureBox.Image == null)
+            if (NoPdfIsLoaded())
             {
                 return;
             }
@@ -981,6 +983,39 @@ namespace epcalipers
                 ResetBitmap(ecgPictureBox.Image);
             }
         }
+
+        private void GotoPdfPage()
+        {
+            if (NoPdfIsLoaded())
+            {
+                return;
+            }
+            gotoPdfPageForm.pdfPageUpDown.Value = currentPdfPage;
+            DialogResult result = gotoPdfPageForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                int value = (int)gotoPdfPageForm.pdfPageUpDown.Value;
+                int pageNumber = value;
+                if (pageNumber < 1)
+                {
+                    pageNumber = 1;
+                }
+                if (pageNumber > numberOfPdfPages)
+                {
+                    pageNumber = numberOfPdfPages;
+                }
+                currentPdfPage = pageNumber;
+                ecgPictureBox.Image.Dispose();
+                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+                ResetBitmap(ecgPictureBox.Image);
+            }
+        }
+
+        private bool NoPdfIsLoaded()
+        {
+            return pdfImages == null || ecgPictureBox.Image == null;
+        }
+        
         #endregion
         #region Menu
 
@@ -1229,8 +1264,13 @@ namespace epcalipers
             ElementHost.EnableModelessKeyboardInterop(transWindow);
             transWindow.Show();
         }
-        #endregion
 
+        private void gotoPDFPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GotoPdfPage();
+        }
+
+        #endregion
         #region right-click menu
         private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1327,5 +1367,7 @@ namespace epcalipers
 
 
         #endregion
+
+   
     }
 }

@@ -38,7 +38,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 76);
+            this.label1.Location = new System.Drawing.Point(13, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(219, 13);
             this.label1.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // numberOfIntervalsTextBox
             // 
-            this.numberOfIntervalsTextBox.Location = new System.Drawing.Point(16, 141);
+            this.numberOfIntervalsTextBox.Location = new System.Drawing.Point(16, 109);
             this.numberOfIntervalsTextBox.Name = "numberOfIntervalsTextBox";
             this.numberOfIntervalsTextBox.Size = new System.Drawing.Size(100, 20);
             this.numberOfIntervalsTextBox.TabIndex = 1;
@@ -55,7 +55,7 @@
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(197, 226);
+            this.okButton.Location = new System.Drawing.Point(197, 194);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -65,7 +65,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(116, 226);
+            this.cancelButton.Location = new System.Drawing.Point(116, 194);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
