@@ -12,7 +12,6 @@ namespace EPCalipersCore
     public class BaseCalipers: ICalipers
     {
         List<BaseCaliper> calipers = new List<BaseCaliper>();
-        public bool Locked { get; set; }
         // this is the (sole) caliper that is selected/highlighted
         /// TODO: check - replaced by GetActiveCaliper()?
         private BaseCaliper ActiveCaliper { get; set; }
@@ -38,7 +37,6 @@ namespace EPCalipersCore
 
         public BaseCalipers()
         {
-            Locked = false;
             ActiveCaliper = null;
             grabbedCaliper = null;
             HorizontalCalibration = new Calibration(CaliperDirection.Horizontal);
@@ -178,10 +176,6 @@ namespace EPCalipersCore
 
         public bool DeleteCaliperIfClicked(Point point)
         {
-            if (Locked)
-            {
-                return false; 
-            }
             bool deleted = false;
             for (int i = calipers.Count - 1; i >= 0; i--)
             {
@@ -374,7 +368,7 @@ namespace EPCalipersCore
             bool needsRefresh = false;
             if (grabbedCaliper != null)
             {
-                if (!caliperWasDragged && !Locked)
+                if (!caliperWasDragged)
                 {
                     if (clickCount == 1)
                     {

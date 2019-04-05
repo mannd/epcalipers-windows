@@ -354,7 +354,8 @@ namespace EPCalipersCore
 
         #region QTc
 
-        public static void QTcInterval(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen, ShowQTcStep1Menu showQTcStep1Menu)
+        public static void QTcInterval(ICalipers calipers, RefreshCaliperScreen refreshCaliperScreen, 
+            ShowQTcStep1Menu showQTcStep1Menu, ShowMainMenu showMainMenu)
         {
             calipers.HorizontalCalibration.DisplayRate = false;
             BaseCaliper singleHorizontalCaliper = calipers.GetLoneTimeCaliper();
@@ -367,11 +368,11 @@ namespace EPCalipersCore
             if (calipers.NoTimeCaliperSelected())
             {
                 NoTimeCaliperError();
+                showMainMenu();
             }
             else
             {
                 showQTcStep1Menu();
-                calipers.Locked = true;
             }
         }
 
@@ -379,6 +380,11 @@ namespace EPCalipersCore
             ShowQTcStep2Menu showQTcStep2Menu, Preferences preferences)
         {
             Debug.Assert(measureRRDialog != null);
+            if (calipers.NoTimeCaliperSelected())
+            {
+                NoTimeCaliperError();
+                return;
+            }
             measureRRDialog.numberOfIntervalsTextBox.Text = preferences.NumberOfIntervalsQtc.ToString();
             if (GetDialogResult(measureRRDialog) == DialogResult.OK)
             {
@@ -397,7 +403,7 @@ namespace EPCalipersCore
             }
         }
 
-        public static void MeasureQTc(ICalipers calipers, ShowMainMenu showMainMenu, 
+        public static void MeasureQTc(ICalipers calipers, ShowMainMenu showMainMenu,
             ShowQTcStep2Menu showQTcStep2Menu, Preferences preferences)
         {
             if (calipers.NoTimeCaliperSelected())

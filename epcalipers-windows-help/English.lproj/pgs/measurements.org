@@ -28,7 +28,7 @@ Select a calibrated time  caliper and stretch it over a number of intervals.  Se
 [[../../shrd/mean_rr.png]] 
 
 ** QTc calculation
-QTc measurement is a multiple step process.  Select the *QTc* button on the toolbar or the *Caliper | QTc measurement* menu command.  Follow the prompt to stretch the selected caliper over one or more RR intervals and select the *Measure* button.  Enter the number of intervals the caliper is stretched over and select *OK*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula by default.  Click *Retry* to measure another QT interval and calculate the QTc while keeping the same RR interval.  Click *Cancel* to end the QTc calculation.  You can change the QTc formula using [[./preferences.html][Options]].
+QTc measurement is a multiple step process.  Select the *QTc* button on the toolbar or the *Caliper | QTc measurement* menu command.  Follow the prompt to stretch the selected caliper over one or more RR intervals and select the *Measure* button.  Enter the number of intervals the caliper is stretched over and select *OK*.  Then use the same caliper or another time caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula by default.  Click *Retry* to measure another QT interval and calculate the QTc while keeping the same RR interval.  Click *Cancel* to end the QTc calculation.  You can change the QTc formula using [[./preferences.html][Options]].
 #+CAPTION: QTc measurement
 [[../../shrd/qtc_calculation.png]]
 

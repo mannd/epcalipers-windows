@@ -34,18 +34,6 @@ namespace WpfTransparentWindow
             }
         }
 
-        public bool Locked
-        {
-            get
-            {
-                return calipers.Locked;
-            }
-            set
-            {
-                calipers.Locked = value;
-            }
-        }
-
         public bool tweakingComponent
         {
             get

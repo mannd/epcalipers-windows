@@ -212,14 +212,13 @@ namespace epcalipers
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            theCalipers.Locked = false;
             ShowMainMenu();
         }
 
         private void QtcButton_Click(object sender, EventArgs e)
         {
-            CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu);
-            //QTcInterval();
+            DisableCalibrationAndMeasurements();
+            CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu, ShowMainMenu);
         }
 
         private void MeanRRButton_Click(object sender, EventArgs e)
@@ -593,25 +592,13 @@ namespace epcalipers
         #endregion
         #region Calipers
 
-        private void QTcInterval()
+        private void DisableCalibrationAndMeasurements()
         {
-            theCalipers.HorizontalCalibration.DisplayRate = false;
-            BaseCaliper singleHorizontalCaliper = theCalipers.GetLoneTimeCaliper();
-            if (singleHorizontalCaliper != null)
-            {
-                theCalipers.SelectCaliper(singleHorizontalCaliper);
-                theCalipers.UnselectCalipersExcept(singleHorizontalCaliper);
-                ecgPictureBox.Refresh();
-            }
-            if (theCalipers.NoTimeCaliperSelected())
-            {
-                CommonCaliper.NoTimeCaliperError();
-            }
-            else
-            {
-                ShowQTcStep1Menu();
-                theCalipers.Locked = true;
-            }
+            calibrateToolStripMenuItem.Enabled = false;
+            clearCalibrationToolStripMenuItem.Enabled = false;
+            toggleRateintervalToolStripMenuItem.Enabled = false;
+            meanRateIntervalToolStripMenuItem.Enabled = false;
+            qTcMeasurementToolStripMenuItem.Enabled = false;
         }
 
         private void ShowQTcStep1Menu()
@@ -651,7 +638,6 @@ namespace epcalipers
             EnableCaliperMenuItems(CalipersAllowed());
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(theCalipers));
             imageButton.Select();
-            theCalipers.Locked = false;
         }
 
         private void EnableCaliperMenuItems(bool enable)
@@ -1215,7 +1201,8 @@ namespace epcalipers
 
         private void qTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            QTcInterval();
+            DisableCalibrationAndMeasurements();
+            CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu, ShowMainMenu);
         }
 
         private void viewHelpToolStripMenuItem_Click(object sender, EventArgs e)

@@ -171,7 +171,6 @@ namespace WpfTransparentWindow
             HideCalibrationMenu(true);
             HideTweakMenu(true);
             EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
-            canvas.Locked = false;
             inQTcStep1 = false;
             currentMenu = Menu.Main;
         }
@@ -242,7 +241,7 @@ namespace WpfTransparentWindow
         private void QTcButtonClicked(object sender, RoutedEventArgs e)
         {
             Debug.Print("QTc clicked");
-            CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu);
+            CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu, ShowMainMenu);
         }
 
         private void CancelButtonClicked(object sender, RoutedEventArgs e)

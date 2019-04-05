@@ -11,7 +11,6 @@ namespace EPCalipersCore
     {
         Calibration HorizontalCalibration { get; set; }
         Calibration VerticalCalibration { get; set; }
-        bool Locked { get; set; }
 
         int NumberOfCalipers();
         bool NoCaliperIsSelected();
