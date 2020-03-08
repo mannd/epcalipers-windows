@@ -67,6 +67,10 @@ namespace EPCalipersCore
         protected readonly int defaultFontSize = 12;
         protected readonly int defaultCanvasFontSize = 16;
 
+        public bool isTweaking = false;
+        public CaliperComponent ChosenComponent { set; get; } = CaliperComponent.NoComponent;
+
+
         public bool isMarching = false;
 
         // added for AngleCaliper derived class

@@ -280,6 +280,7 @@ namespace EPCalipersCore
             else
             {
                 chosenComponent = GetCaliperComponent(chosenCaliper, point);
+                chosenCaliper.ChosenComponent = chosenComponent;
             }
         }
 
@@ -311,6 +312,7 @@ namespace EPCalipersCore
         public void CancelTweaking()
         {
             chosenComponent = CaliperComponent.NoComponent;
+            chosenCaliper.ChosenComponent = CaliperComponent.NoComponent;
             chosenCaliper = null;
             tweakingComponent = false;
         }

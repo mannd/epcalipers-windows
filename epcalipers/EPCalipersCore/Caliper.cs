@@ -78,14 +78,46 @@ namespace EPCalipersCore
             if (isMarching && isTimeCaliper())
             {
                 DrawMarchingCalipers(canvas, brush);
-            }
-            //CaliperText(canvas, brush);
+            };
             CaliperText(canvas, brush, CaliperTextPosition, true);
+            DrawChosenComponent(canvas);
         }
 
         protected void MakeLine(ref Line line, double X1, double X2, double Y1, double Y2)
         {
             line.X1 = X1; line.X2 = X2; line.Y1 = Y1; line.Y2 = Y2;
+        }
+
+        protected void DrawChosenComponent(Canvas canvas)
+        {
+            if (ChosenComponent == CaliperComponent.NoComponent) return;
+            MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
+            Line bar1Line = new Line();
+            switch (ChosenComponent)
+            {
+                case CaliperComponent.LeftBar:
+                    MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
+                    break;
+                default:
+                    break;
+            }
+            bar1Line.StrokeThickness = LineWidth;
+            bar1Line.Stroke = brush;
+            canvas.Children.Add(bar1Line);
+        }
+
+        private System.Drawing.Color GetChosenComponentColor()
+        {
+            System.Drawing.Color chosenComponentColor;
+           if (IsSelected)
+            {
+                chosenComponentColor = UnselectedColor;
+            }
+           else
+            {
+                chosenComponentColor = SelectedColor;
+            }
+            return chosenComponentColor;
         }
 
         protected void CaliperText(Canvas canvas, MBrush brush, TextPosition textPosition,
