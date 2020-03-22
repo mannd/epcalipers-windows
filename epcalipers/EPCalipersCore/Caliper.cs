@@ -92,23 +92,47 @@ namespace EPCalipersCore
         {
             if (ChosenComponent == CaliperComponent.NoComponent) return;
             MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
-            Line bar1Line = new Line();
+            Line chosenComponentLine = new Line();
             switch (ChosenComponent)
             {
                 case CaliperComponent.LeftBar:
-                    MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
+                    MakeLine(ref chosenComponentLine, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
                     break;
+                case CaliperComponent.RightBar:
+                    MakeLine(ref chosenComponentLine, Bar2Position, Bar2Position, canvas.ActualHeight + 30, 0);
+                    break;
+                //case .lowerBar:
+                //    +context.move(to: CGPoint(x: 0, y: bar1Position))
+                //    + context.addLine(to: CGPoint(x: rect.size.width, y: bar1Position))
+                //    +        case .rightBar:
+                //    +context.move(to: CGPoint(x: bar2Position, y: rect.size.height))
+                //    + context.addLine(to: CGPoint(x: bar2Position, y: 0))
+                //    +        case .upperBar:
+                //    +context.move(to: CGPoint(x: 0, y: bar2Position))
+                //    + context.addLine(to: CGPoint(x: rect.size.width, y: bar2Position))
+                //    +        case .crossBar:
+                //    +            if (direction == .horizontal)
+                //    {
+                //        +context.move(to: CGPoint(x: bar2Position, y: crossBarPosition))
+                //        + context.addLine(to: CGPoint(x: bar1Position, y: crossBarPosition))
+                //        +            }
+                //    +            else
+                //    {
+                //        +context.move(to: CGPoint(x: crossBarPosition, y: bar2Position))
+                //        + context.addLine(to: CGPoint(x: crossBarPosition, y: bar1Position))
+                //        +            }
+
                 default:
                     break;
             }
-            bar1Line.StrokeThickness = LineWidth;
-            bar1Line.Stroke = brush;
-            canvas.Children.Add(bar1Line);
+            chosenComponentLine.StrokeThickness = LineWidth;
+            chosenComponentLine.Stroke = brush;
+            canvas.Children.Add(chosenComponentLine);
         }
 
         private System.Drawing.Color GetChosenComponentColor()
         {
-            System.Drawing.Color chosenComponentColor;
+           System.Drawing.Color chosenComponentColor;
            if (IsSelected)
             {
                 chosenComponentColor = UnselectedColor;

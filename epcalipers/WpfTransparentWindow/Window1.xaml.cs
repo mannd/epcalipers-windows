@@ -306,6 +306,7 @@ namespace WpfTransparentWindow
         {
             ShowTweakMenu();
             TweakCaliper();
+            canvas.DrawCalipers();
         }
 
         #endregion
@@ -342,6 +343,7 @@ namespace WpfTransparentWindow
                 if (canvas.NoChosenCaliper() && canvas.tweakingComponent)
                 {
                     CancelTweaking();
+                   
                 }
                 if (!canvas.tweakingComponent)
                 {
@@ -420,6 +422,7 @@ namespace WpfTransparentWindow
                 string message = string.Format("Tweak {0} with arrow or ctrl-arrow key.", 
                     componentName);
                 TweakTextBlock.Text = message;
+                // isn't this just canvas.tweakingComponent = true ??
                 if (!canvas.tweakingComponent)
                 {
                     canvas.tweakingComponent = true;
@@ -429,12 +432,14 @@ namespace WpfTransparentWindow
             {
                 CancelTweaking();
             }
+            canvas.DrawCalipers();
         }
 
         private void CancelTweaking()
         {
             ShowMenu(previousMenu);
             canvas.CancelTweaking();
+            canvas.DrawCalipers();
         }
 
         private void canvas_KeyDown(object sender, KeyEventArgs e)

@@ -1302,6 +1302,7 @@ namespace epcalipers
                 {
                     theCalipers.tweakingComponent = true;
                 }
+                ecgPictureBox.Refresh();
             }
             else
             {

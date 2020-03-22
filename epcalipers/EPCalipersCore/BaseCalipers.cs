@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -280,6 +281,7 @@ namespace EPCalipersCore
             else
             {
                 chosenComponent = GetCaliperComponent(chosenCaliper, point);
+                Debug.WriteLine("set chosen component");
                 chosenCaliper.ChosenComponent = chosenComponent;
             }
         }
