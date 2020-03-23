@@ -314,8 +314,10 @@ namespace EPCalipersCore
         public void CancelTweaking()
         {
             chosenComponent = CaliperComponent.NoComponent;
-            chosenCaliper.ChosenComponent = CaliperComponent.NoComponent;
-            chosenCaliper = null;
+            if (chosenCaliper != null) {
+                chosenCaliper.ChosenComponent = CaliperComponent.NoComponent;
+                chosenCaliper = null;
+            }
             tweakingComponent = false;
         }
 

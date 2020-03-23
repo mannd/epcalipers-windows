@@ -495,6 +495,10 @@ namespace WpfTransparentWindow
                     }
                     e.Handled = true;
                     break;
+                case Key.Escape:
+                    CancelTweaking();
+                    e.Handled = true;
+                    break;
                 default:
                     Debug.Print("misc key pressed");
                     e.Handled = false;

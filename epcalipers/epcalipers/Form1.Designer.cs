@@ -120,7 +120,7 @@ namespace epcalipers
 			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 48);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
@@ -135,7 +135,7 @@ namespace epcalipers
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(162, 814);
-			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(1208, 59);
 			this.flowLayoutPanel1.TabIndex = 2;
@@ -149,7 +149,7 @@ namespace epcalipers
 			this.panel1.Controls.Add(this.ecgPictureBox);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(6, 6);
-			this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.panel1.Margin = new System.Windows.Forms.Padding(6);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1364, 796);
 			this.panel1.TabIndex = 3;
@@ -157,7 +157,7 @@ namespace epcalipers
 			// thumbnail
 			// 
 			this.thumbnail.Location = new System.Drawing.Point(0, 0);
-			this.thumbnail.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.thumbnail.Margin = new System.Windows.Forms.Padding(6);
 			this.thumbnail.Name = "thumbnail";
 			this.thumbnail.Size = new System.Drawing.Size(200, 96);
 			this.thumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -169,7 +169,7 @@ namespace epcalipers
 			// 
 			this.ecgPictureBox.BackColor = System.Drawing.SystemColors.Window;
 			this.ecgPictureBox.Location = new System.Drawing.Point(0, 0);
-			this.ecgPictureBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.ecgPictureBox.Margin = new System.Windows.Forms.Padding(6);
 			this.ecgPictureBox.Name = "ecgPictureBox";
 			this.ecgPictureBox.Size = new System.Drawing.Size(1364, 798);
 			this.ecgPictureBox.TabIndex = 0;
@@ -183,7 +183,7 @@ namespace epcalipers
 			this.flowLayoutPanel2.Controls.Add(this.zoomOutButton);
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 814);
-			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
 			this.flowLayoutPanel2.Size = new System.Drawing.Size(144, 59);
 			this.flowLayoutPanel2.TabIndex = 4;
@@ -193,7 +193,7 @@ namespace epcalipers
 			this.zoomInButton.AutoSize = true;
 			this.zoomInButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.zoomInButton.Location = new System.Drawing.Point(6, 6);
-			this.zoomInButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.zoomInButton.Margin = new System.Windows.Forms.Padding(6);
 			this.zoomInButton.Name = "zoomInButton";
 			this.zoomInButton.Size = new System.Drawing.Size(34, 35);
 			this.zoomInButton.TabIndex = 0;
@@ -207,7 +207,7 @@ namespace epcalipers
 			this.zoomOutButton.AutoSize = true;
 			this.zoomOutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.zoomOutButton.Location = new System.Drawing.Point(52, 6);
-			this.zoomOutButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.zoomOutButton.Margin = new System.Windows.Forms.Padding(6);
 			this.zoomOutButton.Name = "zoomOutButton";
 			this.zoomOutButton.Size = new System.Drawing.Size(29, 35);
 			this.zoomOutButton.TabIndex = 1;
@@ -637,7 +637,7 @@ namespace epcalipers
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
-			this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.Margin = new System.Windows.Forms.Padding(6);
 			this.Name = "Form1";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "EP Calipers";

@@ -24,7 +24,6 @@ namespace EPCalipersCore
         Line bar2Line = new Line();
         Line crossbarLine = new Line();
         TextBlock textBlock = new TextBlock();
-        protected double horizontalSizeAdjustment = 0.8;
 
         public Caliper() : base()
         {
@@ -153,18 +152,14 @@ namespace EPCalipersCore
             textBlock.FontSize = defaultCanvasFontSize;
             textBlock.Text = text;
             textBlock.TextAlignment = System.Windows.TextAlignment.Center;
-            //textBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-            Font font = new Font("Helvetica", defaultCanvasFontSize);
-            Size size = TextRenderer.MeasureText(text, font);
-            // The textblocks based on TextRenderer.MeasureTest are too wide, so adjust.
-            size.Width = (int)Math.Round(horizontalSizeAdjustment * size.Width);
-            textBlock.Width = size.Width;
-            textBlock.Height = size.Height;
             // Adding padding to a textBlock centers its content.
             textBlock.Padding = new System.Windows.Thickness(3);
             // Shade the textBlock for debugging purposes if necessary.
             //textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
             textBlock.Foreground = brush;
+            textBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
+            System.Windows.Size desiredSize = textBlock.DesiredSize;
+            Size size = new Size((int)desiredSize.Width, (int)desiredSize.Height);
 
             RectangleF textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
                             Math.Max(Bar1Position, Bar2Position), CrossbarPosition, size,
@@ -271,7 +266,6 @@ namespace EPCalipersCore
             {
                 DrawMarchingCalipers(g, brush, rect);
             }
-            //CaliperText(g, brush);
             CaliperText(g, brush, rect, CaliperTextPosition, true);
             pen.Dispose();
             brush.Dispose();
@@ -303,8 +297,6 @@ namespace EPCalipersCore
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             string text = Measurement();
             SizeF size = g.MeasureString(text, TextFont);
-            float stringWidth = size.Width;
-            float stringHeight = size.Height;
             var textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
                 Math.Max(Bar1Position, Bar2Position), CrossbarPosition, size, rect, optimizeTextPosition);
             g.DrawString(text, TextFont, brush, textRect);
