@@ -245,7 +245,7 @@ namespace epcalipers
             this.quitToolStripMenuItem,
             this.quitToolStripMenuItem1});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(74, 40);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(74, 44);
 			this.fileToolStripMenuItem.Text = "&File";
 			// 
 			// openToolStripMenuItem
@@ -303,7 +303,7 @@ namespace epcalipers
             this.previousPageToolStripMenuItem1,
             this.gotoPDFPageToolStripMenuItem});
 			this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-			this.zoomToolStripMenuItem.Size = new System.Drawing.Size(106, 40);
+			this.zoomToolStripMenuItem.Size = new System.Drawing.Size(106, 44);
 			this.zoomToolStripMenuItem.Text = "Image";
 			// 
 			// zoomInToolStripMenuItem
@@ -440,7 +440,7 @@ namespace epcalipers
             this.meanRateIntervalToolStripMenuItem,
             this.qTcMeasurementToolStripMenuItem});
 			this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
-			this.calipersToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
+			this.calipersToolStripMenuItem.Size = new System.Drawing.Size(125, 44);
 			this.calipersToolStripMenuItem.Text = "Calipers";
 			// 
 			// timeCaliperToolStripMenuItem
@@ -536,7 +536,7 @@ namespace epcalipers
             this.toolStripSeparator7,
             this.optionsToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(93, 40);
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(93, 44);
 			this.toolsToolStripMenuItem.Text = "Tools";
 			// 
 			// transparentWindowToolStripMenuItem1
@@ -567,7 +567,7 @@ namespace epcalipers
             this.toolStripSeparator1,
             this.aboutEPCalipersToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(88, 40);
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(88, 44);
 			this.helpToolStripMenuItem.Text = "Help";
 			// 
 			// viewHelpToolStripMenuItem
