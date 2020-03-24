@@ -74,6 +74,7 @@ namespace EPCalipersCore
             g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
 
             CaliperText(g, brush, rect, TextPosition.CenterAbove, false);
+            DrawChosenComponent(g, rect, endPointBar1, endPointBar2);
 
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
@@ -87,6 +88,30 @@ namespace EPCalipersCore
 
             pen.Dispose();
             brush.Dispose();
+        }
+
+        protected void DrawChosenComponent(Graphics g, RectangleF rect, PointF endPointBar1, PointF endPointBar2)
+        {
+            if (ChosenComponent == CaliperComponent.NoComponent) return;
+            DBrush brush = new SolidBrush(GetChosenComponentColor());
+            System.Drawing.Pen pen = new System.Drawing.Pen(brush, LineWidth);
+            switch (ChosenComponent)
+            {
+                case CaliperComponent.LeftBar:
+					g.DrawLine(pen, Bar1Position, CrossbarPosition, endPointBar1.X, endPointBar1.Y);
+                    break;
+                case CaliperComponent.RightBar:
+					g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
+                    break;
+                case CaliperComponent.Apex:
+					g.DrawLine(pen, Bar1Position, CrossbarPosition, endPointBar1.X, endPointBar1.Y);
+					g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
+                    break;
+                default:
+                    break;
+            }
+            brush.Dispose();
+            pen.Dispose();
         }
 
         public override void Draw(Canvas canvas)
@@ -116,6 +141,7 @@ namespace EPCalipersCore
             canvas.Children.Add(bar2Line);
 
             CaliperText(canvas, brush, TextPosition.CenterAbove, false);
+            DrawChosenComponent(canvas, endPointBar1, endPointBar2);
 
             if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
             {
@@ -126,6 +152,35 @@ namespace EPCalipersCore
                     DrawTriangleBase(canvas, brush, 5 * pointsPerMM);
                 }
             }
+        }
+
+        protected void DrawChosenComponent(Canvas canvas, PointF endPointBar1, PointF endPointBar2)
+        {
+            if (ChosenComponent == CaliperComponent.NoComponent) return;
+            MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
+            Line chosenComponentLine = new Line();
+			Line secondChosenComponentLine = new Line();
+            switch (ChosenComponent)
+            {
+                case CaliperComponent.LeftBar:
+					MakeLine(ref chosenComponentLine, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
+                    break;
+                case CaliperComponent.RightBar:
+					MakeLine(ref chosenComponentLine, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
+                    break;
+                case CaliperComponent.Apex:
+					MakeLine(ref chosenComponentLine, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
+					MakeLine(ref secondChosenComponentLine, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
+                    break;
+                default:
+                    break;
+            }
+            chosenComponentLine.StrokeThickness = LineWidth;
+            chosenComponentLine.Stroke = brush;
+            secondChosenComponentLine.StrokeThickness = LineWidth;
+            secondChosenComponentLine.Stroke = brush;
+            canvas.Children.Add(chosenComponentLine);
+            canvas.Children.Add(secondChosenComponentLine);
         }
 
         private PointF EndPointForPosition(PointF p, float angle, float length)

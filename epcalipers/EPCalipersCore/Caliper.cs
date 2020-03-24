@@ -100,27 +100,22 @@ namespace EPCalipersCore
                 case CaliperComponent.RightBar:
                     MakeLine(ref chosenComponentLine, Bar2Position, Bar2Position, canvas.ActualHeight + 30, 0);
                     break;
-                //case .lowerBar:
-                //    +context.move(to: CGPoint(x: 0, y: bar1Position))
-                //    + context.addLine(to: CGPoint(x: rect.size.width, y: bar1Position))
-                //    +        case .rightBar:
-                //    +context.move(to: CGPoint(x: bar2Position, y: rect.size.height))
-                //    + context.addLine(to: CGPoint(x: bar2Position, y: 0))
-                //    +        case .upperBar:
-                //    +context.move(to: CGPoint(x: 0, y: bar2Position))
-                //    + context.addLine(to: CGPoint(x: rect.size.width, y: bar2Position))
-                //    +        case .crossBar:
-                //    +            if (direction == .horizontal)
-                //    {
-                //        +context.move(to: CGPoint(x: bar2Position, y: crossBarPosition))
-                //        + context.addLine(to: CGPoint(x: bar1Position, y: crossBarPosition))
-                //        +            }
-                //    +            else
-                //    {
-                //        +context.move(to: CGPoint(x: crossBarPosition, y: bar2Position))
-                //        + context.addLine(to: CGPoint(x: crossBarPosition, y: bar1Position))
-                //        +            }
-
+                case CaliperComponent.UpperBar:
+                    MakeLine(ref chosenComponentLine, 0, canvas.ActualWidth, Bar1Position, Bar1Position);
+                    break;
+                case CaliperComponent.LowerBar:
+                    MakeLine(ref chosenComponentLine, 0, canvas.ActualWidth, Bar2Position, Bar2Position);
+                    break;
+                case CaliperComponent.CrossBar:
+                    if (Direction == CaliperDirection.Horizontal)
+                    {
+                        MakeLine(ref chosenComponentLine, Bar1Position, Bar2Position, CrossbarPosition, CrossbarPosition);
+                    }
+                    else
+                    {
+                        MakeLine(ref chosenComponentLine, CrossbarPosition, CrossbarPosition, Bar1Position, Bar2Position);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -129,7 +124,7 @@ namespace EPCalipersCore
             canvas.Children.Add(chosenComponentLine);
         }
 
-        private System.Drawing.Color GetChosenComponentColor()
+        protected System.Drawing.Color GetChosenComponentColor()
         {
            System.Drawing.Color chosenComponentColor;
            if (IsSelected)
@@ -267,6 +262,7 @@ namespace EPCalipersCore
                 DrawMarchingCalipers(g, brush, rect);
             }
             CaliperText(g, brush, rect, CaliperTextPosition, true);
+            DrawChosenComponent(g, rect);
             pen.Dispose();
             brush.Dispose();
         }
@@ -300,6 +296,42 @@ namespace EPCalipersCore
             var textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
                 Math.Max(Bar1Position, Bar2Position), CrossbarPosition, size, rect, optimizeTextPosition);
             g.DrawString(text, TextFont, brush, textRect);
+        }
+
+        protected void DrawChosenComponent(Graphics g, RectangleF rect)
+        {
+            if (ChosenComponent == CaliperComponent.NoComponent) return;
+            DBrush brush = new SolidBrush(GetChosenComponentColor());
+            System.Drawing.Pen pen = new System.Drawing.Pen(brush, LineWidth);
+            switch (ChosenComponent)
+            {
+                case CaliperComponent.LeftBar:
+					g.DrawLine(pen, Bar1Position, 0.0f, Bar1Position, rect.Size.Height);
+                    break;
+                case CaliperComponent.RightBar:
+					g.DrawLine(pen, Bar2Position, 0.0f, Bar2Position, rect.Size.Height);
+                    break;
+                case CaliperComponent.UpperBar:
+					g.DrawLine(pen, 0.0f, Bar1Position, rect.Size.Width, Bar1Position);
+                    break;
+                case CaliperComponent.LowerBar:
+					g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
+                    break;
+                case CaliperComponent.CrossBar:
+                    if (Direction == CaliperDirection.Horizontal)
+                    {
+						g.DrawLine(pen, Bar2Position, CrossbarPosition, Bar1Position, CrossbarPosition);
+                    }
+                    else
+                    {
+						g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            brush.Dispose();
+            pen.Dispose();
         }
 
         protected RectangleF GetCaliperTextPosition(TextPosition textPosition, float left, float right, float center,

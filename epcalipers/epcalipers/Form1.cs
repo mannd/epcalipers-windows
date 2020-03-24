@@ -333,6 +333,7 @@ namespace epcalipers
                 flowLayoutPanel1.Controls.Add(c);
             }
             theCalipers.CancelTweaking();
+            ecgPictureBox.Refresh();
         }
         #endregion
         #region Mouse
