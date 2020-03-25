@@ -6,7 +6,7 @@
         xmlns:custom="clr-namespace:WpfTransparentWindow;assembly="
         xmlns:local="clr-namespace:WpfTransparentWindow"
         mc:Ignorable="d"
-        Title="Floating EP Calipers" Height="450" Width="800"
+        Title="Transparent Window" Height="450" Width="800"
         AllowsTransparency="True" WindowStyle="None" Background="Transparent"
     ResizeMode="CanResizeWithGrip" SizeChanged="Window_SizeChanged">
     <Window.Resources>
@@ -81,7 +81,7 @@
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
                     <Button Name="MeasureButton" Content="Measure" Click="MeasureButtonClicked" ToolTip="Measure interval"
                         Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
-                    <TextBlock Name="MessageTextBlock" Width="180" Margin="10, 10, 10, 10"
+                    <TextBlock Name="MessageTextBlock" Width="200" Margin="10, 10, 10, 10"
                         Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Right" VerticalAlignment="Bottom">Message</TextBlock>
                     <Button Name="SetButton" Content="Set Calibration" Click="SetButtonClicked" ToolTip="Set calibration interval"
                         Grid.Column="2" Margin="10, 10, 10, 10"/>
@@ -91,8 +91,8 @@
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
                     <Button Name="CancelTweakButton" Content="Done" Click="CancelTweakButtonClicked" ToolTip="Done tweaking"
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
-                    <TextBlock Name="TweakTextBlock" Width="380" Margin="10, 10, 10, 10"
-                        Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right"
+                    <TextBlock Name="TweakTextBlock" Width="400" Margin="10, 10, 10, 10"
+                        Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom"
                                TextWrapping="Wrap">Message</TextBlock>
                     
                 </Grid>

@@ -309,7 +309,7 @@ namespace WpfTransparentWindow
         #region Right click menu
         private void MarchingCaliperMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Debug.Print("Marching caliper menu item clicked");
+            canvas.ClearAllChosenComponents();
             if (canvas.MarchCaliper())
             {
                 canvas.DrawCalipers();
@@ -323,7 +323,7 @@ namespace WpfTransparentWindow
 
         private void CaliperColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Debug.Print("Color menu item clicked");
+            canvas.ClearAllChosenComponents();
             CommonCaliper.SelectCaliperColor(canvas, canvas.DrawCalipers);
         }
 
@@ -440,17 +440,14 @@ namespace WpfTransparentWindow
 
         private void TweakCaliper()
         {
+            canvas.ClearAllChosenComponentsExceptForChosenCaliper();
             if (canvas.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = canvas.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow or ctrl-arrow key.", 
+                string message = string.Format("Tweak {0} with arrow or ctrl-arrow key", 
                     componentName);
                 TweakTextBlock.Text = message;
-                // isn't this just canvas.tweakingComponent = true ??
-                if (!canvas.tweakingComponent)
-                {
-                    canvas.tweakingComponent = true;
-                }
+				canvas.tweakingComponent = true;
             }
             else
             {

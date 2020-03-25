@@ -23,5 +23,7 @@ namespace EPCalipersCore
         void UnselectChosenCaliper();
         Color GetChosenCaliperColor();
         void SetChosenCaliperColor(Color color);
+        void ClearAllChosenComponentsExceptForChosenCaliper();
+        void ClearAllChosenComponents();
     }
 }

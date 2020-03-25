@@ -10,8 +10,6 @@ using System.Windows.Controls;
 
 namespace EPCalipersCore
 {
-//    public enum CaliperDirection { Horizontal, Vertical };
-
     public enum CaliperComponent { LeftBar, RightBar, CrossBar, LowerBar, UpperBar, Apex, NoComponent};
 
     public enum MovementDirection { Up, Down, Left, Right, Stationary };

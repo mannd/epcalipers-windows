@@ -328,6 +328,7 @@ namespace epcalipers
         {
             // always returns to previous toolbar
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             foreach (Control c in oldControls)
             {
                 flowLayoutPanel1.Controls.Add(c);
@@ -606,6 +607,7 @@ namespace epcalipers
         private void ShowQTcStep1Menu()
         {
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             if (qtcStep1Menu == null)
             {
                 qtcStep1Menu = new Control[] { cancelButton, measureRRForQtcButton, measureRRForQtcMessageLabel };
@@ -617,6 +619,7 @@ namespace epcalipers
         private void ShowQTcStep2Menu()
         {
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             if (qtcStep2Menu == null)
             {
                 qtcStep2Menu = new Control[] { cancelButton, measureQTcButton, measureQtcMessageLabel };
@@ -628,6 +631,7 @@ namespace epcalipers
         private void ShowMainMenu()
         {
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             if (mainMenu == null)
             {
                 mainMenu = new Control[] { qtcButton, meanRRButton,
@@ -669,6 +673,7 @@ namespace epcalipers
         private void ShowCalibrationMenu()
         {
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             if (calibrationMenu == null)
             {
                 calibrationMenu = new Control[] { backCalibrationButton,
@@ -1275,6 +1280,7 @@ namespace epcalipers
         #region right-click menu
         private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theCalipers.ClearAllChosenComponents();
             CommonCaliper.SelectCaliperColor(theCalipers, ImageRefresh);
         }
 
@@ -1283,6 +1289,7 @@ namespace epcalipers
             Debug.Assert(flowLayoutPanel1.Controls.Count < maxControlNumber);
             flowLayoutPanel1.Controls.CopyTo(oldControls, 0);
             flowLayoutPanel1.Controls.Clear();
+            flowLayoutPanel1.Refresh();
             if (tweakMenu == null)
             {
                 tweakMenu = new Control[] { cancelTweakButton, tweakLabel };
@@ -1294,6 +1301,7 @@ namespace epcalipers
 
         private void TweakCaliper()
         {
+            theCalipers.ClearAllChosenComponentsExceptForChosenCaliper();
             if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
@@ -1313,6 +1321,7 @@ namespace epcalipers
 
         private void marchingCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            theCalipers.ClearAllChosenComponents();
             if (theCalipers.MarchCaliper())
             {
                 ecgPictureBox.Refresh();

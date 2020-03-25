@@ -313,12 +313,39 @@ namespace EPCalipersCore
 
         public void CancelTweaking()
         {
-            chosenComponent = CaliperComponent.NoComponent;
-            if (chosenCaliper != null) {
-                chosenCaliper.ChosenComponent = CaliperComponent.NoComponent;
-                chosenCaliper = null;
-            }
+            ClearAllChosenComponents();
             tweakingComponent = false;
+        }
+
+        private void ClearAllChosenComponentsExceptFor(BaseCaliper caliper)
+        {
+            if (caliper == null)
+            {
+                ClearAllChosenComponents();
+            }
+            else
+            {
+                foreach (Caliper c in calipers)
+                {
+                    if (c != caliper)
+                    {
+                        c.ChosenComponent = CaliperComponent.NoComponent;
+                    }
+                }
+            }
+        }
+
+        public void ClearAllChosenComponentsExceptForChosenCaliper()
+        {
+            ClearAllChosenComponentsExceptFor(chosenCaliper);
+        }
+
+        public void ClearAllChosenComponents()
+        {
+            chosenComponent = CaliperComponent.NoComponent;
+            foreach (BaseCaliper c in calipers) {
+                c.ChosenComponent = CaliperComponent.NoComponent;
+            }
         }
 
         public virtual void MicroMove(MovementDirection movementDirection)

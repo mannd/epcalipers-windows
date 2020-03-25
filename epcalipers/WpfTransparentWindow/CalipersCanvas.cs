@@ -199,6 +199,7 @@ namespace WpfTransparentWindow
 
         public void CancelTweaking()
         {
+            calipers.ClearAllChosenComponents();
             calipers.CancelTweaking();
         }
 
@@ -215,6 +216,16 @@ namespace WpfTransparentWindow
         public void MicroMove(MovementDirection movementDirection)
         {
             calipers.MicroMove(movementDirection);
+        }
+
+        public void ClearAllChosenComponentsExceptForChosenCaliper()
+        {
+            calipers.ClearAllChosenComponentsExceptForChosenCaliper();
+        }
+
+        public void ClearAllChosenComponents()
+        {
+            calipers.ClearAllChosenComponents();
         }
     }  
 }
