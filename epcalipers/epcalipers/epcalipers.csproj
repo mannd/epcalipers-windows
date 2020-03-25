@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\Documents\publish\epcalipers-2.3.0-anyCPU\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\test\epcalipers-2.4.0-x86\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -31,7 +31,7 @@
     <PublisherName>EP Studios</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2.3.0.0</ApplicationVersion>
+    <ApplicationVersion>2.4.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,10 +60,10 @@
     <ApplicationIcon>epcalipers-test-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DF223E17045C5474991C157CBEC168052C457DBA</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>34936636EC03C754A7EC9E5CCE085A860A0577EC</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>epcalipers_3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>epstudios.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -201,6 +201,7 @@
     <None Include="epcalipers_2_TemporaryKey.pfx" />
     <None Include="epcalipers_3_TemporaryKey.pfx" />
     <None Include="epcalipers_TemporaryKey.pfx" />
+    <None Include="epstudios.pfx" />
     <None Include="newtemporarykey.pfx" />
   </ItemGroup>
   <ItemGroup>
