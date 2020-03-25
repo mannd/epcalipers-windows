@@ -76,6 +76,7 @@ Many of these keys are combinations using the CTRL (Control) key, the SHIFT key 
 | SHIFT-Del        | Delete all calipers                  |
 | CTRL+H           | Show caliper handles                 |
 | CTRL+I           | Toggle rate/interval                 |
+| ALT+T            | Launch a transparent window          |
 | ALT+Left arrow   | Prev page of multipage PDF           |
 | ALT+Right arrow  | Next page of multipage PDF           |
 | F1               | Help                                 |
