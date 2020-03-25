@@ -173,6 +173,11 @@ namespace WpfTransparentWindow
             return calipers.PointIsNearCaliper(ConvertPoint(point));
         }
 
+        public void DeleteAllCalipers()
+        {
+            calipers.deleteAllCalipers();
+        }
+
         public void UnselectChosenCaliper()
         {
             calipers.UnselectChosenCaliper();

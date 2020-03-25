@@ -28,6 +28,10 @@ namespace WpfTransparentWindow
         Preferences preferences;
         MeasureRRDialog measureRRDialog = new MeasureRRDialog();
         CalibrationDialog calibrationDialog = new CalibrationDialog();
+        public static RoutedCommand AddTimeCaliperCommand = new RoutedCommand();
+        public static RoutedCommand AddAmplitudeCaliperCommand = new RoutedCommand();
+        public static RoutedCommand AddAngleCaliperCommand = new RoutedCommand();
+        public static RoutedCommand DeleteAllCalipersCommand = new RoutedCommand();
 
         Button[] mainMenu;
         Button[] secondaryMenu;
@@ -58,6 +62,27 @@ namespace WpfTransparentWindow
             secondaryMenu = new Button[] { MeasureButton, CancelButton };
             calibrationMenu = new Button[] { SetButton, ClearButton, CancelCalibrationButton };
             ShowMainMenu();
+        }
+
+        public void AddTimeCaliperCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommonCaliper.AddCaliper(canvas, CaliperDirection.Horizontal, SetupCaliper);
+        }
+
+        public void AddAmplitudeCaliperCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommonCaliper.AddCaliper(canvas, CaliperDirection.Vertical, SetupCaliper);
+        }
+
+        public void AddAngleCaliperCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            CommonCaliper.AddAngleCaliper(canvas, SetupCaliper);
+        }
+
+        public void DeleteAllCalipersCommandExecute(object sender, ExecutedRoutedEventArgs e)
+        {
+            canvas.DeleteAllCalipers();
+            canvas.DrawCalipers();
         }
 
         public void DragWindow(object sender, MouseButtonEventArgs args)
@@ -379,7 +404,6 @@ namespace WpfTransparentWindow
                 Debug.Print("Double Click!"); //handle the double click event here...
                 if (canvas.DeleteCaliperIfClicked(clickPoint))
                 {
-                    Debug.Print("Trying to delete caliper...");
                     canvas.DrawCalipers();
                 }
             }
@@ -506,6 +530,9 @@ namespace WpfTransparentWindow
             }
             canvas.DrawCalipers();
         }
+
+
+
 
         public void Dispose()
         {

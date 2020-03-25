@@ -175,7 +175,7 @@ namespace epcalipers
 
             measureRRForQtcMessageLabel = new Label
             {
-                Text = "Measure one or more RR intervals"
+                Text = Properties.Resources.measureRRForQtcMessageText
             };
             AdjustLabel(measureRRForQtcMessageLabel);
             measureQtcMessageLabel = new Label

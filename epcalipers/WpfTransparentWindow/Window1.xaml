@@ -15,6 +15,18 @@
             <GradientStop Color="Gray" Offset="1"/>
         </LinearGradientBrush>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="local:Window1.AddTimeCaliperCommand" Executed="AddTimeCaliperCommandExecute" />
+        <CommandBinding Command="local:Window1.AddAmplitudeCaliperCommand" Executed="AddAmplitudeCaliperCommandExecute" />
+        <CommandBinding Command="local:Window1.AddAngleCaliperCommand" Executed="AddAngleCaliperCommandExecute" />
+        <CommandBinding Command="local:Window1.DeleteAllCalipersCommand" Executed="DeleteAllCalipersCommandExecute" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Command="local:Window1.AddTimeCaliperCommand" Key="T" Modifiers="Ctrl" />
+        <KeyBinding Command="local:Window1.AddAmplitudeCaliperCommand" Key="A" Modifiers="Ctrl" />
+        <KeyBinding Command="local:Window1.AddAngleCaliperCommand" Key="G" Modifiers="Ctrl" />
+        <KeyBinding Command="local:Window1.DeleteAllCalipersCommand" Key="Delete" Modifiers="Shift" />
+    </Window.InputBindings>
     <Border Background="#01FFFFFF" CornerRadius="5" BorderBrush="{StaticResource WindowFrameBrush}" BorderThickness="2,0,2,2">
         <Grid>
             <Grid.ColumnDefinitions>
