@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define epcalipers_TargetDir=$(var.epcalipers.TargetDir)?>
-  <Product Id="*" Name="EP Calipers" Language="1033" Version="2.3.0.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
+  <Product Id="*" Name="EP Calipers" Language="1033" Version="2.4.3.0" Manufacturer="EP Studios" UpgradeCode="6173b3f3-17b5-4011-8c79-31a279220332">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -62,11 +62,11 @@
       <Component Id="epcalipers.exe.config" Guid="ddf6d839-c675-465b-b73f-ba28e6843066">
         <File Id="epcalipers.exe.config" Name="epcalipers.exe.config" Source="$(var.epcalipers_TargetDir)epcalipers.exe.config" />
       </Component>
-      <Component Id="Magick.NET_Q16_x64.Native.dll" Guid="77f1ceb0-baa6-4c6d-8ed9-7982a7ed7b48">
-        <File Id="Magick.NET_Q16_x64.Native.dll" Name="Magick.NET-Q16-x64.Native.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.Native.dll" />
-      </Component>
       <Component Id="Magick.NET_Q16_x64.dll" Guid="8d5e2e1a-3810-4d23-a658-f5fa5e773486">
         <File Id="Magick.NET_Q16_x64.dll" Name="Magick.NET-Q16-x64.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-x64.dll" />
+      </Component>
+      <Component Id="Magick.Native_Q16_x64.dll" Guid="dbfaeeae-0a7d-4cdf-a915-0e473ff475e9">
+        <File Id="Magick.Native_Q16_x64.dll" Name="Magick.Native-Q16-x64.dll" Source="$(var.epcalipers_TargetDir)Magick.Native-Q16-x64.dll" />
       </Component>
       <Component Id="gsdll64.dll" Guid="10b07b7f-05d1-4c90-b992-083868352520">
         <File Id="gsdll64.dll" Name="gsdll64.dll" Source="$(var.epcalipers_TargetDir)gsdll64.dll" />
@@ -79,6 +79,15 @@
       </Component>
       <Component Id="EPCalipersCore.dll" Guid="f588a079-33b5-4ac3-b8ea-684b800704a7">
         <File Id="EPCalipersCore.dll" Name="EPCalipersCore.dll" Source="$(var.epcalipers_TargetDir)EPCalipersCore.dll" />
+      </Component>
+      <Component Id="epcalipers.pdb" Guid="8d3852da-0441-4f8c-9a48-37a8e6963e39">
+        <File Id="epcalipers.pdb" Name="epcalipers.pdb" Source="$(var.epcalipers_TargetDir)epcalipers.pdb" />
+      </Component>
+      <Component Id="EPCalipersCore.pdb" Guid="f82fece9-b8ff-455d-a4d3-cb9e0f50ae56">
+        <File Id="EPCalipersCore.pdb" Name="EPCalipersCore.pdb" Source="$(var.epcalipers_TargetDir)EPCalipersCore.pdb" />
+      </Component>
+      <Component Id="WpfTransparentWindow.pdb" Guid="c989fc5c-f223-47a0-b8a8-99d55dcca588">
+        <File Id="WpfTransparentWindow.pdb" Name="WpfTransparentWindow.pdb" Source="$(var.epcalipers_TargetDir)WpfTransparentWindow.pdb" />
       </Component>
     </ComponentGroup>
   </Fragment>
