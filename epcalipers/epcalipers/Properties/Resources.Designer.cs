@@ -61,11 +61,92 @@ namespace epcalipers.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not open {0} from disk..
+        /// </summary>
+        internal static string couldNotOpenFileErrorText {
+            get {
+                return ResourceManager.GetString("couldNotOpenFileErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not resize image.
+        /// </summary>
+        internal static string couldNotResizeText {
+            get {
+                return ResourceManager.GetString("couldNotResizeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error opening file.  Exception: .
+        /// </summary>
+        internal static string errorOpeningFileText {
+            get {
+                return ResourceManager.GetString("errorOpeningFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string errorTitleText {
+            get {
+                return ResourceManager.GetString("errorTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure QT.
+        /// </summary>
+        internal static string measureQTText {
+            get {
+                return ResourceManager.GetString("measureQTText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Measure one or more RR intervals.
         /// </summary>
         internal static string measureRRForQtcMessageText {
             get {
                 return ResourceManager.GetString("measureRRForQtcMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Image Open.
+        /// </summary>
+        internal static string noImageOpenTitleText {
+            get {
+                return ResourceManager.GetString("noImageOpenTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image is open so how can you print?.
+        /// </summary>
+        internal static string noImageToPrintText {
+            get {
+                return ResourceManager.GetString("noImageToPrintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No image is open so how can you save?.
+        /// </summary>
+        internal static string noImageToSaveText {
+            get {
+                return ResourceManager.GetString("noImageToSaveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tweak {0} with arrow or ctrl-arrow keys.  Right-click to tweak a different component..
+        /// </summary>
+        internal static string tweakText {
+            get {
+                return ResourceManager.GetString("tweakText", resourceCulture);
             }
         }
     }

@@ -117,7 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="couldNotOpenFileErrorText" xml:space="preserve">
+    <value>Could not open {0} from disk.</value>
+  </data>
+  <data name="couldNotResizeText" xml:space="preserve">
+    <value>Could not resize image</value>
+  </data>
+  <data name="errorOpeningFileText" xml:space="preserve">
+    <value>Error opening file.  Exception: </value>
+  </data>
+  <data name="errorTitleText" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="measureQTText" xml:space="preserve">
+    <value>Measure QT</value>
+  </data>
   <data name="measureRRForQtcMessageText" xml:space="preserve">
     <value>Measure one or more RR intervals</value>
+  </data>
+  <data name="noImageOpenTitleText" xml:space="preserve">
+    <value>No Image Open</value>
+  </data>
+  <data name="noImageToPrintText" xml:space="preserve">
+    <value>No image is open so how can you print?</value>
+  </data>
+  <data name="noImageToSaveText" xml:space="preserve">
+    <value>No image is open so how can you save?</value>
+  </data>
+  <data name="tweakText" xml:space="preserve">
+    <value>Tweak {0} with arrow or ctrl-arrow keys.  Right-click to tweak a different component.</value>
   </data>
 </root>

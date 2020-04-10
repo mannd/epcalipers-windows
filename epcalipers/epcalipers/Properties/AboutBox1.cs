@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace epcalipers.Properties
 {
@@ -15,9 +16,9 @@ namespace epcalipers.Properties
         public AboutBox1()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
+            this.Text = String.Format(CultureInfo.CurrentCulture, "About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            this.labelVersion.Text = String.Format(CultureInfo.CurrentCulture, "Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
@@ -25,7 +26,7 @@ namespace epcalipers.Properties
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
+        public static string AssemblyTitle
         {
             get
             {
@@ -33,7 +34,7 @@ namespace epcalipers.Properties
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (!String.IsNullOrEmpty(titleAttribute.Title))
                     {
                         return titleAttribute.Title;
                     }
@@ -42,7 +43,7 @@ namespace epcalipers.Properties
             }
         }
 
-        public string AssemblyVersion
+        public static string AssemblyVersion
         {
             get
             {
@@ -51,7 +52,7 @@ namespace epcalipers.Properties
             }
         }
 
-        public string AssemblyDescription
+        public static string AssemblyDescription
         {
             get
             {
@@ -64,7 +65,7 @@ namespace epcalipers.Properties
             }
         }
 
-        public string AssemblyProduct
+        public static string AssemblyProduct
         {
             get
             {
@@ -77,7 +78,7 @@ namespace epcalipers.Properties
             }
         }
 
-        public string AssemblyCopyright
+        public static string AssemblyCopyright
         {
             get
             {
@@ -90,7 +91,7 @@ namespace epcalipers.Properties
             }
         }
 
-        public string AssemblyCompany
+        public static string AssemblyCompany
         {
             get
             {
@@ -104,9 +105,9 @@ namespace epcalipers.Properties
         }
         #endregion
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.linkLabel1.LinkVisited = true;
+            this.LinkLabel1.LinkVisited = true;
 
             // Navigate to a URL.
             System.Diagnostics.Process.Start("https://www.epstudiossoftware.com");

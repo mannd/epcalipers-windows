@@ -11,6 +11,7 @@ using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
 using EPCalipersCore;
 using EPCalipersCore.Properties;
+using System.Globalization;
 
 namespace epcalipers
 {
@@ -64,14 +65,14 @@ namespace epcalipers
         double maximumZoom = 5.0;
 
         // Drag and drop variables
-        protected Thread getImageThread;
-        protected bool validData;
-        protected DragDropEffects effects;
-        protected string lastFilename = "";
-        protected Image image;
-        protected Image nextImage;
-        protected int lastX = 0;
-        protected int lastY = 0;
+        private Thread getImageThread;
+        private bool validData;
+        // private DragDropEffects effects;
+        private string lastFilename = "";
+        private Image image;
+        private Image nextImage;
+        private int lastX = 0;
+        private int lastY = 0;
 
         // PDF stuff
         private MagickImageCollection pdfImages = null;
@@ -107,11 +108,11 @@ namespace epcalipers
                 if (Environment.GetCommandLineArgs().Length > 1)
                 {
                     string arg1 = Environment.GetCommandLineArgs()[1];
-                    string ext = System.IO.Path.GetExtension(arg1);
+                    string ext = Path.GetExtension(arg1);
                     if (IsValidFileType(ext, true))
                     {
                         lastFilename = arg1;
-                        if (ext.ToLower() == ".pdf")
+                        if (ext.ToUpperInvariant() == ".PDF")
                         {
                             OpenPdf(lastFilename);
                         }
@@ -124,11 +125,60 @@ namespace epcalipers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                lastFilename = "";
+                if (ex is FileNotFoundException || ex is MagickException)
+                {
+                    lastFilename = "";
+                }
+                else
+                {
+                    throw;
+                }
             }
-            ShowMainMenu();
+            finally
+            {
+                ShowMainMenu();
+            }
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (theBitmap != null) theBitmap.Dispose();
+                if (pdfImages != null) pdfImages.Dispose();
+                if (nextImage != null) nextImage.Dispose();
+                if (imageButton != null) imageButton.Dispose();
+                if (addCalipersButton != null) addCalipersButton.Dispose();
+                if (calibrateButton != null) calibrateButton.Dispose();
+                if (intervalRateButton != null) intervalRateButton.Dispose();
+                if (measureRRForQtcButton != null) measureRRForQtcButton.Dispose();
+                if (setCalibrationButton != null) setCalibrationButton.Dispose();
+                if (clearCalibrationButton != null) clearCalibrationButton.Dispose();
+                if (backCalibrationButton != null) backCalibrationButton.Dispose();
+                if (meanRRButton != null) meanRRButton.Dispose();
+                if (qtcButton != null) qtcButton.Dispose();
+                if (cancelButton != null) cancelButton.Dispose();
+                if (measureQTcButton != null) measureQTcButton.Dispose();
+                if (cancelTweakButton != null) cancelTweakButton.Dispose();
+                if (measureQtcMessageLabel != null) measureQtcMessageLabel.Dispose();
+                if (measureRRForQtcMessageLabel != null) measureRRForQtcMessageLabel.Dispose();
+                if (tweakLabel != null) tweakLabel.Dispose();
+                if (preferencesDialog != null) preferencesDialog.Dispose();
+                if (measureRRDialog != null) measureRRDialog.Dispose();
+                if (calibrationDialog != null) calibrationDialog.Dispose();
+                if (gotoPdfPageForm != null) gotoPdfPageForm.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
 
         private void SetupButtons()
@@ -175,12 +225,12 @@ namespace epcalipers
 
             measureRRForQtcMessageLabel = new Label
             {
-                Text = Properties.Resources.measureRRForQtcMessageText
+                Text = Resources.measureRRForQtcMessageText
             };
             AdjustLabel(measureRRForQtcMessageLabel);
             measureQtcMessageLabel = new Label
             {
-                Text = "Measure QT"
+                Text = Resources.measureQTText
             };
             AdjustLabel(measureQtcMessageLabel);
             tweakLabel = new Label();
@@ -196,7 +246,7 @@ namespace epcalipers
             button.AutoSize = true;
         }
  
-        private void AdjustLabel(Label label)
+        private static void AdjustLabel(Label label)
         {
             // properties below ensure label is aligned with Buttons
             label.AutoSize = true;
@@ -246,14 +296,12 @@ namespace epcalipers
         {
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
-            bool isPDF = false;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 try
                 {
                     {
-                        if (Path.GetExtension(openFileDialog1.FileName).ToLower() == ".pdf")
+                        if (Path.GetExtension(openFileDialog1.FileName).ToUpperInvariant() == ".PDF")
                         {
-                            isPDF = true;
                             ClearPdf();
                             OpenPdf(openFileDialog1.FileName);
                         }
@@ -268,14 +316,13 @@ namespace epcalipers
                 }
                 catch (Exception exception)
                 {
-                    String pdfWarning = "";
-                    if (isPDF)
+                    if (exception is FileNotFoundException || exception is MagickException)
                     {
-                        pdfWarning = "A reminder: to open PDF files, the Ghostscript library must be installed.  See Help for more information";
-
+                        MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.couldNotOpenFileErrorText, openFileDialog1.FileName) + "\n\nDetailed error: " +
+                            exception.Message, Resources.errorTitleText);
+                        return;
                     }
-                    MessageBox.Show(String.Format("Could not open {0} from disk. {1}", openFileDialog1.FileName, pdfWarning) + "\n\nDetailed error: " +
-                        exception.Message, "Error");
+                    throw;
                 }
         }
 
@@ -459,8 +506,12 @@ namespace epcalipers
             }
             catch (Exception exception)
             {
-
-                MessageBox.Show("Exception: " + exception.Message, "Error");
+                if (exception is FileNotFoundException || exception is MagickException)
+                {
+                    MessageBox.Show(Resources.errorOpeningFileText + exception.Message, Resources.errorTitleText);
+                    return;
+                }
+                throw;
             }
         }
 
@@ -515,10 +566,15 @@ namespace epcalipers
             }
         }
 
-        protected bool GetFilename(out string filename, DragEventArgs e)
+        protected static bool GetFilename(out string filename, DragEventArgs e)
         {
             bool result = false;
             filename = String.Empty;
+
+            if (e == null)
+            {
+                return false;
+            }
 
             if ((e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
             {
@@ -535,23 +591,22 @@ namespace epcalipers
             return result;
         }
 
-        private bool IsValidFileType(string fileExtension, bool allowPDF)
+        private static bool IsValidFileType(string fileExtension, bool allowPDF)
         {
-            string ext = fileExtension.ToLower();
-            return ((ext == ".jpg") || (ext == ".png") || (ext == ".bmp") || (allowPDF && ext == ".pdf"));
+            string ext = fileExtension.ToUpperInvariant();
+            return ((ext == ".JPG") || (ext == ".JPEG") || (ext == ".TIFF") || (ext == ".TIF") || (ext == ".PNG") || (ext == ".BMP") || (allowPDF && ext == ".PDF"));
         }
 
         private bool FileIsPdf(string fileName)
         {
             try
             {
-                return System.IO.Path.GetExtension(fileName).ToLower() == ".pdf";
+                return Path.GetExtension(fileName).ToUpperInvariant() == ".PDF";
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 return false;
             }
-        
         }
 
         public delegate void AssignImageDlgt();
@@ -563,10 +618,9 @@ namespace epcalipers
                 nextImage = new Bitmap(lastFilename);
                 this.Invoke(new AssignImageDlgt(AssignImage));
             }
-            catch (Exception exception)
+            catch (FileNotFoundException exception)
             {
-
-                MessageBox.Show("Exception in LoadImage: " + exception.Message, "Error");
+                MessageBox.Show("Exception in LoadImage: " + exception.Message, Resources.errorTitleText);
             }
         }
 
@@ -786,9 +840,12 @@ namespace epcalipers
                 Bitmap bmp = new Bitmap(bitmap, newSize);
                 return bmp;
             }
+            // Note that new Bitmap only throws a general Exception, so impossible to fulfill warning below.
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
-                MessageBox.Show("Image too large.");
+                MessageBox.Show(Resources.couldNotResizeText);
                 return null;
             }
         }
@@ -857,7 +914,7 @@ namespace epcalipers
         }
 
         // code based on http://stackoverflow.com/questions/14184700/how-to-rotate-image-x-degrees-in-c
-        private Bitmap RotateImage(Bitmap bmp, float angle, Color bkColor)
+        private static Bitmap RotateImage(Bitmap bmp, float angle, Color bkColor)
         {
             angle = angle % 360;
             if (angle > 180)
@@ -921,7 +978,7 @@ namespace epcalipers
             {
                 Density = new Density(300, 300)
             };
-            PdfReadDefines defines = new PdfReadDefines();
+            //PdfReadDefines defines = new PdfReadDefines();
 
             using (pdfImages)
             {
@@ -1052,7 +1109,7 @@ namespace epcalipers
         {
             if (ecgPictureBox.Image == null)
             {
-                MessageBox.Show("No image is open so how can you print?", "No Image Open");
+                MessageBox.Show(Resources.noImageToPrintText, Resources.noImageOpenTitleText);
                 return;
             }
             string filename = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".jpg";
@@ -1064,13 +1121,14 @@ namespace epcalipers
             p.StartInfo.FileName = filename;
             p.StartInfo.Verb = "Print";
             p.Start();
+            p.Dispose();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
-                MessageBox.Show("No image is open so how can you save?", "No Image Open");
+                MessageBox.Show(Resources.noImageToSaveText, Resources.noImageOpenTitleText);
                 return;
             }
             saveFileDialog1.Filter = saveFileTypeFilter;
@@ -1110,6 +1168,7 @@ namespace epcalipers
         {
             AboutBox1 box = new AboutBox1();
             CommonCaliper.GetDialogResult(box);
+            box.Dispose();
         }
 
         private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1269,6 +1328,7 @@ namespace epcalipers
             var transWindow = new WpfTransparentWindow.Window1();
             ElementHost.EnableModelessKeyboardInterop(transWindow);
             transWindow.Show();
+            transWindow.Dispose();
         }
 
         private void gotoPDFPageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1305,7 +1365,7 @@ namespace epcalipers
             if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
-                string message = string.Format("Tweak {0} with arrow or ctrl-arrow keys.  Right-click to tweak a different component.", componentName);
+                string message = string.Format(CultureInfo.CurrentCulture, Resources.tweakText, componentName);
                 tweakLabel.Text = message;
                 if (!theCalipers.tweakingComponent)
                 {
