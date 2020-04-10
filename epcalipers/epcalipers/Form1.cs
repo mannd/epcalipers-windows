@@ -1,17 +1,16 @@
 ﻿using epcalipers.Properties;
+using EPCalipersCore;
+using EPCalipersCore.Properties;
 using ImageMagick;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Runtime.InteropServices;
-using EPCalipersCore;
-using EPCalipersCore.Properties;
-using System.Globalization;
 
 namespace epcalipers
 {
@@ -34,13 +33,13 @@ namespace epcalipers
         readonly Button measureQTcButton = new Button();
         readonly Button cancelTweakButton = new Button();
         readonly Label measureQtcMessageLabel = new Label
-            {
-                Text = Resources.measureQTText
-            };
+        {
+            Text = Resources.measureQTText
+        };
         readonly Label measureRRForQtcMessageLabel = new Label
-            {
-                Text = Resources.measureRRForQtcMessageText
-            };
+        {
+            Text = Resources.measureRRForQtcMessageText
+        };
         readonly Label tweakLabel = new Label();
         Control[] mainMenu;
         Control[] calibrationMenu;
@@ -187,7 +186,7 @@ namespace epcalipers
 
         private void SetupButtons()
         {
-          //  imageButton = new Button();
+            //  imageButton = new Button();
             InitButton(imageButton, "Open", "Open ECG image file or PDF", ImageButton_Click);
             InitButton(addCalipersButton, "Add Caliper", "Add new caliper", AddCaliper_Click);
             InitButton(calibrateButton, "Calibration", "Calibrate, recalibrate or clear calibration", CalibrateButton_Click);
@@ -195,7 +194,7 @@ namespace epcalipers
             InitButton(clearCalibrationButton, "Clear Calibration", "Clear all calibration", ClearCalibrationButton_Click);
             InitButton(backCalibrationButton, "Done", "Done with calibration", BackCalibrationButton_Click);
             InitButton(intervalRateButton, "Rate/Int", "Toggle between rate and interval", IntervalRateButton_Click);
-            InitButton(measureRRForQtcButton, "Measure", "Measure 1 or more RR intervals for QTc", 
+            InitButton(measureRRForQtcButton, "Measure", "Measure 1 or more RR intervals for QTc",
                 MeasureRRForQtcButton_Click);
             InitButton(measureQTcButton, "Measure", "Measure QT interval", MeasureQTcButton_Click);
             InitButton(meanRRButton, "Mean Rate", "Measure mean rate and interval", MeanRRButton_Click);
@@ -216,7 +215,7 @@ namespace epcalipers
             button.Click += onClickFunc;
             button.AutoSize = true;
         }
- 
+
         private static void AdjustLabel(Label label)
         {
             // properties below ensure label is aligned with Buttons
@@ -224,7 +223,7 @@ namespace epcalipers
             label.Dock = DockStyle.Fill;
             label.TextAlign = ContentAlignment.MiddleCenter;
         }
-      
+
         #endregion
         #region Buttons
         private void MeasureQTcButton_Click(object sender, EventArgs e)
@@ -317,7 +316,7 @@ namespace epcalipers
         {
             if (ecgPictureBox.Image == null)
             {
-               return;
+                return;
             }
             CommonCaliper.PickAndAddCaliper(theCalipers, SetupCaliper);
         }
@@ -369,7 +368,7 @@ namespace epcalipers
         {
             Point clickPoint = new Point(e.X, e.Y);
 
-            if  (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 contextMenuStrip1.Hide();
                 theCalipers.SetChosenCaliper(clickPoint);
@@ -401,7 +400,7 @@ namespace epcalipers
                 {
                     TweakCaliper();
                 }
-                
+
                 return;
             }
             // Update the mouse path with the mouse information
@@ -1049,7 +1048,7 @@ namespace epcalipers
         {
             return pdfImages == null || ecgPictureBox.Image == null;
         }
-        
+
         #endregion
         #region Menu
 
@@ -1374,11 +1373,11 @@ namespace epcalipers
             {
                 return base.ProcessCmdKey(ref msg, keyData);
             }
-            switch(keyData)
+            switch (keyData)
             {
                 case Keys.Left:
                     theCalipers.Move(MovementDirection.Left);
-                    break; 
+                    break;
                 case Keys.Right:
                     theCalipers.Move(MovementDirection.Right);
                     break;
@@ -1390,7 +1389,7 @@ namespace epcalipers
                     break;
                 case Keys.Left | Keys.Control:
                     theCalipers.MicroMove(MovementDirection.Left);
-                    break; 
+                    break;
                 case Keys.Right | Keys.Control:
                     theCalipers.MicroMove(MovementDirection.Right);
                     break;
@@ -1410,6 +1409,6 @@ namespace epcalipers
 
         #endregion
 
-   
+
     }
 }
