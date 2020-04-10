@@ -19,50 +19,54 @@ namespace epcalipers
     {
         #region Fields
         Bitmap theBitmap;
-        BaseCalipers theCalipers;
-        Button imageButton;
-        Button addCalipersButton;
-        Button calibrateButton;
-        Button intervalRateButton;
-        Button measureRRForQtcButton;
-        Button setCalibrationButton;
-        Button clearCalibrationButton;
-        Button backCalibrationButton;
-        Button meanRRButton;
-        Button qtcButton;
-        Button cancelButton;
-        Button measureQTcButton;
-        Button cancelTweakButton;
-        Label measureQtcMessageLabel;
-        Label measureRRForQtcMessageLabel;
-        Label tweakLabel;
+        readonly BaseCalipers theCalipers;
+        readonly Button imageButton = new Button();
+        readonly Button addCalipersButton = new Button();
+        readonly Button calibrateButton = new Button();
+        readonly Button intervalRateButton = new Button();
+        readonly Button measureRRForQtcButton = new Button();
+        readonly Button setCalibrationButton = new Button();
+        readonly Button clearCalibrationButton = new Button();
+        readonly Button backCalibrationButton = new Button();
+        readonly Button meanRRButton = new Button();
+        readonly Button qtcButton = new Button();
+        readonly Button cancelButton = new Button();
+        readonly Button measureQTcButton = new Button();
+        readonly Button cancelTweakButton = new Button();
+        readonly Label measureQtcMessageLabel = new Label
+            {
+                Text = Resources.measureQTText
+            };
+        readonly Label measureRRForQtcMessageLabel = new Label
+            {
+                Text = Resources.measureRRForQtcMessageText
+            };
+        readonly Label tweakLabel = new Label();
         Control[] mainMenu;
         Control[] calibrationMenu;
         Control[] qtcStep1Menu;
         Control[] qtcStep2Menu;
         Control[] tweakMenu;
-        static int maxControlNumber = 10;
-        Control[] oldControls = new Control[maxControlNumber];
-
-        Preferences preferences;
+        const int maxControlNumber = 10;
+        readonly Control[] oldControls = new Control[maxControlNumber];
+        readonly Preferences preferences;
         PreferencesDialog preferencesDialog;
-        MeasureRRDialog measureRRDialog = new MeasureRRDialog();
-        CalibrationDialog calibrationDialog = new CalibrationDialog();
-        GotoPDFPageForm gotoPdfPageForm = new GotoPDFPageForm();
+        readonly MeasureRRDialog measureRRDialog = new MeasureRRDialog();
+        readonly CalibrationDialog calibrationDialog = new CalibrationDialog();
+        readonly GotoPDFPageForm gotoPdfPageForm = new GotoPDFPageForm();
 
         float rotationAngle = 0.0f;
-        Color BACKGROUND_COLOR = Color.Transparent;
+        readonly Color BACKGROUND_COLOR = Color.Transparent;
         Point firstPoint;
-
-        string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
-        string saveFileTypeFilter = "Image files (*.jpg, *.bmp *.png) | *.jpg; *.bmp; *.png";
+        readonly string openFileTypeFilter = "Image or PDF files | *.jpg; *.bmp; *.png; *.pdf";
+        readonly string saveFileTypeFilter = "Image files (*.jpg, *.bmp *.png) | *.jpg; *.bmp; *.png";
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
-        double zoomInFactor = 1.414214;
-        double zoomOutFactor = 0.7071068;
+        readonly double zoomInFactor = 1.414214;
+        readonly double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
-        double maximumZoom = 5.0;
+        readonly double maximumZoom = 5.0;
 
         // Drag and drop variables
         private Thread getImageThread;
@@ -90,10 +94,10 @@ namespace epcalipers
             FormBorderStyle = FormBorderStyle.Sizable;
 
             ecgPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
-            ecgPictureBox.Paint += ecgPictureBox_Paint;
-            ecgPictureBox.MouseDown += ecgPictureBox_MouseDown;
-            ecgPictureBox.MouseDoubleClick += ecgPictureBox_MouseDoubleClick;
-            ecgPictureBox.MouseUp += ecgPictureBox_MouseUp;
+            ecgPictureBox.Paint += EcgPictureBox_Paint;
+            ecgPictureBox.MouseDown += EcgPictureBox_MouseDown;
+            ecgPictureBox.MouseDoubleClick += EcgPictureBox_MouseDoubleClick;
+            ecgPictureBox.MouseUp += EcgPictureBox_MouseUp;
 
             // Ghostscript location
             string ghostscriptDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -183,57 +187,24 @@ namespace epcalipers
 
         private void SetupButtons()
         {
-            imageButton = new Button();
-            InitButton(imageButton, "Open", "Open ECG image file or PDF", imageButton_Click);
-
-            addCalipersButton = new Button();
-            InitButton(addCalipersButton, "Add Caliper", "Add new caliper", addCaliper_Click);
-
-            calibrateButton = new Button();
-            InitButton(calibrateButton, "Calibration", "Calibrate, recalibrate or clear calibration", calibrateButton_Click);
-
-            setCalibrationButton = new Button();
-            InitButton(setCalibrationButton, "Set Calibration", "Set calibration interval", setCalibrationButton_Click);
-
-            clearCalibrationButton = new Button();
-            InitButton(clearCalibrationButton, "Clear Calibration", "Clear all calibration", clearCalibrationButton_Click);
-
-            backCalibrationButton = new Button();
-            InitButton(backCalibrationButton, "Done", "Done with calibration", backCalibrationButton_Click);
-
-            intervalRateButton = new Button();
-            InitButton(intervalRateButton, "Rate/Int", "Toggle between rate and interval", intervalRateButton_Click);
-
-            measureRRForQtcButton = new Button();
+          //  imageButton = new Button();
+            InitButton(imageButton, "Open", "Open ECG image file or PDF", ImageButton_Click);
+            InitButton(addCalipersButton, "Add Caliper", "Add new caliper", AddCaliper_Click);
+            InitButton(calibrateButton, "Calibration", "Calibrate, recalibrate or clear calibration", CalibrateButton_Click);
+            InitButton(setCalibrationButton, "Set Calibration", "Set calibration interval", SetCalibrationButton_Click);
+            InitButton(clearCalibrationButton, "Clear Calibration", "Clear all calibration", ClearCalibrationButton_Click);
+            InitButton(backCalibrationButton, "Done", "Done with calibration", BackCalibrationButton_Click);
+            InitButton(intervalRateButton, "Rate/Int", "Toggle between rate and interval", IntervalRateButton_Click);
             InitButton(measureRRForQtcButton, "Measure", "Measure 1 or more RR intervals for QTc", 
                 MeasureRRForQtcButton_Click);
-
-            measureQTcButton = new Button();
             InitButton(measureQTcButton, "Measure", "Measure QT interval", MeasureQTcButton_Click);
-
-            meanRRButton = new Button();
             InitButton(meanRRButton, "Mean Rate", "Measure mean rate and interval", MeanRRButton_Click);
-
-            qtcButton = new Button();
             InitButton(qtcButton, "QTc", "Measure corrected QT (QTc)", QtcButton_Click);
-
-            cancelButton = new Button();
             InitButton(cancelButton, "Cancel", "Cancel measurement", CancelButton_Click);
-
-            cancelTweakButton = new Button();
             InitButton(cancelTweakButton, "Done", "Cancel tweaking", CancelTweakButton_Click);
 
-            measureRRForQtcMessageLabel = new Label
-            {
-                Text = Resources.measureRRForQtcMessageText
-            };
             AdjustLabel(measureRRForQtcMessageLabel);
-            measureQtcMessageLabel = new Label
-            {
-                Text = Resources.measureQTText
-            };
             AdjustLabel(measureQtcMessageLabel);
-            tweakLabel = new Label();
             // tweakLabel text is changed on the fly
             AdjustLabel(tweakLabel);
         }
@@ -282,17 +253,17 @@ namespace epcalipers
             CommonCaliper.MeasureRRForQTc(theCalipers, measureRRDialog, ShowMainMenu, ShowQTcStep2Menu, preferences);
         }
 
-        private void clearCalibrationButton_Click(object sender, EventArgs e)
+        private void ClearCalibrationButton_Click(object sender, EventArgs e)
         {
             CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
-        private void backCalibrationButton_Click(object sender, EventArgs e)
+        private void BackCalibrationButton_Click(object sender, EventArgs e)
         {
             ShowMainMenu();
         }
 
-        private void imageButton_Click(object sender, EventArgs e)
+        private void ImageButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
@@ -326,12 +297,12 @@ namespace epcalipers
                 }
         }
 
-        private void calibrateButton_Click(object sender, EventArgs e)
+        private void CalibrateButton_Click(object sender, EventArgs e)
         {
             DoCalibration();
         }
 
-        private void setCalibrationButton_Click(object sender, EventArgs e)
+        private void SetCalibrationButton_Click(object sender, EventArgs e)
         {
             SetCalibration();
         }
@@ -342,7 +313,7 @@ namespace epcalipers
                 ImageRefresh, ShowMainMenu);
         }
 
-        private void addCaliper_Click(object sender, EventArgs e)
+        private void AddCaliper_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
@@ -351,17 +322,17 @@ namespace epcalipers
             CommonCaliper.PickAndAddCaliper(theCalipers, SetupCaliper);
         }
 
-        private void zoomInButton_Click(object sender, EventArgs e)
+        private void ZoomInButton_Click(object sender, EventArgs e)
         {
             ZoomIn();
         }
 
-        private void zoomOutButton_Click(object sender, EventArgs e)
+        private void ZoomOutButton_Click(object sender, EventArgs e)
         {
             ZoomOut();
         }
 
-        private void intervalRateButton_Click(object sender, EventArgs e)
+        private void IntervalRateButton_Click(object sender, EventArgs e)
         {
             ToggleIntervalRate();
         }
@@ -385,7 +356,7 @@ namespace epcalipers
         }
         #endregion
         #region Mouse
-        private void ecgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void EcgPictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Point mouseClickLocation = new Point(e.X, e.Y);
             if (theCalipers.DeleteCaliperIfClicked(mouseClickLocation))
@@ -394,7 +365,7 @@ namespace epcalipers
             }
         }
 
-        private void ecgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void EcgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Point clickPoint = new Point(e.X, e.Y);
 
@@ -438,7 +409,7 @@ namespace epcalipers
             theCalipers.GrabCaliperIfClicked(clickPoint);
         }
 
-        private void ecgPictureBox_MouseMove(object sender, MouseEventArgs e)
+        private void EcgPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             Point newPoint = new Point(e.X, e.Y);
             int deltaX = newPoint.X - firstPoint.X;
@@ -450,7 +421,7 @@ namespace epcalipers
             }
         }
 
-        private void ecgPictureBox_MouseUp(object sender, MouseEventArgs e)
+        private void EcgPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
             {
@@ -558,7 +529,7 @@ namespace epcalipers
                 // only bother if mouse position changes
                 if ((e.X != lastX) || (e.Y != lastY))
                 {
-                    setThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
+                    SetThumbnailLocation(this.PointToClient(new Point(e.X, e.Y)));
                     Debug.WriteLine("lastX and lastY = {0} & {1}", lastX, lastY);
                     lastX = e.X;
                     lastY = e.Y;
@@ -628,11 +599,11 @@ namespace epcalipers
         {
             thumbnail.Width = 100;
             thumbnail.Height = nextImage.Height * 100 / nextImage.Width;
-            setThumbnailLocation(PointToClient(new Point(lastX, lastY)));
+            SetThumbnailLocation(PointToClient(new Point(lastX, lastY)));
             thumbnail.Image = nextImage;
         }
 
-        protected void setThumbnailLocation(Point point)
+        protected void SetThumbnailLocation(Point point)
         {
             if (thumbnail.Image == null)
             {
@@ -850,7 +821,7 @@ namespace epcalipers
             }
         }
 
-        private void ecgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        private void EcgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             theCalipers.Draw(g, ecgPictureBox.DisplayRectangle);
@@ -916,11 +887,11 @@ namespace epcalipers
         // code based on http://stackoverflow.com/questions/14184700/how-to-rotate-image-x-degrees-in-c
         private static Bitmap RotateImage(Bitmap bmp, float angle, Color bkColor)
         {
-            angle = angle % 360;
+            angle %= 360;
             if (angle > 180)
                 angle -= 360;
 
-            PixelFormat pf = default(PixelFormat);
+            PixelFormat pf;
             if (bkColor == Color.Transparent)
             {
                 pf = PixelFormat.Format32bppArgb;
@@ -1100,12 +1071,12 @@ namespace epcalipers
             resetImageToolStripMenuItem1.Enabled = value;
         }
 
-        private void quitToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void QuitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PrintToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
@@ -1124,7 +1095,7 @@ namespace epcalipers
             p.Dispose();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ecgPictureBox.Image == null)
             {
@@ -1143,7 +1114,7 @@ namespace epcalipers
             }
         }
 
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (preferencesDialog == null)
             {
@@ -1164,54 +1135,54 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
-        private void aboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 box = new AboutBox1();
             CommonCaliper.GetDialogResult(box);
             box.Dispose();
         }
 
-        private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ZoomInToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ZoomIn();
         }
 
-        private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ZoomOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ZoomOut();
         }
 
-        private void resetZoomToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ResetZoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ResetZoom();
         }
 
-        private void rotate90RToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void Rotate90RToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             RotateEcgImage(90.0f);
         }
 
-        private void rotate90LToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Rotate90LToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(-90.0f);
         }
 
-        private void rotate1RToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Rotate1RToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(1.0f);
         }
 
-        private void rotate1LToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Rotate1LToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(-1.0f);
         }
 
-        private void resetImageToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ResetImageToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ResetEcgImage();
         }
 
-        private void timeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TimeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!CalipersAllowed())
             {
@@ -1220,7 +1191,7 @@ namespace epcalipers
             CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Horizontal, SetupCaliper);
         }
 
-        private void amplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AmplitudeCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!CalipersAllowed())
             {
@@ -1229,7 +1200,7 @@ namespace epcalipers
             CommonCaliper.AddCaliper(theCalipers, CaliperDirection.Vertical, SetupCaliper);
         }
 
-        private void angleCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AngleCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!CalipersAllowed())
             {
@@ -1238,7 +1209,7 @@ namespace epcalipers
             CommonCaliper.AddAngleCaliper(theCalipers, SetupCaliper);
         }
 
-        private void deleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!CalipersAllowed())
             {
@@ -1252,12 +1223,12 @@ namespace epcalipers
             }
         }
 
-        private void deleteAllCalipersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteAllCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            deleteAllCalipers();
+            DeleteAllCalipers();
         }
 
-        private void deleteAllCalipers()
+        private void DeleteAllCalipers()
         {
             if (!CalipersAllowed())
             {
@@ -1267,62 +1238,62 @@ namespace epcalipers
             ecgPictureBox.Refresh();
         }
 
-        private void calibrateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CalibrateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetCalibration();
         }
 
-        private void clearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
-        private void nextPageToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void NextPageToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             NextPdfPage();
         }
 
-        private void previousPageToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void PreviousPageToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             PreviousPdfPage();
         }
 
-        private void toggleRateintervalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToggleRateintervalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             theCalipers.HorizontalCalibration.DisplayRate = !theCalipers.HorizontalCalibration.DisplayRate;
             ecgPictureBox.Refresh();
 
         }
 
-        private void meanRateIntervalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MeanRateIntervalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CommonCaliper.MeasureMeanIntervalRate(theCalipers, ImageRefresh, measureRRDialog, preferences);
         }
 
-        private void qTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)
+        private void QTcMeasurementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisableCalibrationAndMeasurements();
             CommonCaliper.QTcInterval(theCalipers, ImageRefresh, ShowQTcStep1Menu, ShowMainMenu);
         }
 
-        private void viewHelpToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ViewHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Debug.WriteLine(Application.StartupPath);
             Debug.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
             Help.ShowHelp(this, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
         }
 
-        private void rotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RotateTinyRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(0.1f);
         }
 
-        private void rotateTinyLToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RotateTinyLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RotateEcgImage(-0.1f);
         }
 
-        private void transparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void TransparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
             var transWindow = new WpfTransparentWindow.Window1();
@@ -1331,20 +1302,20 @@ namespace epcalipers
             transWindow.Dispose();
         }
 
-        private void gotoPDFPageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GotoPDFPageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GotoPdfPage();
         }
 
         #endregion
         #region right-click menu
-        private void caliperColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CaliperColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             theCalipers.ClearAllChosenComponents();
             CommonCaliper.SelectCaliperColor(theCalipers, ImageRefresh);
         }
 
-        private void tweakToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TweakToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Debug.Assert(flowLayoutPanel1.Controls.Count < maxControlNumber);
             flowLayoutPanel1.Controls.CopyTo(oldControls, 0);
@@ -1379,7 +1350,7 @@ namespace epcalipers
             }
         }
 
-        private void marchingCaliperToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MarchingCaliperToolStripMenuItem_Click(object sender, EventArgs e)
         {
             theCalipers.ClearAllChosenComponents();
             if (theCalipers.MarchCaliper())
