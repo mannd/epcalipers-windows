@@ -47,8 +47,8 @@
             </Border>
             <custom:CalipersCanvas 
                 x:Name="canvas" Background="Transparent" HorizontalAlignment="Stretch" Margin="0,0, 0,30" Grid.Row="1" 
-                VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown" MouseMove="canvas_MouseMove" 
-                MouseUp="canvas_MouseUp" KeyDown="canvas_KeyDown" Focusable="True">
+                VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" 
+                MouseUp="Canvas_MouseUp" KeyDown="Canvas_KeyDown" Focusable="True">
                 <custom:CalipersCanvas.ContextMenu>
                     <ContextMenu Name="RightClickMenu" Placement="MousePoint">
                         <MenuItem Header="Caliper Color" Name="CaliperColorMenuItem" Click="CaliperColorMenuItem_Click"/>

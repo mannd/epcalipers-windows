@@ -8,14 +8,11 @@ namespace EPCalipersCore
 	// This class manages the set of calipers on the screen
 	public class BaseCalipers : ICalipers
 	{
-		List<BaseCaliper> calipers = new List<BaseCaliper>();
-		// this is the (sole) caliper that is selected/highlighted
-		/// TODO: check - replaced by GetActiveCaliper()?
-		private BaseCaliper ActiveCaliper { get; set; }
+		readonly List<BaseCaliper> calipers = new List<BaseCaliper>();
 		public Calibration HorizontalCalibration { get; set; }
 		public Calibration VerticalCalibration { get; set; }
 		// must be able to fake red color if fully transparent
-		public bool isFullyTransparent { get; set; }
+		public bool IsFullyTransparent { get; set; }
 
 		// for caliper movement
 		private BaseCaliper grabbedCaliper;
@@ -26,22 +23,21 @@ namespace EPCalipersCore
 
 		// for color and tweaking
 		private BaseCaliper chosenCaliper;
-		public CaliperComponent chosenComponent { get; set; }
-		public bool tweakingComponent { get; set; }
+		public CaliperComponent ChosenComponent { get; set; }
+		public bool TweakingComponent { get; set; }
 		private readonly float tweakDistance = 0.4f;
 		private readonly float hiresTweakDistance = 0.01f;
 
 
 		public BaseCalipers()
 		{
-			ActiveCaliper = null;
 			grabbedCaliper = null;
 			HorizontalCalibration = new Calibration(CaliperDirection.Horizontal);
 			VerticalCalibration = new Calibration(CaliperDirection.Vertical);
 			chosenCaliper = null;
-			chosenComponent = CaliperComponent.NoComponent;
-			tweakingComponent = false;
-			isFullyTransparent = false;
+			ChosenComponent = CaliperComponent.NoComponent;
+			TweakingComponent = false;
+			IsFullyTransparent = false;
 		}
 
 		public List<BaseCaliper> GetCalipers()
@@ -57,17 +53,17 @@ namespace EPCalipersCore
 			}
 		}
 
-		public void addCaliper(BaseCaliper c)
+		public void AddCaliper(BaseCaliper c)
 		{
 			calipers.Add(c);
 		}
 
-		public void deleteCaliper(BaseCaliper c)
+		public void DeleteCaliper(BaseCaliper c)
 		{
 			calipers.Remove(c);
 		}
 
-		public void deleteAllCalipers()
+		public void DeleteAllCalipers()
 		{
 			calipers.Clear();
 		}
@@ -108,14 +104,14 @@ namespace EPCalipersCore
 			return (calipers.Count < 1 ||
 				NoCaliperIsSelected() ||
 				GetActiveCaliper().Direction == CaliperDirection.Vertical) ||
-				GetActiveCaliper().isAngleCaliper;
+				GetActiveCaliper().IsAngleCaliper;
 		}
 
 		private Color AdjustColor(Color color)
 		{
 			// We have to avoid the color red if transparency is operational.
 			// A real red color will disappear!
-			if (isFullyTransparent && color == Color.Red)
+			if (IsFullyTransparent && color == Color.Red)
 			{
 				return Color.Firebrick;
 			}
@@ -178,7 +174,7 @@ namespace EPCalipersCore
 			{
 				if (calipers[i].PointNearCaliper(point) && !deleted)
 				{
-					deleteCaliper(calipers[i]);
+					DeleteCaliper(calipers[i]);
 					deleted = true;
 				}
 			}
@@ -210,7 +206,7 @@ namespace EPCalipersCore
 			grabbedCaliper = caliper;
 		}
 
-		public BaseCaliper getGrabbedCaliper(Point point)
+		public BaseCaliper GetGrabbedCaliper(Point point)
 		{
 			BaseCaliper caliper = null;
 			foreach (var c in calipers)
@@ -225,7 +221,7 @@ namespace EPCalipersCore
 
 		public void SetChosenCaliper(Point point)
 		{
-			chosenCaliper = getGrabbedCaliper(point);
+			chosenCaliper = GetGrabbedCaliper(point);
 		}
 
 		public bool NoChosenCaliper()
@@ -266,20 +262,20 @@ namespace EPCalipersCore
 
 		public string GetChosenComponentName()
 		{
-			return BaseCaliper.ComponentName(chosenComponent);
+			return BaseCaliper.ComponentName(ChosenComponent);
 		}
 
 		public void SetChosenCaliperComponent(Point point)
 		{
 			if (chosenCaliper == null)
 			{
-				chosenComponent = CaliperComponent.NoComponent;
+				ChosenComponent = CaliperComponent.NoComponent;
 			}
 			else
 			{
-				chosenComponent = GetCaliperComponent(chosenCaliper, point);
+				ChosenComponent = GetCaliperComponent(chosenCaliper, point);
 				Debug.WriteLine("set chosen component");
-				chosenCaliper.ChosenComponent = chosenComponent;
+				chosenCaliper.ChosenComponent = ChosenComponent;
 			}
 		}
 
@@ -299,7 +295,7 @@ namespace EPCalipersCore
 			}
 			else if (caliper.PointNearCrossbar(point))
 			{
-				return caliper.isAngleCaliper ? CaliperComponent.Apex : CaliperComponent.CrossBar;
+				return caliper.IsAngleCaliper ? CaliperComponent.Apex : CaliperComponent.CrossBar;
 			}
 			else
 			{
@@ -311,7 +307,7 @@ namespace EPCalipersCore
 		public void CancelTweaking()
 		{
 			ClearAllChosenComponents();
-			tweakingComponent = false;
+			TweakingComponent = false;
 		}
 
 		private void ClearAllChosenComponentsExceptFor(BaseCaliper caliper)
@@ -339,7 +335,7 @@ namespace EPCalipersCore
 
 		public void ClearAllChosenComponents()
 		{
-			chosenComponent = CaliperComponent.NoComponent;
+			ChosenComponent = CaliperComponent.NoComponent;
 			foreach (BaseCaliper c in calipers)
 			{
 				c.ChosenComponent = CaliperComponent.NoComponent;
@@ -360,7 +356,7 @@ namespace EPCalipersCore
 		{
 			if (chosenCaliper != null)
 			{
-				chosenCaliper.MoveBarInDirection(movementDirection, distance, chosenComponent);
+				chosenCaliper.MoveBarInDirection(movementDirection, distance, ChosenComponent);
 			}
 		}
 
@@ -463,7 +459,7 @@ namespace EPCalipersCore
 			return pointNearCaliper;
 		}
 
-		public bool updateCalibration(double zoomFactor)
+		public bool UpdateCalibration(double zoomFactor)
 		{
 			if (HorizontalCalibration.Calibrated ||
 				VerticalCalibration.Calibrated)
@@ -483,7 +479,7 @@ namespace EPCalipersCore
 				foreach (BaseCaliper caliper in calipers)
 				{
 					if (caliper.Direction == CaliperDirection.Horizontal
-						&& !caliper.isAngleCaliper)
+						&& !caliper.IsAngleCaliper)
 					{
 						c = caliper;
 						n++;

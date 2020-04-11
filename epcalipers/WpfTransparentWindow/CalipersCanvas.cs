@@ -5,7 +5,7 @@ namespace WpfTransparentWindow
 {
 	class CalipersCanvas : Canvas, ICalipers
 	{
-		BaseCalipers calipers = new BaseCalipers();
+		readonly BaseCalipers calipers = new BaseCalipers();
 		public Calibration HorizontalCalibration
 		{
 			get
@@ -29,27 +29,27 @@ namespace WpfTransparentWindow
 			}
 		}
 
-		public bool tweakingComponent
+		public bool TweakingComponent
 		{
 			get
 			{
-				return calipers.tweakingComponent;
+				return calipers.TweakingComponent;
 			}
 			set
 			{
-				calipers.tweakingComponent = value;
+				calipers.TweakingComponent = value;
 			}
 		}
 
-		public CaliperComponent chosenComponent
+		public CaliperComponent ChosenComponent
 		{
 			get
 			{
-				return calipers.chosenComponent;
+				return calipers.ChosenComponent;
 			}
 			set
 			{
-				calipers.chosenComponent = value;
+				calipers.ChosenComponent = value;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace WpfTransparentWindow
 
 		public void AddCaliper(BaseCaliper c)
 		{
-			calipers.addCaliper(c);
+			calipers.AddCaliper(c);
 		}
 
 		public void DrawCalipers()
@@ -158,9 +158,9 @@ namespace WpfTransparentWindow
 			return calipers.NoChosenCaliper();
 		}
 
-		public BaseCaliper getGrabbedCaliper(System.Windows.Point point)
+		public BaseCaliper GetGrabbedCaliper(System.Windows.Point point)
 		{
-			return calipers.getGrabbedCaliper(ConvertPoint(point));
+			return calipers.GetGrabbedCaliper(ConvertPoint(point));
 		}
 
 		public bool PointIsNearCaliper(System.Windows.Point point)
@@ -170,7 +170,7 @@ namespace WpfTransparentWindow
 
 		public void DeleteAllCalipers()
 		{
-			calipers.deleteAllCalipers();
+			calipers.DeleteAllCalipers();
 		}
 
 		public void UnselectChosenCaliper()

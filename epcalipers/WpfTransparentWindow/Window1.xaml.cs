@@ -2,6 +2,7 @@
 using EPCalipersCore.Properties;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,17 +16,17 @@ namespace WpfTransparentWindow
 	{
 		#region Fields
 		System.Windows.Point firstPoint;
-		Preferences preferences;
-		MeasureRRDialog measureRRDialog = new MeasureRRDialog();
-		CalibrationDialog calibrationDialog = new CalibrationDialog();
+		readonly Preferences preferences;
+		readonly MeasureRRDialog measureRRDialog = new MeasureRRDialog();
+		readonly CalibrationDialog calibrationDialog = new CalibrationDialog();
 		public static RoutedCommand AddTimeCaliperCommand = new RoutedCommand();
 		public static RoutedCommand AddAmplitudeCaliperCommand = new RoutedCommand();
 		public static RoutedCommand AddAngleCaliperCommand = new RoutedCommand();
 		public static RoutedCommand DeleteAllCalipersCommand = new RoutedCommand();
 
-		Button[] mainMenu;
-		Button[] secondaryMenu;
-		Button[] calibrationMenu;
+		readonly Button[] mainMenu;
+		readonly Button[] secondaryMenu;
+		readonly Button[] calibrationMenu;
 
 		enum Menu
 		{
@@ -355,12 +356,12 @@ namespace WpfTransparentWindow
 				RightClickMenu.Visibility = Visibility.Hidden;
 				canvas.SetChosenCaliper(clickPoint);
 				canvas.SetChosenCaliperComponent(clickPoint);
-				if (canvas.NoChosenCaliper() && canvas.tweakingComponent)
+				if (canvas.NoChosenCaliper() && canvas.TweakingComponent)
 				{
 					CancelTweaking();
 
 				}
-				if (!canvas.tweakingComponent)
+				if (!canvas.TweakingComponent)
 				{
 					bool pointNearCaliper = canvas.PointIsNearCaliper(clickPoint);
 					// Can't disable whole context menu, or it won't disappear with another click
@@ -369,11 +370,11 @@ namespace WpfTransparentWindow
 					MarchingCaliperMenuItem.IsEnabled = pointNearCaliper;
 					if (pointNearCaliper)
 					{
-						BaseCaliper c = canvas.getGrabbedCaliper(clickPoint);
+						BaseCaliper c = canvas.GetGrabbedCaliper(clickPoint);
 						if (c != null)
 						{
-							MarchingCaliperMenuItem.IsChecked = c.isMarching && c.isTimeCaliper();
-							MarchingCaliperMenuItem.IsEnabled = c.isTimeCaliper();
+							MarchingCaliperMenuItem.IsChecked = c.isMarching && c.IsTimeCaliper();
+							MarchingCaliperMenuItem.IsEnabled = c.IsTimeCaliper();
 						}
 					}
 					else
@@ -404,7 +405,7 @@ namespace WpfTransparentWindow
 			}
 		}
 
-		private void canvas_MouseMove(object sender, MouseEventArgs e)
+		private void Canvas_MouseMove(object sender, MouseEventArgs e)
 		{
 			var newPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
 			float deltaX = (float)(newPoint.X - firstPoint.X);
@@ -416,7 +417,7 @@ namespace WpfTransparentWindow
 			}
 		}
 
-		private void canvas_MouseUp(object sender, MouseButtonEventArgs e)
+		private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
 		{
 			Debug.Print("Mouse up");
 			if (canvas.ReleaseGrabbedCaliper(e.ClickCount))
@@ -431,13 +432,13 @@ namespace WpfTransparentWindow
 		private void TweakCaliper()
 		{
 			canvas.ClearAllChosenComponentsExceptForChosenCaliper();
-			if (canvas.chosenComponent != CaliperComponent.NoComponent)
+			if (canvas.ChosenComponent != CaliperComponent.NoComponent)
 			{
 				string componentName = canvas.GetChosenComponentName();
 				string message = string.Format("Tweak {0} with arrow or ctrl-arrow key",
 					componentName);
 				TweakTextBlock.Text = message;
-				canvas.tweakingComponent = true;
+				canvas.TweakingComponent = true;
 			}
 			else
 			{
@@ -453,9 +454,9 @@ namespace WpfTransparentWindow
 			canvas.DrawCalipers();
 		}
 
-		private void canvas_KeyDown(object sender, KeyEventArgs e)
+		private void Canvas_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (!canvas.tweakingComponent)
+			if (!canvas.TweakingComponent)
 			{
 				e.Handled = false;
 				return;
@@ -517,9 +518,6 @@ namespace WpfTransparentWindow
 			}
 			canvas.DrawCalipers();
 		}
-
-
-
 
 		public void Dispose()
 		{

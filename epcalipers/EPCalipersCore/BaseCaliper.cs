@@ -68,12 +68,12 @@ namespace EPCalipersCore
 		public bool isMarching = false;
 
 		// added for AngleCaliper derived class
-		public bool requiresCalibration
+		public bool RequiresCalibration
 		{
 			get { return caliperRequiresCalibration; }
 		}
 
-		public bool isAngleCaliper
+		public bool IsAngleCaliper
 		{
 			get { return caliperIsAngleCaliper; }
 		}
@@ -130,9 +130,9 @@ namespace EPCalipersCore
 
 		public virtual void Draw(Canvas canvas) { }
 
-		public bool isTimeCaliper()
+		public bool IsTimeCaliper()
 		{
-			return Direction == CaliperDirection.Horizontal && !isAngleCaliper;
+			return Direction == CaliperDirection.Horizontal && !IsAngleCaliper;
 		}
 
 		// returns significant bar coordinate depending on direction of caliper
@@ -232,18 +232,6 @@ namespace EPCalipersCore
 			else
 			{
 				return EPCalculator.MsecToSec(interval);
-			}
-		}
-
-		private double IntervalInMsec(double interval)
-		{
-			if (CurrentCalibration.UnitsAreMsecs)
-			{
-				return interval;
-			}
-			else
-			{
-				return EPCalculator.SecToMsec(interval);
 			}
 		}
 

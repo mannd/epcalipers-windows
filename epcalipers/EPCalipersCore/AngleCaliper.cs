@@ -16,8 +16,6 @@ namespace EPCalipersCore
 		Line bar1Line = new Line();
 		Line bar2Line = new Line();
 		Line crossbarLine = new Line();
-		readonly TextBlock textBlock = new TextBlock();
-		TextBlock baseTextBlock = new TextBlock();
 
 		// private static float differential = 0.0f;
 
@@ -71,7 +69,7 @@ namespace EPCalipersCore
 			g.DrawLine(pen, Bar2Position, CrossbarPosition, endPointBar2.X, endPointBar2.Y);
 
 			CaliperText(g, brush, rect, TextPosition.CenterAbove, false);
-			DrawChosenComponent(g, rect, endPointBar1, endPointBar2);
+			DrawChosenComponent(g, endPointBar1, endPointBar2);
 
 			if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
 			{
@@ -87,7 +85,7 @@ namespace EPCalipersCore
 			brush.Dispose();
 		}
 
-		protected void DrawChosenComponent(Graphics g, RectangleF rect, PointF endPointBar1, PointF endPointBar2)
+		protected void DrawChosenComponent(Graphics g, PointF endPointBar1, PointF endPointBar2)
 		{
 			if (ChosenComponent == CaliperComponent.NoComponent) return;
 			DBrush brush = new SolidBrush(GetChosenComponentColor());
@@ -114,9 +112,6 @@ namespace EPCalipersCore
 		public override void Draw(Canvas canvas)
 		{
 			var brush = new SolidColorBrush(ConvertColor(CaliperColor));
-			canvas.Children.Remove(bar1Line);
-			canvas.Children.Remove(bar2Line);
-			canvas.Children.Remove(crossbarLine);
 			// ensure caliper always extends past the screen edges
 			float length = (float)Math.Max(canvas.ActualHeight, canvas.ActualWidth) * 2.0f;
 			CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
@@ -252,7 +247,9 @@ namespace EPCalipersCore
 
 		private void DrawTriangleBase(Canvas canvas, MBrush brush, double height)
 		{
-			canvas.Children.Remove(baseTextBlock);
+			//canvas.Children.Remove(baseTextBlock);
+			TextBlock baseTextBlock = new TextBlock();
+			baseTextBlock.IsHitTestVisible = false;
 			PointF point1 = GetBasePoint1ForHeight(height);
 			PointF point2 = GetBasePoint2ForHeight(height);
 			double lengthInPoints = point2.X - point1.X;
@@ -262,11 +259,6 @@ namespace EPCalipersCore
 			canvas.Children.Add(crossbarLine);
 
 			string text = BaseMeasurement(lengthInPoints);
-			// we put the label below the base
-			RectangleF rect = new RectangleF((point2.X > point1.X ? point1.X - 25 : point2.X - 25),
-				point1.Y + 5,
-			   (float)Math.Max(120.0, Math.Abs(point2.X - point1.X) + 50),
-			   20.0f);
 			baseTextBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
 			baseTextBlock.FontSize = defaultCanvasFontSize;
 			baseTextBlock.Text = text;
@@ -276,7 +268,8 @@ namespace EPCalipersCore
 			baseTextBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
 			System.Windows.Size desiredSize = baseTextBlock.DesiredSize;
 			Size size = new Size((int)desiredSize.Width, (int)desiredSize.Height);
-			baseTextBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
+			// Uncomment below for debugging text block positioning.
+			//baseTextBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
 
 			RectangleF textRect = GetCaliperTextPosition(triangleBaseTextPosition, Math.Min(point1.X, point2.X),
 					  Math.Max(point1.X, point2.X), point1.Y, size,
@@ -333,7 +326,7 @@ namespace EPCalipersCore
 
 		private double CalibratedBaseResult(double lengthInPoints)
 		{
-			lengthInPoints = lengthInPoints * CurrentCalibration.Multiplier;
+			lengthInPoints *= CurrentCalibration.Multiplier;
 			if (Rounding == Preferences.Rounding.ToInt && CurrentCalibration.UnitsAreMsecs)
 			{
 				lengthInPoints = Math.Round(lengthInPoints);
@@ -418,7 +411,7 @@ namespace EPCalipersCore
 			}
 			// TODO: test this
 			// We use smaller increments for angle calipers, otherwise movement is too large.
-			distance = distance / 2.0f;
+			distance /= 2.0f;
 			if (movementDirection == MovementDirection.Left)
 			{
 				distance = -distance;

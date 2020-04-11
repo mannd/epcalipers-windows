@@ -81,6 +81,8 @@ namespace epcalipers
         private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
+
+        private WpfTransparentWindow.Window1 transWindow;
         #endregion
         #region Initialization
         public Form1()
@@ -153,6 +155,7 @@ namespace epcalipers
         {
             if (disposing)
             {
+                Debug.Print("Disposing");
                 if (theBitmap != null) theBitmap.Dispose();
                 if (pdfImages != null) pdfImages.Dispose();
                 if (nextImage != null) nextImage.Dispose();
@@ -176,6 +179,7 @@ namespace epcalipers
                 if (measureRRDialog != null) measureRRDialog.Dispose();
                 if (calibrationDialog != null) calibrationDialog.Dispose();
                 if (gotoPdfPageForm != null) gotoPdfPageForm.Dispose();
+                if (transWindow != null) transWindow.Dispose();
                 if (components != null)
                 {
                     components.Dispose();
@@ -286,7 +290,7 @@ namespace epcalipers
                 }
                 catch (Exception exception)
                 {
-                    if (exception is FileNotFoundException || exception is MagickException)
+                    if (exception is FileNotFoundException || exception is MagickException || exception is ArgumentException)
                     {
                         MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.couldNotOpenFileErrorText, openFileDialog1.FileName) + "\n\nDetailed error: " +
                             exception.Message, Resources.errorTitleText);
@@ -373,21 +377,21 @@ namespace epcalipers
                 contextMenuStrip1.Hide();
                 theCalipers.SetChosenCaliper(clickPoint);
                 theCalipers.SetChosenCaliperComponent(clickPoint);
-                if (theCalipers.NoChosenCaliper() && theCalipers.tweakingComponent)
+                if (theCalipers.NoChosenCaliper() && theCalipers.TweakingComponent)
                 {
                     CancelTweaking();
                 }
-                if (!theCalipers.tweakingComponent)
+                if (!theCalipers.TweakingComponent)
                 {
                     bool pointNearCaliper = theCalipers.PointIsNearCaliper(clickPoint);
                     contextMenuStrip1.Enabled = pointNearCaliper;
                     if (pointNearCaliper)
                     {
-                        BaseCaliper c = theCalipers.getGrabbedCaliper(clickPoint);
+                        BaseCaliper c = theCalipers.GetGrabbedCaliper(clickPoint);
                         if (c != null)
                         {
-                            marchingCaliperToolStripMenuItem.Checked = c.isMarching && c.isTimeCaliper();
-                            marchingCaliperToolStripMenuItem.Enabled = c.isTimeCaliper();
+                            marchingCaliperToolStripMenuItem.Checked = c.isMarching && c.IsTimeCaliper();
+                            marchingCaliperToolStripMenuItem.Enabled = c.IsTimeCaliper();
                         }
                     }
                     else
@@ -728,7 +732,7 @@ namespace epcalipers
         private void SetupCaliper(Caliper c)
         {
             c.Setup(preferences);
-            theCalipers.addCaliper(c);
+            theCalipers.AddCaliper(c);
             ecgPictureBox.Refresh();
         }
 
@@ -805,7 +809,7 @@ namespace epcalipers
         {
             try
             {
-                theCalipers.updateCalibration(currentActualZoom);
+                theCalipers.UpdateCalibration(currentActualZoom);
                 Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
                 Bitmap bmp = new Bitmap(bitmap, newSize);
                 return bmp;
@@ -1217,7 +1221,7 @@ namespace epcalipers
             BaseCaliper c = theCalipers.GetActiveCaliper();
             if (c != null)
             {
-                theCalipers.deleteCaliper(c);
+                theCalipers.DeleteCaliper(c);
                 ecgPictureBox.Refresh();
             }
         }
@@ -1233,7 +1237,7 @@ namespace epcalipers
             {
                 return;
             }
-            theCalipers.deleteAllCalipers();
+            theCalipers.DeleteAllCalipers();
             ecgPictureBox.Refresh();
         }
 
@@ -1295,10 +1299,9 @@ namespace epcalipers
         private void TransparentWindowToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             // see https://stackoverflow.com/questions/16511382/open-a-wpf-window-from-winforms-link-form-app-with-wpf-app
-            var transWindow = new WpfTransparentWindow.Window1();
+			transWindow = new WpfTransparentWindow.Window1();
             ElementHost.EnableModelessKeyboardInterop(transWindow);
             transWindow.Show();
-            transWindow.Dispose();
         }
 
         private void GotoPDFPageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1332,14 +1335,14 @@ namespace epcalipers
         private void TweakCaliper()
         {
             theCalipers.ClearAllChosenComponentsExceptForChosenCaliper();
-            if (theCalipers.chosenComponent != CaliperComponent.NoComponent)
+            if (theCalipers.ChosenComponent != CaliperComponent.NoComponent)
             {
                 string componentName = theCalipers.GetChosenComponentName();
                 string message = string.Format(CultureInfo.CurrentCulture, Resources.tweakText, componentName);
                 tweakLabel.Text = message;
-                if (!theCalipers.tweakingComponent)
+                if (!theCalipers.TweakingComponent)
                 {
-                    theCalipers.tweakingComponent = true;
+                    theCalipers.TweakingComponent = true;
                 }
                 ecgPictureBox.Refresh();
             }
@@ -1369,7 +1372,7 @@ namespace epcalipers
         #region Keys
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (!theCalipers.tweakingComponent)
+            if (!theCalipers.TweakingComponent)
             {
                 return base.ProcessCmdKey(ref msg, keyData);
             }

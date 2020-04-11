@@ -1,5 +1,6 @@
 ﻿using EPCalipersCore.Properties;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,7 +17,6 @@ namespace EPCalipersCore
 		Line bar1Line = new Line();
 		Line bar2Line = new Line();
 		Line crossbarLine = new Line();
-		TextBlock textBlock = new TextBlock();
 
 		public Caliper() : base()
 		{
@@ -25,9 +25,6 @@ namespace EPCalipersCore
 		public override void Draw(Canvas canvas)
 		{
 			var brush = new SolidColorBrush(ConvertColor(CaliperColor));
-			canvas.Children.Remove(bar1Line);
-			canvas.Children.Remove(bar2Line);
-			canvas.Children.Remove(crossbarLine);
 			if (Direction == CaliperDirection.Horizontal)
 			{
 				CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
@@ -67,7 +64,7 @@ namespace EPCalipersCore
 				crossbarLine.Stroke = brush;
 				canvas.Children.Add(crossbarLine);
 			}
-			if (isMarching && isTimeCaliper())
+			if (isMarching && IsTimeCaliper())
 			{
 				DrawMarchingCalipers(canvas, brush);
 			};
@@ -134,19 +131,20 @@ namespace EPCalipersCore
 		protected void CaliperText(Canvas canvas, MBrush brush, TextPosition textPosition,
 			bool optimizeTextPosition)
 		{
-			canvas.Children.Remove(textBlock);
 			string text = Measurement();
+			TextBlock textBlock = new TextBlock();
+			textBlock.IsHitTestVisible = false;
 			textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
 			textBlock.FontSize = defaultCanvasFontSize;
-			textBlock.Text = text;
 			textBlock.TextAlignment = System.Windows.TextAlignment.Center;
-			// Adding padding to a textBlock centers its content.
 			textBlock.Padding = new System.Windows.Thickness(3);
-			// Shade the textBlock for debugging purposes if necessary.
-			//textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
 			textBlock.Foreground = brush;
+			// Uncomment below for debugging text block positioning.
+			//textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.LightGray));
+			textBlock.Text = text;
 			textBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
 			System.Windows.Size desiredSize = textBlock.DesiredSize;
+			//Debug.Print("desiredSize = {0} text = {1}", desiredSize, text);
 			Size size = new Size((int)desiredSize.Width, (int)desiredSize.Height);
 
 			RectangleF textRect = GetCaliperTextPosition(textPosition, Math.Min(Bar1Position, Bar2Position),
@@ -250,7 +248,7 @@ namespace EPCalipersCore
 				g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
 				g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);
 			}
-			if (isMarching && isTimeCaliper())
+			if (isMarching && IsTimeCaliper())
 			{
 				DrawMarchingCalipers(g, brush, rect);
 			}

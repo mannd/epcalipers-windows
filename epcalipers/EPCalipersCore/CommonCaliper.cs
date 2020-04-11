@@ -124,7 +124,7 @@ namespace EPCalipersCore
 				{
 					throw new Exception("No caliper for calibration");
 				}
-				if (c.isAngleCaliper)
+				if (c.IsAngleCaliper)
 				{
 					throw new Exception("Angle calipers don't require calibration.  " +
 						"Only time or amplitude calipers need to be calibrated.\n\n" +
@@ -273,7 +273,7 @@ namespace EPCalipersCore
 				return;
 			}
 			BaseCaliper c = calipers.GetActiveCaliper();
-			if (c.Direction == CaliperDirection.Vertical || c.isAngleCaliper)
+			if (c.Direction == CaliperDirection.Vertical || c.IsAngleCaliper)
 			{
 				NoTimeCaliperError();
 				return;
@@ -284,7 +284,7 @@ namespace EPCalipersCore
 				int value = (int)measureRRDialog.numericUpDown.Value;
 				try
 				{
-					Tuple<double, double> tuple = getMeanRRMeanRate(value, c);
+					Tuple<double, double> tuple = GetMeanRRMeanRate(value, c);
 					double meanRR = tuple.Item1;
 					double meanRate = tuple.Item2;
 					string message = string.Format("Mean interval = {0} {1}", meanRR.ToString("G4"), c.CurrentCalibration.Units);
@@ -299,7 +299,7 @@ namespace EPCalipersCore
 			}
 		}
 
-		public static Tuple<double, double> getMeanRRMeanRate(int value, BaseCaliper c)
+		public static Tuple<double, double> GetMeanRRMeanRate(int value, BaseCaliper c)
 		{
 			int divisor = value;
 			divisor = Math.Abs(divisor);
@@ -389,7 +389,7 @@ namespace EPCalipersCore
 				try
 				{
 					int value = (int)measureRRDialog.numericUpDown.Value;
-					Tuple<double, double> tuple = getMeanRRMeanRate(value, calipers.GetActiveCaliper());
+					Tuple<double, double> tuple = GetMeanRRMeanRate(value, calipers.GetActiveCaliper());
 					rrIntervalForQtc = tuple.Item1;
 					showQTcStep2Menu();
 				}
