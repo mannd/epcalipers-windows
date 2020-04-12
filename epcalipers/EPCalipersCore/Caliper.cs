@@ -1,6 +1,5 @@
 ﻿using EPCalipersCore.Properties;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,6 +11,8 @@ namespace EPCalipersCore
 	using DBrush = System.Drawing.Brush;
 	using MBrush = System.Windows.Media.Brush;
 
+	// TODO: Ideally this should be split into 2 classes: FormsCaliper and CanvasCaliper.
+	// Even more ideally, port WinForms stuff over to WPF.
 	public class Caliper : BaseCaliper
 	{
 		Line bar1Line = new Line();
@@ -132,16 +133,18 @@ namespace EPCalipersCore
 			bool optimizeTextPosition)
 		{
 			string text = Measurement();
-			TextBlock textBlock = new TextBlock();
-			textBlock.IsHitTestVisible = false;
-			textBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-			textBlock.FontSize = defaultCanvasFontSize;
-			textBlock.TextAlignment = System.Windows.TextAlignment.Center;
-			textBlock.Padding = new System.Windows.Thickness(3);
-			textBlock.Foreground = brush;
-			// Uncomment below for debugging text block positioning.
-			//textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.LightGray));
-			textBlock.Text = text;
+			TextBlock textBlock = new TextBlock
+			{
+				IsHitTestVisible = false,
+				FontFamily = new System.Windows.Media.FontFamily("Helvetica"),
+				FontSize = defaultCanvasFontSize,
+				TextAlignment = System.Windows.TextAlignment.Center,
+				Padding = new System.Windows.Thickness(3),
+				Foreground = brush,
+				// Uncomment below for debugging text block positioning.
+				//textBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.LightGray));
+				Text = text
+			};
 			textBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
 			System.Windows.Size desiredSize = textBlock.DesiredSize;
 			//Debug.Print("desiredSize = {0} text = {1}", desiredSize, text);

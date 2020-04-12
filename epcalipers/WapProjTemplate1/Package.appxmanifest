@@ -9,7 +9,7 @@
   <Identity
     Name="EPStudios.EPCalipers"
     Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"
-    Version="2.4.5.0" />
+    Version="2.4.6.0" />
 
   <Properties>
     <DisplayName>EP Calipers</DisplayName>
@@ -39,6 +39,21 @@
         <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="98c0bd98-4466-40f0-82c9-9c5d1b8b16f4">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.jpg</uap:FileType>
+              <uap:FileType>.pdf</uap:FileType>
+              <uap:FileType>.jpeg</uap:FileType>
+              <uap:FileType>.bmp</uap:FileType>
+              <uap:FileType>.png</uap:FileType>
+              <uap:FileType>.tif</uap:FileType>
+              <uap:FileType>.tiff</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

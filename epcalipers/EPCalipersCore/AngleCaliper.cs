@@ -247,9 +247,6 @@ namespace EPCalipersCore
 
 		private void DrawTriangleBase(Canvas canvas, MBrush brush, double height)
 		{
-			//canvas.Children.Remove(baseTextBlock);
-			TextBlock baseTextBlock = new TextBlock();
-			baseTextBlock.IsHitTestVisible = false;
 			PointF point1 = GetBasePoint1ForHeight(height);
 			PointF point2 = GetBasePoint2ForHeight(height);
 			double lengthInPoints = point2.X - point1.X;
@@ -259,12 +256,16 @@ namespace EPCalipersCore
 			canvas.Children.Add(crossbarLine);
 
 			string text = BaseMeasurement(lengthInPoints);
-			baseTextBlock.FontFamily = new System.Windows.Media.FontFamily("Helvetica");
-			baseTextBlock.FontSize = defaultCanvasFontSize;
-			baseTextBlock.Text = text;
-			baseTextBlock.TextAlignment = System.Windows.TextAlignment.Center;
-			baseTextBlock.Padding = new System.Windows.Thickness(3);
-			baseTextBlock.Foreground = brush;
+			TextBlock baseTextBlock = new TextBlock
+			{
+				IsHitTestVisible = false,
+				FontFamily = new System.Windows.Media.FontFamily("Helvetica"),
+				FontSize = defaultCanvasFontSize,
+				Text = text,
+				TextAlignment = System.Windows.TextAlignment.Center,
+				Padding = new System.Windows.Thickness(3),
+				Foreground = brush
+			};
 			baseTextBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
 			System.Windows.Size desiredSize = baseTextBlock.DesiredSize;
 			Size size = new Size((int)desiredSize.Width, (int)desiredSize.Height);
