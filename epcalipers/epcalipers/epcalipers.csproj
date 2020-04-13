@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\test\epcalipers-2.4.0-x86-test\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\test\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -30,8 +30,8 @@
     <ProductName>EP Calipers</ProductName>
     <PublisherName>EP Studios</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2.4.6.0</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.4.6.2</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -230,9 +230,9 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -262,36 +262,48 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PublishFile Include="epcalipers.pdb">
+    <FileAssociation Include=".bmp">
       <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>File</FileType>
-    </PublishFile>
-    <PublishFile Include="EPCalipersCore.pdb">
+      <Description>BMP File</Description>
+      <Progid>bmp</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".jpeg">
       <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>File</FileType>
-    </PublishFile>
-    <PublishFile Include="WpfTransparentWindow.pdb">
+      <Description>JPEG File</Description>
+      <Progid>jpeg</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".jpg">
       <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>File</FileType>
-    </PublishFile>
+      <Description>JPG File</Description>
+      <Progid>jpg</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".pdf">
+      <Visible>False</Visible>
+      <Description>PDF File</Description>
+      <Progid>pdf</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".png">
+      <Visible>False</Visible>
+      <Description>PNG File</Description>
+      <Progid>png</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".tif">
+      <Visible>False</Visible>
+      <Description>TIF File</Description>
+      <Progid>tif</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
+    <FileAssociation Include=".tiff">
+      <Visible>False</Visible>
+      <Description>TIFF File</Description>
+      <Progid>tiff</Progid>
+      <DefaultIcon>epcalipers-test-icon.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
