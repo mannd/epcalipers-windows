@@ -143,11 +143,6 @@ namespace EPCalipersCore
 
 		protected virtual string Measurement()
 		{
-			// "%.4g %s"
-			/// TODO: Change below mimics behavior of the other versions of this app.
-			// Original code rounds to nearest number, which is ok for msec but not for 
-			// mV or sec.  Consider preference to allow rounding only if UnitsAreMsec() or displaying
-			// rate and apply it here.  Below shows how to do either method, depending on UnitsAreMsec()
 			string s;
 			if (CurrentCalibration.unitsAreMsecOrRate())
 			{
@@ -336,7 +331,6 @@ namespace EPCalipersCore
 			{
 				distance = -distance;
 			}
-			// TODO: make sure directions are correct, c.f. iOS version
 			switch (adjustedComponent)
 			{
 				case CaliperComponent.LeftBar:
@@ -394,7 +388,6 @@ namespace EPCalipersCore
 
 		private MovementDirection SwapDirection(MovementDirection movementDirection)
 		{
-			// TODO: check these directions
 			switch (movementDirection)
 			{
 				case MovementDirection.Left:

@@ -55,7 +55,7 @@
 				return UnitsAreMsecs || UnitsAreSeconds;
 			}
 		}
-		// TODO possibly refactor next 2 variables:
+		// Possibly refactor next 2 variables:
 		//public enum UnitType { Sec, Msec, Bpm, None };
 		public bool UnitsAreSeconds { get { return _unitsAreSeconds(); } }
 		public bool UnitsAreMsecs { get { return _unitsAreMsecs(); } }

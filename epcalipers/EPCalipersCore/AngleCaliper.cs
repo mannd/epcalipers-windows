@@ -410,7 +410,6 @@ namespace EPCalipersCore
 			{
 				base.MoveBarInDirection(movementDirection, distance, CaliperComponent.CrossBar);
 			}
-			// TODO: test this
 			// We use smaller increments for angle calipers, otherwise movement is too large.
 			distance /= 2.0f;
 			if (movementDirection == MovementDirection.Left)

@@ -82,8 +82,6 @@ namespace EPCalipersCore
 				{
 					return errorResult;
 				}
-				// TODO: is this needed?
-				//                qtc = (Math.Round(qtc * 100000.0) / 100000.0);
 				if (convertToMsec)
 				{
 					qtc *= 1000.0;
