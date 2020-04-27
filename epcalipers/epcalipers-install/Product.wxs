@@ -66,6 +66,12 @@
       <Component Id="gswin32c.exe" Guid="ed92d8c9-69ba-4464-8ff8-5ddaf926be58">
         <File Id="gswin32c.exe" Name="gswin32c.exe" Source="$(var.epcalipers_TargetDir)gswin32c.exe" />
       </Component>
+      <Component Id="gsdll64.dll" Guid="4997ae4b-9c24-424c-a22a-092433a52938">
+        <File Id="gsdll64.dll" Name="gsdll64.dll" Source="$(var.epcalipers_TargetDir)gsdll64.dll" />
+      </Component>
+      <Component Id="gswin64c.exe" Guid="f988e33b-b122-4490-8396-5916ce417c62">
+        <File Id="gswin64c.exe" Name="gswin64c.exe" Source="$(var.epcalipers_TargetDir)gswin64c.exe" />
+      </Component>
       <Component Id="Magick.NET_Q16_AnyCPU.dll" Guid="128bd4d7-14b2-4a48-bf65-f8b8f9fd3e62">
         <File Id="Magick.NET_Q16_AnyCPU.dll" Name="Magick.NET-Q16-AnyCPU.dll" Source="$(var.epcalipers_TargetDir)Magick.NET-Q16-AnyCPU.dll" />
       </Component>
