@@ -844,6 +844,7 @@ namespace epcalipers
             theBitmap = new Bitmap(image);
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
+            theCalipers.CancelTweaking();
             CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
         }
 
