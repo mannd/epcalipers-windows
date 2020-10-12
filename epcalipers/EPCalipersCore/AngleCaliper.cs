@@ -112,6 +112,7 @@ namespace EPCalipersCore
 		public override void Draw(Canvas canvas)
 		{
 			var brush = new SolidColorBrush(ConvertColor(CaliperColor));
+			var LineWidth = Math.Max(this.LineWidth - 1, 1);
 			// ensure caliper always extends past the screen edges
 			float length = (float)Math.Max(canvas.ActualHeight, canvas.ActualWidth) * 2.0f;
 			CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
@@ -167,6 +168,7 @@ namespace EPCalipersCore
 				default:
 					break;
 			}
+			var LineWidth = Math.Max(this.LineWidth - 1, 1);
 			chosenComponentLine.StrokeThickness = LineWidth;
 			chosenComponentLine.Stroke = brush;
 			secondChosenComponentLine.StrokeThickness = LineWidth;
@@ -251,6 +253,7 @@ namespace EPCalipersCore
 			PointF point2 = GetBasePoint2ForHeight(height);
 			double lengthInPoints = point2.X - point1.X;
 			MakeLine(ref crossbarLine, point1.X, point2.X, point1.Y, point2.Y);
+			var LineWidth = Math.Max(this.LineWidth - 1, 1);
 			crossbarLine.StrokeThickness = LineWidth;
 			crossbarLine.Stroke = brush;
 			canvas.Children.Add(crossbarLine);

@@ -26,6 +26,8 @@ namespace EPCalipersCore
 		public override void Draw(Canvas canvas)
 		{
 			var brush = new SolidColorBrush(ConvertColor(CaliperColor));
+			// Same line width is thicker appearing on WPF forms, so back off a notch.
+			var LineWidth = Math.Max(this.LineWidth - 1, 1);
 			if (Direction == CaliperDirection.Horizontal)
 			{
 				CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
@@ -110,7 +112,8 @@ namespace EPCalipersCore
 				default:
 					break;
 			}
-			chosenComponentLine.StrokeThickness = LineWidth;
+			// Match slightly narrower linewidth used in Draw(Canvas).
+			chosenComponentLine.StrokeThickness = Math.Max(LineWidth - 1, 1);
 			chosenComponentLine.Stroke = brush;
 			canvas.Children.Add(chosenComponentLine);
 		}
