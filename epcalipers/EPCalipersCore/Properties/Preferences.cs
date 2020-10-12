@@ -18,7 +18,9 @@ namespace EPCalipersCore.Properties
 		private string timeCaliperTextPosition;
 		private string amplitudeCaliperTextPosition;
 
-		private const int MAX_LINEWIDTH = 3;
+		// When changing next two lines, be consistent.
+		private const int MAX_LINEWIDTH = 5;
+		private const string LINEWIDTH_RANGE = "Caliper line width (between 1 and 5)";
 		private const int MAX_NUMBER_OF_INTERVALS = 10;
 
 		public enum Rounding
@@ -166,7 +168,7 @@ namespace EPCalipersCore.Properties
 
 		[Browsable(true),
 			ReadOnly(false),
-			Description("Caliper line width (between 1 and 3)"),
+			Description(LINEWIDTH_RANGE),
 			DisplayName("Line width"),
 			Category("Calipers")]
 		public int LineWidth

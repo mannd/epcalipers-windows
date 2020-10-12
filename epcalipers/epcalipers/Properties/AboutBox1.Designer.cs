@@ -56,7 +56,7 @@
 			this.tableLayoutPanel.Controls.Add(this.LinkLabel1, 1, 4);
 			this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel.Location = new System.Drawing.Point(18, 17);
-			this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(6);
 			this.tableLayoutPanel.Name = "tableLayoutPanel";
 			this.tableLayoutPanel.RowCount = 7;
 			this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.718271F));
@@ -79,7 +79,7 @@
 			this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
 			this.logoPictureBox.Location = new System.Drawing.Point(6, 6);
-			this.logoPictureBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.logoPictureBox.Margin = new System.Windows.Forms.Padding(6);
 			this.logoPictureBox.Name = "logoPictureBox";
 			this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 7);
 			this.logoPictureBox.Size = new System.Drawing.Size(360, 535);
@@ -154,19 +154,19 @@
 			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.okButton.Location = new System.Drawing.Point(972, 501);
-			this.okButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.okButton.Margin = new System.Windows.Forms.Padding(6);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(150, 40);
 			this.okButton.TabIndex = 24;
 			this.okButton.Text = "&OK";
 			// 
-			// linkLabel1
+			// LinkLabel1
 			// 
 			this.LinkLabel1.AutoSize = true;
 			this.LinkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.LinkLabel1.Location = new System.Drawing.Point(384, 212);
 			this.LinkLabel1.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
-			this.LinkLabel1.Name = "linkLabel1";
+			this.LinkLabel1.Name = "LinkLabel1";
 			this.LinkLabel1.Size = new System.Drawing.Size(732, 53);
 			this.LinkLabel1.TabIndex = 25;
 			this.LinkLabel1.TabStop = true;
@@ -182,7 +182,7 @@
 			this.ClientSize = new System.Drawing.Size(1164, 581);
 			this.Controls.Add(this.tableLayoutPanel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.Margin = new System.Windows.Forms.Padding(6);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "AboutBox1";
