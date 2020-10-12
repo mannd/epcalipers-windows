@@ -11,7 +11,6 @@ namespace EPCalipersCore
 		readonly List<BaseCaliper> calipers = new List<BaseCaliper>();
 		public Calibration HorizontalCalibration { get; set; }
 		public Calibration VerticalCalibration { get; set; }
-		// must be able to fake red color if fully transparent
 		public bool IsFullyTransparent { get; set; }
 
 		// for caliper movement
@@ -461,12 +460,13 @@ namespace EPCalipersCore
 
 		public bool UpdateCalibration(double zoomFactor)
 		{
-			if (HorizontalCalibration.Calibrated ||
-				VerticalCalibration.Calibrated)
-			{
+			// FIXME: remove if
+			//if (HorizontalCalibration.Calibrated ||
+			//	VerticalCalibration.Calibrated)
+			//{
 				HorizontalCalibration.CurrentZoom = zoomFactor;
 				VerticalCalibration.CurrentZoom = zoomFactor;
-			}
+			//}
 			return NumberOfCalipers() > 0;
 		}
 

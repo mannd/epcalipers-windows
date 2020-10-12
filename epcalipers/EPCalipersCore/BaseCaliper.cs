@@ -24,9 +24,36 @@ namespace EPCalipersCore
 		protected string roundToHundredthsString = "F2";
 		protected string noRoundingString = "G";
 
-		public float Bar1Position { set; get; }
-		public float Bar2Position { set; get; }
-		public float CrossbarPosition { set; get; }
+		private float _bar1Position;
+		private float _bar2Position;
+		private float _crossbarPosition;
+
+		public float Bar1Position { 
+			get {
+				System.Diagnostics.Debug.Print("zoom = {0}", CurrentCalibration.CurrentZoom);
+				return _bar1Position * (float)CurrentCalibration.CurrentZoom;
+			} 
+			set { 
+				_bar1Position = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+		}
+		public float Bar2Position { 
+			get {
+				return _bar2Position * (float)CurrentCalibration.CurrentZoom;
+			} 
+			set { 
+				_bar2Position = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+		}
+		public float CrossbarPosition { 
+			get {
+				return _crossbarPosition * (float)CurrentCalibration.CurrentZoom;
+			} 
+			set { 
+				_crossbarPosition = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+		}
+
 		public CaliperDirection Direction { set; get; }
 		public Color CaliperColor { set; get; }
 		public Color UnselectedColor { set; get; }
@@ -91,6 +118,7 @@ namespace EPCalipersCore
 			float crossbarPosition)
 		{
 			Direction = direction;
+			CurrentCalibration = new Calibration();
 			Bar1Position = bar1Position;
 			Bar2Position = bar2Position;
 			CrossbarPosition = crossbarPosition;
@@ -101,7 +129,6 @@ namespace EPCalipersCore
 			IsSelected = false;
 			TextFontSize = defaultFontSize;
 			TextFont = new Font("Segoe UI", TextFontSize);
-			CurrentCalibration = new Calibration();
 			RoundMsecRate = true;
 			Rounding = Preferences.Rounding.ToInt;
 			AutoPositionText = true;
