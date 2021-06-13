@@ -20,6 +20,7 @@
         <CommandBinding Command="local:Window1.AddAmplitudeCaliperCommand" Executed="AddAmplitudeCaliperCommandExecute" />
         <CommandBinding Command="local:Window1.AddAngleCaliperCommand" Executed="AddAngleCaliperCommandExecute" />
         <CommandBinding Command="local:Window1.DeleteAllCalipersCommand" Executed="DeleteAllCalipersCommandExecute" />
+        <CommandBinding Command="local:CustomCommands.MinimizeWindow" Executed="MinimizeWindowCommand_Executed" />
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Command="local:Window1.AddTimeCaliperCommand" Key="T" Modifiers="Ctrl" />
@@ -40,9 +41,11 @@
               CornerRadius="5,5,0,0" Margin="-1,0,-1,0" MouseLeftButtonDown="DragWindow" Grid.ColumnSpan="2">
                 <Grid>
                     <TextBlock Foreground="White" FontWeight="Bold" VerticalAlignment="Center" Margin="10,2,10,2"
-            Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Title}"/>
-                    <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5" FontSize="7"
-                  Width="15" Height="15" Padding="0" Command="ApplicationCommands.Close"/>
+                    Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Title}"/>
+                    <Button Content="&#x2014;" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,8,40,8" FontSize="9"
+                  Width="20" Height="20" Padding="0" Command="local:CustomCommands.MinimizeWindow" FontWeight="Bold" ToolTip="Minimize"/>
+                    <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,8,10,8" FontSize="9"
+                  Width="20" Height="20" Padding="0" Command="ApplicationCommands.Close" FontWeight="Bold" ToolTip="Close"/>
                 </Grid>
             </Border>
             <custom:CalipersCanvas 
@@ -94,7 +97,7 @@
                     <TextBlock Name="TweakTextBlock" Width="400" Margin="10, 10, 10, 10"
                         Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom"
                                TextWrapping="Wrap">Message</TextBlock>
-                    
+
                 </Grid>
             </StackPanel>
         </Grid>

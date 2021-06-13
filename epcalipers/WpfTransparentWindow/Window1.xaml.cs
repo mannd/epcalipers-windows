@@ -47,7 +47,10 @@ namespace WpfTransparentWindow
 		{
 			InitializeComponent();
 			CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
-					   new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
+					   new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args)
+					   {
+						   this.Close();
+					   })));
 			preferences = new Preferences();
 			mainMenu = new Button[] { AddButton, CalibrateButton, ClearButton, RateIntButton, MeanRateButton, QTcButton };
 			secondaryMenu = new Button[] { MeasureButton, CancelButton };
@@ -68,6 +71,11 @@ namespace WpfTransparentWindow
 		public void AddAngleCaliperCommandExecute(object sender, ExecutedRoutedEventArgs e)
 		{
 			CommonCaliper.AddAngleCaliper(canvas, SetupCaliper);
+		}
+
+		public void MinimizeWindowCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			this.WindowState = WindowState.Minimized;
 		}
 
 		public void DeleteAllCalipersCommandExecute(object sender, ExecutedRoutedEventArgs e)
@@ -575,5 +583,18 @@ namespace WpfTransparentWindow
 		//}
 		#endregion
 
+	}
+	public static class CustomCommands
+	{
+		public static readonly RoutedUICommand MinimizeWindow = new RoutedUICommand
+			(
+				"MinimizeWindow",
+				"MinimizeWindow",
+				typeof(CustomCommands),
+				new InputGestureCollection()
+				{
+					new KeyGesture(Key.Down, ModifierKeys.Windows)
+				}
+			);
 	}
 }

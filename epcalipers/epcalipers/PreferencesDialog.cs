@@ -7,7 +7,7 @@ namespace epcalipers
 	public partial class PreferencesDialog : Form
 	{
 
-		Preferences preferences;
+		readonly Preferences preferences;
 		public PreferencesDialog()
 		{
 			InitializeComponent();
