@@ -276,11 +276,19 @@ namespace epcalipers
                     {
                         if (Path.GetExtension(openFileDialog1.FileName).ToUpperInvariant() == ".PDF")
                         {
+                            if (ecgPictureBox.Image != null)
+							{
+                                ecgPictureBox.Image.Dispose();
+							}
                             ClearPdf();
                             OpenPdf(openFileDialog1.FileName);
                         }
                         else
                         {
+                            if (ecgPictureBox.Image != null)
+							{
+                                ecgPictureBox.Image.Dispose();
+							}
                             ecgPictureBox.Load(openFileDialog1.FileName);
                             ClearPdf();
                         }
