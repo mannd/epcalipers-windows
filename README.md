@@ -30,7 +30,7 @@ The Brugadometer is based on the work of Dr. Adrian Baranchuk and his colleagues
 Thanks to Dr. Michael Katz for the original concept, to Scott Krankkala for the idea behind marching calipers, and to Fred Cohen for helping to troubleshoot the application.
 
 ## Copyright
-Copyright © 2016-2020 [EP Studios, Inc.](https://www.epstudiossoftware.com)
+Copyright © 2016-2021 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann, MD
