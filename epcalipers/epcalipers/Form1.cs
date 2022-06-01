@@ -846,14 +846,17 @@ namespace epcalipers
             }
         }
 
-        private void ResetBitmap(Image image)
+        private void ResetBitmap(Image image, bool resetCalibration = true)
         {
             KillBitmap();
             theBitmap = new Bitmap(image);
             currentActualZoom = 1.0;
             rotationAngle = 0.0f;
             theCalipers.CancelTweaking();
-            CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+            if (resetCalibration)
+            {
+                CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+            }
         }
 
         // rotation
@@ -1011,7 +1014,7 @@ namespace epcalipers
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image);
+                ResetBitmap(ecgPictureBox.Image, false);
             }
         }
 
@@ -1026,7 +1029,7 @@ namespace epcalipers
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image);
+                ResetBitmap(ecgPictureBox.Image, false);
             }
         }
 
@@ -1053,7 +1056,7 @@ namespace epcalipers
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
                 ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image);
+                ResetBitmap(ecgPictureBox.Image, false);
             }
         }
 
