@@ -790,37 +790,35 @@ namespace epcalipers
             ecgPictureBox.Image = zoomedBitmap;
         }
 
-        // TODO: Redo zooming to check first for maxcalibration and for too big an image and
-        // Don't zoom if these exist.
-        private void ZoomBy(double zoomFactor)
-        {
-            {
-                if (ecgPictureBox.Image == null)
-                {
-                    return;
-                }
-                double originalZoom = currentActualZoom;
-                currentActualZoom *= zoomFactor;
-                if (currentActualZoom > maximumZoom)
-                {
-                    currentActualZoom = maximumZoom;
-                    // no further processing, or can get memory overflow
-                    return;
-                }
-                Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
-                Bitmap zoomedBitmap = Zoom(rotatedBitmap);
-				rotatedBitmap.Dispose();
-                if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-                {
-                    ecgPictureBox.Image.Dispose();
-                }
-				ecgPictureBox.Image = zoomedBitmap;
-            }
-        }
+		// TODO: Redo zooming to check first for maxcalibration and for too big an image and
+		// Don't zoom if these exist.
+		private void ZoomBy(double zoomFactor)
+		{
+			if (ecgPictureBox.Image == null)
+			{
+				return;
+			}
+			double originalZoom = currentActualZoom;
+			currentActualZoom *= zoomFactor;
+			if (currentActualZoom > maximumZoom)
+			{
+				currentActualZoom = maximumZoom;
+				// no further processing, or can get memory overflow
+				return;
+			}
+			Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
+			Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+			rotatedBitmap.Dispose();
+			if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+			{
+				ecgPictureBox.Image.Dispose();
+			}
+			ecgPictureBox.Image = zoomedBitmap;
+		}
 
-        // TODO: Getting out of memory exception here.
-        // Solution? See https://stackoverflow.com/questions/8563933/c-sharp-out-of-memory-exception
-        private Bitmap Zoom(Bitmap bitmap)
+		// TODO: Getting out of memory exception here.
+		// Solution? See https://stackoverflow.com/questions/8563933/c-sharp-out-of-memory-exception
+		private Bitmap Zoom(Bitmap bitmap)
         {
             try
             {
