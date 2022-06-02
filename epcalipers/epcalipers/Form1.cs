@@ -790,6 +790,8 @@ namespace epcalipers
             ecgPictureBox.Image = zoomedBitmap;
         }
 
+        // TODO: Redo zooming to check first for maxcalibration and for too big an image and
+        // Don't zoom if these exist.
         private void ZoomBy(double zoomFactor)
         {
             {
@@ -807,23 +809,12 @@ namespace epcalipers
                 }
                 Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
                 Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+				rotatedBitmap.Dispose();
                 if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
                 {
                     ecgPictureBox.Image.Dispose();
                 }
-                if (zoomedBitmap != null)
-                {
-                    ecgPictureBox.Image = zoomedBitmap;
-					rotatedBitmap.Dispose();
-                }
-                else
-				{
-                    // Reconstruct original unzoomed bitmap
-                    ecgPictureBox.Image = theBitmap;
-					CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
-                    currentActualZoom = 1.0;
-                    rotationAngle = 0;
-				}
+				ecgPictureBox.Image = zoomedBitmap;
             }
         }
 
@@ -833,22 +824,27 @@ namespace epcalipers
         {
             try
             {
-                theCalipers.UpdateCalibration(currentActualZoom);
+				theCalipers.UpdateCalibration(currentActualZoom);
                 // TODO: have a maximum size and refuse to enlarge more than the max?
-                Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
+                Size newSize = GetZoomedSize(bitmap.Size);
+                //Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
                 Bitmap bmp = new Bitmap(bitmap, newSize);
-                bitmap.Dispose();
                 return bmp;
-            }
-            // Note that new Bitmap only throws a general Exception, so impossible to fulfill warning below.
+			}
+			// Note that new Bitmap only throws a general Exception, so impossible to fulfill warning below.
 #pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception)
+			catch (Exception)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
                 MessageBox.Show(Resources.couldNotResizeText);
                 return null;
             }
         }
+
+        private Size GetZoomedSize(Size originalSize)
+		{
+            return new Size((int)(originalSize.Width * currentActualZoom), (int)(originalSize.Height * currentActualZoom));
+		}
 
         private void EcgPictureBox_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
         {
@@ -864,22 +860,14 @@ namespace epcalipers
             }
         }
 
-        private void ResetBitmap(Image image, bool resetCalibration = true)
+        private void ResetBitmap(Image image)
         {
             KillBitmap();
             theBitmap = new Bitmap(image);
-            theCalipers.CancelTweaking();
-            if (resetCalibration)
-            {
-                CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
-				currentActualZoom = 1.0;
-				rotationAngle = 0.0f;
-            }
-            else
-			{
-                Zoom(theBitmap);
-                theCalipers.UpdateCalibration(currentActualZoom);
-			}
+			theCalipers.CancelTweaking();
+			CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+			currentActualZoom = 1.0;
+			rotationAngle = 0.0f;
         }
 
         // rotation
@@ -941,6 +929,7 @@ namespace epcalipers
 
             float sin = (float)Math.Abs(Math.Sin(angle * Math.PI / 180.0)); // this function takes radians
             float cos = (float)Math.Abs(Math.Cos(angle * Math.PI / 180.0)); // this one too
+            // Exception here
             float newImgWidth = sin * bmp.Height + cos * bmp.Width;
             float newImgHeight = sin * bmp.Width + cos * bmp.Height;
             float originX = 0f;
@@ -999,9 +988,7 @@ namespace epcalipers
                 // Consider using background worker here
                 //Application.DoEvents();
                 pdfImages.Read(filename, settings);
-                // This may avoid out of memory errors with large PDF file zooming.
-                // But large PDF takes longer to load.
-                pdfImages.Optimize();
+                // Can't use optimize if pdf pages are different sizes
                 Cursor.Current = Cursors.Default;
                 numberOfPdfPages = pdfImages.Count;
                 EnablePages(numberOfPdfPages > 1);
@@ -1039,9 +1026,11 @@ namespace epcalipers
             {
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
-                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image, false);
-            }
+                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                ecgPictureBox.Image = Zoom(bitmap);
+    //            ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+				//ResetBitmap(ecgPictureBox.Image);
+			}
         }
 
         private void PreviousPdfPage()
@@ -1054,9 +1043,11 @@ namespace epcalipers
             {
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
-                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image, false);
-            }
+                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                ecgPictureBox.Image = Zoom(bitmap);
+    //            ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+				//ResetBitmap(ecgPictureBox.Image);
+			}
         }
 
         private void GotoPdfPage()
@@ -1081,8 +1072,10 @@ namespace epcalipers
                 }
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
-                ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                ResetBitmap(ecgPictureBox.Image, false);
+                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                ecgPictureBox.Image = Zoom(bitmap);
+                //ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
+                //ResetBitmap(ecgPictureBox.Image);
             }
         }
 
