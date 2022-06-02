@@ -792,34 +792,52 @@ namespace epcalipers
 
         private void ZoomBy(double zoomFactor)
         {
-            if (ecgPictureBox.Image == null)
             {
-                return;
+                if (ecgPictureBox.Image == null)
+                {
+                    return;
+                }
+                double originalZoom = currentActualZoom;
+                currentActualZoom *= zoomFactor;
+                if (currentActualZoom > maximumZoom)
+                {
+                    currentActualZoom = maximumZoom;
+                    // no further processing, or can get memory overflow
+                    return;
+                }
+                Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
+                Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+                if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
+                {
+                    ecgPictureBox.Image.Dispose();
+                }
+                if (zoomedBitmap != null)
+                {
+                    ecgPictureBox.Image = zoomedBitmap;
+					rotatedBitmap.Dispose();
+                }
+                else
+				{
+                    // Reconstruct original unzoomed bitmap
+                    ecgPictureBox.Image = theBitmap;
+					CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+                    currentActualZoom = 1.0;
+                    rotationAngle = 0;
+				}
             }
-            currentActualZoom *= zoomFactor;
-            if (currentActualZoom > maximumZoom)
-            {
-                currentActualZoom = maximumZoom;
-                // no further processing, or can get memory overflow
-                return;
-            }
-            Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
-            Bitmap zoomedBitmap = Zoom(rotatedBitmap);
-            rotatedBitmap.Dispose();
-            if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
-            {
-                ecgPictureBox.Image.Dispose();
-            }
-            ecgPictureBox.Image = zoomedBitmap;
         }
 
+        // TODO: Getting out of memory exception here.
+        // Solution? See https://stackoverflow.com/questions/8563933/c-sharp-out-of-memory-exception
         private Bitmap Zoom(Bitmap bitmap)
         {
             try
             {
                 theCalipers.UpdateCalibration(currentActualZoom);
+                // TODO: have a maximum size and refuse to enlarge more than the max?
                 Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
                 Bitmap bmp = new Bitmap(bitmap, newSize);
+                bitmap.Dispose();
                 return bmp;
             }
             // Note that new Bitmap only throws a general Exception, so impossible to fulfill warning below.
@@ -850,13 +868,18 @@ namespace epcalipers
         {
             KillBitmap();
             theBitmap = new Bitmap(image);
-            currentActualZoom = 1.0;
-            rotationAngle = 0.0f;
             theCalipers.CancelTweaking();
             if (resetCalibration)
             {
                 CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
+				currentActualZoom = 1.0;
+				rotationAngle = 0.0f;
             }
+            else
+			{
+                Zoom(theBitmap);
+                theCalipers.UpdateCalibration(currentActualZoom);
+			}
         }
 
         // rotation
@@ -976,6 +999,9 @@ namespace epcalipers
                 // Consider using background worker here
                 //Application.DoEvents();
                 pdfImages.Read(filename, settings);
+                // This may avoid out of memory errors with large PDF file zooming.
+                // But large PDF takes longer to load.
+                pdfImages.Optimize();
                 Cursor.Current = Cursors.Default;
                 numberOfPdfPages = pdfImages.Count;
                 EnablePages(numberOfPdfPages > 1);
