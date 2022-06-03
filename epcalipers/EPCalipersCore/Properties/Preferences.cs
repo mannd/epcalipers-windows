@@ -17,6 +17,7 @@ namespace EPCalipersCore.Properties
 		private bool autoPositionText;
 		private string timeCaliperTextPosition;
 		private string amplitudeCaliperTextPosition;
+		private bool recalibrateOnChangePDFPage;
 
 		// When changing next two lines, be consistent.
 		private const int MAX_LINEWIDTH = 5;
@@ -61,6 +62,7 @@ namespace EPCalipersCore.Properties
 			autoPositionText = (bool)Settings.Default["AutoPositionText"];
 			timeCaliperTextPosition = (string)Settings.Default["TimeCaliperTextPosition"];
 			amplitudeCaliperTextPosition = (string)Settings.Default["AmplitudeCaliperTextPosition"];
+			recalibrateOnChangePDFPage = (bool)Settings.Default["RecalibrateOnChangePDFPage"];
 		}
 
 		public QtcFormula ActiveQtcFormula()
@@ -142,6 +144,17 @@ namespace EPCalipersCore.Properties
 		{
 			get { return autoPositionText; }
 			set { autoPositionText = value; }
+		}
+
+		[Browsable(true),
+			ReadOnly(false),
+			Description("Clear calibration with each change of PDF page"),
+			DisplayName("Clear calibration each page"),
+			Category("Calipers")]
+		public bool RecalibrationOnChangePDFPage
+		{
+			get { return recalibrateOnChangePDFPage; }
+			set { recalibrateOnChangePDFPage = value;  }
 		}
 
 		[Browsable(true),
@@ -316,6 +329,7 @@ namespace EPCalipersCore.Properties
 			Settings.Default["AutoPositionText"] = autoPositionText;
 			Settings.Default["TimeCaliperTextPosition"] = timeCaliperTextPosition;
 			Settings.Default["AmplitudeCaliperTextPosition"] = amplitudeCaliperTextPosition;
+			Settings.Default["RecalibrateOnChamgePDFPage"] = recalibrateOnChangePDFPage;
 			Settings.Default.Save();
 		}
 

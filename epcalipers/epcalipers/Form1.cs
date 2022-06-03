@@ -1025,9 +1025,14 @@ namespace epcalipers
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                ecgPictureBox.Image = Zoom(bitmap);
-    //            ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-				//ResetBitmap(ecgPictureBox.Image);
+                if (preferences.RecalibrationOnChangePDFPage)
+                {
+                    ResetBitmap(ecgPictureBox.Image);
+                }
+                else
+                {
+                    ecgPictureBox.Image = Zoom(bitmap);
+                }
 			}
         }
 
@@ -1042,9 +1047,14 @@ namespace epcalipers
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                ecgPictureBox.Image = Zoom(bitmap);
-    //            ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-				//ResetBitmap(ecgPictureBox.Image);
+                if (preferences.RecalibrationOnChangePDFPage)
+                {
+                    ResetBitmap(ecgPictureBox.Image);
+                }
+                else
+                {
+                    ecgPictureBox.Image = Zoom(bitmap);
+                }
 			}
         }
 
@@ -1071,9 +1081,14 @@ namespace epcalipers
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                ecgPictureBox.Image = Zoom(bitmap);
-                //ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-                //ResetBitmap(ecgPictureBox.Image);
+                if (preferences.RecalibrationOnChangePDFPage)
+                {
+                    ResetBitmap(ecgPictureBox.Image);
+                }
+                else
+                {
+                    ecgPictureBox.Image = Zoom(bitmap);
+                }
             }
         }
 

@@ -41,5 +41,8 @@
     <Setting Name="AmplitudeCaliperTextPosition" Type="System.String" Scope="User">
       <Value Profile="(Default)">Right</Value>
     </Setting>
+    <Setting Name="RecalibrateOnChangePDFPage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
