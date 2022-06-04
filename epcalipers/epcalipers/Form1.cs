@@ -765,10 +765,10 @@ namespace epcalipers
 
         private void ZoomIn()
         {
-            ZoomBy(zoomInFactor);
-        }
+			ZoomBy(zoomInFactor);
+		}
 
-        private void ZoomOut()
+		private void ZoomOut()
         {
             ZoomBy(zoomOutFactor);
         }
@@ -798,7 +798,6 @@ namespace epcalipers
 			{
 				return;
 			}
-			double originalZoom = currentActualZoom;
 			currentActualZoom *= zoomFactor;
 			if (currentActualZoom > maximumZoom)
 			{
@@ -807,12 +806,14 @@ namespace epcalipers
 				return;
 			}
 			Bitmap rotatedBitmap = RotateImage(theBitmap, rotationAngle, BACKGROUND_COLOR);
-			Bitmap zoomedBitmap = Zoom(rotatedBitmap);
+            Bitmap zoomedBitmap = Zoom(rotatedBitmap);
 			rotatedBitmap.Dispose();
 			if (ecgPictureBox.Image != null && ecgPictureBox.Image != theBitmap)
 			{
 				ecgPictureBox.Image.Dispose();
 			}
+			//It may be that the Image is not valid when zoomed too much...
+
 			ecgPictureBox.Image = zoomedBitmap;
 		}
 
@@ -825,16 +826,17 @@ namespace epcalipers
 				theCalipers.UpdateCalibration(currentActualZoom);
                 // TODO: have a maximum size and refuse to enlarge more than the max?
                 Size newSize = GetZoomedSize(bitmap.Size);
+                Debug.Print(newSize.ToString());
                 //Size newSize = new Size((int)(bitmap.Width * currentActualZoom), (int)(bitmap.Height * currentActualZoom));
                 Bitmap bmp = new Bitmap(bitmap, newSize);
                 return bmp;
 			}
 			// Note that new Bitmap only throws a general Exception, so impossible to fulfill warning below.
 #pragma warning disable CA1031 // Do not catch general exception types
-			catch (Exception)
+			catch (OutOfMemoryException ex)
 #pragma warning restore CA1031 // Do not catch general exception types
             {
-                MessageBox.Show(Resources.couldNotResizeText);
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -1027,6 +1029,7 @@ namespace epcalipers
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
+                    ecgPictureBox.Image = bitmap;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else
@@ -1049,6 +1052,7 @@ namespace epcalipers
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
+                    ecgPictureBox.Image = bitmap;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else
@@ -1083,6 +1087,7 @@ namespace epcalipers
                 Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
+                    ecgPictureBox.Image = bitmap;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else

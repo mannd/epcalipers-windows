@@ -329,7 +329,7 @@ namespace EPCalipersCore.Properties
 			Settings.Default["AutoPositionText"] = autoPositionText;
 			Settings.Default["TimeCaliperTextPosition"] = timeCaliperTextPosition;
 			Settings.Default["AmplitudeCaliperTextPosition"] = amplitudeCaliperTextPosition;
-			Settings.Default["RecalibrateOnChamgePDFPage"] = recalibrateOnChangePDFPage;
+			Settings.Default["RecalibrateOnChangePDFPage"] = recalibrateOnChangePDFPage;
 			Settings.Default.Save();
 		}
 
