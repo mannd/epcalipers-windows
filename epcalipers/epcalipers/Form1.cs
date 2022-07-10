@@ -955,22 +955,20 @@ namespace epcalipers
                     originY = newImgHeight;
                 }
             }
-
-            Bitmap newImg = new Bitmap((int)newImgWidth, (int)newImgHeight, pf);
-            Graphics g = Graphics.FromImage(newImg);
-            g.Clear(bkColor);
-            g.TranslateTransform(originX, originY); // offset the origin to our calculated values
-            g.RotateTransform(angle); // set up rotate
-            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
-            g.DrawImageUnscaled(bmp, 0, 0); // draw the image at 0, 0
-            g.Dispose();
-
-            return newImg;
-        }
-        #endregion
-        #region PDF
-        // PDF stuff
-        private void OpenPdf(string filename)
+			Bitmap newImg = new Bitmap((int)newImgWidth, (int)newImgHeight, pf);
+			Graphics g = Graphics.FromImage(newImg);
+			g.Clear(bkColor);
+			g.TranslateTransform(originX, originY); // offset the origin to our calculated values
+			g.RotateTransform(angle); // set up rotate
+			g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+			g.DrawImageUnscaled(bmp, 0, 0); // draw the image at 0, 0
+			g.Dispose();
+			return newImg;
+		}
+		#endregion
+		#region PDF
+		// PDF stuff
+		private void OpenPdf(string filename)
         {
             MagickReadSettings settings = new MagickReadSettings
             {
