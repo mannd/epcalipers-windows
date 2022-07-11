@@ -1032,6 +1032,7 @@ namespace epcalipers
                 }
                 else
                 {
+                    theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
 			}
@@ -1055,6 +1056,7 @@ namespace epcalipers
                 }
                 else
                 {
+                    theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
 			}
@@ -1090,6 +1092,7 @@ namespace epcalipers
                 }
                 else
                 {
+                    theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
             }
