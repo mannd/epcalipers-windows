@@ -30,7 +30,6 @@ namespace EPCalipersCore
 
 		public float Bar1Position { 
 			get {
-				System.Diagnostics.Debug.Print("zoom = {0}", CurrentCalibration.CurrentZoom);
 				return _bar1Position * (float)CurrentCalibration.CurrentZoom;
 			} 
 			set { 

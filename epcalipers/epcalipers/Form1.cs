@@ -65,7 +65,7 @@ namespace epcalipers
         readonly double zoomInFactor = 1.414214;
         readonly double zoomOutFactor = 0.7071068;
         double currentActualZoom = 1.0;
-        readonly double maximumZoom = 5.0;
+        readonly double maximumZoom = 6.0;
 
         // Drag and drop variables
         private Thread getImageThread;
@@ -972,7 +972,7 @@ namespace epcalipers
         {
             MagickReadSettings settings = new MagickReadSettings
             {
-                Density = new Density(300, 300)
+                Density = new Density(144, 144)
             };
             //PdfReadDefines defines = new PdfReadDefines();
 
@@ -1032,6 +1032,7 @@ namespace epcalipers
                 }
                 else
                 {
+                    KillBitmap();
                     theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
@@ -1056,6 +1057,7 @@ namespace epcalipers
                 }
                 else
                 {
+                    KillBitmap();
                     theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
@@ -1092,6 +1094,8 @@ namespace epcalipers
                 }
                 else
                 {
+                    // TODO: preserve rotation with page change?
+                    KillBitmap();
                     theBitmap = bitmap;
                     ecgPictureBox.Image = Zoom(bitmap);
                 }
