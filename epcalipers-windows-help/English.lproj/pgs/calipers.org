@@ -9,7 +9,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_HEAD: <meta name="description" content="How to use the electronic calipers" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* [[../../shrd/icon_32x32@2x.png]] Calipers
+* [[../../shrd/epcalipers-help-icon-64.png]] Calipers
 * Adding and deleting calipers
 Calipers come in three flavors.  Calipers with a horizontal crossbar and vertical sidebars are used to make time measurements and are called /time calipers/.  Calipers with a vertical crossbar and horizontal sidebars are used to make amplitude measurements and are called, you guessed it, /amplitude calipers/.  Finally /angle calipers/ are used to measure angles, such as the 𝞫 angle in Brugada syndrome.
 ** Add Calipers
@@ -27,7 +27,7 @@ In order to make measurements or calibrate, it is necessary to /select/ a single
 ** Deleting Calipers
 Double-click a caliper to delete it.  Note that after calibration, even if you delete all calibrated calipers, new calipers that are added will retain calibration.  You can also delete the selected caliper or all calipers using the menu or using the shortcut keys Del (Delete) and SHIFT-Del. 
 ** Caliper Colors
-If you right-click on a caliper with your mouse, a context menu will appear.  The first item on this menu is *Caliper Color*.  Click this option, and the color selector appears.  Use the color selector to change the color of the caliper you clicked on.  The color change will only affect the individual caliper you clicked on.  You can change the default caliper color of new calipers by changing [[file:preferences.org::*Changing%20options][Options]].
+If you right-click on a caliper with your mouse, a context menu will appear.  The first item on this menu is *Caliper Color*.  Click this option, and the color selector appears.  Use the color selector to change the color of the caliper you clicked on.  The color change will only affect the individual caliper you clicked on.  You can change the default caliper color of new calipers by changing Options.
 ** Marching calipers
 Right-clicking a /time caliper/ with your mouse will open the secondary menu with the option *Marching Caliper* available.  Click this and the time caliper will be converted to a /marching caliper/.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is very useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Select *Marching Caliper* again to change the marching caliper back to normal again.  Note that amplitude and angle calipers cannot be converted to marching calipers.
 #+CAPTION: Marching caliper

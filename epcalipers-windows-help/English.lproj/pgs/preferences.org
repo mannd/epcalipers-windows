@@ -9,7 +9,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_HEAD: <meta name="description" content="Changing default settings" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* [[../../shrd/icon_32x32@2x.png]] Options
+* [[../../shrd/epcalipers-help-icon-64.png]] Options
 ** Changing options
 Options can be selected using the *Tools | Options* menu item.  You can change default settings as you prefer, including caliper colors, line width of the calipers, default calibration intervals and number of intervals used to calculate mean intervals.  For example, if you usually use just 1 RR interval to calculate the QTc, set the number of mean RR intervals for the QTc measurement to 1 interval.  Remember though you can override any of these values when you actually do the measurements.
 #+CAPTION: Options dialog
@@ -21,6 +21,7 @@ Options can be selected using the *Tools | Options* menu item.  You can change d
 - *Auto-position text* When set to true, caliper text labels will automatically reposition themselves to avoid being obscured by the caliper or by the edges of the windows.
 - *Caliper color* This is the color of unselected newly added calipers.  Note that this color can be overwritten by right-clicking on a caliper and selecting *Caliper Color*.
 - *Selected caliper color* This is the color of the selected caliper.
+- *Clear calibration each page* Normally this is set to true, and calibration is cleared and page zoom is reset when changing pages of a PDF.  If you have a multipage PDF where the calibration doesn't change, set this to false.  Calibration and zoom (but not rotation) will be preserved with each page change.
 - *Line width* Increase or decrease this value to make the caliper lines thicker or thinner.
 - *Time text position* Position of time caliper text labels in relation to caliper.
 - *Number of intervals (mean RR)* The default number of intervals you use to measure mean RR intervals.

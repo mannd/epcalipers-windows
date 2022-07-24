@@ -9,7 +9,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_HEAD: <meta name="description" content="Crash course for EP Calipers" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* [[../../shrd/icon_32x32@2x.png]] Introduction -- EP Calipers 101
+* [[../../shrd/epcalipers-help-icon-64.png]] Introduction -- EP Calipers 101
 ** You're on call, again...
 It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and the ECG shows a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  She wants to send you the ECG.
 

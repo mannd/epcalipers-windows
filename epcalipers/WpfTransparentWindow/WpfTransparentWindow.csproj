@@ -135,5 +135,11 @@
       <Name>EPCalipersCore</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="EpCalipersLargeTemplate1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="LargeTile.scale-100.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

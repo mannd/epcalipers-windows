@@ -9,7 +9,7 @@
 #+EXPORT_EXCLUDE_TAGS: noexport
 #+HTML_HEAD: <meta name="description" content="How to manipulate the ECG image" />
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* [[../../shrd/icon_32x32@2x.png]] Images
+* [[../../shrd/epcalipers-help-icon-64.png]] Images
 Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  Note that unlike with earlier versions of EP Calipers, it is not necessary to download and install /Ghostscript/ on your computer in order to open PDF files.  To load ECG images use one of the following methods.
 * Loading an image
 ** Open command

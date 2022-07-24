@@ -3,14 +3,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-25 Wed 10:51 -->
+<!-- 2022-07-23 Sat 17:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="David Mann" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
   .subtitle { text-align: center;
@@ -31,8 +31,9 @@
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
   pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
     padding: 8pt;
     font-family: monospace;
     overflow: auto;
@@ -40,22 +41,22 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
+    overflow: auto;
   }
   pre.src:before {
     display: none;
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
+    top: -8px;
+    right: 12px;
     padding: 3px;
-    border: 1px solid black;
+    color: #555;
+    background-color: #f2f2f299;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
   pre.src-C:before { content: 'C'; }
   /* pre.src-C++ doesn't work in CSS */
   pre.src-clojure:before { content: 'Clojure'; }
@@ -161,6 +162,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -178,120 +192,73 @@
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { width: 90%; }
-  /*]]>*/-->
 </style>
 <meta name="description" content="How to manipulate the ECG image" />
 <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
 </head>
 <body>
-<div id="content">
-<div id="outline-container-orgd23e87e" class="outline-2">
-<h2 id="orgd23e87e"><img src="../../shrd/icon_32x32@2x.png" alt="icon_32x32@2x.png" /> Images</h2>
-<div class="outline-text-2" id="text-orgd23e87e">
+<div id="content" class="content">
+<div id="outline-container-org95a6870" class="outline-2">
+<h2 id="org95a6870"><img src="../../shrd/epcalipers-help-icon-64.png" alt="epcalipers-help-icon-64.png" /> Images</h2>
+<div class="outline-text-2" id="text-org95a6870">
 <p>
 Images include files in typical image formats such as JPG, BMP, and PNG, as well as PDF files.  Note that unlike with earlier versions of EP Calipers, it is not necessary to download and install <i>Ghostscript</i> on your computer in order to open PDF files.  To load ECG images use one of the following methods.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcf8a8a7" class="outline-2">
-<h2 id="orgcf8a8a7">Loading an image</h2>
-<div class="outline-text-2" id="text-orgcf8a8a7">
+<div id="outline-container-org80215ae" class="outline-2">
+<h2 id="org80215ae">Loading an image</h2>
+<div class="outline-text-2" id="text-org80215ae">
 </div>
-<div id="outline-container-org5d89488" class="outline-3">
-<h3 id="org5d89488">Open command</h3>
-<div class="outline-text-3" id="text-org5d89488">
+<div id="outline-container-org0826628" class="outline-3">
+<h3 id="org0826628">Open command</h3>
+<div class="outline-text-3" id="text-org0826628">
 <p>
 Use the <b>File | Open</b> menu command (or keyboard shortcut Ctrl-O) to select an
 image stored on your computer.  You can also use the <b>Open</b> button to do the same thing.  
 </p>
 </div>
 </div>
-<div id="outline-container-orgd04e697" class="outline-3">
-<h3 id="orgd04e697">Drag and drop</h3>
-<div class="outline-text-3" id="text-orgd04e697">
+<div id="outline-container-org235cd1d" class="outline-3">
+<h3 id="org235cd1d">Drag and drop</h3>
+<div class="outline-text-3" id="text-org235cd1d">
 <p>
 You can drag and drop an image file onto the program window and it will load.
 </p>
 </div>
 </div>
-<div id="outline-container-orgba55e7d" class="outline-3">
-<h3 id="orgba55e7d">Right-click on an image file</h3>
-<div class="outline-text-3" id="text-orgba55e7d">
+<div id="outline-container-org0e8e352" class="outline-3">
+<h3 id="org0e8e352">Right-click on an image file</h3>
+<div class="outline-text-3" id="text-org0e8e352">
 <p>
 Even when <b>EP Calipers</b> is not open, you can use the right click menu to open an image file.  Select <b>Open with</b> from the right click menu and select <b>EP Calipers</b> to open the image file.  This method can also be used to open email attachments.
 </p>
 </div>
 </div>
-<div id="outline-container-org1c4abf9" class="outline-3">
-<h3 id="org1c4abf9">Multi-page PDFs</h3>
-<div class="outline-text-3" id="text-org1c4abf9">
+<div id="outline-container-org70e257e" class="outline-3">
+<h3 id="org70e257e">Multi-page PDFs</h3>
+<div class="outline-text-3" id="text-org70e257e">
 <p>
 If you load a PDF file with multiple pages, the first page will be shown initially.  You can use the <b>Image | Previous Page</b> and <b>Next Page</b> menu items to change pages, or the keyboard shortcuts.  Note that a big PDF file may take a long time to load.
 </p>
 </div>
 </div>
-<div id="outline-container-org1a4af88" class="outline-3">
-<h3 id="org1a4af88">Opening <i>AliveCor™</i> ECGs</h3>
-<div class="outline-text-3" id="text-org1a4af88">
+<div id="outline-container-org2af9d80" class="outline-3">
+<h3 id="org2af9d80">Opening <i>AliveCor™</i> ECGs</h3>
+<div class="outline-text-3" id="text-org2af9d80">
 <p>
 <a href="https://www.alivecor.com/">AliveCor</a> ECGs can be saved as PDF files.  Load them with any of the above methods (except drag and drop).
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf7de561" class="outline-2">
-<h2 id="orgf7de561">Adjusting the image</h2>
-<div class="outline-text-2" id="text-orgf7de561">
+<div id="outline-container-orgb5ba9b9" class="outline-2">
+<h2 id="orgb5ba9b9">Adjusting the image</h2>
+<div class="outline-text-2" id="text-orgb5ba9b9">
 </div>
-<div id="outline-container-org0e357d1" class="outline-3">
-<h3 id="org0e357d1">Moving the image</h3>
-<div class="outline-text-3" id="text-org0e357d1">
+<div id="outline-container-orgd843bcc" class="outline-3">
+<h3 id="orgd843bcc">Moving the image</h3>
+<div class="outline-text-3" id="text-orgd843bcc">
 <p>
 If the image is too large for the window, you can either enlarge the
 window as usual (such as using the Windows maximize button), or scroll
@@ -301,43 +268,43 @@ image by zooming out as described below.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcfc097a" class="outline-3">
-<h3 id="orgcfc097a">Rotation</h3>
-<div class="outline-text-3" id="text-orgcfc097a">
+<div id="outline-container-org6698477" class="outline-3">
+<h3 id="org6698477">Rotation</h3>
+<div class="outline-text-3" id="text-org6698477">
 <p>
 If the ECG image is rotated or tilted, use the <b>Image | Rotation</b> menu commands to correct this.  You can rotate by 90°, 1°, or 0.1° increments in either direction.  The keyboard shortcuts for rotation are useful.  <b>Important:</b> You should rotate your image before calibrating your calipers or making measurements.  Once an image has been calibrated, rotation will affect the accuracy of the calibration.  For this reason, if you rotate the image after it has been calibrated, the calibration will clear automatically and you will need to recalibrate.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc84d057" class="outline-3">
-<h3 id="orgc84d057">Zooming</h3>
-<div class="outline-text-3" id="text-orgc84d057">
+<div id="outline-container-org2c41a3b" class="outline-3">
+<h3 id="org2c41a3b">Zooming</h3>
+<div class="outline-text-3" id="text-org2c41a3b">
 <p>
 You can also use the Zoom buttons (<b>+</b> and <b>-</b>) at the lower left of the window to zoom in and out.  Zooming is also available in the <b>Image</b> menu, which includes a <b>Reset zoom</b> option to restore the original unzoomed image.   Note that Caliper calibration <b>does</b> adjust with zooming.  There is no need to recalibrate the calipers after zooming.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org6a69486" class="outline-2">
-<h2 id="org6a69486">Saving or printing an edited image</h2>
-<div class="outline-text-2" id="text-org6a69486">
+<div id="outline-container-org4352cc7" class="outline-2">
+<h2 id="org4352cc7">Saving or printing an edited image</h2>
+<div class="outline-text-2" id="text-org4352cc7">
 <p>
 Use the <b>File | Save</b> menu item to save the current image (including calipers) to a file.  You can open the saved image file on disk by double clicking it.  It is usually possible to print the file from whatever program you have chosen to open image files.  You can also print directly from <b>EP Calipers</b> using the <b>File | Print</b> menu item.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc5c018d" class="outline-2">
-<h2 id="orgc5c018d">Transparent windows</h2>
-<div class="outline-text-2" id="text-orgc5c018d">
+<div id="outline-container-orgc064b09" class="outline-2">
+<h2 id="orgc064b09">Transparent windows</h2>
+<div class="outline-text-2" id="text-orgc064b09">
 </div>
-<div id="outline-container-org2a0122a" class="outline-3">
-<h3 id="org2a0122a">What are transparent windows?</h3>
-<div class="outline-text-3" id="text-org2a0122a">
+<div id="outline-container-orgf2a14a2" class="outline-3">
+<h3 id="orgf2a14a2">What are transparent windows?</h3>
+<div class="outline-text-3" id="text-orgf2a14a2">
 <p>
 Sometimes it is easier to open an image or PDF file on your Desktop using an external program, such as a web browser or photo app, and then make measurements directly on this image.  <b>EP Calipers</b> allows you do this using <i>transparent windows</i>.  You can launch one or more transparent windows which allow you to measure whatever is underneath the window using calipers.  A transparent window looks like this:
 </p>
 
-<div class="figure">
+<div id="orgf7c84c1" class="figure">
 <p><img src="../../shrd/transparent_window.png" alt="transparent_window.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Transparent window floating over a browser web page</p>
@@ -345,21 +312,21 @@ Sometimes it is easier to open an image or PDF file on your Desktop using an ext
 </div>
 </div>
 
-<div id="outline-container-org1257788" class="outline-3">
-<h3 id="org1257788">Lauching a transparent window</h3>
-<div class="outline-text-3" id="text-org1257788">
+<div id="outline-container-org51bfae1" class="outline-3">
+<h3 id="org51bfae1">Lauching a transparent window</h3>
+<div class="outline-text-3" id="text-org51bfae1">
 <p>
 Use the <b>Options | Transparent window</b> menu item to lauch a transparent window.  This window has the same functionality as the main window, with buttons to add calipers, calibrate, measure rates, mean rates, and QTc intervals.  The right-click menu is the same as the main window, allowing you to change individual caliper colors, march calipers, and tweak caliper positioning.
 </p>
 </div>
 </div>
-<div id="outline-container-org875f507" class="outline-3">
-<h3 id="org875f507">Things to watch out for with transparent windows</h3>
-<div class="outline-text-3" id="text-org875f507">
+<div id="outline-container-org79e17cc" class="outline-3">
+<h3 id="org79e17cc">Things to watch out for with transparent windows</h3>
+<div class="outline-text-3" id="text-org79e17cc">
 </div>
-<div id="outline-container-orgaff9036" class="outline-4">
-<h4 id="orgaff9036">Calibration implications</h4>
-<div class="outline-text-4" id="text-orgaff9036">
+<div id="outline-container-orgec97131" class="outline-4">
+<h4 id="orgec97131">Calibration implications</h4>
+<div class="outline-text-4" id="text-orgec97131">
 <p>
 When you load an image into <b>EP Calipers</b> the normal way and calibrate your calipers, the program will automatically adjust the calibration factor when you zoom the image.  With transparent windows the program has no way to figure out if you zoom the underlying image and invalidate calibration.  Take care to recalibrate your calipers if you zoom your image in a program external to <b>EP Calipers</b>.
 </p>
