@@ -52,18 +52,19 @@
   <PropertyGroup>
     <ProjectGuid>a949557d-38fe-41c5-b445-18d4cf2691da</ProjectGuid>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17134.0</TargetPlatformMinVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <EntryPointProjectUniqueName>..\epcalipers\epcalipers.csproj</EntryPointProjectUniqueName>
     <PackageCertificateKeyFile>epstudios.pfx</PackageCertificateKeyFile>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\epcalipers-appxbundle\epcalipers-2.7.1-x86-x64\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
+    <AppInstallerUri>file:\\C:\Users\mannd\OneDrive\Documents\test\</AppInstallerUri>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <AppxBundle>Always</AppxBundle>
