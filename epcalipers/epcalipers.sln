@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPCalipersCore", "EPCaliper
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "EPCalipersProject", "WapProjTemplate1\EPCalipersProject.wapproj", "{A949557D-38FE-41C5-B445-18D4CF2691DA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EPCalipersPackage", "EPCalipersPackage\EPCalipersPackage.vdproj", "{47680C21-367A-4A24-A26A-3D9410842515}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +166,19 @@ Global
 		{A949557D-38FE-41C5-B445-18D4CF2691DA}.Release|x86.ActiveCfg = Release|x86
 		{A949557D-38FE-41C5-B445-18D4CF2691DA}.Release|x86.Build.0 = Release|x86
 		{A949557D-38FE-41C5-B445-18D4CF2691DA}.Release|x86.Deploy.0 = Release|x86
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|Any CPU.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|ARM.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|ARM64.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|ia64.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|x64.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Debug|x86.ActiveCfg = Debug
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|Any CPU.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|ARM.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|ARM64.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|ia64.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|x64.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|x86.ActiveCfg = Release
+		{47680C21-367A-4A24-A26A-3D9410842515}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
