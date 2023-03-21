@@ -39,7 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_56A8A972852C41A697381E23E3D951C8"
+        "MsmKey" = "8:_471B1B28124C4A558EC7EDDD8E4F7C1A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -53,12 +53,6 @@
         {
         "MsmKey" = "8:_6A8E21CF023F52A27FB88280B5F304FA"
         "OwnerKey" = "8:_41E9CBE701A342E9B7602CA4ED61AC6D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6F3070970BF44A16969E4AEDB02AD785"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -342,10 +336,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56A8A972852C41A697381E23E3D951C8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_471B1B28124C4A558EC7EDDD8E4F7C1A"
             {
-            "SourcePath" = "8:..\\epcalipers\\EpCalipersIcon2.ico"
-            "TargetName" = "8:EpCalipersIcon2.ico"
+            "SourcePath" = "8:..\\epcalipers\\EpCalipersIcon4.ico"
+            "TargetName" = "8:EpCalipersIcon4.ico"
             "Tag" = "8:"
             "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
             "Condition" = "8:"
@@ -422,26 +416,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6F3070970BF44A16969E4AEDB02AD785"
-            {
-            "SourcePath" = "8:..\\epcalipers\\EpCalipersIcon3.ico"
-            "TargetName" = "8:EpCalipersIcon3.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6F3EBDDD54A5185AFAC4FC04F94EBEDA"
@@ -809,7 +783,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EP Calipers"
         "ProductCode" = "8:{76B8F3C1-F41D-458B-A7A9-4613A361D9E9}"
-        "PackageCode" = "8:{EA58380D-056E-4D7F-ACAA-B8FF008F9210}"
+        "PackageCode" = "8:{EB3DA6EF-3751-4B07-A4BC-07B6686F69E9}"
         "UpgradeCode" = "8:{66672ADF-B267-44D2-992A-2678083BEA47}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -940,7 +914,7 @@
             "Target" = "8:_41E9CBE701A342E9B7602CA4ED61AC6D"
             "Folder" = "8:_8D2427485D5540299A1B404F0FD55667"
             "WorkingFolder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Icon" = "8:_6F3070970BF44A16969E4AEDB02AD785"
+            "Icon" = "8:_471B1B28124C4A558EC7EDDD8E4F7C1A"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F76C8C45ECA74571B08F1BB0724E9523"
@@ -954,7 +928,7 @@
             "Target" = "8:_41E9CBE701A342E9B7602CA4ED61AC6D"
             "Folder" = "8:_655C0417C8064B39943C4E69EDD06FB6"
             "WorkingFolder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Icon" = "8:_6F3070970BF44A16969E4AEDB02AD785"
+            "Icon" = "8:_471B1B28124C4A558EC7EDDD8E4F7C1A"
             "Feature" = "8:"
             }
         }
