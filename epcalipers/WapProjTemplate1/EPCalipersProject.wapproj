@@ -57,7 +57,7 @@
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <EntryPointProjectUniqueName>..\epcalipers\epcalipers.csproj</EntryPointProjectUniqueName>
     <PackageCertificateKeyFile>epstudios.pfx</PackageCertificateKeyFile>
-    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
@@ -158,9 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\epcalipers\epcalipers.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-x86" Version="13.0.0" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
 </Project>
