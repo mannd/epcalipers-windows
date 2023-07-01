@@ -37,7 +37,7 @@ namespace epcalipers.Tests
 
 
 		[TestMethod()]
-		public void initWithDirectionTest()
+		public void InitWithDirectionTest()
 		{
 			Calibration cal = new Calibration();
 			Assert.IsTrue(cal.Direction == CaliperDirection.Horizontal);
@@ -47,7 +47,7 @@ namespace epcalipers.Tests
 		}
 
 		[TestMethod()]
-		public void currentHorizontalCalFactorTest()
+		public void CurrentHorizontalCalFactorTest()
 		{
 			Calibration cal = new Calibration
 			{
@@ -61,7 +61,7 @@ namespace epcalipers.Tests
 		}
 
 		[TestMethod()]
-		public void complexCalibrationTest()
+		public void ComplexCalibrationTest()
 		{
 			Calibration cal = new Calibration
 			{
@@ -79,7 +79,7 @@ namespace epcalipers.Tests
 		}
 
 		[TestMethod()]
-		public void roundingTest()
+		public void RoundingTest()
 		{
 			double n = 455.5;
 			Assert.IsTrue(System.Math.Round(n) == 456);

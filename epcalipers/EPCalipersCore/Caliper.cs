@@ -132,6 +132,11 @@ namespace EPCalipersCore
 			return chosenComponentColor;
 		}
 
+		public string TestMeasurement()
+		{
+			return Measurement();
+		}
+
 		protected void CaliperText(Canvas canvas, MBrush brush, TextPosition textPosition,
 			bool optimizeTextPosition)
 		{
