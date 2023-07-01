@@ -218,6 +218,7 @@ namespace EPCalipersCore
 				CurrentCalibration.CanDisplayRate)
 			{
 				result = RateResult(result);
+				result = Math.Abs(result); // no negative rates
 			}
 			return result;
 		}
