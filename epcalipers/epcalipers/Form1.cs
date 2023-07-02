@@ -739,6 +739,8 @@ namespace epcalipers
 
         private void SetupCaliper(Caliper c)
         {
+            Point offset = ecgPictureBox.Location;
+            c.initialOffset = new Point(-offset.X, -offset.Y);
             c.Setup(preferences);
             theCalipers.AddCaliper(c);
             ecgPictureBox.Refresh();

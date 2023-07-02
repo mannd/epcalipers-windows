@@ -28,6 +28,16 @@ namespace EPCalipersCore
 		private float _bar2Position;
 		private float _crossbarPosition;
 
+		private Point _initialOffset = new Point();
+
+		public Point initialOffset
+		{
+			set
+			{
+				_initialOffset = value;
+			}
+		}
+
 		public float Bar1Position { 
 			get {
 				return _bar1Position * (float)CurrentCalibration.CurrentZoom;
@@ -140,11 +150,23 @@ namespace EPCalipersCore
 			SetInitialPositionNearCorner();
 		}
 
+		// TODO: position caliper relative to visible window, not image.
+		// That ensures new caliper is visible when created in an offset image.
 		private void SetInitialPositionNearCorner()
 		{
-			Bar1Position = 50 + differential;
-			Bar2Position = 100 + differential;
-			CrossbarPosition = 100 + differential;
+			// init with Horizontal bar offsets
+			int barOffset = _initialOffset.X;
+			int crossbarOffset = _initialOffset.Y;
+
+			if (Direction == CaliperDirection.Vertical)
+			{
+				barOffset = _initialOffset.Y;
+				crossbarOffset = _initialOffset.X;
+			}
+
+			Bar1Position = 50 + differential + barOffset;
+			Bar2Position = 100 + differential + barOffset;
+			CrossbarPosition = 100 + differential + crossbarOffset;
 			differential += 15.0f;
 			if (differential > 80.0f)
 			{
