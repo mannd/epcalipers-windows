@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\epcalipers-2.7.1.1-anyCPU\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\epcalipers-2.8.2-anyCPU\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -30,8 +30,8 @@
     <ProductName>EP Calipers</ProductName>
     <PublisherName>EP Studios</PublisherName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>2.7.1.1</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.8.2.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -257,14 +257,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q16-x86">
-      <Version>13.0.1</Version>
+    <PackageReference Include="Magick.NET-Q16-AnyCPU">
+      <Version>13.1.3</Version>
     </PackageReference>
     <PackageReference Include="Magick.NET.Core">
-      <Version>13.0.1</Version>
+      <Version>13.1.3</Version>
     </PackageReference>
     <PackageReference Include="Magick.NET.SystemDrawing">
-      <Version>7.0.1</Version>
+      <Version>7.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
