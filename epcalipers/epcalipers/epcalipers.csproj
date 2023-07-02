@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\OneDrive\Documents\publish\epcalipers-2.8.2-anyCPU\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\epcalipers-clickonce\epcalipers-2.8.2-anyCPU\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
