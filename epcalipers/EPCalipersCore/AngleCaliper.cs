@@ -87,7 +87,7 @@ namespace EPCalipersCore
 
 		protected void DrawChosenComponent(Graphics g, PointF endPointBar1, PointF endPointBar2)
 		{
-			if (ChosenComponent == CaliperComponent.NoComponent) return;
+			if (ChosenComponent == CaliperComponent.NoComponent || !isTweaking) return;
 			DBrush brush = new SolidBrush(GetChosenComponentColor());
 			System.Drawing.Pen pen = new System.Drawing.Pen(brush, LineWidth);
 			switch (ChosenComponent)
@@ -149,7 +149,7 @@ namespace EPCalipersCore
 
 		protected void DrawChosenComponent(Canvas canvas, PointF endPointBar1, PointF endPointBar2)
 		{
-			if (ChosenComponent == CaliperComponent.NoComponent) return;
+			if (ChosenComponent == CaliperComponent.NoComponent || !isTweaking) return;
 			MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
 			Line chosenComponentLine = new Line();
 			Line secondChosenComponentLine = new Line();

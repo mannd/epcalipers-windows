@@ -442,6 +442,10 @@ namespace WpfTransparentWindow
 			canvas.ClearAllChosenComponentsExceptForChosenCaliper();
 			if (canvas.ChosenComponent != CaliperComponent.NoComponent)
 			{
+				if (canvas.GetChosenCaliper() != null)
+				{
+					canvas.GetChosenCaliper().isTweaking = true;
+				}
 				string componentName = canvas.GetChosenComponentName();
 				string message = string.Format("Tweak {0} with arrow or ctrl-arrow key",
 					componentName);

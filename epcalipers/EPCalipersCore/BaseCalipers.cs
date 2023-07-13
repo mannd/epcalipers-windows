@@ -21,7 +21,7 @@ namespace EPCalipersCore
 		private bool caliperWasDragged = false;
 
 		// for color and tweaking
-		private BaseCaliper chosenCaliper;
+		public BaseCaliper chosenCaliper;
 		public CaliperComponent ChosenComponent { get; set; }
 		public bool TweakingComponent { get; set; }
 		private readonly float tweakDistance = 0.4f;
@@ -337,6 +337,7 @@ namespace EPCalipersCore
 			ChosenComponent = CaliperComponent.NoComponent;
 			foreach (BaseCaliper c in calipers)
 			{
+				c.isTweaking = false;
 				c.ChosenComponent = CaliperComponent.NoComponent;
 			}
 		}

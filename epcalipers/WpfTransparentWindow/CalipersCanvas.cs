@@ -222,5 +222,10 @@ namespace WpfTransparentWindow
 		{
 			calipers.ClearAllChosenComponents();
 		}
+
+		public BaseCaliper GetChosenCaliper()
+		{
+			return calipers.chosenCaliper;
+		}
 	}
 }

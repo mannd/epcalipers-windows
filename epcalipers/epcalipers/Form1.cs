@@ -1393,6 +1393,10 @@ namespace epcalipers
             theCalipers.ClearAllChosenComponentsExceptForChosenCaliper();
             if (theCalipers.ChosenComponent != CaliperComponent.NoComponent)
             {
+                if (theCalipers.chosenCaliper != null)
+				{
+                    theCalipers.chosenCaliper.isTweaking = true;
+				}
                 string componentName = theCalipers.GetChosenComponentName();
                 string message = string.Format(CultureInfo.CurrentCulture, Resources.tweakText, componentName);
                 tweakLabel.Text = message;
@@ -1472,6 +1476,10 @@ namespace epcalipers
 		private void Form1_Load(object sender, EventArgs e)
 		{
 
+		}
+
+		private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
 		}
 	}
 }
