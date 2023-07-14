@@ -379,7 +379,8 @@ namespace epcalipers
         private void EcgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             Debug.Print("Forms mouse down");
-            Point clickPoint = new Point(e.X, e.Y);
+            Point clickPoint = e.Location;
+            Debug.Print("ClickPoint = {0}", clickPoint);
 
             if (e.Button == MouseButtons.Right)
             {
@@ -407,7 +408,12 @@ namespace epcalipers
                     {
                         marchingCaliperToolStripMenuItem.Checked = false;
                     }
-                    contextMenuStrip1.Show(this, clickPoint);
+                    // translate to screen coordinates
+                    var offsetX = panel1.HorizontalScroll.Value;
+                    var offsetY = panel1.VerticalScroll.Value;
+                    Debug.Print("offsetX = {0}, offsetY = {1}", offsetX, offsetY);
+                    var offsetPoint = new Point(clickPoint.X - offsetX, clickPoint.Y - offsetY);
+                    contextMenuStrip1.Show(this, offsetPoint);
                 }
                 else
                 {
