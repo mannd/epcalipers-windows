@@ -840,15 +840,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EP Calipers"
-        "ProductCode" = "8:{89B16317-DA32-4927-A097-2F8AF4ED8976}"
-        "PackageCode" = "8:{2901570A-0F9F-48E0-9F15-B487917EF5A2}"
+        "ProductCode" = "8:{27B7829E-8AB1-4C1D-922F-CA7AE4A2E2D7}"
+        "PackageCode" = "8:{1B89FD8A-BC0C-4C3C-A471-28F5806DDB26}"
         "UpgradeCode" = "8:{66672ADF-B267-44D2-992A-2678083BEA47}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.9.0"
+        "ProductVersion" = "8:2.9.1"
         "Manufacturer" = "8:EP Studios"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1390,7 +1390,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
             {
-            "SourcePath" = "8:..\\epcalipers\\obj\\Release\\epcalipers.exe"
+            "SourcePath" = "8:..\\epcalipers\\obj\\Debug\\epcalipers.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
