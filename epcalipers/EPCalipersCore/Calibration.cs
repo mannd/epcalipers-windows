@@ -100,7 +100,11 @@
 
 		public void InitWithDirection(CaliperDirection direction)
 		{
-			Reset();
+			Units = "points";
+			DisplayRate = false;
+			OriginalZoom = 1.0f;
+			CurrentZoom = 1.0f;
+			Calibrated = false;
 			this.Direction = direction;
 		}
 
@@ -108,8 +112,8 @@
 		{
 			Units = "points";
 			DisplayRate = false;
-			OriginalZoom = 1.0f;
-			CurrentZoom = 1.0f;
+			//OriginalZoom = 1.0f;
+			//CurrentZoom = 1.0f;
 			Calibrated = false;
 		}
 
