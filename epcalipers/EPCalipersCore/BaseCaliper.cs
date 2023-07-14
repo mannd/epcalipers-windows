@@ -24,9 +24,9 @@ namespace EPCalipersCore
 		protected string roundToHundredthsString = "F2";
 		protected string noRoundingString = "G";
 
-		private float _bar1Position;
-		private float _bar2Position;
-		private float _crossbarPosition;
+		private float _bar1Position = 0;
+		private float _bar2Position = 0;
+		private float _crossbarPosition = 0;
 
 		private Point _initialOffset = new Point();
 
