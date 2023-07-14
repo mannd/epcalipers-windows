@@ -355,6 +355,7 @@ namespace WpfTransparentWindow
 		#region Mouse
 		private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
 		{
+			Debug.Print("Mouse down");
 			var clickPoint = e.GetPosition(canvas);
 			if (e.ChangedButton == MouseButton.Right)
 			{
@@ -406,7 +407,7 @@ namespace WpfTransparentWindow
 					canvas.DrawCalipers();
 				}
 			}
-			else
+			else // if (!canvas.TweakingComponent)
 			{
 				firstPoint = clickPoint;
 				canvas.GrabCaliperIfClicked(clickPoint);
@@ -415,6 +416,7 @@ namespace WpfTransparentWindow
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
 		{
+			//Debug.Print("Mouse move");
 			var newPoint = new System.Windows.Point(e.GetPosition(canvas).X, e.GetPosition(canvas).Y);
 			float deltaX = (float)(newPoint.X - firstPoint.X);
 			float deltaY = (float)(newPoint.Y - firstPoint.Y);

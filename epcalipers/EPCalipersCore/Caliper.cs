@@ -1,5 +1,6 @@
 ﻿using EPCalipersCore.Properties;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -72,7 +73,7 @@ namespace EPCalipersCore
 				DrawMarchingCalipers(canvas, brush);
 			};
 			CaliperText(canvas, brush, CaliperTextPosition, true);
-			DrawChosenComponent(canvas);
+			DrawChosenComponent(bar1Line, bar2Line, crossbarLine);
 		}
 
 		protected void MakeLine(ref Line line, double X1, double X2, double Y1, double Y2)
@@ -80,7 +81,9 @@ namespace EPCalipersCore
 			line.X1 = X1; line.X2 = X2; line.Y1 = Y1; line.Y2 = Y2;
 		}
 
-		protected void DrawChosenComponent(Canvas canvas)
+		// Apparently adding lines on top of lines causes a sticky cursor.
+		// This is a better way to draw the chosen component.
+		protected void DrawChosenComponent(Line bar1Line, Line bar2Line, Line crossbarLine)
 		{
 			if (ChosenComponent == CaliperComponent.NoComponent || !isTweaking) return;
 			MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
@@ -88,34 +91,20 @@ namespace EPCalipersCore
 			switch (ChosenComponent)
 			{
 				case CaliperComponent.LeftBar:
-					MakeLine(ref chosenComponentLine, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
+					case CaliperComponent.UpperBar:
+					chosenComponentLine = bar1Line;
 					break;
 				case CaliperComponent.RightBar:
-					MakeLine(ref chosenComponentLine, Bar2Position, Bar2Position, canvas.ActualHeight + 30, 0);
-					break;
-				case CaliperComponent.UpperBar:
-					MakeLine(ref chosenComponentLine, 0, canvas.ActualWidth, Bar1Position, Bar1Position);
-					break;
 				case CaliperComponent.LowerBar:
-					MakeLine(ref chosenComponentLine, 0, canvas.ActualWidth, Bar2Position, Bar2Position);
+					chosenComponentLine = bar2Line;
 					break;
 				case CaliperComponent.CrossBar:
-					if (Direction == CaliperDirection.Horizontal)
-					{
-						MakeLine(ref chosenComponentLine, Bar1Position, Bar2Position, CrossbarPosition, CrossbarPosition);
-					}
-					else
-					{
-						MakeLine(ref chosenComponentLine, CrossbarPosition, CrossbarPosition, Bar1Position, Bar2Position);
-					}
+					chosenComponentLine = crossbarLine;
 					break;
 				default:
 					break;
 			}
-			// Match slightly narrower linewidth used in Draw(Canvas).
-			chosenComponentLine.StrokeThickness = Math.Max(LineWidth - 1, 1);
 			chosenComponentLine.Stroke = brush;
-			canvas.Children.Add(chosenComponentLine);
 		}
 
 		protected System.Drawing.Color GetChosenComponentColor()

@@ -134,7 +134,7 @@ namespace EPCalipersCore
 			canvas.Children.Add(bar2Line);
 
 			CaliperText(canvas, brush, TextPosition.CenterAbove, false);
-			DrawChosenComponent(canvas, endPointBar1, endPointBar2);
+			DrawChosenComponent(bar1Line, bar2Line);
 
 			if (VerticalCalibration.Calibrated && VerticalCalibration.UnitsAreMM)
 			{
@@ -147,34 +147,29 @@ namespace EPCalipersCore
 			}
 		}
 
-		protected void DrawChosenComponent(Canvas canvas, PointF endPointBar1, PointF endPointBar2)
+		protected void DrawChosenComponent(Line bar1Line, Line bar2Line)
 		{
 			if (ChosenComponent == CaliperComponent.NoComponent || !isTweaking) return;
-			MBrush brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
+			var brush = new SolidColorBrush(ConvertColor(GetChosenComponentColor()));
 			Line chosenComponentLine = new Line();
 			Line secondChosenComponentLine = new Line();
 			switch (ChosenComponent)
 			{
 				case CaliperComponent.LeftBar:
-					MakeLine(ref chosenComponentLine, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
+					chosenComponentLine = bar1Line;
 					break;
 				case CaliperComponent.RightBar:
-					MakeLine(ref chosenComponentLine, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
+					chosenComponentLine = bar2Line;
 					break;
 				case CaliperComponent.Apex:
-					MakeLine(ref chosenComponentLine, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
-					MakeLine(ref secondChosenComponentLine, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
+					chosenComponentLine = bar1Line;
+					secondChosenComponentLine = bar2Line;
 					break;
 				default:
 					break;
 			}
-			var LineWidth = Math.Max(this.LineWidth - 1, 1);
-			chosenComponentLine.StrokeThickness = LineWidth;
 			chosenComponentLine.Stroke = brush;
-			secondChosenComponentLine.StrokeThickness = LineWidth;
 			secondChosenComponentLine.Stroke = brush;
-			canvas.Children.Add(chosenComponentLine);
-			canvas.Children.Add(secondChosenComponentLine);
 		}
 
 		private PointF EndPointForPosition(PointF p, float angle, float length)

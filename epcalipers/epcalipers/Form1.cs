@@ -378,6 +378,7 @@ namespace epcalipers
 
         private void EcgPictureBox_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            Debug.Print("Forms mouse down");
             Point clickPoint = new Point(e.X, e.Y);
 
             if (e.Button == MouseButtons.Right)
@@ -434,6 +435,7 @@ namespace epcalipers
 
         private void EcgPictureBox_MouseUp(object sender, MouseEventArgs e)
         {
+            Debug.Print("Forms mouse up");
             if (theCalipers.ReleaseGrabbedCaliper(e.Clicks))
             {
                 ecgPictureBox.Refresh();
