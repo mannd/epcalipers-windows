@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WPFepcalipers"
         mc:Ignorable="d"
         Title="About EP Calipers" Height="450" Width="600"
+        Name="AboutEPCalipers"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
@@ -14,20 +15,16 @@
     <Grid Margin="10">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Image x:Name="AppIcon"    
-               VerticalAlignment="Top" Width="150" Source="/EpCalipersIcon4.ico"
+               VerticalAlignment="Top" Width="150" Source="/EpCalipersLargeTemplate1.ico"
                />
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                <TextBlock Name="AppName" Text="EP Calipers" Margin="5"/>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" >
+                <TextBlock Name="AppName" Text="App name" Margin="5" />
                 <TextBlock Name="Version" Text="Version" Margin="5"/>
                 <TextBlock Name="Copyright" Text="Copyright" Margin="5"/>
                 <TextBlock Name="Company" Text="Company" Margin="5"/>
-                <TextBlock Name="DescriptionText" Width="400" Height="200" Margin="5"
+                <TextBlock Name="DescriptionText" Width="400" Height="200"  Margin="5"
                            TextWrapping="Wrap"></TextBlock>
-                <!--<StackPanel  Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <Button Name="okButton" Click="OkButton_Click" IsDefault="True">OK</Button>
-                    <Button Name="cancelButton" IsCancel="True">Cancel</Button>
-                </StackPanel>-->
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
     </Grid>
 </Window>

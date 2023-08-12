@@ -34,7 +34,9 @@
     <Content Include="epcalipers-help.chm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="EpCalipersLargeTemplate1.ico" />
+    <Content Include="EpCalipersLargeTemplate1.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

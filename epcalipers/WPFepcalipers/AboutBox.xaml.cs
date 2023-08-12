@@ -25,16 +25,17 @@ namespace WPFepcalipers
 		{
 			InitializeComponent();
 			AdditionalInitiation();
+			Debug.WriteLine(AssemblyProperties.AssemblyConfigurationAttribute);
 		}
 
 		private void AdditionalInitiation()
 		{
 
             this.Title = String.Format(CultureInfo.CurrentCulture, 
-				"About {0}", AssemblyMethods.AssemblyTitle);
-            this.AppName.Text = AssemblyMethods.AssemblyProduct;
-            this.Copyright.Text = AssemblyMethods.AssemblyCopyright;
-			Run run = new(AssemblyMethods.AssemblyCompany);
+				"About {0}", AssemblyProperties.AssemblyTitle);
+            this.AppName.Text = AssemblyProperties.AssemblyProduct;
+            this.Copyright.Text = AssemblyProperties.AssemblyCopyright;
+			Run run = new(AssemblyProperties.AssemblyCompany);
 			Hyperlink hyperlink = new(run)
 			{
 				NavigateUri = new Uri("https://www.epstudiossoftware.com")
@@ -42,9 +43,9 @@ namespace WPFepcalipers
 			hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
 			this.Company.Text = null;
 			this.Company.Inlines.Add(hyperlink);
-            this.DescriptionText.Text = AssemblyMethods.AssemblyDescription;
+            this.DescriptionText.Text = AssemblyProperties.AssemblyDescription;
 			this.Version.Text = String.Format(CultureInfo.CurrentCulture, 
-				"Version {0}", AssemblyMethods.AssemblyVersion);
+				"Version {0}", AssemblyProperties.AssemblyVersion);
 		}
 
 		private void OkButton_Click(object sender, RoutedEventArgs e)
