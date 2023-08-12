@@ -32,6 +32,10 @@ namespace WPFepcalipers
 		{
 			Debug.WriteLine("About");
 			var aboutBox = new AboutBox();
+			if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+			{
+				aboutBox.AdditionalOptions = true;
+			}
 			aboutBox.ShowDialog();
 		}
 

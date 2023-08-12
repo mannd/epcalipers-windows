@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFepcalipers"
         mc:Ignorable="d"
-        Title="EP Calipers" Height="450" Width="800">
+        Title="EP Calipers" Height="600" Width="800">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close"/>
+                    <MenuItem Header="_Open">
+                    </MenuItem>
+                <MenuItem Header="_Close"/>
                     <MenuItem Header="_Save"/>
                 </MenuItem>
                 <MenuItem Header="_Image">

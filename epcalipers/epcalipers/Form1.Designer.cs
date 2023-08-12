@@ -586,7 +586,7 @@ namespace epcalipers
             this.tweakToolStripMenuItem,
             this.marchingCaliperToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(347, 174);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(347, 130);
 			this.contextMenuStrip1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.contextMenuStrip1_Closed);
 			// 
 			// caliperColorToolStripMenuItem
@@ -713,6 +713,6 @@ namespace epcalipers
         private ToolStripMenuItem transparentWindowToolStripMenuItem1;
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripMenuItem gotoPDFPageToolStripMenuItem;
-    }
+	}
 }
 

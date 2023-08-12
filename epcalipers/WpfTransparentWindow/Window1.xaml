@@ -52,18 +52,18 @@
                   Width="20" Height="20" Padding="0" Command="ApplicationCommands.Close" FontWeight="Bold" ToolTip="Close" Grid.Column="1"/>
                 </Grid>
             </Border>
-            <custom:CalipersCanvas 
+            <local:CalipersCanvas 
                 x:Name="canvas" Background="Transparent" HorizontalAlignment="Stretch" Margin="0,0, 0,30" Grid.Row="1" 
                 VerticalAlignment="Stretch" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" 
                 MouseUp="Canvas_MouseUp" KeyDown="Canvas_KeyDown" Focusable="True">
-                <custom:CalipersCanvas.ContextMenu>
+                <local:CalipersCanvas.ContextMenu>
                     <ContextMenu Name="RightClickMenu" Placement="MousePoint">
                         <MenuItem Header="Caliper Color" Name="CaliperColorMenuItem" Click="CaliperColorMenuItem_Click"/>
                         <MenuItem Header="Tweak Caliper Position" Name="TweakCaliperPositionMenuItem" Click="TweakCaliperPositionMenuItem_Click"/>
                         <MenuItem Header="Marching Caliper" Name="MarchingCaliperMenuItem" Click="MarchingCaliperMenuItem_Click"/>
                     </ContextMenu>
-                </custom:CalipersCanvas.ContextMenu>
-            </custom:CalipersCanvas>
+                </local:CalipersCanvas.ContextMenu>
+            </local:CalipersCanvas>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2">
                 <Grid>
