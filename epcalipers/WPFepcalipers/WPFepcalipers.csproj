@@ -24,6 +24,11 @@
   <ItemGroup>
     <None Remove="epcalipers-help.chm" />
     <None Remove="EpCalipersIcon4.ico" />
+    <None Remove="Images\AlphaChannel.png" />
+    <None Remove="Images\ZoomIn.png" />
+    <None Remove="Images\ZoomOut.png" />
+    <None Remove="Images\ZoomToFit.png" />
+    <None Remove="OpenFile.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +42,21 @@
     <Content Include="EpCalipersLargeTemplate1.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\AlphaChannel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ZoomIn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ZoomOut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\ZoomToFit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\OpenFile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

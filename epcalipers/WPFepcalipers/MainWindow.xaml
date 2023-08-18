@@ -36,8 +36,39 @@
                     <MenuItem Header="_About EP Calipers" Click="About_Click"/>
                 </MenuItem>
             </Menu>
-            <StackPanel></StackPanel>
+            <StackPanel>
+                <ToolBarTray >
+                    <ToolBar x:Name="mainToolBar" Band="0" BandIndex="0" >
+                        <Button Content="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                ToolTip="Open image file">
+                        </Button>
+                        <Separator />
+                        <Button Content="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                ToolTip="Zoom in">
+                        </Button>
+                        <Button Content="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                ToolTip="Zoom out">
+                        </Button>
+                        <Button Content="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                ToolTip="Reset zoom">
+                        </Button>
+                        <Separator />
+                        <Button>
+                            Time
+                        </Button>
+                        <Button>Amplitude</Button>
+                        <Button ToolTip="Add angle caliper">Angle</Button>
+                        <Separator />
+                        <Button Margin="5">Calibration</Button>
+                        <Button Margin="5">Clear</Button>
+                        <Separator />
+                        <Button Margin="5">Rate/Int</Button>
+                        <Button Margin="5">MeanInt</Button>
+                        <Button Margin="5">QTc</Button>
+                    </ToolBar>
+                </ToolBarTray>
+                <Canvas Background="Transparent" />
+            </StackPanel>
         </DockPanel>
-
     </Grid>
 </Window>

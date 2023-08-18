@@ -44,6 +44,7 @@ namespace WpfTransparentWindow
 		#endregion
 		#region Window
 		public Window1()
+		
 		{
 			InitializeComponent();
 			CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
