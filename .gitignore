@@ -281,3 +281,7 @@ flycheck_*.el
 
 #Migration backup
 epcalipers/MigrationBackup/
+
+#VS code
+.vscode
+!.vscode/launch.json

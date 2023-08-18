@@ -589,6 +589,20 @@ namespace WpfTransparentWindow
 		//}
 		#endregion
 
+		private void TimeCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			CommonCaliper.AddCaliper(canvas, CaliperDirection.Horizontal, SetupCaliper);
+		}
+
+		private void AmplitudeCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			CommonCaliper.AddCaliper(canvas, CaliperDirection.Vertical, SetupCaliper);
+		}
+
+		private void AngleCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			CommonCaliper.AddAngleCaliper(canvas, SetupCaliper);
+		}
 	}
 	public static class CustomCommands
 	{
