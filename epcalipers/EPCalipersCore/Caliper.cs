@@ -33,8 +33,8 @@ namespace EPCalipersCore
 			{
 				CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
 				CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-				Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
-				Bar2Position = Math.Max(Bar2Position, DELTA);
+				//Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
+				//Bar2Position = Math.Max(Bar2Position, DELTA);
 				MakeLine(ref bar1Line, Bar1Position, Bar1Position, 0, canvas.ActualHeight + 30);
 				bar1Line.StrokeThickness = LineWidth;
 				bar1Line.Stroke = brush;
@@ -53,19 +53,22 @@ namespace EPCalipersCore
 			{
 				CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualWidth - DELTA);
 				CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-				Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualHeight - DELTA);
-				Bar2Position = Math.Max(Bar2Position, DELTA);
+				//Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualHeight - DELTA);
+				//Bar2Position = Math.Max(Bar2Position, DELTA);
 				MakeLine(ref bar1Line, 0, canvas.ActualWidth, Bar1Position, Bar1Position);
 				bar1Line.StrokeThickness = LineWidth;
 				bar1Line.Stroke = brush;
+				bar1Line.ClipToBounds = true;
 				canvas.Children.Add(bar1Line);
 				MakeLine(ref bar2Line, 0, canvas.ActualWidth, Bar2Position, Bar2Position);
 				bar2Line.StrokeThickness = LineWidth;
 				bar2Line.Stroke = brush;
+				bar2Line.ClipToBounds = true;
 				canvas.Children.Add(bar2Line);
 				MakeLine(ref crossbarLine, CrossbarPosition, CrossbarPosition, Bar2Position, Bar1Position);
 				crossbarLine.StrokeThickness = LineWidth;
 				crossbarLine.Stroke = brush;
+				crossbarLine.ClipToBounds = true;
 				canvas.Children.Add(crossbarLine);
 			}
 			if (isMarching && IsTimeCaliper())
@@ -154,7 +157,8 @@ namespace EPCalipersCore
 
 			Canvas.SetLeft(textBlock, textRect.X);
 			Canvas.SetTop(textBlock, textRect.Y);
-			canvas.Children.Add(textBlock);
+			if (textRect.Y > 0) // Don't draw label if it overlaps menu.
+				canvas.Children.Add(textBlock);
 		}
 
 		private void DrawMarchingCalipers(Canvas canvas, MBrush brush)
@@ -232,8 +236,8 @@ namespace EPCalipersCore
 			{
 				CrossbarPosition = Math.Min(CrossbarPosition, rect.Size.Height - DELTA);
 				CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-				Bar1Position = Math.Min(Bar1Position, rect.Size.Width - DELTA);
-				Bar2Position = Math.Max(Bar2Position, DELTA);
+				//Bar1Position = Math.Min(Bar1Position, rect.Size.Width - DELTA);
+				//Bar2Position = Math.Max(Bar2Position, DELTA);
 				g.DrawLine(pen, Bar1Position, 0.0f, Bar1Position, rect.Size.Height);
 				g.DrawLine(pen, Bar2Position, 0.0f, Bar2Position, rect.Size.Height);
 				g.DrawLine(pen, Bar2Position, CrossbarPosition, Bar1Position, CrossbarPosition);
@@ -242,8 +246,8 @@ namespace EPCalipersCore
 			{
 				CrossbarPosition = Math.Min(CrossbarPosition, rect.Size.Width - DELTA);
 				CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-				Bar1Position = Math.Min(Bar1Position, rect.Size.Height - DELTA);
-				Bar2Position = Math.Max(Bar2Position, DELTA);
+				//Bar1Position = Math.Min(Bar1Position, rect.Size.Height - DELTA);
+				//Bar2Position = Math.Max(Bar2Position, DELTA);
 				g.DrawLine(pen, 0.0f, Bar1Position, rect.Size.Width, Bar1Position);
 				g.DrawLine(pen, 0.0f, Bar2Position, rect.Size.Width, Bar2Position);
 				g.DrawLine(pen, CrossbarPosition, Bar2Position, CrossbarPosition, Bar1Position);

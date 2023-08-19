@@ -55,9 +55,9 @@ namespace EPCalipersCore
 			// ensure caliper always extends past the screen edges
 			float length = Math.Max(rect.Size.Height, rect.Size.Width) * 2.0f;
 
-			CrossbarPosition = Math.Min(CrossbarPosition, rect.Size.Height - DELTA);
-			CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-			Bar1Position = Math.Min(Bar1Position, rect.Size.Width - DELTA);
+			//CrossbarPosition = Math.Min(CrossbarPosition, rect.Size.Height - DELTA);
+			//CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
+			//Bar1Position = Math.Min(Bar1Position, rect.Size.Width - DELTA);
 			Bar2Position = Bar1Position;
 
 			PointF endPointBar1 = EndPointForPosition(new PointF(Bar1Position, CrossbarPosition),
@@ -115,9 +115,9 @@ namespace EPCalipersCore
 			var LineWidth = Math.Max(this.LineWidth - 1, 1);
 			// ensure caliper always extends past the screen edges
 			float length = (float)Math.Max(canvas.ActualHeight, canvas.ActualWidth) * 2.0f;
-			CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
-			CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
-			Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
+			//CrossbarPosition = (float)Math.Min(CrossbarPosition, canvas.ActualHeight - DELTA);
+			//CrossbarPosition = Math.Max(CrossbarPosition, DELTA);
+			//Bar1Position = (float)Math.Min(Bar1Position, canvas.ActualWidth - DELTA);
 			Bar2Position = Bar1Position;
 
 			PointF endPointBar1 = EndPointForPosition(new PointF(Bar1Position, CrossbarPosition),
@@ -125,12 +125,14 @@ namespace EPCalipersCore
 			MakeLine(ref bar1Line, Bar1Position, endPointBar1.X, CrossbarPosition, endPointBar1.Y);
 			bar1Line.StrokeThickness = LineWidth;
 			bar1Line.Stroke = brush;
+			bar1Line.ClipToBounds = true;
 			canvas.Children.Add(bar1Line);
 			PointF endPointBar2 = EndPointForPosition(new PointF(Bar2Position, CrossbarPosition),
 				angleBar2, length);
 			MakeLine(ref bar2Line, Bar2Position, endPointBar2.X, CrossbarPosition, endPointBar2.Y);
 			bar2Line.StrokeThickness = LineWidth;
 			bar2Line.Stroke = brush;
+			bar2Line.ClipToBounds= true;
 			canvas.Children.Add(bar2Line);
 
 			CaliperText(canvas, brush, TextPosition.CenterAbove, false);
