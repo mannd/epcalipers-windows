@@ -60,9 +60,23 @@
                         <MenuItem Header="_Close" Command="ApplicationCommands.Close"/>
                     </MenuItem>
                     <MenuItem Header="_Calipers">
-                        <MenuItem Header="_Time Caliper" Click="TimeCaliper_Click"/>
-                        <MenuItem Header="_Amplitude Caliper" Click="AmplitudeCaliper_Click"/>
-                        <MenuItem Header="_Angle Caliper" Click="AngleCaliper_Click"/>
+                        <MenuItem Header="_Time Caliper" Command="local:Window1.AddTimeCaliperCommand" 
+                                  InputGestureText="Ctrl+T" ToolTip="Add time caliper"/>
+                        <MenuItem Header="_Amplitude Caliper" Command="local:Window1.AddAmplitudeCaliperCommand"
+                                  InputGestureText="Ctrl+A" ToolTip="Add amplitude caliper"/>
+                        <MenuItem Header="An_gle Caliper" Command="local:Window1.AddAngleCaliperCommand"
+                                  InputGestureText="Ctrl+G" ToolTip="Add angle caliper"/>
+                        <MenuItem Header="_Delete Caliper" 
+                                  InputGestureText="Del" ToolTip="Delete selected caliper"/>
+                    </MenuItem>
+                    <MenuItem Header="_Tools">
+                        <MenuItem Header="_Options" Command="local:Window1.AddTimeCaliperCommand"/>
+                    </MenuItem>
+                    <MenuItem Header="_Help">
+                        <MenuItem Header="_EP Calipers Help" Command="local:Window1.AddTimeCaliperCommand"
+                                  InputGestureText="F1"/>
+                        <Separator/>
+                        <MenuItem Header="_About EP Calipers" Command="local:Window1.AddAmplitudeCaliperCommand"/>
                     </MenuItem>
                 </Menu>
             </StackPanel>
