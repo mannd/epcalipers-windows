@@ -588,6 +588,17 @@ namespace WpfTransparentWindow
 		//    return true;
 		//}
 		#endregion
+
+		private void About_Click(object sender, RoutedEventArgs e)
+		{
+
+
+		}
+
+		private void Help_Click(object sender, RoutedEventArgs e)
+		{
+            System.Windows.Forms.Help.ShowHelp(null, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
+		}
 	}
 	public static class CustomCommands
 	{
