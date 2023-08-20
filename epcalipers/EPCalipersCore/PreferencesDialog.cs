@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace epcalipers
+namespace EPCalipersCore
 {
 	public partial class PreferencesDialog : Form
 	{

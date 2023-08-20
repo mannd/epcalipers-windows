@@ -49,7 +49,7 @@ namespace epcalipers
         const int maxControlNumber = 10;
         readonly Control[] oldControls = new Control[maxControlNumber];
         readonly Preferences preferences;
-        PreferencesDialog preferencesDialog;
+        EPCalipersCore.PreferencesDialog preferencesDialog;
         readonly MeasureRRDialog measureRRDialog = new MeasureRRDialog();
         readonly CalibrationDialog calibrationDialog = new CalibrationDialog();
         readonly GotoPDFPageForm gotoPdfPageForm = new GotoPDFPageForm();
@@ -90,6 +90,8 @@ namespace epcalipers
             InitializeComponent();
             preferences = new Preferences();
             theCalipers = new BaseCalipers();
+
+            Activated += (s, a) => UpdatePreferences();
 
             ecgPictureBox.BackColor = Color.White;
             FormBorderStyle = FormBorderStyle.Sizable;
@@ -1185,7 +1187,7 @@ namespace epcalipers
         {
             if (preferencesDialog == null)
             {
-                preferencesDialog = new PreferencesDialog();
+                preferencesDialog = new EPCalipersCore.PreferencesDialog();
             }
             if (CommonCaliper.GetDialogResult(preferencesDialog) == DialogResult.OK)
             {

@@ -101,7 +101,7 @@
                                   ToolTip="Measure QTc"/>
                     </MenuItem>
                     <MenuItem Header="_Tools">
-                        <MenuItem Header="_Options" Command="local:Window1.OptionsCommand"/>
+                        <MenuItem Header="_Options..." Command="local:Window1.OptionsCommand"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
                         <MenuItem Header="_EP Calipers Help" Command="local:Window1.HelpCommand"

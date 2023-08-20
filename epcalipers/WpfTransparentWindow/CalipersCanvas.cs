@@ -1,4 +1,5 @@
 ﻿using EPCalipersCore;
+using EPCalipersCore.Properties;
 using System.Windows.Controls;
 
 namespace WpfTransparentWindow
@@ -71,6 +72,14 @@ namespace WpfTransparentWindow
 			{
 				DrawCaliper(c);
 			}
+		}
+
+		public void UpdatePreferences()
+		{
+			// TODO: this isn't working
+			Preferences p = new Preferences();
+			p.Load();
+			calipers.UpdatePreferences(p);
 		}
 
 		private void DrawCaliper(BaseCaliper c)

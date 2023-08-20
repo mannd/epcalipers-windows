@@ -1,4 +1,4 @@
-﻿namespace epcalipers
+﻿namespace EPCalipersCore
 {
     partial class PreferencesDialog
     {
@@ -36,8 +36,8 @@
 			// 
 			// propertyGrid1
 			// 
-			this.propertyGrid1.Location = new System.Drawing.Point(-2, -2);
-			this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.propertyGrid1.Location = new System.Drawing.Point(-7, 0);
+			this.propertyGrid1.Margin = new System.Windows.Forms.Padding(6);
 			this.propertyGrid1.Name = "propertyGrid1";
 			this.propertyGrid1.Size = new System.Drawing.Size(728, 538);
 			this.propertyGrid1.TabIndex = 0;
@@ -46,7 +46,7 @@
 			// 
 			this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.okButton.Location = new System.Drawing.Point(550, 612);
-			this.okButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.okButton.Margin = new System.Windows.Forms.Padding(6);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(150, 44);
 			this.okButton.TabIndex = 1;
@@ -57,7 +57,7 @@
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.cancelButton.Location = new System.Drawing.Point(388, 610);
-			this.cancelButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.cancelButton.Margin = new System.Windows.Forms.Padding(6);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(150, 44);
 			this.cancelButton.TabIndex = 2;
@@ -75,7 +75,7 @@
 			this.Controls.Add(this.okButton);
 			this.Controls.Add(this.propertyGrid1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			this.Margin = new System.Windows.Forms.Padding(6);
 			this.Name = "PreferencesDialog";
 			this.Text = "Options";
 			this.Load += new System.EventHandler(this.PreferencesDialog_Load);

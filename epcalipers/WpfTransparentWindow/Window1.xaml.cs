@@ -51,6 +51,7 @@ namespace WpfTransparentWindow
 
 		bool inQTcStep1 = false;
 		#endregion
+
 		#region Window
 		public Window1()
 		{
@@ -61,6 +62,7 @@ namespace WpfTransparentWindow
 						   this.Close();
 					   })));
 			preferences = new Preferences();
+			Activated += (s, a) => UpdatePreferences();
 			mainMenu = new Button[] { AddButton, CalibrateButton, ClearButton, RateIntButton, MeanRateButton, QTcButton };
 			secondaryMenu = new Button[] { MeasureButton, CancelButton };
 			calibrationMenu = new Button[] { SetButton, ClearButton, CancelCalibrationButton };
@@ -127,6 +129,19 @@ namespace WpfTransparentWindow
 		public void OptionsCommandExecute(object sender, ExecutedRoutedEventArgs e)
 		{
 			Debug.Print("Open Options");
+			PreferencesDialog preferencesDialog = new PreferencesDialog();
+            if (CommonCaliper.GetDialogResult(preferencesDialog) == System.Windows.Forms.DialogResult.OK)
+            {
+                preferencesDialog.Save();
+				UpdatePreferences();
+            }
+		}
+
+		private void UpdatePreferences()
+		{
+                canvas.UpdatePreferences();
+				preferences.Load();
+				canvas.DrawCalipers();
 		}
 
 		public void HelpCommandExecute(object sender, ExecutedRoutedEventArgs e)
