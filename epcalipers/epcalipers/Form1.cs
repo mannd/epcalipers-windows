@@ -1204,9 +1204,13 @@ namespace epcalipers
 
         private void AboutEPCalipersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox1 box = new AboutBox1();
-            CommonCaliper.GetDialogResult(box);
-            box.Dispose();
+			AboutBox aboutBox = new AboutBox();
+			if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.LeftShift) 
+                || System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.RightShift))
+			{
+				aboutBox.AdditionalOptions = true;
+			}
+			aboutBox.ShowDialog();
         }
 
         private void ZoomInToolStripMenuItem_Click(object sender, EventArgs e)

@@ -139,6 +139,10 @@ namespace WpfTransparentWindow
 			Debug.Print("Open About Box");
 			//TODO: About box needs to be separate project to allow use by both types of windows.
 			AboutBox aboutBox = new AboutBox();
+			if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+			{
+				aboutBox.AdditionalOptions = true;
+			}
 			aboutBox.ShowDialog();
 		}
 
