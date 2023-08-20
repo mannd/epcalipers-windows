@@ -23,6 +23,15 @@ namespace WpfTransparentWindow
 		public static RoutedCommand AddAmplitudeCaliperCommand = new RoutedCommand();
 		public static RoutedCommand AddAngleCaliperCommand = new RoutedCommand();
 		public static RoutedCommand DeleteAllCalipersCommand = new RoutedCommand();
+		public static RoutedCommand DeleteCaliperCommand = new RoutedCommand();
+		public static RoutedCommand SetCalibrationCommand = new RoutedCommand();
+		public static RoutedCommand ClearCalibrationCommand = new RoutedCommand();
+		public static RoutedCommand ToggleRateIntervalCommand = new RoutedCommand();
+		public static RoutedCommand MeanIntervalCommand = new RoutedCommand();
+		public static RoutedCommand QTcCommand = new RoutedCommand();
+		public static RoutedCommand OptionsCommand = new RoutedCommand();
+		public static RoutedCommand HelpCommand = new RoutedCommand();
+		public static RoutedCommand AboutCommand = new RoutedCommand();
 
 		readonly Button[] mainMenu;
 		readonly Button[] secondaryMenu;
@@ -78,10 +87,57 @@ namespace WpfTransparentWindow
 			this.WindowState = WindowState.Minimized;
 		}
 
+		public void DeleteCaliperCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			canvas.DeleteSelectedCaliper();
+			canvas.DrawCalipers();
+		}
+
 		public void DeleteAllCalipersCommandExecute(object sender, ExecutedRoutedEventArgs e)
 		{
 			canvas.DeleteAllCalipers();
 			canvas.DrawCalipers();
+		}
+
+		public void SetCalibrationCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, 1, canvas.DrawCalipers, ShowMainMenu);
+		}
+		public void ClearCalibrationCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			CommonCaliper.ClearCalibration(canvas, canvas.DrawCalipers, EnableMeasurementMenuItems);
+		}
+
+		public void ToggleRateIntervalCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			canvas.HorizontalCalibration.DisplayRate = !canvas.HorizontalCalibration.DisplayRate;
+			canvas.DrawCalipers();
+		}
+
+		public void MeanIntervalCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			CommonCaliper.MeasureMeanIntervalRate(canvas, canvas.DrawCalipers, measureRRDialog, preferences);
+		}
+
+		public void QTcCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu, ShowMainMenu);
+		}
+
+		public void OptionsCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			Debug.Print("Open Options");
+		}
+
+		public void HelpCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+            System.Windows.Forms.Help.ShowHelp(null, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
+		}
+
+		public void AboutCommandExecute(object sender, ExecutedRoutedEventArgs e)
+		{
+			Debug.Print("Open About Box");
+			//TODO: About box needs to be separate project to allow use by both types of windows.
 		}
 
 		public void DragWindow(object sender, MouseButtonEventArgs args)
@@ -243,12 +299,6 @@ namespace WpfTransparentWindow
 			ShowCalibrationMenu();
 		}
 
-		private void ClearButtonClicked(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("Clear clicked.");
-			CommonCaliper.ClearCalibration(canvas, canvas.DrawCalipers, EnableMeasurementMenuItems);
-		}
-
 		private void RateIntButtonClicked(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("Rate/Int clicked");
@@ -262,12 +312,6 @@ namespace WpfTransparentWindow
 			CommonCaliper.MeasureMeanIntervalRate(canvas, canvas.DrawCalipers, measureRRDialog, preferences);
 		}
 
-		private void QTcButtonClicked(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("QTc clicked");
-			CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu, ShowMainMenu);
-		}
-
 		private void CancelButtonClicked(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("Cancel clicked");
@@ -278,12 +322,6 @@ namespace WpfTransparentWindow
 		{
 			Debug.Print("Cancel calibration clicked");
 			ShowMainMenu();
-		}
-
-		private void SetButtonClicked(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("Set calibration clicked");
-			CommonCaliper.SetCalibration(canvas, preferences, calibrationDialog, 1, canvas.DrawCalipers, ShowMainMenu);
 		}
 
 		private void MeasureButtonClicked(object sender, RoutedEventArgs e)
@@ -588,17 +626,6 @@ namespace WpfTransparentWindow
 		//    return true;
 		//}
 		#endregion
-
-		private void About_Click(object sender, RoutedEventArgs e)
-		{
-
-
-		}
-
-		private void Help_Click(object sender, RoutedEventArgs e)
-		{
-            System.Windows.Forms.Help.ShowHelp(null, System.AppDomain.CurrentDomain.BaseDirectory + "epcalipers-help.chm");
-		}
 	}
 	public static class CustomCommands
 	{

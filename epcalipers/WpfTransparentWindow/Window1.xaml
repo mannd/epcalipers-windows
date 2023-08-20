@@ -19,14 +19,27 @@
         <CommandBinding Command="local:Window1.AddTimeCaliperCommand" Executed="AddTimeCaliperCommandExecute" />
         <CommandBinding Command="local:Window1.AddAmplitudeCaliperCommand" Executed="AddAmplitudeCaliperCommandExecute" />
         <CommandBinding Command="local:Window1.AddAngleCaliperCommand" Executed="AddAngleCaliperCommandExecute" />
+        <CommandBinding Command="local:Window1.DeleteCaliperCommand" Executed="DeleteCaliperCommandExecute" />
         <CommandBinding Command="local:Window1.DeleteAllCalipersCommand" Executed="DeleteAllCalipersCommandExecute" />
+        <CommandBinding Command="local:Window1.SetCalibrationCommand" Executed="SetCalibrationCommandExecute" />
+        <CommandBinding Command="local:Window1.ClearCalibrationCommand" Executed="ClearCalibrationCommandExecute" />
+        <CommandBinding Command="local:Window1.ToggleRateIntervalCommand" Executed="ToggleRateIntervalCommandExecute" />
+        <CommandBinding Command="local:Window1.MeanIntervalCommand" Executed="MeanIntervalCommandExecute" />
+        <CommandBinding Command="local:Window1.QTcCommand" Executed="QTcCommandExecute" />
+        <CommandBinding Command="local:Window1.OptionsCommand" Executed="OptionsCommandExecute" />
+        <CommandBinding Command="local:Window1.HelpCommand" Executed="HelpCommandExecute" />
+        <CommandBinding Command="local:Window1.AboutCommand" Executed="AboutCommandExecute" />
+
         <CommandBinding Command="local:CustomCommands.MinimizeWindow" Executed="MinimizeWindowCommand_Executed" />
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Command="local:Window1.AddTimeCaliperCommand" Key="T" Modifiers="Ctrl" />
         <KeyBinding Command="local:Window1.AddAmplitudeCaliperCommand" Key="A" Modifiers="Ctrl" />
         <KeyBinding Command="local:Window1.AddAngleCaliperCommand" Key="G" Modifiers="Ctrl" />
+        <KeyBinding Command="local:Window1.DeleteCaliperCommand" Key="Delete" />
         <KeyBinding Command="local:Window1.DeleteAllCalipersCommand" Key="Delete" Modifiers="Shift" />
+        <KeyBinding Command="local:Window1.ToggleRateIntervalCommand" Key="I" Modifiers="Ctrl" />
+        <KeyBinding Command="local:Window1.HelpCommand" Key="F1" />
     </Window.InputBindings>
     <Border Background="#01FFFFFF" CornerRadius="5" BorderBrush="{StaticResource WindowFrameBrush}" BorderThickness="2,0,2,2">
         <Grid>
@@ -70,17 +83,31 @@
                                   InputGestureText="Ctrl+A" ToolTip="Add amplitude caliper"/>
                         <MenuItem Header="An_gle Caliper" Command="local:Window1.AddAngleCaliperCommand"
                                   InputGestureText="Ctrl+G" ToolTip="Add angle caliper"/>
-                        <MenuItem Header="_Delete Caliper" 
+                        <MenuItem Header="_Delete Caliper" Command="local:Window1.DeleteCaliperCommand"
                                   InputGestureText="Del" ToolTip="Delete selected caliper"/>
+                        <MenuItem Header="Delete All Calipers" Command="local:Window1.DeleteAllCalipersCommand"
+                                  InputGestureText="Shift-Del" ToolTip="Delete selected caliper"/>
+                        <Separator/>
+                        <MenuItem Header="Set Calibration" Command="local:Window1.SetCalibrationCommand"
+                                  ToolTip="Set calibration of selected caliper"/>
+                        <MenuItem Header="Clear Calibration" Command="local:Window1.ClearCalibrationCommand"
+                                  ToolTip="Clear calibration of all calipers"/>
+                        <Separator/>
+                        <MenuItem Header="Toggle Rate Interval" Command="local:Window1.ToggleRateIntervalCommand"
+                                  InputGestureText="Ctrl-I" ToolTip="Toggle between rate and interval measurements"/>
+                        <MenuItem Header="Mean Rate Interval" Command="local:Window1.MeanIntervalCommand"
+                                  ToolTip="Calculate mean rate and interval over several intervals"/>
+                        <MenuItem Header="QTc" Command="local:Window1.QTcCommand"
+                                  ToolTip="Measure QTc"/>
                     </MenuItem>
                     <MenuItem Header="_Tools">
-                        <MenuItem Header="_Options" Command="local:Window1.AddTimeCaliperCommand"/>
+                        <MenuItem Header="_Options" Command="local:Window1.OptionsCommand"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
-                        <MenuItem Header="_EP Calipers Help" Click="Help_Click"
+                        <MenuItem Header="_EP Calipers Help" Command="local:Window1.HelpCommand"
                                   InputGestureText="F1"/>
                         <Separator/>
-                        <MenuItem Header="_About EP Calipers" Click="About_Click"/>
+                        <MenuItem Header="_About EP Calipers" Command="local:Window1.AboutCommand"/>
                     </MenuItem>
                 </Menu>
             </StackPanel>
@@ -110,11 +137,14 @@
                         Grid.Column="0" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="CalibrateButton" Content="Calibration" Click="CalibrateButtonClicked" ToolTip="Calibrate, recalibrate, or clear calibration"
                         Grid.Column="1" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="RateIntButton" Content="Rate/Int" Click="RateIntButtonClicked" ToolTip="Toggle between rate and interval"
+                    <Button Name="RateIntButton" Content="Rate/Int" 
+                            Command="local:Window1.ToggleRateIntervalCommand" ToolTip="Toggle between rate and interval"
                         Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="MeanRateButton" Content="Mean Rate" Click="MeanRateButtonClicked" ToolTip="Measure mean rate and interval"
+                    <Button Name="MeanRateButton" Content="Mean Rate" 
+                            Command="local:Window1.MeanIntervalCommand" ToolTip="Measure mean rate and interval"
                         Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
-                    <Button Name="QTcButton" Content="QTc" Click="QTcButtonClicked" ToolTip="Measure corrected QT (QTc)"
+                    <Button Name="QTcButton" Content="QTc" 
+                            Command="local:Window1.QTcCommand" ToolTip="Measure corrected QT (QTc)"
                         Grid.Column="4" Width="80" Margin="10, 10, 10, 10"/>
                     <Button Name="CancelButton" Content="Cancel" Click="CancelButtonClicked" ToolTip="Cancel measurement"
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />
@@ -122,9 +152,11 @@
                         Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
                     <TextBlock Name="MessageTextBlock" Width="200" Margin="10, 10, 10, 10"
                         Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Right" VerticalAlignment="Bottom">Message</TextBlock>
-                    <Button Name="SetButton" Content="Set Calibration" Click="SetButtonClicked" ToolTip="Set calibration interval"
+                    <Button Name="SetButton" Content="Set Calibration" 
+                            Command="local:Window1.SetCalibrationCommand" ToolTip="Set calibration interval"
                         Grid.Column="2" Margin="10, 10, 10, 10"/>
-                    <Button Name="ClearButton" Content="Clear Calibration" Click="ClearButtonClicked" ToolTip="Clear all calibration"
+                    <Button Name="ClearButton" Content="Clear Calibration" 
+                            Command="local:Window1.ClearCalibrationCommand" ToolTip="Clear all calibration"
                         Grid.Column="3" Margin="10, 10, 10, 10"/>
                     <Button Name="CancelCalibrationButton" Content="Done" Click="CancelCalibrationButtonClicked" ToolTip="Done with calibration"
                         Grid.Column="4" Width="80" Margin="10,10,10,10" />

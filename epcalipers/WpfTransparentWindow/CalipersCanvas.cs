@@ -173,6 +173,16 @@ namespace WpfTransparentWindow
 			calipers.DeleteAllCalipers();
 		}
 
+		public void DeleteSelectedCaliper()
+		{
+            BaseCaliper c = calipers.GetActiveCaliper();
+            if (c != null)
+            {
+                calipers.DeleteCaliper(c);
+            }
+
+		}
+
 		public void UnselectChosenCaliper()
 		{
 			calipers.UnselectChosenCaliper();
