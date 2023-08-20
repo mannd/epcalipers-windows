@@ -138,6 +138,8 @@ namespace WpfTransparentWindow
 		{
 			Debug.Print("Open About Box");
 			//TODO: About box needs to be separate project to allow use by both types of windows.
+			AboutBox aboutBox = new AboutBox();
+			aboutBox.ShowDialog();
 		}
 
 		public void DragWindow(object sender, MouseButtonEventArgs args)
