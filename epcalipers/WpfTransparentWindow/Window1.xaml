@@ -80,34 +80,34 @@
                         <MenuItem Header="_Close" Command="ApplicationCommands.Close"/>
                     </MenuItem>
                     <MenuItem Header="_Calipers">
-                        <MenuItem Header="_Time Caliper" Command="local:Window1.AddTimeCaliperCommand" 
-                                  InputGestureText="Ctrl+T" ToolTip="Add time caliper"/>
-                        <MenuItem Header="_Amplitude Caliper" Command="local:Window1.AddAmplitudeCaliperCommand"
-                                  InputGestureText="Ctrl+A" ToolTip="Add amplitude caliper"/>
-                        <MenuItem Header="An_gle Caliper" Command="local:Window1.AddAngleCaliperCommand"
-                                  InputGestureText="Ctrl+G" ToolTip="Add angle caliper"/>
-                        <MenuItem Header="_Delete Caliper" Command="local:Window1.DeleteCaliperCommand"
-                                  InputGestureText="Del" ToolTip="Delete selected caliper"/>
-                        <MenuItem Header="Delete All Calipers" Command="local:Window1.DeleteAllCalipersCommand"
-                                  InputGestureText="Shift-Del" ToolTip="Delete selected caliper"/>
+                        <MenuItem Header="_Time caliper" Command="local:Window1.AddTimeCaliperCommand" 
+                                  InputGestureText="Ctrl+T" />
+                        <MenuItem Header="_Amplitude caliper" Command="local:Window1.AddAmplitudeCaliperCommand"
+                                  InputGestureText="Ctrl+A" />
+                        <MenuItem Header="An_gle caliper" Command="local:Window1.AddAngleCaliperCommand"
+                                  InputGestureText="Ctrl+G" />
+                        <MenuItem Header="_Delete caliper" Command="local:Window1.DeleteCaliperCommand"
+                                  InputGestureText="Del" />
+                        <MenuItem Header="Delete all _calipers" Command="local:Window1.DeleteAllCalipersCommand"
+                                  InputGestureText="Shift-Del" />
                         <Separator/>
-                        <MenuItem Header="Set Calibration" Command="local:Window1.SetCalibrationCommand"
-                                  ToolTip="Set calibration of selected caliper"/>
-                        <MenuItem Header="Clear Calibration" Command="local:Window1.ClearCalibrationCommand"
-                                  ToolTip="Clear calibration of all calipers"/>
+                        <MenuItem Header="Set calibration" Command="local:Window1.SetCalibrationCommand"
+                                  />
+                        <MenuItem Header="Clear calibration" Command="local:Window1.ClearCalibrationCommand"
+                                  />
                         <Separator/>
-                        <MenuItem Header="Toggle Rate Interval" Command="local:Window1.ToggleRateIntervalCommand"
-                                  InputGestureText="Ctrl-I" ToolTip="Toggle between rate and interval measurements"/>
-                        <MenuItem Header="Mean Rate Interval" Command="local:Window1.MeanIntervalCommand"
-                                  ToolTip="Calculate mean rate and interval over several intervals"/>
-                        <MenuItem Header="QTc" Command="local:Window1.QTcCommand"
-                                  ToolTip="Measure QTc"/>
+                        <MenuItem Header="Toggle rate/interval" Command="local:Window1.ToggleRateIntervalCommand"
+                                  InputGestureText="Ctrl-I" />
+                        <MenuItem Header="Mean rate/interval" Command="local:Window1.MeanIntervalCommand"
+                                  />
+                        <MenuItem Header="QTc measurement" Command="local:Window1.QTcCommand"
+                                  />
                     </MenuItem>
                     <MenuItem Header="_Tools">
                         <MenuItem Header="_Options..." Command="local:Window1.OptionsCommand"/>
                     </MenuItem>
                     <MenuItem Header="_Help">
-                        <MenuItem Header="_EP Calipers Help" Command="local:Window1.HelpCommand"
+                        <MenuItem Header="_EP Calipers help" Command="local:Window1.HelpCommand"
                                   InputGestureText="F1"/>
                         <Separator/>
                         <MenuItem Header="_About EP Calipers" Command="local:Window1.AboutCommand"/>
@@ -128,7 +128,7 @@
             </custom:CalipersCanvas>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2">
-                <Grid>
+                <Grid ShowGridLines="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -137,22 +137,22 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button Name="AddButton" Content="Add Caliper" Click="AddButtonClicked" ToolTip="Add a new caliper"
-                        Grid.Column="0" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="0" Width="100" Margin="10, 10, 10, 10"/>
                     <Button Name="CalibrateButton" Content="Calibration" Click="CalibrateButtonClicked" ToolTip="Calibrate, recalibrate, or clear calibration"
-                        Grid.Column="1" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="1" Width="100" Margin="10, 10, 10, 10"/>
                     <Button Name="RateIntButton" Content="Rate/Int" 
                             Command="local:Window1.ToggleRateIntervalCommand" ToolTip="Toggle between rate and interval"
-                        Grid.Column="2" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="2" Width="100" Margin="10, 10, 10, 10"/>
                     <Button Name="MeanRateButton" Content="Mean Rate" 
                             Command="local:Window1.MeanIntervalCommand" ToolTip="Measure mean rate and interval"
-                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="3" Width="100" Margin="10, 10, 10, 10"/>
                     <Button Name="QTcButton" Content="QTc" 
                             Command="local:Window1.QTcCommand" ToolTip="Measure corrected QT (QTc)"
-                        Grid.Column="4" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="4" Width="100" Margin="10, 10, 10, 10"/>
                     <Button Name="CancelButton" Content="Cancel" Click="CancelButtonClicked" ToolTip="Cancel measurement"
-                        Grid.Column="4" Width="80" Margin="10,10,10,10" />
+                        Grid.Column="4" Width="100" Margin="10,10,10,10" />
                     <Button Name="MeasureButton" Content="Measure" Click="MeasureButtonClicked" ToolTip="Measure interval"
-                        Grid.Column="3" Width="80" Margin="10, 10, 10, 10"/>
+                        Grid.Column="3" Width="100" Margin="10, 10, 10, 10"/>
                     <TextBlock Name="MessageTextBlock" Width="200" Margin="10, 10, 10, 10"
                         Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Right" VerticalAlignment="Bottom">Message</TextBlock>
                     <Button Name="SetButton" Content="Set Calibration" 
@@ -162,9 +162,9 @@
                             Command="local:Window1.ClearCalibrationCommand" ToolTip="Clear all calibration"
                         Grid.Column="3" Margin="10, 10, 10, 10"/>
                     <Button Name="CancelCalibrationButton" Content="Done" Click="CancelCalibrationButtonClicked" ToolTip="Done with calibration"
-                        Grid.Column="4" Width="80" Margin="10,10,10,10" />
+                        Grid.Column="4" Width="100" Margin="10,10,10,10" />
                     <Button Name="CancelTweakButton" Content="Done" Click="CancelTweakButtonClicked" ToolTip="Done tweaking"
-                        Grid.Column="4" Width="80" Margin="10,10,10,10" />
+                        Grid.Column="4" Width="100" Margin="10,10,10,10" />
                     <TextBlock Name="TweakTextBlock" Width="400" Margin="10, 10, 10, 10"
                         Grid.Column="0" Grid.ColumnSpan="4" TextAlignment="Right" VerticalAlignment="Bottom"
                                TextWrapping="Wrap">Message</TextBlock>
