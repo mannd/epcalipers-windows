@@ -158,9 +158,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\epcalipers\EpCalipersLargeTemplate1.ico">
+    <Resource Include="..\epcalipers\EpCalipersLargeTemplate1.ico">
       <Link>EpCalipersLargeTemplate1.ico</Link>
-    </Content>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

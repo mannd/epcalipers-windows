@@ -23,9 +23,12 @@
         <CommandBinding Command="local:Window1.DeleteAllCalipersCommand" Executed="DeleteAllCalipersCommandExecute" />
         <CommandBinding Command="local:Window1.SetCalibrationCommand" Executed="SetCalibrationCommandExecute" />
         <CommandBinding Command="local:Window1.ClearCalibrationCommand" Executed="ClearCalibrationCommandExecute" />
-        <CommandBinding Command="local:Window1.ToggleRateIntervalCommand" Executed="ToggleRateIntervalCommandExecute" />
-        <CommandBinding Command="local:Window1.MeanIntervalCommand" Executed="MeanIntervalCommandExecute" />
-        <CommandBinding Command="local:Window1.QTcCommand" Executed="QTcCommandExecute" />
+        <CommandBinding Command="local:Window1.ToggleRateIntervalCommand" Executed="ToggleRateIntervalCommandExecute"
+                        CanExecute="MeasurementsCanExecute" />
+        <CommandBinding Command="local:Window1.MeanIntervalCommand" Executed="MeanIntervalCommandExecute"
+                        CanExecute="MeasurementsCanExecute" />
+        <CommandBinding Command="local:Window1.QTcCommand" Executed="QTcCommandExecute"
+                        CanExecute="MeasurementsCanExecute" />
         <CommandBinding Command="local:Window1.OptionsCommand" Executed="OptionsCommandExecute" />
         <CommandBinding Command="local:Window1.HelpCommand" Executed="HelpCommandExecute" />
         <CommandBinding Command="local:Window1.AboutCommand" Executed="AboutCommandExecute" />

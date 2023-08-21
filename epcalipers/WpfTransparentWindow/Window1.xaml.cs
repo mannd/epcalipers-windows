@@ -37,7 +37,7 @@ namespace WpfTransparentWindow
 		readonly Button[] secondaryMenu;
 		readonly Button[] calibrationMenu;
 
-		enum Menu
+		enum ButtonMenu
 		{
 			Main,
 			Secondary,
@@ -46,8 +46,8 @@ namespace WpfTransparentWindow
 			Qt2,
 			Tweak
 		}
-		Menu currentMenu = Menu.Main;
-		Menu previousMenu = Menu.Main;
+		ButtonMenu currentMenu = ButtonMenu.Main;
+		ButtonMenu previousMenu = ButtonMenu.Main;
 
 		bool inQTcStep1 = false;
 		#endregion
@@ -110,6 +110,15 @@ namespace WpfTransparentWindow
 			CommonCaliper.ClearCalibration(canvas, canvas.DrawCalipers, EnableMeasurementMenuItems);
 		}
 
+		// We're not using this because it is confusing that the calibration menu disappears 
+		// when there are no calipers.  It is clearer to the user when the menu is clicked ond
+		// they see they first need to add a caliper.  Also, it is fine to clear calibration
+		// despite no calipers being on the screen.
+		public void CalibrationCanExecute(object Sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = canvas.NumberOfCalipers() > 0;
+		}
+
 		public void ToggleRateIntervalCommandExecute(object sender, ExecutedRoutedEventArgs e)
 		{
 			canvas.HorizontalCalibration.DisplayRate = !canvas.HorizontalCalibration.DisplayRate;
@@ -124,6 +133,12 @@ namespace WpfTransparentWindow
 		public void QTcCommandExecute(object sender, ExecutedRoutedEventArgs e)
 		{
 			CommonCaliper.QTcInterval(canvas, canvas.DrawCalipers, ShowQTcStep1Menu, ShowMainMenu);
+		}
+		public void MeasurementsCanExecute(object Sender, CanExecuteRoutedEventArgs e)
+		{
+			// Below is confusing, measurement buttons and menu disappears when there are no calipers present.
+			//e.CanExecute = canvas.NumberOfCalipers() > 0 && CommonCaliper.MeasurementsAllowed(canvas);
+			e.CanExecute = CommonCaliper.MeasurementsAllowed(canvas);
 		}
 
 		public void OptionsCommandExecute(object sender, ExecutedRoutedEventArgs e)
@@ -174,26 +189,26 @@ namespace WpfTransparentWindow
 		#endregion
 		#region Buttons
 
-		private void ShowMenu(Menu menu)
+		private void ShowMenu(ButtonMenu menu)
 		{
 			switch (menu)
 			{
-				case Menu.Main:
+				case ButtonMenu.Main:
 					ShowMainMenu();
 					break;
-				case Menu.Secondary:
+				case ButtonMenu.Secondary:
 					ShowSecondaryMenu();
 					break;
-				case Menu.Calibration:
+				case ButtonMenu.Calibration:
 					ShowCalibrationMenu();
 					break;
-				case Menu.Tweak:
+				case ButtonMenu.Tweak:
 					ShowTweakMenu();
 					break;
-				case Menu.Qt1:
+				case ButtonMenu.Qt1:
 					ShowQTcStep1Menu();
 					break;
-				case Menu.Qt2:
+				case ButtonMenu.Qt2:
 					ShowQTcStep2Menu();
 					break;
 				default:
@@ -273,7 +288,7 @@ namespace WpfTransparentWindow
 			HideTweakMenu(true);
 			EnableMeasurementMenuItems(CommonCaliper.MeasurementsAllowed(canvas));
 			inQTcStep1 = false;
-			currentMenu = Menu.Main;
+			currentMenu = ButtonMenu.Main;
 		}
 
 		private void ShowSecondaryMenu()
@@ -282,7 +297,7 @@ namespace WpfTransparentWindow
 			HideSecondaryMenu(false);
 			HideTweakMenu(true);
 			HideCalibrationMenu(true);
-			currentMenu = Menu.Secondary;
+			currentMenu = ButtonMenu.Secondary;
 		}
 
 		private void ShowCalibrationMenu()
@@ -291,7 +306,7 @@ namespace WpfTransparentWindow
 			HideSecondaryMenu(true);
 			HideTweakMenu(true);
 			HideCalibrationMenu(false);
-			currentMenu = Menu.Calibration;
+			currentMenu = ButtonMenu.Calibration;
 		}
 
 		private void ShowTweakMenu()
@@ -301,7 +316,7 @@ namespace WpfTransparentWindow
 			HideCalibrationMenu(true);
 			HideTweakMenu(false);
 			previousMenu = currentMenu;
-			currentMenu = Menu.Tweak;
+			currentMenu = ButtonMenu.Tweak;
 		}
 
 		private void EnableMeasurementMenuItems(bool enable)
@@ -399,7 +414,7 @@ namespace WpfTransparentWindow
 			ShowSecondaryMenu();
 			MessageTextBlock.Text = "Measure one or more RR intervals";
 			inQTcStep1 = true;
-			currentMenu = Menu.Qt1;
+			currentMenu = ButtonMenu.Qt1;
 		}
 
 		private void ShowQTcStep2Menu()
@@ -407,7 +422,7 @@ namespace WpfTransparentWindow
 			ShowSecondaryMenu();
 			inQTcStep1 = false;
 			MessageTextBlock.Text = "Measure QT";
-			currentMenu = Menu.Qt2;
+			currentMenu = ButtonMenu.Qt2;
 		}
 
 		#endregion
