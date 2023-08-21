@@ -220,6 +220,7 @@ namespace epcalipers
             toolTip1.SetToolTip(button, toolTip);
             button.Click += onClickFunc;
             button.AutoSize = true;
+            button.MinimumSize = new System.Drawing.Size(160, 40);
         }
 
         private static void AdjustLabel(Label label)

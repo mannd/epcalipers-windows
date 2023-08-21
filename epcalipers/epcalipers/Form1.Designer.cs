@@ -101,13 +101,13 @@ namespace epcalipers
 			this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 48);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 44);
 			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1376, 879);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1376, 883);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// flowLayoutPanel1
@@ -116,7 +116,7 @@ namespace epcalipers
 			this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.Control;
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(162, 814);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(162, 818);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(1208, 59);
@@ -133,7 +133,7 @@ namespace epcalipers
 			this.panel1.Location = new System.Drawing.Point(6, 6);
 			this.panel1.Margin = new System.Windows.Forms.Padding(6);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1364, 796);
+			this.panel1.Size = new System.Drawing.Size(1364, 800);
 			this.panel1.TabIndex = 3;
 			// 
 			// thumbnail
@@ -161,11 +161,12 @@ namespace epcalipers
 			// 
 			// flowLayoutPanel2
 			// 
+			this.flowLayoutPanel2.AutoSize = true;
 			this.flowLayoutPanel2.BackColor = System.Drawing.SystemColors.Control;
 			this.flowLayoutPanel2.Controls.Add(this.zoomInButton);
 			this.flowLayoutPanel2.Controls.Add(this.zoomOutButton);
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 814);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 818);
 			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
 			this.flowLayoutPanel2.Size = new System.Drawing.Size(144, 59);
@@ -175,12 +176,15 @@ namespace epcalipers
 			// 
 			this.zoomInButton.AutoSize = true;
 			this.zoomInButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.zoomInButton.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.zoomInButton.Font = new System.Drawing.Font("Segoe UI Symbol", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.zoomInButton.Location = new System.Drawing.Point(6, 6);
 			this.zoomInButton.Margin = new System.Windows.Forms.Padding(6);
+			this.zoomInButton.MinimumSize = new System.Drawing.Size(40, 40);
 			this.zoomInButton.Name = "zoomInButton";
-			this.zoomInButton.Size = new System.Drawing.Size(34, 35);
+			this.zoomInButton.Size = new System.Drawing.Size(50, 40);
 			this.zoomInButton.TabIndex = 0;
-			this.zoomInButton.Text = "+";
+			this.zoomInButton.Text = "";
 			this.toolTip1.SetToolTip(this.zoomInButton, "Zoom in");
 			this.zoomInButton.UseVisualStyleBackColor = true;
 			this.zoomInButton.Click += new System.EventHandler(this.ZoomInButton_Click);
@@ -189,12 +193,14 @@ namespace epcalipers
 			// 
 			this.zoomOutButton.AutoSize = true;
 			this.zoomOutButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.zoomOutButton.Location = new System.Drawing.Point(52, 6);
+			this.zoomOutButton.Font = new System.Drawing.Font("Segoe UI Symbol", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.zoomOutButton.Location = new System.Drawing.Point(68, 6);
 			this.zoomOutButton.Margin = new System.Windows.Forms.Padding(6);
+			this.zoomOutButton.MinimumSize = new System.Drawing.Size(40, 40);
 			this.zoomOutButton.Name = "zoomOutButton";
-			this.zoomOutButton.Size = new System.Drawing.Size(29, 35);
+			this.zoomOutButton.Size = new System.Drawing.Size(50, 40);
 			this.zoomOutButton.TabIndex = 1;
-			this.zoomOutButton.Text = "-";
+			this.zoomOutButton.Text = "";
 			this.toolTip1.SetToolTip(this.zoomOutButton, "Zoom out");
 			this.zoomOutButton.UseVisualStyleBackColor = true;
 			this.zoomOutButton.Click += new System.EventHandler(this.ZoomOutButton_Click);
@@ -215,7 +221,7 @@ namespace epcalipers
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1376, 48);
+			this.menuStrip1.Size = new System.Drawing.Size(1376, 44);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -228,7 +234,7 @@ namespace epcalipers
             this.quitToolStripMenuItem,
             this.quitToolStripMenuItem1});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(74, 44);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(74, 40);
 			this.fileToolStripMenuItem.Text = "&File";
 			// 
 			// openToolStripMenuItem
@@ -286,7 +292,7 @@ namespace epcalipers
             this.previousPageToolStripMenuItem1,
             this.gotoPDFPageToolStripMenuItem});
 			this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-			this.zoomToolStripMenuItem.Size = new System.Drawing.Size(106, 44);
+			this.zoomToolStripMenuItem.Size = new System.Drawing.Size(106, 40);
 			this.zoomToolStripMenuItem.Text = "Image";
 			// 
 			// zoomInToolStripMenuItem
@@ -423,7 +429,7 @@ namespace epcalipers
             this.meanRateIntervalToolStripMenuItem,
             this.qTcMeasurementToolStripMenuItem});
 			this.calipersToolStripMenuItem.Name = "calipersToolStripMenuItem";
-			this.calipersToolStripMenuItem.Size = new System.Drawing.Size(125, 44);
+			this.calipersToolStripMenuItem.Size = new System.Drawing.Size(125, 40);
 			this.calipersToolStripMenuItem.Text = "Calipers";
 			// 
 			// timeCaliperToolStripMenuItem
@@ -519,7 +525,7 @@ namespace epcalipers
             this.toolStripSeparator7,
             this.optionsToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(93, 44);
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(93, 40);
 			this.toolsToolStripMenuItem.Text = "Tools";
 			// 
 			// transparentWindowToolStripMenuItem1
@@ -550,7 +556,7 @@ namespace epcalipers
             this.toolStripSeparator1,
             this.aboutEPCalipersToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(88, 44);
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(88, 40);
 			this.helpToolStripMenuItem.Text = "Help";
 			// 
 			// viewHelpToolStripMenuItem
@@ -622,6 +628,7 @@ namespace epcalipers
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Margin = new System.Windows.Forms.Padding(6);
+			this.MinimumSize = new System.Drawing.Size(1300, 800);
 			this.Name = "Form1";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.Text = "EP Calipers";
