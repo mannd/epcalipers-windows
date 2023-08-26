@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("EP Calipers")]
 [assembly: AssemblyDescription("Electronic calipers for cardiologists and electrophysiologists.  For further information please select the Help menu item or visit the EP Studios website.")]
-[assembly: AssemblyConfiguration("MSI Application")]
+[assembly: AssemblyConfiguration("Microsoft Store Application")]
 [assembly: AssemblyCulture("")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
