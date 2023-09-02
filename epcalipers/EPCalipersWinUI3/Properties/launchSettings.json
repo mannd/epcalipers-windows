@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EPCalipersWinUI3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EPCalipersWinUI3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
