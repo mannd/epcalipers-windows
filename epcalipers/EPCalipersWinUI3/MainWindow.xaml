@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
-        <MicaBackdrop/>
+        <MicaBackdrop Kind="BaseAlt"/>
     </Window.SystemBackdrop>
 
     <Grid>
@@ -24,7 +24,7 @@
         </StackPanel>
         <MenuBar Grid.Row="1" >
             <MenuBarItem Title="File">
-                <MenuFlyoutItem Text="Open...">
+                <MenuFlyoutItem Text="Open..." Command="{Binding OpenFile}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -38,22 +38,127 @@
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="P" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
-                    
+
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="Quit"/>
             </MenuBarItem>
             <MenuBarItem Title="Image">
-                <MenuFlyoutItem Text="Open..." />
+                <MenuFlyoutItem Text="Zoom In">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Add" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Zoom Out">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Reset Zoom" />
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Rotate 90° R">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rotate 90° L">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rotate 1° R">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rotate 1° L">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="L" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rotate 0.1° R">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Rotate 0.1° L">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Reset Image">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Next PDF Page">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Previous PDF Page">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Goto PDF Page..." />
             </MenuBarItem>
             <MenuBarItem Title="Calipers">
-                <MenuFlyoutItem Text="Open..." />
+                <MenuFlyoutItem Text="Time Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="T" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Amplitude Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="A" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Angle Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="G" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Delete Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Icon="Delete" Text="Delete All Calipers">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Set Calibration" />
+                <MenuFlyoutItem Text="Clear Calibration" />
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Toggle Rate/Interval">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="I" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Mean Rate/Interval" />
+                <MenuFlyoutItem Text="Measure QTc" />
             </MenuBarItem>
             <MenuBarItem Title="Tools">
-                <MenuFlyoutItem Text="Open..." />
+                <MenuFlyoutItem Text="Transparent Window">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="T" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Options..." />
             </MenuBarItem>
             <MenuBarItem Title="Help">
-                <MenuFlyoutItem Text="Help" />
+                <MenuFlyoutItem Text="Help">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F1"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem Text="About EP Calipers" />
             </MenuBarItem>
@@ -93,9 +198,18 @@
                 </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
-        <Canvas x:Name="canvas" Grid.Row="3">
-            <Image x:Name="image" Source="Assets/sampleECG.jpg" />
-        </Canvas>
+        <!--see https://stackoverflow.com/questions/70161937/winui-3-0-desktop-add-a-shape-to-a-canvas-in-code-->
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="3" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
+                          ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto" 
+                      ViewChanged="scrollViewer_ViewChanged">
+            <!-- size of canvas needs to be set to image size when image is loaded-->
+            <Canvas x:Name="canvas" Background="Transparent" 
+                    Width="5000" Height="5000">
+                <Image x:Name="image" Source="Assets/Images/sampleECG.jpg" Stretch="None"
+                       HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </Canvas>
+        </ScrollViewer>
     </Grid>
 </Window>
 
