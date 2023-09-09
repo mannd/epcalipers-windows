@@ -1,5 +1,22 @@
 # EP Calipers for Microsoft Windows
 
+## IMPORTANT!!
+This is an experimental branch of the EP Calipers for Windows
+repository.  The current main branch is the epcalipers-2 branch.
+
+This epcalipers-3 branch is a rewrite nearly from scratch of EP
+Calipers.  It does not yet have functionality as a calipers app, and
+it may not even build.
+
+The goals of this new branch are to recreate the app with the
+following improvements:
+- Use the most modern Windows desktop system, WinUI 3.
+- Improve the archecture of the app (XAML views, MVVM).
+- Eliminate PDF processing via Ghostscript, and use Nuget packages instead.
+- Update the Help system to Modern Windows style.
+- Support dark mode
+- MSIX installation via side-loading or Microsoft Store.
+
 ## Description 
 This is the Microsoft Windows™ version of EP Calipers.
 Versions for Android, iOS and macOS are also available.

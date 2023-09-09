@@ -27,11 +27,9 @@ namespace EPCalipersWinUI3
 	/// </summary>
 	public sealed partial class MainWindow : Window
 	{
-		int n = 1000;
 		double lineThickness = 5;
 		Microsoft.UI.Xaml.Shapes.Line line = new();
-
-		public ICommand OpenFile { get; }
+		public MainWindowViewModel ViewModel { get; set; }
 
 		public MainWindow()
 		{
@@ -39,8 +37,7 @@ namespace EPCalipersWinUI3
 			//GetAppWindowAndPresenter();
 			ExtendsContentIntoTitleBar = true;
 			SetTitleBar(TitleBar);
-
-			OpenFile = new StandardUICommand();
+			ViewModel = new MainWindowViewModel();
 
 			DrawLine(500, 0, 500, 500);
 

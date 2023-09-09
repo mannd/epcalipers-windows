@@ -33,6 +33,7 @@ namespace EPCalipersWinUI3
 		public App()
 		{
 			this.InitializeComponent();
+
 		}
 
 		/// <summary>

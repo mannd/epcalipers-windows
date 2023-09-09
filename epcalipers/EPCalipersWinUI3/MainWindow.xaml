@@ -11,6 +11,7 @@
         <MicaBackdrop Kind="BaseAlt"/>
     </Window.SystemBackdrop>
 
+    <Page>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -24,7 +25,7 @@
         </StackPanel>
         <MenuBar Grid.Row="1" >
             <MenuBarItem Title="File">
-                <MenuFlyoutItem Text="Open..." Command="{Binding OpenFile}">
+                <MenuFlyoutItem Text="Open..." Command="{x:Bind ViewModel.TestCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -166,7 +167,7 @@
         <!--TODO: Segoe Fluent icons not included in Win10, so must add
         the font to shared resources, and may need to change syntax below.-->
         <CommandBar Grid.Row="2" Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton Label="Open">
+            <AppBarButton Label="{x:Bind ViewModel.TestText}">
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
@@ -211,5 +212,6 @@
             </Canvas>
         </ScrollViewer>
     </Grid>
+</Page>
 </Window>
 
