@@ -22,78 +22,21 @@ using Windows.Foundation.Collections;
 
 namespace EPCalipersWinUI3
 {
-	/// <summary>
-	/// An empty window that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class MainWindow : Window
-	{
-		double lineThickness = 5;
-		Microsoft.UI.Xaml.Shapes.Line line = new();
-		public MainWindowViewModel ViewModel { get; set; }
+    /// <summary>
+    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class MainWindow : Window
+    {
 
-		public MainWindow()
-		{
-			this.InitializeComponent();
-			//GetAppWindowAndPresenter();
-			ExtendsContentIntoTitleBar = true;
-			SetTitleBar(TitleBar);
-			ViewModel = new MainWindowViewModel();
-
-			DrawLine(500, 0, 500, 500);
-
-			scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
-			{
-				lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
-				lineThickness = Math.Min(lineThickness, 5.0);
-				
-				canvas.Children.Remove(line);
-				DrawLine(500, 0, 500, 500);
-				Debug.Print(scrollViewer.ZoomFactor.ToString());
-			});
-		}
-
-		private void DrawLine(int x1, int y1, int x2, int y2)
-		{
-			//	canvas.Children.Clear();
-			var brush = new SolidColorBrush(Microsoft.UI.Colors.Blue);
-			line.X1 = x1;
-			line.Y1 = y1;
-			line.X2 = x2;
-			line.Y2 = y2;
-			lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
-			lineThickness = Math.Min(lineThickness, 5.0);
-			line.Stroke = brush;
-			canvas.Children.Add(line);
-		}
-
-		private void Image_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			//Need to set canvas size to match image size when image is loaded
-		}
-
-		private void scrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-		{
-			// Just thin out lines as view zooms
-		}
-
-		private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-		{
-		}
-
-		private void PrintMessage()
-		{
-			Debug.Print("print message");
-		}
-
-
-		public void GetAppWindowAndPresenter()
-		{
-			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-			WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-			AppWindow _apw = AppWindow.GetFromWindowId(myWndId);
-			OverlappedPresenter _presenter = _apw.Presenter as OverlappedPresenter;
-			_presenter.SetBorderAndTitleBar(false, false);
-		}
-
-	}
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(TitleBar);
+            MainFrame.Navigate(typeof(Views.MainPage));
+            //Frame rootFrame = new Frame();
+            //Content = rootFrame;
+            //rootFrame.Navigate(typeof(Views.MainPage));
+        }
+    }
 }

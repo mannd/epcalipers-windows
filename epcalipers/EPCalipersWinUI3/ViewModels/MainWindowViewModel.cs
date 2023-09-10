@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3
 {
-	public partial class MainWindowViewModel : ObservableObject
-	{
-		[RelayCommand]
-		void Test()
-		{
-			Debug.Print("test command");
-		}
+    public partial class MainWindowViewModel : ObservableObject
+    {
+        [RelayCommand]
+        void Test()
+        {
+            Debug.Print("test command");
+        }
 
-		[ObservableProperty]
-		private string testText = "Test Text";
-	}
+        [ObservableProperty]
+        private string testText = "Test Text";
+    }
 }

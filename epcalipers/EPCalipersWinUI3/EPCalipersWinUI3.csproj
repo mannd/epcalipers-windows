@@ -21,6 +21,7 @@
     <None Remove="Assets\calipers.png" />
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
+    <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,14 @@
   -->
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
