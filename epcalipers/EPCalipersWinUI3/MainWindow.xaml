@@ -10,31 +10,21 @@
     <Window.SystemBackdrop>
         <MicaBackdrop Kind="BaseAlt"/>
     </Window.SystemBackdrop>
+
     <StackPanel>
-        <StackPanel x:Name="TitleBar" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <Image Margin="8" VerticalAlignment="Center" Source="/Assets/StoreLogo.scale-200.png" />
-            <TextBlock VerticalAlignment="Center" Text="EP Calipers 3" Height="32" />
-        </StackPanel>
+        <Grid x:Name="TitleBar" Height="32">
+        <Image Source="/Assets/StoreLogo.scale-200.png"
+           HorizontalAlignment="Left" 
+           Width="16" Height="16" 
+           Margin="8,0"/>
+        <TextBlock x:Name="AppTitleTextBlock" Text="EP Calipers"
+               TextWrapping="NoWrap"
+               Style="{StaticResource CaptionTextBlockStyle}" 
+               VerticalAlignment="Center"
+               Margin="28,0,0,0"/>
+        </Grid>
         <Frame x:Name="MainFrame" />
     </StackPanel>
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid x:Name="AppTitleBar">
-            <Image Source="Images/WindowIcon.png"
-                   HorizontalAlignment="Left" 
-                   Width="16" Height="16" 
-                   Margin="8,0"/>
-            <TextBlock x:Name="AppTitleTextBlock" Text="App title"
-                       TextWrapping="NoWrap"
-                       Style="{StaticResource CaptionTextBlockStyle}" 
-                       VerticalAlignment="Center"
-                       Margin="28,0,0,0"/>
-        </Grid>
-    </Grid>-->
 </Window>
 
 

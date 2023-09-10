@@ -34,9 +34,24 @@ namespace EPCalipersWinUI3
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
             MainFrame.Navigate(typeof(Views.MainPage));
-            //Frame rootFrame = new Frame();
-            //Content = rootFrame;
-            //rootFrame.Navigate(typeof(Views.MainPage));
-        }
-    }
+			Activated += MainWindow_Activated;
+			//Frame rootFrame = new Frame();
+			//Content = rootFrame;
+			//rootFrame.Navigate(typeof(Views.MainPage));
+		}
+
+		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+		{
+			if (args.WindowActivationState == WindowActivationState.Deactivated)
+			{
+				AppTitleTextBlock.Foreground =
+					(SolidColorBrush)App.Current.Resources["WindowCaptionForegroundDisabled"];
+			}
+			else
+			{
+				AppTitleTextBlock.Foreground =
+					(SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
+			}
+		}
+	}
 }
