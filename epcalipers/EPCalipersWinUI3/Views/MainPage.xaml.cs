@@ -77,5 +77,24 @@ namespace EPCalipersWinUI3.Views
         {
             Debug.Print("print message");
         }
+
+
+		private void ZoomIn_Click(object sender, RoutedEventArgs e)
+		{
+            Zoom(2);
+		}
+
+		private void ZoomOut_Click(object sender, RoutedEventArgs e)
+		{
+            Zoom(0.5f);
+		}
+        
+        private void Zoom(float multiple)
+        {
+            if (scrollViewer != null)
+            {
+                scrollViewer.ChangeView(0, 0, multiple * scrollViewer.ZoomFactor);
+            }
+        }
 	}
 }

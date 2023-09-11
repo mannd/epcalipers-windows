@@ -19,17 +19,10 @@ namespace EPCalipersWinUI3
 {
     public partial class MainPageViewModel : ObservableObject
     {
-
         [RelayCommand]
         void Test()
         {
             Debug.Print("test command");
-        }
-
-        [RelayCommand]
-        void ZoomIn()
-        {
-			TestText = "Zoomed!!";
         }
 
         [RelayCommand]
@@ -56,15 +49,17 @@ namespace EPCalipersWinUI3
 			var file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
-				using (IRandomAccessStream fileStream =
-					await file.OpenAsync(Windows.Storage.FileAccessMode.Read)) {
-					BitmapImage bitmapImage = new BitmapImage();
-					bitmapImage.DecodePixelHeight = 500;
-					await bitmapImage.SetSourceAsync(fileStream);
-					MainImageSource = bitmapImage;
-					Debug.Print("Picked photo: " + file.Name);
-					TestText = file.Name;
-				}
+				BitmapImage bitmapImage = new BitmapImage();
+				bitmapImage.UriSource = new Uri(file.Path);
+				MainImageSource = bitmapImage;
+				// Alternate method using fileStream ->
+				//using (IRandomAccessStream fileStream =
+				//	await file.OpenAsync(Windows.Storage.FileAccessMode.Read)) {
+				//	BitmapImage bitmapImage = new BitmapImage();
+				//	bitmapImage.DecodePixelHeight = 500;
+				//	await bitmapImage.SetSourceAsync(fileStream);
+				//	MainImageSource = bitmapImage;
+				//}
 			}
 			else
 			{
@@ -82,5 +77,6 @@ namespace EPCalipersWinUI3
         [ObservableProperty]
         private ImageSource mainImageSource 
 			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+
     }
 }

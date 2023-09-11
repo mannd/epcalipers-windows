@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
             <MenuBar Grid.Row="0" >
                 <MenuBarItem Title="File">
-                    <MenuFlyoutItem Text="Open..." Command="{x:Bind ViewModel.TestCommand}">
+                    <MenuFlyoutItem Text="Open..." Command="{x:Bind ViewModel.OpenCommand}">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="O" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -37,12 +37,12 @@
                     <MenuFlyoutItem Text="Quit"/>
                 </MenuBarItem>
                 <MenuBarItem Title="Image">
-                    <MenuFlyoutItem Text="Zoom In">
+                    <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Add" Modifiers="Control"/>
+                            <KeyboardAccelerator Key="Add" Modifiers="Control" />
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Zoom Out">
+                    <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -160,14 +160,14 @@
       the font to shared resources, and may need to change syntax below.-->
             <CommandBar Grid.Row="1" Background="Transparent" 
                         IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Label="{x:Bind ViewModel.TestText, Mode=TwoWay}" Command="{x:Bind ViewModel.OpenCommand}">
+                <AppBarButton Label="Open" Command="{x:Bind ViewModel.OpenCommand}">
                     <SymbolIcon Symbol="OpenFile" />
                 </AppBarButton>
-                <AppBarSeparator/>
-                <AppBarButton Label="Zoom In" Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
-                    <SymbolIcon Symbol="ZoomIn" />
-                </AppBarButton>
-                <AppBarButton Label="Zoom Out" ToolTipService.ToolTip="Zoom out">
+            <AppBarSeparator/>
+            <AppBarButton Label="Zoom In" Click="ZoomIn_Click" ToolTipService.ToolTip="Zoom in">
+                <SymbolIcon Symbol="ZoomIn" />
+            </AppBarButton>
+                <AppBarButton Label="Zoom Out" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
                     <SymbolIcon Symbol="ZoomOut" />
                 </AppBarButton>
                 <AppBarSeparator/>
@@ -195,10 +195,10 @@
             <!--see https://stackoverflow.com/questions/70161937/winui-3-0-desktop-add-a-shape-to-a-canvas-in-code-->
             <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Auto" 
+                        VerticalScrollBarVisibility="Auto"
                     ViewChanged="scrollViewer_ViewChanged">
                 <!-- size of canvas needs to be set to image size when image is loaded-->
-                <Canvas x:Name="canvas" Background="Transparent" 
+                <Canvas x:Name="canvas" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" 
                   Width="5000" Height="5000">
                     <Image x:Name="image" Source="{x:Bind ViewModel.MainImageSource, Mode=TwoWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top" />
