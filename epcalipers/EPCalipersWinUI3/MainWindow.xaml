@@ -17,7 +17,7 @@
            HorizontalAlignment="Left" 
            Width="16" Height="16" 
            Margin="8,0"/>
-        <TextBlock x:Name="AppTitleTextBlock" Text="EP Calipers"
+        <TextBlock x:Name="AppTitleTextBlock" Text="EP Calipers 3"
                TextWrapping="NoWrap"
                Style="{StaticResource CaptionTextBlockStyle}" 
                VerticalAlignment="Center"

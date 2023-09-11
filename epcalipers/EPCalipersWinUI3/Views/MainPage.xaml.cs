@@ -26,11 +26,11 @@ namespace EPCalipersWinUI3.Views
 	{
         double lineThickness = 5;
         Microsoft.UI.Xaml.Shapes.Line line = new();
-        public MainWindowViewModel ViewModel { get; set; }
+        public MainPageViewModel ViewModel { get; set; }
 		public MainPage()
 		{
 			this.InitializeComponent();
-            ViewModel = new MainWindowViewModel();
+            ViewModel = new MainPageViewModel();
 
             DrawLine(500, 0, 500, 500);
 

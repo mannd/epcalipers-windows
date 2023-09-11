@@ -35,9 +35,6 @@ namespace EPCalipersWinUI3
             SetTitleBar(TitleBar);
             MainFrame.Navigate(typeof(Views.MainPage));
 			Activated += MainWindow_Activated;
-			//Frame rootFrame = new Frame();
-			//Content = rootFrame;
-			//rootFrame.Navigate(typeof(Views.MainPage));
 		}
 
 		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)

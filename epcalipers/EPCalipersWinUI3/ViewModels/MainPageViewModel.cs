@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3
 {
-    public partial class MainWindowViewModel : ObservableObject
+    public partial class MainPageViewModel : ObservableObject
     {
 
         [RelayCommand]
