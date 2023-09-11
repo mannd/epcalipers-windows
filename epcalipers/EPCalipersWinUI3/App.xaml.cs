@@ -36,6 +36,8 @@ namespace EPCalipersWinUI3
 
         }
 
+        public Window Window => m_window;
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
@@ -43,10 +45,7 @@ namespace EPCalipersWinUI3
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
-            //Frame rootFrame = new Frame();
-            //m_window.Content = rootFrame; 
             m_window.Activate();
-            //rootFrame.Navigate(typeof(Views.MainPage));
         }
 
         private Window m_window;

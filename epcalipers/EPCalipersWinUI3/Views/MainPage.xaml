@@ -160,11 +160,11 @@
       the font to shared resources, and may need to change syntax below.-->
             <CommandBar Grid.Row="1" Background="Transparent" 
                         IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Label="{x:Bind ViewModel.TestText}">
+                <AppBarButton Label="{x:Bind ViewModel.TestText, Mode=TwoWay}" Command="{x:Bind ViewModel.OpenCommand}">
                     <SymbolIcon Symbol="OpenFile" />
                 </AppBarButton>
                 <AppBarSeparator/>
-                <AppBarButton Label="Zoom In" ToolTipService.ToolTip="Zoom in">
+                <AppBarButton Label="Zoom In" Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
                     <SymbolIcon Symbol="ZoomIn" />
                 </AppBarButton>
                 <AppBarButton Label="Zoom Out" ToolTipService.ToolTip="Zoom out">
@@ -200,7 +200,7 @@
                 <!-- size of canvas needs to be set to image size when image is loaded-->
                 <Canvas x:Name="canvas" Background="Transparent" 
                   Width="5000" Height="5000">
-                    <Image x:Name="image" Source="{x:Bind ViewModel.MainImageSource}" Stretch="None"
+                    <Image x:Name="image" Source="{x:Bind ViewModel.MainImageSource, Mode=TwoWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top" />
                 </Canvas>
             </ScrollViewer>
