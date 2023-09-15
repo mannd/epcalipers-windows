@@ -153,7 +153,7 @@
                     </MenuFlyoutItem>
 
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="About EP Calipers" />
+                    <MenuFlyoutItem Text="About EP Calipers" Click="About_Click" />
                 </MenuBarItem>
             </MenuBar>
             <!--TODO: Segoe Fluent icons not included in Win10, so must add

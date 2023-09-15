@@ -88,13 +88,20 @@ namespace EPCalipersWinUI3.Views
 		{
             Zoom(0.5f);
 		}
-        
-        private void Zoom(float multiple)
+          private void Zoom(float multiple)
         {
             if (scrollViewer != null)
             {
                 scrollViewer.ChangeView(0, 0, multiple * scrollViewer.ZoomFactor);
             }
         }
+
+		private async void About_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("About");
+            var aboutDialog = new AboutDialog();
+            aboutDialog.XamlRoot = this.XamlRoot;
+            var result = await aboutDialog.ShowAsync();
+		}
 	}
 }

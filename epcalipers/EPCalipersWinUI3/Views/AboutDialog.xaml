@@ -1,0 +1,21 @@
+﻿<ContentDialog
+    x:Class="EPCalipersWinUI3.Views.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EPCalipersWinUI3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="About EP Calipers"
+    Style="{ThemeResource DefaultContentDialogStyle}"
+    PrimaryButtonText="OK"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+    <StackPanel Orientation="Vertical" >
+        <Image x:Name="AppIcon" HorizontalAlignment="Center"  
+                Width="100" Source="/Assets/StoreLogo.scale-150.png"
+               />
+        <TextBlock Name="AppName" Text="App name" HorizontalAlignment="Center" FontStyle="Italic" />
+        <TextBlock Name="Version" Text="Version" HorizontalAlignment="Center"/>
+        <TextBlock Name="Copyright" Text="Copyright" HorizontalAlignment="Center"/>
+        <HyperlinkButton Style="{ThemeResource DefaultHyperlinkButtonStyle}" Name="CompanyLink" 
+                             Content="EP Studios home page" NavigateUri="https://www.epstudiossoftware.com" HorizontalAlignment="Center" Margin="10" />
+    </StackPanel>
+</ContentDialog>

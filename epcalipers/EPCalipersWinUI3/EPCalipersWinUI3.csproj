@@ -13,6 +13,16 @@
     <PackageCertificateThumbprint>34936636EC03C754A7EC9E5CCE085A860A0577EC</PackageCertificateThumbprint>
     <PackageCertificateKeyFile>epstudios.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Title>EP Calipers</Title>
+    <Company>EP Studios</Company>
+    <Description>Test description</Description>
+    <Copyright>Copyright (c) 2023 </Copyright>
+    <PackageProjectUrl>https://www.epstudiossoftware.com</PackageProjectUrl>
+    <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
+    <Version>3.0.0.0-alpha</Version>
+    <Authors>EP Studios</Authors>
+    <Product>EP Calipers 3</Product>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Models\BaseCaliper.cs" />
@@ -24,6 +34,7 @@
     <None Remove="Assets\calipers.png" />
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
+    <None Remove="Views\AboutDialog.xaml" />
     <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
 
@@ -56,12 +67,20 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Update="Assets\calipers.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\StoreLogo.scale-200.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\AboutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 

@@ -16,7 +16,7 @@
 
   <Properties>
     <DisplayName>EP Calipers 3</DisplayName>
-    <PublisherDisplayName>mannd</PublisherDisplayName>
+    <PublisherDisplayName>EP Studios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -35,7 +35,7 @@
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
         DisplayName="EP Calipers 3"
-        Description="EPCalipersWinUI3"
+        Description="Make measurements on digital electrocardiograms."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
