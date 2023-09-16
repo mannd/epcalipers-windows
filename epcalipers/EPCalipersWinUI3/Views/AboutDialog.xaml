@@ -4,18 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EPCalipersWinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="About EP Calipers"
+    Title="{x:Bind ViewModel.Title, Mode=OneTime}"
     Style="{ThemeResource DefaultContentDialogStyle}"
-    PrimaryButtonText="OK"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+    PrimaryButtonText="OK" >
     <StackPanel Orientation="Vertical" >
         <Image x:Name="AppIcon" HorizontalAlignment="Center"  
-                Width="100" Source="/Assets/StoreLogo.scale-150.png"
-               />
-        <TextBlock Name="AppName" Text="App name" HorizontalAlignment="Center" FontStyle="Italic" />
-        <TextBlock Name="Version" Text="Version" HorizontalAlignment="Center"/>
-        <TextBlock Name="Copyright" Text="Copyright" HorizontalAlignment="Center"/>
-        <HyperlinkButton Style="{ThemeResource DefaultHyperlinkButtonStyle}" Name="CompanyLink" 
-                             Content="EP Studios home page" NavigateUri="https://www.epstudiossoftware.com" HorizontalAlignment="Center" Margin="10" />
+                Width="100" Source="/Assets/StoreLogo.scale-150.png" />
+        <TextBlock Text="{x:Bind ViewModel.AppName, Mode=OneTime}" HorizontalAlignment="Center" FontStyle="Italic" />
+        <TextBlock Text="{x:Bind ViewModel.Version, Mode=OneTime}" HorizontalAlignment="Center"/>
+        <TextBlock Text="{x:Bind ViewModel.Copyright, Mode=OneTime}" HorizontalAlignment="Center"/>
+        <HyperlinkButton Style="{ThemeResource DefaultHyperlinkButtonStyle}" Content="{x:Bind ViewModel.HomePage, Mode=OneTime}" 
+                         NavigateUri="{x:Bind ViewModel.NavigateUri, Mode=OneTime}" 
+                         HorizontalAlignment="Center" Margin="0,20,0,-10" />
     </StackPanel>
 </ContentDialog>
