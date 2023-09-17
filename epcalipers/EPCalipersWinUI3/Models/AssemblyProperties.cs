@@ -7,7 +7,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
-namespace EPCalipersWinUI3.Models;
+// See https://stackoverflow.com/questions/23144872/assemblytitle-attribute-in-the-net-framework
+// for definitions of some of the Assembly keys.
+
+ namespace EPCalipersWinUI3.Models;
 	// See https://referencesource.microsoft.com/#mscorlib/system/reflection/assemblyattributes.cs
 // for more Assembly attritues
 	internal class AssemblyProperties

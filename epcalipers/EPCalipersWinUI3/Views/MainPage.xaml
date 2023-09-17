@@ -16,8 +16,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <MenuBar Grid.Row="0" >
-                <MenuBarItem Title="File">
-                    <MenuFlyoutItem Text="Open..." Command="{x:Bind ViewModel.OpenCommand}">
+                <MenuBarItem x:Uid="FileMenu">
+                    <MenuFlyoutItem x:Uid="OpenMenuItem" Command="{x:Bind ViewModel.OpenCommand}">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="O" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -195,7 +195,8 @@
             <!--see https://stackoverflow.com/questions/70161937/winui-3-0-desktop-add-a-shape-to-a-canvas-in-code-->
             <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto" PointerPressed="scrollViewer_PointerPressed"
+                          PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased"
                     ViewChanged="scrollViewer_ViewChanged">
                 <!-- size of canvas needs to be set to image size when image is loaded-->
                 <Canvas x:Name="canvas" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" 

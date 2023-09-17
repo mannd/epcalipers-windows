@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,7 +26,8 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MainPage : Page
 	{
         double lineThickness = 5;
-        Microsoft.UI.Xaml.Shapes.Line line = new();
+        bool pointerDown = false;
+        //Microsoft.UI.Xaml.Shapes.Line line = new();
         public MainPageViewModel ViewModel { get; set; }
 		public MainPage()
 		{
@@ -36,18 +38,19 @@ namespace EPCalipersWinUI3.Views
 
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
-                lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
-                lineThickness = Math.Min(lineThickness, 5.0);
+                //lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
+                //lineThickness = Math.Min(lineThickness, 5.0);
 
-                canvas.Children.Remove(line);
-                DrawLine(500, 0, 500, 500);
-                Debug.Print(scrollViewer.ZoomFactor.ToString());
+                //canvas.Children.Remove(line);
+                //DrawLine(500, 0, 500, 500);
+                //Debug.Print(scrollViewer.ZoomFactor.ToString());
             });
         }
 
         private void DrawLine(int x1, int y1, int x2, int y2)
         {
-            //	canvas.Children.Clear();
+            //canvas.Children.Clear();
+            Line line = new Line();
             var brush = new SolidColorBrush(Microsoft.UI.Colors.Blue);
             line.X1 = x1;
             line.Y1 = y1;
@@ -102,6 +105,28 @@ namespace EPCalipersWinUI3.Views
             var aboutDialog = new AboutDialog();
             aboutDialog.XamlRoot = this.XamlRoot;
             var result = await aboutDialog.ShowAsync();
+		}
+
+		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+            var position = e.GetCurrentPoint(this.canvas);
+            Debug.WriteLine($"Scrollview touched at {position.Position}");
+            DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            pointerDown = true;
+		}
+
+		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
+		{
+            if (pointerDown) {
+                var position = e.GetCurrentPoint(this.canvas);
+                DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            }
+		}
+
+		private void scrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
+		{
+            Debug.WriteLine("Pointer released.");
+            pointerDown = false;
 		}
 	}
 }

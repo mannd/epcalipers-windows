@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -31,5 +33,10 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private string navigateUri = "https://www.epstudiossoftware.com";
+
+		public void debugPrintAssemblyInfo()
+		{
+			Debug.WriteLine("testing");
+		}
 	}
 }

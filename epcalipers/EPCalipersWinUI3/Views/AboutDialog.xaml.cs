@@ -28,6 +28,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			ViewModel = new AboutViewModel();
 			this.InitializeComponent();
+			ViewModel.debugPrintAssemblyInfo();
 		}
 	}
 }

@@ -15,7 +15,7 @@
   <mp:PhoneIdentity PhoneProductId="5a11a93a-e1f5-4d7b-9c5b-7db1236300e8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>EP Calipers 3</DisplayName>
+    <DisplayName>ms-resource:AppDisplayName</DisplayName>
     <PublisherDisplayName>EP Studios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -34,7 +34,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="EP Calipers 3"
+        DisplayName="ms-resource:AppDisplayName"
         Description="Make measurements on digital electrocardiograms."
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
