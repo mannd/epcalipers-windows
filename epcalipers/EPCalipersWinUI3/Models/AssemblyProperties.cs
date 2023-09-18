@@ -12,9 +12,9 @@ using System.Reflection;
 
  namespace EPCalipersWinUI3.Models;
 	// See https://referencesource.microsoft.com/#mscorlib/system/reflection/assemblyattributes.cs
-// for more Assembly attritues
+	// for more Assembly attritues
 	public class AssemblyProperties
-{
+	{
 
 	#region Assembly Attribute Accessors
 

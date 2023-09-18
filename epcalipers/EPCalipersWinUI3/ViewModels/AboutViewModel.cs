@@ -12,21 +12,31 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
+
+	// TODO: Localize strings, possibly using satellite assemblies, or just resources.
 	public partial class AboutViewModel : ObservableObject
 	{
 
+		private readonly AppInfo model = new AppInfo();
+
+		public AboutViewModel()
+		{
+			version = model.ProductVersion;
+			title = $"About {model.ProductName}";
+			copyright = $"{model.Copyright} {model.Company}";
+		}
+
 		[ObservableProperty]
-		private string title = $"About {AssemblyProperties.AssemblyProduct}";
+		private string title;
 
 		[ObservableProperty]
 		private string appName = AssemblyProperties.AssemblyProduct;
 
 		[ObservableProperty]
-		private string version = String.Format(CultureInfo.CurrentCulture,
-				"Version {0}", AssemblyProperties.AssemblyVersion);
+		private string version;
 
 		[ObservableProperty]
-		private string copyright = $"{AssemblyProperties.AssemblyCopyright} {AssemblyProperties.AssemblyCompany}";
+		private string copyright;
 
 		[ObservableProperty]
 		private string homePage = "EP Studios home page";
@@ -34,9 +44,15 @@ namespace EPCalipersWinUI3.ViewModels
 		[ObservableProperty]
 		private string navigateUri = "https://www.epstudiossoftware.com";
 
-		public void debugPrintAssemblyInfo()
+		public void DebugPrintAssemblyInfo()
 		{
 			Debug.WriteLine("testing");
+			Debug.WriteLine(model.ProductName);
+			Debug.WriteLine(model.ProductVersion);
+			Debug.WriteLine(model.FileVersion);
+			Debug.WriteLine(model.Title);
+			Debug.WriteLine(model.Copyright);
+			Debug.WriteLine(model.Company);
 		}
 	}
 }
