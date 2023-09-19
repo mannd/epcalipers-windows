@@ -128,5 +128,6 @@ namespace EPCalipersWinUI3.Views
             Debug.WriteLine("Pointer released.");
             pointerDown = false;
 		}
+
 	}
 }

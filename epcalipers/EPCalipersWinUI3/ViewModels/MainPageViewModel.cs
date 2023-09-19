@@ -67,6 +67,9 @@ namespace EPCalipersWinUI3
 			}
 		}
 
+		[RelayCommand]
+		private void Exit() => Application.Current.Exit();
+
 
 		[ObservableProperty]
         private string testText = "Test";

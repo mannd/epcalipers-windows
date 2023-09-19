@@ -22,82 +22,86 @@
                             <KeyboardAccelerator Key="O" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Save">
+                    <MenuFlyoutItem x:Uid="SaveMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="S" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Print">
+                    <MenuFlyoutItem x:Uid="PrintMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="P" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
-
                     </MenuFlyoutItem>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Quit"/>
-                </MenuBarItem>
-                <MenuBarItem Title="Image">
-                    <MenuFlyoutItem Text="Zoom In" Click="ZoomIn_Click">
+                <MenuFlyoutItem x:Uid="ExitMenuItem" 
+                                Command="{x:Bind ViewModel.ExitCommand}">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F4" Modifiers="Menu"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+            </MenuBarItem>
+                <MenuBarItem x:Uid="ImageMenu">
+                    <MenuFlyoutItem x:Uid="ZoomInMenuItem" Click="ZoomIn_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Add" Modifiers="Control" />
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Zoom Out" Click="ZoomOut_Click">
+                    <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Click="ZoomOut_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Reset Zoom" />
+                    <MenuFlyoutItem x:Uid="ResetZoomMenuItem" />
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Rotate 90° R">
+                    <MenuFlyoutItem x:Uid="Rotate90RMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Rotate 90° L">
+                    <MenuFlyoutItem x:Uid="Rotate90LMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Rotate 1° R">
+                    <MenuFlyoutItem x:Uid="Rotate1RMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="R" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Rotate 1° L">
-                        <MenuFlyoutItem.KeyboardAccelerators>
+                <MenuFlyoutItem x:Uid="Rotate1LMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="L" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Rotate 0.1° R">
+                    <MenuFlyoutItem x:Uid="Rotate01RMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Rotate 0.1° L">
+                    <MenuFlyoutItem x:Uid="Rotate01LMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
+                            <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Reset Image">
+                    <MenuFlyoutItem x:Uid="ResetImageMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
                     <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Next PDF Page">
+                    <MenuFlyoutItem x:Uid="NextPageMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Previous PDF Page">
+                    <MenuFlyoutItem x:Uid="PreviousPageMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Goto PDF Page..." />
+                    <MenuFlyoutItem x:Uid="GotoPageMenuItem" />
                 </MenuBarItem>
-                <MenuBarItem Title="Calipers">
+                <MenuBarItem x:Uid="CalipersMenu">
                     <MenuFlyoutItem Text="Time Caliper">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="T" Modifiers="Control"/>
