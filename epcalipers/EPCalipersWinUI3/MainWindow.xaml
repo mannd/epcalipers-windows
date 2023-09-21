@@ -12,18 +12,22 @@
     </Window.SystemBackdrop>
 
     <Grid>
-        <Grid x:Name="TitleBar" Height="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="TitleBar" Grid.Row="0">
         <Image Source="/Assets/StoreLogo.scale-200.png"
            HorizontalAlignment="Left" 
            Width="16" Height="16" 
            Margin="8,0"/>
-        <TextBlock x:Name="AppTitleTextBlock" Text="EP Calipers 3"
+        <TextBlock x:Name="AppTitleTextBlock" Text="EP Calipers 3" 
                TextWrapping="NoWrap"
                Style="{StaticResource CaptionTextBlockStyle}" 
                VerticalAlignment="Center"
                Margin="28,0,0,0"/>
         </Grid>
-        <Frame x:Name="MainFrame" />
+        <Frame x:Name="MainFrame" Grid.Row="1"/>
     </Grid>
 </Window>
 

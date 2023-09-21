@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Models
 {
-    public enum ComponentType
+    public enum ComponentRole
     {
         Left,
         Right,
@@ -21,18 +21,18 @@ namespace EPCalipersWinUI3.Models
 		public CaliperComponent RightBar { get; set; }
 		public CaliperComponent CrossBar { get; set; }
 
-		public List<CaliperComponent> CaliperComponents { get; set; }
+		public Dictionary<ComponentRole, CaliperComponent> CaliperComponents { get; set; }
 
 		public TimeCaliper()
 		{
 			LeftBar = new CaliperComponent(ComponentDirection.Vertical);
 			RightBar = new CaliperComponent(ComponentDirection.Vertical);
 			CrossBar = new CaliperComponent(ComponentDirection.Horizontal);
-			CaliperComponents = new List<CaliperComponent>()
+			CaliperComponents = new()
 			{
-				LeftBar,
-				RightBar,
-				CrossBar
+				{ComponentRole.Left, LeftBar },
+				{ComponentRole.Right, RightBar },
+				{ComponentRole.Cross, CrossBar }
 			};
 		}
 
@@ -47,7 +47,7 @@ namespace EPCalipersWinUI3.Models
 				_isSelected = value;
 				foreach (var component in CaliperComponents)
 				{
-					component.IsSelected = value;
+					component.Value.IsSelected = value;
 				}
 			}
 		}

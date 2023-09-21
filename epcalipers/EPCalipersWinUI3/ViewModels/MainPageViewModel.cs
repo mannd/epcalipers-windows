@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Media;
 using System.ComponentModel;
 using Windows.Storage.Streams;
 using System.Drawing;
+using EPCalipersWinUI3.Views;
 
 namespace EPCalipersWinUI3
 {
@@ -25,6 +26,15 @@ namespace EPCalipersWinUI3
         {
             Debug.Print("test command");
         }
+
+		[RelayCommand]
+		private async Task About(UIElement element)
+		{
+			Debug.WriteLine("About");
+			var aboutDialog = new AboutDialog();
+			aboutDialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
+			await aboutDialog.ShowAsync();
+		}
 
         [RelayCommand]
 		private async Task Open()
@@ -50,8 +60,10 @@ namespace EPCalipersWinUI3
 			var file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
-				BitmapImage bitmapImage = new BitmapImage();
-				bitmapImage.UriSource = new Uri(file.Path);
+				BitmapImage bitmapImage = new()
+				{
+					UriSource = new Uri(file.Path)
+				};
 				MainImageSource = bitmapImage;
 				// Alternate method using fileStream ->
 				//using (IRandomAccessStream fileStream =
@@ -69,7 +81,7 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
-		private void Exit() => Application.Current.Exit();
+		private static void Exit() => Application.Current.Exit();
 
 
 		[ObservableProperty]

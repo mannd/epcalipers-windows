@@ -15,7 +15,6 @@ namespace EPCalipersWinUI3.Models
         Angle
     }
 
-
     /// <summary>
     /// One of the bars of a caliper.
     /// </summary>

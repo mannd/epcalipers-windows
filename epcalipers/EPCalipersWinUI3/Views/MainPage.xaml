@@ -7,207 +7,207 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="Green"
-    
-    >
-    
+    x:Name="mainPage"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+
     <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="32"/>
-                <RowDefinition Height="52"/>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-            <MenuBar Grid.Row="0" >
-                <MenuBarItem x:Uid="FileMenu">
-                    <MenuFlyoutItem x:Uid="OpenMenuItem" Command="{x:Bind ViewModel.OpenCommand}">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="O" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="SaveMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="S" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="PrintMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="P" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
+        <MenuBar Grid.Row="0" >
+            <MenuBarItem x:Uid="FileMenu">
+                <MenuFlyoutItem x:Uid="OpenMenuItem" Command="{x:Bind ViewModel.OpenCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="O" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="SaveMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="PrintMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="P" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="ExitMenuItem" 
                                 Command="{x:Bind ViewModel.ExitCommand}">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F4" Modifiers="Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F4" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuBarItem>
-                <MenuBarItem x:Uid="ImageMenu">
-                    <MenuFlyoutItem x:Uid="ZoomInMenuItem" Click="ZoomIn_Click">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Add" Modifiers="Control" />
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Click="ZoomOut_Click">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="ResetZoomMenuItem" />
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem x:Uid="Rotate90RMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="Rotate90LMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="Rotate1RMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="R" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
+            <MenuBarItem x:Uid="ImageMenu">
+                <MenuFlyoutItem x:Uid="ZoomInMenuItem" Click="ZoomIn_Click">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Add" Modifiers="Control" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Click="ZoomOut_Click">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" />
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="Rotate90RMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="Rotate90LMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="Rotate1RMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="Rotate1LMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="L" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="Rotate01RMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="Rotate01LMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="ResetImageMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem x:Uid="NextPageMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="PreviousPageMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem x:Uid="GotoPageMenuItem" />
-                </MenuBarItem>
-                <MenuBarItem x:Uid="CalipersMenu">
-                    <MenuFlyoutItem Text="Time Caliper">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="T" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Amplitude Caliper">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="A" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Angle Caliper">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="G" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Delete Caliper">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Delete" />
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Icon="Delete" Text="Delete All Calipers">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Set Calibration" />
-                    <MenuFlyoutItem Text="Clear Calibration" />
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Toggle Rate/Interval">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="I" Modifiers="Control"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Mean Rate/Interval" />
-                    <MenuFlyoutItem Text="Measure QTc" />
-                </MenuBarItem>
-                <MenuBarItem Title="Tools">
-                    <MenuFlyoutItem Text="Transparent Window">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="T" Modifiers="Menu"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Options..." />
-                </MenuBarItem>
-                <MenuBarItem Title="Help">
-                    <MenuFlyoutItem Text="Help">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F1"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
+                        <KeyboardAccelerator Key="L" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="Rotate01RMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="Rotate01LMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="ResetImageMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="NextPageMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="PreviousPageMenuItem">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="GotoPageMenuItem" />
+            </MenuBarItem>
+            <MenuBarItem x:Uid="CalipersMenu">
+                <MenuFlyoutItem Text="Time Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="T" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Amplitude Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="A" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Angle Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="G" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Delete Caliper">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Icon="Delete" Text="Delete All Calipers">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Set Calibration" />
+                <MenuFlyoutItem Text="Clear Calibration" />
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Toggle Rate/Interval">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="I" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Mean Rate/Interval" />
+                <MenuFlyoutItem Text="Measure QTc" />
+            </MenuBarItem>
+            <MenuBarItem Title="Tools">
+                <MenuFlyoutItem Text="Transparent Window">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="T" Modifiers="Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="Options..." />
+            </MenuBarItem>
+            <MenuBarItem Title="Help">
+                <MenuFlyoutItem Text="Help">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F1"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
 
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="About EP Calipers" Click="About_Click" />
-                </MenuBarItem>
-            </MenuBar>
-            <!--TODO: Segoe Fluent icons not included in Win10, so must add
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem Text="About EP Calipers" Command="{x:Bind ViewModel.AboutCommand}" />
+            </MenuBarItem>
+        </MenuBar>
+        <!--TODO: Segoe Fluent icons not included in Win10, so must add
       the font to shared resources, and may need to change syntax below.-->
-            <CommandBar Grid.Row="1" Background="Transparent" 
+        <CommandBar Grid.Row="1" Background="Transparent" 
                         IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Label="Open" Command="{x:Bind ViewModel.OpenCommand}">
-                    <SymbolIcon Symbol="OpenFile" />
-                </AppBarButton>
+            <AppBarButton Label="Open" Command="{x:Bind ViewModel.OpenCommand}">
+                <SymbolIcon Symbol="OpenFile" />
+            </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton Label="Zoom In" Click="ZoomIn_Click" ToolTipService.ToolTip="Zoom in">
                 <SymbolIcon Symbol="ZoomIn" />
             </AppBarButton>
-                <AppBarButton Label="Zoom Out" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
-                    <SymbolIcon Symbol="ZoomOut" />
-                </AppBarButton>
-                <AppBarSeparator/>
-                <AppBarButton Label="Calipers">
-                    <BitmapIcon UriSource="Assets/StoreLogo.scale-400.png" 
+            <AppBarButton Label="Zoom Out" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
+                <SymbolIcon Symbol="ZoomOut" />
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Label="Calipers">
+                <BitmapIcon UriSource="Assets/StoreLogo.scale-400.png" 
                            ToolTipService.ToolTip="Add caliper"/>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Label="Calibration">
+                <FontIcon Glyph="&#xE73E;" />
+            </AppBarButton>
+            <AppBarButton Icon="Switch" Label="Rate/Interval"/>
+            <AppBarButton Label="Mean Interval">
+                <FontIcon Glyph="&#xE94A;" />
+            </AppBarButton>
+            <AppBarButton Icon="Calculator" Label="QTc"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Icon="Setting" Label="Settings">
+                    <AppBarButton.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="I" />
+                    </AppBarButton.KeyboardAccelerators>
                 </AppBarButton>
-                <AppBarSeparator/>
-                <AppBarButton Label="Calibration">
-                    <FontIcon Glyph="&#xE73E;" />
-                </AppBarButton>
-                <AppBarButton Icon="Switch" Label="Rate/Interval"/>
-                <AppBarButton Label="Mean Interval">
-                    <FontIcon Glyph="&#xE94A;" />
-                </AppBarButton>
-                <AppBarButton Icon="Calculator" Label="QTc"/>
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Icon="Setting" Label="Settings">
-                        <AppBarButton.KeyboardAccelerators>
-                            <KeyboardAccelerator Modifiers="Control" Key="I" />
-                        </AppBarButton.KeyboardAccelerators>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-            <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="scrollViewer_PointerPressed"
                           PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
-                    ViewChanged="scrollViewer_ViewChanged">
-            <Grid x:Name="canvas" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Image x:Name="image" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
+                    ViewChanged="scrollViewer_ViewChanged"
+                      >
+            <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
                      HorizontalAlignment="Left" VerticalAlignment="Top" />
             </Grid>
         </ScrollViewer>

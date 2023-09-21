@@ -25,6 +25,11 @@ namespace EPCalipersWinUI3.Views
 	/// </summary>
 	public sealed partial class MainPage : Page
 	{
+        // Note zoom factors used in Mac OS X version
+        // These are taken from the Apple IKImageView demo
+        private readonly float _zoomInFactor = 1.414214f;
+        private readonly float _zoomOutFactor = 0.7071068f;
+
         double lineThickness = 5;
         bool pointerDown = false;
         //Microsoft.UI.Xaml.Shapes.Line line = new();
@@ -34,7 +39,7 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel();
 
-           // DrawLine(500, 0, 500, 500);
+            DrawLine(500, 0, 500, 500);
 
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -50,7 +55,7 @@ namespace EPCalipersWinUI3.Views
         private void DrawLine(int x1, int y1, int x2, int y2)
         {
             //canvas.Children.Clear();
-            Line line = new Line();
+            Line line = new();
             var brush = new SolidColorBrush(Microsoft.UI.Colors.Blue);
             line.X1 = x1;
             line.Y1 = y1;
@@ -59,12 +64,7 @@ namespace EPCalipersWinUI3.Views
             lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
             lineThickness = Math.Min(lineThickness, 5.0);
             line.Stroke = brush;
-            canvas.Children.Add(line);
-        }
-
-        private void Image_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            //Need to set canvas size to match image size when image is loaded
+            CaliperGrid.Children.Add(line);
         }
 
         private void scrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
@@ -82,29 +82,18 @@ namespace EPCalipersWinUI3.Views
         }
 
 
-		private void ZoomIn_Click(object sender, RoutedEventArgs e)
+		private void ZoomIn_Click(object _1, RoutedEventArgs _2)
 		{
-            Zoom(2);
+            Zoom(_zoomInFactor);
 		}
 
 		private void ZoomOut_Click(object sender, RoutedEventArgs e)
 		{
-            Zoom(0.5f);
+            Zoom(_zoomOutFactor);
 		}
           private void Zoom(float multiple)
         {
-            if (scrollViewer != null)
-            {
-                scrollViewer.ChangeView(0, 0, multiple * scrollViewer.ZoomFactor);
-            }
-        }
-
-		private async void About_Click(object sender, RoutedEventArgs e)
-		{
-			Debug.WriteLine("About");
-            var aboutDialog = new AboutDialog();
-            aboutDialog.XamlRoot = this.XamlRoot;
-            var result = await aboutDialog.ShowAsync();
+			scrollViewer?.ChangeView(0, 0, multiple * scrollViewer.ZoomFactor);
 		}
 
 		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
