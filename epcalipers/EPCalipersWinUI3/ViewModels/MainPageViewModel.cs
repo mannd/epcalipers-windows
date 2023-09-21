@@ -16,16 +16,19 @@ using System.ComponentModel;
 using Windows.Storage.Streams;
 using System.Drawing;
 using EPCalipersWinUI3.Views;
+using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.InteropServices;
 
 namespace EPCalipersWinUI3
 {
-    public partial class MainPageViewModel : ObservableObject
-    {
-        [RelayCommand]
-        void Test()
-        {
-            Debug.Print("test command");
-        }
+	public partial class MainPageViewModel : ObservableObject
+	{
+		[RelayCommand]
+		void Test()
+		{
+			Debug.Print("test command");
+		}
 
 		[RelayCommand]
 		private async Task About(UIElement element)
@@ -36,7 +39,7 @@ namespace EPCalipersWinUI3
 			await aboutDialog.ShowAsync();
 		}
 
-        [RelayCommand]
+		[RelayCommand]
 		private async Task Open()
 		{
 			// Create a file picker
@@ -55,11 +58,28 @@ namespace EPCalipersWinUI3
 			openPicker.FileTypeFilter.Add(".jpg");
 			openPicker.FileTypeFilter.Add(".jpeg");
 			openPicker.FileTypeFilter.Add(".png");
+			openPicker.FileTypeFilter.Add(".pdf");
 
 			// Open the picker for the user to pick a file
 			var file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
+				if (file.FileType == ".pdf")
+				{
+					Debug.WriteLine("is pdf");
+					var doc = PdfiumViewer.PdfDocument.Load(file.Path);
+					var img = doc.Render(0, 300, 300, true);
+
+					var source = await GetWinUI3BitmapSourceFromBitmap(new Bitmap(img));
+
+					//BitmapImage bm = new BitmapImage();
+
+					//var tempPath = Path.GetTempPath();
+					//bm.UriSource = new Uri($"{tempPath}page_0_temppfd.bmp");
+					MainImageSource = source;
+					
+					return;
+				};
 				BitmapImage bitmapImage = new()
 				{
 					UriSource = new Uri(file.Path)
@@ -80,18 +100,76 @@ namespace EPCalipersWinUI3
 			}
 		}
 
+		private void renderPdfToFile(string pdfFilename, string outputImageFilename, int dpi)
+		{
+			var tempPath = Path.GetTempPath();
+			Debug.WriteLine($"{tempPath}");
+			using (var doc = PdfiumViewer.PdfDocument.Load(pdfFilename))
+			{ // Load PDF Document from file
+				for (int page = 0; page < doc.PageCount; page++)
+				{ // Loop through pages
+					using (var img = doc.Render(page, dpi, dpi, false))
+					{ // Render with dpi and with forPrinting false
+						var filePath = $"{tempPath}page_{page}_{outputImageFilename}.bmp";
+                        Console.WriteLine(filePath);
+						if (File.Exists(filePath))
+						{
+							File.Delete(filePath);
+						}
+						img.Save(filePath); // Save rendered image to disc
+					}
+				}
+			}
+		}
+
+		// from https://stackoverflow.com/questions/76640972/convert-system-drawing-icon-to-microsoft-ui-xaml-imagesource
+		public static async Task<Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource> GetWinUI3BitmapSourceFromBitmap(System.Drawing.Bitmap bitmap)
+		{
+			if (bitmap == null)
+				return null;
+
+			// convert to bitmap
+			return await GetWinUI3BitmapSourceFromGdiBitmap(bitmap);
+		}
+
+		public static async Task<Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
+		{
+			if (bmp == null)
+				return null;
+
+			// get pixels as an array of bytes
+			var data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
+			var bytes = new byte[data.Stride * data.Height];
+			Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
+			bmp.UnlockBits(data);
+
+			// get WinRT SoftwareBitmap
+			var softwareBitmap = new Windows.Graphics.Imaging.SoftwareBitmap(
+				Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+				bmp.Width,
+				bmp.Height,
+				Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
+			softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
+
+			// build WinUI3 SoftwareBitmapSource
+			var source = new Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource();
+			await source.SetBitmapAsync(softwareBitmap);
+			return source;
+		}
+
+
 		[RelayCommand]
-		private static void Exit() => Application.Current.Exit();
+	private static void Exit() => Application.Current.Exit();
 
 
-		[ObservableProperty]
-        private string testText = "Test";
+	[ObservableProperty]
+	private string testText = "Test";
 
-        [ObservableProperty]
-        private Image mainImage;
+	[ObservableProperty]
+	private Microsoft.UI.Xaml.Controls.Image mainImage;
 
-        [ObservableProperty]
-        private ImageSource mainImageSource 
-			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
-    }
+	[ObservableProperty]
+	private ImageSource mainImageSource
+		= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+	}
 }

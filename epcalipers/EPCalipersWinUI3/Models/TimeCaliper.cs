@@ -55,8 +55,7 @@ namespace EPCalipersWinUI3.Models
 
 		public void Move(CaliperComponent component, int distance)
 		{
-			if (component == null) { return; }
-			component.Move(distance);
+			component?.Move(distance);
 		}
 	}
 }
