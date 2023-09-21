@@ -11,7 +11,7 @@
         <MicaBackdrop Kind="BaseAlt"/>
     </Window.SystemBackdrop>
 
-    <StackPanel>
+    <Grid>
         <Grid x:Name="TitleBar" Height="32">
         <Image Source="/Assets/StoreLogo.scale-200.png"
            HorizontalAlignment="Left" 
@@ -24,7 +24,7 @@
                Margin="28,0,0,0"/>
         </Grid>
         <Frame x:Name="MainFrame" />
-    </StackPanel>
+    </Grid>
 </Window>
 
 

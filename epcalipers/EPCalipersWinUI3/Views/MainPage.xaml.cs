@@ -34,7 +34,7 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel();
 
-            DrawLine(500, 0, 500, 500);
+           // DrawLine(500, 0, 500, 500);
 
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -109,24 +109,24 @@ namespace EPCalipersWinUI3.Views
 
 		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-            var position = e.GetCurrentPoint(this.canvas);
-            Debug.WriteLine($"Scrollview touched at {position.Position}");
-            DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            pointerDown = true;
+            //var position = e.GetCurrentPoint(this.canvas);
+            //Debug.WriteLine($"Scrollview touched at {position.Position}");
+            //DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            //pointerDown = true;
 		}
 
 		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
-            if (pointerDown) {
-                var position = e.GetCurrentPoint(this.canvas);
-                DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            }
+            //if (pointerDown) {
+            //    var position = e.GetCurrentPoint(this.canvas);
+            //    DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            //}
 		}
 
 		private void scrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
-            Debug.WriteLine("Pointer released.");
-            pointerDown = false;
+            //Debug.WriteLine("Pointer released.");
+            //pointerDown = false;
 		}
 
 	}

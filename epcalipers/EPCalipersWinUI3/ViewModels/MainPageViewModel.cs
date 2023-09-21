@@ -14,6 +14,7 @@ using Windows.Storage.Pickers;
 using Microsoft.UI.Xaml.Media;
 using System.ComponentModel;
 using Windows.Storage.Streams;
+using System.Drawing;
 
 namespace EPCalipersWinUI3
 {
@@ -80,6 +81,5 @@ namespace EPCalipersWinUI3
         [ObservableProperty]
         private ImageSource mainImageSource 
 			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
-
     }
 }
