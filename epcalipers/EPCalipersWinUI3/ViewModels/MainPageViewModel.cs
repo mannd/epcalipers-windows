@@ -1,30 +1,30 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AppUIBasics.Helper;
-using Windows.Storage.Pickers;
-using Microsoft.UI.Xaml.Media;
-using System.ComponentModel;
-using Windows.Storage.Streams;
 using System.Drawing;
-using EPCalipersWinUI3.Views;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.InteropServices;
-using System.Drawing.Imaging;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.Storage.Pickers;
 
 namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : ObservableObject
 	{
+		private PdfHelper _pdfHelper;
+
+		public MainPageViewModel()
+		{
+			_pdfHelper = new PdfHelper();
+		}
+		
 		[RelayCommand]
 		void Test()
 		{
@@ -65,15 +65,16 @@ namespace EPCalipersWinUI3
 			var file = await openPicker.PickSingleFileAsync();
 			if (file != null)
 			{
-				if (file.FileType == ".pdf")
+				if (PdfHelper.IsPdfFile(file))
 				{
-					Debug.WriteLine("is pdf");
-					var doc = PdfiumViewer.PdfDocument.Load(file.Path);
-					var img = doc.Render(0, 300, 300, true);
+					using (var doc = PdfiumViewer.PdfDocument.Load(file.Path)) {
+						var img = doc.Render(0, 300, 300, PdfiumViewer.PdfRenderFlags.CorrectFromDpi);
+						img.Save("\\Users\\mannd\\Downloads\\tempfile1.bmp");
 
-					var source = await GetWinUI3BitmapSourceFromBitmap(new Bitmap(img));
-					MainImageSource = source;
-					return;
+						var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(img));
+						MainImageSource = source;
+						return;
+					}
 				};
 				BitmapImage bitmapImage = new()
 				{
@@ -106,7 +107,7 @@ namespace EPCalipersWinUI3
 					using (var img = doc.Render(page, dpi, dpi, false))
 					{ // Render with dpi and with forPrinting false
 						var filePath = $"{tempPath}page_{page}_{outputImageFilename}.bmp";
-                        Console.WriteLine(filePath);
+						Console.WriteLine(filePath);
 						if (File.Exists(filePath))
 						{
 							File.Delete(filePath);
@@ -154,17 +155,17 @@ namespace EPCalipersWinUI3
 
 
 		[RelayCommand]
-	private static void Exit() => Application.Current.Exit();
+		private static void Exit() => Application.Current.Exit();
 
 
-	[ObservableProperty]
-	private string testText = "Test";
+		[ObservableProperty]
+		private string testText = "Test";
 
-	[ObservableProperty]
-	private Microsoft.UI.Xaml.Controls.Image mainImage;
+		[ObservableProperty]
+		private Microsoft.UI.Xaml.Controls.Image mainImage;
 
-	[ObservableProperty]
-	private ImageSource mainImageSource
-		= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+		[ObservableProperty]
+		private ImageSource mainImageSource
+			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 	}
 }
