@@ -19,6 +19,7 @@ using EPCalipersWinUI3.Views;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.InteropServices;
+using System.Drawing.Imaging;
 
 namespace EPCalipersWinUI3
 {
@@ -71,13 +72,7 @@ namespace EPCalipersWinUI3
 					var img = doc.Render(0, 300, 300, true);
 
 					var source = await GetWinUI3BitmapSourceFromBitmap(new Bitmap(img));
-
-					//BitmapImage bm = new BitmapImage();
-
-					//var tempPath = Path.GetTempPath();
-					//bm.UriSource = new Uri($"{tempPath}page_0_temppfd.bmp");
 					MainImageSource = source;
-					
 					return;
 				};
 				BitmapImage bitmapImage = new()
