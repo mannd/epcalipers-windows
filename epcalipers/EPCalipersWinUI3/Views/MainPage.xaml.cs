@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
@@ -36,8 +37,8 @@ namespace EPCalipersWinUI3.Views
         private readonly static float _maxZoom = 10;
         private readonly static float _minZoom = 0.1f;
         double lineThickness = 5;
-        bool pointerDown = false;
-        //Microsoft.UI.Xaml.Shapes.Line line = new();
+        private double _imageRotation = 0;
+
         public MainPageViewModel ViewModel { get; set; }
 		public MainPage()
 		{
@@ -154,12 +155,8 @@ namespace EPCalipersWinUI3.Views
 				if (items.Count > 0)
 				{
 					var storageFile = items[0] as StorageFile;
-                    // check file types first
+                    // check file types first???
                     await ViewModel.OpenImageFile(storageFile);
-                    //var bitmapImage = new BitmapImage();
-                    //bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
-                    //// Set the image on the main page to the dropped image
-                    //ViewModel.MainImageSource = bitmapImage;
                 }
 			}
 		}
@@ -168,6 +165,44 @@ namespace EPCalipersWinUI3.Views
 		{
             e.AcceptedOperation = DataPackageOperation.Link; 
             e.Handled = true;
+		}
+
+		private void Rotate90R_Click(object sender, RoutedEventArgs e)
+		{
+            spinrect.Begin();
+   //         // FIXME: The image is clipped in the Grid.
+   //         _imageRotation += 90;
+			//var image = EcgImage;
+			//image.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
+   //         var animation1 = new DoubleAnimation();
+
+			//RotateTransform rotateTransform = new RotateTransform()
+   //         {
+   //             CenterX = image.Width / 2,
+   //             CenterY = image.Height / 2,
+   //             Angle = _imageRotation
+			//};
+			//image.RenderTransform = rotateTransform;
+
+		}
+
+       private void ResetRotation()
+        {
+            _imageRotation = 0;
+            EcgImage.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
+
+            RotateTransform rotateTransform = new RotateTransform()
+            {
+                CenterX = EcgImage.Width / 2,
+                CenterY = EcgImage.Height / 2,
+                Angle = _imageRotation
+            };
+			EcgImage.RenderTransform = rotateTransform;
+        }
+
+		private void ResetImage_Click(object sender, RoutedEventArgs e)
+		{
+            ResetRotation();
 		}
 	}
 }

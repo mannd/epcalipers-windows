@@ -9,7 +9,13 @@
     mc:Ignorable="d"
     x:Name="mainPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-
+    <Page.Resources>
+        <Storyboard x:Name="spinrect">
+            <DoubleAnimation To="360" RepeatBehavior="1"
+         Storyboard.TargetName="EcgImage"
+         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" />
+        </Storyboard>
+    </Page.Resources>
     <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -57,12 +63,13 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="ResetZoomMenuItem" Click="ResetZoom_Click"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="Rotate90RMenuItem">
+                <MenuFlyoutItem x:Uid="Rotate90RMenuItem" Click="Rotate90R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="Rotate90LMenuItem">
+                    
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -87,7 +94,7 @@
                         <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetImageMenuItem">
+                <MenuFlyoutItem x:Uid="ResetImageMenuItem" Click="ResetImage_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -209,8 +216,12 @@
             <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
                      HorizontalAlignment="Left" VerticalAlignment="Top"
+                       RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <RotateTransform/>
+                    </Image.RenderTransform>
+                </Image>
                        
-                       />
             </Grid>
         </ScrollViewer>
     </Grid>

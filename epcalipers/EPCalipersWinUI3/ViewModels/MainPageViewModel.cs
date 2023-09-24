@@ -56,6 +56,20 @@ namespace EPCalipersWinUI3
 			await aboutDialog.ShowAsync();
 		}
 
+		private void Rotate90R()
+		{
+			var image = MainImage;
+			image.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
+
+			RotateTransform rotateTransform = new RotateTransform()
+			{
+				CenterX = image.Width / 2,
+				CenterY = image.Height / 2,
+				Angle = 180
+			};
+			image.RenderTransform = rotateTransform;
+		}
+
 		[RelayCommand]
 		private async Task Open()
 		{
