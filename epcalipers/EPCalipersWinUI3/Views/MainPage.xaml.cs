@@ -154,17 +154,20 @@ namespace EPCalipersWinUI3.Views
 				if (items.Count > 0)
 				{
 					var storageFile = items[0] as StorageFile;
-					var bitmapImage = new BitmapImage();
-					bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
-					// Set the image on the main page to the dropped image
-					ViewModel.MainImageSource = bitmapImage;
-				}
+                    // check file types first
+                    await ViewModel.OpenImageFile(storageFile);
+                    //var bitmapImage = new BitmapImage();
+                    //bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
+                    //// Set the image on the main page to the dropped image
+                    //ViewModel.MainImageSource = bitmapImage;
+                }
 			}
 		}
 
 		private void EcgImage_DragOver(object sender, DragEventArgs e)
 		{
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+            e.AcceptedOperation = DataPackageOperation.Link; 
+            e.Handled = true;
 		}
 	}
 }

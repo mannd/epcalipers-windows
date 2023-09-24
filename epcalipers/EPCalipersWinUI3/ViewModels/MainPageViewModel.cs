@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace EPCalipersWinUI3
@@ -78,15 +79,25 @@ namespace EPCalipersWinUI3
 
 			// Open the picker for the user to pick a file
 			var file = await openPicker.PickSingleFileAsync();
+			await OpenImageFile(file);
+		}
+
+		public async Task OpenImageFile(StorageFile file)
+		{
 			if (file != null)
 			{
 				if (PdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
 					MainImageSource = await _pdfHelper.GetPdfPageAsync(0);
-				} else
+				}
+				else
 				{
-					MainImageSource = new BitmapImage() { UriSource = new Uri(file.Path) };
+					var bitmapImage = new BitmapImage();
+					bitmapImage.SetSource(await file.OpenAsync(FileAccessMode.Read));
+					// Set the image on the main page to the dropped image
+					MainImageSource = bitmapImage;
+					//MainImageSource = new BitmapImage() { UriSource = new Uri(file.Path) };
 				}
 				// Alternate method using fileStream ->
 				//using (IRandomAccessStream fileStream =

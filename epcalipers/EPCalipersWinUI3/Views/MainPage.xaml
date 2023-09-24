@@ -10,7 +10,7 @@
     x:Name="mainPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
-    <Grid >
+    <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="52"/>
@@ -205,7 +205,6 @@
                         VerticalScrollBarVisibility="Auto" PointerPressed="scrollViewer_PointerPressed"
                           PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
                     ViewChanged="scrollViewer_ViewChanged"
-                      AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver"
                       >
             <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
