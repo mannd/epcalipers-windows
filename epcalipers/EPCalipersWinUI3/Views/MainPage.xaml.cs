@@ -30,6 +30,8 @@ namespace EPCalipersWinUI3.Views
         private readonly float _zoomInFactor = 1.414214f;
         private readonly float _zoomOutFactor = 0.7071068f;
 
+        private readonly static float _maxZoom = 10;
+        private readonly static float _minZoom = 0.1f;
         double lineThickness = 5;
         bool pointerDown = false;
         //Microsoft.UI.Xaml.Shapes.Line line = new();
@@ -49,6 +51,11 @@ namespace EPCalipersWinUI3.Views
                 //canvas.Children.Remove(line);
                 //DrawLine(500, 0, 500, 500);
                 //Debug.Print(scrollViewer.ZoomFactor.ToString());
+            });
+
+            EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
+            {
+                SetZoom(1);
             });
         }
 
@@ -82,6 +89,7 @@ namespace EPCalipersWinUI3.Views
         }
 
 
+
 		private void ZoomIn_Click(object _1, RoutedEventArgs _2)
 		{
             Zoom(_zoomInFactor);
@@ -91,10 +99,26 @@ namespace EPCalipersWinUI3.Views
 		{
             Zoom(_zoomOutFactor);
 		}
+
+		private void ResetZoom_Click(object sender, RoutedEventArgs e)
+		{
+            SetZoom(1);
+		}
+
           private void Zoom(float multiple)
         {
-			scrollViewer?.ChangeView(0, 0, multiple * scrollViewer.ZoomFactor);
+            var zoomTarget = multiple * scrollViewer.ZoomFactor;
+            if (zoomTarget < _minZoom || zoomTarget > _maxZoom) { return; }
+            SetZoom(zoomTarget);
 		}
+
+        private void SetZoom(float zoom)
+        {
+            scrollViewer?.ChangeView(0, 0, zoom);
+            // Not sure if we need ViewModel to track this...
+            ViewModel.ZoomFactor = zoom;
+        }
+
 
 		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{

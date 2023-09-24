@@ -55,7 +55,7 @@
                         <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" />
+                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" Click="ResetZoom_Click"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="Rotate90RMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>

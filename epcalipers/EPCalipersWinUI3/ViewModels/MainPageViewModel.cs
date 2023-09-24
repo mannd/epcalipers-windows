@@ -18,7 +18,22 @@ namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : ObservableObject
 	{
-		private PdfHelper _pdfHelper;
+		private readonly PdfHelper _pdfHelper = new PdfHelper();
+
+		public float ZoomFactor
+		{
+			get
+			{
+				return _zoomFactor;
+			}
+			set
+			{
+				_zoomFactor = value;
+				Debug.WriteLine(_zoomFactor.ToString());
+			}
+		}
+
+		private float _zoomFactor;
 
 		public MainPageViewModel()
 		{
@@ -67,20 +82,12 @@ namespace EPCalipersWinUI3
 			{
 				if (PdfHelper.IsPdfFile(file))
 				{
-					using (var doc = PdfiumViewer.PdfDocument.Load(file.Path)) {
-						var img = doc.Render(0, 300, 300, PdfiumViewer.PdfRenderFlags.CorrectFromDpi);
-						img.Save("\\Users\\mannd\\Downloads\\tempfile1.bmp");
-
-						var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(img));
-						MainImageSource = source;
-						return;
-					}
-				};
-				BitmapImage bitmapImage = new()
+					_pdfHelper.LoadPdfFile(file);
+					MainImageSource = await _pdfHelper.GetPdfPageAsync(0);
+				} else
 				{
-					UriSource = new Uri(file.Path)
-				};
-				MainImageSource = bitmapImage;
+					MainImageSource = new BitmapImage() { UriSource = new Uri(file.Path) };
+				}
 				// Alternate method using fileStream ->
 				//using (IRandomAccessStream fileStream =
 				//	await file.OpenAsync(Windows.Storage.FileAccessMode.Read)) {
@@ -93,28 +100,6 @@ namespace EPCalipersWinUI3
 			else
 			{
 				Debug.Print("Operation cancelled.");
-			}
-		}
-
-		private void renderPdfToFile(string pdfFilename, string outputImageFilename, int dpi)
-		{
-			var tempPath = Path.GetTempPath();
-			Debug.WriteLine($"{tempPath}");
-			using (var doc = PdfiumViewer.PdfDocument.Load(pdfFilename))
-			{ // Load PDF Document from file
-				for (int page = 0; page < doc.PageCount; page++)
-				{ // Loop through pages
-					using (var img = doc.Render(page, dpi, dpi, false))
-					{ // Render with dpi and with forPrinting false
-						var filePath = $"{tempPath}page_{page}_{outputImageFilename}.bmp";
-						Console.WriteLine(filePath);
-						if (File.Exists(filePath))
-						{
-							File.Delete(filePath);
-						}
-						img.Save(filePath); // Save rendered image to disc
-					}
-				}
 			}
 		}
 
