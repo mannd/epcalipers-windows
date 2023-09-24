@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
@@ -12,8 +13,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -115,10 +118,10 @@ namespace EPCalipersWinUI3.Views
         private void SetZoom(float zoom)
         {
             scrollViewer?.ChangeView(0, 0, zoom);
+            // TODO: Remove this if not used.
             // Not sure if we need ViewModel to track this...
             ViewModel.ZoomFactor = zoom;
         }
-
 
 		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
@@ -142,5 +145,26 @@ namespace EPCalipersWinUI3.Views
             //pointerDown = false;
 		}
 
+		private async void EcgImage_Drop(object sender, DragEventArgs e)
+		{
+			Debug.WriteLine("Dropped file");
+			if (e.DataView.Contains(StandardDataFormats.StorageItems))
+			{
+				var items = await e.DataView.GetStorageItemsAsync();
+				if (items.Count > 0)
+				{
+					var storageFile = items[0] as StorageFile;
+					var bitmapImage = new BitmapImage();
+					bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
+					// Set the image on the main page to the dropped image
+					ViewModel.MainImageSource = bitmapImage;
+				}
+			}
+		}
+
+		private void EcgImage_DragOver(object sender, DragEventArgs e)
+		{
+            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+		}
 	}
 }

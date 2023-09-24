@@ -205,10 +205,13 @@
                         VerticalScrollBarVisibility="Auto" PointerPressed="scrollViewer_PointerPressed"
                           PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
                     ViewChanged="scrollViewer_ViewChanged"
+                      AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver"
                       >
             <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top" />
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                       
+                       />
             </Grid>
         </ScrollViewer>
     </Grid>
