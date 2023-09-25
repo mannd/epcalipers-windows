@@ -61,28 +61,27 @@
                         <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate90LMenuItem">
-                    
+                <MenuFlyoutItem x:Uid="Rotate90LMenuItem" Click="Rotate90L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate1RMenuItem">
+                <MenuFlyoutItem x:Uid="Rotate1RMenuItem" Click="Rotate1R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate1LMenuItem">
+                <MenuFlyoutItem x:Uid="Rotate1LMenuItem" Click="Rotate1L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate01RMenuItem">
+                <MenuFlyoutItem x:Uid="Rotate01RMenuItem" Click="Rotate01R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate01LMenuItem">
+                <MenuFlyoutItem x:Uid="Rotate01LMenuItem" Click="Rotate01L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>

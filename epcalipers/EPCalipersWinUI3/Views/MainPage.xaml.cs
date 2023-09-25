@@ -25,9 +25,6 @@ using Windows.Storage;
 
 namespace EPCalipersWinUI3.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class MainPage : Page
 	{
         // Note zoom factors used in Mac OS X version
@@ -37,6 +34,8 @@ namespace EPCalipersWinUI3.Views
 
         private readonly static float _maxZoom = 10;
         private readonly static float _minZoom = 0.1f;
+        private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
+
         double lineThickness = 5;
         private double _imageRotation = 0;
 
@@ -46,19 +45,11 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel();
 
+			// demo
             DrawLine(500, 0, 500, 500);
 
-            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
-
-            RotateTransform rotateTransform = new RotateTransform()
-            {
-                CenterX = EcgImage.Width / 2,
-                CenterY = EcgImage.Height / 2,
-                //Angle = _imageRotation
-            };
-            EcgImage.RenderTransform = rotateTransform;
-
-
+			// Set up image rotation
+			InitImageForRotation();
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
                 //lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
@@ -72,9 +63,11 @@ namespace EPCalipersWinUI3.Views
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
                 SetZoom(1);
+				InitImageForRotation();
             });
         }
 
+		// demo
         private void DrawLine(int x1, int y1, int x2, int y2)
         {
             //canvas.Children.Clear();
@@ -99,13 +92,29 @@ namespace EPCalipersWinUI3.Views
         {
         }
 
-        private void PrintMessage()
-        {
-            Debug.Print("print message");
-        }
+		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+            //var position = e.GetCurrentPoint(this.canvas);
+            //Debug.WriteLine($"Scrollview touched at {position.Position}");
+            //DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            //pointerDown = true;
+		}
 
+		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
+		{
+            //if (pointerDown) {
+            //    var position = e.GetCurrentPoint(this.canvas);
+            //    DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+            //}
+		}
 
+		private void scrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
+		{
+            //Debug.WriteLine("Pointer released.");
+            //pointerDown = false;
+		}
 
+		#region zoom
 		private void ZoomIn_Click(object _1, RoutedEventArgs _2)
 		{
             Zoom(_zoomInFactor);
@@ -135,29 +144,8 @@ namespace EPCalipersWinUI3.Views
             // Not sure if we need ViewModel to track this...
             ViewModel.ZoomFactor = zoom;
         }
-
-		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
-		{
-            //var position = e.GetCurrentPoint(this.canvas);
-            //Debug.WriteLine($"Scrollview touched at {position.Position}");
-            //DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            //pointerDown = true;
-		}
-
-		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
-		{
-            //if (pointerDown) {
-            //    var position = e.GetCurrentPoint(this.canvas);
-            //    DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            //}
-		}
-
-		private void scrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
-		{
-            //Debug.WriteLine("Pointer released.");
-            //pointerDown = false;
-		}
-
+		#endregion
+		#region drag and drop
 		private async void EcgImage_Drop(object sender, DragEventArgs e)
 		{
 			Debug.WriteLine("Dropped file");
@@ -178,62 +166,89 @@ namespace EPCalipersWinUI3.Views
             e.AcceptedOperation = DataPackageOperation.Link; 
             e.Handled = true;
 		}
-
+		#endregion
+		#region rotation
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-            // FIXME: The image is clipped in the Grid.
+			RotateImageByAngle(90);
+		}
 
-            Storyboard storyboard = new Storyboard();
-            var originalRotation = _imageRotation;
-            _imageRotation += 90;
-            storyboard.Duration = new Duration(TimeSpan.FromSeconds(1));
-            DoubleAnimation rotateAnimation = new DoubleAnimation()
-            {
-                From = originalRotation,
-                To = _imageRotation,
-                Duration = storyboard.Duration
-            };
+		private void Rotate90L_Click(object sender, RoutedEventArgs e)
+		{
+			RotateImageByAngle(-90);
+		}
 
-            Storyboard.SetTarget(rotateAnimation, EcgImage);
-            Storyboard.SetTargetProperty(rotateAnimation,
-                "(UIElement.RenderTransform).(RotateTransform.Angle)");
-            storyboard.Children.Add(rotateAnimation);
-			storyboard.Begin();
+		private void Rotate1R_Click(object sender, RoutedEventArgs e)
+		{
+			RotateImageByAngle(1);
+		}
 
+		private void Rotate1L_Click(object sender, RoutedEventArgs e)
+		{
+			RotateImageByAngle(-1);
+		}
 
+		private void Rotate01R_Click(object sender, RoutedEventArgs e)
+		{
+			RotateImageByAngle(0.1);
+		}
 
+		private void Rotate01L_Click(object sender, RoutedEventArgs e)
+		{
+			RotateImageByAngle(-0.1);
+		}
 
-			//_imageRotation += 90;
-   //         var image = EcgImage;
-   //         image.RenderTransformOrigin = new Point(0.5, 0.5);
+		private void ResetImage_Click(object sender, RoutedEventArgs e)
+		{
+            RotateImageToAngle(0);
+		}
 
-   //         RotateTransform rotateTransform = new RotateTransform()
-   //         {
-   //             CenterX = image.Width / 2,
-   //             CenterY = image.Height / 2,
-   //             Angle = _imageRotation
-   //         };
-   //         image.RenderTransform = rotateTransform;
+		private void RotateImageByAngle(double angle)
+		{
+			var originalRotation = _imageRotation;
+			_imageRotation += angle; 
+			RotateImage(originalRotation, _imageRotation);
+		}
 
+        private void RotateImageToAngle(double angle)
+        {
+			var originalRotation = _imageRotation;
+			_imageRotation = angle; 
+			RotateImage(originalRotation, _imageRotation);
         }
 
-		private void ResetRotation()
-        {
-            _imageRotation = 0;
-            EcgImage.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
+		private void RotateImage(double startAngle, double endAngle)
+		{
+			// NB: This is a bit of a regression from V2, since rotated image is clipped.
+			Storyboard storyboard = new();
+			storyboard.Duration = new Duration(_rotationDuration);
+			DoubleAnimation rotateAnimation = new()
+			{
+				From = startAngle,
+				To = endAngle,
+				Duration = storyboard.Duration
+			};
 
+			Storyboard.SetTarget(rotateAnimation, EcgImage);
+			Storyboard.SetTargetProperty(rotateAnimation,
+				"(UIElement.RenderTransform).(RotateTransform.Angle)");
+			storyboard.Children.Add(rotateAnimation);
+			storyboard.Begin();
+		}
+
+		private void InitImageForRotation()
+		{
+			if (EcgImage?.Source  == null) { return; }
+			_imageRotation = 0;
+            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
             RotateTransform rotateTransform = new RotateTransform()
             {
                 CenterX = EcgImage.Width / 2,
                 CenterY = EcgImage.Height / 2,
-                Angle = _imageRotation
+				Angle = _imageRotation
             };
-			EcgImage.RenderTransform = rotateTransform;
-        }
-
-		private void ResetImage_Click(object sender, RoutedEventArgs e)
-		{
-            ResetRotation();
+            EcgImage.RenderTransform = rotateTransform;
 		}
+		#endregion
 	}
 }
