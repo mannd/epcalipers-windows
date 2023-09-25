@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -46,6 +47,17 @@ namespace EPCalipersWinUI3.Views
             ViewModel = new MainPageViewModel();
 
             DrawLine(500, 0, 500, 500);
+
+            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
+
+            RotateTransform rotateTransform = new RotateTransform()
+            {
+                CenterX = EcgImage.Width / 2,
+                CenterY = EcgImage.Height / 2,
+                //Angle = _imageRotation
+            };
+            EcgImage.RenderTransform = rotateTransform;
+
 
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -169,24 +181,43 @@ namespace EPCalipersWinUI3.Views
 
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-            spinrect.Begin();
-   //         // FIXME: The image is clipped in the Grid.
-   //         _imageRotation += 90;
-			//var image = EcgImage;
-			//image.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
-   //         var animation1 = new DoubleAnimation();
+            // FIXME: The image is clipped in the Grid.
 
-			//RotateTransform rotateTransform = new RotateTransform()
+            Storyboard storyboard = new Storyboard();
+            var originalRotation = _imageRotation;
+            _imageRotation += 90;
+            storyboard.Duration = new Duration(TimeSpan.FromSeconds(1));
+            DoubleAnimation rotateAnimation = new DoubleAnimation()
+            {
+                From = originalRotation,
+                To = _imageRotation,
+                Duration = storyboard.Duration
+            };
+
+            Storyboard.SetTarget(rotateAnimation, EcgImage);
+            Storyboard.SetTargetProperty(rotateAnimation,
+                "(UIElement.RenderTransform).(RotateTransform.Angle)");
+            storyboard.Children.Add(rotateAnimation);
+			storyboard.Begin();
+
+
+
+
+			//_imageRotation += 90;
+   //         var image = EcgImage;
+   //         image.RenderTransformOrigin = new Point(0.5, 0.5);
+
+   //         RotateTransform rotateTransform = new RotateTransform()
    //         {
    //             CenterX = image.Width / 2,
    //             CenterY = image.Height / 2,
    //             Angle = _imageRotation
-			//};
-			//image.RenderTransform = rotateTransform;
+   //         };
+   //         image.RenderTransform = rotateTransform;
 
-		}
+        }
 
-       private void ResetRotation()
+		private void ResetRotation()
         {
             _imageRotation = 0;
             EcgImage.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);

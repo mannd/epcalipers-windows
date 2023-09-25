@@ -9,13 +9,6 @@
     mc:Ignorable="d"
     x:Name="mainPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-    <Page.Resources>
-        <Storyboard x:Name="spinrect">
-            <DoubleAnimation To="360" RepeatBehavior="1"
-         Storyboard.TargetName="EcgImage"
-         Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" />
-        </Storyboard>
-    </Page.Resources>
     <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -215,11 +208,7 @@
                       >
             <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top"
-                       RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <RotateTransform/>
-                    </Image.RenderTransform>
+                     HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
                        
             </Grid>
