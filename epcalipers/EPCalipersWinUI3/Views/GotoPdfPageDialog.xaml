@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EPCalipersWinUI3.Views.GotoPdfPageDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EPCalipersWinUI3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Uid="GotoPdfPageDialog"
+    Style="{ThemeResource DefaultContentDialogStyle}"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <Grid>
+        <NumberBox
+                Header="Enter an integer:"
+                Value="{x:Bind ViewModel.CurrentPdfPageNumber}"
+                SpinButtonPlacementMode="Compact"
+                SmallChange="1"
+                Minimum="1"
+                Maximum="{x:Bind ViewModel.MaximumPdfPage}">
+        </NumberBox>
+    </Grid>
+</ContentDialog>

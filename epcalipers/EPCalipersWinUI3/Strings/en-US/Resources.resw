@@ -132,6 +132,15 @@
   <data name="GotoPageMenuItem.Text" xml:space="preserve">
     <value>Goto PDF page...</value>
   </data>
+  <data name="GotoPdfPageDialog.PrimaryButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="GotoPdfPageDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="GotoPdfPageDialog.Title" xml:space="preserve">
+    <value>Go to PDF page</value>
+  </data>
   <data name="ImageMenu.Title" xml:space="preserve">
     <value>Image</value>
   </data>

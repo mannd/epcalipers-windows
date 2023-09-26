@@ -41,6 +41,7 @@
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
     <None Remove="Views\AboutDialog.xaml" />
+    <None Remove="Views\GotoPdfPageDialog.xaml" />
     <None Remove="Views\MainPage.xaml" />
   </ItemGroup>
 
@@ -100,6 +101,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Page Update="Views\GotoPdfPageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AboutDialog.xaml">
@@ -122,5 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="C:\Users\mannd\.nuget\packages\pdfium.net.sdk\4.86.2704\build\..\content\x64\pdfium.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
 </Project>

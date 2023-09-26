@@ -92,17 +92,17 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="NextPageMenuItem">
+                <MenuFlyoutItem x:Uid="NextPageMenuItem" Command="{x:Bind ViewModel.NextPdfPageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="PreviousPageMenuItem">
+                <MenuFlyoutItem x:Uid="PreviousPageMenuItem" Command="{x:Bind ViewModel.PreviousPdfPageCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="GotoPageMenuItem" />
+                <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
                 <MenuFlyoutItem Text="Time Caliper">
@@ -160,7 +160,7 @@
                 </MenuFlyoutItem>
 
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="About EP Calipers" Command="{x:Bind ViewModel.AboutCommand}" />
+                <MenuFlyoutItem Text="About EP Calipers"  Click="About_Click" />
             </MenuBarItem>
         </MenuBar>
         <!--TODO: Segoe Fluent icons not included in Win10, so must add

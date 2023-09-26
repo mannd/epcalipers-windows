@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -20,6 +22,9 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper = new PdfHelper();
+
+		public bool ResetZoom { get; private set; } = true;
+		public bool ResetRotation { get; private set; } = false;
 
 		public float ZoomFactor
 		{
@@ -40,34 +45,12 @@ namespace EPCalipersWinUI3
 		{
 			_pdfHelper = new PdfHelper();
 		}
-		
+
+		#region commands
 		[RelayCommand]
 		void Test()
 		{
 			Debug.Print("test command");
-		}
-
-		[RelayCommand]
-		private async Task About(UIElement element)
-		{
-			Debug.WriteLine("About");
-			var aboutDialog = new AboutDialog();
-			aboutDialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
-			await aboutDialog.ShowAsync();
-		}
-
-		private void Rotate90R()
-		{
-			var image = MainImage;
-			image.RenderTransformOrigin = new Windows.Foundation.Point(0.5, 0.5);
-
-			RotateTransform rotateTransform = new RotateTransform()
-			{
-				CenterX = image.Width / 2,
-				CenterY = image.Height / 2,
-				Angle = 180
-			};
-			image.RenderTransform = rotateTransform;
 		}
 
 		[RelayCommand]
@@ -103,7 +86,10 @@ namespace EPCalipersWinUI3
 				if (PdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
-					MainImageSource = await _pdfHelper.GetPdfPageAsync(0);
+					PdfImagePage pdfImagePage = await _pdfHelper.GetPdfImagePage(0);
+					MainImageSource = pdfImagePage.PageSource;
+					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
+					CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 				}
 				else
 				{
@@ -113,32 +99,17 @@ namespace EPCalipersWinUI3
 					MainImageSource = bitmapImage;
 					//MainImageSource = new BitmapImage() { UriSource = new Uri(file.Path) };
 				}
-				// Alternate method using fileStream ->
-				//using (IRandomAccessStream fileStream =
-				//	await file.OpenAsync(Windows.Storage.FileAccessMode.Read)) {
-				//	BitmapImage bitmapImage = new BitmapImage();
-				//	bitmapImage.DecodePixelHeight = 500;
-				//	await bitmapImage.SetSourceAsync(fileStream);
-				//	MainImageSource = bitmapImage;
-				//}
 			}
 			else
 			{
 				Debug.Print("Operation cancelled.");
+				//ContentDialog dialog = MessageDialog.Create(title: "Test", message: "Message");
+				//dialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
+				//await dialog.ShowAsync();
 			}
 		}
 
-		// from https://stackoverflow.com/questions/76640972/convert-system-drawing-icon-to-microsoft-ui-xaml-imagesource
-		public static async Task<Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource> GetWinUI3BitmapSourceFromBitmap(System.Drawing.Bitmap bitmap)
-		{
-			if (bitmap == null)
-				return null;
-
-			// convert to bitmap
-			return await GetWinUI3BitmapSourceFromGdiBitmap(bitmap);
-		}
-
-		public static async Task<Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
+		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
 		{
 			if (bmp == null)
 				return null;
@@ -167,7 +138,40 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private static void Exit() => Application.Current.Exit();
 
+		[RelayCommand]
+		private async Task NextPdfPage() 
+		{
+			var nextPage = await _pdfHelper.GetNextPage();
+			if (nextPage != null)
+			{
+				MainImageSource = nextPage;
+			}
+		}
 
+		[RelayCommand]
+		private async Task PreviousPdfPage() 
+		{ 
+			var previousPage = await _pdfHelper.GetPreviousPage();
+			if (previousPage != null)
+			{
+				MainImageSource = previousPage;
+			}
+		}
+
+
+		[RelayCommand]
+		private async Task GotoPdfPage(int pageNumber) 
+		{
+			// User's input 1 based page numbers.
+			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
+			if (page != null)
+			{
+				MainImageSource = page;
+			}
+		}
+		#endregion
+
+		#region observable properties
 		[ObservableProperty]
 		private string testText = "Test";
 
@@ -177,5 +181,14 @@ namespace EPCalipersWinUI3
 		[ObservableProperty]
 		private ImageSource mainImageSource
 			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+
+		[ObservableProperty]
+		public int maximumPdfPage;
+
+		[ObservableProperty]
+		public int currentPdfPageNumber;
+
+
+		#endregion
 	}
 }

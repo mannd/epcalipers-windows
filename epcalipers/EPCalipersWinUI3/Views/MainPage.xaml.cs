@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -48,8 +49,6 @@ namespace EPCalipersWinUI3.Views
 			// demo
             DrawLine(500, 0, 500, 500);
 
-			// Set up image rotation
-			InitImageForRotation();
             scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
                 //lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
@@ -62,8 +61,18 @@ namespace EPCalipersWinUI3.Views
 
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
-                SetZoom(1);
-				InitImageForRotation();
+				if (ViewModel.ResetZoom)
+				{
+					SetZoom(1);
+				}
+				if (ViewModel.ResetRotation) {
+					RotateImageWithoutAnimation(0);
+				} 
+				else
+				{
+					var originalRotation = _imageRotation; 
+					RotateImageWithoutAnimation(originalRotation);
+				}
             });
         }
 
@@ -238,8 +247,13 @@ namespace EPCalipersWinUI3.Views
 
 		private void InitImageForRotation()
 		{
+			RotateImageWithoutAnimation(0);
+		}
+
+		private void RotateImageWithoutAnimation(double angle)
+		{
 			if (EcgImage?.Source  == null) { return; }
-			_imageRotation = 0;
+			_imageRotation = angle;
             EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
             RotateTransform rotateTransform = new RotateTransform()
             {
@@ -249,6 +263,23 @@ namespace EPCalipersWinUI3.Views
             };
             EcgImage.RenderTransform = rotateTransform;
 		}
+		#endregion
+		#region misc
+		private async void About_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("About");
+			var aboutDialog = new AboutDialog();
+			aboutDialog.XamlRoot = XamlRoot;
+			await aboutDialog.ShowAsync();
+		}
+
+		private async void GotoPdfPage_Click(object sender, RoutedEventArgs e)
+		{
+			var gotoPdfPageDialog = new GotoPdfPageDialog(ViewModel);
+			gotoPdfPageDialog.XamlRoot = XamlRoot;
+			await gotoPdfPageDialog.ShowAsync();
+		}
+
 		#endregion
 	}
 }

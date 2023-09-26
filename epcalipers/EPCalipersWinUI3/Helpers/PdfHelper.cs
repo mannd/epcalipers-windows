@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PdfiumViewer;
 using Windows.Storage;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.Helpers
 {
@@ -20,9 +21,18 @@ namespace EPCalipersWinUI3.Helpers
 	public class PdfHelper
 	{
 		private PdfDocument _pdfDocument = null;
+		private List<PdfImagePage> pdfImagePages = new();
+		private int _pageNumber = 0;
 
 		public string FilePath { get; set; }
 		public bool PdfIsLoaded => _pdfDocument != null;
+
+		public int NumberOfPdfPages => _pdfDocument.PageCount;
+
+		// Two properties below use 1 based pagination.
+		public int CurrentPageNumber => _pageNumber + 1;
+
+		public int MaximumPageNumber => NumberOfPdfPages;
 
 		public static bool IsPdfFile(StorageFile file) =>
 			file.FileType.ToUpper() == ".PDF";
@@ -36,6 +46,8 @@ namespace EPCalipersWinUI3.Helpers
 			try
 			{
 				_pdfDocument = PdfDocument.Load(file.Path);
+				pdfImagePages.Clear();
+				_pageNumber = 0;
 			}
 			catch (Exception ex)
 			{
@@ -43,11 +55,26 @@ namespace EPCalipersWinUI3.Helpers
 			}
 		}
 
-		public async Task<SoftwareBitmapSource> GetPdfPageAsync(int pageNumber)
+		public async Task<PdfImagePage> GetPdfImagePage(int pageNumber )
+		{
+			if (pageNumber < pdfImagePages.Count)
+			{
+				return pdfImagePages[pageNumber];
+			}
+			var pdfImagePage = new PdfImagePage();
+			pdfImagePage.PageSource = await GetPdfPageSourceAsync(pageNumber);
+			pdfImagePages.Add(pdfImagePage);
+			return pdfImagePage;
+		}
+
+		public async Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber)
 		{
 			if (_pdfDocument == null) { return null; }
-			var img = _pdfDocument.Render(0, 300, 300, PdfRenderFlags.CorrectFromDpi);
+			if (pageNumber < 0 || pageNumber > _pdfDocument.PageCount - 1) { return null; }
+			_pageNumber = pageNumber;
+			var img = _pdfDocument.Render(pageNumber, 300, 300, PdfRenderFlags.CorrectFromDpi);
 			var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(img));
+			img.Dispose();
 			return source;
 		}
 
@@ -55,10 +82,29 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			_pdfDocument?.Dispose();
 			_pdfDocument = null;
+			_pageNumber = 0;
 		}
 
-		// from https://stackoverflow.com/questions/76640972/convert-system-drawing-icon-to-microsoft-ui-xaml-imagesource
-		private static async Task<Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
+		public async Task<SoftwareBitmapSource> GetNextPage()
+		{
+			if (_pdfDocument == null) return null;
+			int nextPage = _pageNumber + 1;
+			if (nextPage > _pdfDocument.PageCount - 1) return null;
+			_pageNumber = nextPage;
+			return await GetPdfPageSourceAsync(nextPage);
+		}
+
+		public async Task<SoftwareBitmapSource> GetPreviousPage()
+		{
+			if (_pdfDocument == null) return null;
+			int previousPage = _pageNumber - 1;
+			if (previousPage < 0) return null;
+			_pageNumber = previousPage;
+			return await GetPdfPageSourceAsync(previousPage);
+		}
+
+		// From https://stackoverflow.com/questions/76640972/convert-system-drawing-icon-to-microsoft-ui-xaml-imagesource
+		private static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(Bitmap bmp)
 		{
 			if (bmp == null)
 				return null;
