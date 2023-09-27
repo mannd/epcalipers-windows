@@ -92,17 +92,21 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="NextPageMenuItem" Command="{x:Bind ViewModel.NextPdfPageCommand}">
+                <MenuFlyoutItem x:Uid="NextPageMenuItem" Command="{x:Bind ViewModel.NextPdfPageCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="PreviousPageMenuItem" Command="{x:Bind ViewModel.PreviousPdfPageCommand}">
+                <MenuFlyoutItem x:Uid="PreviousPageMenuItem" 
+                                Command="{x:Bind ViewModel.PreviousPdfPageCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"/>
+                <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"
+                                IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
                 <MenuFlyoutItem Text="Time Caliper">

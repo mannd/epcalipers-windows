@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using PdfiumViewer;
 using Windows.Storage;
 using EPCalipersWinUI3.Models;
+using Microsoft.UI.Xaml.Printing;
 
 namespace EPCalipersWinUI3.Helpers
 {
@@ -21,7 +22,6 @@ namespace EPCalipersWinUI3.Helpers
 	public class PdfHelper
 	{
 		private PdfDocument _pdfDocument = null;
-		private List<PdfImagePage> pdfImagePages = new();
 		private int _pageNumber = 0;
 
 		public string FilePath { get; set; }
@@ -46,25 +46,12 @@ namespace EPCalipersWinUI3.Helpers
 			try
 			{
 				_pdfDocument = PdfDocument.Load(file.Path);
-				pdfImagePages.Clear();
 				_pageNumber = 0;
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.Message);
 			}
-		}
-
-		public async Task<PdfImagePage> GetPdfImagePage(int pageNumber )
-		{
-			if (pageNumber < pdfImagePages.Count)
-			{
-				return pdfImagePages[pageNumber];
-			}
-			var pdfImagePage = new PdfImagePage();
-			pdfImagePage.PageSource = await GetPdfPageSourceAsync(pageNumber);
-			pdfImagePages.Add(pdfImagePage);
-			return pdfImagePage;
 		}
 
 		public async Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber)
@@ -83,6 +70,16 @@ namespace EPCalipersWinUI3.Helpers
 			_pdfDocument?.Dispose();
 			_pdfDocument = null;
 			_pageNumber = 0;
+		}
+
+		public bool IsMultiPage
+		{
+			get
+			{
+				var count = _pdfDocument?.PageCount;
+				Debug.WriteLine($"Page count = {count}");
+				return count > 0;
+			}
 		}
 
 		public async Task<SoftwareBitmapSource> GetNextPage()
@@ -127,29 +124,6 @@ namespace EPCalipersWinUI3.Helpers
 			var source = new Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
 			return source;
-		}
-
-		// Currently not used.
-		private void renderPdfToFile(string pdfFilename, string outputImageFilename, int dpi)
-		{
-			var tempPath = Path.GetTempPath();
-			Debug.WriteLine($"{tempPath}");
-			using (var doc = PdfiumViewer.PdfDocument.Load(pdfFilename))
-			{ // Load PDF Document from file
-				for (int page = 0; page < doc.PageCount; page++)
-				{ // Loop through pages
-					using (var img = doc.Render(page, dpi, dpi, false))
-					{ // Render with dpi and with forPrinting false
-						var filePath = $"{tempPath}page_{page}_{outputImageFilename}.bmp";
-						Console.WriteLine(filePath);
-						if (File.Exists(filePath))
-						{
-							File.Delete(filePath);
-						}
-						img.Save(filePath); // Save rendered image to disc
-					}
-				}
-			}
 		}
 	}
 }

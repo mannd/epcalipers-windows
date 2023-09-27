@@ -83,13 +83,16 @@ namespace EPCalipersWinUI3
 		{
 			if (file != null)
 			{
+				_pdfHelper.ClearPdfFile();
+				// NB can get OOM errors with large PDF files when running on x86 system.
 				if (PdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
-					PdfImagePage pdfImagePage = await _pdfHelper.GetPdfImagePage(0);
-					MainImageSource = pdfImagePage.PageSource;
+					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
+					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
 					CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+					IsMultipagePdf = _pdfHelper.IsMultiPage;
 				}
 				else
 				{
@@ -97,7 +100,7 @@ namespace EPCalipersWinUI3
 					bitmapImage.SetSource(await file.OpenAsync(FileAccessMode.Read));
 					// Set the image on the main page to the dropped image
 					MainImageSource = bitmapImage;
-					//MainImageSource = new BitmapImage() { UriSource = new Uri(file.Path) };
+					IsMultipagePdf = false;
 				}
 			}
 			else
@@ -145,7 +148,10 @@ namespace EPCalipersWinUI3
 			if (nextPage != null)
 			{
 				MainImageSource = nextPage;
+				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+					
 			}
+			Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
 		}
 
 		[RelayCommand]
@@ -155,6 +161,7 @@ namespace EPCalipersWinUI3
 			if (previousPage != null)
 			{
 				MainImageSource = previousPage;
+				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 			}
 		}
 
@@ -167,6 +174,7 @@ namespace EPCalipersWinUI3
 			if (page != null)
 			{
 				MainImageSource = page;
+				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 			}
 		}
 		#endregion
@@ -187,6 +195,9 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		public int currentPdfPageNumber;
+
+		[ObservableProperty]
+		public bool isMultipagePdf;
 
 
 		#endregion

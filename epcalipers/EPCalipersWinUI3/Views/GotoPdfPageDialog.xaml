@@ -10,8 +10,8 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
     <Grid>
-        <NumberBox
-                Header="Enter an integer:"
+        <NumberBox Name="GotoPdfPageNumberBox"
+                   x:Uid="GotoPdfPageNumberBox"
                 Value="{x:Bind ViewModel.CurrentPdfPageNumber}"
                 SpinButtonPlacementMode="Compact"
                 SmallChange="1"

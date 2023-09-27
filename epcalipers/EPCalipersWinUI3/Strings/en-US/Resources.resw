@@ -141,6 +141,9 @@
   <data name="GotoPdfPageDialog.Title" xml:space="preserve">
     <value>Go to PDF page</value>
   </data>
+  <data name="GotoPdfPageNumberBox.Header" xml:space="preserve">
+    <value>Page:</value>
+  </data>
   <data name="ImageMenu.Title" xml:space="preserve">
     <value>Image</value>
   </data>
