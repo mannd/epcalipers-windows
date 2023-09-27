@@ -53,32 +53,6 @@ namespace EPCalipersWinUI3
 			Debug.Print("test command");
 		}
 
-		[RelayCommand]
-		private async Task Open()
-		{
-			// Create a file picker
-			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-
-			// Retrieve the window handle (HWND) of the current WinUI 3 window.
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(mainWindow);
-
-			// Initialize the file picker with the window handle (HWND).
-			WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-
-			// Set options for your file picker
-			openPicker.ViewMode = PickerViewMode.Thumbnail;
-			openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-			openPicker.FileTypeFilter.Add(".jpg");
-			openPicker.FileTypeFilter.Add(".jpeg");
-			openPicker.FileTypeFilter.Add(".png");
-			openPicker.FileTypeFilter.Add(".pdf");
-
-			// Open the picker for the user to pick a file
-			var file = await openPicker.PickSingleFileAsync();
-			await OpenImageFile(file);
-		}
-
 		public async Task OpenImageFile(StorageFile file)
 		{
 			if (file != null)
@@ -165,9 +139,7 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-
-		[RelayCommand]
-		private async Task GotoPdfPage(int pageNumber) 
+		public async Task GotoPdfPage(int pageNumber) 
 		{
 			// User's input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);

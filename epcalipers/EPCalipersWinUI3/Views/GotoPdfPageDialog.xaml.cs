@@ -19,6 +19,8 @@ namespace EPCalipersWinUI3.Views
 	{
 		public MainPageViewModel ViewModel { get; }
 
+		public int PageNumber {  get; set; }
+
 		public GotoPdfPageDialog(MainPageViewModel viewModel)
 		{
 			ViewModel = viewModel;
@@ -32,6 +34,7 @@ namespace EPCalipersWinUI3.Views
 
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
+			PageNumber = (int)GotoPdfPageNumberBox.Value;
 		}
 
 		private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

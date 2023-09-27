@@ -1,4 +1,5 @@
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -20,6 +21,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -265,6 +267,34 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 		#region misc
+
+		private async Task Open()
+		{
+			// Create a file picker
+			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+
+			// Retrieve the window handle (HWND) of the current WinUI 3 window.
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(mainWindow);
+
+			// Initialize the file picker with the window handle (HWND).
+			WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+			// Set options for your file picker
+			openPicker.ViewMode = PickerViewMode.Thumbnail;
+			openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+			openPicker.FileTypeFilter.Add(".jpg");
+			openPicker.FileTypeFilter.Add(".jpeg");
+			openPicker.FileTypeFilter.Add(".png");
+			openPicker.FileTypeFilter.Add(".pdf");
+
+			// Open the picker for the user to pick a file
+			var file = await openPicker.PickSingleFileAsync();
+			await ViewModel.OpenImageFile(file);
+		}
+
+
+
 		private async void About_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("About");
@@ -277,9 +307,43 @@ namespace EPCalipersWinUI3.Views
 		{
 			var gotoPdfPageDialog = new GotoPdfPageDialog(ViewModel);
 			gotoPdfPageDialog.XamlRoot = XamlRoot;
-			await gotoPdfPageDialog.ShowAsync();
+			var result = await gotoPdfPageDialog.ShowAsync();
+			Debug.WriteLine(result);
+			if (result == ContentDialogResult.Primary)
+			{
+				var page = gotoPdfPageDialog.PageNumber;
+				await ViewModel.GotoPdfPage(page);
+			}
 		}
 
 		#endregion
+
+		private async void OpenFile_Click(object sender, RoutedEventArgs e)
+		{
+			// Create a file picker
+			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+
+			// Retrieve the window handle (HWND) of the current WinUI 3 window.
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(mainWindow);
+
+			// Initialize the file picker with the window handle (HWND).
+			WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+			// Set options for your file picker
+			openPicker.ViewMode = PickerViewMode.Thumbnail;
+			openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+			openPicker.FileTypeFilter.Add(".jpg");
+			openPicker.FileTypeFilter.Add(".jpeg");
+			openPicker.FileTypeFilter.Add(".png");
+			openPicker.FileTypeFilter.Add(".pdf");
+
+			// Open the picker for the user to pick a file
+			var file = await openPicker.PickSingleFileAsync();
+			// Change the cursor to a wait icon
+			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
+			await ViewModel.OpenImageFile(file);
+			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+		}
 	}
 }

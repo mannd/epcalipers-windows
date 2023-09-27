@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
         <MenuBar Grid.Row="0" >
             <MenuBarItem x:Uid="FileMenu">
-                <MenuFlyoutItem x:Uid="OpenMenuItem" Command="{x:Bind ViewModel.OpenCommand}">
+                <MenuFlyoutItem x:Uid="OpenMenuItem" Click="OpenFile_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -171,7 +171,7 @@
       the font to shared resources, and may need to change syntax below.-->
         <CommandBar Grid.Row="1" Background="Transparent" 
                         IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton Label="Open" Command="{x:Bind ViewModel.OpenCommand}">
+            <AppBarButton Label="Open" Click="OpenFile_Click">
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
@@ -209,12 +209,12 @@
                           PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
                     ViewChanged="scrollViewer_ViewChanged"
                       >
-            <Grid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
                        
-            </Grid>
+            </local:CustomGrid>
         </ScrollViewer>
     </Grid>
 </Page>
