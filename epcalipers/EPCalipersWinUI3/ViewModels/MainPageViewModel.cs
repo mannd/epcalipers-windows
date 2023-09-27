@@ -65,8 +65,8 @@ namespace EPCalipersWinUI3
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
 					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
-					CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 					IsMultipagePdf = _pdfHelper.IsMultiPage;
+					UpdatePageNumber();
 				}
 				else
 				{
@@ -84,6 +84,7 @@ namespace EPCalipersWinUI3
 				//dialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
 				//await dialog.ShowAsync();
 			}
+
 		}
 
 		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
@@ -122,7 +123,7 @@ namespace EPCalipersWinUI3
 			if (nextPage != null)
 			{
 				MainImageSource = nextPage;
-				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+				UpdatePageNumber();
 					
 			}
 			Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
@@ -135,7 +136,7 @@ namespace EPCalipersWinUI3
 			if (previousPage != null)
 			{
 				MainImageSource = previousPage;
-				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+				UpdatePageNumber();
 			}
 		}
 
@@ -146,8 +147,14 @@ namespace EPCalipersWinUI3
 			if (page != null)
 			{
 				MainImageSource = page;
-				CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+				UpdatePageNumber();
 			}
+		}
+		private void UpdatePageNumber()
+		{
+			CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
+			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
+			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
 		}
 		#endregion
 
@@ -170,6 +177,12 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		public bool isMultipagePdf;
+
+		[ObservableProperty]
+		public bool isNotFirstPageOfPdf;
+
+		[ObservableProperty]
+		public bool isNotLastPageOfPdf;
 
 
 		#endregion

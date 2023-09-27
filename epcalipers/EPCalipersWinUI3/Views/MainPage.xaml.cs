@@ -247,11 +247,6 @@ namespace EPCalipersWinUI3.Views
 			storyboard.Begin();
 		}
 
-		private void InitImageForRotation()
-		{
-			RotateImageWithoutAnimation(0);
-		}
-
 		private void RotateImageWithoutAnimation(double angle)
 		{
 			if (EcgImage?.Source  == null) { return; }
@@ -293,8 +288,6 @@ namespace EPCalipersWinUI3.Views
 			await ViewModel.OpenImageFile(file);
 		}
 
-
-
 		private async void About_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("About");
@@ -315,8 +308,6 @@ namespace EPCalipersWinUI3.Views
 				await ViewModel.GotoPdfPage(page);
 			}
 		}
-
-		#endregion
 
 		private async void OpenFile_Click(object sender, RoutedEventArgs e)
 		{
@@ -345,5 +336,6 @@ namespace EPCalipersWinUI3.Views
 			await ViewModel.OpenImageFile(file);
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
+		#endregion
 	}
 }
