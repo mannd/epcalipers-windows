@@ -117,11 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutMenuItem.Text" xml:space="preserve">
+    <value>About EP Calipers</value>
+  </data>
+  <data name="AmplitudeCaliperMenuItem.Text" xml:space="preserve">
+    <value>Amplitude caliper</value>
+  </data>
+  <data name="AngleCaliperMenuItem.Text" xml:space="preserve">
+    <value>Angle caliper</value>
+  </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>EP Calipers 3 Test</value>
   </data>
+  <data name="CalibrationBarButton.Label" xml:space="preserve">
+    <value>Calibration</value>
+  </data>
+  <data name="CalipersBarButton.Label" xml:space="preserve">
+    <value>Calipers</value>
+  </data>
   <data name="CalipersMenu.Title" xml:space="preserve">
     <value>Calipers</value>
+  </data>
+  <data name="ClearCalibrationMenuItem.Text" xml:space="preserve">
+    <value>Clear calibration</value>
+  </data>
+  <data name="DeleteAllCalipersMenuItem.Text" xml:space="preserve">
+    <value>Delete all calipers</value>
+  </data>
+  <data name="DeleteCaliperMenuItem.Text" xml:space="preserve">
+    <value>Delete caliper</value>
   </data>
   <data name="ExitMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
@@ -144,20 +168,47 @@
   <data name="GotoPdfPageNumberBox.Header" xml:space="preserve">
     <value>Page:</value>
   </data>
+  <data name="HelpMenu.Title" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HelpMenuItem.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="ImageMenu.Title" xml:space="preserve">
     <value>Image</value>
+  </data>
+  <data name="MeanRateIntervalBarButton.Label" xml:space="preserve">
+    <value>Mean interval</value>
+  </data>
+  <data name="MeanRateIntervalMenuItem.Text" xml:space="preserve">
+    <value>Mean rate/interval</value>
+  </data>
+  <data name="MeasureQTcMenuItem.Text" xml:space="preserve">
+    <value>Measure QTc</value>
   </data>
   <data name="NextPageMenuItem.Text" xml:space="preserve">
     <value>Next PDF page</value>
   </data>
+  <data name="OpenBarButton.Label" xml:space="preserve">
+    <value>Open</value>
+  </data>
   <data name="OpenMenuItem.Text" xml:space="preserve">
     <value>Open...</value>
+  </data>
+  <data name="OptionsMenuItem.Text" xml:space="preserve">
+    <value>Options...</value>
   </data>
   <data name="PreviousPageMenuItem.Text" xml:space="preserve">
     <value>Previous PDF page</value>
   </data>
   <data name="PrintMenuItem.Text" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <data name="QTcBarButton.Label" xml:space="preserve">
+    <value>QTc</value>
+  </data>
+  <data name="RateIntervalBarButton.Label" xml:space="preserve">
+    <value>Rate/interval</value>
   </data>
   <data name="ResetImageMenuItem.Text" xml:space="preserve">
     <value>Reset image</value>
@@ -186,8 +237,32 @@
   <data name="SaveMenuItem.Text" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SetCalibrationMenuItem.Text" xml:space="preserve">
+    <value>Set calibration</value>
+  </data>
+  <data name="SettingsBarButton.Label" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="TimeCaliperMenuItem.Text" xml:space="preserve">
+    <value>Time caliper</value>
+  </data>
+  <data name="ToggleRateIntervalMenuItem.Text" xml:space="preserve">
+    <value>Toggle rate/interval</value>
+  </data>
+  <data name="ToolsMenu.Title" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="TransparentWindowMenuItemText" xml:space="preserve">
+    <value>Transparent window</value>
+  </data>
+  <data name="ZoomInBarButton.Label" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
   <data name="ZoomInMenuItem.Text" xml:space="preserve">
     <value>Zoom in</value>
+  </data>
+  <data name="ZoomOutBarButton.Label" xml:space="preserve">
+    <value>Zoom out</value>
   </data>
   <data name="ZoomOutMenuItem.Text" xml:space="preserve">
     <value>Zoom out</value>

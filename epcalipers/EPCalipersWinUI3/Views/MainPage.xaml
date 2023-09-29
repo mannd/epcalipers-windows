@@ -109,94 +109,94 @@
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
-                <MenuFlyoutItem Text="Time Caliper">
+                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Amplitude Caliper">
+                <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="A" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Angle Caliper">
+                <MenuFlyoutItem x:Uid="AngleCaliperMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="G" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Delete Caliper">
+                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Icon="Delete" Text="Delete All Calipers">
+                <MenuFlyoutItem Icon="Delete" x:Uid="DeleteAllCalipersMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Set Calibration" />
-                <MenuFlyoutItem Text="Clear Calibration" />
+                <MenuFlyoutItem x:Uid="SetCalibrationMenuItem"/>
+                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Toggle Rate/Interval">
+                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Text="Mean Rate/Interval" />
-                <MenuFlyoutItem Text="Measure QTc" />
+                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"/>
+                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
             </MenuBarItem>
-            <MenuBarItem Title="Tools">
-                <MenuFlyoutItem Text="Transparent Window">
+            <MenuBarItem x:Uid="ToolsMenu">
+                <MenuFlyoutItem x:Uid="TransparentWindowMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="Options..." />
+                <MenuFlyoutItem x:Uid="OptionsMenuItem"/>
             </MenuBarItem>
-            <MenuBarItem Title="Help">
-                <MenuFlyoutItem Text="Help">
+            <MenuBarItem x:Uid="HelpMenu">
+                <MenuFlyoutItem x:Uid="HelpMenuItem">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
 
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem Text="About EP Calipers"  Click="About_Click" />
+                <MenuFlyoutItem x:Uid="AboutMenuItem"  Click="About_Click" />
             </MenuBarItem>
         </MenuBar>
         <!--TODO: Segoe Fluent icons not included in Win10, so must add
       the font to shared resources, and may need to change syntax below.-->
         <CommandBar Grid.Row="1" Background="Transparent" 
                         IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton Label="Open" Click="OpenFile_Click">
+            <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click">
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton Label="Zoom In" Click="ZoomIn_Click" ToolTipService.ToolTip="Zoom in">
+            <AppBarButton x:Uid="ZoomInBarButton" Click="ZoomIn_Click" ToolTipService.ToolTip="Zoom in">
                 <SymbolIcon Symbol="ZoomIn" />
             </AppBarButton>
-            <AppBarButton Label="Zoom Out" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
+            <AppBarButton x:Uid="ZoomOutBarButton" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton Label="Calipers">
+            <AppBarButton x:Uid="CalipersBarButton">
                 <BitmapIcon UriSource="Assets/StoreLogo.scale-400.png" 
                            ToolTipService.ToolTip="Add caliper"/>
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton Label="Calibration">
+            <AppBarButton x:Uid="CalibrationBarButton">
                 <FontIcon Glyph="&#xE73E;" />
             </AppBarButton>
-            <AppBarButton Icon="Switch" Label="Rate/Interval"/>
-            <AppBarButton Label="Mean Interval">
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" />
+            <AppBarButton x:Uid="MeanRateIntervalBarButton">
                 <FontIcon Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" Label="QTc"/>
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Setting" Label="Settings">
+                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="I" />
                     </AppBarButton.KeyboardAccelerators>
@@ -209,8 +209,9 @@
                           PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
                     ViewChanged="scrollViewer_ViewChanged"
                       >
-            <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
+            <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
+                              HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="UniformToFill" 
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
                        

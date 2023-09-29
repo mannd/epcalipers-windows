@@ -24,7 +24,7 @@ namespace EPCalipersWinUI3
 		private readonly PdfHelper _pdfHelper = new PdfHelper();
 
 		public bool ResetZoom { get; private set; } = true;
-		public bool ResetRotation { get; private set; } = false;
+		public bool ResetRotation { get; private set; } = true;
 
 		public float ZoomFactor
 		{

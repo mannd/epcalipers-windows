@@ -105,10 +105,10 @@ namespace EPCalipersWinUI3.Views
 
 		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-            //var position = e.GetCurrentPoint(this.canvas);
-            //Debug.WriteLine($"Scrollview touched at {position.Position}");
-            //DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            //pointerDown = true;
+			var position = e.GetCurrentPoint(this.CaliperGrid);
+			Debug.WriteLine($"Scrollview touched at {position.Position}");
+			//DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
+			//pointerDown = true;
 		}
 
 		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -181,7 +181,8 @@ namespace EPCalipersWinUI3.Views
 		#region rotation
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-			RotateImageByAngle(90);
+			TestRotateScale();
+			//RotateImageByAngle(90);
 		}
 
 		private void Rotate90L_Click(object sender, RoutedEventArgs e)
@@ -231,6 +232,7 @@ namespace EPCalipersWinUI3.Views
 		private void RotateImage(double startAngle, double endAngle)
 		{
 			// NB: This is a bit of a regression from V2, since rotated image is clipped.
+			ScaleTransform scaleTransform = new();
 			Storyboard storyboard = new();
 			storyboard.Duration = new Duration(_rotationDuration);
 			DoubleAnimation rotateAnimation = new()
@@ -258,7 +260,18 @@ namespace EPCalipersWinUI3.Views
                 CenterY = EcgImage.Height / 2,
 				Angle = _imageRotation
             };
-            EcgImage.RenderTransform = rotateTransform;
+			EcgImage.RenderTransform = rotateTransform;
+		}
+
+		private void TestRotateScale()
+		{
+			CompositeTransform compositeTransform = new CompositeTransform();
+			compositeTransform.ScaleX = 0.5;
+			compositeTransform.ScaleY = 0.5;
+			compositeTransform.CenterX = EcgImage.Width / 2;
+			compositeTransform.CenterY = EcgImage.Height / 2;
+			compositeTransform.Rotation = 90;
+			EcgImage.RenderTransform = compositeTransform;
 		}
 		#endregion
 		#region misc
