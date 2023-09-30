@@ -211,7 +211,7 @@
                       >
             <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
                               HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="UniformToFill" 
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
                        

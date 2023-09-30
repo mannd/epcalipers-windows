@@ -181,8 +181,7 @@ namespace EPCalipersWinUI3.Views
 		#region rotation
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-			TestRotateScale();
-			//RotateImageByAngle(90);
+			RotateImageByAngle(90, 0.5);
 		}
 
 		private void Rotate90L_Click(object sender, RoutedEventArgs e)
@@ -212,14 +211,15 @@ namespace EPCalipersWinUI3.Views
 
 		private void ResetImage_Click(object sender, RoutedEventArgs e)
 		{
-            RotateImageToAngle(0);
+			ResetRotation();
+            //RotateImageToAngle(0);
 		}
 
-		private void RotateImageByAngle(double angle)
+		private void RotateImageByAngle(double angle, double scale = 1.0)
 		{
 			var originalRotation = _imageRotation;
 			_imageRotation += angle; 
-			RotateImage(originalRotation, _imageRotation);
+			RotateImage(originalRotation, _imageRotation, scale);
 		}
 
         private void RotateImageToAngle(double angle)
@@ -229,10 +229,10 @@ namespace EPCalipersWinUI3.Views
 			RotateImage(originalRotation, _imageRotation);
         }
 
-		private void RotateImage(double startAngle, double endAngle)
+		private void RotateImage(double startAngle, double endAngle, double scale = 1.0)
 		{
 			// NB: This is a bit of a regression from V2, since rotated image is clipped.
-			ScaleTransform scaleTransform = new();
+            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
 			Storyboard storyboard = new();
 			storyboard.Duration = new Duration(_rotationDuration);
 			DoubleAnimation rotateAnimation = new()
@@ -242,9 +242,27 @@ namespace EPCalipersWinUI3.Views
 				Duration = storyboard.Duration
 			};
 
+			DoubleAnimation scaleAnimation = new DoubleAnimation()
+			{
+				Duration = storyboard.Duration,
+				To = scale
+			};
+			DoubleAnimation scaleYAnimation = new DoubleAnimation()
+			{
+				Duration = storyboard.Duration,
+				To = scale
+			};
+			Storyboard.SetTarget(scaleAnimation, EcgImage);
+			Storyboard.SetTarget(scaleYAnimation, EcgImage);
 			Storyboard.SetTarget(rotateAnimation, EcgImage);
+			Storyboard.SetTargetProperty(scaleAnimation,
+				"(UIElement.RenderTransform).(CompositeTransform.ScaleX)");
+			Storyboard.SetTargetProperty(scaleYAnimation,
+				"(UIElement.RenderTransform).(CompositeTransform.ScaleY)");
 			Storyboard.SetTargetProperty(rotateAnimation,
-				"(UIElement.RenderTransform).(RotateTransform.Angle)");
+				"(UIElement.RenderTransform).(CompositeTransform.Rotation)");
+			storyboard.Children.Add(scaleAnimation);
+			storyboard.Children.Add(scaleYAnimation);
 			storyboard.Children.Add(rotateAnimation);
 			storyboard.Begin();
 		}
@@ -254,14 +272,25 @@ namespace EPCalipersWinUI3.Views
 			if (EcgImage?.Source  == null) { return; }
 			_imageRotation = angle;
             EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
-            RotateTransform rotateTransform = new RotateTransform()
+            CompositeTransform rotateTransform = new()
             {
                 CenterX = EcgImage.Width / 2,
                 CenterY = EcgImage.Height / 2,
-				Angle = _imageRotation
+				Rotation = _imageRotation,
             };
 			EcgImage.RenderTransform = rotateTransform;
 		}
+
+		private void ResetRotation()
+		{
+			RotateImage(_imageRotation, 0, 1.0);
+			_imageRotation = 0;
+			//EcgImage.RenderTransform = null;
+			//RotateImageWithoutAnimation(0);
+		}
+
+		// TODO: Calculate the scaling factor based on height and width and rotation angle...
+		// https://stackoverflow.com/questions/65554301/how-to-calculate-the-sizes-of-a-rectangle-that-contains-rotated-image-potential#:~:text=and%20the%20width%20and%20height%20of%20the%20rotated,%28theta%20%2B%20theta0%29%29%2C%20fabs%20%28sin%20%28theta%20-%20theta0%29%29
 
 		private void TestRotateScale()
 		{

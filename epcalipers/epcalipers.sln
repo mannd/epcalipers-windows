@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFepcalipers", "WPFepcalip
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPCalipersWinUI3", "EPCalipersWinUI3\EPCalipersWinUI3.csproj", "{172E8116-E5DE-456A-8BB4-52ACD704C1C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPCalipersWinUi3Tests", "EPCalipersWinUi3Tests\EPCalipersWinUi3Tests.csproj", "{209994BA-0020-410E-A612-16A9656BBAD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPCalipersWinUi3Tests", "EPCalipersWinUi3Tests\EPCalipersWinUi3Tests.csproj", "{209994BA-0020-410E-A612-16A9656BBAD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -291,8 +291,8 @@ Global
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|ia64.ActiveCfg = Debug|Any CPU
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|ia64.Build.0 = Debug|Any CPU
-		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x64.Build.0 = Debug|Any CPU
+		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x64.ActiveCfg = Debug|x64
+		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x64.Build.0 = Debug|x64
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Debug|x86.Build.0 = Debug|Any CPU
 		{209994BA-0020-410E-A612-16A9656BBAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
