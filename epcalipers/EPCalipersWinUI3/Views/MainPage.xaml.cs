@@ -45,6 +45,7 @@ namespace EPCalipersWinUI3.Views
 		private double _rotatedImageScale = 1.0;
 
         public MainPageViewModel ViewModel { get; set; }
+
 		public MainPage()
 		{
 			this.InitializeComponent();
@@ -213,8 +214,8 @@ namespace EPCalipersWinUI3.Views
 
 		private void ResetImage_Click(object sender, RoutedEventArgs e)
 		{
-			ResetRotation();
-            //RotateImageToAngle(0);
+			//ResetRotation();
+            RotateImageToAngle(0);
 		}
 
 		private void RotateImageByAngle(double angle)

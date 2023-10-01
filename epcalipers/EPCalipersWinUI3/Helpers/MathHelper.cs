@@ -32,10 +32,10 @@ namespace EPCalipersWinUI3.Helpers
 			var W = width * Math.Abs(Math.Cos(theta)) + height * Math.Abs(Math.Sin(theta));
 			var H = width * Math.Abs(Math.Sin(theta)) + height * Math.Abs(Math.Cos(theta));
 
-			if (W < boundsWidth && H < boundsHeight)
-			{
-				return 1.0;
-			}
+			//if (W < boundsWidth && H < boundsHeight)
+			//{
+			//	return 1.0;
+			//}
 			var a = Math.Min(width / W, height / H);
 			return a;
 		}
