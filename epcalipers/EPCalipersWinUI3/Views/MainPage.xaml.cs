@@ -1,3 +1,4 @@
+using EPCalipersWinUI3.Helpers;
 using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -41,6 +42,7 @@ namespace EPCalipersWinUI3.Views
 
         double lineThickness = 5;
         private double _imageRotation = 0;
+		private double _rotatedImageScale = 1.0;
 
         public MainPageViewModel ViewModel { get; set; }
 		public MainPage()
@@ -72,7 +74,7 @@ namespace EPCalipersWinUI3.Views
 				} 
 				else
 				{
-					var originalRotation = _imageRotation; 
+					var originalRotation = _imageRotation;
 					RotateImageWithoutAnimation(originalRotation);
 				}
             });
@@ -181,7 +183,7 @@ namespace EPCalipersWinUI3.Views
 		#region rotation
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-			RotateImageByAngle(90, 0.5);
+			RotateImageByAngle(90);
 		}
 
 		private void Rotate90L_Click(object sender, RoutedEventArgs e)
@@ -215,11 +217,11 @@ namespace EPCalipersWinUI3.Views
             //RotateImageToAngle(0);
 		}
 
-		private void RotateImageByAngle(double angle, double scale = 1.0)
+		private void RotateImageByAngle(double angle)
 		{
 			var originalRotation = _imageRotation;
 			_imageRotation += angle; 
-			RotateImage(originalRotation, _imageRotation, scale);
+			RotateImage(originalRotation, _imageRotation);
 		}
 
         private void RotateImageToAngle(double angle)
@@ -229,7 +231,7 @@ namespace EPCalipersWinUI3.Views
 			RotateImage(originalRotation, _imageRotation);
         }
 
-		private void RotateImage(double startAngle, double endAngle, double scale = 1.0)
+		private void RotateImage(double startAngle, double endAngle)
 		{
 			// NB: This is a bit of a regression from V2, since rotated image is clipped.
             EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -242,15 +244,23 @@ namespace EPCalipersWinUI3.Views
 				Duration = storyboard.Duration
 			};
 
+			// Bug, reversing rotation by 1 degree and reversing direction causes scale to alternate
+			// between legitimate scale and scale of 1.0;
+			var scaledWidth = _rotatedImageScale * EcgImage.ActualWidth;
+			var scaledHeight = _rotatedImageScale * EcgImage.ActualHeight; ;
+			_rotatedImageScale = MathHelper.ScaleToFit(scaledWidth, scaledHeight, EcgImage.ActualWidth,
+				EcgImage.ActualHeight, _imageRotation);
+			Debug.WriteLine($"rotated image scale = {_rotatedImageScale}");
+
 			DoubleAnimation scaleAnimation = new DoubleAnimation()
 			{
 				Duration = storyboard.Duration,
-				To = scale
+				To = _rotatedImageScale
 			};
 			DoubleAnimation scaleYAnimation = new DoubleAnimation()
 			{
 				Duration = storyboard.Duration,
-				To = scale
+				To = _rotatedImageScale
 			};
 			Storyboard.SetTarget(scaleAnimation, EcgImage);
 			Storyboard.SetTarget(scaleYAnimation, EcgImage);
@@ -283,7 +293,8 @@ namespace EPCalipersWinUI3.Views
 
 		private void ResetRotation()
 		{
-			RotateImage(_imageRotation, 0, 1.0);
+			_rotatedImageScale = 1.0;
+			RotateImage(_imageRotation, 0);
 			_imageRotation = 0;
 			//EcgImage.RenderTransform = null;
 			//RotateImageWithoutAnimation(0);
