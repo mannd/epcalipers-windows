@@ -29,10 +29,12 @@ namespace EPCalipersWinUI3.Models
 			IsChosen = isChosen;
 		}
 
-        public ComponentDirection Direction { get; set; }
+        public ComponentDirection Direction { get; set; } 
 		public int Position { get; set; }
         public bool IsSelected { get; set; }
         public bool IsChosen { get; set; }
+
+        public bool HasMoved { get; set; }
 
         public void Move(int distance)
         {

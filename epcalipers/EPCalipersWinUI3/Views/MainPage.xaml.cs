@@ -97,16 +97,16 @@ namespace EPCalipersWinUI3.Views
             CaliperGrid.Children.Add(line);
         }
 
-        private void scrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        private void ScrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
             // Just thin out lines as view zooms
         }
 
-        private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
         }
 
-		private void scrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
+		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
 			Debug.WriteLine($"Scrollview touched at {position.Position}");
@@ -114,7 +114,7 @@ namespace EPCalipersWinUI3.Views
 			//pointerDown = true;
 		}
 
-		private void scrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
+		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
             //if (pointerDown) {
             //    var position = e.GetCurrentPoint(this.canvas);
@@ -122,7 +122,7 @@ namespace EPCalipersWinUI3.Views
             //}
 		}
 
-		private void scrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
+		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
             //Debug.WriteLine("Pointer released.");
             //pointerDown = false;
@@ -234,10 +234,11 @@ namespace EPCalipersWinUI3.Views
 
 		private void RotateImage(double startAngle, double endAngle)
 		{
-			// NB: This is a bit of a regression from V2, since rotated image is clipped.
             EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
-			Storyboard storyboard = new();
-			storyboard.Duration = new Duration(_rotationDuration);
+			Storyboard storyboard = new()
+			{
+				Duration = new Duration(_rotationDuration)
+			};
 			DoubleAnimation rotateAnimation = new()
 			{
 				From = startAngle,
@@ -249,16 +250,14 @@ namespace EPCalipersWinUI3.Views
 			// between legitimate scale and scale of 1.0;
 			var scaledWidth = _rotatedImageScale * EcgImage.ActualWidth;
 			var scaledHeight = _rotatedImageScale * EcgImage.ActualHeight; ;
-			_rotatedImageScale = MathHelper.ScaleToFit(scaledWidth, scaledHeight, EcgImage.ActualWidth,
-				EcgImage.ActualHeight, _imageRotation);
-			Debug.WriteLine($"rotated image scale = {_rotatedImageScale}");
+			_rotatedImageScale = MathHelper.ScaleToFit(scaledWidth, scaledHeight, _imageRotation);
 
-			DoubleAnimation scaleAnimation = new DoubleAnimation()
+			DoubleAnimation scaleAnimation = new()
 			{
 				Duration = storyboard.Duration,
 				To = _rotatedImageScale
 			};
-			DoubleAnimation scaleYAnimation = new DoubleAnimation()
+			DoubleAnimation scaleYAnimation = new()
 			{
 				Duration = storyboard.Duration,
 				To = _rotatedImageScale
@@ -304,56 +303,25 @@ namespace EPCalipersWinUI3.Views
 		// TODO: Calculate the scaling factor based on height and width and rotation angle...
 		// https://stackoverflow.com/questions/65554301/how-to-calculate-the-sizes-of-a-rectangle-that-contains-rotated-image-potential#:~:text=and%20the%20width%20and%20height%20of%20the%20rotated,%28theta%20%2B%20theta0%29%29%2C%20fabs%20%28sin%20%28theta%20-%20theta0%29%29
 
-		private void TestRotateScale()
-		{
-			CompositeTransform compositeTransform = new CompositeTransform();
-			compositeTransform.ScaleX = 0.5;
-			compositeTransform.ScaleY = 0.5;
-			compositeTransform.CenterX = EcgImage.Width / 2;
-			compositeTransform.CenterY = EcgImage.Height / 2;
-			compositeTransform.Rotation = 90;
-			EcgImage.RenderTransform = compositeTransform;
-		}
 		#endregion
-		#region misc
-
-		private async Task Open()
-		{
-			// Create a file picker
-			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-
-			// Retrieve the window handle (HWND) of the current WinUI 3 window.
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(mainWindow);
-
-			// Initialize the file picker with the window handle (HWND).
-			WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-
-			// Set options for your file picker
-			openPicker.ViewMode = PickerViewMode.Thumbnail;
-			openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-			openPicker.FileTypeFilter.Add(".jpg");
-			openPicker.FileTypeFilter.Add(".jpeg");
-			openPicker.FileTypeFilter.Add(".png");
-			openPicker.FileTypeFilter.Add(".pdf");
-
-			// Open the picker for the user to pick a file
-			var file = await openPicker.PickSingleFileAsync();
-			await ViewModel.OpenImageFile(file);
-		}
+		#region event handlers
 
 		private async void About_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("About");
-			var aboutDialog = new AboutDialog();
-			aboutDialog.XamlRoot = XamlRoot;
+			var aboutDialog = new AboutDialog
+			{
+				XamlRoot = XamlRoot
+			};
 			await aboutDialog.ShowAsync();
 		}
 
 		private async void GotoPdfPage_Click(object sender, RoutedEventArgs e)
 		{
-			var gotoPdfPageDialog = new GotoPdfPageDialog(ViewModel);
-			gotoPdfPageDialog.XamlRoot = XamlRoot;
+			var gotoPdfPageDialog = new GotoPdfPageDialog(ViewModel)
+			{
+				XamlRoot = XamlRoot
+			};
 			var result = await gotoPdfPageDialog.ShowAsync();
 			Debug.WriteLine(result);
 			if (result == ContentDialogResult.Primary)

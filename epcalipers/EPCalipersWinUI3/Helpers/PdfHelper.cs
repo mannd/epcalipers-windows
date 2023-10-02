@@ -76,9 +76,7 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			get
 			{
-				var count = _pdfDocument?.PageCount;
-				Debug.WriteLine($"Page count = {count}");
-				return count > 0;
+				return _pdfDocument?.PageCount > 0;
 			}
 		}
 

@@ -57,5 +57,11 @@ namespace EPCalipersWinUI3.Models
 		{
 			component?.Move(distance);
 		}
+
+		public void Move(int distance)
+		{
+			Move(LeftBar, distance);
+			Move(RightBar, distance);
+		}
 	}
 }

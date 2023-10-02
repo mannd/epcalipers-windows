@@ -21,8 +21,10 @@ namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : ObservableObject
 	{
-		private readonly PdfHelper _pdfHelper = new PdfHelper();
+		private readonly PdfHelper _pdfHelper = new();
 
+		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
+		// It should only allow reset rotation to be false if image is multipage PDF.
 		public bool ResetZoom { get; private set; } = false;
 		public bool ResetRotation { get; private set; } = false;
 
@@ -47,11 +49,6 @@ namespace EPCalipersWinUI3
 		}
 
 		#region commands
-		[RelayCommand]
-		void Test()
-		{
-			Debug.Print("test command");
-		}
 
 		public async Task OpenImageFile(StorageFile file)
 		{

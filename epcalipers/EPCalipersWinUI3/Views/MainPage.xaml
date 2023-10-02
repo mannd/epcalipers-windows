@@ -205,9 +205,9 @@
         </CommandBar>
         <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
-                        VerticalScrollBarVisibility="Auto" PointerPressed="scrollViewer_PointerPressed"
-                          PointerMoved="scrollViewer_PointerMoved" PointerReleased="scrollView_PointerReleased" 
-                    ViewChanged="scrollViewer_ViewChanged"
+                        VerticalScrollBarVisibility="Auto" PointerPressed="ScrollViewer_PointerPressed"
+                          PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 
+                    ViewChanged="ScrollViewer_ViewChanged"
                       >
             <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
                               HorizontalAlignment="Left" VerticalAlignment="Top">

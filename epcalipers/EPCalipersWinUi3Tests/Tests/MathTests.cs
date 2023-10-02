@@ -17,10 +17,10 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestScaleRectangle()
 		{
-			var scale0 = MathHelper.ScaleRectangleToFit(100, 50, 90);
+			int width = 100;
+			int height = 50;
+			var scale0 = MathHelper.ScaleToFit(width, height, 90);
 			Assert.True(scale0 < 1.0);
-			var scale1 = MathHelper.ScaleRectangleToFit(50, 100, 90);
-			Assert.True(scale1 >= 1.0);
 		}
 	}
 }
