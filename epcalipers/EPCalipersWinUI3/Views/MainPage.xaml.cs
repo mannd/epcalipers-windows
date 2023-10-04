@@ -23,6 +23,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using EPCalipersWinUI3.Models;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,13 +32,6 @@ namespace EPCalipersWinUI3.Views
 {
 	public sealed partial class MainPage : Page
 	{
-        // Note zoom factors used in Mac OS X version
-        // These are taken from the Apple IKImageView demo
-        private readonly float _zoomInFactor = 1.414214f;
-        private readonly float _zoomOutFactor = 0.7071068f;
-
-        private readonly static float _maxZoom = 10;
-        private readonly static float _minZoom = 0.1f;
         private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
 
         double lineThickness = 5;
@@ -49,28 +43,22 @@ namespace EPCalipersWinUI3.Views
 		public MainPage()
 		{
 			this.InitializeComponent();
-            ViewModel = new MainPageViewModel();
+            ViewModel = new MainPageViewModel(SetZoom);
 
 			// demo
-            DrawLine(500, 0, 500, 500);
 
-            scrollViewer.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
+            ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
-                //lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
-                //lineThickness = Math.Min(lineThickness, 5.0);
-
-                //canvas.Children.Remove(line);
-                //DrawLine(500, 0, 500, 500);
-                //Debug.Print(scrollViewer.ZoomFactor.ToString());
+				ViewModel.ZoomFactor = ScrollView.ZoomFactor;
             });
 
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
-				if (ViewModel.ResetZoom)
+				if (ViewModel.ResetZoomWithNewImage)
 				{
-					SetZoom(1);
+					ViewModel.ResetZoomCommand.Execute(null);
 				}
-				if (ViewModel.ResetRotation) {
+				if (ViewModel.ResetRotationWithNewImage) {
 					RotateImageWithoutAnimation(0);
 				} 
 				else
@@ -81,21 +69,13 @@ namespace EPCalipersWinUI3.Views
             });
         }
 
-		// demo
-        private void DrawLine(int x1, int y1, int x2, int y2)
-        {
-            //canvas.Children.Clear();
-            Line line = new();
-            var brush = new SolidColorBrush(Microsoft.UI.Colors.Blue);
-            line.X1 = x1;
-            line.Y1 = y1;
-            line.X2 = x2;
-            line.Y2 = y2;
-            lineThickness = Math.Max(1.0, lineThickness / scrollViewer.ZoomFactor);
-            lineThickness = Math.Min(lineThickness, 5.0);
-            line.Stroke = brush;
-            CaliperGrid.Children.Add(line);
-        }
+
+		#region calipers
+		private void AddTimeCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			TimeCaliper testCaliper = new TimeCaliper();
+			CaliperGrid.Draw(testCaliper, ScrollView.ActualHeight);
+		}
 
         private void ScrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
@@ -127,36 +107,16 @@ namespace EPCalipersWinUI3.Views
             //Debug.WriteLine("Pointer released.");
             //pointerDown = false;
 		}
+		#endregion
 
 		#region zoom
-		private void ZoomIn_Click(object _1, RoutedEventArgs _2)
-		{
-            Zoom(_zoomInFactor);
-		}
-
-		private void ZoomOut_Click(object sender, RoutedEventArgs e)
-		{
-            Zoom(_zoomOutFactor);
-		}
-
-		private void ResetZoom_Click(object sender, RoutedEventArgs e)
-		{
-            SetZoom(1);
-		}
-
-          private void Zoom(float multiple)
-        {
-            var zoomTarget = multiple * scrollViewer.ZoomFactor;
-            if (zoomTarget < _minZoom || zoomTarget > _maxZoom) { return; }
-            SetZoom(zoomTarget);
-		}
-
+		/// <summary>
+		/// Delegate method that view model uses to set zoom on scroll view
+		/// </summary>
+		/// <param name="zoom"></param>
         private void SetZoom(float zoom)
         {
-            scrollViewer?.ChangeView(0, 0, zoom);
-            // TODO: Remove this if not used.
-            // Not sure if we need ViewModel to track this...
-            ViewModel.ZoomFactor = zoom;
+            ScrollView?.ChangeView(0, 0, zoom);
         }
 		#endregion
 		#region drag and drop
@@ -359,5 +319,6 @@ namespace EPCalipersWinUI3.Views
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 		#endregion
+
 	}
 }

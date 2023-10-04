@@ -44,17 +44,17 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu">
-                <MenuFlyoutItem x:Uid="ZoomInMenuItem" Click="ZoomIn_Click">
+                <MenuFlyoutItem x:Uid="ZoomInMenuItem" Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Add" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Click="ZoomOut_Click">
+                <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" Click="ResetZoom_Click"/>
+                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" Command="{x:Bind ViewModel.ResetZoomCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="Rotate90RMenuItem" Click="Rotate90R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
@@ -109,7 +109,7 @@
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
-                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem">
+                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Click="AddTimeCaliper_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -175,10 +175,10 @@
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="ZoomInBarButton" Click="ZoomIn_Click" ToolTipService.ToolTip="Zoom in">
+            <AppBarButton x:Uid="ZoomInBarButton" Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
                 <SymbolIcon Symbol="ZoomIn" />
             </AppBarButton>
-            <AppBarButton x:Uid="ZoomOutBarButton" Click="ZoomOut_Click" ToolTipService.ToolTip="Zoom out">
+            <AppBarButton x:Uid="ZoomOutBarButton" Command="{x:Bind ViewModel.ZoomOutCommand}" ToolTipService.ToolTip="Zoom out">
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
@@ -203,7 +203,7 @@
                 </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
-        <ScrollViewer x:Name="scrollViewer" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
+        <ScrollViewer x:Name="ScrollView" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollViewer_PointerPressed"
                           PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 

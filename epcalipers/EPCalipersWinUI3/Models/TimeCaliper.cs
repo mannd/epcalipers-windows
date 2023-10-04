@@ -34,6 +34,43 @@ namespace EPCalipersWinUI3.Models
 				{ComponentRole.Right, RightBar },
 				{ComponentRole.Cross, CrossBar }
 			};
+			// temp initial position of caliper
+			LeftBar.Position = 100;
+			RightBar.Position = 200;
+			CrossBar.Position = 200;
+		}
+
+		private void SetInitialPositionNearCorner()
+		{
+            //Point offset = ecgPictureBox.Location;
+            //c.initialOffset = new Point(-offset.X, -offset.Y);
+
+			//// init with Horizontal bar offsets
+			//int barOffset = _initialOffset.X;
+			//int crossbarOffset = _initialOffset.Y;
+
+			//if (Direction == CaliperDirection.Vertical)
+			//{
+			//	barOffset = _initialOffset.Y;
+			//	crossbarOffset = _initialOffset.X;
+			//}
+
+			//Bar1Position = 50 + differential + barOffset;
+			//Bar2Position = 100 + differential + barOffset;
+			//CrossbarPosition = 100 + differential + crossbarOffset;
+			//differential += 15.0f;
+			//if (differential > 80.0f)
+			//{
+			//	differential = 0.0f;
+			//}
+		}
+
+		public double Value
+		{
+			get
+			{
+				return (double)RightBar.Position - LeftBar.Position;
+			}
 		}
 
 		public bool IsSelected

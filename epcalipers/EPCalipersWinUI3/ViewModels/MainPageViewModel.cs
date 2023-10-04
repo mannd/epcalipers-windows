@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Devices.PointOfService;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -23,31 +24,29 @@ namespace EPCalipersWinUI3
 	{
 		private readonly PdfHelper _pdfHelper = new();
 
+        // Note zoom factors used in Mac OS X version
+        // These are taken from the Apple IKImageView demo
+        private readonly float _zoomInFactor = 1.414214f;
+        private readonly float _zoomOutFactor = 0.7071068f;
+        private readonly static float _maxZoom = 10;
+        private readonly static float _minZoom = 0.1f;
+
+		public delegate void SetZoomDelegate(float zoomFactor);
+
+		public SetZoomDelegate SetZoom; 
+
 		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
 		// It should only allow reset rotation to be false if image is multipage PDF.
-		public bool ResetZoom { get; private set; } = false;
-		public bool ResetRotation { get; private set; } = false;
+		public bool ResetZoomWithNewImage { get; private set; } = false;
+		public bool ResetRotationWithNewImage { get; private set; } = false;
 
-		public float ZoomFactor
+		public float ZoomFactor { get; set; } = 1;
+
+		public MainPageViewModel(SetZoomDelegate setZoomDelegate)
 		{
-			get
-			{
-				return _zoomFactor;
-			}
-			set
-			{
-				_zoomFactor = value;
-				Debug.WriteLine(_zoomFactor.ToString());
-			}
-		}
-
-		private float _zoomFactor;
-
-		public MainPageViewModel()
-		{
+			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}
-
 		#region commands
 
 		public async Task OpenImageFile(StorageFile file)
@@ -104,11 +103,37 @@ namespace EPCalipersWinUI3
 			softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
 
 			// build WinUI3 SoftwareBitmapSource
-			var source = new Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource();
+			var source = new SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
 			return source;
 		}
 
+		private void ZoomView(float multiple)
+		{
+			var zoomTarget = multiple * ZoomFactor;
+			if (zoomTarget < _minZoom || zoomTarget > _maxZoom) { return; }
+			ZoomFactor = zoomTarget;
+			SetZoom(ZoomFactor);
+		}
+
+		[RelayCommand]
+		private void ZoomIn()
+		{
+			ZoomView(_zoomInFactor);
+		}
+
+		[RelayCommand]
+		private void ZoomOut()
+		{
+			ZoomView(_zoomOutFactor);
+		}
+
+		[RelayCommand]
+		private void ResetZoom()
+		{
+			ZoomFactor = 1;
+			SetZoom(ZoomFactor);
+		}
 
 		[RelayCommand]
 		private static void Exit() => Application.Current.Exit();
