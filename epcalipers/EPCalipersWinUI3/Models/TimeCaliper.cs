@@ -1,5 +1,7 @@
-﻿using System;
+﻿using EPCalipersWinUI3.Contracts;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +17,17 @@ namespace EPCalipersWinUI3.Models
         Cross,
         Apex
     }
-	public class TimeCaliper
+	public class TimeCaliper : ICaliper
 	{
 		public CaliperComponent LeftBar { get; set; }
 		public CaliperComponent RightBar { get; set; }
 		public CaliperComponent CrossBar { get; set; }
 
 		public Dictionary<ComponentRole, CaliperComponent> CaliperComponents { get; set; }
+
+		public delegate void DrawDelegate();
+
+		public DrawDelegate Draw { get; set; } = null;
 
 		public TimeCaliper()
 		{
@@ -99,6 +105,24 @@ namespace EPCalipersWinUI3.Models
 		{
 			Move(LeftBar, distance);
 			Move(RightBar, distance);
+		}
+
+		public void ToggleIsSelected()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DrawCaliper()
+		{
+			if (Draw != null)
+			{
+				Draw();
+			}
+		}
+
+		public void PointIsNearCaliper(Point point)
+		{
+			return false;
 		}
 	}
 }

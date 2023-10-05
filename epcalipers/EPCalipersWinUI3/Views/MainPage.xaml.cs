@@ -77,16 +77,16 @@ namespace EPCalipersWinUI3.Views
 			CaliperGrid.Draw(testCaliper, ScrollView.ActualHeight);
 		}
 
-        private void ScrollViewer_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+        private void ScrollView_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
             // Just thin out lines as view zooms
         }
 
-        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        private void ScrollView_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
         }
 
-		private void ScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
+		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
 			Debug.WriteLine($"Scrollview touched at {position.Position}");

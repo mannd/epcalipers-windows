@@ -32,14 +32,12 @@ namespace EPCalipersWinUI3
         private readonly static float _minZoom = 0.1f;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
-
-		public SetZoomDelegate SetZoom; 
+		public SetZoomDelegate SetZoom {  get; set; }
 
 		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
 		// It should only allow reset rotation to be false if image is multipage PDF.
-		public bool ResetZoomWithNewImage { get; private set; } = false;
-		public bool ResetRotationWithNewImage { get; private set; } = false;
-
+		public bool ResetZoomWithNewImage { get; private set; } = true;
+		public bool ResetRotationWithNewImage { get; private set; } = true;
 		public float ZoomFactor { get; set; } = 1;
 
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate)
