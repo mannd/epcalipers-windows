@@ -17,11 +17,15 @@ namespace EPCalipersWinUI3.Models
         Cross,
         Apex
     }
-	public class TimeCaliper : ICaliper
+	public class TimeCaliper  
 	{
 		public CaliperComponent LeftBar { get; set; }
 		public CaliperComponent RightBar { get; set; }
 		public CaliperComponent CrossBar { get; set; }
+
+		// Used to set the bounds of the caliper components.
+		public double Height { get; set; }
+		public double Width { get; set; }	
 
 		public Dictionary<ComponentRole, CaliperComponent> CaliperComponents { get; set; }
 
@@ -29,7 +33,7 @@ namespace EPCalipersWinUI3.Models
 
 		public DrawDelegate Draw { get; set; } = null;
 
-		public TimeCaliper()
+		public TimeCaliper(double boundsWidth, double boundsHeight)
 		{
 			LeftBar = new CaliperComponent(ComponentDirection.Vertical);
 			RightBar = new CaliperComponent(ComponentDirection.Vertical);
@@ -44,6 +48,28 @@ namespace EPCalipersWinUI3.Models
 			LeftBar.Position = 100;
 			RightBar.Position = 200;
 			CrossBar.Position = 200;
+
+			LeftBar.Line = new Microsoft.UI.Xaml.Shapes.Line
+			{
+				X1 = LeftBar.Position,
+				X2 = LeftBar.Position,
+				Y1 = 0,
+				Y2 = boundsHeight
+			};
+			RightBar.Line = new Microsoft.UI.Xaml.Shapes.Line
+			{
+				X1 = RightBar.Position,
+				X2 = RightBar.Position,
+				Y1 = 0,
+				Y2 = boundsHeight
+			};
+			CrossBar.Line = new Microsoft.UI.Xaml.Shapes.Line
+			{
+				X1 = LeftBar.Position,
+				X2 = RightBar.Position,
+				Y1 = CrossBar.Position,
+				Y2 = CrossBar.Position
+			};
 		}
 
 		private void SetInitialPositionNearCorner()
@@ -118,11 +144,6 @@ namespace EPCalipersWinUI3.Models
 			{
 				Draw();
 			}
-		}
-
-		public void PointIsNearCaliper(Point point)
-		{
-			return false;
 		}
 	}
 }

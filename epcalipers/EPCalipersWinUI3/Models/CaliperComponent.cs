@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace EPCalipersWinUI3.Models
     /// </summary>
     public class CaliperComponent
     {
+
 		public CaliperComponent(ComponentDirection direction = ComponentDirection.Horizontal,
             int position = 0, bool isSelected = false , bool isChosen = false)
 		{
@@ -30,10 +32,10 @@ namespace EPCalipersWinUI3.Models
 		}
 
         public ComponentDirection Direction { get; set; } 
-		public int Position { get; set; }
+        public Line Line { get; set; } = new Line();
+		public double Position {  get; set; }
         public bool IsSelected { get; set; }
         public bool IsChosen { get; set; }
-
         public bool HasMoved { get; set; }
 
         public void Move(int distance)

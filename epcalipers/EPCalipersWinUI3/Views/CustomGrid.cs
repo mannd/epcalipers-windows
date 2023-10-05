@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,31 +21,31 @@ namespace EPCalipersWinUI3.Views
 			set => ProtectedCursor = value;
 		}
 
-		public void Draw(TimeCaliper c, double height)
+		public void Draw(TimeCaliper c)
 		{
-            Line leftLine = new();
+			Line leftLine = c.LeftBar.Line;
             var brush = new SolidColorBrush(Microsoft.UI.Colors.Blue);
-			leftLine.X1 = c.LeftBar.Position;
-			leftLine.Y1 = 0;
-			leftLine.X2 = c.LeftBar.Position;
-			leftLine.Y2 = height;
             leftLine.Stroke = brush;
             Children.Add(leftLine);
-			Line rightLine = new();
-			rightLine.X1 = c.RightBar.Position;
-			rightLine.Y1 = 0;
-			rightLine.X2 = c.RightBar.Position;
-			rightLine.Y2 = height;
+			Line rightLine = c.RightBar.Line;
             rightLine.Stroke = brush;
             Children.Add(rightLine);
-			Line crossbar = new();
-			crossbar.X1 = c.LeftBar.Position;
-			crossbar.Y1 = c.CrossBar.Position;
-			crossbar.X2 = c.RightBar.Position;
-			crossbar.Y2 = c.CrossBar.Position;
+			Line crossbar = c.CrossBar.Line;
             crossbar.Stroke = brush;
             Children.Add(crossbar);
+		}
+		public void Draw(TimeCaliper c, double increment)
+		{
+			c.RightBar.Line.X1 += increment;
+			c.RightBar.Line.X2 += increment;
+			c.CrossBar.Line.X2 += increment;
+		}
 
+		public void Drag(TimeCaliper c, double x)
+		{
+			c.RightBar.Line.X1 = x;
+			c.RightBar.Line.X2 = x;
+			c.CrossBar.Line.X2 = x;
 		}
 	}
 }

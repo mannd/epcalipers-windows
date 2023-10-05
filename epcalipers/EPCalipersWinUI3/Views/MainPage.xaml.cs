@@ -38,6 +38,10 @@ namespace EPCalipersWinUI3.Views
         private double _imageRotation = 0;
 		private double _rotatedImageScale = 1.0;
 
+		private TimeCaliper testCaliper;
+
+		private bool pointerDown = false;
+
         public MainPageViewModel ViewModel { get; set; }
 
 		public MainPage()
@@ -73,8 +77,12 @@ namespace EPCalipersWinUI3.Views
 		#region calipers
 		private void AddTimeCaliper_Click(object sender, RoutedEventArgs e)
 		{
-			TimeCaliper testCaliper = new TimeCaliper();
-			CaliperGrid.Draw(testCaliper, ScrollView.ActualHeight);
+			if (testCaliper == null)
+			{
+				testCaliper = new TimeCaliper(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
+				CaliperGrid.Draw(testCaliper);
+			}
+			CaliperGrid.Draw(testCaliper, 1);
 		}
 
         private void ScrollView_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
@@ -89,23 +97,23 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
-			Debug.WriteLine($"Scrollview touched at {position.Position}");
-			//DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-			//pointerDown = true;
+			CaliperGrid.Drag(testCaliper, position.Position.X);
+			pointerDown = true;
 		}
 
 		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
-            //if (pointerDown) {
-            //    var position = e.GetCurrentPoint(this.canvas);
-            //    DrawLine((int)position.Position.X, (int)position.Position.Y, 500, 500);
-            //}
+			if (pointerDown)
+			{
+				var position = e.GetCurrentPoint(this.CaliperGrid);
+				CaliperGrid.Drag(testCaliper, position.Position.X);
+			}
 		}
 
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
-            //Debug.WriteLine("Pointer released.");
-            //pointerDown = false;
+			Debug.WriteLine("Pointer released.");
+			pointerDown = false;
 		}
 		#endregion
 
