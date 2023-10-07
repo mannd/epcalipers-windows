@@ -18,7 +18,7 @@ namespace EPCalipersWinUI3.Calipers
         private Grid _grid;  // Grid that holds the caliper.
         private double _boundsWidth;
         private double _boundsHeight;
-        private readonly int margin = 10;
+        private readonly double _precision;
 
         public CaliperComponent LeftBar { get; set; }
         public CaliperComponent RightBar { get; set; }
@@ -123,7 +123,19 @@ namespace EPCalipersWinUI3.Calipers
             throw new NotImplementedException();
         }
 
-        override public void Draw()
+		public override CaliperComponent IsNearComponent(Point p)
+		{
+            foreach (var component in CaliperComponents)
+            {
+                if (component.IsNear(p))
+                {
+                    return component;
+                }
+            }
+            return null;
+		}
+
+		override public void Draw()
         {
             _grid.Children.Add(LeftBar.Line);
             _grid.Children.Add(RightBar.Line);

@@ -40,6 +40,7 @@ namespace EPCalipersWinUI3.Views
 
 		private Caliper testCaliper;
 		private List<Caliper> _calipers = new List<Caliper>();
+		private CaliperComponent _grabbedComponent = null;
 
 		private bool pointerDown = false;
 		private Point startingPoint;
@@ -104,18 +105,32 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
 			startingPoint = position.Position;
-			pointerDown = true;
+			// Detect if this is near a caliper component, and if so, load it up for movement.
+			foreach (var caliper in _calipers)
+			{
+				var component = caliper.IsNearComponent(startingPoint);
+				if (component != null)
+				{
+					pointerDown = true;
+					_grabbedComponent = component;
+					break;
+				}
+
+			}
 		}
 
 		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
-			if (pointerDown)
+			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(this.CaliperGrid);
 				// NB: only allow moving pointer withing bounds of EcgImage.
 				// Going outside of bounds increases size of CalipersGrid, and that distors calipers.
 				// By only registering in-bounds movements, the calipers can't go out of bounds or
 				// get stuck at the edges of the image.
+				//
+				// Also note, if we decide to center the image in the Grid, will need to check that
+				// Position.X and Position.Y are > 0 too.
 				if (position.Position.X < EcgImage.ActualWidth && position.Position.Y < EcgImage.ActualHeight)
 				{
 					var delta = new Point(position.Position.X - startingPoint.X, position.Position.Y - startingPoint.Y);
@@ -123,7 +138,7 @@ namespace EPCalipersWinUI3.Views
 					startingPoint.Y += delta.Y;
 					// temporary.  In reality, would detect caliper and caliper component with initial
 					// touch, and only drag that.
-					_calipers[0].Drag(((TimeCaliper)_calipers[0]).CrossBar, delta);
+					_calipers[0].Drag(_grabbedComponent, delta);
 				}
 			}
 		}

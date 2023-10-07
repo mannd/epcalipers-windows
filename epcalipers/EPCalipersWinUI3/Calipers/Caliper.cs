@@ -66,5 +66,7 @@ namespace EPCalipersWinUI3.Calipers
         public abstract void Draw();
 
         public abstract void Drag(CaliperComponent component, Point position);
+
+        public abstract CaliperComponent IsNearComponent(Point p);
     }
 }

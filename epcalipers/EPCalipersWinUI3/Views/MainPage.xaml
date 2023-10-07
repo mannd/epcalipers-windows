@@ -216,7 +216,7 @@
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollView_PointerPressed"
                           PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 
                     ViewChanged="ScrollView_ViewChanged" >
-            <local:CustomGrid x:Name="CaliperGrid" Background="Red" 
+            <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
                       HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top">
