@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Calipers;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-	public class CaliperTests
+    public class CaliperTests
 	{
 		[Fact]
 		public void TestCaliperIsSelected()

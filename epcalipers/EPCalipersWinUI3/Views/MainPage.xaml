@@ -169,9 +169,9 @@
         </MenuBar>
         <!--TODO: Segoe Fluent icons not included in Win10, so must add
       the font to shared resources, and may need to change syntax below.-->
-        <CommandBar Grid.Row="1" Background="Transparent" 
+        <CommandBar Grid.Row="1" Background="Transparent"
                         IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click">
+            <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click" >
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
@@ -182,9 +182,17 @@
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="CalipersBarButton">
-                <BitmapIcon UriSource="Assets/StoreLogo.scale-400.png" 
-                           ToolTipService.ToolTip="Add caliper"/>
+            <AppBarButton x:Uid="TimeCaliperBarButton" Click="AddTimeCaliper_Click" >
+                <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
+                           ToolTipService.ToolTip="Add time caliper"/>
+            </AppBarButton>
+            <AppBarButton x:Uid="AmplitudeCaliperBarButton" >
+                <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" 
+                           ToolTipService.ToolTip="Add amplitude caliper"/>
+            </AppBarButton>
+            <AppBarButton x:Uid="AngleCaliperBarButton" >
+                <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" 
+                           ToolTipService.ToolTip="Add angle caliper"/>
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton x:Uid="CalibrationBarButton">
@@ -209,10 +217,13 @@
                           PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 
                     ViewChanged="ScrollView_ViewChanged"
                       >
-            <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
-                              HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None" 
-                     HorizontalAlignment="Left" VerticalAlignment="Top">
+            <local:CustomGrid x:Name="CaliperGrid" Background="Red" 
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                <local:CustomGrid.Clip>
+                    <RectangleGeometry Rect="500, 200, 200, 200" />
+                </local:CustomGrid.Clip>
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
+                     HorizontalAlignment="Center" VerticalAlignment="Center">
                 </Image>
                        
             </local:CustomGrid>

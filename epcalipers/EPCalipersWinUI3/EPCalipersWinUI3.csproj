@@ -86,7 +86,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\AmplitudeCaliper.scale-200.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\AngleCaliper.scale-200.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\calipers.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\TimeCaliper.scale-200.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

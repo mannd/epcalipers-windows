@@ -1,9 +1,9 @@
-﻿using EPCalipersWinUI3.Models;
+﻿using EPCalipersWinUI3.Calipers;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-	public class CaliperComponentTests
+    public class CaliperComponentTests
 	{
 		CaliperComponent component;
 

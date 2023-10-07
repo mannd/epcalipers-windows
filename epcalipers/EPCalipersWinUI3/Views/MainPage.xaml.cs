@@ -23,24 +23,26 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Calipers;
+using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace EPCalipersWinUI3.Views
 {
-	public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page
 	{
         private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
 
-        double lineThickness = 5;
         private double _imageRotation = 0;
 		private double _rotatedImageScale = 1.0;
 
-		private TimeCaliper testCaliper;
+		private Caliper testCaliper;
+		private List<Caliper> _calipers = new List<Caliper>();
 
 		private bool pointerDown = false;
+		private Point startingPoint;
 
         public MainPageViewModel ViewModel { get; set; }
 
@@ -73,21 +75,20 @@ namespace EPCalipersWinUI3.Views
             });
         }
 
-
 		#region calipers
 		private void AddTimeCaliper_Click(object sender, RoutedEventArgs e)
 		{
 			if (testCaliper == null)
 			{
-				testCaliper = new TimeCaliper(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
-				CaliperGrid.Draw(testCaliper);
+				testCaliper = Caliper.Create(CaliperType.Time, CaliperGrid);
+				_calipers.Add(testCaliper);
+				testCaliper.Draw();
 			}
-			CaliperGrid.Draw(testCaliper, 1);
 		}
 
         private void ScrollView_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {
-            // Just thin out lines as view zooms
+            // ? thin out lines as view zooms
         }
 
         private void ScrollView_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -97,7 +98,9 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
-			CaliperGrid.Drag(testCaliper, position.Position.X);
+			//	_calipers[0].Drag(((TimeCaliper)_calipers[0]).RightBar, position.Position);
+			//CaliperGrid.Drag(testCaliper, position.Position.X);
+			startingPoint = position.Position;
 			pointerDown = true;
 		}
 
@@ -106,7 +109,11 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown)
 			{
 				var position = e.GetCurrentPoint(this.CaliperGrid);
-				CaliperGrid.Drag(testCaliper, position.Position.X);
+				var delta = new Point(position.Position.X - startingPoint.X, position.Position.Y - startingPoint.Y);
+				startingPoint.X += delta.X;
+				startingPoint.Y += delta.Y;
+				_calipers[0].Drag(((TimeCaliper)_calipers[0]).RightBar, delta);
+				//CaliperGrid.Drag(testCaliper, position.Position.X);
 			}
 		}
 

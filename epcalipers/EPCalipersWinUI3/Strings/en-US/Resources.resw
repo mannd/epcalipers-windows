@@ -120,8 +120,14 @@
   <data name="AboutMenuItem.Text" xml:space="preserve">
     <value>About EP Calipers</value>
   </data>
+  <data name="AmplitudeCaliperBarButton.Label" xml:space="preserve">
+    <value>Amplitude</value>
+  </data>
   <data name="AmplitudeCaliperMenuItem.Text" xml:space="preserve">
     <value>Amplitude caliper</value>
+  </data>
+  <data name="AngleCaliperBarButton.Label" xml:space="preserve">
+    <value>Angle</value>
   </data>
   <data name="AngleCaliperMenuItem.Text" xml:space="preserve">
     <value>Angle caliper</value>
@@ -131,9 +137,6 @@
   </data>
   <data name="CalibrationBarButton.Label" xml:space="preserve">
     <value>Calibration</value>
-  </data>
-  <data name="CalipersBarButton.Label" xml:space="preserve">
-    <value>Calipers</value>
   </data>
   <data name="CalipersMenu.Title" xml:space="preserve">
     <value>Calipers</value>
@@ -242,6 +245,9 @@
   </data>
   <data name="SettingsBarButton.Label" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="TimeCaliperBarButton.Label" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="TimeCaliperMenuItem.Text" xml:space="preserve">
     <value>Time caliper</value>
