@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Media;
+﻿using EPCalipersWinUI3.Contracts;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Devices;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -21,7 +23,7 @@ namespace EPCalipersWinUI3.Calipers
     /// <summary>
     /// One of the bars of a caliper.
     /// </summary>
-    public class CaliperComponent
+    public class CaliperComponent : ILine
     {
 		public enum Role
 		{
@@ -33,83 +35,89 @@ namespace EPCalipersWinUI3.Calipers
 			TriangleBase // For BrugadaMeter.
 		}
 
-        // TODO: Implement Position as get only, based on role of component.
-
         public Line Line { get; set; }
+
+        public ILine ComponentLine { get; set; }
         public Role ComponentRole { get; set; }
+
+		public double Position
+        {
+            get
+            {
+				switch (ComponentRole)
+				{
+					case Role.Horizontal:
+						return Y1;
+					case Role.Vertical:
+						return X1;
+					default:
+						return 0;
+				}
+			}
+		}
+
+		public double X1 { get => ComponentLine.X1; set => ComponentLine.X1 = value; }
+        public double X2 { get => ComponentLine.X2; set => ComponentLine.X2 = value; }
+        public double Y1 { get => ComponentLine.Y1; set => ComponentLine.Y1 = value; }
+        public double Y2 { get => ComponentLine.Y2; set => ComponentLine.Y2 = value; }
 
         private readonly double _precision = 10;
 
 		public CaliperComponent(Role role,
-			double position, double start, double end)
+			double position, double start, double end, ILine componentLine = null)
         {
             ComponentRole = role;
+            ComponentLine = componentLine ?? new ComponentLine();
             InitLine(start, end, position);
         }
 
         private void InitLine(double start, double end, double position)
         {
-            if (Line == null)
-            {
-                Line = new Line();
-            }
             switch (ComponentRole)
             {
                 case Role.Vertical:
-                    Line.X1 = position;
-                    Line.Y1 = 0;
-                    Line.X2 = position;
-                    Line.Y2 = end;
+                    X1 = position;
+                    Y1 = 0;
+                    X2 = position;
+                    Y2 = end;
                     break;
                 case Role.HorizontalCrossBar:
-                    Line.X1 = start;
-                    Line.Y1 = position;
-                    Line.X2 = end;
-                    Line.Y2 = position;
+                    X1 = start;
+                    Y1 = position;
+                    X2 = end;
+                    Y2 = position;
                     break;
                 default:
                     break;
             }
         }
-
-		public SolidColorBrush Brush
-        {
-            set
-            {
-                Line.Stroke = value;
-            }
-        }
-
-        public double Thickness
-        {
-            set
-            {
-                Line.StrokeThickness = value;
-            }
-        }
-
         public bool IsSelected { get; set; }
+		public Color Color { set => ComponentLine.Color = value; }
+		public double Width { get => ComponentLine.Width; set => ComponentLine.Width = value; }
 
-
-
-        public bool IsNear(Point p)
+		public bool IsNear(Point p)
         {
-            if (Line == null)
-            {
-                return false;
-            }
             switch (ComponentRole)
             {
+                case Role.Horizontal:
+					return p.Y > Y1 - _precision && p.Y < Y1 + _precision;
                 case Role.Vertical:
-					return p.X > Line.X1 - _precision && p.X < Line.X1 + _precision;
-                    case Role.HorizontalCrossBar:
-                    return p.X > Math.Min(Line.X1, Line.X2)
-                            && p.X < Math.Max(Line.X1, Line.X2)
-                            && p.Y > Line.Y1 - _precision
-                            && p.Y < Line.Y1 + _precision;
+					return p.X > X1 - _precision && p.X < X1 + _precision;
+				case Role.HorizontalCrossBar:
+					return p.X > Math.Min(X1, X2)
+                            && p.X < Math.Max(X1, X2)
+                            && p.Y > Y1 - _precision
+                            && p.Y < Y1 + _precision;
+				case Role.VerticalCrossBar:
+					return p.Y > Math.Min(X1, X2)
+                            && p.Y < Math.Max(X1, X2)
+                            && p.X > X1 - _precision
+                            && p.Y < X1 + _precision;
                 default: return false;
             }
         }
+
+        public Line GetComponent() => ComponentLine.GetComponent();
 
 
     }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
+using EPCalipersWinUI3.Contracts;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -20,7 +21,7 @@ namespace EPCalipersWinUI3.Calipers
 
     public abstract class Caliper
     {
-        public static Caliper Create(CaliperType caliperType, Grid grid)
+		public static Caliper Create(CaliperType caliperType, Grid grid)
         {
             switch (caliperType)
 			{
@@ -38,18 +39,9 @@ namespace EPCalipersWinUI3.Calipers
 
         protected void SetColor(Color color)
         {
-            var brush = new SolidColorBrush(color);
             foreach (var component in GetCaliperComponents())
             {
-                component.Brush = brush;
-            }
-        }
-
-        protected void SetBrush(SolidColorBrush brush)
-        {
-            foreach (var component in GetCaliperComponents())
-            {
-                component.Brush = brush;
+                component.Color = color;
             }
         }
 
@@ -57,7 +49,7 @@ namespace EPCalipersWinUI3.Calipers
         {
             foreach (var component in GetCaliperComponents())
             {
-                component.Thickness = thickness;
+                component.Width = thickness;
             }
         }
 

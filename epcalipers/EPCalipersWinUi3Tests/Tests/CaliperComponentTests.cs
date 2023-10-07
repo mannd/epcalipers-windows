@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Calipers;
+using Windows.Foundation;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
@@ -9,21 +10,28 @@ namespace EPCalipersWinUi3Tests.Tests
 
 		public CaliperComponentTests()
 		{
-			component = new CaliperComponent();
+			var stubComponentLine = new FakeComponentLine();
+			component = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, 200, stubComponentLine);
 		}
 
 		[Fact]
-		public void TestMoveComponent()
+		public void TestPosition()
 		{
-			Assert.Equal(0, component.Position);
-			component.Move(0);
-			Assert.Equal(0, component.Position);
-			component.Move(1);
-			Assert.Equal(1, component.Position);
-			component.Move(2);
-			Assert.Equal(3, component.Position);
-			component.Move(-5);
-			Assert.Equal(-2, component.Position);
+			var position = component.Position;
+			Assert.Equal(100, position);
+			component.X1 = 200;
+			Assert.Equal(200, component.Position);
+		}
+
+		[Fact]
+		public void TestIsNear()
+		{
+			Point p = new Point(101, 50);
+			Assert.True(component.IsNear(p));
+			Point p0 = new Point(95, 50);
+			Assert.True(component.IsNear(p0));
+			Point p1 = new Point(150, 50);
+			Assert.False(component.IsNear(p1));
 		}
 	}
 }

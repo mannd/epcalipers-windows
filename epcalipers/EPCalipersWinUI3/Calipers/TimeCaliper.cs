@@ -42,7 +42,7 @@ namespace EPCalipersWinUI3.Calipers
         /// The text displayed adjacent to the caliper, showing the value in points
         /// or calibrated units.
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
         public CaliperComponent[] CaliperComponents { get; set; }
 
@@ -116,7 +116,7 @@ namespace EPCalipersWinUI3.Calipers
                 }
             }
         }
-        private bool _isSelected;
+        private bool _isSelected = false;
 
         public void ToggleIsSelected()
         {
@@ -137,36 +137,37 @@ namespace EPCalipersWinUI3.Calipers
 
 		override public void Draw()
         {
-            _grid.Children.Add(LeftBar.Line);
-            _grid.Children.Add(RightBar.Line);
-            _grid.Children.Add(CrossBar.Line);
+            var c = LeftBar.GetComponent();
+            _grid.Children.Add(c);
+            //_grid.Children.Add(LeftBar.GetComponent());
+            _grid.Children.Add(RightBar.GetComponent());
+            _grid.Children.Add(CrossBar.GetComponent());
         }
 
-        // Note that calipers are being drawn outside of image.  Is this good or bad?
 		override public void Drag(CaliperComponent component, Point delta)
 		{
             if (component == LeftBar)
             {
-				component.Line.X1 += delta.X;
-				component.Line.X2 += delta.X;
-				CrossBar.Line.X1 += delta.X;
+				component.X1 += delta.X;
+				component.X2 += delta.X;
+				CrossBar.X1 += delta.X;
 			}
 			else if (component == RightBar)
             {
-				component.Line.X1 += delta.X;
-				component.Line.X2 += delta.X;
-				CrossBar.Line.X2 += delta.X;
+				component.X1 += delta.X;
+				component.X2 += delta.X;
+				CrossBar.X2 += delta.X;
 			}
 			else if (component == CrossBar)
             {
-                LeftBar.Line.X1 += delta.X;
-                LeftBar.Line.X2 += delta.X;
-                RightBar.Line.X1 += delta.X;
-                RightBar.Line.X2 += delta.X;
-                CrossBar.Line.X1 += delta.X;
-                CrossBar.Line.X2 += delta.X;
-                CrossBar.Line.Y1 += delta.Y;
-                CrossBar.Line.Y2 += delta.Y;
+                LeftBar.X1 += delta.X;
+                LeftBar.X2 += delta.X;
+                RightBar.X1 += delta.X;
+                RightBar.X2 += delta.X;
+                CrossBar.X1 += delta.X;
+                CrossBar.X2 += delta.X;
+                CrossBar.Y1 += delta.Y;
+                CrossBar.Y2 += delta.Y;
 			}
 		}
 	}
