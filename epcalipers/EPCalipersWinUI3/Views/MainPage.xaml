@@ -215,15 +215,11 @@
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollView_PointerPressed"
                           PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 
-                    ViewChanged="ScrollView_ViewChanged"
-                      >
+                    ViewChanged="ScrollView_ViewChanged" >
             <local:CustomGrid x:Name="CaliperGrid" Background="Red" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center">
-                <local:CustomGrid.Clip>
-                    <RectangleGeometry Rect="500, 200, 200, 200" />
-                </local:CustomGrid.Clip>
+                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
-                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                     HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
                        
             </local:CustomGrid>

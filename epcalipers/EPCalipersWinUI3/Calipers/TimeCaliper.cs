@@ -18,6 +18,7 @@ namespace EPCalipersWinUI3.Calipers
         private Grid _grid;  // Grid that holds the caliper.
         private double _boundsWidth;
         private double _boundsHeight;
+        private readonly int margin = 10;
 
         public CaliperComponent LeftBar { get; set; }
         public CaliperComponent RightBar { get; set; }
@@ -97,7 +98,7 @@ namespace EPCalipersWinUI3.Calipers
 
         override public double Value()
         {
-			return RightBar.Position - LeftBar.Position;
+            return RightBar.Line.X1 - LeftBar.Line.X1;
 		}
 
 		public bool IsSelected
@@ -154,7 +155,7 @@ namespace EPCalipersWinUI3.Calipers
                 CrossBar.Line.X2 += delta.X;
                 CrossBar.Line.Y1 += delta.Y;
                 CrossBar.Line.Y2 += delta.Y;
-            }
+			}
 		}
 	}
 }

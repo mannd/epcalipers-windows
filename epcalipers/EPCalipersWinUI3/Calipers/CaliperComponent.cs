@@ -31,7 +31,6 @@ namespace EPCalipersWinUI3.Calipers
 			Angle,
 			TriangleBase // For BrugadaMeter.
 		}
-        public double Position { get; set; }
         public Line Line { get; set; }
         public Role ComponentRole { get; set; }
 
@@ -39,11 +38,10 @@ namespace EPCalipersWinUI3.Calipers
 			double position, double start, double end)
         {
             ComponentRole = role;
-            Position = position;
-            InitLine(start, end);
+            InitLine(start, end, position);
         }
 
-        private void InitLine(double start, double end)
+        private void InitLine(double start, double end, double position)
         {
             if (Line == null)
             {
@@ -52,16 +50,16 @@ namespace EPCalipersWinUI3.Calipers
             switch (ComponentRole)
             {
                 case Role.Vertical:
-                    Line.X1 = Position;
+                    Line.X1 = position;
                     Line.Y1 = 0;
-                    Line.X2 = Position;
+                    Line.X2 = position;
                     Line.Y2 = end;
                     break;
                 case Role.HorizontalCrossBar:
                     Line.X1 = start;
-                    Line.Y1 = Position;
+                    Line.Y1 = position;
                     Line.X2 = end;
-                    Line.Y2 = Position;
+                    Line.Y2 = position;
                     break;
                 default:
                     break;
