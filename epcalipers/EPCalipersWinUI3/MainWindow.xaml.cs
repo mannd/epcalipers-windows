@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Input;
+using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -35,6 +36,12 @@ namespace EPCalipersWinUI3
             SetTitleBar(TitleBar);
             MainFrame.Navigate(typeof(Views.MainPage));
 			Activated += MainWindow_Activated;
+		}
+
+		public void Navigate(System.Type type)
+		{
+			if (type == null) { return; }
+			MainFrame.Navigate(type);
 		}
 
 		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)

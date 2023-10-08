@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3.Calipers
         public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
         private bool _fakeComponentLines;
-
+    
         public CaliperComponent[] CaliperComponents { get; set; }
 
         /// <summary>

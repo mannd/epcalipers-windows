@@ -363,5 +363,17 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 
+		private void Options_Click(object sender, RoutedEventArgs e)
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(SettingsPage));
+		}
+
+		private void Help_Click(object sender, RoutedEventArgs e)
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(HelpWebViewPage));
+
+		}
 	}
 }

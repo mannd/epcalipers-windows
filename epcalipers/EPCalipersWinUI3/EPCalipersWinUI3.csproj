@@ -42,7 +42,9 @@
     <None Remove="Assets\SplashScreen.scale-200.png" />
     <None Remove="Views\AboutDialog.xaml" />
     <None Remove="Views\GotoPdfPageDialog.xaml" />
+    <None Remove="Views\HelpWebViewPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
+    <None Remove="Views\SettingsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -110,6 +112,12 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Page Update="Views\HelpWebViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\GotoPdfPageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

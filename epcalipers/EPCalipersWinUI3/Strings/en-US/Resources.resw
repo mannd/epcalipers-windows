@@ -120,6 +120,9 @@
   <data name="AboutMenuItem.Text" xml:space="preserve">
     <value>About EP Calipers</value>
   </data>
+  <data name="AddCaliperBarButton.Label" xml:space="preserve">
+    <value>Add caliper</value>
+  </data>
   <data name="AmplitudeCaliperBarButton.Label" xml:space="preserve">
     <value>Amplitude</value>
   </data>
@@ -258,7 +261,7 @@
   <data name="ToolsMenu.Title" xml:space="preserve">
     <value>Tools</value>
   </data>
-  <data name="TransparentWindowMenuItemText" xml:space="preserve">
+  <data name="TransparentWindowMenuItem.Text" xml:space="preserve">
     <value>Transparent window</value>
   </data>
   <data name="ZoomInBarButton.Label" xml:space="preserve">

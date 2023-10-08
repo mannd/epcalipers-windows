@@ -21,6 +21,9 @@
         <MenuBar Grid.Row="0" >
             <MenuBarItem x:Uid="FileMenu">
                 <MenuFlyoutItem x:Uid="OpenMenuItem" Click="OpenFile_Click">
+                    <MenuFlyoutItem.Icon>
+                        <SymbolIcon Symbol="OpenFile" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -45,11 +48,17 @@
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu">
                 <MenuFlyoutItem x:Uid="ZoomInMenuItem" Command="{x:Bind ViewModel.ZoomInCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <SymbolIcon Symbol="ZoomIn" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Add" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <SymbolIcon Symbol="ZoomOut" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -110,16 +119,25 @@
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
                 <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Click="AddTimeCaliper_Click">
+                    <MenuFlyoutItem.Icon>
+                        <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem">
+                    <MenuFlyoutItem.Icon>
+                        <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="A" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AngleCaliperMenuItem">
+                    <MenuFlyoutItem.Icon>
+                        <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
+                    </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="G" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -154,10 +172,10 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="OptionsMenuItem"/>
+                <MenuFlyoutItem x:Uid="OptionsMenuItem" Click="Options_Click"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="HelpMenu">
-                <MenuFlyoutItem x:Uid="HelpMenuItem">
+                <MenuFlyoutItem x:Uid="HelpMenuItem" Click="Help_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -182,21 +200,49 @@
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="TimeCaliperBarButton" Click="AddTimeCaliper_Click" >
+            <AppBarButton x:Uid="AddCaliperBarButton"  >
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
-            </AppBarButton>
-            <AppBarButton x:Uid="AmplitudeCaliperBarButton" >
-                <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" 
-                           ToolTipService.ToolTip="Add amplitude caliper"/>
-            </AppBarButton>
-            <AppBarButton x:Uid="AngleCaliperBarButton" >
-                <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" 
-                           ToolTipService.ToolTip="Add angle caliper"/>
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Click="AddTimeCaliper_Click">
+                            <MenuFlyoutItem.Icon>
+                                <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="T" Modifiers="Control" />
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem">
+                            <MenuFlyoutItem.Icon>
+                                <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="A" Modifiers="Control" />
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="AngleCaliperMenuItem">
+                            <MenuFlyoutItem.Icon>
+                                <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="G" Modifiers="Control" />
+                            </MenuFlyoutItem.KeyboardAccelerators>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton x:Uid="CalibrationBarButton">
                 <FontIcon Glyph="&#xE73E;" />
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Uid="SetCalibrationMenuItem">
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem">
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" />
             <AppBarButton x:Uid="MeanRateIntervalBarButton">
