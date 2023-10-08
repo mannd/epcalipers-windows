@@ -13,36 +13,22 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
 {
+
     public sealed class TimeCaliper : Caliper
     {
-        private Grid _grid;  // Grid that holds the caliper.
-        private double _boundsWidth;
-        private double _boundsHeight;
-        private readonly double _precision;
+        private Bounds _bounds;
 
         public CaliperComponent LeftBar { get; set; }
         public CaliperComponent RightBar { get; set; }
         public CaliperComponent CrossBar { get; set; }
 
         /// <summary>
-        /// Color of caliper when not selected.
-        /// </summary>
-        public Color UnselectedColor { get; set; } = Colors.Blue;
-
-        /// <summary>
-        /// Color of caliper when selected.
-        /// </summary>
-        // TODO: UnselectedColor can be changed on a per caliper basis, but not SelectedColor,
-        // so maybe SelectedColor should be system-wide and not per caliper.  This may affect
-        // other versions of EP Calipers too (i.e. change SelectedColor in settings, old selected color
-        // may still appear when selecting caliper created before the change).
-        public Color SelectedColor { get; set; } = Colors.Red;
-
-        /// <summary>
         /// The text displayed adjacent to the caliper, showing the value in points
         /// or calibrated units.
         /// </summary>
         public string Text { get; set; }  // TODO: a class for the Text of a caliper
+
+        private bool _fakeComponentLines;
 
         public CaliperComponent[] CaliperComponents { get; set; }
 
@@ -51,26 +37,37 @@ namespace EPCalipersWinUI3.Calipers
         /// </summary>
         /// <param name="boundsWidth">The width of the view containing the caliper.</param>
         /// <param name="boundsHeight">The height of the view containing the caliper.</param>
-        public TimeCaliper(Grid grid)
+        public TimeCaliper(Bounds bounds, bool fakeComponentLines = false)
         {
-            _grid = grid;
-            _boundsWidth = _grid.ActualWidth;
-            _boundsHeight = _grid.ActualHeight;
-
-            // temp set initial positions here.
-            LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, _boundsHeight);
-            RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, 300, 0, _boundsHeight);
-            CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 300, 100, 300);
+            _bounds = bounds;
+            _fakeComponentLines = fakeComponentLines;
+            SetInitialPosition();
             CaliperComponents =  new[] { LeftBar, RightBar, CrossBar };
             SetThickness(2);
-            SetColor(UnselectedColor);
         }
 
-        override protected CaliperComponent[] GetCaliperComponents()
+        protected override CaliperComponent[] GetCaliperComponents()
         {
             return CaliperComponents;
         }
 
+        private void SetInitialPosition()
+        {
+            if (_fakeComponentLines)
+            {
+                var fakeComponentLine = new FakeComponentLine();
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, _bounds.Height, fakeComponentLine);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, 300, 0, _bounds.Height, fakeComponentLine);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 300, 100, 300, fakeComponentLine);
+            }
+            else
+            {
+                // temp set initial positions here.
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, _bounds.Height);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, 300, 0, _bounds.Height);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 300, 100, 300);
+            }
+        }
         private void SetInitialPositionNearCorner()
         {
             //Point offset = ecgPictureBox.Location;
@@ -96,9 +93,9 @@ namespace EPCalipersWinUI3.Calipers
             //}
         }
 
-        override public double Value()
+        public override double Value()
         {
-            return RightBar.Line.X1 - LeftBar.Line.X1;
+            return RightBar.Position - LeftBar.Position;
 		}
 
 		public bool IsSelected
@@ -135,16 +132,14 @@ namespace EPCalipersWinUI3.Calipers
             return null;
 		}
 
-		override public void Draw()
-        {
-            var c = LeftBar.GetComponent();
-            _grid.Children.Add(c);
-            //_grid.Children.Add(LeftBar.GetComponent());
-            _grid.Children.Add(RightBar.GetComponent());
-            _grid.Children.Add(CrossBar.GetComponent());
-        }
+		public override void Add(Grid grid)
+		{
+            grid.Children.Add(LeftBar.GetComponent());
+            grid.Children.Add(RightBar.GetComponent());
+            grid.Children.Add(CrossBar.GetComponent());
+		}
 
-		override public void Drag(CaliperComponent component, Point delta)
+		public override void Drag(CaliperComponent component, Point delta)
 		{
             if (component == LeftBar)
             {

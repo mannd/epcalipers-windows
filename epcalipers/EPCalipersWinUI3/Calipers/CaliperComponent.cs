@@ -13,18 +13,14 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.Calipers
 {
-    public enum ComponentDirection
-    {
-        Horizontal,
-        Vertical,
-        Angle
-    }
-
     /// <summary>
     /// One of the bars of a caliper.
     /// </summary>
-    public class CaliperComponent : ILine
+    public sealed class CaliperComponent : ILine
     {
+        /// <summary>
+        /// The direction and function of the CaliperComponent in a Caliper.
+        /// </summary>
 		public enum Role
 		{
 			Horizontal,
@@ -34,12 +30,12 @@ namespace EPCalipersWinUI3.Calipers
 			Angle,
 			TriangleBase // For BrugadaMeter.
 		}
-
-        public Line Line { get; set; }
-
+        /// <summary>
+        /// This is a graphics object that is drawable, just a Line but can substitute
+        /// an ILine stub for testing.
+        /// </summary>
         public ILine ComponentLine { get; set; }
         public Role ComponentRole { get; set; }
-
 		public double Position
         {
             get
@@ -55,23 +51,23 @@ namespace EPCalipersWinUI3.Calipers
 				}
 			}
 		}
-
 		public double X1 { get => ComponentLine.X1; set => ComponentLine.X1 = value; }
         public double X2 { get => ComponentLine.X2; set => ComponentLine.X2 = value; }
         public double Y1 { get => ComponentLine.Y1; set => ComponentLine.Y1 = value; }
         public double Y2 { get => ComponentLine.Y2; set => ComponentLine.Y2 = value; }
 
-        private readonly double _precision = 10;
+        private readonly double _precision = 10; // Used to determine if touches are nearby.
 
+        // TODO: Should (position, start, end) be a struct?
 		public CaliperComponent(Role role,
 			double position, double start, double end, ILine componentLine = null)
         {
             ComponentRole = role;
             ComponentLine = componentLine ?? new ComponentLine();
-            InitLine(start, end, position);
+            SetupComponentLine(start, end, position);
         }
 
-        private void InitLine(double start, double end, double position)
+        private void SetupComponentLine(double start, double end, double position)
         {
             switch (ComponentRole)
             {
@@ -93,7 +89,11 @@ namespace EPCalipersWinUI3.Calipers
         }
         public bool IsSelected { get; set; }
 		public Color Color { set => ComponentLine.Color = value; }
-		public double Width { get => ComponentLine.Width; set => ComponentLine.Width = value; }
+		public double Width
+        {
+            get => ComponentLine.Width;
+            set => ComponentLine.Width = value;
+        }
 
 		public bool IsNear(Point p)
         {
@@ -118,7 +118,5 @@ namespace EPCalipersWinUI3.Calipers
         }
 
         public Line GetComponent() => ComponentLine.GetComponent();
-
-
     }
 }

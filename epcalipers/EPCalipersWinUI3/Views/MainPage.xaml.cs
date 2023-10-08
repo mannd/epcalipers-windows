@@ -86,9 +86,11 @@ namespace EPCalipersWinUI3.Views
 		{
 			if (testCaliper == null)
 			{
-				testCaliper = Caliper.Create(CaliperType.Time, CaliperGrid);
+				var bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
+				testCaliper = Caliper.Create(CaliperType.Time, bounds);
+				testCaliper.SetColor(Colors.Blue);
 				_calipers.Add(testCaliper);
-				testCaliper.Draw();
+				testCaliper.Add(CaliperGrid);
 			}
 		}
 

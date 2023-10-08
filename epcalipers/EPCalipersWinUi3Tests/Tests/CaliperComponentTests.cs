@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Calipers;
+using Microsoft.UI;
 using Windows.Foundation;
 using Xunit;
 
