@@ -11,15 +11,20 @@
 
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--<WebView2
-            x:Name="WebView"
+        <StackPanel Grid.Row="0">
+            <Button Content="Back" Click="BackButton_Click"/>
+        </StackPanel>
+
+
+        <WebView2
+            x:Name="WebView" Grid.Row="1"
             Source="{x:Bind ViewModel.Source, Mode=OneWay}" />
 
-        <StackPanel
+        <!--<StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}">

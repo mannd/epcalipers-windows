@@ -134,6 +134,20 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
+		private static void Settings()
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(SettingsPage));
+		}
+
+		[RelayCommand]
+		private static void Help()
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(HelpWebViewPage));
+		}
+
+		[RelayCommand]
 		private static void Exit() => Application.Current.Exit();
 
 		[RelayCommand]

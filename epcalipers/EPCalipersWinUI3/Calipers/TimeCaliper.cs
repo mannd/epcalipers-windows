@@ -10,6 +10,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Input;
 using Windows.Foundation;
+using Windows.Gaming.XboxLive.Storage;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -98,27 +99,6 @@ namespace EPCalipersWinUI3.Calipers
             return RightBar.Position - LeftBar.Position;
 		}
 
-		public bool IsSelected
-        {
-            get
-            {
-                return _isSelected;
-            }
-            set
-            {
-                _isSelected = value;
-                foreach (var component in CaliperComponents)
-                {
-                    component.IsSelected = value;
-                }
-            }
-        }
-        private bool _isSelected = false;
-
-        public void ToggleIsSelected()
-        {
-            throw new NotImplementedException();
-        }
 
 		public override CaliperComponent IsNearComponent(Point p)
 		{
@@ -138,6 +118,14 @@ namespace EPCalipersWinUI3.Calipers
             grid.Children.Add(RightBar.GetComponent());
             grid.Children.Add(CrossBar.GetComponent());
 		}
+
+		public override void Delete(Grid grid)
+		{
+            grid.Children.Remove(LeftBar.GetComponent());
+            grid.Children.Remove(RightBar.GetComponent());
+            grid.Children.Remove(CrossBar.GetComponent());
+		}
+
 
 		public override void Drag(CaliperComponent component, Point delta)
 		{

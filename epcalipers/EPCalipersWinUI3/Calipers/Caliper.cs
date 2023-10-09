@@ -45,6 +45,31 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
+        public Color UnselectedColor {  get; set; }
+        public Color SelectedColor { get; set; }
+		public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                foreach (var component in GetCaliperComponents())
+                {
+                    component.IsSelected = value;
+                    component.Color = component.IsSelected ? SelectedColor : UnselectedColor;
+                }
+            }
+        }
+        private bool _isSelected = false;
+
+        public void ToggleIsSelected()
+        {
+            IsSelected = !IsSelected;
+        }
+
         protected void SetThickness(double thickness)
         {
             foreach (var component in GetCaliperComponents())
@@ -56,6 +81,8 @@ namespace EPCalipersWinUI3.Calipers
         public abstract double Value();
 
         public abstract void Add(Grid grid);
+
+        public abstract void Delete(Grid grid);
 
         public abstract void Drag(CaliperComponent component, Point position);
 

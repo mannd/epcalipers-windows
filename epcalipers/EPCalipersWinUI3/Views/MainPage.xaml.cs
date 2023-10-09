@@ -38,9 +38,9 @@ namespace EPCalipersWinUI3.Views
         private double _imageRotation = 0;
 		private double _rotatedImageScale = 1.0;
 
-		private Caliper testCaliper;
 		private List<Caliper> _calipers = new List<Caliper>();
 		private CaliperComponent _grabbedComponent = null;
+		private Caliper _grabbedCaliper = null;
 
 		private bool pointerDown = false;
 		private Point startingPoint;
@@ -51,8 +51,6 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom);
-
-			// demo
 
             ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -73,25 +71,56 @@ namespace EPCalipersWinUI3.Views
 					var originalRotation = _imageRotation;
 					RotateImageWithoutAnimation(originalRotation);
 				}
-			
-
-				// Below happens automatically...
-				//CaliperGrid.Height = EcgImage.Height;
-				//CaliperGrid.Width = EcgImage.Width;
             });
         }
 
 		#region calipers
 		private void AddTimeCaliper_Click(object sender, RoutedEventArgs e)
 		{
-			if (testCaliper == null)
-			{
 				var bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
-				testCaliper = Caliper.Create(CaliperType.Time, bounds);
+				var testCaliper = Caliper.Create(CaliperType.Time, bounds);
 				testCaliper.SetColor(Colors.Blue);
+				testCaliper.UnselectedColor = Colors.Blue;
+				testCaliper.SelectedColor = Colors.Red;
 				_calipers.Add(testCaliper);
 				testCaliper.Add(CaliperGrid);
+		}
+		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			foreach (var caliper in _calipers)
+			{
+				var component = caliper.IsNearComponent(startingPoint);
+				if (component != null)
+				{
+					// TODO: has to be handled in _calipers, because need to clear selected
+					// calipers first.
+					caliper.ToggleIsSelected();
+					break;
+				}
 			}
+		}
+
+		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+		{
+			foreach (var caliper in _calipers)
+			{
+				var component = caliper.IsNearComponent(startingPoint);
+				if (component != null)
+				{
+					caliper.Delete(CaliperGrid);
+					break;
+				}
+			}
+		}
+
+		private void DeleteAllCalipers()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.Delete(CaliperGrid);
+			}
+			_calipers.Clear();
+			
 		}
 
         private void ScrollView_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
@@ -115,6 +144,7 @@ namespace EPCalipersWinUI3.Views
 				{
 					pointerDown = true;
 					_grabbedComponent = component;
+					_grabbedCaliper = caliper;
 					break;
 				}
 
@@ -140,7 +170,7 @@ namespace EPCalipersWinUI3.Views
 					startingPoint.Y += delta.Y;
 					// temporary.  In reality, would detect caliper and caliper component with initial
 					// touch, and only drag that.
-					_calipers[0].Drag(_grabbedComponent, delta);
+					_grabbedCaliper.Drag(_grabbedComponent, delta);
 				}
 			}
 		}
@@ -148,6 +178,8 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			Debug.WriteLine("Pointer released.");
+			_grabbedComponent = null;
+			_grabbedComponent = null;
 			pointerDown = false;
 		}
 		#endregion
@@ -174,6 +206,8 @@ namespace EPCalipersWinUI3.Views
 					var storageFile = items[0] as StorageFile;
                     // check file types first???
                     await ViewModel.OpenImageFile(storageFile);
+					// TODO: make sure image opens before deleting calipers...
+					DeleteAllCalipers();
                 }
 			}
 		}
@@ -360,20 +394,9 @@ namespace EPCalipersWinUI3.Views
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
 			await ViewModel.OpenImageFile(file);
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+			// Maybe move this to ViewModel, to make sure file loads before deleting calipers.
+			DeleteAllCalipers();
 		}
 		#endregion
-
-		private void Options_Click(object sender, RoutedEventArgs e)
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(SettingsPage));
-		}
-
-		private void Help_Click(object sender, RoutedEventArgs e)
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(HelpWebViewPage));
-
-		}
 	}
 }

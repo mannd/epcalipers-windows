@@ -26,5 +26,11 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
 		}
-	}
+
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(MainPage));
+        }
+    }
 }

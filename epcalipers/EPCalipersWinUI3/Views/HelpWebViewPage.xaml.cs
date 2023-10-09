@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using EPCalipersWinUI3.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,9 +23,18 @@ namespace EPCalipersWinUI3.Views
 	/// </summary>
 	public sealed partial class HelpWebViewPage : Page
 	{
+		public HelpViewModel ViewModel {  get; set; }
+
 		public HelpWebViewPage()
 		{
 			this.InitializeComponent();
+			ViewModel = new HelpViewModel();
+		}
+
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(MainPage));
 		}
 	}
 }

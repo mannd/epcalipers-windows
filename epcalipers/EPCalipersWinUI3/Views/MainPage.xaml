@@ -172,15 +172,18 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="OptionsMenuItem" Click="Options_Click"/>
+                <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.SettingsCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="HelpMenu">
-                <MenuFlyoutItem x:Uid="HelpMenuItem" Click="Help_Click">
+                <MenuFlyoutItem x:Uid="HelpMenuItem" Command="{x:Bind ViewModel.HelpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="AboutMenuItem"  Click="About_Click" />
             </MenuBarItem>
@@ -260,7 +263,9 @@
         <ScrollViewer x:Name="ScrollView" Grid.Row="2" HorizontalScrollMode="Enabled" VerticalScrollMode="Enabled"
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollView_PointerPressed"
-                          PointerMoved="ScrollViewer_PointerMoved" PointerReleased="ScrollView_PointerReleased" 
+                          PointerMoved="ScrollViewer_PointerMoved" Tapped="ScrollViewer_Tapped"
+                      DoubleTapped="ScrollViewer_DoubleTapped"
+                      PointerReleased="ScrollView_PointerReleased" 
                     ViewChanged="ScrollView_ViewChanged" >
             <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
                       HorizontalAlignment="Left" VerticalAlignment="Top">
