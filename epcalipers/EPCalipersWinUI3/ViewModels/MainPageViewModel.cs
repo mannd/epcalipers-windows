@@ -1,20 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Views;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.PointOfService;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -23,6 +25,8 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper = new();
+		private CaliperCollection _caliperCollection;
+		private Grid _grid;
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -40,12 +44,34 @@ namespace EPCalipersWinUI3
 		public bool ResetRotationWithNewImage { get; private set; } = true;
 		public float ZoomFactor { get; set; } = 1;
 
-		public MainPageViewModel(SetZoomDelegate setZoomDelegate)
+		public MainPageViewModel(SetZoomDelegate setZoomDelegate, Grid grid)
 		{
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
+			_caliperCollection = new CaliperCollection(grid);
+			_grid = grid;
 		}
 		#region commands
+
+		[RelayCommand]
+		public void AddTimeCaliper()
+		{
+			var bounds = new Bounds(_grid.ActualWidth, _grid.ActualHeight);
+			var caliper = Caliper.Create(CaliperType.Time, bounds);
+			caliper.SetColor(Colors.Blue);
+			caliper.UnselectedColor = Colors.Blue;
+			caliper.SelectedColor = Colors.Red;
+			_caliperCollection.Add(caliper);
+		}
+
+		public void ToggleCaliperSelection(Point point)
+		{
+			_caliperCollection.ToggleCaliperSelection(point);
+		}
+		public void RemoveAtPoint(Point point)
+		{
+			_caliperCollection.RemoveAtPoint(point);
+		}
 
 		public async Task OpenImageFile(StorageFile file)
 		{
@@ -204,19 +230,22 @@ namespace EPCalipersWinUI3
 			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 
 		[ObservableProperty]
-		public int maximumPdfPage;
+		private int maximumPdfPage;
 
 		[ObservableProperty]
-		public int currentPdfPageNumber;
+		private int currentPdfPageNumber;
 
 		[ObservableProperty]
-		public bool isMultipagePdf;
+		private bool isMultipagePdf;
 
 		[ObservableProperty]
-		public bool isNotFirstPageOfPdf;
+		private bool isNotFirstPageOfPdf;
 
 		[ObservableProperty]
-		public bool isNotLastPageOfPdf;
+		private bool isNotLastPageOfPdf;
+
+		[ObservableProperty]
+		private Bounds bounds;
 
 
 		#endregion

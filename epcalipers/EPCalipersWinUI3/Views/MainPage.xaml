@@ -208,7 +208,7 @@
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Click="AddTimeCaliper_Click">
+                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
@@ -272,7 +272,6 @@
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
-                       
             </local:CustomGrid>
         </ScrollViewer>
     </Grid>

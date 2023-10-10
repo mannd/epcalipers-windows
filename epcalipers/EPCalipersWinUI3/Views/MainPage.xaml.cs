@@ -50,7 +50,7 @@ namespace EPCalipersWinUI3.Views
 		public MainPage()
 		{
 			this.InitializeComponent();
-            ViewModel = new MainPageViewModel(SetZoom);
+            ViewModel = new MainPageViewModel(SetZoom, CaliperGrid);
 
             ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -59,6 +59,7 @@ namespace EPCalipersWinUI3.Views
 
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
+				ViewModel.Bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
 				if (ViewModel.ResetZoomWithNewImage)
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
@@ -87,30 +88,14 @@ namespace EPCalipersWinUI3.Views
 		}
 		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			foreach (var caliper in _calipers)
-			{
-				var component = caliper.IsNearComponent(startingPoint);
-				if (component != null)
-				{
-					// TODO: has to be handled in _calipers, because need to clear selected
-					// calipers first.
-					caliper.ToggleIsSelected();
-					break;
-				}
-			}
+			var position = e.GetPosition(CaliperGrid);
+			ViewModel.ToggleCaliperSelection(position);
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
-			foreach (var caliper in _calipers)
-			{
-				var component = caliper.IsNearComponent(startingPoint);
-				if (component != null)
-				{
-					caliper.Delete(CaliperGrid);
-					break;
-				}
-			}
+			var position = e.GetPosition(CaliperGrid);
+			ViewModel.RemoveAtPoint(position);
 		}
 
 		private void DeleteAllCalipers()
