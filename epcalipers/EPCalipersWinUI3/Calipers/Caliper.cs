@@ -19,14 +19,25 @@ namespace EPCalipersWinUI3.Calipers
         Angle
     }
     public readonly record struct Bounds(double Width, double Height);
+
+    /// <summary>
+    /// A caliper's position is defined by the positions of the 3 components.
+    /// The Center position is the crossbar, and First and Last are Left and Right
+    /// for Time calipers, and Top and Bottom for Amplitude calipers.
+    /// Angle calipers may need a different structure.
+    /// </summary>
+    /// <param name="Center"></param>
+    /// <param name="First"></param>
+    /// <param name="Last"></param>
+    public readonly record struct CaliperPosition(double Center, double First, double Last);
     public abstract class Caliper
     {
-		public static Caliper Create(CaliperType caliperType, Bounds bounds)
+		public static Caliper Create(CaliperType caliperType, Bounds bounds, CaliperPosition position)
         {
             switch (caliperType)
 			{
 				case CaliperType.Time:
-					return new TimeCaliper(bounds);
+					return new TimeCaliper(bounds, position);
 				case CaliperType.Amplitude:
 					return null;
 				case CaliperType.Angle:

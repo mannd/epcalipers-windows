@@ -33,16 +33,11 @@ namespace EPCalipersWinUI3.Calipers
     
         public CaliperComponent[] CaliperComponents { get; set; }
 
-        /// <summary>
-        /// A caliper measuring time, with vertical bars and a horizontal crossbar.
-        /// </summary>
-        /// <param name="boundsWidth">The width of the view containing the caliper.</param>
-        /// <param name="boundsHeight">The height of the view containing the caliper.</param>
-        public TimeCaliper(Bounds bounds, bool fakeComponentLines = false)
+        public TimeCaliper(Bounds bounds, CaliperPosition position, bool fakeComponentLines = false)
         {
             _bounds = bounds;
             _fakeComponentLines = fakeComponentLines;
-            SetInitialPosition();
+            SetInitialPosition(position);
             CaliperComponents =  new[] { LeftBar, RightBar, CrossBar };
             SetThickness(2);
         }
@@ -52,21 +47,21 @@ namespace EPCalipersWinUI3.Calipers
             return CaliperComponents;
         }
 
-        private void SetInitialPosition()
+		private void SetInitialPosition(CaliperPosition position)
         {
             if (_fakeComponentLines)
             {
                 var fakeComponentLine = new FakeComponentLine();
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, _bounds.Height, fakeComponentLine);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, 300, 0, _bounds.Height, fakeComponentLine);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 300, 100, 300, fakeComponentLine);
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, _bounds.Height, fakeComponentLine);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, _bounds.Height, fakeComponentLine);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, 100, 300, fakeComponentLine);
             }
             else
             {
                 // temp set initial positions here.
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, 100, 0, _bounds.Height);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, 300, 0, _bounds.Height);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 300, 100, 300);
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, _bounds.Height);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, _bounds.Height);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, 100, 300);
             }
         }
         private void SetInitialPositionNearCorner()
@@ -152,6 +147,19 @@ namespace EPCalipersWinUI3.Calipers
                 CrossBar.Y1 += delta.Y;
                 CrossBar.Y2 += delta.Y;
 			}
+		}
+	}
+
+	internal record struct NewStruct(int Item1, int Item2, int Item3)
+	{
+		public static implicit operator (int, int, int)(NewStruct value)
+		{
+			return (value.Item1, value.Item2, value.Item3);
+		}
+
+		public static implicit operator NewStruct((int, int, int) value)
+		{
+			return new NewStruct(value.Item1, value.Item2, value.Item3);
 		}
 	}
 }

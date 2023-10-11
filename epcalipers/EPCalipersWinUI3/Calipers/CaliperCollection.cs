@@ -52,17 +52,53 @@ namespace EPCalipersWinUI3.Calipers
 			_caliperCollection.Clear();
 		}
 
-		public void ToggleCaliperSelection(Point point)
+		public void RemoveActiveCaliper()
+		{
+			foreach (var caliper in _caliperCollection)
+			{
+				if (caliper.IsSelected)
+				{
+					caliper.Delete(_grid);
+					_caliperCollection.Remove(caliper);
+					break;  // Can only be one selected caliper, so no point checking the rest.
+				}
+			}
+		}
+
+		public (Caliper, CaliperComponent) GetGrabbedCaliper(Point point)
 		{
 			foreach (var caliper in _caliperCollection)
 			{
 				var component = caliper.IsNearComponent(point);
 				if (component != null)
 				{
-					// TODO: has to be handled in _calipers, because need to clear selected
-					// calipers first.
-					caliper.ToggleIsSelected();
-					break;
+					return (caliper, component);
+				}
+			}
+			return (null, null);
+		}
+
+		public void ToggleCaliperSelection(Point point)
+		{
+			bool caliperToggled = false;
+			foreach (var caliper in _caliperCollection)
+			{
+				var component = caliper.IsNearComponent(point);
+				if (component != null && !caliperToggled)
+				{
+					caliperToggled = true;
+					if (caliper.IsSelected)
+					{
+						caliper.IsSelected = false;
+					}
+					else
+					{
+						caliper.IsSelected = true;
+					}
+				}
+				else
+				{
+					caliper.IsSelected = false;
 				}
 			}
 		}

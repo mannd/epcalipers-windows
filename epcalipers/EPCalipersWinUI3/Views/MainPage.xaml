@@ -95,7 +95,7 @@
                         <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetImageMenuItem" Click="ResetImage_Click">
+                <MenuFlyoutItem x:Uid="ResetRotationMenuItem" Click="ResetRotation_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -118,7 +118,7 @@
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu">
-                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Click="AddTimeCaliper_Click">
+                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
@@ -143,12 +143,14 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem">
+                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" 
+                                Command="{x:Bind ViewModel.DeleteSelectedCaliperCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Icon="Delete" x:Uid="DeleteAllCalipersMenuItem">
+                <MenuFlyoutItem Icon="Delete" x:Uid="DeleteAllCalipersMenuItem"
+                                Command="{x:Bind ViewModel.DeleteAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>

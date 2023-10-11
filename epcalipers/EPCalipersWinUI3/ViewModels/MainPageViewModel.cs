@@ -27,6 +27,9 @@ namespace EPCalipersWinUI3
 		private readonly PdfHelper _pdfHelper = new();
 		private CaliperCollection _caliperCollection;
 		private Grid _grid;
+		private Caliper _grabbedCaliper = null;
+		private CaliperComponent _grabbedComponent = null;
+		private Point _startingPoint;
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -57,11 +60,23 @@ namespace EPCalipersWinUI3
 		public void AddTimeCaliper()
 		{
 			var bounds = new Bounds(_grid.ActualWidth, _grid.ActualHeight);
-			var caliper = Caliper.Create(CaliperType.Time, bounds);
+			var caliper = Caliper.Create(CaliperType.Time, bounds, new CaliperPosition(100, 100, 300));
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
 			_caliperCollection.Add(caliper);
+		}
+
+		[RelayCommand]
+		public void DeleteAllCalipers()
+		{
+			_caliperCollection.Clear();
+		}
+
+		[RelayCommand]
+		public void DeleteSelectedCaliper()
+		{
+			_caliperCollection.RemoveActiveCaliper();
 		}
 
 		public void ToggleCaliperSelection(Point point)
@@ -71,6 +86,28 @@ namespace EPCalipersWinUI3
 		public void RemoveAtPoint(Point point)
 		{
 			_caliperCollection.RemoveAtPoint(point);
+		}
+
+		public void GrabCaliper(Point point)
+		{
+			// Detect if this is near a caliper component, and if so, load it up for movement.
+			(_grabbedCaliper, _grabbedComponent) = _caliperCollection.GetGrabbedCaliper(point);
+			_startingPoint = point;
+		}
+
+		public void DragCaliperComponent(Point point)
+		{
+			if (_grabbedCaliper == null || _grabbedComponent == null) return;
+			var delta = new Point(point.X - _startingPoint.X, point.Y - _startingPoint.Y);
+			_startingPoint.X += delta.X;
+			_startingPoint.Y += delta.Y;
+			_grabbedCaliper.Drag(_grabbedComponent, delta);
+		}
+
+		public void ReleaseGrabbedCaliper()
+		{
+			_grabbedCaliper = null;
+			_grabbedComponent = null;
 		}
 
 		public async Task OpenImageFile(StorageFile file)

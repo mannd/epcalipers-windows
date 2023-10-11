@@ -216,8 +216,8 @@
   <data name="RateIntervalBarButton.Label" xml:space="preserve">
     <value>Rate/interval</value>
   </data>
-  <data name="ResetImageMenuItem.Text" xml:space="preserve">
-    <value>Reset image</value>
+  <data name="ResetRotationMenuItem.Text" xml:space="preserve">
+    <value>Reset rotation</value>
   </data>
   <data name="ResetZoomMenuItem.Text" xml:space="preserve">
     <value>Reset zoom</value>

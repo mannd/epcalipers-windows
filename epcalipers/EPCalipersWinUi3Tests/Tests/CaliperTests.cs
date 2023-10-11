@@ -9,16 +9,22 @@ using Microsoft.UI.Xaml.Shapes;
 using Microsoft.UI;
 using Windows.UI;
 using Xunit;
+using EPCalipersWinUI3;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
     public class CaliperTests
 	{
+		private TimeCaliper GetTimeCaliper()
+		{
+			var bounds = new Bounds(500, 1000);
+			return new TimeCaliper(bounds, new CaliperPosition(50, 100, 200), true);
+		}
+
 		[Fact]
 		public void TestCaliperIsSelected()
 		{
-			var bounds = new Bounds(500, 1000);
-			TimeCaliper timeCaliper = new TimeCaliper(bounds, true);
+			var timeCaliper = GetTimeCaliper();
 			Assert.False(timeCaliper.LeftBar.IsSelected);
 			Assert.False(timeCaliper.RightBar.IsSelected);
 			Assert.False(timeCaliper.CrossBar.IsSelected);
@@ -31,5 +37,6 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.False(timeCaliper.RightBar.IsSelected);
 			Assert.False(timeCaliper.CrossBar.IsSelected);
 		}
+
 	}
 }

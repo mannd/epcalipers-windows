@@ -59,7 +59,10 @@ namespace EPCalipersWinUI3.Views
 
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
+				// TODO: Need to change bounds with rotation?
 				ViewModel.Bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
+				ViewModel.DeleteAllCalipersCommand.Execute(null);
+
 				if (ViewModel.ResetZoomWithNewImage)
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
@@ -76,16 +79,6 @@ namespace EPCalipersWinUI3.Views
         }
 
 		#region calipers
-		private void AddTimeCaliper_Click(object sender, RoutedEventArgs e)
-		{
-				var bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
-				var testCaliper = Caliper.Create(CaliperType.Time, bounds);
-				testCaliper.SetColor(Colors.Blue);
-				testCaliper.UnselectedColor = Colors.Blue;
-				testCaliper.SelectedColor = Colors.Red;
-				_calipers.Add(testCaliper);
-				testCaliper.Add(CaliperGrid);
-		}
 		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			var position = e.GetPosition(CaliperGrid);
@@ -121,19 +114,8 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
 			startingPoint = position.Position;
-			// Detect if this is near a caliper component, and if so, load it up for movement.
-			foreach (var caliper in _calipers)
-			{
-				var component = caliper.IsNearComponent(startingPoint);
-				if (component != null)
-				{
-					pointerDown = true;
-					_grabbedComponent = component;
-					_grabbedCaliper = caliper;
-					break;
-				}
-
-			}
+			pointerDown = true;
+			ViewModel.GrabCaliper(startingPoint);
 		}
 
 		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -141,21 +123,9 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(this.CaliperGrid);
-				// NB: only allow moving pointer withing bounds of EcgImage.
-				// Going outside of bounds increases size of CalipersGrid, and that distors calipers.
-				// By only registering in-bounds movements, the calipers can't go out of bounds or
-				// get stuck at the edges of the image.
-				//
-				// Also note, if we decide to center the image in the Grid, will need to check that
-				// Position.X and Position.Y are > 0 too.
 				if (position.Position.X < EcgImage.ActualWidth && position.Position.Y < EcgImage.ActualHeight)
 				{
-					var delta = new Point(position.Position.X - startingPoint.X, position.Position.Y - startingPoint.Y);
-					startingPoint.X += delta.X;
-					startingPoint.Y += delta.Y;
-					// temporary.  In reality, would detect caliper and caliper component with initial
-					// touch, and only drag that.
-					_grabbedCaliper.Drag(_grabbedComponent, delta);
+					ViewModel.DragCaliperComponent(position.Position);
 				}
 			}
 		}
@@ -163,8 +133,7 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			Debug.WriteLine("Pointer released.");
-			_grabbedComponent = null;
-			_grabbedComponent = null;
+			ViewModel.ReleaseGrabbedCaliper();
 			pointerDown = false;
 		}
 		#endregion
@@ -234,7 +203,7 @@ namespace EPCalipersWinUI3.Views
 			RotateImageByAngle(-0.1);
 		}
 
-		private void ResetImage_Click(object sender, RoutedEventArgs e)
+		private void ResetRotation_Click(object sender, RoutedEventArgs e)
 		{
 			//ResetRotation();
             RotateImageToAngle(0);
@@ -268,8 +237,6 @@ namespace EPCalipersWinUI3.Views
 				Duration = storyboard.Duration
 			};
 
-			// Bug, reversing rotation by 1 degree and reversing direction causes scale to alternate
-			// between legitimate scale and scale of 1.0;
 			var scaledWidth = _rotatedImageScale * EcgImage.ActualWidth;
 			var scaledHeight = _rotatedImageScale * EcgImage.ActualHeight; ;
 			_rotatedImageScale = MathHelper.ScaleToFit(scaledWidth, scaledHeight, _imageRotation);
@@ -311,15 +278,6 @@ namespace EPCalipersWinUI3.Views
 				Rotation = _imageRotation,
             };
 			EcgImage.RenderTransform = rotateTransform;
-		}
-
-		private void ResetRotation()
-		{
-			_rotatedImageScale = 1.0;
-			RotateImage(_imageRotation, 0);
-			_imageRotation = 0;
-			//EcgImage.RenderTransform = null;
-			//RotateImageWithoutAnimation(0);
 		}
 
 		// TODO: Calculate the scaling factor based on height and width and rotation angle...

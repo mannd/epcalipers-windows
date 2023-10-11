@@ -34,7 +34,7 @@ namespace EPCalipersWinUI3.Calipers
         /// This is a graphics object that is drawable, just a Line but can substitute
         /// an ILine stub for testing.
         /// </summary>
-        public ILine ComponentLine { get; set; }
+        public ILine ComponentLine { get;  set; }
         public Role ComponentRole { get; set; }
 		public double Position
         {
@@ -55,6 +55,8 @@ namespace EPCalipersWinUI3.Calipers
         public double X2 { get => ComponentLine.X2; set => ComponentLine.X2 = value; }
         public double Y1 { get => ComponentLine.Y1; set => ComponentLine.Y1 = value; }
         public double Y2 { get => ComponentLine.Y2; set => ComponentLine.Y2 = value; }
+
+        public bool IsGrabbed { get; set; } = false;
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
@@ -88,7 +90,8 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
         public bool IsSelected { get; set; }
-		public Color Color { set => ComponentLine.Color = value; }
+		public Color Color {
+            set => ComponentLine.Color = value; }
 		public double Width
         {
             get => ComponentLine.Width;
