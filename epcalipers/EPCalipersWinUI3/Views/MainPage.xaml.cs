@@ -34,16 +34,11 @@ namespace EPCalipersWinUI3.Views
     public sealed partial class MainPage : Page
 	{
         private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
-
         private double _imageRotation = 0;
 		private double _rotatedImageScale = 1.0;
 
-		private List<Caliper> _calipers = new List<Caliper>();
-		private CaliperComponent _grabbedComponent = null;
-		private Caliper _grabbedCaliper = null;
-
 		private bool pointerDown = false;
-		private Point startingPoint;
+		private Point pointerPosition;
 
         public MainPageViewModel ViewModel { get; set; }
 
@@ -91,31 +86,12 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.RemoveAtPoint(position);
 		}
 
-		private void DeleteAllCalipers()
-		{
-			foreach (var caliper in _calipers)
-			{
-				caliper.Delete(CaliperGrid);
-			}
-			_calipers.Clear();
-			
-		}
-
-        private void ScrollView_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-        {
-            // ? thin out lines as view zooms
-        }
-
-        private void ScrollView_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-        }
-
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperGrid);
-			startingPoint = position.Position;
+			pointerPosition = position.Position;
 			pointerDown = true;
-			ViewModel.GrabCaliper(startingPoint);
+			ViewModel.GrabCaliper(pointerPosition);
 		}
 
 		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -160,8 +136,6 @@ namespace EPCalipersWinUI3.Views
 					var storageFile = items[0] as StorageFile;
                     // check file types first???
                     await ViewModel.OpenImageFile(storageFile);
-					// TODO: make sure image opens before deleting calipers...
-					DeleteAllCalipers();
                 }
 			}
 		}
@@ -337,8 +311,6 @@ namespace EPCalipersWinUI3.Views
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
 			await ViewModel.OpenImageFile(file);
 			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
-			// Maybe move this to ViewModel, to make sure file loads before deleting calipers.
-			DeleteAllCalipers();
 		}
 		#endregion
 	}

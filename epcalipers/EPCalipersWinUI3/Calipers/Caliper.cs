@@ -32,6 +32,12 @@ namespace EPCalipersWinUI3.Calipers
     public readonly record struct CaliperPosition(double Center, double First, double Last);
     public abstract class Caliper
     {
+        protected Bounds Bounds { get; init; }
+        protected Caliper(Bounds bounds) 
+        {
+            Bounds = bounds;
+        }
+
 		public static Caliper Create(CaliperType caliperType, Bounds bounds, CaliperPosition position)
         {
             switch (caliperType)
@@ -39,14 +45,21 @@ namespace EPCalipersWinUI3.Calipers
 				case CaliperType.Time:
 					return new TimeCaliper(bounds, position);
 				case CaliperType.Amplitude:
-					return null;
+					return new AmplitudeCaliper(bounds, position);
 				case CaliperType.Angle:
 					return null;
 			}
 			return null;
 		}
 
-		protected abstract CaliperComponent[] GetCaliperComponents(); 
+        public CaliperType CaliperType { get; init; }
+
+        protected CaliperComponent[] CaliperComponents { get; init; }
+
+		protected  CaliperComponent[] GetCaliperComponents()
+        {
+            return CaliperComponents;
+        }
 
         public void SetColor(Color color)
         {
@@ -95,7 +108,7 @@ namespace EPCalipersWinUI3.Calipers
 
         public abstract void Delete(Grid grid);
 
-        public abstract void Drag(CaliperComponent component, Point position);
+        public abstract void Drag(CaliperComponent component, Point delta);
 
         public abstract CaliperComponent IsNearComponent(Point p);
     }

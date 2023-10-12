@@ -126,7 +126,7 @@
                         <KeyboardAccelerator Key="T" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem">
+                <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
@@ -218,7 +218,7 @@
                                 <KeyboardAccelerator Key="T" Modifiers="Control" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem">
+                        <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
@@ -266,9 +266,7 @@
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollView_PointerPressed"
                           PointerMoved="ScrollViewer_PointerMoved" Tapped="ScrollViewer_Tapped"
-                      DoubleTapped="ScrollViewer_DoubleTapped"
-                      PointerReleased="ScrollView_PointerReleased" 
-                    ViewChanged="ScrollView_ViewChanged" >
+                      DoubleTapped="ScrollViewer_DoubleTapped" PointerReleased="ScrollView_PointerReleased">
             <local:CustomGrid x:Name="CaliperGrid" Background="Transparent" 
                       HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"

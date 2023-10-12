@@ -17,8 +17,6 @@ namespace EPCalipersWinUI3.Calipers
 
     public sealed class TimeCaliper : Caliper
     {
-        private Bounds _bounds;
-
         public CaliperComponent LeftBar { get; set; }
         public CaliperComponent RightBar { get; set; }
         public CaliperComponent CrossBar { get; set; }
@@ -29,22 +27,16 @@ namespace EPCalipersWinUI3.Calipers
         /// </summary>
         public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
-        private bool _fakeComponentLines;
+		private bool _fakeComponentLines;
     
-        public CaliperComponent[] CaliperComponents { get; set; }
 
-        public TimeCaliper(Bounds bounds, CaliperPosition position, bool fakeComponentLines = false)
+        public TimeCaliper(Bounds bounds, CaliperPosition position, bool fakeComponentLines = false) : base(bounds)
         {
-            _bounds = bounds;
             _fakeComponentLines = fakeComponentLines;
             SetInitialPosition(position);
             CaliperComponents =  new[] { LeftBar, RightBar, CrossBar };
-            SetThickness(2);
-        }
-
-        protected override CaliperComponent[] GetCaliperComponents()
-        {
-            return CaliperComponents;
+			SetThickness(2);
+			CaliperType = CaliperType.Time;
         }
 
 		private void SetInitialPosition(CaliperPosition position)
@@ -52,16 +44,18 @@ namespace EPCalipersWinUI3.Calipers
             if (_fakeComponentLines)
             {
                 var fakeComponentLine = new FakeComponentLine();
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, _bounds.Height, fakeComponentLine);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, _bounds.Height, fakeComponentLine);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, 100, 300, fakeComponentLine);
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height, fakeComponentLine);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height, fakeComponentLine);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 
+                    position.Center, position.First, position.Last, fakeComponentLine);
             }
             else
             {
                 // temp set initial positions here.
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, _bounds.Height);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, _bounds.Height);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, 100, 300);
+                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height);
+                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height);
+                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 
+                    position.Center, position.First, position.Last);
             }
         }
         private void SetInitialPositionNearCorner()
@@ -109,16 +103,20 @@ namespace EPCalipersWinUI3.Calipers
 
 		public override void Add(Grid grid)
 		{
+            if (grid == null) return; // grid can be null for testing.
             grid.Children.Add(LeftBar.GetComponent());
             grid.Children.Add(RightBar.GetComponent());
             grid.Children.Add(CrossBar.GetComponent());
+            //grid.Children.Add(CaliperLabel);
 		}
 
 		public override void Delete(Grid grid)
 		{
+            if (grid == null) return;
             grid.Children.Remove(LeftBar.GetComponent());
             grid.Children.Remove(RightBar.GetComponent());
             grid.Children.Remove(CrossBar.GetComponent());
+            //grid.Children.Remove(CaliperLabel);
 		}
 
 
@@ -147,19 +145,6 @@ namespace EPCalipersWinUI3.Calipers
                 CrossBar.Y1 += delta.Y;
                 CrossBar.Y2 += delta.Y;
 			}
-		}
-	}
-
-	internal record struct NewStruct(int Item1, int Item2, int Item3)
-	{
-		public static implicit operator (int, int, int)(NewStruct value)
-		{
-			return (value.Item1, value.Item2, value.Item3);
-		}
-
-		public static implicit operator NewStruct((int, int, int) value)
-		{
-			return new NewStruct(value.Item1, value.Item2, value.Item3);
 		}
 	}
 }

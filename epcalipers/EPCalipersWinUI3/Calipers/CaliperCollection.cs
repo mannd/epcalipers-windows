@@ -23,6 +23,9 @@ namespace EPCalipersWinUI3.Calipers
 			_grid = grid;
 		}
 
+		public IList<Caliper> FilteredCalipers(CaliperType caliperType) 
+			=> _caliperCollection.Where(x => x.CaliperType == caliperType).ToList();
+
 		public void Add(Caliper caliper)
 		{
 			caliper.Add(_grid);
@@ -67,15 +70,21 @@ namespace EPCalipersWinUI3.Calipers
 
 		public (Caliper, CaliperComponent) GetGrabbedCaliper(Point point)
 		{
-			foreach (var caliper in _caliperCollection)
-			{
-				var component = caliper.IsNearComponent(point);
-				if (component != null)
-				{
-					return (caliper, component);
-				}
-			}
-			return (null, null);
+			CaliperComponent component = null;
+			var caliper = _caliperCollection.Where(x => (component = x.IsNearComponent(point)) != null).FirstOrDefault();
+			if (caliper == null) return (null, null);
+			return (caliper, component);
+		
+
+			//foreach (var caliper in _caliperCollection)
+			//{
+			//	var component = caliper.IsNearComponent(point);
+			//	if (component != null)
+			//	{
+			//		return (caliper, component);
+			//	}
+			//}
+			//return (null, null);
 		}
 
 		public void ToggleCaliperSelection(Point point)

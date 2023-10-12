@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public class HelpViewModel
+	public partial class HelpViewModel : ObservableObject
 	{
-		public string Source = "https://epstudiossoftware.com";
+		[ObservableProperty]
+		private string source = "https://epstudiossoftware.com";
 	}
 }

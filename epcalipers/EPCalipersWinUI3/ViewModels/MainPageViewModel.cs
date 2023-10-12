@@ -68,6 +68,17 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
+		public void AddAmplitudeCaliper()
+		{
+			var bounds = new Bounds(_grid.ActualWidth, _grid.ActualHeight);
+			var caliper = Caliper.Create(CaliperType.Amplitude, bounds, new CaliperPosition(100, 100, 300));
+			caliper.SetColor(Colors.Blue);
+			caliper.UnselectedColor = Colors.Blue;
+			caliper.SelectedColor = Colors.Red;
+			_caliperCollection.Add(caliper);
+		}
+
+		[RelayCommand]
 		public void DeleteAllCalipers()
 		{
 			_caliperCollection.Clear();

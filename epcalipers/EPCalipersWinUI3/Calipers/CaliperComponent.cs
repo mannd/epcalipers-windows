@@ -73,6 +73,12 @@ namespace EPCalipersWinUI3.Calipers
         {
             switch (ComponentRole)
             {
+                case Role.Horizontal:
+                    X1 = 0;
+                    Y1 = position;
+                    X2 = end;
+                    Y2 = position;
+                    break;
                 case Role.Vertical:
                     X1 = position;
                     Y1 = 0;
@@ -84,6 +90,12 @@ namespace EPCalipersWinUI3.Calipers
                     Y1 = position;
                     X2 = end;
                     Y2 = position;
+                    break;
+                case Role.VerticalCrossBar:
+                    X1 = position;
+                    Y1 = start;
+                    X2 = position;
+                    Y2 = end;
                     break;
                 default:
                     break;
@@ -112,10 +124,10 @@ namespace EPCalipersWinUI3.Calipers
                             && p.Y > Y1 - _precision
                             && p.Y < Y1 + _precision;
 				case Role.VerticalCrossBar:
-					return p.Y > Math.Min(X1, X2)
-                            && p.Y < Math.Max(X1, X2)
+					return p.Y > Math.Min(Y1, Y2)
+                            && p.Y < Math.Max(Y1, Y2)
                             && p.X > X1 - _precision
-                            && p.Y < X1 + _precision;
+                            && p.X < X1 + _precision;
                 default: return false;
             }
         }
