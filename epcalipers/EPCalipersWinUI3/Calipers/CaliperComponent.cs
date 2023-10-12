@@ -62,10 +62,10 @@ namespace EPCalipersWinUI3.Calipers
 
         // TODO: Should (position, start, end) be a struct?
 		public CaliperComponent(Role role,
-			double position, double start, double end, ILine componentLine = null)
+			double position, double start, double end, bool fakeComponentLine = false)
         {
             ComponentRole = role;
-            ComponentLine = componentLine ?? new ComponentLine();
+            ComponentLine = fakeComponentLine ? new FakeComponentLine() : new ComponentLine();
             SetupComponentLine(start, end, position);
         }
 

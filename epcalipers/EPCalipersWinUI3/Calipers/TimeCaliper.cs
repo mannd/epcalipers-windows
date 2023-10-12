@@ -41,24 +41,11 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void SetInitialPosition(CaliperPosition position)
         {
-            if (_fakeComponentLines)
-            {
-                var fakeComponentLine = new FakeComponentLine();
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height, fakeComponentLine);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height, fakeComponentLine);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 
-                    position.Center, position.First, position.Last, fakeComponentLine);
-            }
-            else
-            {
-                // temp set initial positions here.
-                LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height);
-                RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, 
-                    position.Center, position.First, position.Last);
-            }
-        }
-        private void SetInitialPositionNearCorner()
+			LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height, _fakeComponentLines);
+			RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height, _fakeComponentLines);
+			CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeComponentLines);
+		}
+		private void SetInitialPositionNearCorner()
         {
             //Point offset = ecgPictureBox.Location;
             //c.initialOffset = new Point(-offset.X, -offset.Y);

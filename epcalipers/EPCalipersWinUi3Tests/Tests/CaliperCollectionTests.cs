@@ -17,11 +17,14 @@ namespace EPCalipersWinUi3Tests.Tests
 			var caliperCollection = new CaliperCollection(null);
 			var timeCaliper = new TimeCaliper(new Bounds(0, 100), new CaliperPosition(100, 100, 200), true);
 			caliperCollection.Add(timeCaliper);
+			var amplitudeCaliper = new AmplitudeCaliper(new Bounds(0, 100), new CaliperPosition(100, 100, 200), true);
+			caliperCollection.Add(amplitudeCaliper);
 			var timeCalipers = caliperCollection.FilteredCalipers(CaliperType.Time);
 			Assert.Single(timeCalipers);
-			Assert.True(timeCalipers[0] == timeCaliper);
 			var amplitudeCalipers = caliperCollection.FilteredCalipers(CaliperType.Amplitude);
-			Assert.Empty(amplitudeCalipers);
+			Assert.Single(amplitudeCalipers);
+			var angleCalipers = caliperCollection.FilteredCalipers(CaliperType.Angle);
+			Assert.Empty(angleCalipers);
 		}
 	}
 }

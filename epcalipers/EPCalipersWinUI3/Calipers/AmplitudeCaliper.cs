@@ -28,22 +28,10 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void SetInitialPosition(CaliperPosition position)
 		{
-            if (_fakeComponentLines)
-            {
-                var fakeComponentLine = new FakeComponentLine();
-                TopBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.First, 0, Bounds.Width, fakeComponentLine);
-                BottomBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.Last, 0, Bounds.Width, fakeComponentLine);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.VerticalCrossBar, 
-                    position.Center, position.First, position.Last, fakeComponentLine);
-            }
-            else
-            {
-                TopBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.First, 0, Bounds.Width);
-                BottomBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.Last, 0, Bounds.Width);
-                CrossBar = new CaliperComponent(CaliperComponent.Role.VerticalCrossBar, 
-                    position.Center, position.First, position.Last);
-            }
-
+			TopBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.First, 0, Bounds.Width, _fakeComponentLines);
+			BottomBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeComponentLines);
+			CrossBar = new CaliperComponent(CaliperComponent.Role.VerticalCrossBar,
+				position.Center, position.First, position.Last, _fakeComponentLines);
 		}
 
 		public override void Add(Grid grid)

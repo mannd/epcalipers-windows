@@ -11,9 +11,7 @@ namespace EPCalipersWinUi3Tests.Tests
 
 		private CaliperComponent GetFakeComponent(CaliperComponent.Role role)
 		{
-			var stubComponentLine = new FakeComponentLine();
-			component = new CaliperComponent(role, 100, 0, 200, stubComponentLine);
-			return component;
+			return new CaliperComponent(role, 100, 0, 200, true);
 		}
 
 		[Fact]
