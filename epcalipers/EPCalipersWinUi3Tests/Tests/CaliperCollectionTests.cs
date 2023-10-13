@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Views;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -14,10 +15,11 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestFilteredCollection()
 		{
 			// TODO: Add more caliper types and calipers.
-			var caliperCollection = new CaliperCollection(null, null);
-			var timeCaliper = new TimeCaliper(new Bounds(0, 100), new CaliperPosition(100, 100, 200), true);
+			var stubCaliperView = new FakeCaliperView();
+			var caliperCollection = new CaliperCollection(stubCaliperView);
+			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, true);
 			caliperCollection.Add(timeCaliper);
-			var amplitudeCaliper = new AmplitudeCaliper(new Bounds(0, 100), new CaliperPosition(100, 100, 200), true);
+			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, true);
 			caliperCollection.Add(amplitudeCaliper);
 			var timeCalipers = caliperCollection.FilteredCalipers(CaliperType.Time);
 			Assert.Single(timeCalipers);

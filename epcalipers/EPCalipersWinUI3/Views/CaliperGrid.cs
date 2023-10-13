@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -32,6 +33,20 @@ namespace EPCalipersWinUI3.Views
 		{
 			Children.Remove(barLine);
 		}
+	}
 
+	public class FakeCaliperView : ICaliperView
+	{
+		public Bounds Bounds => new Bounds(800, 400);
+
+		public void Add(Line line)
+		{
+			Debug.Print($"{line} added.");
+		}
+
+		public void Remove(Line line)
+		{
+			Debug.Print($"{line} removed.");
+		}
 	}
 }

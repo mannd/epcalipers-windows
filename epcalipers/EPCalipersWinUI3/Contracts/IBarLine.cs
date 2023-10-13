@@ -21,6 +21,6 @@ namespace EPCalipersWinUI3.Contracts
 		Color Color { set; }
 
 		double Width { set; get; }
-		Line GetLine();
+		Line Line { set; get; }
 	}
 }

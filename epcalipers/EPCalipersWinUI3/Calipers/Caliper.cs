@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3.Calipers
     public readonly record struct Bounds(double Width, double Height);
 
     /// <summary>
-    /// A caliper's position is defined by the positions of the 3 components.
+    /// A caliper's position is defined by the positions of the 3 bars.
     /// The Center position is the crossbar, and First and Last are Left and Right
     /// for Time calipers, and Top and Bottom for Amplitude calipers.
     /// Angle calipers may need a different structure.
@@ -57,13 +57,13 @@ namespace EPCalipersWinUI3.Calipers
 
         public CaliperType CaliperType { get; init; }
 
-        protected Bar[] CaliperComponents { get; init; }
+        protected Bar[] Bars { get; init; }
 
         public void SetColor(Color color)
         {
-            foreach (var component in CaliperComponents)
+            foreach (var bar in Bars)
             {
-                component.Color = color;
+                bar.Color = color;
             }
         }
 
@@ -78,10 +78,10 @@ namespace EPCalipersWinUI3.Calipers
             set
             {
                 _isSelected = value;
-                foreach (var component in CaliperComponents)
+                foreach (var bar in Bars)
                 {
-                    component.IsSelected = value;
-                    component.Color = component.IsSelected ? SelectedColor : UnselectedColor;
+                    bar.IsSelected = value;
+                    bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
                 }
             }
         }
@@ -94,9 +94,9 @@ namespace EPCalipersWinUI3.Calipers
 
         protected void SetThickness(double thickness)
         {
-            foreach (var component in CaliperComponents)
+            foreach (var bar in Bars)
             {
-                component.Width = thickness;
+                bar.Width = thickness;
             }
         }
 
@@ -105,17 +105,17 @@ namespace EPCalipersWinUI3.Calipers
         public void Add(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in CaliperComponents) caliperView.Add(bar.GetBarLine());
+			foreach (var bar in Bars) caliperView.Add(bar.Line());
         }
 
         public void Remove(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in CaliperComponents) caliperView.Remove(bar.GetBarLine());
+			foreach (var bar in Bars) caliperView.Remove(bar.Line());
         }
 
-        public abstract void Drag(Bar component, Point delta);
+        public abstract void Drag(Bar bar, Point delta);
 
-        public abstract Bar IsNearComponent(Point p);
+        public abstract Bar IsNearBar(Point p);
     }
 }

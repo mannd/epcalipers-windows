@@ -23,47 +23,24 @@ namespace EPCalipersWinUI3.Calipers
 
         public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
-		private bool _fakeComponentLines;
+		private bool _fakeBarLines;
 
         public TimeCaliper(CaliperPosition position, 
-			ICaliperView caliperView, bool fakeComponentLines = false) : base(caliperView)
+			ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
         {
-            _fakeComponentLines = fakeComponentLines;
-            SetInitialPosition(position);
-            CaliperComponents =  new[] { LeftBar, RightBar, CrossBar };
+            _fakeBarLines = fakeBarLines;
+            InitBars(position);
+            Bars =  new[] { LeftBar, RightBar, CrossBar };
 			SetThickness(2);
 			CaliperType = CaliperType.Time;
         }
 
-		private void SetInitialPosition(CaliperPosition position)
+		private void InitBars(CaliperPosition position)
         {
-			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeComponentLines);
-			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeComponentLines);
-			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeComponentLines);
-		}
-		private void SetInitialPositionNearCorner()
-		{
-			//Point offset = ecgPictureBox.Location;
-			//c.initialOffset = new Point(-offset.X, -offset.Y);
-
-			//// init with Horizontal bar offsets
-			//int barOffset = _initialOffset.X;
-			//int crossbarOffset = _initialOffset.Y;
-
-			//if (Direction == CaliperDirection.Vertical)
-			//{
-			//	barOffset = _initialOffset.Y;
-			//	crossbarOffset = _initialOffset.X;
-			//}
-
-			//Bar1Position = 50 + differential + barOffset;
-			//Bar2Position = 100 + differential + barOffset;
-			//CrossbarPosition = 100 + differential + crossbarOffset;
-			//differential += 15.0f;
-			//if (differential > 80.0f)
-			//{
-			//	differential = 0.0f;
-			//}
+			// NB Crossbar must be first, to allow IsNear to work correctly.
+			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeBarLines);
+			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeBarLines);
+			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeBarLines);
 		}
 
 		public override double Value()
@@ -72,42 +49,42 @@ namespace EPCalipersWinUI3.Calipers
 		}
 
 
-		public override Bar IsNearComponent(Point p)
+		public override Bar IsNearBar(Point p)
 		{
-			foreach (var component in CaliperComponents)
+			foreach (var bar in Bars)
 			{
-				if (component.IsNear(p))
+				if (bar.IsNear(p))
 				{
-					return component;
+					return bar;
 				}
 			}
 			return null;
 		}
 
-		public override void Drag(Bar component, Point delta)
+		public override void Drag(Bar bar, Point delta)
 		{
-            if (component == LeftBar)
+            if (bar == LeftBar)
             {
-				component.X1 += delta.X;
-				component.X2 += delta.X;
+				bar.X1 += delta.X;
+				bar.X2 += delta.X;
 				CrossBar.X1 += delta.X;
 			}
-			else if (component == RightBar)
+			else if (bar == RightBar)
             {
-				component.X1 += delta.X;
-				component.X2 += delta.X;
+				bar.X1 += delta.X;
+				bar.X2 += delta.X;
 				CrossBar.X2 += delta.X;
 			}
-			else if (component == CrossBar)
+			else if (bar == CrossBar)
             {
                 LeftBar.X1 += delta.X;
                 LeftBar.X2 += delta.X;
                 RightBar.X1 += delta.X;
                 RightBar.X2 += delta.X;
-                CrossBar.X1 += delta.X;
-                CrossBar.X2 += delta.X;
-                CrossBar.Y1 += delta.Y;
-                CrossBar.Y2 += delta.Y;
+                bar.X1 += delta.X;
+                bar.X2 += delta.X;
+                bar.Y1 += delta.Y;
+                bar.Y2 += delta.Y;
 			}
 		}
 	}

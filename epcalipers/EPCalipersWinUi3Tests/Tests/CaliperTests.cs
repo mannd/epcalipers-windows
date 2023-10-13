@@ -10,6 +10,7 @@ using Microsoft.UI;
 using Windows.UI;
 using Xunit;
 using EPCalipersWinUI3;
+using EPCalipersWinUI3.Views;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -17,8 +18,8 @@ namespace EPCalipersWinUi3Tests.Tests
 	{
 		private TimeCaliper GetTimeCaliper()
 		{
-			var bounds = new Bounds(500, 1000);
-			return new TimeCaliper(bounds, new CaliperPosition(50, 100, 200), true);
+			var stubCaliperView = new FakeCaliperView();
+			return new TimeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, true);
 		}
 
 		[Fact]

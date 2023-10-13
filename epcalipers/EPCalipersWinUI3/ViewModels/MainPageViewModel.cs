@@ -39,6 +39,8 @@ namespace EPCalipersWinUI3
         private readonly static float _maxZoom = 10;
         private readonly static float _minZoom = 0.1f;
 
+		private static double _differential = 0;
+
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
 
@@ -59,7 +61,8 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			var caliper = Caliper.Create(CaliperType.Time, new CaliperPosition(100, 100, 300), _caliperView);
+			var initialPosition = InitialPosition(CaliperType.Time, 200);
+			var caliper = Caliper.Create(CaliperType.Time, initialPosition, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -69,11 +72,57 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			var caliper = Caliper.Create(CaliperType.Amplitude, new CaliperPosition(100, 100, 300), _caliperView);
+			var initialPosition = InitialPosition(CaliperType.Amplitude, 200);
+			var caliper = Caliper.Create(CaliperType.Amplitude, initialPosition, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
 			_caliperCollection.Add(caliper);
+		}
+
+		private CaliperPosition InitialPosition(CaliperType type, double spacing)
+		{
+			Point p = GetApproximateCenterOfView(_caliperView);
+			double halfSpacing = spacing / 2.0;
+			switch (type)
+			{
+				case CaliperType.Time:
+					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
+				case CaliperType.Amplitude:
+					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+				default:
+					return new CaliperPosition(0, 0, 0);
+			}
+		}
+
+		private Point GetApproximateCenterOfView(ICaliperView view)
+		{
+			// Get centerpoint of CaliperView.
+			Point center = new Point((view.Bounds.Width / 2.0) + _differential, (view.Bounds.Height / 2.0) + _differential);
+			_differential += 10;
+			if (_differential > 100) _differential = 0;
+			return center;
+			//Point offset = ecgPictureBox.Location;
+			//c.initialOffset = new Point(-offset.X, -offset.Y);
+
+			//// init with Horizontal bar offsets
+			//int barOffset = _initialOffset.X;
+			//int crossbarOffset = _initialOffset.Y;
+
+			//if (Direction == CaliperDirection.Vertical)
+			//{
+			//	barOffset = _initialOffset.Y;
+			//	crossbarOffset = _initialOffset.X;
+			//}
+
+			//Bar1Position = 50 + differential + barOffset;
+			//Bar2Position = 100 + differential + barOffset;
+			//CrossbarPosition = 100 + differential + crossbarOffset;
+			//differential += 15.0f;
+			//if (differential > 80.0f)
+			//{
+			//	differential = 0.0f;
+			//}
 		}
 
 		[RelayCommand]
@@ -100,7 +149,7 @@ namespace EPCalipersWinUI3
 		public void GrabCaliper(Point point)
 		{
 			// Detect if this is near a caliper component, and if so, load it up for movement.
-			(_grabbedCaliper, _grabbedComponent) = _caliperCollection.GetGrabbedCaliper(point);
+			(_grabbedCaliper, _grabbedComponent) = _caliperCollection.GetGrabbedCaliperAndBar(point);
 			_startingPoint = point;
 		}
 

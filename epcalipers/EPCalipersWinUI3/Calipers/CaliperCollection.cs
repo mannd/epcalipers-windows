@@ -37,8 +37,8 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			foreach (var caliper in _calipers)
 			{
-				var component = caliper.IsNearComponent(point);
-				if (component != null)
+				var bar = caliper.IsNearBar(point);
+				if (bar != null)
 				{
 					caliper.Remove(_caliperView);
 					_calipers.Remove(caliper);
@@ -69,23 +69,12 @@ namespace EPCalipersWinUI3.Calipers
 			}
 		}
 
-		public (Caliper, Bar) GetGrabbedCaliper(Point point)
+		public (Caliper, Bar) GetGrabbedCaliperAndBar(Point point)
 		{
-			Bar component = null;
-			var caliper = _calipers.Where(x => (component = x.IsNearComponent(point)) != null).FirstOrDefault();
+			Bar bar = null;
+			var caliper = _calipers.Where(x => (bar = x.IsNearBar(point)) != null).FirstOrDefault();
 			if (caliper == null) return (null, null);
-			return (caliper, component);
-		
-
-			//foreach (var caliper in _caliperCollection)
-			//{
-			//	var component = caliper.IsNearComponent(point);
-			//	if (component != null)
-			//	{
-			//		return (caliper, component);
-			//	}
-			//}
-			//return (null, null);
+			return (caliper, bar);
 		}
 
 		public void ToggleCaliperSelection(Point point)
@@ -93,8 +82,8 @@ namespace EPCalipersWinUI3.Calipers
 			bool caliperToggled = false;
 			foreach (var caliper in _calipers)
 			{
-				var component = caliper.IsNearComponent(point);
-				if (component != null && !caliperToggled)
+				var bar = caliper.IsNearBar(point);
+				if (bar != null && !caliperToggled)
 				{
 					caliperToggled = true;
 					if (caliper.IsSelected)

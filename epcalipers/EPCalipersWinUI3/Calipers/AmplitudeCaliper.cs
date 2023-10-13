@@ -15,60 +15,61 @@ namespace EPCalipersWinUI3.Calipers
         public Bar BottomBar { get; set; }
         public Bar CrossBar { get; set; }
 
-		private bool _fakeComponentLines;
+		private bool _fakeBarLines;
 
 		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
-			bool fakeComponentLines = false) : base(caliperView)
+			bool fakeBarLines = false) : base(caliperView)
 		{
-			_fakeComponentLines = fakeComponentLines;
+			_fakeBarLines = fakeBarLines;
 			SetInitialPosition(position);
-			CaliperComponents = new[] { TopBar, BottomBar, CrossBar };
+			Bars = new[] { TopBar, BottomBar, CrossBar };
 			SetThickness(2);
 			CaliperType = CaliperType.Amplitude;
 		}
 
 		private void SetInitialPosition(CaliperPosition position)
 		{
-			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeComponentLines);
-			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeComponentLines);
+			// NB Crossbar must be first to allow isNear to work properly.
 			CrossBar = new Bar(Bar.Role.VerticalCrossBar,
-				position.Center, position.First, position.Last, _fakeComponentLines);
+				position.Center, position.First, position.Last, _fakeBarLines);
+			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeBarLines);
+			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeBarLines);
 		}
 
-		public override void Drag(Bar component, Point delta)
+		public override void Drag(Bar bar, Point delta)
 		{
-            if (component == TopBar)
+            if (bar == TopBar)
             {
-				component.Y1 += delta.Y;
-				component.Y2 += delta.Y;
+				bar.Y1 += delta.Y;
+				bar.Y2 += delta.Y;
 				CrossBar.Y1 += delta.Y;
 			}
-			else if (component == BottomBar)
+			else if (bar == BottomBar)
             {
-				component.Y1 += delta.Y;
-				component.Y2 += delta.Y;
+				bar.Y1 += delta.Y;
+				bar.Y2 += delta.Y;
 				CrossBar.Y2 += delta.Y;
 			}
-			else if (component == CrossBar)
+			else if (bar == CrossBar)
             {
                 TopBar.Y1 += delta.Y;
                 TopBar.Y2 += delta.Y;
                 BottomBar.Y1 += delta.Y;
                 BottomBar.Y2 += delta.Y;
-                CrossBar.X1 += delta.X;
-                CrossBar.X2 += delta.X;
-                CrossBar.Y1 += delta.Y;
-                CrossBar.Y2 += delta.Y;
+                bar.X1 += delta.X;
+                bar.X2 += delta.X;
+                bar.Y1 += delta.Y;
+                bar.Y2 += delta.Y;
 			}
 		}
 
-		public override Bar IsNearComponent(Point p)
+		public override Bar IsNearBar(Point p)
 		{
-            foreach (var component in CaliperComponents)
+            foreach (var bar in Bars)
             {
-                if (component.IsNear(p))
+                if (bar.IsNear(p))
                 {
-                    return component;
+                    return bar;
                 }
             }
             return null;

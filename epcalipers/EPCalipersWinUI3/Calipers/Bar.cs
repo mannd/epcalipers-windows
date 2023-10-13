@@ -130,6 +130,6 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public Line GetBarLine() => BarLine.GetLine();
+        public Line Line() => BarLine.Line;
     }
 }

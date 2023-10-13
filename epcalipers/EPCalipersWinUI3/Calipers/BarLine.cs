@@ -31,8 +31,11 @@ namespace EPCalipersWinUI3.Calipers
 			get => _line.StrokeThickness;
 			set => _line.StrokeThickness = value;
 		}
-
-		public Line GetLine() => _line;
+		public Line Line
+		{
+			get => _line;
+			set => _line = value;
+		}
 	}
 
 	public class FakeBarLine : IBarLine
@@ -43,6 +46,6 @@ namespace EPCalipersWinUI3.Calipers
 		public double Y2 { get; set; }
 		public Windows.UI.Color Color { set { } }
 		public double Width { get; set; }
-		public Line GetLine() => null;
+		public Line Line { get => null; set { } }
 	}
 }
