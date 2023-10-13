@@ -33,19 +33,22 @@ namespace EPCalipersWinUI3.Calipers
     public abstract class Caliper
     {
         protected Bounds Bounds { get; init; }
-        protected Caliper(Bounds bounds) 
+        protected ICaliperView CaliperView { get; init; }
+
+        protected Caliper(ICaliperView caliperView) 
         {
-            Bounds = bounds;
+            CaliperView = caliperView;
+            Bounds = caliperView.Bounds;
         }
 
-		public static Caliper Create(CaliperType caliperType, Bounds bounds, CaliperPosition position)
+		public static Caliper Create(CaliperType caliperType, CaliperPosition position, ICaliperView caliperView)
         {
             switch (caliperType)
 			{
 				case CaliperType.Time:
-					return new TimeCaliper(bounds, position);
+					return new TimeCaliper(position, caliperView);
 				case CaliperType.Amplitude:
-					return new AmplitudeCaliper(bounds, position);
+					return new AmplitudeCaliper(position, caliperView);
 				case CaliperType.Angle:
 					return null;
 			}
@@ -54,16 +57,11 @@ namespace EPCalipersWinUI3.Calipers
 
         public CaliperType CaliperType { get; init; }
 
-        protected CaliperComponent[] CaliperComponents { get; init; }
-
-		protected  CaliperComponent[] GetCaliperComponents()
-        {
-            return CaliperComponents;
-        }
+        protected Bar[] CaliperComponents { get; init; }
 
         public void SetColor(Color color)
         {
-            foreach (var component in GetCaliperComponents())
+            foreach (var component in CaliperComponents)
             {
                 component.Color = color;
             }
@@ -80,7 +78,7 @@ namespace EPCalipersWinUI3.Calipers
             set
             {
                 _isSelected = value;
-                foreach (var component in GetCaliperComponents())
+                foreach (var component in CaliperComponents)
                 {
                     component.IsSelected = value;
                     component.Color = component.IsSelected ? SelectedColor : UnselectedColor;
@@ -96,7 +94,7 @@ namespace EPCalipersWinUI3.Calipers
 
         protected void SetThickness(double thickness)
         {
-            foreach (var component in GetCaliperComponents())
+            foreach (var component in CaliperComponents)
             {
                 component.Width = thickness;
             }
@@ -104,12 +102,20 @@ namespace EPCalipersWinUI3.Calipers
 
         public abstract double Value();
 
-        public abstract void Add(Grid grid);
+        public void Add(ICaliperView caliperView)
+        {
+            if (caliperView == null) return;
+			foreach (var bar in CaliperComponents) caliperView.Add(bar.GetBarLine());
+        }
 
-        public abstract void Delete(Grid grid);
+        public void Remove(ICaliperView caliperView)
+        {
+            if (caliperView == null) return;
+			foreach (var bar in CaliperComponents) caliperView.Remove(bar.GetBarLine());
+        }
 
-        public abstract void Drag(CaliperComponent component, Point delta);
+        public abstract void Drag(Bar component, Point delta);
 
-        public abstract CaliperComponent IsNearComponent(Point p);
+        public abstract Bar IsNearComponent(Point p);
     }
 }

@@ -45,7 +45,7 @@ namespace EPCalipersWinUI3.Views
 		public MainPage()
 		{
 			this.InitializeComponent();
-            ViewModel = new MainPageViewModel(SetZoom, CaliperGrid);
+            ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
             ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
@@ -55,7 +55,7 @@ namespace EPCalipersWinUI3.Views
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
 				// TODO: Need to change bounds with rotation?
-				ViewModel.Bounds = new Bounds(CaliperGrid.ActualWidth, CaliperGrid.ActualHeight);
+				ViewModel.Bounds = CaliperView.Bounds;
 				ViewModel.DeleteAllCalipersCommand.Execute(null);
 
 				if (ViewModel.ResetZoomWithNewImage)
@@ -76,19 +76,19 @@ namespace EPCalipersWinUI3.Views
 		#region calipers
 		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			var position = e.GetPosition(CaliperGrid);
+			var position = e.GetPosition(CaliperView);
 			ViewModel.ToggleCaliperSelection(position);
 		}
 
 		private void ScrollViewer_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
 		{
-			var position = e.GetPosition(CaliperGrid);
+			var position = e.GetPosition(CaliperView);
 			ViewModel.RemoveAtPoint(position);
 		}
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-			var position = e.GetCurrentPoint(this.CaliperGrid);
+			var position = e.GetCurrentPoint(this.CaliperView);
 			pointerPosition = position.Position;
 			pointerDown = true;
 			ViewModel.GrabCaliper(pointerPosition);
@@ -98,7 +98,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			if (pointerDown) // && dragging caliper...
 			{
-				var position = e.GetCurrentPoint(this.CaliperGrid);
+				var position = e.GetCurrentPoint(this.CaliperView);
 				if (position.Position.X < EcgImage.ActualWidth && position.Position.Y < EcgImage.ActualHeight)
 				{
 					ViewModel.DragCaliperComponent(position.Position);
@@ -308,9 +308,9 @@ namespace EPCalipersWinUI3.Views
 			// Open the picker for the user to pick a file
 			var file = await openPicker.PickSingleFileAsync();
 			// Change the cursor to a wait icon
-			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
+			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
 			await ViewModel.OpenImageFile(file);
-			CaliperGrid.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
+			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 		#endregion
 	}

@@ -7,17 +7,16 @@ namespace EPCalipersWinUi3Tests.Tests
 {
     public class CaliperComponentTests
 	{
-		CaliperComponent component;
 
-		private CaliperComponent GetFakeComponent(CaliperComponent.Role role)
+		private Bar GetFakeComponent(Bar.Role role)
 		{
-			return new CaliperComponent(role, 100, 0, 200, true);
+			return new Bar(role, 100, 0, 200, true);
 		}
 
 		[Fact]
 		public void TestIsNear()
 		{
-			var verticalComponent = GetFakeComponent(CaliperComponent.Role.Vertical);
+			var verticalComponent = GetFakeComponent(Bar.Role.Vertical);
 			verticalComponent.X1 = 100;
 			verticalComponent.X2 = 100;
 			Point p = new Point(101, 50);
@@ -27,7 +26,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			Point p1 = new Point(150, 50);
 			Assert.False(verticalComponent.IsNear(p1));
 
-			var horizontalComponent = GetFakeComponent(CaliperComponent.Role.Horizontal);
+			var horizontalComponent = GetFakeComponent(Bar.Role.Horizontal);
 			horizontalComponent.Y1 = 100;
 			horizontalComponent.Y2 = 100;
 			Point p2 = new Point(50, 101);
@@ -37,7 +36,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			Point p4 = new Point(50, 150);
 			Assert.False(horizontalComponent.IsNear(p4));
 
-			var horizontalCrossbarComponent = GetFakeComponent(CaliperComponent.Role.HorizontalCrossBar);
+			var horizontalCrossbarComponent = GetFakeComponent(Bar.Role.HorizontalCrossBar);
 			horizontalCrossbarComponent.X1 = 100;
 			horizontalCrossbarComponent.X2 = 200;
 			horizontalCrossbarComponent.Y1 = 50;

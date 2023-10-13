@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 using Windows.Foundation;
+using EPCalipersWinUI3.Contracts;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -14,33 +15,33 @@ namespace EPCalipersWinUI3.Calipers
 	/// </summary>
 	public class CaliperCollection
 	{
-		private IList<Caliper> _caliperCollection;
-		private Grid _grid;
+		private IList<Caliper> _calipers;
+		private ICaliperView _caliperView;
 
-		public CaliperCollection(Grid grid)
+		public CaliperCollection(ICaliperView caliperView)
 		{ 
-			_caliperCollection = new List<Caliper>();
-			_grid = grid;
+			_calipers = new List<Caliper>();
+			_caliperView = caliperView;
 		}
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType) 
-			=> _caliperCollection.Where(x => x.CaliperType == caliperType).ToList();
+			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
 
 		public void Add(Caliper caliper)
 		{
-			caliper.Add(_grid);
-			_caliperCollection.Add(caliper);
+			caliper.Add(_caliperView);
+			_calipers.Add(caliper);
 		}
 
 		public void RemoveAtPoint(Point point)
 		{
-			foreach (var caliper in _caliperCollection)
+			foreach (var caliper in _calipers)
 			{
 				var component = caliper.IsNearComponent(point);
 				if (component != null)
 				{
-					caliper.Delete(_grid);
-					_caliperCollection.Remove(caliper);
+					caliper.Remove(_caliperView);
+					_calipers.Remove(caliper);
 					break;
 				}
 			}
@@ -48,30 +49,30 @@ namespace EPCalipersWinUI3.Calipers
 
 		public void Clear()
 		{
-			foreach (var caliper in _caliperCollection)
+			foreach (var caliper in _calipers)
 			{
-				caliper.Delete(_grid);
+				caliper.Remove(_caliperView);
 			}
-			_caliperCollection.Clear();
+			_calipers.Clear();
 		}
 
 		public void RemoveActiveCaliper()
 		{
-			foreach (var caliper in _caliperCollection)
+			foreach (var caliper in _calipers)
 			{
 				if (caliper.IsSelected)
 				{
-					caliper.Delete(_grid);
-					_caliperCollection.Remove(caliper);
+					caliper.Remove(_caliperView);
+					_calipers.Remove(caliper);
 					break;  // Can only be one selected caliper, so no point checking the rest.
 				}
 			}
 		}
 
-		public (Caliper, CaliperComponent) GetGrabbedCaliper(Point point)
+		public (Caliper, Bar) GetGrabbedCaliper(Point point)
 		{
-			CaliperComponent component = null;
-			var caliper = _caliperCollection.Where(x => (component = x.IsNearComponent(point)) != null).FirstOrDefault();
+			Bar component = null;
+			var caliper = _calipers.Where(x => (component = x.IsNearComponent(point)) != null).FirstOrDefault();
 			if (caliper == null) return (null, null);
 			return (caliper, component);
 		
@@ -90,7 +91,7 @@ namespace EPCalipersWinUI3.Calipers
 		public void ToggleCaliperSelection(Point point)
 		{
 			bool caliperToggled = false;
-			foreach (var caliper in _caliperCollection)
+			foreach (var caliper in _calipers)
 			{
 				var component = caliper.IsNearComponent(point);
 				if (component != null && !caliperToggled)

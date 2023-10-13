@@ -16,10 +16,10 @@ namespace EPCalipersWinUI3.Calipers
     /// <summary>
     /// One of the bars of a caliper.
     /// </summary>
-    public sealed class CaliperComponent : ILine
+    public sealed class Bar
     {
         /// <summary>
-        /// The direction and function of the CaliperComponent in a Caliper.
+        /// The direction and function of the Bar in a Caliper.
         /// </summary>
 		public enum Role
 		{
@@ -34,13 +34,13 @@ namespace EPCalipersWinUI3.Calipers
         /// This is a graphics object that is drawable, just a Line but can substitute
         /// an ILine stub for testing.
         /// </summary>
-        public ILine ComponentLine { get;  set; }
-        public Role ComponentRole { get; set; }
+        public IBarLine BarLine { get;  set; }
+        public Role BarRole { get; set; }
 		public double Position
         {
             get
             {
-				switch (ComponentRole)
+				switch (BarRole)
 				{
 					case Role.Horizontal:
 						return Y1;
@@ -51,27 +51,25 @@ namespace EPCalipersWinUI3.Calipers
 				}
 			}
 		}
-		public double X1 { get => ComponentLine.X1; set => ComponentLine.X1 = value; }
-        public double X2 { get => ComponentLine.X2; set => ComponentLine.X2 = value; }
-        public double Y1 { get => ComponentLine.Y1; set => ComponentLine.Y1 = value; }
-        public double Y2 { get => ComponentLine.Y2; set => ComponentLine.Y2 = value; }
-
-        public bool IsGrabbed { get; set; } = false;
+		public double X1 { get => BarLine.X1; set => BarLine.X1 = value; }
+        public double X2 { get => BarLine.X2; set => BarLine.X2 = value; }
+        public double Y1 { get => BarLine.Y1; set => BarLine.Y1 = value; }
+        public double Y2 { get => BarLine.Y2; set => BarLine.Y2 = value; }
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
-        // TODO: Should (position, start, end) be a struct?
-		public CaliperComponent(Role role,
+        // TODO: Should (position, start, end) be a struct or record?
+		public Bar(Role role,
 			double position, double start, double end, bool fakeComponentLine = false)
         {
-            ComponentRole = role;
-            ComponentLine = fakeComponentLine ? new FakeComponentLine() : new ComponentLine();
-            SetupComponentLine(start, end, position);
+            BarRole = role;
+            BarLine = fakeComponentLine ? new FakeBarLine() : new BarLine();
+            SetupBar(position, start, end);
         }
 
-        private void SetupComponentLine(double start, double end, double position)
-        {
-            switch (ComponentRole)
+        private void SetupBar(double position, double start, double end)
+		{
+            switch (BarRole)
             {
                 case Role.Horizontal:
                     X1 = 0;
@@ -103,16 +101,16 @@ namespace EPCalipersWinUI3.Calipers
         }
         public bool IsSelected { get; set; }
 		public Color Color {
-            set => ComponentLine.Color = value; }
+            set => BarLine.Color = value; }
 		public double Width
         {
-            get => ComponentLine.Width;
-            set => ComponentLine.Width = value;
+            get => BarLine.Width;
+            set => BarLine.Width = value;
         }
 
 		public bool IsNear(Point p)
         {
-            switch (ComponentRole)
+            switch (BarRole)
             {
                 case Role.Horizontal:
 					return p.Y > Y1 - _precision && p.Y < Y1 + _precision;
@@ -132,6 +130,6 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public Line GetComponent() => ComponentLine.GetComponent();
+        public Line GetBarLine() => BarLine.GetLine();
     }
 }

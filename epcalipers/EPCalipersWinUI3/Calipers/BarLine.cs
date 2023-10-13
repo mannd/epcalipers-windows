@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Calipers
 {
-	public class ComponentLine : ILine
+	public class BarLine : IBarLine
 	{
 		private Line _line = new();
 		public double X1 { get => _line.X1; set => _line.X1 = value; }
@@ -32,10 +32,10 @@ namespace EPCalipersWinUI3.Calipers
 			set => _line.StrokeThickness = value;
 		}
 
-		public Line GetComponent() => _line;
+		public Line GetLine() => _line;
 	}
 
-	public class FakeComponentLine : ILine
+	public class FakeBarLine : IBarLine
 	{
 		public double X1 { get; set; }
 		public double X2 { get; set; }
@@ -43,6 +43,6 @@ namespace EPCalipersWinUI3.Calipers
 		public double Y2 { get; set; }
 		public Windows.UI.Color Color { set { } }
 		public double Width { get; set; }
-		public Line GetComponent() => null;
+		public Line GetLine() => null;
 	}
 }

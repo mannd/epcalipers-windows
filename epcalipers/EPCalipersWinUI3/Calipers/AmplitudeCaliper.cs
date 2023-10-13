@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using EPCalipersWinUI3.Contracts;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,14 @@ namespace EPCalipersWinUI3.Calipers
 {
 	public sealed class AmplitudeCaliper : Caliper
 	{
-        public CaliperComponent TopBar { get; set; }
-        public CaliperComponent BottomBar { get; set; }
-        public CaliperComponent CrossBar { get; set; }
+        public Bar TopBar { get; set; }
+        public Bar BottomBar { get; set; }
+        public Bar CrossBar { get; set; }
 
 		private bool _fakeComponentLines;
 
-		public AmplitudeCaliper(Bounds bounds, CaliperPosition position,
-			bool fakeComponentLines = false) : base(bounds)
+		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
+			bool fakeComponentLines = false) : base(caliperView)
 		{
 			_fakeComponentLines = fakeComponentLines;
 			SetInitialPosition(position);
@@ -28,31 +29,13 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void SetInitialPosition(CaliperPosition position)
 		{
-			TopBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.First, 0, Bounds.Width, _fakeComponentLines);
-			BottomBar = new CaliperComponent(CaliperComponent.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeComponentLines);
-			CrossBar = new CaliperComponent(CaliperComponent.Role.VerticalCrossBar,
+			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeComponentLines);
+			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeComponentLines);
+			CrossBar = new Bar(Bar.Role.VerticalCrossBar,
 				position.Center, position.First, position.Last, _fakeComponentLines);
 		}
 
-		public override void Add(Grid grid)
-		{
-            if (grid == null) return; // grid can be null for testing.
-            grid.Children.Add(TopBar.GetComponent());
-            grid.Children.Add(BottomBar.GetComponent());
-            grid.Children.Add(CrossBar.GetComponent());
-            //grid.Children.Add(CaliperLabel);
-		}
-
-		public override void Delete(Grid grid)
-		{
-            if (grid == null) return;
-            grid.Children.Remove(TopBar.GetComponent());
-            grid.Children.Remove(BottomBar.GetComponent());
-            grid.Children.Remove(CrossBar.GetComponent());
-            //grid.Children.Remove(CaliperLabel);
-		}
-
-		public override void Drag(CaliperComponent component, Point delta)
+		public override void Drag(Bar component, Point delta)
 		{
             if (component == TopBar)
             {
@@ -79,7 +62,7 @@ namespace EPCalipersWinUI3.Calipers
 			}
 		}
 
-		public override CaliperComponent IsNearComponent(Point p)
+		public override Bar IsNearComponent(Point p)
 		{
             foreach (var component in CaliperComponents)
             {

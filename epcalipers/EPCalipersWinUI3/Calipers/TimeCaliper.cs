@@ -17,20 +17,16 @@ namespace EPCalipersWinUI3.Calipers
 
     public sealed class TimeCaliper : Caliper
     {
-        public CaliperComponent LeftBar { get; set; }
-        public CaliperComponent RightBar { get; set; }
-        public CaliperComponent CrossBar { get; set; }
+        public Bar LeftBar { get; set; }
+        public Bar RightBar { get; set; }
+        public Bar CrossBar { get; set; }
 
-        /// <summary>
-        /// The text displayed adjacent to the caliper, showing the value in points
-        /// or calibrated units.
-        /// </summary>
         public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
 		private bool _fakeComponentLines;
-    
 
-        public TimeCaliper(Bounds bounds, CaliperPosition position, bool fakeComponentLines = false) : base(bounds)
+        public TimeCaliper(CaliperPosition position, 
+			ICaliperView caliperView, bool fakeComponentLines = false) : base(caliperView)
         {
             _fakeComponentLines = fakeComponentLines;
             SetInitialPosition(position);
@@ -41,73 +37,54 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void SetInitialPosition(CaliperPosition position)
         {
-			LeftBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.First, 0, Bounds.Height, _fakeComponentLines);
-			RightBar = new CaliperComponent(CaliperComponent.Role.Vertical, position.Last, 0, Bounds.Height, _fakeComponentLines);
-			CrossBar = new CaliperComponent(CaliperComponent.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeComponentLines);
+			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeComponentLines);
+			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeComponentLines);
+			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeComponentLines);
 		}
 		private void SetInitialPositionNearCorner()
-        {
-            //Point offset = ecgPictureBox.Location;
-            //c.initialOffset = new Point(-offset.X, -offset.Y);
-
-            //// init with Horizontal bar offsets
-            //int barOffset = _initialOffset.X;
-            //int crossbarOffset = _initialOffset.Y;
-
-            //if (Direction == CaliperDirection.Vertical)
-            //{
-            //	barOffset = _initialOffset.Y;
-            //	crossbarOffset = _initialOffset.X;
-            //}
-
-            //Bar1Position = 50 + differential + barOffset;
-            //Bar2Position = 100 + differential + barOffset;
-            //CrossbarPosition = 100 + differential + crossbarOffset;
-            //differential += 15.0f;
-            //if (differential > 80.0f)
-            //{
-            //	differential = 0.0f;
-            //}
-        }
-
-        public override double Value()
-        {
-            return RightBar.Position - LeftBar.Position;
-		}
-
-
-		public override CaliperComponent IsNearComponent(Point p)
 		{
-            foreach (var component in CaliperComponents)
-            {
-                if (component.IsNear(p))
-                {
-                    return component;
-                }
-            }
-            return null;
+			//Point offset = ecgPictureBox.Location;
+			//c.initialOffset = new Point(-offset.X, -offset.Y);
+
+			//// init with Horizontal bar offsets
+			//int barOffset = _initialOffset.X;
+			//int crossbarOffset = _initialOffset.Y;
+
+			//if (Direction == CaliperDirection.Vertical)
+			//{
+			//	barOffset = _initialOffset.Y;
+			//	crossbarOffset = _initialOffset.X;
+			//}
+
+			//Bar1Position = 50 + differential + barOffset;
+			//Bar2Position = 100 + differential + barOffset;
+			//CrossbarPosition = 100 + differential + crossbarOffset;
+			//differential += 15.0f;
+			//if (differential > 80.0f)
+			//{
+			//	differential = 0.0f;
+			//}
 		}
 
-		public override void Add(Grid grid)
+		public override double Value()
 		{
-            if (grid == null) return; // grid can be null for testing.
-            grid.Children.Add(LeftBar.GetComponent());
-            grid.Children.Add(RightBar.GetComponent());
-            grid.Children.Add(CrossBar.GetComponent());
-            //grid.Children.Add(CaliperLabel);
+			return RightBar.Position - LeftBar.Position;
 		}
 
-		public override void Delete(Grid grid)
+
+		public override Bar IsNearComponent(Point p)
 		{
-            if (grid == null) return;
-            grid.Children.Remove(LeftBar.GetComponent());
-            grid.Children.Remove(RightBar.GetComponent());
-            grid.Children.Remove(CrossBar.GetComponent());
-            //grid.Children.Remove(CaliperLabel);
+			foreach (var component in CaliperComponents)
+			{
+				if (component.IsNear(p))
+				{
+					return component;
+				}
+			}
+			return null;
 		}
 
-
-		public override void Drag(CaliperComponent component, Point delta)
+		public override void Drag(Bar component, Point delta)
 		{
             if (component == LeftBar)
             {

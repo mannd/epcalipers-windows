@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Views;
@@ -26,9 +27,9 @@ namespace EPCalipersWinUI3
 	{
 		private readonly PdfHelper _pdfHelper = new();
 		private CaliperCollection _caliperCollection;
-		private Grid _grid;
+		private ICaliperView _caliperView;
 		private Caliper _grabbedCaliper = null;
-		private CaliperComponent _grabbedComponent = null;
+		private Bar _grabbedComponent = null;
 		private Point _startingPoint;
 
         // Note zoom factors used in Mac OS X version
@@ -47,20 +48,18 @@ namespace EPCalipersWinUI3
 		public bool ResetRotationWithNewImage { get; private set; } = true;
 		public float ZoomFactor { get; set; } = 1;
 
-		public MainPageViewModel(SetZoomDelegate setZoomDelegate, Grid grid)
+		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 		{
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
-			_caliperCollection = new CaliperCollection(grid);
-			_grid = grid;
+			_caliperCollection = new CaliperCollection(caliperView);
+			_caliperView = caliperView;
 		}
 		#region commands
-
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			var bounds = new Bounds(_grid.ActualWidth, _grid.ActualHeight);
-			var caliper = Caliper.Create(CaliperType.Time, bounds, new CaliperPosition(100, 100, 300));
+			var caliper = Caliper.Create(CaliperType.Time, new CaliperPosition(100, 100, 300), _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -70,8 +69,7 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			var bounds = new Bounds(_grid.ActualWidth, _grid.ActualHeight);
-			var caliper = Caliper.Create(CaliperType.Amplitude, bounds, new CaliperPosition(100, 100, 300));
+			var caliper = Caliper.Create(CaliperType.Amplitude, new CaliperPosition(100, 100, 300), _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;

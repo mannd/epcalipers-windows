@@ -20,7 +20,7 @@
     <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
     <Version>3.0.0.0-alpha</Version>
     <Authors>EP Studios</Authors>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>

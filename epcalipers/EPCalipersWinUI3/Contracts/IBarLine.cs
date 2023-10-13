@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.Contracts
 {
-	public interface ILine
+	public interface IBarLine
 	{
 		double X1 { get; set; }
 
@@ -21,6 +21,6 @@ namespace EPCalipersWinUI3.Contracts
 		Color Color { set; }
 
 		double Width { set; get; }
-		Line GetComponent();
+		Line GetLine();
 	}
 }
