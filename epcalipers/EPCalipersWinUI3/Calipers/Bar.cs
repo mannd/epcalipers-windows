@@ -4,12 +4,15 @@ using Microsoft.UI.Xaml.Shapes;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Devices;
 using Windows.UI;
+using Color = Windows.UI.Color;
+using Point = Windows.Foundation.Point;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -27,7 +30,8 @@ namespace EPCalipersWinUI3.Calipers
 			Vertical,
 			HorizontalCrossBar,
 			VerticalCrossBar,
-			Angle,
+			LeftAngle,
+            RightAngle,
 			TriangleBase // For BrugadaMeter.
 		}
         /// <summary>
@@ -36,6 +40,11 @@ namespace EPCalipersWinUI3.Calipers
         /// </summary>
         public IBarLine BarLine { get;  set; }
         public Role BarRole { get; set; }
+
+        // Angle is only used for angle calipers.
+        public double Angle { get; set; }
+		float angleBar1 = (float)(0.5 * Math.PI);
+		float angleBar2 = (float)(0.25 * Math.PI);
 		public double Position
         {
             get
@@ -45,6 +54,10 @@ namespace EPCalipersWinUI3.Calipers
 					case Role.Horizontal:
 						return Y1;
 					case Role.Vertical:
+						return X1;
+					case Role.HorizontalCrossBar:
+						return Y1;
+					case Role.VerticalCrossBar:
 						return X1;
 					default:
 						return 0;
@@ -95,6 +108,18 @@ namespace EPCalipersWinUI3.Calipers
                     X2 = position;
                     Y2 = end;
                     break;
+                case Role.LeftAngle:
+                    X1 = position;
+                    Y1 = start;
+                    X2 = EndPointForPosition(new Point(X1, Y2), angleBar1, 1000).X;
+                    Y2 = Math.Min(EndPointForPosition(new Point(X1, Y2), angleBar1, 1000).Y, 200);
+                    break;
+				case Role.RightAngle:
+                    X1 = position;
+                    Y1 = start;
+                    X2 = EndPointForPosition(new Point(X1, Y2), angleBar2, 1000).X;
+                    Y2 = EndPointForPosition(new Point(X1, Y2), angleBar2, 1000).Y;
+                    break;
                 default:
                     break;
             }
@@ -130,6 +155,15 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public Line Line() => BarLine.Line;
+		private Point EndPointForPosition(Point p, float angle, float length)
+		{
+			// Note Windows coordinates origin is top left of screen
+			double endX = Math.Cos(angle) * length + p.X;
+			double endY = Math.Sin(angle) * length + p.Y;
+			Point endPoint = new Point((float)endX, (float)endY);
+			return endPoint;
+		}
+
+		public Line Line() => BarLine.Line;
     }
 }

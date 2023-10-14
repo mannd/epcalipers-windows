@@ -50,7 +50,7 @@ namespace EPCalipersWinUI3.Calipers
 				case CaliperType.Amplitude:
 					return new AmplitudeCaliper(position, caliperView);
 				case CaliperType.Angle:
-					return null;
+					return new AngleCaliper(position, caliperView);
 			}
 			return null;
 		}

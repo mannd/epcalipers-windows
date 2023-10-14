@@ -80,6 +80,16 @@ namespace EPCalipersWinUI3
 			_caliperCollection.Add(caliper);
 		}
 
+		[RelayCommand]
+		public void AddAngleCaliper()
+		{
+			var initialPosition = InitialPosition(CaliperType.Angle, 200);
+			var caliper = Caliper.Create(CaliperType.Angle, initialPosition, _caliperView);
+		//	caliper.SetColor(Colors.Blue);
+			caliper.UnselectedColor = Colors.Blue;
+			caliper.SelectedColor = Colors.Red;
+			_caliperCollection.Add(caliper);
+		}
 		private CaliperPosition InitialPosition(CaliperType type, double spacing)
 		{
 			Point p = GetApproximateCenterOfView(_caliperView);
@@ -89,6 +99,8 @@ namespace EPCalipersWinUI3
 				case CaliperType.Time:
 					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
 				case CaliperType.Amplitude:
+					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+				case CaliperType.Angle:
 					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
 				default:
 					return new CaliperPosition(0, 0, 0);

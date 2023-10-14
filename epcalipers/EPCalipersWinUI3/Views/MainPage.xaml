@@ -134,7 +134,7 @@
                         <KeyboardAccelerator Key="A" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="AngleCaliperMenuItem">
+                <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
@@ -226,7 +226,7 @@
                                 <KeyboardAccelerator Key="A" Modifiers="Control" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Uid="AngleCaliperMenuItem">
+                        <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
