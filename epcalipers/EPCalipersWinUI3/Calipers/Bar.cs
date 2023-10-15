@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Shapes;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -73,11 +74,19 @@ namespace EPCalipersWinUI3.Calipers
 
         // TODO: Should (position, start, end) be a struct or record?
 		public Bar(Role role,
-			double position, double start, double end, bool fakeComponentLine = false)
+			double position, double start, double end, bool fakeBarLine = false)
         {
             BarRole = role;
-            BarLine = fakeComponentLine ? new FakeBarLine() : new BarLine();
+            BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
             SetupBar(position, start, end);
+        }
+
+        public Bar(Role role, Point apex, double angle, bool fakeBarLine = false)
+        {
+            // TODO: exception if role is not an Angle role.
+            BarRole = role;
+            BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
+            SetupAngleBar(apex, angle);
         }
 
         private void SetupBar(double position, double start, double end)
@@ -109,20 +118,30 @@ namespace EPCalipersWinUI3.Calipers
                     Y2 = end;
                     break;
                 case Role.LeftAngle:
-                    X1 = position;
-                    Y1 = start;
-                    X2 = EndPointForPosition(new Point(X1, Y2), angleBar1, 1000).X;
-                    Y2 = Math.Min(EndPointForPosition(new Point(X1, Y2), angleBar1, 1000).Y, 200);
-                    break;
-				case Role.RightAngle:
-                    X1 = position;
-                    Y1 = start;
-                    X2 = EndPointForPosition(new Point(X1, Y2), angleBar2, 1000).X;
-                    Y2 = EndPointForPosition(new Point(X1, Y2), angleBar2, 1000).Y;
+                case Role.RightAngle:
+                    throw new NotImplementedException();
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private void SetupAngleBar(Point apex, double angle)
+        {
+            switch (BarRole)
+            {
+                case Role.LeftAngle:
+                case Role.RightAngle:
+                    var leftEndPoint = EndPointForPosition(apex, (float)angle, 1000);
+                    X1 = apex.X;
+                    Y1 = apex.Y;
+                    X2 = leftEndPoint.X;
+                    Y2 = leftEndPoint.Y;
                     break;
                 default:
-                    break;
+                    throw new NotFiniteNumberException();
             }
+           
+
         }
         public bool IsSelected { get; set; }
 		public Color Color {

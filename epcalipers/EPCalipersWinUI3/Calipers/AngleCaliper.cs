@@ -21,21 +21,18 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			_fakeBarLines = fakeBarLines;
 			InitBars(position);
-			Bars = new[] { LeftAngleBar, RightAngleBar };
+			Bars = new[] { LeftAngleBar, RightAngleBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
 		}
 
 		private void InitBars(CaliperPosition position)
 		{
-			// For angle bars, apex is defined by position first and last,
-			// center is angle in radians from vertical line pointing down.
-			LeftAngleBar = new Bar(Bar.Role.LeftAngle, 
-				position.First, position.Last, Bounds.Height, _fakeBarLines);
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, new Point(100, 100), 0.5 * Math.PI); 
 			LeftAngleBar.Color = Colors.Red;
-			RightAngleBar = new Bar(Bar.Role.RightAngle, 
-				position.First, position.Last, Bounds.Height, _fakeBarLines);
+			RightAngleBar = new Bar(Bar.Role.RightAngle, new Point(100, 100), 0.25 * Math.PI); 
 			RightAngleBar.Color = Colors.Green;
+
 		}
 
 		public override void Drag(Bar bar, Point delta)
