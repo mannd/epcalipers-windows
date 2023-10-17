@@ -62,7 +62,7 @@ namespace EPCalipersWinUI3
 		public void AddTimeCaliper()
 		{
 			var initialPosition = InitialPosition(CaliperType.Time, 200);
-			var caliper = Caliper.Create(CaliperType.Time, initialPosition.Item1, _caliperView);
+			var caliper = new TimeCaliper(initialPosition, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -73,7 +73,7 @@ namespace EPCalipersWinUI3
 		public void AddAmplitudeCaliper()
 		{
 			var initialPosition = InitialPosition(CaliperType.Amplitude, 200);
-			var caliper = Caliper.Create(CaliperType.Amplitude, initialPosition.Item1, _caliperView);
+			var caliper = new AmplitudeCaliper(initialPosition, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -83,28 +83,34 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			var initialPosition = InitialPosition(CaliperType.Angle, 200);
-			var caliper = Caliper.Create(CaliperType.Angle, initialPosition.Item1, _caliperView, initialPosition.Item2);
+			var initialPosition = InitialAnglePosition();
+			var caliper = new AngleCaliper(initialPosition, _caliperView);
 		//	caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
 			_caliperCollection.Add(caliper);
 		}
-		private (CaliperPosition, Point) InitialPosition(CaliperType type, double spacing)
+		private CaliperPosition InitialPosition(CaliperType type, double spacing)
 		{
 			Point p = GetApproximateCenterOfView(_caliperView);
 			double halfSpacing = spacing / 2.0;
 			switch (type)
 			{
 				case CaliperType.Time:
-					return (new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing), p);
+					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
 				case CaliperType.Amplitude:
-					return (new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing), p);
-				case CaliperType.Angle:
-					return (new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing), p);
+					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
 				default:
-					return (new CaliperPosition(0, 0, 0), p);
+					return new CaliperPosition(0, 0, 0);
 			}
+		}
+
+		private AngleCaliperPosition InitialAnglePosition()
+		{
+			var apex = GetApproximateCenterOfView(_caliperView);
+			double firstAngle = 0.5 * Math.PI;
+			double secondAngle = 0.25 * Math.PI;
+			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
 		}
 
 		private Point GetApproximateCenterOfView(ICaliperView view)
@@ -114,27 +120,6 @@ namespace EPCalipersWinUI3
 			_differential += 10;
 			if (_differential > 100) _differential = 0;
 			return center;
-			//Point offset = ecgPictureBox.Location;
-			//c.initialOffset = new Point(-offset.X, -offset.Y);
-
-			//// init with Horizontal bar offsets
-			//int barOffset = _initialOffset.X;
-			//int crossbarOffset = _initialOffset.Y;
-
-			//if (Direction == CaliperDirection.Vertical)
-			//{
-			//	barOffset = _initialOffset.Y;
-			//	crossbarOffset = _initialOffset.X;
-			//}
-
-			//Bar1Position = 50 + differential + barOffset;
-			//Bar2Position = 100 + differential + barOffset;
-			//CrossbarPosition = 100 + differential + crossbarOffset;
-			//differential += 15.0f;
-			//if (differential > 80.0f)
-			//{
-			//	differential = 0.0f;
-			//}
 		}
 
 		[RelayCommand]

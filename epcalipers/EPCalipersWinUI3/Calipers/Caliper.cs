@@ -30,6 +30,7 @@ namespace EPCalipersWinUI3.Calipers
     /// <param name="First"></param>
     /// <param name="Last"></param>
     public readonly record struct CaliperPosition(double Center, double First, double Last);
+    public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
     public abstract class Caliper
     {
         protected Bounds Bounds { get; init; }
@@ -40,21 +41,6 @@ namespace EPCalipersWinUI3.Calipers
             CaliperView = caliperView;
             Bounds = caliperView.Bounds;
         }
-
-		public static Caliper Create(CaliperType caliperType, CaliperPosition position, 
-            ICaliperView caliperView, Point? apex = null)
-        {
-            switch (caliperType)
-			{
-				case CaliperType.Time:
-					return new TimeCaliper(position, caliperView);
-				case CaliperType.Amplitude:
-					return new AmplitudeCaliper(position, caliperView);
-				case CaliperType.Angle:
-					return new AngleCaliper(apex, caliperView);
-			}
-			return null;
-		}
 
         public CaliperType CaliperType { get; init; }
 
