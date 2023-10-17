@@ -2,6 +2,7 @@
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,9 +30,11 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void InitBars(AngleCaliperPosition position)
 		{
-			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds); 
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds);
+			LeftAngleBar.Angle = position.FirstAngle;
 			LeftAngleBar.Color = Colors.Red;
 			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds); 
+			RightAngleBar.Angle = position.LastAngle;
 			RightAngleBar.Color = Colors.Green;
 		}
 
@@ -42,7 +45,34 @@ namespace EPCalipersWinUI3.Calipers
 
 		public override Bar IsNearBar(Point p)
 		{
-			throw new NotImplementedException();
+			if (PointNearBar(p, LeftAngleBar.Angle))
+			{
+				Debug.Print("near left angle bar");
+				return LeftAngleBar;
+			} 
+			if (PointNearBar(p, RightAngleBar.Angle))
+			{
+				Debug.Print("near right angle bar");
+				return RightAngleBar;
+			}
+			Debug.Print("not near any bar");
+			return null;
+		}
+
+		private readonly double angleDelta = 0.1;
+
+		public bool PointNearBar(Point p, double barAngle)
+		{
+			double theta = RelativeTheta(p);
+			return theta < (double)barAngle + angleDelta &&
+				theta > (double)barAngle - angleDelta;
+		}
+
+		private double RelativeTheta(Point p)
+		{
+			var x = p.X - LeftAngleBar.X1;
+			var y = p.Y - LeftAngleBar.Y1;
+			return Math.Atan2(y, x);
 		}
 
 		public override double Value()
