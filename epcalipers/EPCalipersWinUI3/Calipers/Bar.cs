@@ -46,8 +46,6 @@ namespace EPCalipersWinUI3.Calipers
 
         // Angle is only used for angle calipers.
         public double Angle { get; set; }
-		float angleBar1 = (float)(0.5 * Math.PI);
-		float angleBar2 = (float)(0.25 * Math.PI);
 		public double Position
         {
             get
@@ -134,28 +132,30 @@ namespace EPCalipersWinUI3.Calipers
         // X2 Y2 point.  We have formula in EP Diagram.
         private void SetupAngleBar(Point apex, double angle)
         {
-            switch (BarRole)
-            {
-                case Role.LeftAngle:
-                case Role.RightAngle:
-                    var leftEndPoint = EndPointForPosition(apex, (float)angle, 1000);
-                    var adjustedEndPoint = AdjustEndPoint(apex, leftEndPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? leftEndPoint;
-                    adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(_bounds.Width, 0), new Point(_bounds.Width, _bounds.Height)) ?? adjustedEndPoint;
-                    X1 = apex.X;
-                    Y1 = apex.Y;
-                    X2 = adjustedEndPoint.X;
-                    Y2 = adjustedEndPoint.Y;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+			//var endPoint = EndPointForPosition(apex, angle, 1000);
+			//var adjustedEndPoint = AdjustEndPoint(apex, endPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? endPoint;
+			//adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(_bounds.Width, 0), new Point(_bounds.Width, _bounds.Height)) ?? adjustedEndPoint;
+            var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height));
+			X1 = apex.X;
+			Y1 = apex.Y;
+			X2 = adjustedEndPoint.X;
+			Y2 = adjustedEndPoint.Y;
+		}
 
-        private Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
+		private Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
         {
             var intersection = MathHelper.Intersection(apex, endPoint, border1, border2);
             return intersection;
         }
+
+        private Point ClippedEndPoint(Point apex, double angle, double length, Point lowerBorder, Point rightBorder)
+        {
+			var endPoint = EndPointForPosition(apex, angle, length);
+			var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, lowerBorder, rightBorder) ?? adjustedEndPoint;
+            return adjustedEndPoint;
+        }
+
 
 
 
@@ -190,12 +190,12 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-		private Point EndPointForPosition(Point p, float angle, float length)
+		private Point EndPointForPosition(Point p, double angle, double length)
 		{
 			// Note Windows coordinates origin is top left of screen
 			double endX = Math.Cos(angle) * length + p.X;
 			double endY = Math.Sin(angle) * length + p.Y;
-			Point endPoint = new Point((float)endX, (float)endY);
+			Point endPoint = new Point(endX, endY);
 			return endPoint;
 		}
 

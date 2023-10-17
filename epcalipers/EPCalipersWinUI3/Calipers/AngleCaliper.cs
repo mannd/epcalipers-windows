@@ -40,7 +40,18 @@ namespace EPCalipersWinUI3.Calipers
 
 		public override void Drag(Bar bar, Point delta)
 		{
-			throw new NotImplementedException();
+			//var newEndpoint = MoveBar(bar, delta, apex);
+		}
+
+		private double MoveBarAngle(Point delta, Point location)
+		{
+			Point newPosition = new Point(location.X + delta.X, location.Y + delta.Y);
+			return RelativeTheta(newPosition);
+		}
+
+		private void MoveBar(Bar bar, Point delta, Point location)
+		{
+			bar.Angle = MoveBarAngle(delta, location);
 		}
 
 		public override Bar IsNearBar(Point p)
