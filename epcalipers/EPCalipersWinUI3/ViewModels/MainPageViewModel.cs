@@ -62,7 +62,7 @@ namespace EPCalipersWinUI3
 		public void AddTimeCaliper()
 		{
 			var initialPosition = InitialPosition(CaliperType.Time, 200);
-			var caliper = Caliper.Create(CaliperType.Time, initialPosition, _caliperView);
+			var caliper = Caliper.Create(CaliperType.Time, initialPosition.Item1, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -73,7 +73,7 @@ namespace EPCalipersWinUI3
 		public void AddAmplitudeCaliper()
 		{
 			var initialPosition = InitialPosition(CaliperType.Amplitude, 200);
-			var caliper = Caliper.Create(CaliperType.Amplitude, initialPosition, _caliperView);
+			var caliper = Caliper.Create(CaliperType.Amplitude, initialPosition.Item1, _caliperView);
 			caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
@@ -84,26 +84,26 @@ namespace EPCalipersWinUI3
 		public void AddAngleCaliper()
 		{
 			var initialPosition = InitialPosition(CaliperType.Angle, 200);
-			var caliper = Caliper.Create(CaliperType.Angle, initialPosition, _caliperView);
+			var caliper = Caliper.Create(CaliperType.Angle, initialPosition.Item1, _caliperView, initialPosition.Item2);
 		//	caliper.SetColor(Colors.Blue);
 			caliper.UnselectedColor = Colors.Blue;
 			caliper.SelectedColor = Colors.Red;
 			_caliperCollection.Add(caliper);
 		}
-		private CaliperPosition InitialPosition(CaliperType type, double spacing)
+		private (CaliperPosition, Point) InitialPosition(CaliperType type, double spacing)
 		{
 			Point p = GetApproximateCenterOfView(_caliperView);
 			double halfSpacing = spacing / 2.0;
 			switch (type)
 			{
 				case CaliperType.Time:
-					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
+					return (new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing), p);
 				case CaliperType.Amplitude:
-					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+					return (new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing), p);
 				case CaliperType.Angle:
-					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+					return (new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing), p);
 				default:
-					return new CaliperPosition(0, 0, 0);
+					return (new CaliperPosition(0, 0, 0), p);
 			}
 		}
 

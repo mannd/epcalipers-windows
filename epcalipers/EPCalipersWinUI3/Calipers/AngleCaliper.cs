@@ -15,24 +15,22 @@ namespace EPCalipersWinUI3.Calipers
 		public Bar RightAngleBar { get; set; }
 
 		private bool _fakeBarLines;
-
-		public AngleCaliper(CaliperPosition position,
-			ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
+		public AngleCaliper(Point? apex, ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
 		{
+			if (apex == null) throw new ArgumentNullException(nameof(apex));
 			_fakeBarLines = fakeBarLines;
-			InitBars(position);
+			InitBars((Point)apex);
 			Bars = new[] { LeftAngleBar, RightAngleBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
 		}
 
-		private void InitBars(CaliperPosition position)
+		private void InitBars(Point apex)
 		{
-			LeftAngleBar = new Bar(Bar.Role.LeftAngle, new Point(100, 100), 0.5 * Math.PI); 
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, apex, 0.5 * Math.PI, Bounds); 
 			LeftAngleBar.Color = Colors.Red;
-			RightAngleBar = new Bar(Bar.Role.RightAngle, new Point(100, 100), 0.25 * Math.PI); 
+			RightAngleBar = new Bar(Bar.Role.RightAngle, apex, 0, Bounds); 
 			RightAngleBar.Color = Colors.Green;
-
 		}
 
 		public override void Drag(Bar bar, Point delta)

@@ -41,7 +41,8 @@ namespace EPCalipersWinUI3.Calipers
             Bounds = caliperView.Bounds;
         }
 
-		public static Caliper Create(CaliperType caliperType, CaliperPosition position, ICaliperView caliperView)
+		public static Caliper Create(CaliperType caliperType, CaliperPosition position, 
+            ICaliperView caliperView, Point? apex = null)
         {
             switch (caliperType)
 			{
@@ -50,7 +51,7 @@ namespace EPCalipersWinUI3.Calipers
 				case CaliperType.Amplitude:
 					return new AmplitudeCaliper(position, caliperView);
 				case CaliperType.Angle:
-					return new AngleCaliper(position, caliperView);
+					return new AngleCaliper(apex, caliperView);
 			}
 			return null;
 		}

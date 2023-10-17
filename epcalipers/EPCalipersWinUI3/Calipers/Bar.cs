@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Media.Devices;
 using Windows.UI;
+using EPCalipersWinUI3.Helpers;
 using Color = Windows.UI.Color;
 using Point = Windows.Foundation.Point;
+
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -71,6 +73,7 @@ namespace EPCalipersWinUI3.Calipers
         public double Y2 { get => BarLine.Y2; set => BarLine.Y2 = value; }
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
+        private Bounds _bounds;
 
         // TODO: Should (position, start, end) be a struct or record?
 		public Bar(Role role,
@@ -81,11 +84,12 @@ namespace EPCalipersWinUI3.Calipers
             SetupBar(position, start, end);
         }
 
-        public Bar(Role role, Point apex, double angle, bool fakeBarLine = false)
+        public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeBarLine = false)
         {
             // TODO: exception if role is not an Angle role.
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
+            _bounds = bounds;
             SetupAngleBar(apex, angle);
         }
 
@@ -125,6 +129,9 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
+        // TODO: Need bounds of view, and calculate intercept of 
+        // Line with width or height.  Use this intercept as
+        // X2 Y2 point.  We have formula in EP Diagram.
         private void SetupAngleBar(Point apex, double angle)
         {
             switch (BarRole)
@@ -132,17 +139,26 @@ namespace EPCalipersWinUI3.Calipers
                 case Role.LeftAngle:
                 case Role.RightAngle:
                     var leftEndPoint = EndPointForPosition(apex, (float)angle, 1000);
+                    var adjustedEndPoint = AdjustEndPoint(apex, leftEndPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? leftEndPoint;
+                    adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(_bounds.Width, 0), new Point(_bounds.Width, _bounds.Height)) ?? adjustedEndPoint;
                     X1 = apex.X;
                     Y1 = apex.Y;
-                    X2 = leftEndPoint.X;
-                    Y2 = leftEndPoint.Y;
+                    X2 = adjustedEndPoint.X;
+                    Y2 = adjustedEndPoint.Y;
                     break;
                 default:
-                    throw new NotFiniteNumberException();
+                    throw new NotImplementedException();
             }
-           
-
         }
+
+        private Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
+        {
+            var intersection = MathHelper.Intersection(apex, endPoint, border1, border2);
+            return intersection;
+        }
+
+
+
         public bool IsSelected { get; set; }
 		public Color Color {
             set => BarLine.Color = value; }
