@@ -63,7 +63,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\epcalipers-msix\</AppxPackageDir>
     <AppInstallerUri>file:\\C:\Users\mannd\OneDrive\Documents\test\</AppInstallerUri>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
