@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using Microsoft.UI;
+using Microsoft.UI.Text;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,8 @@ namespace EPCalipersWinUI3.Calipers
 		public Bar LeftAngleBar { get; set; }
 		public Bar RightAngleBar { get; set; }
 
+		public Bar ApexBar { get; set; } // a pseudobar
+
 		private bool _fakeBarLines;
 
 		public AngleCaliper(AngleCaliperPosition position, 
@@ -22,7 +25,7 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			_fakeBarLines = fakeBarLines;
 			InitBars(position);
-			Bars = new[] { LeftAngleBar, RightAngleBar};
+			Bars = new[] { LeftAngleBar, RightAngleBar, ApexBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
 
@@ -30,17 +33,65 @@ namespace EPCalipersWinUI3.Calipers
 
 		private void InitBars(AngleCaliperPosition position)
 		{
-			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds);
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeBarLines);
 			LeftAngleBar.Angle = position.FirstAngle;
 			LeftAngleBar.Color = Colors.Red;
-			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds); 
+			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeBarLines); 
 			RightAngleBar.Angle = position.LastAngle;
 			RightAngleBar.Color = Colors.Green;
+			ApexBar = new(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines);
+			// TODO: make apex bar invisible even when tapped.
+			ApexBar.Color = Colors.Transparent;  // Change to a different color to debug.
 		}
 
 		public override void Drag(Bar bar, Point delta)
 		{
-			//var newEndpoint = MoveBar(bar, delta, apex);
+			switch (bar.BarRole)
+			{
+				case Bar.Role.Apex:
+					bar.X1 += delta.X;
+					bar.X2 += delta.X;
+					bar.Y1 += delta.Y;
+					bar.Y2 += delta.Y;
+					var apex = new Point(((bar.X2 - bar.X1) / 2) + bar.X1, bar.Y1);
+					LeftAngleBar.SetupAngleBar(apex, LeftAngleBar.Angle);
+					RightAngleBar.SetupAngleBar(apex, RightAngleBar.Angle);
+					break;
+				case Bar.Role.LeftAngle:
+					LeftAngleBar.Angle -= delta.X / 20;
+					LeftAngleBar.SetupAngleBar(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
+					break;
+				case Bar.Role.RightAngle:
+					RightAngleBar.Angle -= delta.X / 20;
+					RightAngleBar.SetupAngleBar(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
+					break;
+					
+
+				default: break;
+			}
+   //         if (bar == LeftBar)
+   //         {
+			//	bar.X1 += delta.X;
+			//	bar.X2 += delta.X;
+			//	CrossBar.X1 += delta.X;
+			//}
+			//else if (bar == RightBar)
+   //         {
+			//	bar.X1 += delta.X;
+			//	bar.X2 += delta.X;
+			//	CrossBar.X2 += delta.X;
+			//}
+			//else if (bar == CrossBar)
+   //         {
+   //             LeftBar.X1 += delta.X;
+   //             LeftBar.X2 += delta.X;
+   //             RightBar.X1 += delta.X;
+   //             RightBar.X2 += delta.X;
+   //             bar.X1 += delta.X;
+   //             bar.X2 += delta.X;
+   //             bar.Y1 += delta.Y;
+   //             bar.Y2 += delta.Y;
+			//}
 		}
 
 		private double MoveBarAngle(Point delta, Point location)
@@ -56,6 +107,11 @@ namespace EPCalipersWinUI3.Calipers
 
 		public override Bar IsNearBar(Point p)
 		{
+			if (ApexBar.IsNear(p))
+			{
+				Debug.Print("near apex");
+				return ApexBar;
+			}
 			if (PointNearBar(p, LeftAngleBar.Angle))
 			{
 				Debug.Print("near left angle bar");

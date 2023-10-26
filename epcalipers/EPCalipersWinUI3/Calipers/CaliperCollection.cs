@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 using Windows.Foundation;
 using EPCalipersWinUI3.Contracts;
+using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -74,6 +75,7 @@ namespace EPCalipersWinUI3.Calipers
 			Bar bar = null;
 			var caliper = _calipers.Where(x => (bar = x.IsNearBar(point)) != null).FirstOrDefault();
 			if (caliper == null) return (null, null);
+			Debug.Print(caliper.ToString(), bar.ToString());
 			return (caliper, bar);
 		}
 

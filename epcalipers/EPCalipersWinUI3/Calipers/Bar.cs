@@ -35,6 +35,7 @@ namespace EPCalipersWinUI3.Calipers
 			VerticalCrossBar,
 			LeftAngle,
             RightAngle,
+            Apex,  // Invisible bar at apex of angle caliper
 			TriangleBase // For BrugadaMeter.
 		}
         /// <summary>
@@ -88,7 +89,14 @@ namespace EPCalipersWinUI3.Calipers
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
             _bounds = bounds;
-            SetupAngleBar(apex, angle);
+            if (role == Role.Apex)
+            {
+                SetupBar(apex.Y, apex.X - 10, apex.X + 10);
+            }
+            else
+            {
+                SetupAngleBar(apex, angle);
+            }
         }
 
         private void SetupBar(double position, double start, double end)
@@ -119,6 +127,12 @@ namespace EPCalipersWinUI3.Calipers
                     X2 = position;
                     Y2 = end;
                     break;
+                case Role.Apex:
+                    X1 = start;
+                    Y1 = position;
+                    X2 = end;
+                    Y2 = position;
+                    break;
                 case Role.LeftAngle:
                 case Role.RightAngle:
                     throw new NotImplementedException();
@@ -130,7 +144,7 @@ namespace EPCalipersWinUI3.Calipers
         // TODO: Need bounds of view, and calculate intercept of 
         // Line with width or height.  Use this intercept as
         // X2 Y2 point.  We have formula in EP Diagram.
-        private void SetupAngleBar(Point apex, double angle)
+        public void SetupAngleBar(Point apex, double angle)
         {
 			//var endPoint = EndPointForPosition(apex, angle, 1000);
 			//var adjustedEndPoint = AdjustEndPoint(apex, endPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? endPoint;
@@ -177,6 +191,7 @@ namespace EPCalipersWinUI3.Calipers
                 case Role.Vertical:
 					return p.X > X1 - _precision && p.X < X1 + _precision;
 				case Role.HorizontalCrossBar:
+                case Role.Apex:
 					return p.X > Math.Min(X1, X2)
                             && p.X < Math.Max(X1, X2)
                             && p.Y > Y1 - _precision

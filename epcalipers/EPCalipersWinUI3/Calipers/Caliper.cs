@@ -104,5 +104,6 @@ namespace EPCalipersWinUI3.Calipers
         public abstract void Drag(Bar bar, Point delta);
 
         public abstract Bar IsNearBar(Point p);
+
     }
 }
