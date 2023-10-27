@@ -11,7 +11,7 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
 {
-	internal class AngleCaliper : Caliper
+	public class AngleCaliper : Caliper
 	{
 		public Bar LeftAngleBar { get; set; }
 		public Bar RightAngleBar { get; set; }
@@ -33,13 +33,9 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeBarLines);
 			LeftAngleBar.Angle = position.FirstAngle;
-			LeftAngleBar.Color = Colors.Red;
 			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeBarLines); 
 			RightAngleBar.Angle = position.LastAngle;
-			RightAngleBar.Color = Colors.Green;
-			ApexBar = new(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines);
-			// TODO: make apex bar invisible even when tapped.
-			ApexBar.Color = Colors.Transparent;  // Change to a different color to debug.
+			ApexBar = new(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines); // ApexBar never drawn
 		}
 
 		public override void ChangeBounds()
@@ -47,8 +43,8 @@ namespace EPCalipersWinUI3.Calipers
 			var bounds = CaliperView.Bounds;
 			LeftAngleBar.Bounds = bounds;
 			RightAngleBar.Bounds = bounds;
-			LeftAngleBar.SetupAngleBar(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
-			RightAngleBar.SetupAngleBar(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
+			LeftAngleBar.SetAngleBarPosition(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
+			RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
 		}
 
 		public override void Drag(Bar bar, Point delta, Point location)
@@ -61,25 +57,19 @@ namespace EPCalipersWinUI3.Calipers
 					bar.Y1 += delta.Y;
 					bar.Y2 += delta.Y;
 					var apex = bar.MidPoint;
-					LeftAngleBar.SetupAngleBar(apex, LeftAngleBar.Angle);
-					RightAngleBar.SetupAngleBar(apex, RightAngleBar.Angle);
+					LeftAngleBar.SetAngleBarPosition(apex, LeftAngleBar.Angle);
+					RightAngleBar.SetAngleBarPosition(apex, RightAngleBar.Angle);
 					break;
 				case Bar.Role.LeftAngle:
 					LeftAngleBar.Angle = RelativeTheta(location);
-					LeftAngleBar.SetupAngleBar(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
+					LeftAngleBar.SetAngleBarPosition(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
 					break;
 				case Bar.Role.RightAngle:
 					RightAngleBar.Angle = RelativeTheta(location);
-					RightAngleBar.SetupAngleBar(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
+					RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
 					break;
 				default: break;
 			}
-		}
-
-		private double MoveBarAngle(Point delta, Point location)
-		{
-			Point newPosition = new Point(location.X + delta.X, location.Y + delta.Y);
-			return RelativeTheta(newPosition);
 		}
 
 		public override Bar IsNearBar(Point p)

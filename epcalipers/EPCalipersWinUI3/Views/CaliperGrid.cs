@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -12,6 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Appointments.AppointmentsProvider;
+using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Views
 {
@@ -29,6 +31,19 @@ namespace EPCalipersWinUI3.Views
 		{
 			Children.Add(barLine);
 		}
+
+		private static double _offset = 0;
+		private readonly static double _offsetIncrement = 10;
+		private readonly static double _maxOffset = 100;
+		public Point GetOffsettedCenter()
+		{
+			Point center = MathHelper.Center(Bounds);
+			center = MathHelper.OffsetPoint(center, _offset);
+			_offset += _offsetIncrement;
+			if (_offset > _maxOffset) _offset = 0;
+			return center;
+		}
+
 		public void Remove(Line barLine)
 		{
 			Children.Remove(barLine);
@@ -42,6 +57,11 @@ namespace EPCalipersWinUI3.Views
 		public void Add(Line line)
 		{
 			Debug.Print($"{line} added.");
+		}
+
+		public Point GetOffsettedCenter()
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Remove(Line line)

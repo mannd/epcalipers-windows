@@ -27,20 +27,10 @@ using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using WinUIEx;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace EPCalipersWinUI3.Views
 {
     public sealed partial class MainPage : Page
 	{
-        private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
-        private double _imageRotation = 0;
-		private double _rotatedImageScale = 1.0;
-
-		private bool pointerDown = false;
-		private Point pointerPosition;
-
         public MainPageViewModel ViewModel { get; set; }
 
 		public MainPage()
@@ -48,7 +38,8 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
-			// TODO: make this a setting?  Note that left/top alignment avoids image shifting.
+			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
+			// so should be the default.
 			CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
 			CaliperView.VerticalAlignment = VerticalAlignment.Top;
 
@@ -62,6 +53,7 @@ namespace EPCalipersWinUI3.Views
 				ViewModel.Bounds = CaliperView.Bounds;
 				ViewModel.DeleteAllCalipersCommand.Execute(null);
 
+				// TODO: Change to settings.  Settings.ResetZoomWithNewImage, etc.
 				if (ViewModel.ResetZoomWithNewImage)
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
@@ -77,7 +69,10 @@ namespace EPCalipersWinUI3.Views
             });
         }
 
-		#region calipers
+		#region touches
+		private bool pointerDown = false;
+		private Point pointerPosition;
+
 		private void ScrollViewer_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			var position = e.GetPosition(CaliperView);
@@ -119,7 +114,6 @@ namespace EPCalipersWinUI3.Views
 			pointerDown = false;
 		}
 		#endregion
-
 		#region zoom
 		/// <summary>
 		/// Delegate method that view model uses to set zoom on scroll view
@@ -133,7 +127,6 @@ namespace EPCalipersWinUI3.Views
 		#region drag and drop
 		private async void EcgImage_Drop(object sender, DragEventArgs e)
 		{
-			Debug.WriteLine("Dropped file");
 			if (e.DataView.Contains(StandardDataFormats.StorageItems))
 			{
 				var items = await e.DataView.GetStorageItemsAsync();
@@ -153,18 +146,21 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 		#region rotation
+		// Note rotation is handled in the code behind file because it is purely a
+		// manipulation of the view, with no affect on the view model.
+
+        private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
+        private double _imageRotation = 0;
+		private double _rotatedImageScale = 1.0;
+
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-			//RotateImageByAngle(90);
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-			mainWindow.SystemBackdrop = new MicaBackdrop();
+			RotateImageByAngle(90);
 		}
 
 		private void Rotate90L_Click(object sender, RoutedEventArgs e)
 		{
-			//RotateImageByAngle(-90);
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-			mainWindow.SystemBackdrop = new TransparentTintBackdrop();
+			RotateImageByAngle(-90);
 		}
 
 		private void Rotate1R_Click(object sender, RoutedEventArgs e)
@@ -189,7 +185,6 @@ namespace EPCalipersWinUI3.Views
 
 		private void ResetRotation_Click(object sender, RoutedEventArgs e)
 		{
-			//ResetRotation();
             RotateImageToAngle(0);
 		}
 
@@ -263,12 +258,9 @@ namespace EPCalipersWinUI3.Views
             };
 			EcgImage.RenderTransform = rotateTransform;
 		}
-
-		// TODO: Calculate the scaling factor based on height and width and rotation angle...
-		// https://stackoverflow.com/questions/65554301/how-to-calculate-the-sizes-of-a-rectangle-that-contains-rotated-image-potential#:~:text=and%20the%20width%20and%20height%20of%20the%20rotated,%28theta%20%2B%20theta0%29%29%2C%20fabs%20%28sin%20%28theta%20-%20theta0%29%29
-
 		#endregion
 		#region event handlers
+		// Events that open dialogs are handled in the code behind file.
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
 

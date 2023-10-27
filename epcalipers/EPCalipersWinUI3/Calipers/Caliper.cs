@@ -108,5 +108,51 @@ namespace EPCalipersWinUI3.Calipers
 
         public abstract Bar IsNearBar(Point p);
 
+        //Standard placement of new calipers
+
+        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView) {
+            CaliperPosition initialPosition;
+            AngleCaliperPosition initialAnglePosition;
+            Caliper caliper = null;
+            switch (type)
+            {
+                case CaliperType.Time:
+                    initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
+                    caliper = new TimeCaliper(initialPosition, caliperView);
+                    break;
+                case CaliperType.Amplitude:
+                    initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
+                    caliper = new AmplitudeCaliper(initialPosition, caliperView);
+                    break;
+                case CaliperType.Angle:
+                    initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
+                    caliper = new AngleCaliper(initialAnglePosition, caliperView);
+                    break;
+            }
+            return caliper;
+        }
+
+		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
+		{
+			Point p = caliperView.GetOffsettedCenter();
+			double halfSpacing = spacing / 2.0;
+			switch (type)
+			{
+				case CaliperType.Time:
+					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
+				case CaliperType.Amplitude:
+					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+				default:
+					return new CaliperPosition(0, 0, 0);
+			}
+		}
+
+		private static AngleCaliperPosition SetInitialAngleCaliperPosition(ICaliperView caliperView)
+		{
+			var apex = caliperView.GetOffsettedCenter();
+			double firstAngle = 0.5 * Math.PI;
+			double secondAngle = 0.25 * Math.PI;
+			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
+		}
     }
 }

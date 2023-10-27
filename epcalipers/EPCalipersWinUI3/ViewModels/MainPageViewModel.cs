@@ -3,34 +3,29 @@ using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
-using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Devices.PointOfService;
 using Windows.Foundation;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 
 namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : ObservableObject
 	{
-		private readonly PdfHelper _pdfHelper = new();
-		private CaliperCollection _caliperCollection;
-		private ICaliperView _caliperView;
+		private readonly PdfHelper _pdfHelper;
+		private readonly CaliperCollection _caliperCollection;
+		private readonly ICaliperView _caliperView;
 		private Caliper _grabbedCaliper = null;
 		private Bar _grabbedComponent = null;
-		private Point _startingPoint;
+		private Point _startingDragPoint;
 
         // Note zoom factors used in Mac OS X version
         // These are taken from the Apple IKImageView demo
@@ -39,7 +34,10 @@ namespace EPCalipersWinUI3
         private readonly static float _maxZoom = 10;
         private readonly static float _minZoom = 0.1f;
 
-		private static double _differential = 10;
+		//
+		private static double _newCaliperDisplacement = 0;
+		private static readonly double _displacementAmount = 10;
+		private static readonly double _maximumDisplacement = 100;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -61,65 +59,32 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			var initialPosition = InitialPosition(CaliperType.Time, 200);
-			var caliper = new TimeCaliper(initialPosition, _caliperView);
-			caliper.SetColor(Colors.Blue);
-			caliper.UnselectedColor = Colors.Blue;
-			caliper.SelectedColor = Colors.Red;
-			_caliperCollection.Add(caliper);
+			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView);
+			FinalizeCaliper(caliper);
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			var initialPosition = InitialPosition(CaliperType.Amplitude, 200);
-			var caliper = new AmplitudeCaliper(initialPosition, _caliperView);
-			caliper.SetColor(Colors.Blue);
-			caliper.UnselectedColor = Colors.Blue;
-			caliper.SelectedColor = Colors.Red;
-			_caliperCollection.Add(caliper);
+			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView);
+			FinalizeCaliper(caliper);
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			var initialPosition = InitialAnglePosition();
-			var caliper = new AngleCaliper(initialPosition, _caliperView);
-		//	caliper.SetColor(Colors.Blue);
-			caliper.UnselectedColor = Colors.Blue;
-			caliper.SelectedColor = Colors.Red;
-			_caliperCollection.Add(caliper);
-		}
-		private CaliperPosition InitialPosition(CaliperType type, double spacing)
-		{
-			Point p = GetApproximateCenterOfView(_caliperView);
-			double halfSpacing = spacing / 2.0;
-			switch (type)
-			{
-				case CaliperType.Time:
-					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
-				case CaliperType.Amplitude:
-					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
-				default:
-					return new CaliperPosition(0, 0, 0);
-			}
+			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView);
+			FinalizeCaliper(caliper);
 		}
 
-		private AngleCaliperPosition InitialAnglePosition()
+		private void FinalizeCaliper(Caliper c)
 		{
-			var apex = GetApproximateCenterOfView(_caliperView);
-			double firstAngle = 0.5 * Math.PI;
-			double secondAngle = 0.25 * Math.PI;
-			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
-		}
+			if (c == null) return;
+			c.UnselectedColor = Colors.Blue;
+			c.SelectedColor = Colors.Red;
+			c.IsSelected = false;
+			_caliperCollection.Add(c);
 
-		private Point GetApproximateCenterOfView(ICaliperView view)
-		{
-			// Get centerpoint of CaliperView.
-			Point center = new Point((view.Bounds.Width / 2.0) + _differential, (view.Bounds.Height / 2.0) + _differential);
-			_differential += 10;
-			if (_differential > 100) _differential = 0;
-			return center;
 		}
 
 		[RelayCommand]
@@ -147,16 +112,16 @@ namespace EPCalipersWinUI3
 		{
 			// Detect if this is near a caliper component, and if so, load it up for movement.
 			(_grabbedCaliper, _grabbedComponent) = _caliperCollection.GetGrabbedCaliperAndBar(point);
-			_startingPoint = point;
+			_startingDragPoint = point;
 		}
 
 		public void DragCaliperComponent(Point point)
 		{
 			if (_grabbedCaliper == null || _grabbedComponent == null) return;
-			var delta = new Point(point.X - _startingPoint.X, point.Y - _startingPoint.Y);
-			_startingPoint.X += delta.X;
-			_startingPoint.Y += delta.Y;
-			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingPoint);
+			var delta = new Point(point.X - _startingDragPoint.X, point.Y - _startingDragPoint.Y);
+			_startingDragPoint.X += delta.X;
+			_startingDragPoint.Y += delta.Y;
+			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingDragPoint);
 		}
 
 		public void ReleaseGrabbedCaliper()

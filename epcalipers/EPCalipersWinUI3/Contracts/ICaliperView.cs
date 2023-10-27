@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EPCalipersWinUI3.Calipers;
 using Microsoft.UI.Xaml.Shapes;
+using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Contracts
 {
@@ -15,5 +16,7 @@ namespace EPCalipersWinUI3.Contracts
 		public void Add(Line line);
 
 		public void Remove(Line line);
+
+		public Point GetOffsettedCenter();
     }
 }

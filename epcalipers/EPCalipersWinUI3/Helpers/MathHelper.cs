@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Shapes;
+﻿using EPCalipersWinUI3.Calipers;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,6 +49,16 @@ namespace EPCalipersWinUI3.Helpers
 			intersection.X = p1.X + u * (p2.X - p1.X);
 			intersection.Y = p1.Y + u * (p2.Y - p1.Y);
 			return intersection;
+		}
+
+		public static Point Center(Bounds bounds)
+		{
+			return new Point(bounds.Width / 2.0, bounds.Height / 2.0);
+		}
+
+		public static Point OffsetPoint(Point p, double offset)
+		{
+			return new Point(p.X + offset, p.Y + offset);
 		}
 	}
 }

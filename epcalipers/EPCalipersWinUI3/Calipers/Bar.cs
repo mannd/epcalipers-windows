@@ -15,7 +15,8 @@ using Windows.UI;
 using EPCalipersWinUI3.Helpers;
 using Color = Windows.UI.Color;
 using Point = Windows.Foundation.Point;
-
+using ABI.Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -74,15 +75,13 @@ namespace EPCalipersWinUI3.Calipers
         public double Y2 { get => BarLine.Y2; set => BarLine.Y2 = value; }
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
-        private Bounds _bounds;
 
-        // TODO: Should (position, start, end) be a struct or record?
 		public Bar(Role role,
 			double position, double start, double end, bool fakeBarLine = false)
         {
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
-            SetupBar(position, start, end);
+            SetBarPosition(position, start, end);
         }
 
         public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeBarLine = false)
@@ -93,15 +92,17 @@ namespace EPCalipersWinUI3.Calipers
             Bounds = bounds;
             if (role == Role.Apex)
             {
-                SetupBar(apex.Y, apex.X - 10, apex.X + 10);
+				SetBarPosition(apex.Y, apex.X - 10, apex.X + 10);
+                // Comment out this line to show hidden ApexBar for debugging.
+                BarLine.Line.Visibility = Visibility.Collapsed; 
             }
             else
             {
-                SetupAngleBar(apex, angle);
+                SetAngleBarPosition(apex, angle);
             }
         }
 
-        private void SetupBar(double position, double start, double end)
+        private void SetBarPosition(double position, double start, double end)
 		{
             switch (BarRole)
             {
@@ -143,14 +144,8 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        // TODO: Need bounds of view, and calculate intercept of 
-        // Line with width or height.  Use this intercept as
-        // X2 Y2 point.  We have formula in EP Diagram.
-        public void SetupAngleBar(Point apex, double angle)
+        public void SetAngleBarPosition(Point apex, double angle)
         {
-			//var endPoint = EndPointForPosition(apex, angle, 1000);
-			//var adjustedEndPoint = AdjustEndPoint(apex, endPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? endPoint;
-			//adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(_bounds.Width, 0), new Point(_bounds.Width, _bounds.Height)) ?? adjustedEndPoint;
             var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
 			X1 = apex.X;
 			Y1 = apex.Y;
