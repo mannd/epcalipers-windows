@@ -47,6 +47,10 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
+			// TODO: make this a setting?  Note that left/top alignment avoids image shifting.
+			CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
+			CaliperView.VerticalAlignment = VerticalAlignment.Top;
+
             ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
             {
 				ViewModel.ZoomFactor = ScrollView.ZoomFactor;

@@ -67,6 +67,7 @@ namespace EPCalipersWinUI3.Calipers
                 _isSelected = value;
                 foreach (var bar in Bars)
                 {
+                    if (bar.BarRole == Bar.Role.Apex) break;
                     bar.IsSelected = value;
                     bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
                 }
