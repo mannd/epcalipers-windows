@@ -61,7 +61,7 @@ namespace EPCalipersWinUI3.Calipers
 			return null;
 		}
 
-		public override void Drag(Bar bar, Point delta)
+		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
             if (bar == LeftBar)
             {

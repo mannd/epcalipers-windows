@@ -54,7 +54,6 @@ namespace EPCalipersWinUI3.Views
 
             EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
             {
-				// TODO: Need to change bounds with rotation?
 				ViewModel.Bounds = CaliperView.Bounds;
 				ViewModel.DeleteAllCalipersCommand.Execute(null);
 

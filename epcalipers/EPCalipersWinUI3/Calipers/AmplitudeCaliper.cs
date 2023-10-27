@@ -36,7 +36,7 @@ namespace EPCalipersWinUI3.Calipers
 			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeBarLines);
 		}
 
-		public override void Drag(Bar bar, Point delta)
+		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
             if (bar == TopBar)
             {

@@ -156,7 +156,7 @@ namespace EPCalipersWinUI3
 			var delta = new Point(point.X - _startingPoint.X, point.Y - _startingPoint.Y);
 			_startingPoint.X += delta.X;
 			_startingPoint.Y += delta.Y;
-			_grabbedCaliper.Drag(_grabbedComponent, delta);
+			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingPoint);
 		}
 
 		public void ReleaseGrabbedCaliper()

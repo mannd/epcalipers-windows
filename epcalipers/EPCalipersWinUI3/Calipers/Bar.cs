@@ -166,12 +166,13 @@ namespace EPCalipersWinUI3.Calipers
         {
 			var endPoint = EndPointForPosition(apex, angle, length);
 			var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, lowerBorder, rightBorder) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), lowerBorder) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), new Point(rightBorder.X, 0)) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(rightBorder.X, 0), rightBorder) ?? adjustedEndPoint;
             return adjustedEndPoint;
         }
 
-
-
+        public Point MidPoint => new Point(((X2 - X1) / 2.0) + X1, ((Y2 - Y1) / 2.0) + Y1);
 
         public bool IsSelected { get; set; }
 		public Color Color {

@@ -44,7 +44,7 @@ namespace EPCalipersWinUI3.Calipers
 			ApexBar.Color = Colors.Transparent;  // Change to a different color to debug.
 		}
 
-		public override void Drag(Bar bar, Point delta)
+		public override void Drag(Bar bar, Point delta, Point location)
 		{
 			switch (bar.BarRole)
 			{
@@ -53,45 +53,20 @@ namespace EPCalipersWinUI3.Calipers
 					bar.X2 += delta.X;
 					bar.Y1 += delta.Y;
 					bar.Y2 += delta.Y;
-					var apex = new Point(((bar.X2 - bar.X1) / 2) + bar.X1, bar.Y1);
+					var apex = bar.MidPoint;
 					LeftAngleBar.SetupAngleBar(apex, LeftAngleBar.Angle);
 					RightAngleBar.SetupAngleBar(apex, RightAngleBar.Angle);
 					break;
 				case Bar.Role.LeftAngle:
-					LeftAngleBar.Angle -= delta.X / 20;
+					LeftAngleBar.Angle = RelativeTheta(location);
 					LeftAngleBar.SetupAngleBar(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
 					break;
 				case Bar.Role.RightAngle:
-					RightAngleBar.Angle -= delta.X / 20;
+					RightAngleBar.Angle = RelativeTheta(location);
 					RightAngleBar.SetupAngleBar(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
 					break;
-					
-
 				default: break;
 			}
-   //         if (bar == LeftBar)
-   //         {
-			//	bar.X1 += delta.X;
-			//	bar.X2 += delta.X;
-			//	CrossBar.X1 += delta.X;
-			//}
-			//else if (bar == RightBar)
-   //         {
-			//	bar.X1 += delta.X;
-			//	bar.X2 += delta.X;
-			//	CrossBar.X2 += delta.X;
-			//}
-			//else if (bar == CrossBar)
-   //         {
-   //             LeftBar.X1 += delta.X;
-   //             LeftBar.X2 += delta.X;
-   //             RightBar.X1 += delta.X;
-   //             RightBar.X2 += delta.X;
-   //             bar.X1 += delta.X;
-   //             bar.X2 += delta.X;
-   //             bar.Y1 += delta.Y;
-   //             bar.Y2 += delta.Y;
-			//}
 		}
 
 		private double MoveBarAngle(Point delta, Point location)
