@@ -25,6 +25,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.ComponentModel.__Internals;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -154,12 +155,16 @@ namespace EPCalipersWinUI3.Views
 		#region rotation
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
 		{
-			RotateImageByAngle(90);
+			//RotateImageByAngle(90);
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			mainWindow.SystemBackdrop = new MicaBackdrop();
 		}
 
 		private void Rotate90L_Click(object sender, RoutedEventArgs e)
 		{
-			RotateImageByAngle(-90);
+			//RotateImageByAngle(-90);
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			mainWindow.SystemBackdrop = new TransparentTintBackdrop();
 		}
 
 		private void Rotate1R_Click(object sender, RoutedEventArgs e)

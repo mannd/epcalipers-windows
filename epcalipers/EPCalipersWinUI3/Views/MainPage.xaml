@@ -19,7 +19,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <MenuBar Grid.Row="0" >
+        <MenuBar Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <MenuBarItem x:Uid="FileMenu">
                 <MenuFlyoutItem x:Uid="OpenMenuItem" Click="OpenFile_Click">
                     <MenuFlyoutItem.Icon>
@@ -193,7 +193,7 @@
         </MenuBar>
         <!--TODO: Segoe Fluent icons not included in Win10, so must add
       the font to shared resources, and may need to change syntax below.-->
-        <CommandBar Grid.Row="1" Background="Transparent"
+        <CommandBar Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                         IsOpen="False" DefaultLabelPosition="Right">
             <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click" >
                 <SymbolIcon Symbol="OpenFile" />

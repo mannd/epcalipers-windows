@@ -16,7 +16,7 @@
             <RowDefinition Height="32" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="TitleBar" Grid.Row="0">
+        <Grid x:Name="TitleBar" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image Source="/Assets/StoreLogo.scale-200.png"
            HorizontalAlignment="Left" 
            Width="16" Height="16" 
