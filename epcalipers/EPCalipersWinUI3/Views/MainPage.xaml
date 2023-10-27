@@ -8,8 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Name="mainPage"
-    Background="Transparent">
-    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >-->
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
     <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -169,7 +168,7 @@
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="TransparentWindowMenuItem">
+                <MenuFlyoutItem x:Uid="TransparentWindowMenuItem" Command="{x:Bind ViewModel.TransparenWindowCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>

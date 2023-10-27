@@ -259,6 +259,13 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
+		private static void TransparenWindow()
+		{
+			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+            mainWindow.Navigate(typeof(TransparentPage));
+		}
+
+		[RelayCommand]
 		private static void Help()
 		{
 			var mainWindow = (Application.Current as App)?.Window as MainWindow;
