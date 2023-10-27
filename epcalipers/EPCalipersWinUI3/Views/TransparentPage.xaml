@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <MenuBar Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <MenuBarItem x:Uid="FileMenu">
-                <MenuFlyoutItem x:Uid="ExitMenuItem" >
+                <MenuFlyoutItem x:Uid="ExitMenuItem" Command="{x:Bind ViewModel.ExitCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F4" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -78,11 +78,11 @@
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="TransparentWindowMenuItem">
-                    <MenuFlyoutItem.KeyboardAccelerators>
+                <ToggleMenuFlyoutItem x:Uid="TransparentWindowMenuItem" IsChecked="True" Command="{x:Bind ViewModel.ToggleTransparentWindowCommand}">
+                    <ToggleMenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="T" Modifiers="Menu"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
+                    </ToggleMenuFlyoutItem.KeyboardAccelerators>
+                </ToggleMenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" >
                     <MenuFlyoutItem.Icon>
@@ -97,7 +97,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="AboutMenuItem" />
+                <MenuFlyoutItem x:Uid="AboutMenuItem" Click="About_Click"/>
             </MenuBarItem>
         </MenuBar>
         <!--TODO: Segoe Fluent icons not included in Win10, so must add
@@ -109,7 +109,7 @@
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" >
+                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}" >
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
@@ -117,7 +117,7 @@
                                 <KeyboardAccelerator Key="T" Modifiers="Control" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" >
+                        <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
@@ -125,7 +125,7 @@
                                 <KeyboardAccelerator Key="A" Modifiers="Control" />
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" >
+                        <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
@@ -161,8 +161,11 @@
                 </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
-        <local:CaliperGrid x:Name="CaliperView" Grid.Row="2" Background="Transparent" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center">
+        <local:CaliperGrid x:Name="TransparentCaliperView" Grid.Row="2" Background="Transparent" 
+                           PointerPressed="CaliperGrid_PointerPressed"
+                          PointerMoved="CaliperGrider_PointerMoved" Tapped="CaliperGrider_Tapped"
+                      DoubleTapped="CaliperGrider_DoubleTapped" PointerReleased="CaliperGrid_PointerReleased"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         </local:CaliperGrid>
     </Grid>
 </Page>

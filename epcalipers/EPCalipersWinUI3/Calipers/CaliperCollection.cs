@@ -48,6 +48,15 @@ namespace EPCalipersWinUI3.Calipers
 			}
 		}
 
+		public void ChangeBounds()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.ChangeBounds();
+			}
+
+		}
+
 		public void Clear()
 		{
 			foreach (var caliper in _calipers)

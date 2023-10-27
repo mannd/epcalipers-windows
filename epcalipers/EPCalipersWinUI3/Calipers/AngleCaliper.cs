@@ -15,7 +15,6 @@ namespace EPCalipersWinUI3.Calipers
 	{
 		public Bar LeftAngleBar { get; set; }
 		public Bar RightAngleBar { get; set; }
-
 		public Bar ApexBar { get; set; } // a pseudobar
 
 		private bool _fakeBarLines;
@@ -28,7 +27,6 @@ namespace EPCalipersWinUI3.Calipers
 			Bars = new[] { LeftAngleBar, RightAngleBar, ApexBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
-
 		}
 
 		private void InitBars(AngleCaliperPosition position)
@@ -42,6 +40,15 @@ namespace EPCalipersWinUI3.Calipers
 			ApexBar = new(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines);
 			// TODO: make apex bar invisible even when tapped.
 			ApexBar.Color = Colors.Transparent;  // Change to a different color to debug.
+		}
+
+		public override void ChangeBounds()
+		{
+			var bounds = CaliperView.Bounds;
+			LeftAngleBar.Bounds = bounds;
+			RightAngleBar.Bounds = bounds;
+			LeftAngleBar.SetupAngleBar(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
+			RightAngleBar.SetupAngleBar(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
 		}
 
 		public override void Drag(Bar bar, Point delta, Point location)
@@ -73,11 +80,6 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			Point newPosition = new Point(location.X + delta.X, location.Y + delta.Y);
 			return RelativeTheta(newPosition);
-		}
-
-		private void MoveBar(Bar bar, Point delta, Point location)
-		{
-			bar.Angle = MoveBarAngle(delta, location);
 		}
 
 		public override Bar IsNearBar(Point p)

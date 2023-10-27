@@ -36,6 +36,13 @@ namespace EPCalipersWinUI3.Calipers
 			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeBarLines);
 		}
 
+		public override void ChangeBounds()
+		{
+			var bounds = CaliperView.Bounds;
+			TopBar.X2 = bounds.Width;
+			BottomBar.X2 = bounds.Width;
+		}
+
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
             if (bar == TopBar)

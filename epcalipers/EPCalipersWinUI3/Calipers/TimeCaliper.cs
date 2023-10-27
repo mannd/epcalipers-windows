@@ -43,6 +43,13 @@ namespace EPCalipersWinUI3.Calipers
 			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeBarLines);
 		}
 
+			public override void ChangeBounds()
+		{
+			var bounds = CaliperView.Bounds;
+			LeftBar.Y2 = bounds.Height;
+			RightBar.Y2 = bounds.Height;
+		}
+
 		public override double Value()
 		{
 			return RightBar.Position - LeftBar.Position;

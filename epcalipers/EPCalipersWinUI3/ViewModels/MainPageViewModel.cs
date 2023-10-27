@@ -39,7 +39,7 @@ namespace EPCalipersWinUI3
         private readonly static float _maxZoom = 10;
         private readonly static float _minZoom = 0.1f;
 
-		private static double _differential = 0;
+		private static double _differential = 10;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -273,7 +273,7 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
-		private static void Exit() => Application.Current.Exit();
+		private static void Exit() => CommandHelper.ApplicationExit();
 
 		[RelayCommand]
 		private async Task NextPdfPage() 

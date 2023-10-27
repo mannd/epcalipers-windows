@@ -45,6 +45,8 @@ namespace EPCalipersWinUI3.Calipers
         public IBarLine BarLine { get;  set; }
         public Role BarRole { get; set; }
 
+        public Bounds Bounds { get; set; }
+
         // Angle is only used for angle calipers.
         public double Angle { get; set; }
 		public double Position
@@ -88,7 +90,7 @@ namespace EPCalipersWinUI3.Calipers
             // TODO: exception if role is not an Angle role.
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
-            _bounds = bounds;
+            Bounds = bounds;
             if (role == Role.Apex)
             {
                 SetupBar(apex.Y, apex.X - 10, apex.X + 10);
@@ -149,7 +151,7 @@ namespace EPCalipersWinUI3.Calipers
 			//var endPoint = EndPointForPosition(apex, angle, 1000);
 			//var adjustedEndPoint = AdjustEndPoint(apex, endPoint, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height)) ?? endPoint;
 			//adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(_bounds.Width, 0), new Point(_bounds.Width, _bounds.Height)) ?? adjustedEndPoint;
-            var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, _bounds.Height), new Point(_bounds.Width, _bounds.Height));
+            var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
 			X1 = apex.X;
 			Y1 = apex.Y;
 			X2 = adjustedEndPoint.X;

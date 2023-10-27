@@ -270,15 +270,7 @@ namespace EPCalipersWinUI3.Views
 		#endregion
 		#region event handlers
 
-		private async void About_Click(object sender, RoutedEventArgs e)
-		{
-			Debug.WriteLine("About");
-			var aboutDialog = new AboutDialog
-			{
-				XamlRoot = XamlRoot
-			};
-			await aboutDialog.ShowAsync();
-		}
+		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
 
 		private async void GotoPdfPage_Click(object sender, RoutedEventArgs e)
 		{

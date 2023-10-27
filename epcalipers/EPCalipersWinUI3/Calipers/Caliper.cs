@@ -102,6 +102,8 @@ namespace EPCalipersWinUI3.Calipers
 			foreach (var bar in Bars) caliperView.Remove(bar.Line());
         }
 
+        public abstract void ChangeBounds();
+
         public abstract void Drag(Bar bar, Point delta, Point previousPoint);
 
         public abstract Bar IsNearBar(Point p);
