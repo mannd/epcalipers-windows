@@ -98,8 +98,10 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(this.CaliperView);
-				if (position.Position.X < EcgImage.ActualWidth && position.Position.Y < EcgImage.ActualHeight)
-				{
+				if (position.Position.X < EcgImage.ActualWidth 
+					&& position.Position.Y < EcgImage.ActualHeight
+					&& position.Position.Y > 0
+					&& position.Position.X > 0) {
 					ViewModel.DragCaliperComponent(position.Position);
 				}
 			}
