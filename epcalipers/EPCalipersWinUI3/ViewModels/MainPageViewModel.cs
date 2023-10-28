@@ -21,23 +21,7 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper;
-		private readonly CaliperCollection _caliperCollection;
-		private readonly ICaliperView _caliperView;
-		private Caliper _grabbedCaliper = null;
-		private Bar _grabbedComponent = null;
-		private Point _startingDragPoint;
-
-        // Note zoom factors used in Mac OS X version
-        // These are taken from the Apple IKImageView demo
-        private readonly float _zoomInFactor = 1.414214f;
-        private readonly float _zoomOutFactor = 0.7071068f;
-        private readonly static float _maxZoom = 10;
-        private readonly static float _minZoom = 0.1f;
-
-		//
-		private static double _newCaliperDisplacement = 0;
-		private static readonly double _displacementAmount = 10;
-		private static readonly double _maximumDisplacement = 100;
+		private CaliperHelper _caliperHelper;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -52,82 +36,62 @@ namespace EPCalipersWinUI3
 		{
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
-			_caliperCollection = new CaliperCollection(caliperView);
-			_caliperView = caliperView;
+			var caliperCollection = new CaliperCollection(caliperView);
+			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
 		}
 		#region commands
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView);
-			FinalizeCaliper(caliper);
+			_caliperHelper.AddTimeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView);
-			FinalizeCaliper(caliper);
+			_caliperHelper.AddAmplitudeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView);
-			FinalizeCaliper(caliper);
-		}
-
-		private void FinalizeCaliper(Caliper c)
-		{
-			if (c == null) return;
-			c.UnselectedColor = Colors.Blue;
-			c.SelectedColor = Colors.Red;
-			c.IsSelected = false;
-			_caliperCollection.Add(c);
-
+			_caliperHelper.AddAngleCaliper();
 		}
 
 		[RelayCommand]
 		public void DeleteAllCalipers()
 		{
-			_caliperCollection.Clear();
+			_caliperHelper.DeleteAllCalipers();
 		}
 
 		[RelayCommand]
 		public void DeleteSelectedCaliper()
 		{
-			_caliperCollection.RemoveActiveCaliper();
+			_caliperHelper.DeleteSelectedCaliper();
 		}
 
 		public void ToggleCaliperSelection(Point point)
 		{
-			_caliperCollection.ToggleCaliperSelection(point);
+			_caliperHelper.ToggleCaliperSelection(point);
 		}
 		public void RemoveAtPoint(Point point)
 		{
-			_caliperCollection.RemoveAtPoint(point);
+			_caliperHelper.RemoveAtPoint(point);
 		}
 
 		public void GrabCaliper(Point point)
 		{
-			// Detect if this is near a caliper component, and if so, load it up for movement.
-			(_grabbedCaliper, _grabbedComponent) = _caliperCollection.GetGrabbedCaliperAndBar(point);
-			_startingDragPoint = point;
+			_caliperHelper.GrabCaliper(point);
 		}
 
 		public void DragCaliperComponent(Point point)
 		{
-			if (_grabbedCaliper == null || _grabbedComponent == null) return;
-			var delta = new Point(point.X - _startingDragPoint.X, point.Y - _startingDragPoint.Y);
-			_startingDragPoint.X += delta.X;
-			_startingDragPoint.Y += delta.Y;
-			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingDragPoint);
+			_caliperHelper.DragCaliperComponent(point);
 		}
 
 		public void ReleaseGrabbedCaliper()
 		{
-			_grabbedCaliper = null;
-			_grabbedComponent = null;
+			_caliperHelper.ReleaseGrabbedCaliper();
 		}
 
 		public async Task OpenImageFile(StorageFile file)
@@ -189,6 +153,14 @@ namespace EPCalipersWinUI3
 			return source;
 		}
 
+		#region zoom
+		// Zoom methods
+		// Note zoom factors used in Mac OS X version
+		// These are taken from the Apple IKImageView demo
+		private readonly float _zoomInFactor = 1.414214f;
+        private readonly float _zoomOutFactor = 0.7071068f;
+        private readonly static float _maxZoom = 10;
+        private readonly static float _minZoom = 0.1f;
 		private void ZoomView(float multiple)
 		{
 			var zoomTarget = multiple * ZoomFactor;
@@ -215,6 +187,7 @@ namespace EPCalipersWinUI3
 			ZoomFactor = 1;
 			SetZoom(ZoomFactor);
 		}
+		#endregion
 
 		[RelayCommand]
 		private static void Settings()
@@ -281,7 +254,6 @@ namespace EPCalipersWinUI3
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
 		}
 		#endregion
-
 		#region observable properties
 		[ObservableProperty]
 		private string testText = "Test";
