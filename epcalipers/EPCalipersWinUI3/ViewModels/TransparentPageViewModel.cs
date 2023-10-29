@@ -88,7 +88,9 @@ namespace EPCalipersWinUI3.ViewModels
 		private static void ToggleTransparentWindow()
 		{
 			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(MainPage));
+			mainWindow.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop()
+				{ Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt };
+			mainWindow.Navigate(typeof(MainPage));
 		}
 
 		[RelayCommand]

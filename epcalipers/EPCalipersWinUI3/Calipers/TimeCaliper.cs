@@ -21,7 +21,6 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
-        public string Text { get; set; }  // TODO: a class for the Text of a caliper
 
 		private bool _fakeBarLines;
 
@@ -33,6 +32,8 @@ namespace EPCalipersWinUI3.Calipers
             Bars =  new[] { LeftBar, RightBar, CrossBar };
 			SetThickness(2);
 			CaliperType = CaliperType.Time;
+			CaliperLabel = new CaliperLabel();
+			CaliperLabel.DrawLabel($"{Value} points");
         }
 
 		private void InitBars(CaliperPosition position)
@@ -43,17 +44,14 @@ namespace EPCalipersWinUI3.Calipers
 			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeBarLines);
 		}
 
-			public override void ChangeBounds()
+		public override void ChangeBounds()
 		{
 			var bounds = CaliperView.Bounds;
 			LeftBar.Y2 = bounds.Height;
 			RightBar.Y2 = bounds.Height;
 		}
 
-		public override double Value()
-		{
-			return RightBar.Position - LeftBar.Position;
-		}
+		public override double Value => RightBar.Position - LeftBar.Position; 
 
 
 		public override Bar IsNearBar(Point p)
@@ -72,27 +70,23 @@ namespace EPCalipersWinUI3.Calipers
 		{
             if (bar == LeftBar)
             {
-				bar.X1 += delta.X;
-				bar.X2 += delta.X;
+				bar.Position += delta.X;
 				CrossBar.X1 += delta.X;
 			}
 			else if (bar == RightBar)
             {
-				bar.X1 += delta.X;
-				bar.X2 += delta.X;
+				bar.Position += delta.X;
 				CrossBar.X2 += delta.X;
 			}
 			else if (bar == CrossBar)
             {
-                LeftBar.X1 += delta.X;
-                LeftBar.X2 += delta.X;
-                RightBar.X1 += delta.X;
-                RightBar.X2 += delta.X;
+                LeftBar.Position += delta.X;
+                RightBar.Position += delta.X;
                 bar.X1 += delta.X;
                 bar.X2 += delta.X;
-                bar.Y1 += delta.Y;
-                bar.Y2 += delta.Y;
+                bar.Position += delta.Y;
 			}
+			CaliperLabel.DrawLabel($"{Value} points");
 		}
 	}
 }

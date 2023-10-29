@@ -200,6 +200,7 @@ namespace EPCalipersWinUI3
 		private static void TransparenWindow()
 		{
 			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
             mainWindow.Navigate(typeof(TransparentPage));
 		}
 

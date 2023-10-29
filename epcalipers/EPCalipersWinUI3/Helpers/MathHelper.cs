@@ -16,7 +16,7 @@ namespace EPCalipersWinUI3.Helpers
 		public static double ScaleToFit(double width, double height, double angle)
 		{
 			// Convert angle to radians.
-			var theta = angle * Math.PI / 180.0;
+			var theta = DegreesToRadians(angle);
 
 			// Compute W and H of bounds of rotated rect.
 			var W = width * Math.Abs(Math.Cos(theta)) + height * Math.Abs(Math.Sin(theta));
@@ -59,6 +59,16 @@ namespace EPCalipersWinUI3.Helpers
 		public static Point OffsetPoint(Point p, double offset)
 		{
 			return new Point(p.X + offset, p.Y + offset);
+		}
+
+		public static double RadiansToDegrees(double radians)
+		{
+			return radians * 180.0 / Math.PI;
+		}
+
+		public static double DegreesToRadians(double degrees)
+		{
+			return (degrees * Math.PI) / 180.0;
 		}
 	}
 }

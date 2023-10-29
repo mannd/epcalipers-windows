@@ -47,24 +47,19 @@ namespace EPCalipersWinUI3.Calipers
 		{
             if (bar == TopBar)
             {
-				bar.Y1 += delta.Y;
-				bar.Y2 += delta.Y;
+				bar.Position += delta.Y;
 				CrossBar.Y1 += delta.Y;
 			}
 			else if (bar == BottomBar)
             {
-				bar.Y1 += delta.Y;
-				bar.Y2 += delta.Y;
+				bar.Position += delta.Y;
 				CrossBar.Y2 += delta.Y;
 			}
 			else if (bar == CrossBar)
             {
-                TopBar.Y1 += delta.Y;
-                TopBar.Y2 += delta.Y;
-                BottomBar.Y1 += delta.Y;
-                BottomBar.Y2 += delta.Y;
-                bar.X1 += delta.X;
-                bar.X2 += delta.X;
+                TopBar.Position += delta.Y;
+                BottomBar.Position += delta.Y;
+                bar.Position += delta.X;
                 bar.Y1 += delta.Y;
                 bar.Y2 += delta.Y;
 			}
@@ -82,9 +77,6 @@ namespace EPCalipersWinUI3.Calipers
             return null;
 		}
 
-		public override double Value()
-		{
-			return BottomBar.Position - TopBar.Position;
-		}
+		public override double Value =>  BottomBar.Position - TopBar.Position;
 	}
 }

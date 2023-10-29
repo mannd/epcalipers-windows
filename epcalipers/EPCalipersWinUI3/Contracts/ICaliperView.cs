@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPCalipersWinUI3.Calipers;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 
@@ -14,6 +15,10 @@ namespace EPCalipersWinUI3.Contracts
         public Bounds Bounds { get; }
 
 		public void Add(Line line);
+
+        public void Add(TextBlock textBlock);
+
+		//public void Remove(TextBlock textBlock);
 
 		public void Remove(Line line);
 

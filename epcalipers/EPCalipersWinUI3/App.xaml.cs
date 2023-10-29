@@ -44,11 +44,18 @@ namespace EPCalipersWinUI3
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-        {
-            m_window = new MainWindow();
-            m_window.Activate();
-        }
+		{
+			m_window = new MainWindow();
+			m_window.Activate();
+#if DEBUG
+			if (System.Diagnostics.Debugger.IsAttached)
+			{
+                // Setting to true shows fast track rendered text in green.
+				DebugSettings.IsTextPerformanceVisualizationEnabled = false;
+			}
+#endif
+		}
 
-        private Window m_window;
-    }
+		private Window m_window;
+	}
 }

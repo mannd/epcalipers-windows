@@ -68,6 +68,22 @@ namespace EPCalipersWinUI3.Calipers
 						return 0;
 				}
 			}
+            set
+            {
+                switch (BarRole)
+                {
+					case Role.Horizontal:
+                    case Role.HorizontalCrossBar:
+						Y1 = value; Y2 = value;
+                        break;
+					case Role.Vertical:
+                    case Role.VerticalCrossBar:
+                        X1 = value; X2 = value;
+                        break;
+					default:
+                        break;
+                }
+            }
 		}
 		public double X1 { get => BarLine.X1; set => BarLine.X1 = value; }
         public double X2 { get => BarLine.X2; set => BarLine.X2 = value; }

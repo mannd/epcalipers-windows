@@ -45,6 +45,7 @@ namespace EPCalipersWinUI3.Calipers
         public CaliperType CaliperType { get; init; }
 
         protected Bar[] Bars { get; init; }
+		public CaliperLabel CaliperLabel { get; set; }
 
         public void SetColor(Color color)
         {
@@ -88,7 +89,7 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public abstract double Value();
+        public abstract double Value { get; }
 
         public void Add(ICaliperView caliperView)
         {

@@ -1,6 +1,8 @@
 ﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
 using Microsoft.UI;
 using Microsoft.UI.Text;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +29,10 @@ namespace EPCalipersWinUI3.Calipers
 			Bars = new[] { LeftAngleBar, RightAngleBar, ApexBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
+			TextBlock testTextBlock = new TextBlock();
+			testTextBlock.Text = "Testing";
+			CaliperView.Add(testTextBlock);
+
 		}
 
 		private void InitBars(AngleCaliperPosition position)
@@ -70,6 +76,8 @@ namespace EPCalipersWinUI3.Calipers
 					break;
 				default: break;
 			}
+			string text = string.Format("{0:0.#}°", Value);
+			Debug.WriteLine(text);
 		}
 
 		public override Bar IsNearBar(Point p)
@@ -109,9 +117,6 @@ namespace EPCalipersWinUI3.Calipers
 			return Math.Atan2(y, x);
 		}
 
-		public override double Value()
-		{
-			throw new NotImplementedException();
-		}
+		public override double Value =>  MathHelper.RadiansToDegrees(LeftAngleBar.Angle - RightAngleBar.Angle);
 	}
 }

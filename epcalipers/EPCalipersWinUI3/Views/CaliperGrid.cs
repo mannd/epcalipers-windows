@@ -32,6 +32,11 @@ namespace EPCalipersWinUI3.Views
 			Children.Add(barLine);
 		}
 
+		public void Add(TextBlock textBlock)
+		{
+			Children.Add(textBlock);
+		}
+
 		private static double _offset = 0;
 		private readonly static double _offsetIncrement = 10;
 		private readonly static double _maxOffset = 100;
@@ -57,6 +62,11 @@ namespace EPCalipersWinUI3.Views
 		public void Add(Line line)
 		{
 			Debug.Print($"{line} added.");
+		}
+
+		public void Add(TextBlock textBlock)
+		{
+			Debug.Print($"{textBlock.Text} added.");
 		}
 
 		public Point GetOffsettedCenter()
