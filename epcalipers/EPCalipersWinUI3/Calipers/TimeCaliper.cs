@@ -21,27 +21,36 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
+		public TimeCaliperLabel Label { get; set; }
 
-		private bool _fakeBarLines;
+
+		private bool _fakeUI;
 
         public TimeCaliper(CaliperPosition position, 
-			ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
+			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
         {
-            _fakeBarLines = fakeBarLines;
+            _fakeUI = fakeUI;
             InitBars(position);
             Bars =  new[] { LeftBar, RightBar, CrossBar };
 			SetThickness(2);
 			CaliperType = CaliperType.Time;
-			CaliperLabel = new CaliperLabel();
-			CaliperLabel.DrawLabel($"{Value} points");
+			InitCaliperLabel();
         }
 
 		private void InitBars(CaliperPosition position)
         {
 			// NB Crossbar must be first, to allow IsNear to work correctly.
-			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeBarLines);
-			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeBarLines);
-			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeBarLines);
+			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
+			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
+			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
+		}
+
+		private void InitCaliperLabel()
+		{
+			var text = $"{Value} points";
+			Label = new TimeCaliperLabel(this, CaliperView, text,
+				CaliperLabelAlignment.Top, false, false);
+			CaliperView.Add(Label);
 		}
 
 		public override void ChangeBounds()
@@ -86,7 +95,8 @@ namespace EPCalipersWinUI3.Calipers
                 bar.X2 += delta.X;
                 bar.Position += delta.Y;
 			}
-			CaliperLabel.DrawLabel($"{Value} points");
+			Label.Text = $"{Value} points";
+			Label.SetPosition();
 		}
 	}
 }

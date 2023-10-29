@@ -29,10 +29,6 @@ namespace EPCalipersWinUI3.Calipers
 			Bars = new[] { LeftAngleBar, RightAngleBar, ApexBar};
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
-			TextBlock testTextBlock = new TextBlock();
-			testTextBlock.Text = "Testing";
-			CaliperView.Add(testTextBlock);
-
 		}
 
 		private void InitBars(AngleCaliperPosition position)
@@ -76,8 +72,8 @@ namespace EPCalipersWinUI3.Calipers
 					break;
 				default: break;
 			}
-			string text = string.Format("{0:0.#}°", Value);
-			Debug.WriteLine(text);
+			//string text = string.Format("{0:0.#}°", Value);
+			//Debug.WriteLine(text);
 		}
 
 		public override Bar IsNearBar(Point p)

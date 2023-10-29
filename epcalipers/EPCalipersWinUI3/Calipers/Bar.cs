@@ -93,10 +93,10 @@ namespace EPCalipersWinUI3.Calipers
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
 		public Bar(Role role,
-			double position, double start, double end, bool fakeBarLine = false)
+			double position, double start, double end, bool fakeUI = false)
         {
             BarRole = role;
-            BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
+            BarLine = fakeUI ? new FakeBarLine() : new BarLine();
             SetBarPosition(position, start, end);
         }
 

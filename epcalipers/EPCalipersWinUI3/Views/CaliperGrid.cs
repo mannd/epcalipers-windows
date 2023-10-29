@@ -29,12 +29,12 @@ namespace EPCalipersWinUI3.Views
 
 		public void Add(Line barLine)
 		{
-			Children.Add(barLine);
+			if (barLine != null) Children.Add(barLine);
 		}
 
-		public void Add(TextBlock textBlock)
+		public void Add(CaliperLabel caliperLabel)
 		{
-			Children.Add(textBlock);
+			if (caliperLabel != null) Children.Add(caliperLabel.TextBlock);
 		}
 
 		private static double _offset = 0;
@@ -64,9 +64,9 @@ namespace EPCalipersWinUI3.Views
 			Debug.Print($"{line} added.");
 		}
 
-		public void Add(TextBlock textBlock)
+		public void Add(CaliperLabel caliperLabel)
 		{
-			Debug.Print($"{textBlock.Text} added.");
+			Debug.Print($"{caliperLabel.Text} added.");
 		}
 
 		public Point GetOffsettedCenter()

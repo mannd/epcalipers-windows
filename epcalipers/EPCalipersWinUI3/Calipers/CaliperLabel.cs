@@ -8,38 +8,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.Graphics.DirectX;
+using EPCalipersWinUI3.Contracts;
 
 namespace EPCalipersWinUI3.Calipers
 {
-    public enum CaliperLabelPosition
+	public enum CaliperLabelAlignment
+	{
+		Top,
+		Bottom,
+		Left,
+		Right,
+	}
+		public struct CaliperLabelPosition
+		{
+			public int Left { get; set; }
+			public int Top { get; set; }
+
+			public CaliperLabelPosition(int left, int top)
+			{
+				Left = left;
+				Top = top;
+			}
+
+			public CaliperLabelPosition(double left, double top)
+			{
+				Left = (int)left;
+				Top = (int)top;
+			}
+		}
+	public abstract class CaliperLabel
     {
-        Top,
-        Bottom,
-        Left,
-        Right,
-    }
+		private string _text;
+		public Caliper Caliper { get; set; }
+		public ICaliperView CaliperView { get; set; }
+		public string Text { get
+			{
+				return _text;
+			}
+			set
+			{
+				_text = value;
+				if (TextBlock != null)
+				{
+					TextBlock.Text = Text;
+				}
 
-    public class CaliperLabel
-    {
-        public string Text { get; set; }
-        public CaliperLabelPosition Position { get; set;}
-        public bool AutoPosition { get; set;}
+			}
+		}
+		protected CaliperLabelPosition Position { get; set; }
+		public CaliperLabelAlignment Alignment { get; set; }
+		public bool AutoPosition { get; set;}
+        public TextBlock TextBlock { get; set; }
 
-        private TextBlock _textBlock;
-        private Rectangle _boundingBox;
-
-        public CaliperLabel() 
-        {
-            _textBlock = new TextBlock();
-            _boundingBox = new Rectangle();
-        }
-
-        public void DrawLabel(string s)
-        {
-            Debug.WriteLine(s);
-        }
-
-
-
-    }
+		public CaliperLabel(
+			Caliper caliper,
+			ICaliperView caliperView,
+			string text,
+			CaliperLabelAlignment alignment,
+			bool autoPosition,
+			bool fakeUI = false)
+		{
+			Caliper = caliper;
+			Text = text;
+			Alignment = alignment;
+			AutoPosition = autoPosition;
+			if (fakeUI)
+			{
+				TextBlock = null;
+			}
+			else
+			{
+				TextBlock = new TextBlock()
+				{
+					Text = text,
+				};
+			}
+		}
+	}
 }

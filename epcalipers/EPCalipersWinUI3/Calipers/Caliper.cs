@@ -89,6 +89,9 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
+        /// <summary>
+        /// The raw measurement of a caliper, in points, or in degrees or angle calipers.
+        /// </summary>
         public abstract double Value { get; }
 
         public void Add(ICaliperView caliperView)
