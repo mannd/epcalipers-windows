@@ -35,12 +35,14 @@ namespace EPCalipersWinUI3.Calipers
 
 		public override void SetPosition(bool initialPosition = false)
 		{
+			if (TextBlock == null) return;
 			GetPosition(initialPosition);
 			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
 		}
 
 		private void GetPosition(bool initialPosition = false)
 		{
+			if (TextBlock == null) return;
 			Size size = new Size();
 			// First positioning of label needs to estimate size of label.
 			if (initialPosition)
@@ -65,14 +67,15 @@ namespace EPCalipersWinUI3.Calipers
 					break;
 			}
 		}
-		public static Size ShapeMeasure(TextBlock tb)
+		public static Size ShapeMeasure(TextBlock textBlock)
 		{
+			if (textBlock == null) return new Size(0, 0);
 			// Measured Size is bounded to be less than maxSize
 			Size maxSize = new Size(
 				 double.PositiveInfinity,
 				 double.PositiveInfinity);
-			tb.Measure(maxSize);
-			return tb.DesiredSize;
+			textBlock.Measure(maxSize);
+			return textBlock.DesiredSize;
 		}
 
 

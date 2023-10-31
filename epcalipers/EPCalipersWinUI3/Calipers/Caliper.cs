@@ -33,6 +33,8 @@ namespace EPCalipersWinUI3.Calipers
     public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
     public abstract class Caliper
     {
+        protected bool _fakeUI;
+
         protected Bounds Bounds { get; init; }
         protected ICaliperView CaliperView { get; init; }
 
@@ -76,9 +78,9 @@ namespace EPCalipersWinUI3.Calipers
                 {
                     if (bar.BarRole == Bar.Role.Apex) break;
                     bar.IsSelected = value;
-                    bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
+                    if (!_fakeUI) bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
 				}
-                if (CaliperLabel != null)
+                if (CaliperLabel != null && !_fakeUI)
 				{
 					CaliperLabel.TextBlock.Foreground = new SolidColorBrush(_isSelected ? SelectedColor : UnselectedColor);
 				}

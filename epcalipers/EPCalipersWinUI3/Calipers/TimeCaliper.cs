@@ -21,8 +21,6 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
-		private bool _fakeUI;
-
         public TimeCaliper(CaliperPosition position, 
 			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
         {
@@ -46,7 +44,7 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			var text = $"{Value} points";
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Top, false, false);
+				CaliperLabelAlignment.Top, false, _fakeUI);
 			CaliperView.Add(CaliperLabel);
 		}
 

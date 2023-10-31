@@ -107,7 +107,7 @@ namespace EPCalipersWinUI3.Calipers
         public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeBarLine = false)
         {
 
-            Debug.Assert(role == Role.LeftAngle || role == Role.RightAngle, 
+            Debug.Assert(role == Role.LeftAngle || role == Role.RightAngle || role == Role.Apex, 
                 "Non-angle bar passed to angle bar constructor.");
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
@@ -116,7 +116,7 @@ namespace EPCalipersWinUI3.Calipers
             {
 				SetBarPosition(apex.Y, apex.X - 10, apex.X + 10);
                 // Comment out this line to show hidden ApexBar for debugging.
-                BarLine.Line.Visibility = Visibility.Collapsed; 
+                if (!fakeBarLine) BarLine.Line.Visibility = Visibility.Collapsed; 
             }
             else
             {
