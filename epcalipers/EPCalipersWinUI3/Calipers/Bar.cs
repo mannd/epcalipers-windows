@@ -17,9 +17,11 @@ using Color = Windows.UI.Color;
 using Point = Windows.Foundation.Point;
 using ABI.Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml;
+using Xunit;
 
 namespace EPCalipersWinUI3.Calipers
 {
+
     /// <summary>
     /// One of the bars of a caliper.
     /// </summary>
@@ -95,6 +97,8 @@ namespace EPCalipersWinUI3.Calipers
 		public Bar(Role role,
 			double position, double start, double end, bool fakeUI = false)
         {
+            Debug.Assert(role != Role.LeftAngle && role != Role.RightAngle,
+                "Angle bar passed to non-angle bar constructor.");
             BarRole = role;
             BarLine = fakeUI ? new FakeBarLine() : new BarLine();
             SetBarPosition(position, start, end);
@@ -102,7 +106,9 @@ namespace EPCalipersWinUI3.Calipers
 
         public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeBarLine = false)
         {
-            // TODO: exception if role is not an Angle role.
+
+            Debug.Assert(role == Role.LeftAngle || role == Role.RightAngle, 
+                "Non-angle bar passed to angle bar constructor.");
             BarRole = role;
             BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
             Bounds = bounds;

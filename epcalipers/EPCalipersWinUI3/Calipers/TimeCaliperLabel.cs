@@ -2,6 +2,7 @@
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,24 +29,42 @@ namespace EPCalipersWinUI3.Calipers
 			bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
 		{
 			Caliper = caliper;
-			TextBlock.Foreground = new Microsoft.UI.Xaml.Media.SolidColorBrush(Colors.Blue);
 			_position = new CaliperLabelPosition();
-			_size = ShapeMeasure(TextBlock);
-			SetPosition();
+			SetPosition(true);
 		}
 
-		public void SetPosition()
+		public override void SetPosition(bool initialPosition = false)
 		{
-			GetPosition();
+			GetPosition(initialPosition);
 			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
 		}
 
-		private void GetPosition()
+		private void GetPosition(bool initialPosition = false)
 		{
-			_position.Left = (int)(Caliper.CrossBar.MidPoint.X - _size.Width / 2);
-			_position.Top = (int)(Caliper.CrossBar.Position - _size.Height - padding);
+			Size size = new Size();
+			// First positioning of label needs to estimate size of label.
+			if (initialPosition)
+			{
+				size = ShapeMeasure(TextBlock);
+			} else
+			{
+				size.Width = TextBlock.ActualWidth;
+				size.Height = TextBlock.ActualHeight;
+			}
+			switch (Alignment)
+			{
+				case CaliperLabelAlignment.Top:
+					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
+					_position.Top = (int)(Caliper.CrossBar.Position - size.Height - padding);
+					break;
+				case CaliperLabelAlignment.Bottom:
+					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
+					_position.Top = (int)(Caliper.CrossBar.Position + padding);
+					break;
+				default:
+					break;
+			}
 		}
-
 		public static Size ShapeMeasure(TextBlock tb)
 		{
 			// Measured Size is bounded to be less than maxSize
@@ -55,5 +74,8 @@ namespace EPCalipersWinUI3.Calipers
 			tb.Measure(maxSize);
 			return tb.DesiredSize;
 		}
+
+
+
 	}
 }

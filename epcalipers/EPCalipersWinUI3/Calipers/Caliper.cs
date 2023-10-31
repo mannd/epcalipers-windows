@@ -47,13 +47,19 @@ namespace EPCalipersWinUI3.Calipers
         protected Bar[] Bars { get; init; }
 		public CaliperLabel CaliperLabel { get; set; }
 
-        public void SetColor(Color color)
+        public Color Color
         {
-            foreach (var bar in Bars)
-            {
-                bar.Color = color;
-            }
-        }
+            get => _color;
+			set
+			{
+				_color = value;
+				foreach (var bar in Bars)
+				{
+					bar.Color = _color;
+				}
+			}
+		}
+		private Color _color;
 
         public Color UnselectedColor {  get; set; }
         public Color SelectedColor { get; set; }
@@ -71,10 +77,14 @@ namespace EPCalipersWinUI3.Calipers
                     if (bar.BarRole == Bar.Role.Apex) break;
                     bar.IsSelected = value;
                     bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
-                }
-            }
-        }
-        private bool _isSelected = false;
+				}
+                if (CaliperLabel != null)
+				{
+					CaliperLabel.TextBlock.Foreground = new SolidColorBrush(_isSelected ? SelectedColor : UnselectedColor);
+				}
+			}
+		}
+		private bool _isSelected = false;
 
         public void ToggleIsSelected()
         {

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.Graphics.DirectX;
 using EPCalipersWinUI3.Contracts;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -61,6 +63,20 @@ namespace EPCalipersWinUI3.Calipers
 		public bool AutoPosition { get; set;}
         public TextBlock TextBlock { get; set; }
 
+		public Color Color
+		{
+			get => _color;
+			set
+			{
+				_color = value;
+				if (TextBlock != null)
+				{
+					TextBlock.Foreground = new SolidColorBrush(_color);
+				}
+			}
+		}
+		private Color _color;
+
 		public CaliperLabel(
 			Caliper caliper,
 			ICaliperView caliperView,
@@ -85,5 +101,7 @@ namespace EPCalipersWinUI3.Calipers
 				};
 			}
 		}
+
+		public abstract void SetPosition(bool initialPosition = false);
 	}
 }
