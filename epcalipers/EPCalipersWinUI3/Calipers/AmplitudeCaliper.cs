@@ -15,25 +15,30 @@ namespace EPCalipersWinUI3.Calipers
         public Bar BottomBar { get; set; }
         public Bar CrossBar { get; set; }
 
-		private bool _fakeBarLines;
-
 		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
-			bool fakeBarLines = false) : base(caliperView)
+			bool fakeUI = false) : base(caliperView)
 		{
-			_fakeBarLines = fakeBarLines;
-			SetInitialPosition(position);
-			Bars = new[] { TopBar, BottomBar, CrossBar };
+			_fakeUI = fakeUI;
+			Bars = InitBars(position);
+			InitCaliperLabel();
 			SetThickness(2);
 			CaliperType = CaliperType.Amplitude;
 		}
 
-		private void SetInitialPosition(CaliperPosition position)
+		private Bar[] InitBars(CaliperPosition position)
 		{
 			// NB Crossbar must be first to allow isNear to work properly.
 			CrossBar = new Bar(Bar.Role.VerticalCrossBar,
-				position.Center, position.First, position.Last, _fakeBarLines);
-			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeBarLines);
-			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeBarLines);
+				position.Center, position.First, position.Last, _fakeUI);
+			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeUI);
+			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeUI);
+			return new[] { TopBar, BottomBar, CrossBar };
+		}
+		private void InitCaliperLabel()
+		{
+			var text = $"{Value} points";
+			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
+				CaliperLabelAlignment.Top, false, base._fakeUI);
 		}
 
 		public override void ChangeBounds()
@@ -63,6 +68,8 @@ namespace EPCalipersWinUI3.Calipers
                 bar.Y1 += delta.Y;
                 bar.Y2 += delta.Y;
 			}
+			CaliperLabel.Text = $"{Value} points";
+			CaliperLabel.SetPosition();
 		}
 
 		public override Bar IsNearBar(Point p)

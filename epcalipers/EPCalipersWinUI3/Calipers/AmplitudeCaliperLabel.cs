@@ -1,8 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +10,13 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
 {
-	public class TimeCaliperLabel : CaliperLabel
+	public class AmplitudeCaliperLabel: CaliperLabel
 	{
 		private CaliperLabelPosition _position;
 		private Size _size;
+		new AmplitudeCaliper Caliper { get; set; }
 
-		new TimeCaliper Caliper { get; set; }
-
-		public TimeCaliperLabel(TimeCaliper caliper, 
+		public AmplitudeCaliperLabel(AmplitudeCaliper caliper, 
 			ICaliperView caliperView, 
 			string text, 
 			CaliperLabelAlignment alignment, 
@@ -30,7 +27,6 @@ namespace EPCalipersWinUI3.Calipers
 			_position = new CaliperLabelPosition();
 			SetPosition(true);
 		}
-
 		public override void SetPosition(bool initialPosition = false)
 		{
 			if (TextBlock == null) return;
@@ -54,20 +50,14 @@ namespace EPCalipersWinUI3.Calipers
 			switch (Alignment)
 			{
 				case CaliperLabelAlignment.Top:
-					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height - _padding);
+					_position.Left = (int)(Caliper.CrossBar.Position - size.Width / 2);
+					_position.Top = (int)(Math.Min(Caliper.TopBar.Position, Caliper.BottomBar.Position) - size.Height - _padding);
 					break;
 				case CaliperLabelAlignment.Bottom:
-					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
-					_position.Top = (int)(Caliper.CrossBar.Position + _padding);
+					_position.Left = (int)(Caliper.CrossBar.Position - size.Width / 2);
+					_position.Top = (int)(Math.Max(Caliper.TopBar.Position, Caliper.BottomBar.Position) + _padding);
 					break;
-				case CaliperLabelAlignment.Left:
-					_position.Left = (int)(Math.Min(Caliper.LeftBar.Position, Caliper.RightBar.Position) - size.Width - _padding);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height / 2);
-					break;
-				case CaliperLabelAlignment.Right:
-					_position.Left = (int)(Math.Max(Caliper.LeftBar.Position, Caliper.RightBar.Position) + _padding);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height / 2);
+				default:
 					break;
 			}
 		}
@@ -81,8 +71,5 @@ namespace EPCalipersWinUI3.Calipers
 			textBlock.Measure(maxSize);
 			return textBlock.DesiredSize;
 		}
-
-
-
 	}
 }

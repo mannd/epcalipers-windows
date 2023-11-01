@@ -25,26 +25,26 @@ namespace EPCalipersWinUI3.Calipers
 			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
-            InitBars(position);
-            Bars =  new[] { LeftBar, RightBar, CrossBar };
+            Bars = InitBars(position);
 			SetThickness(2);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();
         }
 
-		private void InitBars(CaliperPosition position)
+		private Bar[] InitBars(CaliperPosition position)
         {
 			// NB Crossbar must be first, to allow IsNear to work correctly.
 			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
 			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
 			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
+            return  new[] { LeftBar, RightBar, CrossBar };
 		}
 
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Top, false, _fakeUI);
+				CaliperLabelAlignment.Right, false, _fakeUI);
 		}
 
 		public override void ChangeBounds()

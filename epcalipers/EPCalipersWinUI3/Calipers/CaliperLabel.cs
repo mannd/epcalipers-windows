@@ -41,6 +41,8 @@ namespace EPCalipersWinUI3.Calipers
 	}
 	public abstract class CaliperLabel
 	{
+		protected readonly int _padding = 10;
+
 		private string _text;
 		public Caliper Caliper { get; set; }
 		public ICaliperView CaliperView { get; set; }
@@ -111,12 +113,12 @@ namespace EPCalipersWinUI3.Calipers
 
 		public void AddToView(ICaliperView view)
 		{
-			view.Add(TextBlock);
+			if (TextBlock != null) view.Add(TextBlock);
 		}
 
 		public void RemoveFromView(ICaliperView view)
 		{
-			view.Remove(TextBlock);
+			if (TextBlock != null) view.Remove(TextBlock);
 		}
 
 		public abstract void SetPosition(bool initialPosition = false);
