@@ -62,11 +62,10 @@ namespace EPCalipersWinUI3.Calipers
                 switch (BarRole)
                 {
                     case Role.Horizontal:
+                    case Role.HorizontalCrossBar:
+                    case Role.Apex:
                         return Y1;
                     case Role.Vertical:
-                        return X1;
-                    case Role.HorizontalCrossBar:
-                        return Y1;
                     case Role.VerticalCrossBar:
                         return X1;
                     default:
@@ -79,6 +78,7 @@ namespace EPCalipersWinUI3.Calipers
                 {
                     case Role.Horizontal:
                     case Role.HorizontalCrossBar:
+                    case Role.Apex:
                         Y1 = value; Y2 = value;
                         break;
                     case Role.Vertical:

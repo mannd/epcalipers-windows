@@ -25,20 +25,29 @@ namespace EPCalipersWinUI3.Calipers
 			ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
 		{
 			_fakeBarLines = fakeBarLines;
-			InitBars(position);
-			Bars = new[] { LeftAngleBar, RightAngleBar, ApexBar};
+			Bars = InitBars(position);
+			InitCaliperLabel();
 			SetThickness(2);
 			CaliperType = CaliperType.Angle;
 		}
 
-		private void InitBars(AngleCaliperPosition position)
+		private Bar[] InitBars(AngleCaliperPosition position)
 		{
 			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeBarLines);
 			LeftAngleBar.Angle = position.FirstAngle;
 			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeBarLines); 
 			RightAngleBar.Angle = position.LastAngle;
-			ApexBar = new(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines); // ApexBar never drawn
+			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines); // ApexBar never drawn
+			return new[] { LeftAngleBar, RightAngleBar, ApexBar};
 		}
+
+		private void InitCaliperLabel()
+		{
+			string text = string.Format("{0:0.#} degrees", Value);
+			CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
+				CaliperLabelAlignment.Right, false, _fakeUI);
+		}
+
 
 		public override void ChangeBounds()
 		{
@@ -72,8 +81,8 @@ namespace EPCalipersWinUI3.Calipers
 					break;
 				default: break;
 			}
-			//string text = string.Format("{0:0.#}°", Value);
-			//Debug.WriteLine(text);
+			CaliperLabel.Text = string.Format("{0:0.#} degrees", Value);
+			CaliperLabel.SetPosition();
 		}
 
 		public override Bar IsNearBar(Point p)

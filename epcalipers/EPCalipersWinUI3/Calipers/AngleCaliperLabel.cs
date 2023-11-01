@@ -1,8 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +10,20 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
 {
-	public class TimeCaliperLabel : CaliperLabel
+	public class AngleCaliperLabel : CaliperLabel
 	{
 		private CaliperLabelPosition _position;
-		private Size _size;
 
-		new TimeCaliper Caliper { get; set; }
+		new AngleCaliper Caliper { get; set; }
 
-		public TimeCaliperLabel(TimeCaliper caliper, 
+		public AngleCaliperLabel(
+			AngleCaliper caliper, 
 			ICaliperView caliperView, 
 			string text, 
 			CaliperLabelAlignment alignment, 
 			bool autoPosition, 
-			bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
+			bool fakeUI = false) 
+			: base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
 		{
 			Caliper = caliper;
 			_position = new CaliperLabelPosition();
@@ -49,29 +48,14 @@ namespace EPCalipersWinUI3.Calipers
 			} else
 			{
 				size.Width = TextBlock.ActualWidth;
-				// TODO: don't need this, height never changes...
 				size.Height = TextBlock.ActualHeight;
 			}
-			switch (Alignment)
-			{
-				case CaliperLabelAlignment.Top:
-					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height - _padding);
-					break;
-				case CaliperLabelAlignment.Bottom:
-					_position.Left = (int)(Caliper.CrossBar.MidPoint.X - size.Width / 2);
-					_position.Top = (int)(Caliper.CrossBar.Position + _padding);
-					break;
-				case CaliperLabelAlignment.Left:
-					_position.Left = (int)(Math.Min(Caliper.LeftBar.Position, Caliper.RightBar.Position) - size.Width - _padding);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height / 2);
-					break;
-				case CaliperLabelAlignment.Right:
-					_position.Left = (int)(Math.Max(Caliper.LeftBar.Position, Caliper.RightBar.Position) + _padding);
-					_position.Top = (int)(Caliper.CrossBar.Position - size.Height / 2);
-					break;
-			}
+			// Angle caliper labels are always at the top
+			_position.Left = (int)(Caliper.ApexBar.MidPoint.X - size.Width / 2);
+			_position.Top = (int)(Caliper.ApexBar.Position - size.Height - _padding);
+			// TODO: deal with brugada triangle.
 		}
+
 		public static Size ShapeMeasure(TextBlock textBlock)
 		{
 			if (textBlock == null) return new Size(0, 0);
@@ -82,8 +66,6 @@ namespace EPCalipersWinUI3.Calipers
 			textBlock.Measure(maxSize);
 			return textBlock.DesiredSize;
 		}
-
-
 
 	}
 }
