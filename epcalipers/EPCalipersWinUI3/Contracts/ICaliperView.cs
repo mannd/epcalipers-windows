@@ -16,9 +16,9 @@ namespace EPCalipersWinUI3.Contracts
 
 		public void Add(Line line);
 
-        public void Add(CaliperLabel caliperLabel);
+        public void Add(TextBlock textBlock);
 
-		//public void Remove(TextBlock textBlock);
+		public void Remove(TextBlock textBlock);
 
 		public void Remove(Line line);
 

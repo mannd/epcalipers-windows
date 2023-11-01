@@ -22,29 +22,31 @@ namespace EPCalipersWinUI3.Calipers
 		Left,
 		Right,
 	}
-		public struct CaliperLabelPosition
+	public struct CaliperLabelPosition
+	{
+		public int Left { get; set; }
+		public int Top { get; set; }
+
+		public CaliperLabelPosition(int left, int top)
 		{
-			public int Left { get; set; }
-			public int Top { get; set; }
-
-			public CaliperLabelPosition(int left, int top)
-			{
-				Left = left;
-				Top = top;
-			}
-
-			public CaliperLabelPosition(double left, double top)
-			{
-				Left = (int)left;
-				Top = (int)top;
-			}
+			Left = left;
+			Top = top;
 		}
+
+		public CaliperLabelPosition(double left, double top)
+		{
+			Left = (int)left;
+			Top = (int)top;
+		}
+	}
 	public abstract class CaliperLabel
-    {
+	{
 		private string _text;
 		public Caliper Caliper { get; set; }
 		public ICaliperView CaliperView { get; set; }
-		public string Text { get
+		public string Text
+		{
+			get
 			{
 				return _text;
 			}
@@ -60,8 +62,23 @@ namespace EPCalipersWinUI3.Calipers
 		}
 		protected CaliperLabelPosition Position { get; set; }
 		public CaliperLabelAlignment Alignment { get; set; }
-		public bool AutoPosition { get; set;}
-        public TextBlock TextBlock { get; set; }
+		public bool AutoPosition { get; set; }
+		public TextBlock TextBlock { get; set; }
+
+		public bool IsSelected
+		{
+			set
+			{
+				_isSelected = value;
+				if (TextBlock != null)
+				{
+					Color = _isSelected ? SelectedColor : UnselectedColor;
+				}
+			}
+		}
+		private bool _isSelected;
+		public Color SelectedColor { get; set; }
+		public Color UnselectedColor { get; set; }
 
 		public Color Color
 		{
@@ -89,17 +106,17 @@ namespace EPCalipersWinUI3.Calipers
 			Text = text;
 			Alignment = alignment;
 			AutoPosition = autoPosition;
-			if (fakeUI)
-			{
-				TextBlock = null;
-			}
-			else
-			{
-				TextBlock = new TextBlock()
-				{
-					Text = text,
-				};
-			}
+			TextBlock = fakeUI ? null : new TextBlock() { Text = text };
+		}
+
+		public void AddToView(ICaliperView view)
+		{
+			view.Add(TextBlock);
+		}
+
+		public void RemoveFromView(ICaliperView view)
+		{
+			view.Remove(TextBlock);
 		}
 
 		public abstract void SetPosition(bool initialPosition = false);

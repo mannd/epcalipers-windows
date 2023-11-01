@@ -45,7 +45,6 @@ namespace EPCalipersWinUI3.Calipers
 			var text = $"{Value} points";
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text,
 				CaliperLabelAlignment.Top, false, _fakeUI);
-			CaliperView.Add(CaliperLabel);
 		}
 
 		public override void ChangeBounds()

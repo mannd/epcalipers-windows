@@ -31,92 +31,131 @@ namespace EPCalipersWinUI3.Calipers
         /// The direction and function of the Bar in a Caliper.
         /// </summary>
 		public enum Role
-		{
-			Horizontal,
-			Vertical,
-			HorizontalCrossBar,
-			VerticalCrossBar,
-			LeftAngle,
+        {
+            Horizontal,
+            Vertical,
+            HorizontalCrossBar,
+            VerticalCrossBar,
+            LeftAngle,
             RightAngle,
             Apex,  // Invisible bar at apex of angle caliper
-			TriangleBase // For BrugadaMeter.
-		}
+            TriangleBase // For BrugadaMeter.
+        }
         /// <summary>
         /// This is a graphics object that is drawable, just a Line but can substitute
         /// an ILine stub for testing.
         /// </summary>
-        public IBarLine BarLine { get;  set; }
         public Role BarRole { get; set; }
-
         public Bounds Bounds { get; set; }
+
+        public Color SelectedColor { get; set; }
+        public Color UnselectedColor {  get; set; }
+
+        private Line _line;
 
         // Angle is only used for angle calipers.
         public double Angle { get; set; }
-		public double Position
+        public double Position
         {
             get
             {
-				switch (BarRole)
-				{
-					case Role.Horizontal:
-						return Y1;
-					case Role.Vertical:
-						return X1;
-					case Role.HorizontalCrossBar:
-						return Y1;
-					case Role.VerticalCrossBar:
-						return X1;
-					default:
-						return 0;
-				}
-			}
+                switch (BarRole)
+                {
+                    case Role.Horizontal:
+                        return Y1;
+                    case Role.Vertical:
+                        return X1;
+                    case Role.HorizontalCrossBar:
+                        return Y1;
+                    case Role.VerticalCrossBar:
+                        return X1;
+                    default:
+                        return 0;
+                }
+            }
             set
             {
                 switch (BarRole)
                 {
-					case Role.Horizontal:
+                    case Role.Horizontal:
                     case Role.HorizontalCrossBar:
-						Y1 = value; Y2 = value;
+                        Y1 = value; Y2 = value;
                         break;
-					case Role.Vertical:
+                    case Role.Vertical:
                     case Role.VerticalCrossBar:
                         X1 = value; X2 = value;
                         break;
-					default:
+                    default:
                         break;
                 }
             }
-		}
-		public double X1 { get => BarLine.X1; set => BarLine.X1 = value; }
-        public double X2 { get => BarLine.X2; set => BarLine.X2 = value; }
-        public double Y1 { get => BarLine.Y1; set => BarLine.Y1 = value; }
-        public double Y2 { get => BarLine.Y2; set => BarLine.Y2 = value; }
+        }
+        public double X1
+        {
+            get => _x1;
+            set
+            {
+                _x1 = value;
+                if (_line != null) _line.X1 = value;
+            }
+        }
+        private double _x1;
+        public double Y1
+        {
+            get => _y1;
+            set
+            {
+                _y1 = value;
+                if (_line != null) _line.Y1 = value;
+            }
+        }
+        private double _y1;
+        public double X2
+        {
+            get => _x2;
+            set
+            {
+                _x2 = value;
+                if (_line != null) _line.X2 = value;
+            }
+        }
+        private double _x2;
+        public double Y2
+        {
+            get => _y2;
+            set
+            {
+                _y2 = value;
+                if (_line != null) _line.Y2 = value;
+            }
+        }
+        private double _y2;
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
-		public Bar(Role role,
-			double position, double start, double end, bool fakeUI = false)
+        public Bar(Role role,
+            double position, double start, double end, bool fakeUI = false)
         {
             Debug.Assert(role != Role.LeftAngle && role != Role.RightAngle,
                 "Angle bar passed to non-angle bar constructor.");
             BarRole = role;
-            BarLine = fakeUI ? new FakeBarLine() : new BarLine();
+            _line = fakeUI ? null : new Line();
             SetBarPosition(position, start, end);
         }
 
-        public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeBarLine = false)
+        public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeUI = false)
         {
 
-            Debug.Assert(role == Role.LeftAngle || role == Role.RightAngle || role == Role.Apex, 
+            Debug.Assert(role == Role.LeftAngle || role == Role.RightAngle || role == Role.Apex,
                 "Non-angle bar passed to angle bar constructor.");
             BarRole = role;
-            BarLine = fakeBarLine ? new FakeBarLine() : new BarLine();
+            _line = fakeUI ? null : new Line();
             Bounds = bounds;
             if (role == Role.Apex)
             {
-				SetBarPosition(apex.Y, apex.X - 10, apex.X + 10);
+                SetBarPosition(apex.Y, apex.X - 10, apex.X + 10);
                 // Comment out this line to show hidden ApexBar for debugging.
-                if (!fakeBarLine) BarLine.Line.Visibility = Visibility.Collapsed; 
+                if (_line != null) _line.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -125,7 +164,7 @@ namespace EPCalipersWinUI3.Calipers
         }
 
         private void SetBarPosition(double position, double start, double end)
-		{
+        {
             switch (BarRole)
             {
                 case Role.Horizontal:
@@ -169,13 +208,13 @@ namespace EPCalipersWinUI3.Calipers
         public void SetAngleBarPosition(Point apex, double angle)
         {
             var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
-			X1 = apex.X;
-			Y1 = apex.Y;
-			X2 = adjustedEndPoint.X;
-			Y2 = adjustedEndPoint.Y;
-		}
+            X1 = apex.X;
+            Y1 = apex.Y;
+            X2 = adjustedEndPoint.X;
+            Y2 = adjustedEndPoint.Y;
+        }
 
-		private Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
+        private static Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
         {
             var intersection = MathHelper.Intersection(apex, endPoint, border1, border2);
             return intersection;
@@ -183,24 +222,50 @@ namespace EPCalipersWinUI3.Calipers
 
         private Point ClippedEndPoint(Point apex, double angle, double length, Point lowerBorder, Point rightBorder)
         {
-			var endPoint = EndPointForPosition(apex, angle, length);
-			var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), lowerBorder) ?? adjustedEndPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), new Point(rightBorder.X, 0)) ?? adjustedEndPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(rightBorder.X, 0), rightBorder) ?? adjustedEndPoint;
+            var endPoint = EndPointForPosition(apex, angle, length);
+            var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;
+            adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), lowerBorder) ?? adjustedEndPoint;
+            adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), new Point(rightBorder.X, 0)) ?? adjustedEndPoint;
+            adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(rightBorder.X, 0), rightBorder) ?? adjustedEndPoint;
             return adjustedEndPoint;
         }
 
         public Point MidPoint => new Point(((X2 - X1) / 2.0) + X1, ((Y2 - Y1) / 2.0) + Y1);
 
-        public bool IsSelected { get; set; }
-		public Color Color {
-            set => BarLine.Color = value; }
-		public double Width
+        public bool IsSelected
         {
-            get => BarLine.Width;
-            set => BarLine.Width = value;
-        }
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                if (_line != null)
+                {
+                    Color = _isSelected ? SelectedColor : UnselectedColor;
+                }
+            }
+
+
+		}
+		private bool _isSelected;
+        public Color Color {
+            set
+            {
+                if (_line != null) {
+                    var brush = new SolidColorBrush(value);
+                    _line.Stroke = brush;
+                }
+            }
+		}
+		public double Width
+		{
+			get => _width;
+			set
+			{
+				_width = value;
+				if (_line != null) _line.StrokeThickness = value;
+			}
+		}
+		private double _width;
 
 		public bool IsNear(Point p)
         {
@@ -225,6 +290,18 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
+        public void AddToView(ICaliperView view)
+        {
+            if (view == null) return;
+            view.Add(_line);
+        }
+
+        public void RemoveFromView(ICaliperView view)
+        {
+            if (view == null) return;
+            view.Remove(_line);
+        }
+
 		private Point EndPointForPosition(Point p, double angle, double length)
 		{
 			// Note Windows coordinates origin is top left of screen
@@ -234,6 +311,5 @@ namespace EPCalipersWinUI3.Calipers
 			return endPoint;
 		}
 
-		public Line Line() => BarLine.Line;
     }
 }

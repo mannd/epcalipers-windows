@@ -35,13 +35,13 @@ namespace EPCalipersWinUI3.Calipers
     {
         protected bool _fakeUI;
 
-        protected Bounds Bounds { get; init; }
+        protected Bounds Bounds => CaliperView.Bounds;
+
         protected ICaliperView CaliperView { get; init; }
 
         protected Caliper(ICaliperView caliperView) 
         {
             CaliperView = caliperView;
-            Bounds = caliperView.Bounds;
         }
 
         public CaliperType CaliperType { get; init; }
@@ -59,36 +59,53 @@ namespace EPCalipersWinUI3.Calipers
 				{
 					bar.Color = _color;
 				}
+                CaliperLabel.Color = _color;
 			}
 		}
 		private Color _color;
 
-        public Color UnselectedColor {  get; set; }
-        public Color SelectedColor { get; set; }
-		public bool IsSelected
+        public Color UnselectedColor
         {
-            get
+            get => _unselectedColor;
+            set
             {
-                return _isSelected;
+                foreach (var bar in Bars)
+                {
+                    bar.UnselectedColor = value;
+                }
+                CaliperLabel.UnselectedColor = value;
             }
+        }
+        private Color _unselectedColor;
+        public Color SelectedColor
+        {
+            get => _selectedColor;
+            set
+            {
+                foreach (var bar in Bars)
+                {
+                    bar.SelectedColor = value;
+                }
+                CaliperLabel.SelectedColor = value;
+            }
+        }
+        private Color _selectedColor;
+		public bool IsSelected
+        { 
+            get =>  _isSelected; 
             set
             {
                 _isSelected = value;
-                foreach (var bar in Bars)
-                {
-                    if (bar.BarRole == Bar.Role.Apex) break;
-                    bar.IsSelected = value;
-                    if (!_fakeUI) bar.Color = bar.IsSelected ? SelectedColor : UnselectedColor;
-				}
-                if (CaliperLabel != null && !_fakeUI)
+				foreach (var bar in Bars)
 				{
-					CaliperLabel.TextBlock.Foreground = new SolidColorBrush(_isSelected ? SelectedColor : UnselectedColor);
+					bar.IsSelected = value;
 				}
+				CaliperLabel.IsSelected = value;
 			}
 		}
 		private bool _isSelected = false;
 
-        public void ToggleIsSelected()
+		public void ToggleIsSelected()
         {
             IsSelected = !IsSelected;
         }
@@ -109,13 +126,15 @@ namespace EPCalipersWinUI3.Calipers
         public void Add(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in Bars) caliperView.Add(bar.Line());
+			foreach (var bar in Bars) bar.AddToView(caliperView);
+            CaliperLabel.AddToView(caliperView);
         }
 
         public void Remove(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in Bars) caliperView.Remove(bar.Line());
+			foreach (var bar in Bars) bar.RemoveFromView(caliperView);
+            CaliperLabel.RemoveFromView(caliperView);
         }
 
         public abstract void ChangeBounds();

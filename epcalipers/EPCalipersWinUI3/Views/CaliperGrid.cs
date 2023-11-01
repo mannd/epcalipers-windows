@@ -27,14 +27,21 @@ namespace EPCalipersWinUI3.Views
 
 		public Bounds Bounds => new Bounds(ActualWidth, ActualHeight);
 
-		public void Add(Line barLine)
+		public void Add(Line line)
 		{
-			if (barLine != null) Children.Add(barLine);
+			if (line != null) Children.Add(line);
 		}
-
-		public void Add(CaliperLabel caliperLabel)
+		public void Remove(Line line)
 		{
-			if (caliperLabel != null) Children.Add(caliperLabel.TextBlock);
+			Children.Remove(line);
+		}
+		public void Add(TextBlock textBlock)
+		{
+			Children.Add(textBlock);
+		}
+		public void Remove(TextBlock textBlock)
+		{
+			Children.Remove(textBlock);
 		}
 
 		private static double _offset = 0;
@@ -49,10 +56,6 @@ namespace EPCalipersWinUI3.Views
 			return center;
 		}
 
-		public void Remove(Line barLine)
-		{
-			Children.Remove(barLine);
-		}
 	}
 
 	public class FakeCaliperView : ICaliperView
@@ -64,9 +67,14 @@ namespace EPCalipersWinUI3.Views
 			Debug.Print($"{line} added.");
 		}
 
-		public void Add(CaliperLabel caliperLabel)
+		public void Add(TextBlock textBlock)
 		{
-			Debug.Print($"{caliperLabel.Text} added.");
+			Debug.Print($"{textBlock.Text} added.");
+		}
+
+		public void Remove(TextBlock textBlock)
+		{
+			Debug.Print($"{textBlock.Text} removed.");
 		}
 
 		public Point GetOffsettedCenter()
