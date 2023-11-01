@@ -57,7 +57,13 @@ namespace EPCalipersWinUI3.Calipers
 					_position.Left = (int)(Caliper.CrossBar.Position - size.Width / 2);
 					_position.Top = (int)(Math.Max(Caliper.TopBar.Position, Caliper.BottomBar.Position) + _padding);
 					break;
-				default:
+				case CaliperLabelAlignment.Left:
+					_position.Left = (int)(Caliper.CrossBar.Position - size.Width - _padding);
+					_position.Top = (int)(Caliper.CrossBar.MidPoint.Y - size.Height / 2);
+					break;
+				case CaliperLabelAlignment.Right:
+					_position.Left = (int)(Caliper.CrossBar.Position + _padding);
+					_position.Top = (int)(Caliper.CrossBar.MidPoint.Y - size.Height / 2);
 					break;
 			}
 		}

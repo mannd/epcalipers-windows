@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			var text = $"{Value} points";
 			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Top, false, base._fakeUI);
+				CaliperLabelAlignment.Right, false, base._fakeUI);
 		}
 
 		public override void ChangeBounds()

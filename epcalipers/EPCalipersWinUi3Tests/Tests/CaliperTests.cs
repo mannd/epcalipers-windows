@@ -78,5 +78,14 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.True(angleCaliper.LeftAngleBar.Y2 <= bounds.Height);
 			Assert.True(angleCaliper.RightAngleBar.Y2 <= bounds.Height);
 		}
+
+		[Fact]
+		public void TestCaliperLabel()
+		{
+			var timeCaliper = GetTimeCaliper();
+			Assert.Equal("150 points", timeCaliper.CaliperLabel.Text);
+			var amplitudeCaliper = GetAmplitudeCaliper();
+			Assert.Equal("150 points", amplitudeCaliper.CaliperLabel.Text);
+		}
 	}
 }
