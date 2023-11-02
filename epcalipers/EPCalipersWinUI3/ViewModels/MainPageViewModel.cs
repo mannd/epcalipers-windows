@@ -240,7 +240,7 @@ namespace EPCalipersWinUI3
 
 		public async Task GotoPdfPage(int pageNumber) 
 		{
-			// User's input 1 based page numbers.
+			// Users input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
 			if (page != null)
 			{

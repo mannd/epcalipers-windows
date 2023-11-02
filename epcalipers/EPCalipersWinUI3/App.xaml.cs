@@ -37,6 +37,8 @@ namespace EPCalipersWinUI3
             this.InitializeComponent();
         }
 
+		//public static WindowEx MainWindow { get; } = new MainWindow();
+
         public Window Window => m_window;
 
         /// <summary>

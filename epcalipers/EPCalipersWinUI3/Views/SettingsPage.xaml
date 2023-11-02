@@ -8,8 +8,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid x:Name="ContentArea">
+    <Grid x:Name="ContentArea" Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -17,5 +18,27 @@
         <StackPanel Grid.Row="0">
             <Button Content="Back" Click="BackButton_Click"/>
         </StackPanel>
+        <TextBlock Grid.Row="1"
+        Text="Settings"
+        Style="{StaticResource TitleLargeTextBlockStyle }" />
+        <StackPanel Grid.Row="2" Margin="30">
+            <CheckBox Content="Auto position caliper labels" />
+            <RadioButtons x:Name="TimeLabelRadioButtons" SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
+                          MaxColumns="4" Header="Time caliper label alignment" 
+                          SelectionChanged="TimeLabelAlignment_SelectionChanged">
+                <x:String>Top</x:String>
+                <x:String>Bottom</x:String>
+                <x:String>Left</x:String>
+                <x:String>Right</x:String>
+            </RadioButtons>
+            <RadioButtons x:Name="AmplitudeLabelRadioButtons" SelectedIndex="0"  
+                          MaxColumns="4" Header="Amplitude caliper label position" >
+                <x:String>Top</x:String>
+                <x:String>Bottom</x:String>
+                <x:String>Left</x:String>
+                <x:String>Right</x:String>
+            </RadioButtons>
+        </StackPanel>
+
     </Grid>
 </Page>

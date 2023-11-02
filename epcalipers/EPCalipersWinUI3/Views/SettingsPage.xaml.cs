@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.ViewModels;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -22,9 +24,11 @@ namespace EPCalipersWinUI3.Views
 	/// </summary>
 	public sealed partial class SettingsPage : Page
 	{
+		public SettingsViewModel ViewModel { get; set; }
 		public SettingsPage()
 		{
 			this.InitializeComponent();
+			ViewModel = new SettingsViewModel();
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -32,5 +36,14 @@ namespace EPCalipersWinUI3.Views
 			var mainWindow = (Application.Current as App)?.Window as MainWindow;
             mainWindow.Navigate(typeof(MainPage));
         }
-    }
+
+		private void TimeLabelAlignment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				ViewModel.TimeCaliperLabelAlignment = selection;
+			}
+		}
+	}
 }

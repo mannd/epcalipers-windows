@@ -88,8 +88,8 @@ namespace EPCalipersWinUI3.Calipers
                 }
                 CaliperLabel.SelectedColor = value;
             }
-        }
-        private Color _selectedColor;
+		}
+		private Color _selectedColor;
 		public bool IsSelected
         { 
             get =>  _isSelected; 

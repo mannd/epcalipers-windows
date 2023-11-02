@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3.Calipers
 			Caliper = caliper;
 			_size = ShapeMeasure(TextBlock);  // Estimate TextBlock size.
 			_position = new CaliperLabelPosition();
-			SetPosition(true);
+			SetPosition();
 		}
 
 		public override void SetPosition()

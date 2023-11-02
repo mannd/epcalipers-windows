@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Input;
 using Windows.Foundation;
 using Windows.Gaming.XboxLive.Storage;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -48,8 +49,8 @@ namespace EPCalipersWinUI3.Calipers
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
-			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Top, false, _fakeUI);
+			var alignment = new Settings().TimeCaliperLabelAlignment;
+			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, false, _fakeUI);
 		}
 
 		public override void ChangeBounds()
