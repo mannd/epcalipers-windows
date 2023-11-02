@@ -15,6 +15,11 @@ namespace EPCalipersWinUI3.Calipers
         public Bar BottomBar { get; set; }
         public Bar CrossBar { get; set; }
 
+		public override double Value =>  BottomBar.Position - TopBar.Position;
+
+		public double TopMostBarPosition => Math.Min(TopBar.Position, BottomBar.Position);
+		public double BottomMostBarPosition => Math.Max(TopBar.Position, BottomBar.Position);
+
 		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
 			bool fakeUI = false) : base(caliperView)
 		{
@@ -84,6 +89,5 @@ namespace EPCalipersWinUI3.Calipers
             return null;
 		}
 
-		public override double Value =>  BottomBar.Position - TopBar.Position;
 	}
 }

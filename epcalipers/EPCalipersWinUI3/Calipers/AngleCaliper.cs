@@ -19,12 +19,11 @@ namespace EPCalipersWinUI3.Calipers
 		public Bar RightAngleBar { get; set; }
 		public Bar ApexBar { get; set; } // a pseudobar
 
-		private bool _fakeBarLines;
 
 		public AngleCaliper(AngleCaliperPosition position, 
-			ICaliperView caliperView, bool fakeBarLines = false) : base(caliperView)
+			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
 		{
-			_fakeBarLines = fakeBarLines;
+			_fakeUI = fakeUI;
 			Bars = InitBars(position);
 			InitCaliperLabel();
 			SetThickness(2);
@@ -33,11 +32,11 @@ namespace EPCalipersWinUI3.Calipers
 
 		private Bar[] InitBars(AngleCaliperPosition position)
 		{
-			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeBarLines);
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeUI);
 			LeftAngleBar.Angle = position.FirstAngle;
-			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeBarLines); 
+			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeUI); 
 			RightAngleBar.Angle = position.LastAngle;
-			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeBarLines); // ApexBar never drawn
+			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
 			return new[] { LeftAngleBar, RightAngleBar, ApexBar};
 		}
 

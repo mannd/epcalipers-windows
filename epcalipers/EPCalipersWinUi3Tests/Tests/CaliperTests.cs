@@ -62,6 +62,13 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.False(amplitudeCaliper.TopBar.IsSelected);
 			Assert.False(amplitudeCaliper.BottomBar.IsSelected);
 			Assert.False(amplitudeCaliper.CrossBar.IsSelected);
+			var angleCaliper = GetAngleCaliper();
+			angleCaliper.IsSelected = true;
+			Assert.True(angleCaliper.LeftAngleBar.IsSelected);
+			Assert.True(angleCaliper.RightAngleBar.IsSelected);
+			angleCaliper.IsSelected = false;
+			Assert.False(angleCaliper.LeftAngleBar.IsSelected);
+			Assert.False(angleCaliper.RightAngleBar.IsSelected);
 		}
 
 		[Fact]

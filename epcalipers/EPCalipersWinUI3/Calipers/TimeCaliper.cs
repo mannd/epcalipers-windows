@@ -21,6 +21,11 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
+		public override double Value => RightBar.Position - LeftBar.Position; 
+
+		public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
+		public double RightMostBarPosition => Math.Max(RightBar.Position, LeftBar.Position);
+
         public TimeCaliper(CaliperPosition position, 
 			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
         {
@@ -44,7 +49,7 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			var text = $"{Value} points";
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Right, false, _fakeUI);
+				CaliperLabelAlignment.Top, false, _fakeUI);
 		}
 
 		public override void ChangeBounds()
@@ -53,9 +58,6 @@ namespace EPCalipersWinUI3.Calipers
 			LeftBar.Y2 = bounds.Height;
 			RightBar.Y2 = bounds.Height;
 		}
-
-		public override double Value => RightBar.Position - LeftBar.Position; 
-
 
 		public override Bar IsNearBar(Point p)
 		{

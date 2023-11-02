@@ -121,6 +121,17 @@ namespace EPCalipersWinUI3.Calipers
 			if (TextBlock != null) view.Remove(TextBlock);
 		}
 
-		public abstract void SetPosition(bool initialPosition = false);
+		public abstract void SetPosition();
+
+		public static Size ShapeMeasure(TextBlock textBlock)
+		{
+			if (textBlock == null) return new Size(0, 0);
+			// Measured Size is bounded to be less than maxSize
+			Size maxSize = new Size(
+				 double.PositiveInfinity,
+				 double.PositiveInfinity);
+			textBlock.Measure(maxSize);
+			return textBlock.DesiredSize;
+		}
 	}
 }
