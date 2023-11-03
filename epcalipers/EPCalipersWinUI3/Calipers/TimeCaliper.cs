@@ -46,6 +46,8 @@ namespace EPCalipersWinUI3.Calipers
             return  new[] { LeftBar, RightBar, CrossBar };
 		}
 
+		// TODO: keep one copy of settings, apply to amplitude caliper too.
+		// Need to persist caliper collection and image when opening settings and help windows!
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
