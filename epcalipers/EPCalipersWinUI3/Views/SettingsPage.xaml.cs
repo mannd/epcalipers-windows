@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -31,11 +32,7 @@ namespace EPCalipersWinUI3.Views
 			ViewModel = new SettingsViewModel();
 		}
 
-		private void BackButton_Click(object sender, RoutedEventArgs e)
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(MainPage));
-        }
+		private void BackButton_Click(object sender, RoutedEventArgs e) => AppHelper.Navigate(typeof(MainPage));
 
 		private void TimeLabelAlignment_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{

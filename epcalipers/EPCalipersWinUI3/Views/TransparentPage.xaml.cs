@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TemplateTest2.Helpers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -32,6 +33,8 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new TransparentPageViewModel(TransparentCaliperView);
 			SizeChanged += TransparentPage_SizeChanged;
+			ViewModel.CachedTitle = AppHelper.AppTitleBarText;
+			AppHelper.AppTitleBarText = "AppTransparentWindowTitle".GetLocalized();
 		}
 
 		private void TransparentPage_SizeChanged(object sender, SizeChangedEventArgs e)

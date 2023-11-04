@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using EPCalipersWinUI3.ViewModels;
+using EPCalipersWinUI3.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,10 +32,7 @@ namespace EPCalipersWinUI3.Views
 			ViewModel = new HelpViewModel();
 		}
 
-		private void BackButton_Click(object sender, RoutedEventArgs e)
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(MainPage));
-		}
+		private void BackButton_Click(object sender, RoutedEventArgs e) 
+			=> AppHelper.Navigate(typeof(MainPage));
 	}
 }

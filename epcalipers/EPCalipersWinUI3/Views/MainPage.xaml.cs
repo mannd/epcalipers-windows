@@ -26,6 +26,8 @@ using Windows.Storage.Pickers;
 using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using WinUIEx;
+using Microsoft.UI.Windowing;
+using TemplateTest2.Helpers;
 
 namespace EPCalipersWinUI3.Views
 {
@@ -52,6 +54,7 @@ namespace EPCalipersWinUI3.Views
             {
 				ViewModel.Bounds = CaliperView.Bounds;
 				ViewModel.DeleteAllCalipersCommand.Execute(null);
+
 
 				// TODO: Change to settings.  Settings.ResetZoomWithNewImage, etc.
 				if (ViewModel.ResetZoomWithNewImage)
@@ -285,7 +288,7 @@ namespace EPCalipersWinUI3.Views
 			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
 
 			// Retrieve the window handle (HWND) of the current WinUI 3 window.
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			var mainWindow = AppHelper.AppMainWindow;
 			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(mainWindow);
 
 			// Initialize the file picker with the window handle (HWND).
@@ -304,6 +307,7 @@ namespace EPCalipersWinUI3.Views
 			// Change the cursor to a wait icon
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
 			await ViewModel.OpenImageFile(file);
+			AppHelper.AppTitleBarText = ViewModel.TitleBarName;
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 		#endregion

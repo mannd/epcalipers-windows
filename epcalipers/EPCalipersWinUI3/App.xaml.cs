@@ -28,6 +28,8 @@ namespace EPCalipersWinUI3
     /// </summary>
     public partial class App : Application
     {
+		private MainWindow _window;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -37,9 +39,7 @@ namespace EPCalipersWinUI3
             this.InitializeComponent();
         }
 
-		//public static WindowEx MainWindow { get; } = new MainWindow();
-
-        public Window Window => m_window;
+        public MainWindow MainWindow => _window;
 
         /// <summary>
         /// Invoked when the application is launched.
@@ -47,8 +47,8 @@ namespace EPCalipersWinUI3
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 		{
-			m_window = new MainWindow();
-			m_window.Activate();
+			_window = new MainWindow();
+			_window.Activate();
 #if DEBUG
 			if (System.Diagnostics.Debugger.IsAttached)
 			{
@@ -58,6 +58,5 @@ namespace EPCalipersWinUI3
 #endif
 		}
 
-		private Window m_window;
 	}
 }

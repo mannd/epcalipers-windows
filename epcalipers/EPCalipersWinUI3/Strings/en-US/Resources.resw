@@ -136,7 +136,19 @@
     <value>Angle caliper</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>EP Calipers 3 Test</value>
+    <value>EP Calipers 3</value>
+  </data>
+  <data name="AppFileTitle" xml:space="preserve">
+    <value>EP Calipers 3 - {0}</value>
+  </data>
+  <data name="AppMultipagePDFTitle" xml:space="preserve">
+    <value>EP Calipers 3 - {0} - Page {1}</value>
+  </data>
+  <data name="AppSimpleTitle" xml:space="preserve">
+    <value>EP Calipers 3</value>
+  </data>
+  <data name="AppTransparentWindowTitle" xml:space="preserve">
+    <value>EP Calipers 3 - Transparent window</value>
   </data>
   <data name="CalibrationBarButton.Label" xml:space="preserve">
     <value>Calibration</value>

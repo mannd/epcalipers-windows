@@ -31,6 +31,7 @@
     <Product>EP Calipers 3</Product>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Helpers\WindowHelper.cs" />
     <Compile Remove="Models\BaseCaliper.cs" />
   </ItemGroup>
   <ItemGroup>

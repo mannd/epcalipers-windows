@@ -9,10 +9,12 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using TemplateTest2.Helpers;
 using Windows.Foundation;
 using Windows.Storage;
 
@@ -98,6 +100,7 @@ namespace EPCalipersWinUI3
 		{
 			if (file != null)
 			{
+				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
 				// NB can get OOM errors with large PDF files when running on x86 system.
 				if (PdfHelper.IsPdfFile(file))
@@ -116,6 +119,8 @@ namespace EPCalipersWinUI3
 					// Set the image on the main page to the dropped image
 					MainImageSource = bitmapImage;
 					IsMultipagePdf = false;
+					AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + FileName;
+					TitleBarName = "AppDisplayName".GetLocalized() + " - " + FileName;
 				}
 			}
 			else
@@ -190,26 +195,18 @@ namespace EPCalipersWinUI3
 		#endregion
 
 		[RelayCommand]
-		private static void Settings()
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(SettingsPage));
-		}
+		private static void Settings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
 		private static void TransparenWindow()
 		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
             mainWindow.Navigate(typeof(TransparentPage));
 		}
 
 		[RelayCommand]
-		private static void Help()
-		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
-            mainWindow.Navigate(typeof(HelpWebViewPage));
-		}
+		private static void Help() => AppHelper.Navigate(typeof(HelpWebViewPage));
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();
@@ -253,12 +250,11 @@ namespace EPCalipersWinUI3
 			CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
+			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(), FileName, CurrentPdfPageNumber);
+			AppHelper.AppTitleBarText = TitleBarName;
 		}
 		#endregion
 		#region observable properties
-		[ObservableProperty]
-		private string testText = "Test";
-
 		[ObservableProperty]
 		private Microsoft.UI.Xaml.Controls.Image mainImage;
 
@@ -283,6 +279,12 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private Bounds bounds;
+
+		[ObservableProperty]
+		private string fileName;
+
+		[ObservableProperty]
+		private string titleBarName;
 
 
 		#endregion

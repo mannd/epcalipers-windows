@@ -17,6 +17,8 @@ using System.Windows.Input;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using EPCalipersWinUI3.Helpers;
+using TemplateTest2.Helpers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,8 +36,20 @@ namespace EPCalipersWinUI3
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
+			AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
             MainFrame.Navigate(typeof(Views.MainPage));
 			Activated += MainWindow_Activated;
+		}
+
+		public TextBlock GetTitleBar()
+		{
+			return AppTitleTextBlock;
+		}
+
+		public string AppTitleBarText
+		{
+			get => AppTitleTextBlock.Text;
+			set => AppTitleTextBlock.Text = value;
 		}
 
 		public void Navigate(System.Type type)

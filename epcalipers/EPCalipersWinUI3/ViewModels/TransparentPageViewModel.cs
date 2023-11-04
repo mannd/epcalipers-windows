@@ -12,10 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using EPCalipersWinUI3.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class TransparentPageViewModel
+	public partial class TransparentPageViewModel: ObservableObject
 	{
 		private readonly CaliperHelper _caliperHelper;
 
@@ -85,15 +87,19 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		private static void ToggleTransparentWindow()
+		private void ToggleTransparentWindow()
 		{
-			var mainWindow = (Application.Current as App)?.Window as MainWindow;
+			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop()
 				{ Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt };
+			AppHelper.AppTitleBarText = CachedTitle; 
 			mainWindow.Navigate(typeof(MainPage));
 		}
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();
+
+		[ObservableProperty]
+		private string cachedTitle;
 	}
 }
