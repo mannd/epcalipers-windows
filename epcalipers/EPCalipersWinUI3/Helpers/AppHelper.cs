@@ -21,5 +21,7 @@ namespace EPCalipersWinUI3.Helpers
         {
             AppMainWindow.Navigate(type);
         }
+
+        public static string CachedTitleBarText { get; set; }
     }
 }

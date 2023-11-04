@@ -14,6 +14,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Helpers;
+using TemplateTest2.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,9 +31,14 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
 			ViewModel = new HelpViewModel();
+			AppHelper.CachedTitleBarText = AppHelper.AppTitleBarText;
+			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
 		}
 
-		private void BackButton_Click(object sender, RoutedEventArgs e) 
-			=> AppHelper.Navigate(typeof(MainPage));
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			AppHelper.AppTitleBarText = AppHelper.CachedTitleBarText;
+			AppHelper.Navigate(typeof(MainPage));
+		}
 	}
 }

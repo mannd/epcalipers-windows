@@ -142,7 +142,7 @@
     <value>EP Calipers 3 - {0}</value>
   </data>
   <data name="AppMultipagePDFTitle" xml:space="preserve">
-    <value>EP Calipers 3 - {0} - Page {1}</value>
+    <value>EP Calipers 3 - {0} - Page {1}/{2}</value>
   </data>
   <data name="AppSimpleTitle" xml:space="preserve">
     <value>EP Calipers 3</value>

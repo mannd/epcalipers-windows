@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TemplateTest2.Helpers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -30,9 +31,15 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
 			ViewModel = new SettingsViewModel();
+			AppHelper.CachedTitleBarText = AppHelper.AppTitleBarText;
+			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
 		}
 
-		private void BackButton_Click(object sender, RoutedEventArgs e) => AppHelper.Navigate(typeof(MainPage));
+		private void BackButton_Click(object sender, RoutedEventArgs e)
+		{
+			AppHelper.AppTitleBarText = AppHelper.CachedTitleBarText;
+			AppHelper.Navigate(typeof(MainPage));
+		}
 
 		private void TimeLabelAlignment_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{

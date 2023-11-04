@@ -247,10 +247,10 @@ namespace EPCalipersWinUI3
 		}
 		private void UpdatePageNumber()
 		{
-			CurrentPdfPageNumber = _pdfHelper.CurrentPageNumber;
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
-			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(), FileName, CurrentPdfPageNumber);
+			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(), 
+				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
 			AppHelper.AppTitleBarText = TitleBarName;
 		}
 		#endregion

@@ -33,7 +33,7 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new TransparentPageViewModel(TransparentCaliperView);
 			SizeChanged += TransparentPage_SizeChanged;
-			ViewModel.CachedTitle = AppHelper.AppTitleBarText;
+			AppHelper.CachedTitleBarText = AppHelper.AppTitleBarText;
 			AppHelper.AppTitleBarText = "AppTransparentWindowTitle".GetLocalized();
 		}
 
