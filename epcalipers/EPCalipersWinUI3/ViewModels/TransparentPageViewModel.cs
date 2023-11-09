@@ -92,7 +92,7 @@ namespace EPCalipersWinUI3.ViewModels
 			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop()
 				{ Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt };
-			AppHelper.AppTitleBarText = AppHelper.CachedTitleBarText;
+			AppHelper.SaveTitleBarText();
 			mainWindow.Navigate(typeof(MainPage));
 		}
 

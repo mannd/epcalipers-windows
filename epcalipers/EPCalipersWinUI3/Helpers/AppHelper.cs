@@ -22,6 +22,16 @@ namespace EPCalipersWinUI3.Helpers
             AppMainWindow.Navigate(type);
         }
 
-        public static string CachedTitleBarText { get; set; }
+        private static string CachedTitleBarText { get; set; }
+
+        public static void SaveTitleBarText()
+        {
+            CachedTitleBarText = AppTitleBarText;
+        }
+
+        public static void RestoreTitleBarText()
+        {
+            AppTitleBarText = CachedTitleBarText;
+        }
     }
 }

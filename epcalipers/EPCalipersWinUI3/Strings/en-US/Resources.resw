@@ -150,6 +150,9 @@
   <data name="AppTransparentWindowTitle" xml:space="preserve">
     <value>EP Calipers 3 - Transparent window</value>
   </data>
+  <data name="BackButton.Content" xml:space="preserve">
+    <value>Back</value>
+  </data>
   <data name="CalibrationBarButton.Label" xml:space="preserve">
     <value>Calibration</value>
   </data>
@@ -214,7 +217,7 @@
     <value>Open...</value>
   </data>
   <data name="OptionsMenuItem.Text" xml:space="preserve">
-    <value>Options...</value>
+    <value>Settings...</value>
   </data>
   <data name="PreviousPageMenuItem.Text" xml:space="preserve">
     <value>Previous PDF page</value>

@@ -31,13 +31,13 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
 			ViewModel = new SettingsViewModel();
-			AppHelper.CachedTitleBarText = AppHelper.AppTitleBarText;
+			AppHelper.SaveTitleBarText();
 			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{
-			AppHelper.AppTitleBarText = AppHelper.CachedTitleBarText;
+			AppHelper.RestoreTitleBarText();
 			AppHelper.Navigate(typeof(MainPage));
 		}
 

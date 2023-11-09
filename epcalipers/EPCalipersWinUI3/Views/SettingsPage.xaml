@@ -11,17 +11,19 @@
     <Grid x:Name="ContentArea" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            <Button Content="Back" Click="BackButton_Click"/>
-        </StackPanel>
-        <TextBlock Grid.Row="1"
-        Text="Settings"
-        Style="{StaticResource TitleLargeTextBlockStyle }" />
-        <StackPanel Grid.Row="2" Margin="30">
+        <Grid Grid.Row="0"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Settings" Style="{StaticResource TitleLargeTextBlockStyle }" />
+            <Button Grid.Column="2" x:Uid="BackButton" Click="BackButton_Click" HorizontalAlignment="Right"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Margin="30">
             <CheckBox Content="Auto position caliper labels" />
             <RadioButtons x:Name="TimeLabelRadioButtons" SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Time caliper label alignment" 
