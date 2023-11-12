@@ -8,6 +8,31 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <Flyout x:Key="myColorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="myColorPicker"
+                         IsColorChannelTextInputVisible="False"
+                             Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=TwoWay}"
+                         IsHexInputVisible="False"/>
+
+                <Grid RelativePanel.Below="myColorPicker"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="OK" 
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"/>
+                    <Button Content="Cancel" 
+                        Margin="2,12,0,0" HorizontalAlignment="Stretch"
+                        Grid.Column="1"/>
+                </Grid>
+            </RelativePanel>
+        </Flyout>
+    </Page.Resources>
+
     <Grid x:Name="ContentArea" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -23,24 +48,37 @@
             <TextBlock Grid.Column="0" Text="Settings" Style="{StaticResource TitleLargeTextBlockStyle }" />
             <Button Grid.Column="2" x:Uid="BackButton" Click="BackButton_Click" HorizontalAlignment="Right"/>
         </Grid>
-        <StackPanel Grid.Row="1" Margin="30">
-            <CheckBox Content="Auto position caliper labels" />
-            <RadioButtons x:Name="TimeLabelRadioButtons" SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
+
+
+        <ScrollViewer Grid.Row="1" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+            <StackPanel>
+                <CheckBox Content="Auto position caliper labels" />
+                <RadioButtons x:Name="TimeLabelRadioButtons" SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Time caliper label alignment" 
                           SelectionChanged="TimeLabelAlignment_SelectionChanged">
-                <x:String>Top</x:String>
-                <x:String>Bottom</x:String>
-                <x:String>Left</x:String>
-                <x:String>Right</x:String>
-            </RadioButtons>
-            <RadioButtons x:Name="AmplitudeLabelRadioButtons" SelectedIndex="0"  
+                    <x:String>Top</x:String>
+                    <x:String>Bottom</x:String>
+                    <x:String>Left</x:String>
+                    <x:String>Right</x:String>
+                </RadioButtons>
+                <RadioButtons x:Name="AmplitudeLabelRadioButtons" SelectedIndex="0"  
                           MaxColumns="4" Header="Amplitude caliper label position" >
-                <x:String>Top</x:String>
-                <x:String>Bottom</x:String>
-                <x:String>Left</x:String>
-                <x:String>Right</x:String>
-            </RadioButtons>
-        </StackPanel>
+                    <x:String>Top</x:String>
+                    <x:String>Bottom</x:String>
+                    <x:String>Left</x:String>
+                    <x:String>Right</x:String>
+                </RadioButtons>
+                <Button x:Name="unselectedColorPickerButton"
+                    Content="Unselected Caliper Color"
+                    Flyout="{StaticResource myColorPickerFlyout}"
+                        
+                        
+                        />
+                        <Button x:Name="selectedColorPickerButton"
+            Content="Selected Caliper Color"
+            Flyout="{StaticResource myColorPickerFlyout}"/>
+                    </StackPanel>
+                </ScrollViewer>
 
     </Grid>
 </Page>

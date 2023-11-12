@@ -4,6 +4,7 @@ using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Views;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -24,6 +25,7 @@ namespace EPCalipersWinUI3
 	{
 		private readonly PdfHelper _pdfHelper;
 		private CaliperHelper _caliperHelper;
+		private Settings _settings;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -40,6 +42,7 @@ namespace EPCalipersWinUI3
 			_pdfHelper = new PdfHelper();
 			var caliperCollection = new CaliperCollection(caliperView);
 			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
+			_settings = new Settings();
 		}
 		#region commands
 		[RelayCommand]

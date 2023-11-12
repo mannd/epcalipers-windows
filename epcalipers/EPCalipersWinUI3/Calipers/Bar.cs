@@ -207,7 +207,8 @@ namespace EPCalipersWinUI3.Calipers
 
         public void SetAngleBarPosition(Point apex, double angle)
         {
-            var adjustedEndPoint = ClippedEndPoint(apex, angle, 1000, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
+            var length = 2 * Math.Max(Bounds.Height, Bounds.Width);
+            var adjustedEndPoint = ClippedEndPoint(apex, angle, length, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
             X1 = apex.X;
             Y1 = apex.Y;
             X2 = adjustedEndPoint.X;

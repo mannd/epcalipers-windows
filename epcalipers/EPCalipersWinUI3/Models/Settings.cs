@@ -1,9 +1,13 @@
 ﻿using EPCalipersWinUI3.Calipers;
+using Microsoft.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Core;
 
 namespace EPCalipersWinUI3.Models
 {
@@ -13,6 +17,8 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
 		private readonly string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
 		private readonly string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
+		private readonly string _unselectedCaliperColorKey = "UnselectedCaliperColorKey";
+		
 		public Settings()
 		{
 			_localSettings =
@@ -44,6 +50,35 @@ namespace EPCalipersWinUI3.Models
 				return alignment;
 			}
 			set => _localSettings.Values[_amplitudeCaliperLabelAlignmentKey] = (int)value;
+		}
+
+		public Color UnselectedCaliperColor
+		{
+			get
+			{
+				var hexColor = _localSettings.Values[_unselectedCaliperColorKey] as string;
+				if (hexColor == null)
+				{
+					return Colors.Blue;
+				}
+				var color = GetColorFromString(hexColor);
+				// TODO handle null
+				return color;
+			}
+			set
+			{
+				var hexColor = value.ToString();
+				_localSettings.Values[_unselectedCaliperColorKey] = hexColor;
+			}
+		}
+
+		private Color GetColorFromString(string colorHex)
+		{
+			var a = Convert.ToByte(colorHex.Substring(1, 2), 16);
+			var r = Convert.ToByte(colorHex.Substring(3, 2), 16);
+			var g = Convert.ToByte(colorHex.Substring(5, 2), 16);
+			var b = Convert.ToByte(colorHex.Substring(7, 2), 16);
+			return Color.FromArgb(a, r, g, b);
 		}
 	}
 }

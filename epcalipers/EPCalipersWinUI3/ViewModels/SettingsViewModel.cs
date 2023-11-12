@@ -9,6 +9,7 @@ using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
 using Windows.Storage.Streams;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -18,6 +19,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public SettingsViewModel() {
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
+			UnselectedCaliperColor = _model.UnselectedCaliperColor;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -30,6 +32,9 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(AmplitudeCaliperLabelAlignment):
 					_model.AmplitudeCaliperLabelAlignment = (CaliperLabelAlignment)AmplitudeCaliperLabelAlignment;
+					break;
+				case nameof(UnselectedCaliperColor):
+					_model.UnselectedCaliperColor = UnselectedCaliperColor;
 					break;
 				default:
 					break;
@@ -44,5 +49,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int amplitudeCaliperLabelAlignment;
+
+		[ObservableProperty]
+		private Color unselectedCaliperColor;
 	}
 }
