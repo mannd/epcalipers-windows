@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -110,6 +111,14 @@ namespace EPCalipersWinUI3.Calipers
             IsSelected = !IsSelected;
         }
 
+        public void RefreshColor()
+        {
+            foreach (var bar in Bars)
+            {
+                //bar.RefreshColor(); 
+            }
+        }
+
         protected void SetThickness(double thickness)
         {
             foreach (var bar in Bars)
@@ -117,6 +126,13 @@ namespace EPCalipersWinUI3.Calipers
                 bar.Width = thickness;
             }
         }
+
+        public void ApplySettings(Settings settings)
+        {
+			UnselectedColor = settings.UnselectedCaliperColor;
+            //SelectedColor = settings.SelectedCaliperColor;
+            //SetThickness(settings.Thickness);
+		}
 
         /// <summary>
         /// The raw measurement of a caliper, in points, or in degrees or angle calipers.

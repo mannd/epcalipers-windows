@@ -72,6 +72,12 @@ namespace EPCalipersWinUI3.Views
             });
         }
 
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			ViewModel.RefreshCalipers();
+		}
+
 		#region touches
 		private bool pointerDown = false;
 		private Point pointerPosition;

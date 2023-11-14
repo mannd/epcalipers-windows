@@ -18,6 +18,8 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
 		private readonly string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
 		private readonly string _unselectedCaliperColorKey = "UnselectedCaliperColorKey";
+		private readonly string _selectedCaliperColorKey = "SelectedCaliperColorKey";
+		private readonly string _barThicknessKey = "BarThicknessKey";
 		
 		public Settings()
 		{
@@ -25,9 +27,15 @@ namespace EPCalipersWinUI3.Models
 				Windows.Storage.ApplicationData.Current.LocalSettings;
 		}
 
+		public double BarThickness
+		{
+			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2);
+			set => _localSettings.Values[_barThicknessKey] = value;
+		}
+
 		public bool AutoAlignLabel
 		{
-			get => (bool)_localSettings.Values[_autoAlignLabelKey];
+			get => (bool)(_localSettings.Values["garbage"] ?? false);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
 
@@ -62,7 +70,6 @@ namespace EPCalipersWinUI3.Models
 					return Colors.Blue;
 				}
 				var color = GetColorFromString(hexColor);
-				// TODO handle null
 				return color;
 			}
 			set

@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 using Windows.Foundation;
 using EPCalipersWinUI3.Contracts;
 using System.Diagnostics;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -110,6 +111,16 @@ namespace EPCalipersWinUI3.Calipers
 				{
 					caliper.IsSelected = false;
 				}
+			}
+		}
+
+		public void RefreshCalipers(Settings settings)
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.UnselectedColor = settings.UnselectedCaliperColor;
+				caliper.IsSelected = caliper.IsSelected;
+				// etc.
 			}
 		}
 	}

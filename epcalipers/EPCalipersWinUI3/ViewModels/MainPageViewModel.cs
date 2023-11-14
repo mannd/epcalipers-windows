@@ -48,19 +48,19 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			_caliperHelper.AddTimeCaliper();
+			_caliperHelper.AddTimeCaliper(_settings);
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			_caliperHelper.AddAmplitudeCaliper();
+			_caliperHelper.AddAmplitudeCaliper(_settings);
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			_caliperHelper.AddAngleCaliper();
+			_caliperHelper.AddAngleCaliper(_settings);
 		}
 
 		[RelayCommand]
@@ -159,6 +159,11 @@ namespace EPCalipersWinUI3
 			var source = new SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
 			return source;
+		}
+
+		public void RefreshCalipers()
+		{
+			_caliperHelper.RefreshCalipers(_settings);
 		}
 
 		#region zoom

@@ -68,17 +68,29 @@
                     <x:String>Left</x:String>
                     <x:String>Right</x:String>
                 </RadioButtons>
-                <Button x:Name="unselectedColorPickerButton"
-                    Content="Unselected Caliper Color"
-                    Flyout="{StaticResource myColorPickerFlyout}"
-                        
-                        
-                        />
-                        <Button x:Name="selectedColorPickerButton"
+               
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="unselectedColorPickerButton"
+                    Content="Unselected caliper color"
+                    Flyout="{StaticResource myColorPickerFlyout}">
+
+                    </Button>
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=OneWay}"/>
+                        </Rectangle.Fill>
+
+                    </Rectangle>
+                </StackPanel>
+
+                <Button x:Name="selectedColorPickerButton"
             Content="Selected Caliper Color"
             Flyout="{StaticResource myColorPickerFlyout}"/>
-                    </StackPanel>
-                </ScrollViewer>
+                <TextBlock>Caliper line width</TextBlock>
+            <Slider Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
+                    Value="2" TickFrequency="1" TickPlacement="Outside"/>
+            </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </Page>

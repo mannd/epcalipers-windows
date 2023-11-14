@@ -1,8 +1,10 @@
 ﻿using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,31 +26,37 @@ namespace EPCalipersWinUI3.Helpers
 			_caliperCollection = caliperCollection;
 		}
 
-		public void AddTimeCaliper()
+		public void AddTimeCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView);
-			FinalizeCaliper(caliper);
+			FinalizeCaliper(caliper, settings);
 		}
 
-		public void AddAmplitudeCaliper()
+		public void AddAmplitudeCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView);
-			FinalizeCaliper(caliper);
+			FinalizeCaliper(caliper, settings);
 		}
 
-		public void AddAngleCaliper()
+		public void AddAngleCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView);
-			FinalizeCaliper(caliper);
+			FinalizeCaliper(caliper, settings);
 		}
 
-		private void FinalizeCaliper(Caliper c)
+		private void FinalizeCaliper(Caliper c, Settings settings)
 		{
 			if (c == null) return;
-			c.UnselectedColor = Colors.Blue;
+			c.UnselectedColor = settings.UnselectedCaliperColor;
 			c.SelectedColor = Colors.Red;
 			c.IsSelected = false;
 			_caliperCollection.Add(c);
+		}
+
+		public void RefreshCalipers(Settings settings)
+		{
+			Debug.Print("Refreshing calipers...");
+			_caliperCollection.RefreshCalipers(settings);
 		}
 
 		public void DeleteAllCalipers()
