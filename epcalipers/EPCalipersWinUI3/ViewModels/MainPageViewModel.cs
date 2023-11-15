@@ -211,6 +211,8 @@ namespace EPCalipersWinUI3
 			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
             mainWindow.Navigate(typeof(TransparentPage));
+			// TODO: check mark on Transparent window menu item can get out of sync with 
+			// reality when navigating.
 		}
 
 		[RelayCommand]

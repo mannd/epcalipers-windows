@@ -37,6 +37,12 @@ namespace EPCalipersWinUI3.Views
 			AppHelper.AppTitleBarText = "AppTransparentWindowTitle".GetLocalized();
 		}
 
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			ViewModel.RefreshCalipers();
+		}
+
 		private void TransparentPage_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			Debug.WriteLine("size changed");

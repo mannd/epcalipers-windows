@@ -30,6 +30,11 @@ namespace EPCalipersWinUI3.ViewModels
 			_settings = new Settings();
 		}
 
+		public void RefreshCalipers()
+		{
+			_caliperHelper.RefreshCalipers(_settings);
+		}
+
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
@@ -98,6 +103,9 @@ namespace EPCalipersWinUI3.ViewModels
 			AppHelper.SaveTitleBarText();
 			mainWindow.Navigate(typeof(MainPage));
 		}
+
+		[RelayCommand]
+		private void Settings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();

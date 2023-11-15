@@ -19,7 +19,12 @@ namespace EPCalipersWinUI3.Helpers
 
         public static void Navigate(Type type)
         {
-            AppMainWindow.Navigate(type);
+            AppMainWindow?.Navigate(type);
+        }
+
+        public static void NavigateBack()
+        {
+            AppMainWindow?.NavigateBack();
         }
 
         private static string CachedTitleBarText { get; set; }

@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Name="mainPage"
+    NavigationCacheMode="Required"
     Background="Transparent">
     <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >-->
     <Grid>
@@ -84,7 +85,7 @@
                     </ToggleMenuFlyoutItem.KeyboardAccelerators>
                 </ToggleMenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="OptionsMenuItem" >
+                <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.SettingsCommand}"> 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE713;" />
                     </MenuFlyoutItem.Icon>

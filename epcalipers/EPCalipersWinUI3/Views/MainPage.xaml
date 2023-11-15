@@ -257,7 +257,7 @@
             </AppBarButton>
             <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton">
+                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.SettingsCommand}">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="I" />
                     </AppBarButton.KeyboardAccelerators>

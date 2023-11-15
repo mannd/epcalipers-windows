@@ -78,6 +78,24 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_unselectedCaliperColorKey] = hexColor;
 			}
 		}
+		public Color SelectedCaliperColor
+		{
+			get
+			{
+				var hexColor = _localSettings.Values[_selectedCaliperColorKey] as string;
+				if (hexColor == null)
+				{
+					return Colors.Red;
+				}
+				var color = GetColorFromString(hexColor);
+				return color;
+			}
+			set
+			{
+				var hexColor = value.ToString();
+				_localSettings.Values[_selectedCaliperColorKey] = hexColor;
+			}
+		}
 
 		private Color GetColorFromString(string colorHex)
 		{

@@ -58,6 +58,12 @@ namespace EPCalipersWinUI3
 			MainFrame.Navigate(type);
 		}
 
+		public void NavigateBack()
+		{
+			if (!MainFrame.CanGoBack) { return; }
+			MainFrame.GoBack();
+		}
+
 		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
 		{
 			if (args.WindowActivationState == WindowActivationState.Deactivated)

@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3.Views
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{
 			AppHelper.RestoreTitleBarText();
-			AppHelper.Navigate(typeof(MainPage));
+			AppHelper.NavigateBack();
 		}
 	}
 }
