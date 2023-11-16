@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3.Models
 
 		public double BarThickness
 		{
-			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2);
+			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2.0);
 			set => _localSettings.Values[_barThicknessKey] = value;
 		}
 

@@ -118,9 +118,7 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			foreach (var caliper in _calipers)
 			{
-				caliper.UnselectedColor = settings.UnselectedCaliperColor;
-				caliper.IsSelected = caliper.IsSelected;
-				// etc.
+				caliper.ApplySettings(settings);
 			}
 		}
 	}

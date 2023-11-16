@@ -32,7 +32,6 @@ namespace EPCalipersWinUI3.Calipers
         {
             _fakeUI = fakeUI;
             Bars = InitBars(position);
-			SetThickness(2);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();
         }

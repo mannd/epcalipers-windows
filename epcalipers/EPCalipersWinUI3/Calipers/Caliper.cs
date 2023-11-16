@@ -119,19 +119,21 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        protected void SetThickness(double thickness)
+		public double BarThickness
         {
-            foreach (var bar in Bars)
+            set
             {
-                bar.Width = thickness;
+                foreach (var bar in Bars)
+                {
+                    bar.Thickness = value;
+                }
             }
         }
 
         public void ApplySettings(Settings settings)
         {
-			UnselectedColor = settings.UnselectedCaliperColor;
-            //SelectedColor = settings.SelectedCaliperColor;
-            //SetThickness(settings.Thickness);
+            BarThickness = settings.BarThickness;
+            SelectedColor = settings.SelectedCaliperColor;
 		}
 
         /// <summary>

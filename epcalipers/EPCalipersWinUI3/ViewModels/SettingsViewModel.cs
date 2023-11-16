@@ -20,6 +20,8 @@ namespace EPCalipersWinUI3.ViewModels
 		public SettingsViewModel() {
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
 			UnselectedCaliperColor = _model.UnselectedCaliperColor;
+			SelectedCaliperColor = _model.SelectedCaliperColor;
+			BarThickness = _model.BarThickness;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -35,6 +37,12 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(UnselectedCaliperColor):
 					_model.UnselectedCaliperColor = UnselectedCaliperColor;
+					break;
+				case nameof(SelectedCaliperColor):
+					_model.SelectedCaliperColor = SelectedCaliperColor;
+					break;
+				case nameof(BarThickness):
+					_model.BarThickness = BarThickness;
 					break;
 				default:
 					break;
@@ -52,5 +60,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private Color unselectedCaliperColor;
+
+		[ObservableProperty]
+		private Color selectedCaliperColor;
+
+		[ObservableProperty]
+		private double barThickness;
 	}
 }

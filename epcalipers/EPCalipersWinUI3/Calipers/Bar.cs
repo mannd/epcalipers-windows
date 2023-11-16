@@ -257,16 +257,16 @@ namespace EPCalipersWinUI3.Calipers
                 }
             }
 		}
-		public double Width
+		public double Thickness
 		{
-			get => _width;
+			get => _thickness;
 			set
 			{
-				_width = value;
+				_thickness = value;
 				if (_line != null) _line.StrokeThickness = value;
 			}
 		}
-		private double _width;
+		private double _thickness;
 
 		public bool IsNear(Point p)
         {

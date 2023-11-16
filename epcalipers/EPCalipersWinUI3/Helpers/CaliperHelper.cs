@@ -48,7 +48,8 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			if (c == null) return;
 			c.UnselectedColor = settings.UnselectedCaliperColor;
-			c.SelectedColor = Colors.Red;
+			c.SelectedColor = settings.SelectedCaliperColor;
+			c.BarThickness = settings.BarThickness;
 			c.IsSelected = false;
 			_caliperCollection.Add(c);
 		}

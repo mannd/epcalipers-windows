@@ -26,7 +26,6 @@ namespace EPCalipersWinUI3.Calipers
 			_fakeUI = fakeUI;
 			Bars = InitBars(position);
 			InitCaliperLabel();
-			SetThickness(2);
 			CaliperType = CaliperType.Angle;
 		}
 

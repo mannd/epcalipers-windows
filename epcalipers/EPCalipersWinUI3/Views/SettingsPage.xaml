@@ -83,12 +83,11 @@
                     </Rectangle>
                 </StackPanel>
 
-                <Button x:Name="selectedColorPickerButton"
-            Content="Selected Caliper Color"
-            Flyout="{StaticResource myColorPickerFlyout}"/>
+                <Button x:Name="selectedColorPickerButton" Content="Selected Caliper Color" 
+                        Flyout="{StaticResource myColorPickerFlyout}"/>
                 <TextBlock>Caliper line width</TextBlock>
-            <Slider Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
-                    Value="2" TickFrequency="1" TickPlacement="Outside"/>
+                <Slider Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
+                    Value="{x:Bind ViewModel.BarThickness, Mode=TwoWay}" TickFrequency="1" TickPlacement="Outside" />
             </StackPanel>
         </ScrollViewer>
 
