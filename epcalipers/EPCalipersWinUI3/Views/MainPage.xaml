@@ -48,6 +48,12 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuBarItem>
+            <MenuBarItem x:Uid="ViewMenu">
+                <MenuFlyoutItem x:Uid="MainMenuItem">
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="TransparentMenuItem" Command="{x:Bind ViewModel.TransparenWindowCommand}">
+                </MenuFlyoutItem>
+            </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu">
                 <MenuFlyoutItem x:Uid="ZoomInMenuItem" Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>

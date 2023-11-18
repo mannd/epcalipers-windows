@@ -201,6 +201,9 @@
   <data name="ImageMenu.Title" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="MainMenuItem.Text" xml:space="preserve">
+    <value>Main</value>
+  </data>
   <data name="MeanRateIntervalBarButton.Label" xml:space="preserve">
     <value>Mean interval</value>
   </data>
@@ -289,8 +292,14 @@
   <data name="ToolsMenu.Title" xml:space="preserve">
     <value>Tools</value>
   </data>
+  <data name="TransparentMenuItem.Text" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
   <data name="TransparentWindowMenuItem.Text" xml:space="preserve">
     <value>Transparent window</value>
+  </data>
+  <data name="ViewMenu.Title" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="ZoomInBarButton.Label" xml:space="preserve">
     <value>Zoom in</value>
