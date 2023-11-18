@@ -68,7 +68,7 @@
 
         <ScrollViewer Grid.Row="1" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
-                <CheckBox Content="Auto position caliper labels" />
+                <CheckBox x:Uid="Autoposition" />
                 <RadioButtons x:Name="TimeLabelRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Time caliper label alignment" 
@@ -89,28 +89,32 @@
                 </RadioButtons>
 
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,5,0">
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,15,0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=OneWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" 
+                    <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" Width="200"
                             Flyout="{StaticResource unselectedColorPickerFlyout}">
                     </Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,5,0">
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,15,0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="{x:Bind ViewModel.SelectedCaliperColor, Mode=OneWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button x:Name="selectedColorPickerButton" x:Uid="SettingsSelectedColor"
+                    <Button x:Name="selectedColorPickerButton" x:Uid="SettingsSelectedColor" Width="200"
                             Flyout="{StaticResource selectedColorPickerFlyout}">
                     </Button> 
                 </StackPanel>
-                <TextBlock>Caliper line width</TextBlock>
-                <Slider Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
+                <StackPanel Orientation="Horizontal">
+                <Slider x:Name="thicknessSlider" Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
+                    VerticalAlignment="Center" Margin="0,0,20,0"
                     Value="{x:Bind ViewModel.BarThickness, Mode=TwoWay}" TickFrequency="1" TickPlacement="Outside" />
+                <TextBlock VerticalAlignment="Center">Caliper line width=</TextBlock>
+                    <TextBlock Text="{x:Bind thicknessSlider.Value}" VerticalAlignment="Center"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 

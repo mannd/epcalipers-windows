@@ -280,7 +280,7 @@ namespace EPCalipersWinUI3.Calipers
                 case Role.Apex:
 					return p.X > Math.Min(X1, X2)
                             && p.X < Math.Max(X1, X2)
-                            && p.Y > Y1 - _precision
+                            && p.Y > Y1 - (3 * _precision) // give more space at top of apex (where label is)
                             && p.Y < Y1 + _precision;
 				case Role.VerticalCrossBar:
 					return p.Y > Math.Min(Y1, Y2)

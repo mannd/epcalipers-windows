@@ -150,6 +150,9 @@
   <data name="AppTransparentWindowTitle" xml:space="preserve">
     <value>EP Calipers 3 - Transparent window</value>
   </data>
+  <data name="Autoposition.Content" xml:space="preserve">
+    <value>Autoposition caliper labels</value>
+  </data>
   <data name="BackButton.Content" xml:space="preserve">
     <value>Back</value>
   </data>

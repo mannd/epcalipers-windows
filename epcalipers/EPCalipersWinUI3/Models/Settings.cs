@@ -43,7 +43,7 @@ namespace EPCalipersWinUI3.Models
 		{
 			get
 			{
-				var value = _localSettings.Values[_timeCaliperLabelAlignmentKey] ?? 0;
+				var value = (int)(_localSettings.Values[_timeCaliperLabelAlignmentKey] ?? 0);
 				var alignment = (CaliperLabelAlignment)value;
 				return alignment;
 			} 
@@ -53,7 +53,7 @@ namespace EPCalipersWinUI3.Models
 		{
 			get
 			{
-				var value = _localSettings.Values[_amplitudeCaliperLabelAlignmentKey] ?? 0;
+				var value = (int)(_localSettings.Values[_amplitudeCaliperLabelAlignmentKey] ?? 0);
 				var alignment = (CaliperLabelAlignment)value;
 				return alignment;
 			}
