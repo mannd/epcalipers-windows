@@ -13,7 +13,7 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class SettingsViewModel: ObservableObject
+	public partial class SettingsViewModel : ObservableObject
 	{
 		private Settings _model = new Settings();
 

@@ -51,9 +51,13 @@ namespace EPCalipersWinUI3.Views
 			}
 		}
 
-		private void confirmColor_Click(object sender, RoutedEventArgs e)
+		private void UnselectedColorButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			unselectedColorPickerButton.Flyout.Hide();
+        }
+		private void SelectedColorButton_Click(object sender, RoutedEventArgs e)
+		{
+			selectedColorPickerButton.Flyout.Hide();
         }
     }
 }

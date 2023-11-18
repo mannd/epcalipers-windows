@@ -9,25 +9,41 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <Flyout x:Key="myColorPickerFlyout">
+        <Flyout x:Key="unselectedColorPickerFlyout">
             <RelativePanel>
-                <ColorPicker x:Name="myColorPicker"
+                <ColorPicker x:Name="unselectedColorPicker"
                          IsColorChannelTextInputVisible="False"
                              Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=TwoWay}"
                          IsHexInputVisible="False"/>
-
-                <Grid RelativePanel.Below="myColorPicker"
+                <Grid RelativePanel.Below="unselectedColorPicker"
                   RelativePanel.AlignLeftWithPanel="True"
                   RelativePanel.AlignRightWithPanel="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="OK" 
-                        Margin="0,12,2,0" HorizontalAlignment="Stretch"/>
-                    <Button Content="Cancel" 
-                        Margin="2,12,0,0" HorizontalAlignment="Stretch"
-                        Grid.Column="1"/>
+                    <Button x:Uid="ButtonDone" Click="UnselectedColorButton_Click"
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"
+                            Grid.Column="1"/>
+                </Grid>
+            </RelativePanel>
+        </Flyout>
+        <Flyout x:Key="selectedColorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="selectedColorPicker" 
+                         IsColorChannelTextInputVisible="False"
+                             Color="{x:Bind ViewModel.SelectedCaliperColor, Mode=TwoWay}"
+                         IsHexInputVisible="False"/>
+                <Grid RelativePanel.Below="selectedColorPicker"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Uid="ButtonDone" Click="SelectedColorButton_Click"
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"
+                            Grid.Column="1"/>
                 </Grid>
             </RelativePanel>
         </Flyout>
@@ -68,23 +84,27 @@
                     <x:String>Left</x:String>
                     <x:String>Right</x:String>
                 </RadioButtons>
-               
-                <StackPanel Orientation="Vertical">
-                    <Button x:Name="unselectedColorPickerButton"
-                    Content="Unselected caliper color"
-                    Flyout="{StaticResource myColorPickerFlyout}">
 
-                    </Button>
-                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,5,0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=OneWay}"/>
                         </Rectangle.Fill>
-
                     </Rectangle>
+                    <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" 
+                            Flyout="{StaticResource unselectedColorPickerFlyout}">
+                    </Button>
                 </StackPanel>
-
-                <Button x:Name="selectedColorPickerButton" Content="Selected Caliper Color" 
-                        Flyout="{StaticResource myColorPickerFlyout}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,5,0">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="{x:Bind ViewModel.SelectedCaliperColor, Mode=OneWay}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Button x:Name="selectedColorPickerButton" x:Uid="SettingsSelectedColor"
+                            Flyout="{StaticResource selectedColorPickerFlyout}">
+                    </Button> 
+                </StackPanel>
                 <TextBlock>Caliper line width</TextBlock>
                 <Slider Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"
                     Value="{x:Bind ViewModel.BarThickness, Mode=TwoWay}" TickFrequency="1" TickPlacement="Outside" />

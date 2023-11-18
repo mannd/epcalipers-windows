@@ -153,6 +153,9 @@
   <data name="BackButton.Content" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="ButtonDone.Content" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="CalibrationBarButton.Label" xml:space="preserve">
     <value>Calibration</value>
   </data>
@@ -237,6 +240,10 @@
   <data name="ResetZoomMenuItem.Text" xml:space="preserve">
     <value>Reset zoom</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Rotate01LMenuItem.Text" xml:space="preserve">
     <value>Rotate 0.1° L</value>
   </data>
@@ -263,6 +270,12 @@
   </data>
   <data name="SettingsBarButton.Label" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SettingsSelectedColor.Content" xml:space="preserve">
+    <value>Selected caliper color</value>
+  </data>
+  <data name="SettingsUnselectedColor.Content" xml:space="preserve">
+    <value>Unselected caliper color</value>
   </data>
   <data name="TimeCaliperBarButton.Label" xml:space="preserve">
     <value>Time</value>
