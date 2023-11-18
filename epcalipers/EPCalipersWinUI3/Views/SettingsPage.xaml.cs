@@ -50,7 +50,14 @@ namespace EPCalipersWinUI3.Views
 				ViewModel.TimeCaliperLabelAlignment = selection;
 			}
 		}
-
+		private void AmplitudeLabelAlignment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				ViewModel.AmplitudeCaliperLabelAlignment = selection;
+			}
+		}
 		private void UnselectedColorButton_Click(object sender, RoutedEventArgs e)
 		{
 			unselectedColorPickerButton.Flyout.Hide();

@@ -69,7 +69,8 @@
         <ScrollViewer Grid.Row="1" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
                 <CheckBox Content="Auto position caliper labels" />
-                <RadioButtons x:Name="TimeLabelRadioButtons" SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
+                <RadioButtons x:Name="TimeLabelRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Time caliper label alignment" 
                           SelectionChanged="TimeLabelAlignment_SelectionChanged">
                     <x:String>Top</x:String>
@@ -77,8 +78,10 @@
                     <x:String>Left</x:String>
                     <x:String>Right</x:String>
                 </RadioButtons>
-                <RadioButtons x:Name="AmplitudeLabelRadioButtons" SelectedIndex="0"  
-                          MaxColumns="4" Header="Amplitude caliper label position" >
+                <RadioButtons x:Name="AmplitudeLabelRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.AmplitudeCaliperLabelAlignment}"  
+                          MaxColumns="4" Header="Amplitude caliper label position"
+                          SelectionChanged="AmplitudeLabelAlignment_SelectionChanged">
                     <x:String>Top</x:String>
                     <x:String>Bottom</x:String>
                     <x:String>Left</x:String>

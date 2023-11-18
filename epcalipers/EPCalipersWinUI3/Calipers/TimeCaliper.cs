@@ -46,7 +46,6 @@ namespace EPCalipersWinUI3.Calipers
 		}
 
 		// TODO: keep one copy of settings, apply to amplitude caliper too.
-		// Need to persist caliper collection and image when opening settings and help windows!
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
@@ -93,8 +92,18 @@ namespace EPCalipersWinUI3.Calipers
                 bar.X2 += delta.X;
                 bar.Position += delta.Y;
 			}
-			CaliperLabel.Text = $"{Value} points";
+			
+			string text = string.Format("{0:0.#} points", Value);
+			CaliperLabel.Text = text;
 			CaliperLabel.SetPosition();
 		}
+
+		public override void ApplySettings(Settings settings)
+		{
+			base.ApplySettings(settings);
+			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
+			CaliperLabel.SetPosition();
+		}
+
 	}
 }

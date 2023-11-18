@@ -70,6 +70,7 @@ namespace EPCalipersWinUI3.Calipers
             get => _unselectedColor;
             set
             {
+                _unselectedColor = value;
                 foreach (var bar in Bars)
                 {
                     bar.UnselectedColor = value;
@@ -83,6 +84,7 @@ namespace EPCalipersWinUI3.Calipers
             get => _selectedColor;
             set
             {
+                _selectedColor = value;
                 foreach (var bar in Bars)
                 {
                     bar.SelectedColor = value;
@@ -130,10 +132,15 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public void ApplySettings(Settings settings)
+        public virtual void ApplySettings(Settings settings)
         {
             BarThickness = settings.BarThickness;
             SelectedColor = settings.SelectedCaliperColor;
+            if (IsSelected)
+            {
+                Color = SelectedColor;
+                // TODO: setting to change all unselected colors too?
+            }
 		}
 
         /// <summary>

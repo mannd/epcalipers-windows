@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,9 @@ namespace EPCalipersWinUI3.Calipers
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
+			var alignment = new Settings().AmplitudeCaliperLabelAlignment;
 			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
-				CaliperLabelAlignment.Right, false, base._fakeUI);
+				alignment, false, base._fakeUI);
 		}
 
 		public override void ChangeBounds()
@@ -72,7 +74,8 @@ namespace EPCalipersWinUI3.Calipers
                 bar.Y1 += delta.Y;
                 bar.Y2 += delta.Y;
 			}
-			CaliperLabel.Text = $"{Value} points";
+			string text = string.Format("{0:0.#} points", Value);
+			CaliperLabel.Text = text;
 			CaliperLabel.SetPosition();
 		}
 
@@ -87,6 +90,14 @@ namespace EPCalipersWinUI3.Calipers
             }
             return null;
 		}
+
+		public override void ApplySettings(Settings settings)
+		{
+			base.ApplySettings(settings);
+			CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
+			CaliperLabel.SetPosition();
+		}
+
 
 	}
 }

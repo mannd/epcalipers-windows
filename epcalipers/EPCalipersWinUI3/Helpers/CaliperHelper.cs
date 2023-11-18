@@ -29,18 +29,21 @@ namespace EPCalipersWinUI3.Helpers
 		public void AddTimeCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView);
+			caliper.CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			FinalizeCaliper(caliper, settings);
 		}
 
 		public void AddAmplitudeCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView);
+			caliper.CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
 			FinalizeCaliper(caliper, settings);
 		}
 
 		public void AddAngleCaliper(Settings settings)
 		{
 			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView);
+			// caliper.CaliperLabel.Alignment = settings.AngleCaliperLabelAlignment; ???
 			FinalizeCaliper(caliper, settings);
 		}
 

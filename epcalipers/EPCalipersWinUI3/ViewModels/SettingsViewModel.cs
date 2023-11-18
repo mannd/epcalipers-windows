@@ -19,6 +19,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public SettingsViewModel() {
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
+			AmplitudeCaliperLabelAlignment =(int)_model.AmplitudeCaliperLabelAlignment;
 			UnselectedCaliperColor = _model.UnselectedCaliperColor;
 			SelectedCaliperColor = _model.SelectedCaliperColor;
 			BarThickness = _model.BarThickness;
