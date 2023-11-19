@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml.Controls;
@@ -19,11 +20,20 @@ namespace EPCalipersWinUI3.Calipers
 		public Bar RightAngleBar { get; set; }
 		public Bar ApexBar { get; set; } // a pseudobar
 
+		private ISettings _settings;
 
 		public AngleCaliper(AngleCaliperPosition position, 
 			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
 		{
 			_fakeUI = fakeUI;
+			if (_fakeUI)
+			{
+				_settings = new FakeSettings();
+			}
+			else
+			{
+				_settings = new Settings();
+			}
 			Bars = InitBars(position);
 			InitCaliperLabel();
 			CaliperType = CaliperType.Angle;

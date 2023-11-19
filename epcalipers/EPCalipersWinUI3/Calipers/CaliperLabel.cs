@@ -43,7 +43,6 @@ namespace EPCalipersWinUI3.Calipers
 	{
 		protected readonly int _padding = 10;
 
-		private string _text;
 		public Caliper Caliper { get; set; }
 		public ICaliperView CaliperView { get; set; }
 		public string Text
@@ -62,6 +61,7 @@ namespace EPCalipersWinUI3.Calipers
 
 			}
 		}
+		private string _text;
 		protected CaliperLabelPosition Position { get; set; }
 		public CaliperLabelAlignment Alignment { get; set; }
 		public bool AutoPosition { get; set; }

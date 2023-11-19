@@ -113,7 +113,7 @@
                     VerticalAlignment="Center" Margin="0,0,20,0"
                     Value="{x:Bind ViewModel.BarThickness, Mode=TwoWay}" TickFrequency="1" TickPlacement="Outside" />
                 <TextBlock VerticalAlignment="Center">Caliper line width=</TextBlock>
-                    <TextBlock Text="{x:Bind thicknessSlider.Value}" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind thicknessSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

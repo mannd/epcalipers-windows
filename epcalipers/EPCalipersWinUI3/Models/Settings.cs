@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Contracts;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Windows.UI.Core;
 
 namespace EPCalipersWinUI3.Models
 {
-	public class Settings
+	public class Settings: ISettings
 	{
 		private Windows.Storage.ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
@@ -105,5 +106,15 @@ namespace EPCalipersWinUI3.Models
 			var b = Convert.ToByte(colorHex.Substring(7, 2), 16);
 			return Color.FromArgb(a, r, g, b);
 		}
+	}
+
+	public class FakeSettings : ISettings
+	{
+		public double BarThickness { get; set; } = 2.0;
+		public bool AutoAlignLabel { get; set; } = false;
+		public CaliperLabelAlignment TimeCaliperLabelAlignment {  get; set; } = CaliperLabelAlignment.Left;
+		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set;} = CaliperLabelAlignment.Left;
+		public Color UnselectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 	}
 }

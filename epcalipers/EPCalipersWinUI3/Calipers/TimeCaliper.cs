@@ -22,6 +22,8 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
+		private ISettings _settings;
+
 		public override double Value => RightBar.Position - LeftBar.Position; 
 
 		public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
@@ -31,6 +33,14 @@ namespace EPCalipersWinUI3.Calipers
 			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
+			if (_fakeUI)
+			{
+				_settings = new FakeSettings();
+			}
+			else
+			{
+				_settings = new Settings();
+			}
             Bars = InitBars(position);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();
@@ -45,11 +55,10 @@ namespace EPCalipersWinUI3.Calipers
             return  new[] { LeftBar, RightBar, CrossBar };
 		}
 
-		// TODO: keep one copy of settings, apply to amplitude caliper too.
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
-			var alignment = new Settings().TimeCaliperLabelAlignment;
+			var alignment = _settings.TimeCaliperLabelAlignment;
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, false, _fakeUI);
 		}
 
@@ -98,12 +107,18 @@ namespace EPCalipersWinUI3.Calipers
 			CaliperLabel.SetPosition();
 		}
 
-		public override void ApplySettings(Settings settings)
+		public override void ApplySettings(ISettings settings)
 		{
 			base.ApplySettings(settings);
 			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			CaliperLabel.SetPosition();
 		}
 
+		//public override void ApplySettings()
+		//{
+		//	base.ApplySettings(_settings);
+		//	CaliperLabel.Alignment = _settings.TimeCaliperLabelAlignment;
+		//	CaliperLabel.SetPosition();
+		//}
 	}
 }

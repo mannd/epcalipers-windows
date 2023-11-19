@@ -132,7 +132,7 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-        public virtual void ApplySettings(Settings settings)
+        public virtual void ApplySettings(ISettings settings)
         {
             BarThickness = settings.BarThickness;
             SelectedColor = settings.SelectedCaliperColor;
@@ -140,6 +140,7 @@ namespace EPCalipersWinUI3.Calipers
             {
                 Color = SelectedColor;
                 // TODO: setting to change all unselected colors too?
+                // If selected, all unselected colors are changed.
             }
 		}
 

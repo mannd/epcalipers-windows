@@ -21,10 +21,20 @@ namespace EPCalipersWinUI3.Calipers
 		public double TopMostBarPosition => Math.Min(TopBar.Position, BottomBar.Position);
 		public double BottomMostBarPosition => Math.Max(TopBar.Position, BottomBar.Position);
 
+		private ISettings _settings;
+
 		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
 			bool fakeUI = false) : base(caliperView)
 		{
 			_fakeUI = fakeUI;
+			if (_fakeUI)
+			{
+				_settings = new FakeSettings();
+			}
+			else
+			{
+				_settings = new Settings();
+			}
 			Bars = InitBars(position);
 			InitCaliperLabel();
 			CaliperType = CaliperType.Amplitude;
@@ -42,7 +52,7 @@ namespace EPCalipersWinUI3.Calipers
 		private void InitCaliperLabel()
 		{
 			var text = $"{Value} points";
-			var alignment = new Settings().AmplitudeCaliperLabelAlignment;
+			var alignment = _settings.AmplitudeCaliperLabelAlignment;
 			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
 				alignment, false, base._fakeUI);
 		}
@@ -91,7 +101,7 @@ namespace EPCalipersWinUI3.Calipers
             return null;
 		}
 
-		public override void ApplySettings(Settings settings)
+		public override void ApplySettings(ISettings settings)
 		{
 			base.ApplySettings(settings);
 			CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
