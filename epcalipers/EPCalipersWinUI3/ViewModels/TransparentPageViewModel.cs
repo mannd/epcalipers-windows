@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class TransparentPageViewModel: ObservableObject
 	{
 		private readonly CaliperHelper _caliperHelper;
-		private Settings _settings;
+		private ISettings _settings;
 
 		public TransparentPageViewModel(ICaliperView caliperView)
 		{

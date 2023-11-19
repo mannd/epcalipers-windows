@@ -10,6 +10,7 @@ using Windows.Foundation;
 using Windows.UI;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
+using Windows.Media.Miracast;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -171,7 +172,7 @@ namespace EPCalipersWinUI3.Calipers
 
         //Standard placement of new calipers
 
-        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView) {
+        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView, ISettings settings) {
             CaliperPosition initialPosition;
             AngleCaliperPosition initialAnglePosition;
             Caliper caliper = null;
@@ -179,19 +180,29 @@ namespace EPCalipersWinUI3.Calipers
             {
                 case CaliperType.Time:
                     initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
-                    caliper = new TimeCaliper(initialPosition, caliperView);
+                    caliper = new TimeCaliper(initialPosition, caliperView, settings);
                     break;
                 case CaliperType.Amplitude:
                     initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
-                    caliper = new AmplitudeCaliper(initialPosition, caliperView);
+                    caliper = new AmplitudeCaliper(initialPosition, caliperView, settings);
                     break;
                 case CaliperType.Angle:
                     initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-                    caliper = new AngleCaliper(initialAnglePosition, caliperView);
+                    caliper = new AngleCaliper(initialAnglePosition, caliperView, settings);
                     break;
             }
+            ApplySettings(caliper, settings);
             return caliper;
         }
+
+		private static void ApplySettings(Caliper c, ISettings settings)
+		{
+			if (c == null) return;
+			c.UnselectedColor = settings.UnselectedCaliperColor;
+			c.SelectedColor = settings.SelectedCaliperColor;
+			c.BarThickness = settings.BarThickness;
+			c.IsSelected = false;
+		}
 
 		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
 		{

@@ -30,17 +30,10 @@ namespace EPCalipersWinUI3.Calipers
 		public double RightMostBarPosition => Math.Max(RightBar.Position, LeftBar.Position);
 
         public TimeCaliper(CaliperPosition position, 
-			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
+			ICaliperView caliperView, ISettings settings, bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
-			if (_fakeUI)
-			{
-				_settings = new FakeSettings();
-			}
-			else
-			{
-				_settings = new Settings();
-			}
+			_settings = settings;
             Bars = InitBars(position);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();

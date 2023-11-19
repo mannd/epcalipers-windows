@@ -114,7 +114,7 @@ namespace EPCalipersWinUI3.Calipers
 			}
 		}
 
-		public void RefreshCalipers(Settings settings)
+		public void RefreshCalipers(ISettings settings)
 		{
 			foreach (var caliper in _calipers)
 			{

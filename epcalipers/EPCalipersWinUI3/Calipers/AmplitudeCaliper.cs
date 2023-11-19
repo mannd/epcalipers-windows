@@ -1,11 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
@@ -23,18 +18,11 @@ namespace EPCalipersWinUI3.Calipers
 
 		private ISettings _settings;
 
-		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView,
+		public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView, ISettings settings,
 			bool fakeUI = false) : base(caliperView)
 		{
 			_fakeUI = fakeUI;
-			if (_fakeUI)
-			{
-				_settings = new FakeSettings();
-			}
-			else
-			{
-				_settings = new Settings();
-			}
+			_settings = settings;
 			Bars = InitBars(position);
 			InitCaliperLabel();
 			CaliperType = CaliperType.Amplitude;

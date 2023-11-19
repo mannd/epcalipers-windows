@@ -1,14 +1,7 @@
 ﻿using EPCalipersWinUI3.Contracts;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Calipers
@@ -16,7 +9,6 @@ namespace EPCalipersWinUI3.Calipers
 	public class TimeCaliperLabel : CaliperLabel
 	{
 		private CaliperLabelPosition _position;
-		private Size _size;
 		private ICaliperView _view;
 
 		new TimeCaliper Caliper { get; set; }
@@ -24,8 +16,9 @@ namespace EPCalipersWinUI3.Calipers
 		public Size Size
 		{
 			get => _size;
-			set => _size = value;
+			set => _size = value;  // Set only used for testing.
 		}
+		private Size _size;
 
 		public TimeCaliperLabel(TimeCaliper caliper, 
 			ICaliperView caliperView, 

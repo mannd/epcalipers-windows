@@ -26,38 +26,25 @@ namespace EPCalipersWinUI3.Helpers
 			_caliperCollection = caliperCollection;
 		}
 
-		public void AddTimeCaliper(Settings settings)
+		public void AddTimeCaliper(ISettings settings)
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView);
-			caliper.CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
-			FinalizeCaliper(caliper, settings);
+			var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView, settings);
+			_caliperCollection.Add(caliper);
 		}
 
-		public void AddAmplitudeCaliper(Settings settings)
+		public void AddAmplitudeCaliper(ISettings settings)
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView);
-			caliper.CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
-			FinalizeCaliper(caliper, settings);
+			var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView, settings);
+			_caliperCollection.Add(caliper);
 		}
 
-		public void AddAngleCaliper(Settings settings)
+		public void AddAngleCaliper(ISettings settings)
 		{
-			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView);
-			// caliper.CaliperLabel.Alignment = settings.AngleCaliperLabelAlignment; ???
-			FinalizeCaliper(caliper, settings);
+			var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView, settings);
+			_caliperCollection.Add(caliper);
 		}
 
-		private void FinalizeCaliper(Caliper c, Settings settings)
-		{
-			if (c == null) return;
-			c.UnselectedColor = settings.UnselectedCaliperColor;
-			c.SelectedColor = settings.SelectedCaliperColor;
-			c.BarThickness = settings.BarThickness;
-			c.IsSelected = false;
-			_caliperCollection.Add(c);
-		}
-
-		public void RefreshCalipers(Settings settings)
+		public void RefreshCalipers(ISettings settings)
 		{
 			Debug.Print("Refreshing calipers...");
 			_caliperCollection.RefreshCalipers(settings);

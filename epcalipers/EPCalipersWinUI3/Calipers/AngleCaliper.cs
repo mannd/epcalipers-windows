@@ -23,17 +23,10 @@ namespace EPCalipersWinUI3.Calipers
 		private ISettings _settings;
 
 		public AngleCaliper(AngleCaliperPosition position, 
-			ICaliperView caliperView, bool fakeUI = false) : base(caliperView)
+			ICaliperView caliperView, ISettings settings, bool fakeUI = false) : base(caliperView)
 		{
 			_fakeUI = fakeUI;
-			if (_fakeUI)
-			{
-				_settings = new FakeSettings();
-			}
-			else
-			{
-				_settings = new Settings();
-			}
+			_settings = settings;
 			Bars = InitBars(position);
 			InitCaliperLabel();
 			CaliperType = CaliperType.Angle;
