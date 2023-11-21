@@ -9,8 +9,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20"
+                    Height="600" Width="400">
             <!-- Content body -->
             <TextBlock Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
             <RadioButtons x:Name="CalibrationRadioButtons" >
@@ -20,10 +20,9 @@
                 <x:String>10 mm</x:String>
                 <x:String>Custom</x:String>
             </RadioButtons>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Custom interval" Margin="10"/>
-                <TextBox/>
+            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                <TextBlock Text="Custom interval (include units)" Margin="10"/>
+                <TextBox VerticalAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-    </Grid>
 </Page>

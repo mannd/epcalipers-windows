@@ -334,18 +334,28 @@ namespace EPCalipersWinUI3.Views
 					await msgDialog.ShowAsync();
 					break;
 				default:
-					ContentDialog dialog = new ContentDialog();
+
+					//ContentDialog dialog = new ContentDialog();
 
 					// XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-					dialog.XamlRoot = this.XamlRoot;
-					dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-					dialog.Title = "Calibrate this caliper?";
-					dialog.PrimaryButtonText = "Calibrate";
-					dialog.CloseButtonText = "Cancel";
-					dialog.DefaultButton = ContentDialogButton.Primary;
-					dialog.Content = new CalibrationDialog();
+					//dialog.XamlRoot = this.XamlRoot;
+					//dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+					//dialog.Title = "Calibrate this caliper?";
+					//dialog.PrimaryButtonText = "Calibrate";
+					//dialog.CloseButtonText = "Cancel";
+					//dialog.DefaultButton = ContentDialogButton.Primary;
+					//dialog.Content = new CalibrationDialog();
+					var window = new WindowEx();
+					window.Width = 400;
+					window.Height = 600;
+					window.SetIsAlwaysOnTop(true);
+					window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+					window.WindowContent = new CalibrationDialog();
+					window.Title = "Calibration";
+					//window.SetIcon("/Assets/EpCalipersLargeTemplate1.ico");
+					window.Show();
 
-					var result = await dialog.ShowAsync();
+					//var result = await dialog.ShowAsync();
 					break;
 			}
 		}

@@ -36,9 +36,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Assets\Fonts\Segoe Fluent Icons.ttf" />
+    <Content Remove="Assets\icons8-check-mark-48.png" />
+    <Content Remove="Assets\Images\iconfinder-document03-1622833_121957.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\calipers.png" />
+    <None Remove="Assets\EpCalipersLargeTemplate1.ico" />
+    <None Remove="Assets\icons8-check-mark-48.png" />
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
     <None Remove="Views\AboutDialog.xaml" />
@@ -99,6 +103,12 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\calipers.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\EpCalipersLargeTemplate1.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\iconfinder-document03-1622833_121957.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\TimeCaliper.scale-200.png">
