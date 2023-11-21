@@ -109,6 +109,5 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();
-
 	}
 }

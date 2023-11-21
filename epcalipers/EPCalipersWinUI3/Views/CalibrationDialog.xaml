@@ -24,5 +24,9 @@
                 <TextBlock Text="Custom interval (include units)" Margin="10"/>
                 <TextBox VerticalAlignment="Center"/>
             </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button>Set Calibration</Button>
+            <Button>Cancel</Button>
+        </StackPanel>
         </StackPanel>
 </Page>

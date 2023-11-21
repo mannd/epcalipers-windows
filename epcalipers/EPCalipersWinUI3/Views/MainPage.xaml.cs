@@ -28,17 +28,20 @@ using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using WinUIEx;
 using Microsoft.UI.Windowing;
 using TemplateTest2.Helpers;
+using EPCalipersWinUI3.ViewModels;
 
 namespace EPCalipersWinUI3.Views
 {
     public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
+		private WindowEx CalibrationDialog { get; set; }
 
 		public MainPage()
 		{
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom, CaliperView);
+			Unloaded += OnUnLoaded;
 
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
 			// so should be the default.
@@ -77,6 +80,17 @@ namespace EPCalipersWinUI3.Views
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
 		}
+
+		private void OnUnLoaded(object sender, RoutedEventArgs e)
+		{
+			Debug.Print("Page unloaded.");
+			if (CalibrationDialog != null)
+			{
+				CalibrationDialog.Close();
+				CalibrationDialog = null;
+			}
+		}
+
 
 		#region touches
 		private bool pointerDown = false;
@@ -345,15 +359,18 @@ namespace EPCalipersWinUI3.Views
 					//dialog.CloseButtonText = "Cancel";
 					//dialog.DefaultButton = ContentDialogButton.Primary;
 					//dialog.Content = new CalibrationDialog();
-					var window = new WindowEx();
-					window.Width = 400;
-					window.Height = 600;
-					window.SetIsAlwaysOnTop(true);
-					window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-					window.WindowContent = new CalibrationDialog();
-					window.Title = "Calibration";
+					if (CalibrationDialog == null)
+					{
+						CalibrationDialog = new WindowEx();
+						CalibrationDialog.Width = 400;
+						CalibrationDialog.Height = 600;
+						CalibrationDialog.SetIsAlwaysOnTop(true);
+						CalibrationDialog.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+						CalibrationDialog.WindowContent = new CalibrationDialog();
+						CalibrationDialog.Title = "Calibration";
+					}
 					//window.SetIcon("/Assets/EpCalipersLargeTemplate1.ico");
-					window.Show();
+					CalibrationDialog.Show();
 
 					//var result = await dialog.ShowAsync();
 					break;

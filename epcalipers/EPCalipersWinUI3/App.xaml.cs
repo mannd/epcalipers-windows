@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -49,6 +50,7 @@ namespace EPCalipersWinUI3
 		{
 			_window = new MainWindow();
 			_window.Activate();
+       
 #if DEBUG
 			if (System.Diagnostics.Debugger.IsAttached)
 			{
