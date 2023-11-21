@@ -64,7 +64,7 @@ namespace EPCalipersWinUI3.Calipers
 		private string _text;
 		protected CaliperLabelPosition Position { get; set; }
 		public CaliperLabelAlignment Alignment { get; set; }
-		public bool AutoPosition { get; set; }
+		public bool AutoAlignLabel { get; set; }
 		public TextBlock TextBlock { get; set; }
 
 		public bool IsSelected
@@ -107,7 +107,7 @@ namespace EPCalipersWinUI3.Calipers
 			Caliper = caliper;
 			Text = text;
 			Alignment = alignment;
-			AutoPosition = autoPosition;
+			AutoAlignLabel = autoPosition;
 			TextBlock = fakeUI ? null : new TextBlock() { Text = text };
 		}
 

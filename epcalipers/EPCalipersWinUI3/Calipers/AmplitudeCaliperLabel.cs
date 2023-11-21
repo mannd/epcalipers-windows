@@ -13,33 +13,51 @@ namespace EPCalipersWinUI3.Calipers
 	public class AmplitudeCaliperLabel: CaliperLabel
 	{
 		private CaliperLabelPosition _position;
+		private ICaliperView _view;
+
+		public Size Size
+		{
+			get => _size;
+			set => _size = value;  // Set only used for testing.
+		}
 		private Size _size;
+
 		new AmplitudeCaliper Caliper { get; set; }
 
 		public AmplitudeCaliperLabel(AmplitudeCaliper caliper, 
 			ICaliperView caliperView, 
 			string text, 
 			CaliperLabelAlignment alignment, 
-			bool autoPosition, 
-			bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
+			bool autoAlignLabel, 
+			bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoAlignLabel, fakeUI)
 		{
 			Caliper = caliper;
-			_size = ShapeMeasure(TextBlock);
+			_view = caliperView;
+			if (!fakeUI)
+			{
+				_size = ShapeMeasure(TextBlock);  // Estimate TextBlock size.
+			}
+			else
+			{
+				_size = new Size();
+			}
+			AutoAlignLabel = autoAlignLabel;
 			_position = new CaliperLabelPosition();
 			SetPosition();
 		}
 		public override void SetPosition()
 		{
 			if (TextBlock == null) return;
-			GetPosition();
+			var alignment = AutoAlign(Alignment, AutoAlignLabel);
+			GetPosition(alignment);
 			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
 		}
 
-		private void GetPosition()
+		private void GetPosition(CaliperLabelAlignment alignment)
 		{
 			if (TextBlock == null) return;
 			_size.Width = TextBlock.ActualWidth;
-			switch (Alignment)
+			switch (alignment)
 			{
 				case CaliperLabelAlignment.Top:
 					_position.Left = (int)(Caliper.CrossBar.Position - _size.Width / 2);
@@ -58,6 +76,67 @@ namespace EPCalipersWinUI3.Calipers
 					_position.Top = (int)(Caliper.CrossBar.MidPoint.Y - _size.Height / 2);
 					break;
 			}
+		}
+
+		public CaliperLabelAlignment AutoAlign(CaliperLabelAlignment alignment, bool autoAlign)
+		{
+			if (!autoAlign)  { return alignment; }
+			if (TextBlock != null)
+			{
+				_size.Width = TextBlock.ActualWidth;
+				_size.Height = TextBlock.ActualHeight;
+			}
+			int distance;
+			switch (alignment)
+			{
+				case CaliperLabelAlignment.Top:
+					distance = (int)(Caliper.TopMostBarPosition - _size.Height - _padding);
+					if (distance < 0)
+					{
+						return CaliperLabelAlignment.Bottom;
+					}
+					break;
+				case CaliperLabelAlignment.Bottom:
+					distance = (int)(Caliper.BottomMostBarPosition + _size.Height + _padding);
+					if (distance > _view.Bounds.Height)
+					{
+						return CaliperLabelAlignment.Top;
+					}
+					break;
+				case CaliperLabelAlignment.Left:
+					distance = (int)(Math.Abs(Caliper.Value) - _size.Height - _padding);
+					if (distance > 0)
+					{
+						distance = (int)(Caliper.CrossBar.Position - _size.Width - _padding);
+						if (distance < 0)
+						{
+							return CaliperLabelAlignment.Right;
+						}
+					}
+					else
+					{
+						return AutoAlign(CaliperLabelAlignment.Top, autoAlign);
+					}
+					break;
+				case CaliperLabelAlignment.Right:
+					distance = (int)(Math.Abs(Caliper.Value) - _size.Height - _padding);
+					if (distance > 0)
+					{
+						distance = (int)(Caliper.CrossBar.Position + _size.Width + _padding);
+						if (distance > _view.Bounds.Height)
+						{
+							return CaliperLabelAlignment.Left;
+						}
+					}
+					else
+					{
+						return AutoAlign(CaliperLabelAlignment.Top, autoAlign);
+					}
+					break;
+				default:
+					return alignment;
+			}
+			return alignment;
 		}
 	}
 }

@@ -11,6 +11,7 @@ using Windows.UI;
 using Xunit;
 using EPCalipersWinUI3;
 using EPCalipersWinUI3.Views;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -19,20 +20,23 @@ namespace EPCalipersWinUi3Tests.Tests
 		private TimeCaliper GetTimeCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
-			return new TimeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, true);
+			var stubSettings = new FakeSettings();
+			return new TimeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, stubSettings, true);
 		}
 		private AmplitudeCaliper GetAmplitudeCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
-			return new AmplitudeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, true);
+			var stubSettings = new FakeSettings();
+			return new AmplitudeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, stubSettings, true);
 		}
 		private AngleCaliper GetAngleCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
+			var stubSettings = new FakeSettings();
 			double firstAngle = 0.5 * Math.PI;
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliper(new AngleCaliperPosition(new Windows.Foundation.Point(50, 50),
-				firstAngle, secondAngle), stubCaliperView, true);
+				firstAngle, secondAngle), stubCaliperView, stubSettings, true);
 		}
 
 		[Fact]

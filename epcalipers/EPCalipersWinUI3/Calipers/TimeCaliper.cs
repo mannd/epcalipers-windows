@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
-		private ISettings _settings;
+		private readonly ISettings _settings;
 
 		public override double Value => RightBar.Position - LeftBar.Position; 
 
@@ -52,7 +52,8 @@ namespace EPCalipersWinUI3.Calipers
 		{
 			var text = $"{Value} points";
 			var alignment = _settings.TimeCaliperLabelAlignment;
-			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, false, _fakeUI);
+			var autoAlignLabel = _settings.AutoAlignLabel;
+			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, _fakeUI);
 		}
 
 		public override void ChangeBounds()
@@ -103,15 +104,9 @@ namespace EPCalipersWinUI3.Calipers
 		public override void ApplySettings(ISettings settings)
 		{
 			base.ApplySettings(settings);
+			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			CaliperLabel.SetPosition();
 		}
-
-		//public override void ApplySettings()
-		//{
-		//	base.ApplySettings(_settings);
-		//	CaliperLabel.Alignment = _settings.TimeCaliperLabelAlignment;
-		//	CaliperLabel.SetPosition();
-		//}
 	}
 }

@@ -18,6 +18,7 @@ namespace EPCalipersWinUI3.ViewModels
 		private Settings _model = new Settings();
 
 		public SettingsViewModel() {
+			AutoAlignLabel = _model.AutoAlignLabel;
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
 			AmplitudeCaliperLabelAlignment =(int)_model.AmplitudeCaliperLabelAlignment;
 			UnselectedCaliperColor = _model.UnselectedCaliperColor;
@@ -45,13 +46,16 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(BarThickness):
 					_model.BarThickness = BarThickness;
 					break;
+				case nameof(AutoAlignLabel):
+					_model.AutoAlignLabel = AutoAlignLabel;
+					break;
 				default:
 					break;
 			}
 		}
 
 		[ObservableProperty]
-		private bool autoPositionLabel;
+		private bool autoAlignLabel;
 
 		[ObservableProperty]
 		private int timeCaliperLabelAlignment;

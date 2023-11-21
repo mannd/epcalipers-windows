@@ -36,7 +36,7 @@ namespace EPCalipersWinUI3.Models
 
 		public bool AutoAlignLabel
 		{
-			get => (bool)(_localSettings.Values["garbage"] ?? false);
+			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? false);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
 
