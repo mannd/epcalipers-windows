@@ -52,21 +52,18 @@
     <Grid x:Name="ContentArea" Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"  >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Settings" Style="{StaticResource TitleLargeTextBlockStyle }" />
-            <Button Grid.Column="2" x:Uid="BackButton" Click="BackButton_Click" HorizontalAlignment="Right"/>
-        </Grid>
-
-
-        <ScrollViewer Grid.Row="1" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+        <Button Grid.Row="0"  Click="BackButton_Click" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon>Back</SymbolIcon>
+                <TextBlock x:Uid="BackButton"></TextBlock> 
+            </StackPanel>
+        </Button>
+        <TextBlock Grid.Row="1" Text="Settings" Style="{StaticResource TitleLargeTextBlockStyle }" />
+        <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
                 <CheckBox x:Uid="Autoposition" IsChecked="{x:Bind ViewModel.AutoAlignLabel, Mode=TwoWay}" />
                 <RadioButtons x:Name="TimeLabelRadioButtons" 

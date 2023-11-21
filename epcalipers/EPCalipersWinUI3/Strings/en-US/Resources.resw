@@ -153,7 +153,7 @@
   <data name="Autoposition.Content" xml:space="preserve">
     <value>Autoposition caliper labels</value>
   </data>
-  <data name="BackButton.Content" xml:space="preserve">
+  <data name="BackButton.Text" xml:space="preserve">
     <value>Back</value>
   </data>
   <data name="ButtonDone.Content" xml:space="preserve">
