@@ -166,6 +166,11 @@ namespace EPCalipersWinUI3
 			_caliperHelper.RefreshCalipers(_settings);
 		}
 
+		public CaliperType GetSelectedCaliperType()
+		{
+			return _caliperHelper.GetSelectedCaliperType();
+		}
+
 		#region zoom
 		// Zoom methods
 		// Note zoom factors used in Mac OS X version

@@ -244,7 +244,7 @@
                 <FontIcon Glyph="&#xE73E;" />
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="SetCalibrationMenuItem">
+                        <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" Click="SetCalibration_Click">
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem">
                         </MenuFlyoutItem>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EPCalipersWinUI3.Views.CalibrationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EPCalipersWinUI3.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <!-- Content body -->
+            <TextBlock Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
+            <RadioButtons x:Name="CalibrationRadioButtons" >
+                <x:String>1000 msec</x:String>
+                <x:String>1.0 sec</x:String>
+                <x:String>1.0 mV</x:String>
+                <x:String>10 mm</x:String>
+                <x:String>Custom</x:String>
+            </RadioButtons>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Custom interval" Margin="10"/>
+                <TextBox/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

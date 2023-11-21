@@ -135,6 +135,12 @@
   <data name="AngleCaliperMenuItem.Text" xml:space="preserve">
     <value>Angle caliper</value>
   </data>
+  <data name="AngleCaliperSelectedMessage" xml:space="preserve">
+    <value>Angle calipers do not require calibration.</value>
+  </data>
+  <data name="AngleCaliperSelectedTitle" xml:space="preserve">
+    <value>Angle caliper selected</value>
+  </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>EP Calipers 3</value>
   </data>
@@ -218,6 +224,12 @@
   </data>
   <data name="NextPageMenuItem.Text" xml:space="preserve">
     <value>Next PDF page</value>
+  </data>
+  <data name="NoCaliperSelectedMessage" xml:space="preserve">
+    <value>Select (by single click or tap) a time or an amplitude caliper and set it to your calibration interval before calibrating.</value>
+  </data>
+  <data name="NoCaliperSelectedTitle" xml:space="preserve">
+    <value>No time or amplitude caliper selected</value>
   </data>
   <data name="OpenBarButton.Label" xml:space="preserve">
     <value>Open</value>

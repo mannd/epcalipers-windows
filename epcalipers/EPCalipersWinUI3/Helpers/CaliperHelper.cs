@@ -95,6 +95,11 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			_caliperCollection.ChangeBounds();
 		}
+
+		public CaliperType GetSelectedCaliperType()
+		{
+			return _caliperCollection.GetSelectedCaliperType();
+		}
 	}
 }
 

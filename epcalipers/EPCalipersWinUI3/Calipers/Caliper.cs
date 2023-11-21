@@ -18,7 +18,8 @@ namespace EPCalipersWinUI3.Calipers
     {
         Time,
         Amplitude,
-        Angle
+        Angle,
+        None
     }
     public readonly record struct Bounds(double Width, double Height);
 

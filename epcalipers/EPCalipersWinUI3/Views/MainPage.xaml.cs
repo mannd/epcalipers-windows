@@ -316,6 +316,39 @@ namespace EPCalipersWinUI3.Views
 			AppHelper.AppTitleBarText = ViewModel.TitleBarName;
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
+
+		private async void SetCalibration_Click(object sender, RoutedEventArgs e)
+		{
+			switch (ViewModel.GetSelectedCaliperType())
+			{
+				case CaliperType.None:
+					var msgDialog = MessageDialog.Create("NoCaliperSelectedTitle".GetLocalized(),
+						"NoCaliperSelectedMessage".GetLocalized());
+					msgDialog.XamlRoot = XamlRoot;
+					await msgDialog.ShowAsync();
+					break;
+				case CaliperType.Angle:
+					msgDialog = MessageDialog.Create("AngleCaliperSelectedTitle".GetLocalized(),
+						"AngleCaliperSelectedMessage".GetLocalized());
+					msgDialog.XamlRoot = XamlRoot;
+					await msgDialog.ShowAsync();
+					break;
+				default:
+					ContentDialog dialog = new ContentDialog();
+
+					// XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+					dialog.XamlRoot = this.XamlRoot;
+					dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+					dialog.Title = "Calibrate this caliper?";
+					dialog.PrimaryButtonText = "Calibrate";
+					dialog.CloseButtonText = "Cancel";
+					dialog.DefaultButton = ContentDialogButton.Primary;
+					dialog.Content = new CalibrationDialog();
+
+					var result = await dialog.ShowAsync();
+					break;
+			}
+		}
 		#endregion
 	}
 }

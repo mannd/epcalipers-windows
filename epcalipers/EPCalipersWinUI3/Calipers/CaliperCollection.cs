@@ -121,5 +121,19 @@ namespace EPCalipersWinUI3.Calipers
 				caliper.ApplySettings(settings);
 			}
 		}
+
+		public CaliperType GetSelectedCaliperType()
+		{
+			foreach (var caliper in _calipers)
+			{
+				if (caliper.IsSelected)
+				{
+					return caliper.CaliperType;
+				}
+			}
+			return CaliperType.None;
+		}
+
+
 	}
 }
