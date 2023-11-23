@@ -11,6 +11,7 @@ using Windows.UI;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using Windows.Media.Miracast;
+using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Calipers
 {
@@ -227,5 +228,10 @@ namespace EPCalipersWinUI3.Calipers
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
 		}
+
+        public virtual void ClearCalibration()
+        {
+            Debug.Print("clearing calibration");
+        }
     }
 }

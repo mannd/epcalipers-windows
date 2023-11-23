@@ -222,6 +222,15 @@
   <data name="MeasureQTcMenuItem.Text" xml:space="preserve">
     <value>Measure QTc</value>
   </data>
+  <data name="mm" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="msec" xml:space="preserve">
+    <value>msec</value>
+  </data>
+  <data name="mV" xml:space="preserve">
+    <value>mV</value>
+  </data>
   <data name="NextPageMenuItem.Text" xml:space="preserve">
     <value>Next PDF page</value>
   </data>
@@ -262,6 +271,9 @@
   <data name="Resources" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Resources1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Rotate01LMenuItem.Text" xml:space="preserve">
     <value>Rotate 0.1° L</value>
   </data>
@@ -282,6 +294,9 @@
   </data>
   <data name="SaveMenuItem.Text" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="sec" xml:space="preserve">
+    <value>sec</value>
   </data>
   <data name="SetCalibrationMenuItem.Text" xml:space="preserve">
     <value>Set calibration</value>

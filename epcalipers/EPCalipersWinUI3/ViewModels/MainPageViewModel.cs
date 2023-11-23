@@ -99,6 +99,7 @@ namespace EPCalipersWinUI3
 			_caliperHelper.ReleaseGrabbedCaliper();
 		}
 
+
 		public async Task OpenImageFile(StorageFile file)
 		{
 			if (file != null)
@@ -246,6 +247,12 @@ namespace EPCalipersWinUI3
 				MainImageSource = previousPage;
 				UpdatePageNumber();
 			}
+		}
+
+		[RelayCommand]
+		public void ClearCalibration()
+		{
+			_caliperHelper.ClearCalibration();
 		}
 
 		public async Task GotoPdfPage(int pageNumber) 

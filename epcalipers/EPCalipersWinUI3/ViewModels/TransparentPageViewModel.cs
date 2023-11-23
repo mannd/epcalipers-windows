@@ -109,5 +109,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();
+
+		[RelayCommand]
+		private void ClearCalibration()
+		{
+			_caliperHelper.ClearCalibration();
+		}
 	}
 }

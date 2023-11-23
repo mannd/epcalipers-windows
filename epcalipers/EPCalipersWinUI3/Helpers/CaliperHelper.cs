@@ -100,6 +100,11 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			return _caliperCollection.GetSelectedCaliperType();
 		}
+
+		public void ClearCalibration()
+		{
+			_caliperCollection.ClearCalibration();
+		}
 	}
 }
 

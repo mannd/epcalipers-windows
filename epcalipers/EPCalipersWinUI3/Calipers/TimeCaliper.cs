@@ -12,24 +12,27 @@ using Microsoft.UI.Input;
 using Windows.Foundation;
 using Windows.Gaming.XboxLive.Storage;
 using EPCalipersWinUI3.Models;
+using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Calipers
 {
 
     public sealed class TimeCaliper : Caliper
     {
-        public Bar LeftBar { get; set; }
+		#region properties
+		public Bar LeftBar { get; set; }
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
-
-		private readonly ISettings _settings;
-
 		public override double Value => RightBar.Position - LeftBar.Position; 
-
 		public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
 		public double RightMostBarPosition => Math.Max(RightBar.Position, LeftBar.Position);
-
-        public TimeCaliper(CaliperPosition position, 
+		public ICalibration Calibration { get; set; }
+		#endregion
+		#region fields
+		private readonly ISettings _settings;
+		#endregion
+		#region init
+		public TimeCaliper(CaliperPosition position, 
 			ICaliperView caliperView, ISettings settings, bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
@@ -37,6 +40,8 @@ namespace EPCalipersWinUI3.Calipers
             Bars = InitBars(position);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();
+			Calibration = new Calibration();
+
         }
 
 		private Bar[] InitBars(CaliperPosition position)
@@ -56,6 +61,15 @@ namespace EPCalipersWinUI3.Calipers
 			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, _fakeUI);
 		}
 
+		public override void ApplySettings(ISettings settings)
+		{
+			base.ApplySettings(settings);
+			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
+			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
+			CaliperLabel.SetPosition();
+		}
+		#endregion
+		#region movement
 		public override void ChangeBounds()
 		{
 			var bounds = CaliperView.Bounds;
@@ -100,13 +114,16 @@ namespace EPCalipersWinUI3.Calipers
 			CaliperLabel.Text = text;
 			CaliperLabel.SetPosition();
 		}
-
-		public override void ApplySettings(ISettings settings)
+		#endregion
+		#region calibration
+		public override void ClearCalibration()
 		{
-			base.ApplySettings(settings);
-			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
-			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
-			CaliperLabel.SetPosition();
+			Calibration = null;
 		}
+		public void SetCalibration(double calibrationValue, CalibrationUnit unit)
+		{
+			Calibration = new Calibration(Value, calibrationValue, unit);
+		}
+		#endregion
 	}
 }

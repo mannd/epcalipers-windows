@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Contracts
 {
-	public enum CalibrationUnits
+	public enum CalibrationUnit
 	{
 		Msec,
 		Sec,
 		Mv,
 		Mm,
-		Custom
+		Custom,
+		Undefined
 	}
 
 	public interface ICalibration
 	{
-		public CalibrationUnits Units { get; set; }
+		public CalibrationUnit Unit { get; set; }
 		public double Value { get; set; }
-		public double Multiplier { get; set; }
+		public void Clear();
 	}
 }

@@ -134,6 +134,14 @@ namespace EPCalipersWinUI3.Calipers
 			return CaliperType.None;
 		}
 
+		public void ClearCalibration()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.ClearCalibration();
+			}
+		}
+
 
 	}
 }
