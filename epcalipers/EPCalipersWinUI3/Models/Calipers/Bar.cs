@@ -19,7 +19,7 @@ using ABI.Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml;
 using Xunit;
 
-namespace EPCalipersWinUI3.Calipers
+namespace EPCalipersWinUI3.Models.Calipers
 {
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace EPCalipersWinUI3.Calipers
         public Bounds Bounds { get; set; }
 
         public Color SelectedColor { get; set; }
-        public Color UnselectedColor {  get; set; }
+        public Color UnselectedColor { get; set; }
 
         private Line _line;
 
@@ -231,7 +231,7 @@ namespace EPCalipersWinUI3.Calipers
             return adjustedEndPoint;
         }
 
-        public Point MidPoint => new Point(((X2 - X1) / 2.0) + X1, ((Y2 - Y1) / 2.0) + Y1);
+        public Point MidPoint => new Point((X2 - X1) / 2.0 + X1, (Y2 - Y1) / 2.0 + Y1);
 
         public bool IsSelected
         {
@@ -246,44 +246,46 @@ namespace EPCalipersWinUI3.Calipers
             }
 
 
-		}
-		private bool _isSelected;
-        public Color Color {
+        }
+        private bool _isSelected;
+        public Color Color
+        {
             set
             {
-                if (_line != null) {
+                if (_line != null)
+                {
                     var brush = new SolidColorBrush(value);
                     _line.Stroke = brush;
                 }
             }
-		}
-		public double Thickness
-		{
-			get => _thickness;
-			set
-			{
-				_thickness = value;
-				if (_line != null) _line.StrokeThickness = value;
-			}
-		}
-		private double _thickness;
+        }
+        public double Thickness
+        {
+            get => _thickness;
+            set
+            {
+                _thickness = value;
+                if (_line != null) _line.StrokeThickness = value;
+            }
+        }
+        private double _thickness;
 
-		public bool IsNear(Point p)
+        public bool IsNear(Point p)
         {
             switch (BarRole)
             {
                 case Role.Horizontal:
-					return p.Y > Y1 - _precision && p.Y < Y1 + _precision;
+                    return p.Y > Y1 - _precision && p.Y < Y1 + _precision;
                 case Role.Vertical:
-					return p.X > X1 - _precision && p.X < X1 + _precision;
-				case Role.HorizontalCrossBar:
+                    return p.X > X1 - _precision && p.X < X1 + _precision;
+                case Role.HorizontalCrossBar:
                 case Role.Apex:
-					return p.X > Math.Min(X1, X2)
+                    return p.X > Math.Min(X1, X2)
                             && p.X < Math.Max(X1, X2)
-                            && p.Y > Y1 - (3 * _precision) // give more space at top of apex (where label is)
+                            && p.Y > Y1 - 3 * _precision // give more space at top of apex (where label is)
                             && p.Y < Y1 + _precision;
-				case Role.VerticalCrossBar:
-					return p.Y > Math.Min(Y1, Y2)
+                case Role.VerticalCrossBar:
+                    return p.Y > Math.Min(Y1, Y2)
                             && p.Y < Math.Max(Y1, Y2)
                             && p.X > X1 - _precision
                             && p.X < X1 + _precision;
@@ -303,14 +305,14 @@ namespace EPCalipersWinUI3.Calipers
             view.Remove(_line);
         }
 
-		private Point EndPointForPosition(Point p, double angle, double length)
-		{
-			// Note Windows coordinates origin is top left of screen
-			double endX = Math.Cos(angle) * length + p.X;
-			double endY = Math.Sin(angle) * length + p.Y;
-			Point endPoint = new Point(endX, endY);
-			return endPoint;
-		}
+        private Point EndPointForPosition(Point p, double angle, double length)
+        {
+            // Note Windows coordinates origin is top left of screen
+            double endX = Math.Cos(angle) * length + p.X;
+            double endY = Math.Sin(angle) * length + p.Y;
+            Point endPoint = new Point(endX, endY);
+            return endPoint;
+        }
 
     }
 }

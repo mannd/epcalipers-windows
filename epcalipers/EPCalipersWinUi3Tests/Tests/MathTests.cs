@@ -5,15 +5,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models.Calipers;
 using Xunit;
 
 
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-	public class MathTests
+    public class MathTests
 	{
 		[Fact]
 		public void TestScaleRectangle()

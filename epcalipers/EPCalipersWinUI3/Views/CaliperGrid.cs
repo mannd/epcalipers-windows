@@ -1,6 +1,6 @@
-﻿using EPCalipersWinUI3.Calipers;
-using EPCalipersWinUI3.Contracts;
+﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;

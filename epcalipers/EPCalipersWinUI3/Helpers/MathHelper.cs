@@ -1,4 +1,4 @@
-﻿using EPCalipersWinUI3.Calipers;
+﻿using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Point = Windows.Foundation.Point;
 
 namespace EPCalipersWinUI3.Helpers
 {
-	public class MathHelper
+    public class MathHelper
 	{
 		// From https://stackoverflow.com/questions/33866535/how-to-scale-a-rotated-rectangle-to-always-fit-another-rectangle
 		public static double ScaleToFit(double width, double height, double angle)

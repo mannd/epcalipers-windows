@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Views;
@@ -18,10 +18,11 @@ using System.Threading.Tasks;
 using TemplateTest2.Helpers;
 using Windows.Foundation;
 using Windows.Storage;
+using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3
 {
-	public partial class MainPageViewModel : ObservableObject
+    public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper;
 		private CaliperHelper _caliperHelper;

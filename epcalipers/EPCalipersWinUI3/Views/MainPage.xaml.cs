@@ -23,12 +23,12 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using WinUIEx;
 using Microsoft.UI.Windowing;
 using TemplateTest2.Helpers;
 using EPCalipersWinUI3.ViewModels;
+using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3.Views
 {

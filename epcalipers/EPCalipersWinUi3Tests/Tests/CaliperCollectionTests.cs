@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using EPCalipersWinUI3.Calipers;
 using EPCalipersWinUI3.Views;
 using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-	public class CaliperCollectionTests
+    public class CaliperCollectionTests
 	{
 		[Fact]
 		public void TestFilteredCollection()

@@ -12,8 +12,9 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using Windows.Media.Miracast;
 using System.Diagnostics;
+using EPCalipersWinUI3.Models.Calipers;
 
-namespace EPCalipersWinUI3.Calipers
+namespace EPCalipersWinUI3.Models.Calipers
 {
     public enum CaliperType
     {
@@ -43,7 +44,7 @@ namespace EPCalipersWinUI3.Calipers
 
         protected ICaliperView CaliperView { get; init; }
 
-        protected Caliper(ICaliperView caliperView) 
+        protected Caliper(ICaliperView caliperView)
         {
             CaliperView = caliperView;
         }
@@ -51,22 +52,22 @@ namespace EPCalipersWinUI3.Calipers
         public CaliperType CaliperType { get; init; }
 
         protected Bar[] Bars { get; init; }
-		public CaliperLabel CaliperLabel { get; set; }
+        public CaliperLabel CaliperLabel { get; set; }
 
         public Color Color
         {
             get => _color;
-			set
-			{
-				_color = value;
-				foreach (var bar in Bars)
-				{
-					bar.Color = _color;
-				}
+            set
+            {
+                _color = value;
+                foreach (var bar in Bars)
+                {
+                    bar.Color = _color;
+                }
                 CaliperLabel.Color = _color;
-			}
-		}
-		private Color _color;
+            }
+        }
+        private Color _color;
 
         public Color UnselectedColor
         {
@@ -94,24 +95,24 @@ namespace EPCalipersWinUI3.Calipers
                 }
                 CaliperLabel.SelectedColor = value;
             }
-		}
-		private Color _selectedColor;
-		public bool IsSelected
-        { 
-            get =>  _isSelected; 
+        }
+        private Color _selectedColor;
+        public bool IsSelected
+        {
+            get => _isSelected;
             set
             {
                 _isSelected = value;
-				foreach (var bar in Bars)
-				{
-					bar.IsSelected = value;
-				}
-				CaliperLabel.IsSelected = value;
-			}
-		}
-		private bool _isSelected = false;
+                foreach (var bar in Bars)
+                {
+                    bar.IsSelected = value;
+                }
+                CaliperLabel.IsSelected = value;
+            }
+        }
+        private bool _isSelected = false;
 
-		public void ToggleIsSelected()
+        public void ToggleIsSelected()
         {
             IsSelected = !IsSelected;
         }
@@ -124,7 +125,7 @@ namespace EPCalipersWinUI3.Calipers
             }
         }
 
-		public double BarThickness
+        public double BarThickness
         {
             set
             {
@@ -145,7 +146,7 @@ namespace EPCalipersWinUI3.Calipers
                 // TODO: setting to change all unselected colors too?
                 // If selected, all unselected colors are changed.
             }
-		}
+        }
 
         /// <summary>
         /// The raw measurement of a caliper, in points, or in degrees or angle calipers.
@@ -155,14 +156,14 @@ namespace EPCalipersWinUI3.Calipers
         public void Add(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in Bars) bar.AddToView(caliperView);
+            foreach (var bar in Bars) bar.AddToView(caliperView);
             CaliperLabel.AddToView(caliperView);
         }
 
         public void Remove(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-			foreach (var bar in Bars) bar.RemoveFromView(caliperView);
+            foreach (var bar in Bars) bar.RemoveFromView(caliperView);
             CaliperLabel.RemoveFromView(caliperView);
         }
 
@@ -174,7 +175,8 @@ namespace EPCalipersWinUI3.Calipers
 
         //Standard placement of new calipers
 
-        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView, ISettings settings) {
+        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView, ISettings settings)
+        {
             CaliperPosition initialPosition;
             AngleCaliperPosition initialAnglePosition;
             Caliper caliper = null;
@@ -197,37 +199,37 @@ namespace EPCalipersWinUI3.Calipers
             return caliper;
         }
 
-		private static void ApplySettings(Caliper c, ISettings settings)
-		{
-			if (c == null) return;
-			c.UnselectedColor = settings.UnselectedCaliperColor;
-			c.SelectedColor = settings.SelectedCaliperColor;
-			c.BarThickness = settings.BarThickness;
-			c.IsSelected = false;
-		}
+        private static void ApplySettings(Caliper c, ISettings settings)
+        {
+            if (c == null) return;
+            c.UnselectedColor = settings.UnselectedCaliperColor;
+            c.SelectedColor = settings.SelectedCaliperColor;
+            c.BarThickness = settings.BarThickness;
+            c.IsSelected = false;
+        }
 
-		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
-		{
-			Point p = caliperView.GetOffsettedCenter();
-			double halfSpacing = spacing / 2.0;
-			switch (type)
-			{
-				case CaliperType.Time:
-					return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
-				case CaliperType.Amplitude:
-					return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
-				default:
-					return new CaliperPosition(0, 0, 0);
-			}
-		}
+        private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
+        {
+            Point p = caliperView.GetOffsettedCenter();
+            double halfSpacing = spacing / 2.0;
+            switch (type)
+            {
+                case CaliperType.Time:
+                    return new CaliperPosition(p.Y, p.X - halfSpacing, p.X + halfSpacing);
+                case CaliperType.Amplitude:
+                    return new CaliperPosition(p.X, p.Y - halfSpacing, p.Y + halfSpacing);
+                default:
+                    return new CaliperPosition(0, 0, 0);
+            }
+        }
 
-		private static AngleCaliperPosition SetInitialAngleCaliperPosition(ICaliperView caliperView)
-		{
-			var apex = caliperView.GetOffsettedCenter();
-			double firstAngle = 0.5 * Math.PI;
-			double secondAngle = 0.25 * Math.PI;
-			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
-		}
+        private static AngleCaliperPosition SetInitialAngleCaliperPosition(ICaliperView caliperView)
+        {
+            var apex = caliperView.GetOffsettedCenter();
+            double firstAngle = 0.5 * Math.PI;
+            double secondAngle = 0.25 * Math.PI;
+            return new AngleCaliperPosition(apex, firstAngle, secondAngle);
+        }
 
         public virtual void ClearCalibration()
         {

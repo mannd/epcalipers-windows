@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EPCalipersWinUI3.Calipers;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Shapes;
-using Microsoft.UI;
-using Windows.UI;
-using Xunit;
-using EPCalipersWinUI3;
+﻿using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
-using EPCalipersWinUI3.Models;
+using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-    public class CaliperTests
+	public class CaliperTests
 	{
 		private TimeCaliper GetTimeCaliper()
 		{

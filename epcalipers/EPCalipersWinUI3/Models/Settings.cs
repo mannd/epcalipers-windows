@@ -1,5 +1,5 @@
-﻿using EPCalipersWinUI3.Calipers;
-using EPCalipersWinUI3.Contracts;
+﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Windows.UI.Core;
 
 namespace EPCalipersWinUI3.Models
 {
-	public class Settings: ISettings
+    public class Settings: ISettings
 	{
 		private Windows.Storage.ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";

@@ -1,6 +1,6 @@
-﻿using EPCalipersWinUI3.Calipers;
-using EPCalipersWinUI3.Contracts;
+﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Helpers
 {
-	public class CaliperHelper
+    public class CaliperHelper
 	{
 		private ICaliperView _caliperView;
 		private CaliperCollection _caliperCollection;

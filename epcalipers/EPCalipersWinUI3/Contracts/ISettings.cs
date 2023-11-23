@@ -1,4 +1,4 @@
-﻿using EPCalipersWinUI3.Calipers;
+﻿using EPCalipersWinUI3.Models.Calipers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.Contracts
 {
-	public interface ISettings
+    public interface ISettings
 	{
 		public double BarThickness { get; set; }
 		public bool AutoAlignLabel { get; set; }

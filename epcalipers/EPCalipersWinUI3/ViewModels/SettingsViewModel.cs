@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPCalipersWinUI3.Models;
-using EPCalipersWinUI3.Calipers;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
 using Windows.Storage.Streams;
 using Windows.UI;
+using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class SettingsViewModel : ObservableObject
+    public partial class SettingsViewModel : ObservableObject
 	{
 		private Settings _model = new Settings();
 

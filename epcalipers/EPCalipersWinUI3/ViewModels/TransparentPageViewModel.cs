@@ -1,6 +1,6 @@
 ﻿
 using CommunityToolkit.Mvvm.Input;
-using EPCalipersWinUI3.Calipers;
+using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using Microsoft.UI;
