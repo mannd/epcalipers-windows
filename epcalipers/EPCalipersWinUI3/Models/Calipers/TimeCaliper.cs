@@ -27,7 +27,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         public override double Value => RightBar.Position - LeftBar.Position;
         public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
         public double RightMostBarPosition => Math.Max(RightBar.Position, LeftBar.Position);
-        public ICalibration Calibration { get; set; }
+        public Calibration Calibration { get; set; }
         #endregion
         #region fields
         private readonly ISettings _settings;
@@ -119,11 +119,10 @@ namespace EPCalipersWinUI3.Models.Calipers
         #region calibration
         public override void ClearCalibration()
         {
-            Calibration = null;
+            Calibration = new Calibration();
         }
         public void SetCalibration(double calibrationValue, CalibrationUnit unit)
         {
-            Calibration = new Calibration(Value, calibrationValue, unit);
         }
         #endregion
     }

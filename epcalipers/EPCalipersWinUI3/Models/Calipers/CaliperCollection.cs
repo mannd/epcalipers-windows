@@ -94,8 +94,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             bool caliperToggled = false;
             foreach (var caliper in _calipers)
             {
-                var bar = caliper.IsNearBar(point);
-                if (bar != null && !caliperToggled)
+                if (caliper.IsNearBar(point) != null && !caliperToggled)
                 {
                     caliperToggled = true;
                     if (caliper.IsSelected)
@@ -106,9 +105,20 @@ namespace EPCalipersWinUI3.Models.Calipers
                     {
                         caliper.IsSelected = true;
                     }
+					UnselectCalipersExcept(caliper);
                 }
-                else
+            }
+        }
+
+        private void UnselectCalipersExcept(Caliper c)
+        {
+            foreach(var caliper in _calipers )
+            {
+                if (caliper != c)
                 {
+                    // NB.  c.IsSelected = false doesn't work.  
+                    // Not sure why? Maybe because we are passing it a variable
+                    // from a foreach loop (in ToggleCaliperSelection()).
                     caliper.IsSelected = false;
                 }
             }

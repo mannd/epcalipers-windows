@@ -1,41 +1,27 @@
 using EPCalipersWinUI3.Helpers;
-using Microsoft.UI;
+using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Devices.Enumeration;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using WinUIEx;
-using Microsoft.UI.Windowing;
-using TemplateTest2.Helpers;
-using EPCalipersWinUI3.ViewModels;
-using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3.Views
 {
-    public sealed partial class MainPage : Page
+	public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
-		private WindowEx CalibrationDialog { get; set; }
+		private WindowEx CalibrationWindow { get; set; }
 
 		public MainPage()
 		{
@@ -84,10 +70,10 @@ namespace EPCalipersWinUI3.Views
 		private void OnUnLoaded(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("Page unloaded.");
-			if (CalibrationDialog != null)
+			if (CalibrationWindow != null)
 			{
-				CalibrationDialog.Close();
-				CalibrationDialog = null;
+				CalibrationWindow.Close();
+				CalibrationWindow = null;
 			}
 		}
 
@@ -351,7 +337,7 @@ namespace EPCalipersWinUI3.Views
 
 					//ContentDialog dialog = new ContentDialog();
 
-					// XamlRoot must be set in the case of a ContentDialog running in a Desktop app
+					//XamlRoot must be set in the case of a ContentDialog running in a Desktop app
 					//dialog.XamlRoot = this.XamlRoot;
 					//dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
 					//dialog.Title = "Calibrate this caliper?";
@@ -359,18 +345,21 @@ namespace EPCalipersWinUI3.Views
 					//dialog.CloseButtonText = "Cancel";
 					//dialog.DefaultButton = ContentDialogButton.Primary;
 					//dialog.Content = new CalibrationDialog();
-					if (CalibrationDialog == null)
+					if (CalibrationWindow == null)
 					{
-						CalibrationDialog = new WindowEx();
-						CalibrationDialog.Width = 400;
-						CalibrationDialog.Height = 600;
-						CalibrationDialog.SetIsAlwaysOnTop(true);
-						CalibrationDialog.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-						CalibrationDialog.WindowContent = new CalibrationDialog();
-						CalibrationDialog.Title = "Calibration";
+						CalibrationWindow = new WindowEx();
+						CalibrationWindow.Width = 400;
+						CalibrationWindow.Height = 400;
+						CalibrationWindow.SetIsAlwaysOnTop(true);
+						CalibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+						var frame = new Frame();
+						CalibrationWindow.WindowContent = frame;
+						frame.Navigate(typeof(CalibrationDialog));
+						//CalibrationWindow.WindowContent = new CalibrationDialog();
+						CalibrationWindow.Title = "Calibration";
 					}
 					//window.SetIcon("/Assets/EpCalipersLargeTemplate1.ico");
-					CalibrationDialog.Show();
+					CalibrationWindow.Show();
 
 					//var result = await dialog.ShowAsync();
 					break;

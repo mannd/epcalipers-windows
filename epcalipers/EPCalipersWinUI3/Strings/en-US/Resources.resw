@@ -162,6 +162,9 @@
   <data name="BackButton.Text" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="bpm" xml:space="preserve">
+    <value>bpm</value>
+  </data>
   <data name="ButtonDone.Content" xml:space="preserve">
     <value>Done</value>
   </data>
@@ -235,7 +238,7 @@
     <value>Next PDF page</value>
   </data>
   <data name="NoCaliperSelectedMessage" xml:space="preserve">
-    <value>Select (by single click or tap) a time or an amplitude caliper and set it to your calibration interval before calibrating.</value>
+    <value>Select (by single click or tap) a time or an amplitude caliper before calibrating.</value>
   </data>
   <data name="NoCaliperSelectedTitle" xml:space="preserve">
     <value>No time or amplitude caliper selected</value>
@@ -297,6 +300,9 @@
   </data>
   <data name="sec" xml:space="preserve">
     <value>sec</value>
+  </data>
+  <data name="SetCalibration.Content" xml:space="preserve">
+    <value>Set calibration</value>
   </data>
   <data name="SetCalibrationMenuItem.Text" xml:space="preserve">
     <value>Set calibration</value>

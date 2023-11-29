@@ -12,6 +12,7 @@ namespace EPCalipersWinUI3.Contracts
 		Sec,
 		Mv,
 		Mm,
+		Bpm,
 		Custom,
 		Undefined
 	}
@@ -20,6 +21,5 @@ namespace EPCalipersWinUI3.Contracts
 	{
 		public CalibrationUnit Unit { get; set; }
 		public double Value { get; set; }
-		public void Clear();
 	}
 }

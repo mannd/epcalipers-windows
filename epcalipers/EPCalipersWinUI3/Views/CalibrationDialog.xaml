@@ -9,24 +9,30 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20"
-                    Height="600" Width="400">
-            <!-- Content body -->
-            <TextBlock Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
-            <RadioButtons x:Name="CalibrationRadioButtons" >
-                <x:String>1000 msec</x:String>
-                <x:String>1.0 sec</x:String>
-                <x:String>1.0 mV</x:String>
-                <x:String>10 mm</x:String>
-                <x:String>Custom</x:String>
-            </RadioButtons>
-            <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                <TextBlock Text="Custom interval (include units)" Margin="10"/>
-                <TextBox VerticalAlignment="Center"/>
-            </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Button>Set Calibration</Button>
-            <Button>Cancel</Button>
-        </StackPanel>
-        </StackPanel>
+    <RelativePanel Margin="20">
+        <!-- Content body -->
+        <TextBlock x:Name="Instructions" Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
+        <RadioButtons x:Name="CalibrationRadioButtons" 
+                      RelativePanel.Below="Instructions"
+                      SelectionChanged="CalibrationRadioButtons_SelectionChanged">
+            <RadioButton IsChecked="True">1000 msec</RadioButton>
+            <RadioButton>1.0 sec</RadioButton>
+            <RadioButton x:Name="CustomRadioButton">
+                <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)" />
+            </RadioButton>
+        </RadioButtons>
+        <Grid RelativePanel.Below="CalibrationRadioButtons"
+              RelativePanel.AlignLeftWithPanel="True"
+              RelativePanel.AlignRightWithPanel="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+           Margin="0,12,2,0" HorizontalAlignment="Stretch" Click="CalibrationDialogCalibrate_Click"
+                   Style="{StaticResource AccentButtonStyle}" x:Uid="SetCalibration" />
+            <Button Grid.Column="1" Margin="2,12,0,0" HorizontalAlignment="Stretch" 
+                    Click="CalibrationDialogCancel_Click">Cancel</Button>
+        </Grid>
+    </RelativePanel>
 </Page>

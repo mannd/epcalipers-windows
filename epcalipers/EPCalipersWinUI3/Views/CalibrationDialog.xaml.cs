@@ -26,6 +26,26 @@ namespace EPCalipersWinUI3.Views
         public CalibrationDialog()
         {
             this.InitializeComponent();
+            EnableCustomText();
         }
-    }
+
+        public void EnableCustomText()
+        {
+            CustomIntervalTextBox.IsEnabled = CustomRadioButton.IsChecked ?? false;
+        }
+
+		private void CalibrationRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+            EnableCustomText();
+		}
+
+		private void CalibrationDialogCancel_Click(object sender, RoutedEventArgs e)
+		{
+		}
+
+		private void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+	}
 }

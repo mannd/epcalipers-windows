@@ -14,7 +14,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Helpers;
-using TemplateTest2.Helpers;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

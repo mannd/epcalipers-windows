@@ -1,28 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
-using EPCalipersWinUI3.Views;
 using EPCalipersWinUI3.Models;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
+using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using TemplateTest2.Helpers;
 using Windows.Foundation;
 using Windows.Storage;
-using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3
 {
-    public partial class MainPageViewModel : ObservableObject
+	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper;
 		private CaliperHelper _caliperHelper;
@@ -99,7 +94,6 @@ namespace EPCalipersWinUI3
 		{
 			_caliperHelper.ReleaseGrabbedCaliper();
 		}
-
 
 		public async Task OpenImageFile(StorageFile file)
 		{
@@ -250,11 +244,13 @@ namespace EPCalipersWinUI3
 			}
 		}
 
+		#region calibration
 		[RelayCommand]
 		public void ClearCalibration()
 		{
 			_caliperHelper.ClearCalibration();
 		}
+		#endregion
 
 		public async Task GotoPdfPage(int pageNumber) 
 		{
