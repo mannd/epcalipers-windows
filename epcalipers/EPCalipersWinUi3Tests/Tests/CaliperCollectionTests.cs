@@ -30,5 +30,29 @@ namespace EPCalipersWinUi3Tests.Tests
 			var angleCalipers = caliperCollection.FilteredCalipers(CaliperType.Angle);
 			Assert.Empty(angleCalipers);
 		}
+
+		[Fact]
+		public void TestSelectedCaliper()
+		{
+			var stubCaliperView = new FakeCaliperView();
+			var caliperCollection = new CaliperCollection(stubCaliperView);
+			var stubSettings = new FakeSettings();
+			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
+			caliperCollection.Add(timeCaliper);
+			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
+			caliperCollection.Add(amplitudeCaliper);
+			var selectedCaliper = caliperCollection.SelectedCaliper;
+			Assert.Null(selectedCaliper);
+			timeCaliper.IsSelected = true;
+			selectedCaliper = caliperCollection.SelectedCaliper;
+			Assert.Equal(timeCaliper, selectedCaliper);
+			var selectedCaliperType = caliperCollection.SelectedCaliperType;
+			Assert.Equal(CaliperType.Time, selectedCaliperType);
+			timeCaliper.IsSelected = false;
+			selectedCaliper = caliperCollection.SelectedCaliper;
+			Assert.Null(selectedCaliper);
+			selectedCaliperType = caliperCollection.SelectedCaliperType;
+			Assert.Equal(CaliperType.None, selectedCaliperType);
+		}
 	}
 }

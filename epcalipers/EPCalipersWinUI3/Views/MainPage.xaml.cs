@@ -27,7 +27,6 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom, CaliperView);
-			Unloaded += OnUnLoaded;
 
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
 			// so should be the default.
@@ -67,15 +66,6 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.RefreshCalipers();
 		}
 
-		private void OnUnLoaded(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("Page unloaded.");
-			if (CalibrationWindow != null)
-			{
-				CalibrationWindow.Close();
-				CalibrationWindow = null;
-			}
-		}
 
 
 		#region touches
@@ -315,55 +305,6 @@ namespace EPCalipersWinUI3.Views
 			await ViewModel.OpenImageFile(file);
 			AppHelper.AppTitleBarText = ViewModel.TitleBarName;
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
-		}
-
-		private async void SetCalibration_Click(object sender, RoutedEventArgs e)
-		{
-			switch (ViewModel.GetSelectedCaliperType())
-			{
-				case CaliperType.None:
-					var msgDialog = MessageDialog.Create("NoCaliperSelectedTitle".GetLocalized(),
-						"NoCaliperSelectedMessage".GetLocalized());
-					msgDialog.XamlRoot = XamlRoot;
-					await msgDialog.ShowAsync();
-					break;
-				case CaliperType.Angle:
-					msgDialog = MessageDialog.Create("AngleCaliperSelectedTitle".GetLocalized(),
-						"AngleCaliperSelectedMessage".GetLocalized());
-					msgDialog.XamlRoot = XamlRoot;
-					await msgDialog.ShowAsync();
-					break;
-				default:
-
-					//ContentDialog dialog = new ContentDialog();
-
-					//XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-					//dialog.XamlRoot = this.XamlRoot;
-					//dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-					//dialog.Title = "Calibrate this caliper?";
-					//dialog.PrimaryButtonText = "Calibrate";
-					//dialog.CloseButtonText = "Cancel";
-					//dialog.DefaultButton = ContentDialogButton.Primary;
-					//dialog.Content = new CalibrationDialog();
-					if (CalibrationWindow == null)
-					{
-						CalibrationWindow = new WindowEx();
-						CalibrationWindow.Width = 400;
-						CalibrationWindow.Height = 400;
-						CalibrationWindow.SetIsAlwaysOnTop(true);
-						CalibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-						var frame = new Frame();
-						CalibrationWindow.WindowContent = frame;
-						frame.Navigate(typeof(CalibrationDialog));
-						//CalibrationWindow.WindowContent = new CalibrationDialog();
-						CalibrationWindow.Title = "Calibration";
-					}
-					//window.SetIcon("/Assets/EpCalipersLargeTemplate1.ico");
-					CalibrationWindow.Show();
-
-					//var result = await dialog.ShowAsync();
-					break;
-			}
 		}
 		#endregion
 	}

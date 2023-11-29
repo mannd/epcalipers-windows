@@ -164,7 +164,9 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="SetCalibrationMenuItem"/>
+                <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
+                                Command="{x:Bind ViewModel.SetCalibrationCommand}"
+                                CommandParameter="{x:Bind XamlRoot}" />
                 <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem">
@@ -244,8 +246,9 @@
                 <FontIcon Glyph="&#xE73E;" />
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" Click="SetCalibration_Click">
-                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
+                                        Command="{x:Bind ViewModel.SetCalibrationCommand}"
+                                        CommandParameter="{x:Bind XamlRoot}" />
                         <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}">
                         </MenuFlyoutItem>
                     </MenuFlyout>

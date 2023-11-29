@@ -9,6 +9,8 @@ using Windows.Foundation;
 using EPCalipersWinUI3.Contracts;
 using System.Diagnostics;
 using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Helpers;
+using Microsoft.UI.Xaml;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -19,6 +21,32 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         private IList<Caliper> _calipers;
         private ICaliperView _caliperView;
+
+        public ICalibration TimeCalibration { get; set; }
+        public ICalibration AmplitudeCalibration { get; set; }
+
+        public Caliper SelectedCaliper
+        {
+            get
+            {
+                foreach (var caliper in _calipers)
+                {
+                    if (caliper.IsSelected)
+                    {
+                        return caliper;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public CaliperType SelectedCaliperType => SelectedCaliper?.CaliperType ?? CaliperType.None;
+
+        /// <summary>
+        /// If the caliper collection is locked, then calipers can not be added, deleted, selected or
+        /// unselected.  They can be moved, however.  This allows calibration to focus on one caliper.
+        /// </summary>
+        public bool IsLocked { get; set; }
 
         public CaliperCollection(ICaliperView caliperView)
         {
@@ -31,12 +59,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public void Add(Caliper caliper)
         {
+            if (IsLocked) return;
             caliper.Add(_caliperView);
             _calipers.Add(caliper);
         }
 
         public void RemoveAtPoint(Point point)
         {
+            if (IsLocked) return;
             foreach (var caliper in _calipers)
             {
                 var bar = caliper.IsNearBar(point);
@@ -60,6 +90,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public void Clear()
         {
+            if (IsLocked) return;
             foreach (var caliper in _calipers)
             {
                 caliper.Remove(_caliperView);
@@ -69,6 +100,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public void RemoveActiveCaliper()
         {
+            if (IsLocked) return;
             foreach (var caliper in _calipers)
             {
                 if (caliper.IsSelected)
@@ -91,6 +123,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public void ToggleCaliperSelection(Point point)
         {
+            if (IsLocked) return;
             bool caliperToggled = false;
             foreach (var caliper in _calipers)
             {
@@ -112,6 +145,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private void UnselectCalipersExcept(Caliper c)
         {
+            if (IsLocked) return;
             foreach(var caliper in _calipers )
             {
                 if (caliper != c)
@@ -132,16 +166,28 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
 
-        public CaliperType GetSelectedCaliperType()
+        public async Task SetCalibrationAsync(XamlRoot xamlRoot)
         {
-            foreach (var caliper in _calipers)
-            {
-                if (caliper.IsSelected)
-                {
-                    return caliper.CaliperType;
-                }
+            ContentDialog dialog;
+            switch (SelectedCaliperType) {
+                case CaliperType.None:
+					dialog = MessageDialog.Create("NoCaliperSelectedTitle".GetLocalized(),
+						"NoCaliperSelectedMessage".GetLocalized());
+                    dialog.XamlRoot = xamlRoot;
+                    await dialog.ShowAsync();
+                    break;
+                case CaliperType.Angle:
+                    dialog = MessageDialog.Create("AngleCaliperSelectedTitle".GetLocalized(),
+                        "AngleCaliperSelectedMessage".GetLocalized());
+                    dialog.XamlRoot = xamlRoot;
+                    await dialog.ShowAsync();
+                    break;
+                default:
+                    // temporary
+                    IsLocked = true;
+                    // IsLocked = false;
+                    break;
             }
-            return CaliperType.None;
         }
 
         public void ClearCalibration()
@@ -151,7 +197,5 @@ namespace EPCalipersWinUI3.Models.Calipers
                 caliper.ClearCalibration();
             }
         }
-
-
     }
 }

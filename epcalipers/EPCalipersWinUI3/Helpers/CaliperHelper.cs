@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -98,8 +99,14 @@ namespace EPCalipersWinUI3.Helpers
 
 		public CaliperType GetSelectedCaliperType()
 		{
-			return _caliperCollection.GetSelectedCaliperType();
+			return _caliperCollection.SelectedCaliperType;
 		}
+
+		public async Task SetCalibrationAsync(XamlRoot xamlRoot)
+		{
+			await _caliperCollection.SetCalibrationAsync(xamlRoot);
+		}
+
 
 		public void ClearCalibration()
 		{

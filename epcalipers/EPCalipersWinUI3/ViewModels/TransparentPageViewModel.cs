@@ -111,6 +111,12 @@ namespace EPCalipersWinUI3.ViewModels
 		private static void Exit() => CommandHelper.ApplicationExit();
 
 		[RelayCommand]
+		public async Task SetCalibrationAsync(XamlRoot xamlRoot)
+		{
+			await _caliperHelper.SetCalibrationAsync(xamlRoot);
+		}
+
+		[RelayCommand]
 		private void ClearCalibration()
 		{
 			_caliperHelper.ClearCalibration();

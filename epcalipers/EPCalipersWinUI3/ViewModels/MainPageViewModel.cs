@@ -5,6 +5,7 @@ using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -245,6 +246,12 @@ namespace EPCalipersWinUI3
 		}
 
 		#region calibration
+		[RelayCommand]
+		public async Task SetCalibration(XamlRoot xamlRoot)
+		{
+			await _caliperHelper.SetCalibrationAsync(xamlRoot);
+		}
+
 		[RelayCommand]
 		public void ClearCalibration()
 		{

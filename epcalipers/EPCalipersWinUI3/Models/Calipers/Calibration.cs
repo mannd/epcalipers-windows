@@ -35,7 +35,14 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         public CalibrationParameters Parameters { get; init; }
         public readonly double Multiplier { get; init; }
-        public string Text { get; } = "Test";
+        public string Text
+        {
+            get
+            {
+                return string.Format("{0:0#} {1}", Parameters.Value, Parameters.UnitString);
+
+            }
+        }
 
 
         public Calibration(double value, RawCalibrationInput input)
