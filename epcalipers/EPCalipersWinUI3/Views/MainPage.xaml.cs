@@ -21,7 +21,6 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
-		private WindowEx CalibrationWindow { get; set; }
 
 		public MainPage()
 		{

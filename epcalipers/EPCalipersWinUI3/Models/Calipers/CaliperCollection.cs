@@ -220,13 +220,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			calibrationWindow.Title = title;
 			calibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-			Frame frame = new Frame();
-			frame.Navigate(typeof(CalibrationDialog));
-			var calibrationDialog = frame.Content as CalibrationDialog;
-			calibrationDialog.Window = calibrationWindow;
-			calibrationDialog.CaliperCollection = this;
-			calibrationDialog.CaliperType = caliperType;
-			calibrationWindow.Content = frame;
+			//Frame frame = new Frame();
+			//frame.Navigate(typeof(CalibrationView));
+			var calibrationView = new CalibrationView(caliperType);
+			calibrationView.Window = calibrationWindow;
+			calibrationView.CaliperCollection = this;
+			calibrationView.CaliperType = caliperType;
+			calibrationWindow.Content = calibrationView;
 			calibrationWindow.Closed += OnClosed;
 			calibrationWindow.Show();
 		}

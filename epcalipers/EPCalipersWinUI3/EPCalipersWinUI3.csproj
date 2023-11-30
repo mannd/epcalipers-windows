@@ -46,7 +46,7 @@
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
     <None Remove="Views\AboutDialog.xaml" />
-    <None Remove="Views\CalibrationDialog.xaml" />
+    <None Remove="Views\CalibrationView.xaml" />
     <None Remove="Views\GotoPdfPageDialog.xaml" />
     <None Remove="Views\HelpWebViewPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
@@ -126,7 +126,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <Page Update="Views\CalibrationDialog.xaml">
+    <Page Update="Views\CalibrationView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\TransparentPage.xaml">

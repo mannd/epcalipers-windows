@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using WinUIEx;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,16 +24,20 @@ namespace EPCalipersWinUI3.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CalibrationDialog : Page
+    public sealed partial class CalibrationView : Page
     {
         public WindowEx Window { get; set; }
         public CaliperCollection CaliperCollection { get; set; }
         public CaliperType CaliperType { get; set; }
 
-        public CalibrationDialog()
+        public CalibrationViewModel ViewModel { get; set; }
+
+        public CalibrationView(CaliperType caliperType)
         {
             this.InitializeComponent();
             EnableCustomText();
+            CaliperType = caliperType;
+            ViewModel = new CalibrationViewModel(caliperType);
         }
 
         public void EnableCustomText()

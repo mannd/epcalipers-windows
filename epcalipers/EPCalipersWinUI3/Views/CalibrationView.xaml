@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="EPCalipersWinUI3.Views.CalibrationDialog"
+    x:Class="EPCalipersWinUI3.Views.CalibrationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EPCalipersWinUI3.Views"
@@ -15,8 +15,8 @@
         <RadioButtons x:Name="CalibrationRadioButtons" 
                       RelativePanel.Below="Instructions"
                       SelectionChanged="CalibrationRadioButtons_SelectionChanged">
-            <RadioButton IsChecked="True">1000 msec</RadioButton>
-            <RadioButton>1.0 sec</RadioButton>
+            <RadioButton IsChecked="True" Content="{x:Bind ViewModel.FirstField}" />
+            <RadioButton Content="{x:Bind ViewModel.SecondField}" />
             <RadioButton x:Name="CustomRadioButton">
                 <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)" />
             </RadioButton>
