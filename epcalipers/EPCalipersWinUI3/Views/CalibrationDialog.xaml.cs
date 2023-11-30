@@ -12,6 +12,8 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using WinUIEx;
+using EPCalipersWinUI3.Models.Calipers;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,6 +25,10 @@ namespace EPCalipersWinUI3.Views
     /// </summary>
     public sealed partial class CalibrationDialog : Page
     {
+        public WindowEx Window { get; set; }
+        public CaliperCollection CaliperCollection { get; set; }
+        public CaliperType CaliperType { get; set; }
+
         public CalibrationDialog()
         {
             this.InitializeComponent();
@@ -41,10 +47,23 @@ namespace EPCalipersWinUI3.Views
 
 		private void CalibrationDialogCancel_Click(object sender, RoutedEventArgs e)
 		{
+            if (Window != null)
+            {
+                Window.Close();
+            }
 		}
 
 		private void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
 		{
+            if (CaliperCollection != null)
+            {
+                // TODO: Get Calibration from dialog, set time or amplitude calibration of 
+                // caliber collection.
+            }
+            if (Window != null)
+            {
+                Window.Close();
+            }
 
 		}
 	}
