@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,13 +11,20 @@ using EPCalipersWinUI3.Helpers;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-    public struct RawCalibrationInput
+    /// <summary>
+    /// Provides parameters need to calibrate the calipers.
+    /// For example, 1000 msec translates to a CalibrationValue of 1000,
+    /// a CalibrationUnit of .Msec, and either a CustomInput of "" if 
+    /// the parameters were derived from radiobutton selections, or of
+    /// "1000 msec" if entered in the custom input textbox.
+    /// </summary>
+    public struct CalibrationInput
     {
         public double CalibrationValue { get; init; }
         public CalibrationUnit Unit { get; init; }
         public string CustomInput { get; init; }
 
-        public RawCalibrationInput(double value, CalibrationUnit unit, string customInput)
+        public CalibrationInput(double value, CalibrationUnit unit, string customInput = "")
         {
             CalibrationValue = value;
             Unit = unit;
@@ -39,21 +47,49 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             get
             {
+                Debug.Print(string.Format("{0:0#} {1}", Parameters.Value, Parameters.UnitString));
                 return string.Format("{0:0#} {1}", Parameters.Value, Parameters.UnitString);
 
             }
         }
 
-
-        public Calibration(double value, RawCalibrationInput input)
+        /// <summary>
+        /// Provides a calibration factor that calculates the actual interval.
+        /// </summary>
+        /// <param name="value">The value of the caliper in points at the time of calibration.</param>
+        /// <param name="input">The desired calibration interval parameters, e.g. "1000 msec"</param>
+        public Calibration(double value, CalibrationInput input)
         {
+            // TODO: need to throw exception if can't get good calibration from custom input.
+            // When exception thrown, calibration is not replaced, and maybe error msg shown.
             Parameters = ParseInput(input);
             Multiplier = Parameters.Value / value;
         }
 
-        public static CalibrationParameters ParseInput(RawCalibrationInput input)
+        public Calibration()
         {
-            // ignore custom for now
+			Parameters = UncalibratedParameters();
+			Multiplier = 1.0;
+		}
+
+        public string GetText(double value)
+        {
+            var calibratedValue = Multiplier * value;
+			return string.Format("{0:0.00#} {1}", calibratedValue, Parameters.UnitString);
+		}
+
+		public static CalibrationParameters UncalibratedParameters()
+        {
+            return new CalibrationParameters
+            {
+                Unit = CalibrationUnit.Uncalibrated,
+                UnitString = CalibrationUnitToString(CalibrationUnit.Uncalibrated),
+                Value = 0.0,
+            };
+        }
+
+        public static CalibrationParameters ParseInput(CalibrationInput input)
+        {
             if (input.Unit == CalibrationUnit.Custom)
             {
                 var (value, unitString) = ParseCustomString(input.CustomInput);
@@ -62,24 +98,13 @@ namespace EPCalipersWinUI3.Models.Calipers
                 {
                     Value = value,
                     UnitString = unitString,
-                    Unit = StringToCalibrationUnit(unitString)
+                    Unit = CalibrationUnit.Custom
                 };
             }
             return new CalibrationParameters {
                 Value = input.CalibrationValue, 
                 Unit = input.Unit, 
                 UnitString = CalibrationUnitToString(input.Unit)
-            };
-        }
-
-        public static CalibrationParameters ParseCustomInput(string customInput)
-        {
-            (double value, string units) = ParseCustomString(customInput);
-            return new CalibrationParameters
-            {
-                Value = value,
-                Unit = CalibrationUnit.Undefined,
-                UnitString = units
             };
         }
 
@@ -118,6 +143,8 @@ namespace EPCalipersWinUI3.Models.Calipers
                     return "mV";
                 case CalibrationUnit.Bpm:
                     return "bpm";
+                case CalibrationUnit.Uncalibrated:
+                    return "points";
                 default:
                     return string.Empty;
             }
@@ -149,12 +176,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public static CalibrationUnit StringToCalibrationUnit(string input)
         {
-            if (string.IsNullOrEmpty(input)) return CalibrationUnit.Undefined;
+            if (string.IsNullOrEmpty(input)) return CalibrationUnit.Uncalibrated;
             if (IsMillimetersUnit(input)) return CalibrationUnit.Mm;
             if (IsMillisecondsUnit(input)) return CalibrationUnit.Msec;
             if (IsSecondsUnit(input)) return CalibrationUnit.Sec;
             if (IsMillivoltsUnit(input)) return CalibrationUnit.Mv;
-            return CalibrationUnit.Undefined;
+            return CalibrationUnit.Uncalibrated;
         }
 	}
 }

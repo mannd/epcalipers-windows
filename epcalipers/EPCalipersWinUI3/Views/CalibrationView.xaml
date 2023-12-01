@@ -18,7 +18,9 @@
             <RadioButton IsChecked="True" Content="{x:Bind ViewModel.FirstField}" />
             <RadioButton Content="{x:Bind ViewModel.SecondField}" />
             <RadioButton x:Name="CustomRadioButton">
-                <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)" />
+                <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)"
+                         Text="{x:Bind ViewModel.CustomInterval, Mode=TwoWay}"/>
+
             </RadioButton>
         </RadioButtons>
         <Grid RelativePanel.Below="CalibrationRadioButtons"

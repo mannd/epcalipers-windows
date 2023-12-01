@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private void InitCaliperLabel()
         {
-            var text = $"{Value} points";
+            var text = Text;
             var alignment = _settings.AmplitudeCaliperLabelAlignment;
             var autoAlignLabel = _settings.AutoAlignLabel;
             CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
@@ -72,8 +72,8 @@ namespace EPCalipersWinUI3.Models.Calipers
                 bar.Y1 += delta.Y;
                 bar.Y2 += delta.Y;
             }
-            string text = string.Format("{0:0.#} points", Value);
-            CaliperLabel.Text = text;
+            string text = Calibration.GetText(Value);
+            CaliperLabel.Text = Text;
             CaliperLabel.SetPosition();
         }
 

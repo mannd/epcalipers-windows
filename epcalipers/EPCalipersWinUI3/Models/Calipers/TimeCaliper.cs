@@ -27,7 +27,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         public override double Value => RightBar.Position - LeftBar.Position;
         public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
         public double RightMostBarPosition => Math.Max(RightBar.Position, LeftBar.Position);
-        public Calibration Calibration { get; set; }
         #endregion
         #region fields
         private readonly ISettings _settings;
@@ -56,7 +55,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private void InitCaliperLabel()
         {
-            var text = $"{Value} points";
+            var text = Text;
             var alignment = _settings.TimeCaliperLabelAlignment;
             var autoAlignLabel = _settings.AutoAlignLabel;
             CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, _fakeUI);
@@ -111,7 +110,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                 bar.Position += delta.Y;
             }
 
-            string text = string.Format("{0:0.#} points", Value);
+            string text = Text;
             CaliperLabel.Text = text;
             CaliperLabel.SetPosition();
         }
@@ -120,9 +119,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         public override void ClearCalibration()
         {
             Calibration = new Calibration();
-        }
-        public void SetCalibration(double calibrationValue, CalibrationUnit unit)
-        {
         }
         #endregion
     }

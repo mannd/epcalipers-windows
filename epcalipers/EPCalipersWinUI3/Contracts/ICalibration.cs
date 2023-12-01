@@ -14,7 +14,7 @@ namespace EPCalipersWinUI3.Contracts
 		Mm,
 		Bpm,
 		Custom,
-		Undefined
+		Uncalibrated
 	}
 
 	public interface ICalibration

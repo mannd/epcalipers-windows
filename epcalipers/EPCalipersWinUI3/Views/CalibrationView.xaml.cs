@@ -27,17 +27,15 @@ namespace EPCalipersWinUI3.Views
     public sealed partial class CalibrationView : Page
     {
         public WindowEx Window { get; set; }
-        public CaliperCollection CaliperCollection { get; set; }
         public CaliperType CaliperType { get; set; }
-
         public CalibrationViewModel ViewModel { get; set; }
 
-        public CalibrationView(CaliperType caliperType)
+        public CalibrationView(Caliper caliper, CaliperCollection caliperCollection)
         {
             this.InitializeComponent();
             EnableCustomText();
-            CaliperType = caliperType;
-            ViewModel = new CalibrationViewModel(caliperType);
+            CaliperType = caliper.CaliperType;
+            ViewModel = new CalibrationViewModel(caliper, caliperCollection);
         }
 
         public void EnableCustomText()
@@ -48,6 +46,11 @@ namespace EPCalipersWinUI3.Views
 		private void CalibrationRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
             EnableCustomText();
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				ViewModel.IntervalSelection = selection;
+			}
 		}
 
 		private void CalibrationDialogCancel_Click(object sender, RoutedEventArgs e)
@@ -55,19 +58,17 @@ namespace EPCalipersWinUI3.Views
             if (Window != null)
             {
                 Window.Close();
+                Window = null;
             }
 		}
 
 		private void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
 		{
-            if (CaliperCollection != null)
-            {
-                // TODO: Get Calibration from dialog, set time or amplitude calibration of 
-                // caliber collection.
-            }
+            ViewModel.SetCalibration();
             if (Window != null)
             {
                 Window.Close();
+                Window = null;
             }
 
 		}

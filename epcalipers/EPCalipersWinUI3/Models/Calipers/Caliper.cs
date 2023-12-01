@@ -112,6 +112,10 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private bool _isSelected = false;
 
+        public Calibration Calibration { get; set; } = new Calibration();
+
+        public string Text => Calibration.GetText(Value);
+
         public void ToggleIsSelected()
         {
             IsSelected = !IsSelected;
@@ -149,7 +153,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
 
         /// <summary>
-        /// The raw measurement of a caliper, in points, or in degrees or angle calipers.
+        /// The raw measurement of a caliper, in points, or in degrees for angle calipers.
         /// </summary>
         public abstract double Value { get; }
 

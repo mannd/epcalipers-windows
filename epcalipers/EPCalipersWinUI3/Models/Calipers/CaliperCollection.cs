@@ -25,8 +25,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private IList<Caliper> _calipers;
 		private ICaliperView _caliperView;
 
-		public ICalibration TimeCalibration { get; set; }
-		public ICalibration AmplitudeCalibration { get; set; }
+		private WindowEx _calibrationWindow;
+
+		public Calibration TimeCalibration { get; set; }
+		public Calibration AmplitudeCalibration { get; set; }
 
 		public Caliper SelectedCaliper
 		{
@@ -200,10 +202,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void ShowCalibrationDialogWindow(CaliperType caliperType)
 		{
-			WindowEx calibrationWindow = new WindowEx();
-			calibrationWindow.Height = 400;
-			calibrationWindow.Width = 400;
-			calibrationWindow.SetIsAlwaysOnTop(true);
+			Debug.Assert(SelectedCaliper != null);
+			if (_calibrationWindow == null)
+			{
+				_calibrationWindow = new WindowEx();
+			}
+			_calibrationWindow.Height = 400;
+			_calibrationWindow.Width = 400;
+			_calibrationWindow.SetIsAlwaysOnTop(true);
 			//var title = string.Format("{0] caliper calibration")
 			string title;
 			switch (caliperType)
@@ -218,22 +224,23 @@ namespace EPCalipersWinUI3.Models.Calipers
 					title = "Calibration";
 					break;
 			}
-			calibrationWindow.Title = title;
-			calibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+			_calibrationWindow.Title = title;
+			_calibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
 			//Frame frame = new Frame();
 			//frame.Navigate(typeof(CalibrationView));
-			var calibrationView = new CalibrationView(caliperType);
-			calibrationView.Window = calibrationWindow;
-			calibrationView.CaliperCollection = this;
+			var calibrationView = new CalibrationView(SelectedCaliper, this);
+			calibrationView.Window = _calibrationWindow;
 			calibrationView.CaliperType = caliperType;
-			calibrationWindow.Content = calibrationView;
-			calibrationWindow.Closed += OnClosed;
-			calibrationWindow.Show();
+			_calibrationWindow.Content = calibrationView;
+			_calibrationWindow.Closed += OnClosed;
+			_calibrationWindow.Show();
 		}
 
 		private void OnClosed(object sender, WindowEventArgs args)
 		{
 			IsLocked = false;
+			_calibrationWindow.Content = null;
+			_calibrationWindow = null;
 		}
 
 		public void ClearCalibration()
@@ -241,6 +248,33 @@ namespace EPCalipersWinUI3.Models.Calipers
 			foreach (var caliper in _calipers)
 			{
 				caliper.ClearCalibration();
+				caliper.CaliperLabel.Text = caliper.Text;
+			}
+		}
+
+		public void SetCalibration(CaliperType caliperType)
+		{
+			switch (caliperType)
+			{
+				case CaliperType.Time:
+					foreach (var caliper in FilteredCalipers(CaliperType.Time))
+					{
+						caliper.Calibration = TimeCalibration;
+						caliper.CaliperLabel.Text = caliper.Text;
+					}
+					break;
+				case CaliperType.Amplitude:
+					foreach (var caliper in FilteredCalipers(CaliperType.Amplitude))
+					{
+						caliper.Calibration = AmplitudeCalibration;
+						caliper.CaliperLabel.Text = caliper.Text;
+					}
+					break;
+				case CaliperType.Angle:
+					// TODO: need to set both calibrations, ignore for now
+					break;
+				default:
+					break;
 			}
 		}
 	}

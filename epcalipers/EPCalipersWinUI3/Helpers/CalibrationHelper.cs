@@ -9,13 +9,6 @@ using Windows.Networking.Vpn;
 
 namespace EPCalipersWinUI3.Helpers
 {
-	public struct CalibrationInput
-	{
-		public double CalibrationValue { get; init; }
-		public CalibrationUnit Unit { get; init; }
-		public string CustomInput {  get; init; }
-	}
-
 	public static class CalibrationHelper
 	{
 		//public static Calibration ParseCalibrationInput(CalibrationInput input)
