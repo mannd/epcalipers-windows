@@ -27,7 +27,15 @@ namespace EPCalipersWinUI3.Models.Calipers
             : base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
         {
             Caliper = caliper;
-            _size = ShapeMeasure(TextBlock);
+            if (!fakeUI)
+            {
+                TextBlock.Text = text;
+                _size = ShapeMeasure(TextBlock);  // Estimate TextBlock size.
+            }
+            else
+            {
+                _size = new Size();
+            }
             _position = new CaliperLabelPosition();
             SetPosition();
         }
@@ -42,6 +50,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private void GetPosition()
         {
             if (TextBlock == null) return;
+            _size.Width = ShapeMeasure(TextBlock).Width;
             _size.Width = TextBlock.ActualWidth;
             // Angle caliper labels are always at the top
             _position.Left = (int)(Caliper.ApexBar.MidPoint.X - _size.Width / 2);

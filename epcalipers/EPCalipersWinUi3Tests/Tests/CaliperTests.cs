@@ -83,10 +83,11 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestCaliperLabel()
 		{
+			// NB: This test will need revision once Rounding is implemented.
 			var timeCaliper = GetTimeCaliper();
-			Assert.Equal("150 points", timeCaliper.CaliperLabel.Text);
+			Assert.Equal("150.00 points", timeCaliper.CaliperLabel.Text);
 			var amplitudeCaliper = GetAmplitudeCaliper();
-			Assert.Equal("150 points", amplitudeCaliper.CaliperLabel.Text);
+			Assert.Equal("150.00 points", amplitudeCaliper.CaliperLabel.Text);
 		}
 	}
 }

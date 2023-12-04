@@ -35,6 +35,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             _view = caliperView;
             if (!fakeUI)
             {
+                TextBlock.Text = text;
                 _size = ShapeMeasure(TextBlock);  // Estimate TextBlock size.
             }
             else
@@ -56,6 +57,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private void GetPosition(CaliperLabelAlignment alignment)
         {
             if (TextBlock == null) return;
+            _size.Width = ShapeMeasure(TextBlock).Width;
             _size.Width = TextBlock.ActualWidth;
             switch (alignment)
             {

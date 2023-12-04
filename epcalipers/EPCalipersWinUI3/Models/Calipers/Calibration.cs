@@ -11,6 +11,18 @@ using EPCalipersWinUI3.Helpers;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
+	public enum CalibrationUnit
+	{
+		Msec,
+		Sec,
+		Mv,
+		Mm,
+		Bpm,
+		Custom,
+		Uncalibrated,
+        Unknown
+	}
+
     /// <summary>
     /// Provides parameters need to calibrate the calipers.
     /// For example, 1000 msec translates to a CalibrationValue of 1000,
@@ -93,12 +105,13 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (input.Unit == CalibrationUnit.Custom)
             {
                 var (value, unitString) = ParseCustomString(input.CustomInput);
+                var unit = StringToCalibrationUnit(unitString);
 
                 return new CalibrationParameters
                 {
                     Value = value,
                     UnitString = unitString,
-                    Unit = CalibrationUnit.Custom
+                    Unit = unit
                 };
             }
             return new CalibrationParameters {
@@ -176,12 +189,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public static CalibrationUnit StringToCalibrationUnit(string input)
         {
-            if (string.IsNullOrEmpty(input)) return CalibrationUnit.Uncalibrated;
+            if (string.IsNullOrEmpty(input)) return CalibrationUnit.Unknown;
             if (IsMillimetersUnit(input)) return CalibrationUnit.Mm;
             if (IsMillisecondsUnit(input)) return CalibrationUnit.Msec;
             if (IsSecondsUnit(input)) return CalibrationUnit.Sec;
             if (IsMillivoltsUnit(input)) return CalibrationUnit.Mv;
-            return CalibrationUnit.Uncalibrated;
+            return CalibrationUnit.Unknown;
         }
 	}
 }

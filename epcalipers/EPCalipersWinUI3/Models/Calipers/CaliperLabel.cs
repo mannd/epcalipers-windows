@@ -107,8 +107,12 @@ namespace EPCalipersWinUI3.Models.Calipers
             Caliper = caliper;
             Text = text;
             Alignment = alignment;
-            AutoAlignLabel = autoPosition;
-            TextBlock = fakeUI ? null : new TextBlock() { Text = text };
+            AutoAlignLabel = autoPosition; 
+            TextBlock = fakeUI ? null : new TextBlock() 
+            { 
+                // TODO: label is offset to left when adding, and calibrating...
+                Text = text 
+            };
         }
 
         public void AddToView(ICaliperView view)

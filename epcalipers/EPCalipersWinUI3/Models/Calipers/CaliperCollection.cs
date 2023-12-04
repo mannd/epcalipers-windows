@@ -27,8 +27,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private WindowEx _calibrationWindow;
 
-		public Calibration TimeCalibration { get; set; }
-		public Calibration AmplitudeCalibration { get; set; }
+		public Calibration TimeCalibration { get; set; } = new Calibration();
+		public Calibration AmplitudeCalibration { get; set; } = new Calibration();
 
 		public Caliper SelectedCaliper
 		{
@@ -66,6 +66,18 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (IsLocked) return;
 			caliper.Add(_caliperView);
+			switch (caliper.CaliperType)
+			{
+				case CaliperType.Time:
+					caliper.Calibration = TimeCalibration;
+					break;
+				case CaliperType.Amplitude:
+					caliper.Calibration = AmplitudeCalibration;
+					break;
+				default:  // handle Angle calipers later
+					break;
+			}
+			caliper.UpdateLabel();
 			_calipers.Add(caliper);
 		}
 
@@ -210,7 +222,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow.Height = 400;
 			_calibrationWindow.Width = 400;
 			_calibrationWindow.SetIsAlwaysOnTop(true);
-			//var title = string.Format("{0] caliper calibration")
 			string title;
 			switch (caliperType)
 			{
@@ -248,7 +259,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			foreach (var caliper in _calipers)
 			{
 				caliper.ClearCalibration();
-				caliper.CaliperLabel.Text = caliper.Text;
+				caliper.UpdateLabel();
 			}
 		}
 
@@ -260,14 +271,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 					foreach (var caliper in FilteredCalipers(CaliperType.Time))
 					{
 						caliper.Calibration = TimeCalibration;
-						caliper.CaliperLabel.Text = caliper.Text;
+						caliper.UpdateLabel();
 					}
 					break;
 				case CaliperType.Amplitude:
 					foreach (var caliper in FilteredCalipers(CaliperType.Amplitude))
 					{
 						caliper.Calibration = AmplitudeCalibration;
-						caliper.CaliperLabel.Text = caliper.Text;
+						caliper.UpdateLabel();
 					}
 					break;
 				case CaliperType.Angle:

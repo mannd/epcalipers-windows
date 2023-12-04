@@ -25,7 +25,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal(CalibrationUnit.Msec , output1.Unit);
 			var input2 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(10.0, CalibrationUnit.Uncalibrated, "");
 			CalibrationParameters output2 = Calibration.ParseInput(input2);
-			Assert.Equal("", output2.UnitString);
+			Assert.Equal("points", output2.UnitString);
 			Assert.Equal(10 , output2.Value);
 			Assert.Equal(CalibrationUnit.Uncalibrated , output2.Unit);
 			var input3 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(0, CalibrationUnit.Custom, "1000 msec");

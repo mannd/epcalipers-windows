@@ -110,9 +110,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                 bar.Position += delta.Y;
             }
 
-            string text = Text;
-            CaliperLabel.Text = text;
-            CaliperLabel.SetPosition();
+            UpdateLabel();
         }
         #endregion
         #region calibration

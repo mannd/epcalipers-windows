@@ -28,8 +28,8 @@ namespace EPCalipersWinUI3.ViewModels
 					SecondField = "1.0 sec";
 					break;
 				case CaliperType.Amplitude:
-					FirstField = "1.0 mV";
-					SecondField = "10 mm";
+					FirstField = "10 mm";
+					SecondField = "1.0 mV";
 					break;
 				default:
 					throw new NotImplementedException();
@@ -42,20 +42,35 @@ namespace EPCalipersWinUI3.ViewModels
 			// TODO: Need to clean this up, break it up.  Need exception handling when
 			// input doesn't make sense.
 			if (_caliperCollection == null) return;
-			Calibration calibration = new Calibration(); // change to uninitiated variable
+			switch (_caliperType)
+			{
+				case CaliperType.Time:
+					CalibrateTimeCaliper();
+					break;
+				case CaliperType.Amplitude:
+					CalibrateAmplitudeCaliper();
+					break;
+				case CaliperType.Angle:
+					break;
+			}
+		}
+
+		private void CalibrateTimeCaliper()
+		{
+			Calibration calibration = new();
 			CalibrationInput input;
 			switch (IntervalSelection)
 			{
 				case 0:
 					input = new CalibrationInput(
-						1000, 
-						Contracts.CalibrationUnit.Msec);
+						1000,
+						CalibrationUnit.Msec);
 					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 1:
 					input = new CalibrationInput(
 						1.0,
-						Contracts.CalibrationUnit.Sec);
+						CalibrationUnit.Sec);
 					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 2:
@@ -65,21 +80,46 @@ namespace EPCalipersWinUI3.ViewModels
 						break;
 					}
 					input = new CalibrationInput(0,
-						Contracts.CalibrationUnit.Custom,
+						CalibrationUnit.Custom,
 						CustomInterval);
 					calibration = new Calibration(_caliper.Value, input);
 					break;
 			}
-			if (_caliperType == CaliperType.Time)
+			_caliperCollection.TimeCalibration = calibration;
+			_caliperCollection.SetCalibration(CaliperType.Time);
+		}
+		private void CalibrateAmplitudeCaliper()
+		{
+			Calibration calibration = new();
+			CalibrationInput input;
+			switch (IntervalSelection)
 			{
-				_caliperCollection.TimeCalibration = calibration;
-				_caliperCollection.SetCalibration(CaliperType.Time);
+				case 0:
+					input = new CalibrationInput(
+						10,
+						CalibrationUnit.Mm);
+					calibration = new Calibration(_caliper.Value, input);
+					break;
+				case 1:
+					input = new CalibrationInput(
+						1.0,
+						CalibrationUnit.Mv);
+					calibration = new Calibration(_caliper.Value, input);
+					break;
+				case 2:
+					if (CustomInterval == null || CustomInterval.Length == 0)
+					{
+						// throw exception, show message
+						break;
+					}
+					input = new CalibrationInput(0,
+						CalibrationUnit.Custom,
+						CustomInterval);
+					calibration = new Calibration(_caliper.Value, input);
+					break;
 			}
-			else
-			{
-				_caliperCollection.AmplitudeCalibration = calibration;
-				_caliperCollection.SetCalibration(CaliperType.Amplitude);
-			}
+			_caliperCollection.AmplitudeCalibration = calibration;
+			_caliperCollection.SetCalibration(CaliperType.Amplitude);
 		}
 
 		[ObservableProperty]

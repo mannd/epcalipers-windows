@@ -239,5 +239,11 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             Debug.Print("clearing calibration");
         }
+
+        public void UpdateLabel()
+        {
+            CaliperLabel.Text = Text;
+            CaliperLabel.SetPosition();
+        }
     }
 }
