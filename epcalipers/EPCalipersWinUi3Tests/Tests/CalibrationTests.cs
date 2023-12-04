@@ -58,7 +58,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			var calibration1 = new Calibration(value1, input1);
 			var multiplier1 = calibration1.Multiplier;
 			Assert.Equal(10.0, multiplier1, 0.0001);
-			var input2 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(1000, CalibrationUnit.Custom, "5.0 sec");
+			var input2 = new CalibrationInput(1000, CalibrationUnit.Custom, "5.0 sec");
 			var value2 = 100;
 			var calibration2 = new Calibration(value2, input2);
 			var multiplier2 = calibration2.Multiplier;
@@ -68,7 +68,7 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestCalibrationText()
 		{
-			var input1 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(1000, CalibrationUnit.Msec, "");
+			var input1 = new CalibrationInput(1000, CalibrationUnit.Msec, "");
 			var value1 = 100;
 			var calibration1 = new Calibration(value1, input1);
 			var unit1 = calibration1.Parameters.UnitString;
@@ -87,7 +87,21 @@ namespace EPCalipersWinUi3Tests.Tests
 
 			// Assert
 			Assert.Equal(1000, output1.Item1);
+			Assert.Equal("msec", output1.Item2);
 		}
+
+		[Fact]
+		public void TestZeroValueCustomString()
+		{
+			var input1 = "0 msec";
+			Assert.Throws<ZeroValueException>(() => Calibration.ParseCustomString(input1));
+			string input2 = null;
+			Assert.Throws<EmptyCustomStringException>(() => Calibration.ParseCustomString(input2));
+			string input3 = "";
+			Assert.Throws<EmptyCustomStringException>(() => Calibration.ParseCustomString(input3));
+
+		}
+
 
 		[Theory]
 		[InlineData("ms")]

@@ -57,69 +57,67 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private void CalibrateTimeCaliper()
 		{
-			Calibration calibration = new();
-			CalibrationInput input;
+			CalibrationInput input = new();
 			switch (IntervalSelection)
 			{
 				case 0:
 					input = new CalibrationInput(
 						1000,
 						CalibrationUnit.Msec);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 1:
 					input = new CalibrationInput(
 						1.0,
 						CalibrationUnit.Sec);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 2:
-					if (CustomInterval == null || CustomInterval.Length == 0)
-					{
-						// throw exception, show message
-						break;
-					}
 					input = new CalibrationInput(0,
 						CalibrationUnit.Custom,
 						CustomInterval);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 			}
-			_caliperCollection.TimeCalibration = calibration;
-			_caliperCollection.SetCalibration(CaliperType.Time);
+			try
+			{
+				var calibration = new Calibration(_caliper.Value, input);
+				_caliperCollection.TimeCalibration = calibration;
+				_caliperCollection.SetCalibration(CaliperType.Time);
+			}
+			catch (Exception)
+			{
+				Debug.Print("Could not calibrate.");
+			}
 		}
 		private void CalibrateAmplitudeCaliper()
 		{
-			Calibration calibration = new();
-			CalibrationInput input;
+			CalibrationInput input = new();
 			switch (IntervalSelection)
 			{
 				case 0:
 					input = new CalibrationInput(
 						10,
 						CalibrationUnit.Mm);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 1:
 					input = new CalibrationInput(
 						1.0,
 						CalibrationUnit.Mv);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 				case 2:
-					if (CustomInterval == null || CustomInterval.Length == 0)
-					{
-						// throw exception, show message
-						break;
-					}
 					input = new CalibrationInput(0,
 						CalibrationUnit.Custom,
 						CustomInterval);
-					calibration = new Calibration(_caliper.Value, input);
 					break;
 			}
+			try
+			{
+			var calibration = new Calibration(_caliper.Value, input);
 			_caliperCollection.AmplitudeCalibration = calibration;
 			_caliperCollection.SetCalibration(CaliperType.Amplitude);
+			}
+			catch (Exception)
+			{
+				Debug.Print("bad calibration");
+			}
 		}
 
 		[ObservableProperty]

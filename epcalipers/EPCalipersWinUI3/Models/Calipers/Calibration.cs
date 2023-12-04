@@ -51,6 +51,12 @@ namespace EPCalipersWinUI3.Models.Calipers
         public string UnitString { get; init; }
     }
 
+    public class ZeroValueException: Exception {
+        public ZeroValueException(): base("Zero value exception") { }
+    }
+
+    public class EmptyCustomStringException: Exception { }
+
     public struct Calibration 
     {
         public CalibrationParameters Parameters { get; init; }
@@ -72,8 +78,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         /// <param name="input">The desired calibration interval parameters, e.g. "1000 msec"</param>
         public Calibration(double value, CalibrationInput input)
         {
-            // TODO: need to throw exception if can't get good calibration from custom input.
-            // When exception thrown, calibration is not replaced, and maybe error msg shown.
             Parameters = ParseInput(input);
             Multiplier = Parameters.Value / value;
         }
@@ -98,23 +102,23 @@ namespace EPCalipersWinUI3.Models.Calipers
                 UnitString = CalibrationUnitToString(CalibrationUnit.Uncalibrated),
                 Value = 0.0,
             };
-        }
+		}
 
-        public static CalibrationParameters ParseInput(CalibrationInput input)
-        {
-            if (input.Unit == CalibrationUnit.Custom)
-            {
-                var (value, unitString) = ParseCustomString(input.CustomInput);
-                var unit = StringToCalibrationUnit(unitString);
+		public static CalibrationParameters ParseInput(CalibrationInput input)
+		{
+			if (input.Unit == CalibrationUnit.Custom)
+			{
+				var (value, unitString) = ParseCustomString(input.CustomInput);
+				var unit = StringToCalibrationUnit(unitString);
 
-                return new CalibrationParameters
-                {
-                    Value = value,
-                    UnitString = unitString,
-                    Unit = unit
-                };
-            }
-            return new CalibrationParameters {
+				return new CalibrationParameters
+				{
+					Value = value,
+					UnitString = unitString,
+					Unit = unit
+				};
+			}
+			return new CalibrationParameters {
                 Value = input.CalibrationValue, 
                 Unit = input.Unit, 
                 UnitString = CalibrationUnitToString(input.Unit)
@@ -123,7 +127,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public static (double, string) ParseCustomString(string s)
         {
-            double value;
+			if (s == null || s.Length == 0)
+			{
+				throw new EmptyCustomStringException();
+			}
+			double value;
             string units = string.Empty;
             char[] delimiters = { ' ' };
             string[] parts = s.Split(delimiters);
@@ -136,7 +144,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
             if (value == 0)
             {
-                throw new Exception("Calibration can't be zero.");
+                throw new ZeroValueException();
             }
             return (value, units);
         }
