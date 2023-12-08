@@ -117,6 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1 mV" xml:space="preserve">
+    <value>1.0 mV</value>
+    <comment>Second default amplitude caliper calibration</comment>
+  </data>
+  <data name="1 sec" xml:space="preserve">
+    <value>1.0 sec</value>
+    <comment>Second default time caliper calibration</comment>
+  </data>
+  <data name="10 mm" xml:space="preserve">
+    <value>10 mm</value>
+    <comment>First default amplitude caliper calibration</comment>
+  </data>
+  <data name="1000 msec" xml:space="preserve">
+    <value>1000 msec</value>
+    <comment>First default time caliper calibration</comment>
+  </data>
+  <data name="AboutEPCalipersDialogTitle" xml:space="preserve">
+    <value>About {0}</value>
+  </data>
   <data name="AboutMenuItem.Text" xml:space="preserve">
     <value>About EP Calipers</value>
   </data>
@@ -174,6 +193,10 @@
   <data name="CalipersMenu.Title" xml:space="preserve">
     <value>Calipers</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel button label</comment>
+  </data>
   <data name="ClearCalibrationMenuItem.Text" xml:space="preserve">
     <value>Clear calibration</value>
   </data>
@@ -182,6 +205,14 @@
   </data>
   <data name="DeleteCaliperMenuItem.Text" xml:space="preserve">
     <value>Delete caliper</value>
+  </data>
+  <data name="EmptyCustomStringException" xml:space="preserve">
+    <value>You must enter a value and units.  Example, 500 ms.</value>
+    <comment>Error message if custom calibration is left blank</comment>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+    <comment>Error dialog title</comment>
   </data>
   <data name="ExitMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
@@ -209,6 +240,10 @@
   </data>
   <data name="HelpMenuItem.Text" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="HomePageButtonTitle" xml:space="preserve">
+    <value>EP Studios home page</value>
+    <comment>Title of button that opens EP Studios home page</comment>
   </data>
   <data name="ImageMenu.Title" xml:space="preserve">
     <value>Image</value>
@@ -243,6 +278,10 @@
   <data name="NoCaliperSelectedTitle" xml:space="preserve">
     <value>No time or amplitude caliper selected</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>OK button label</comment>
+  </data>
   <data name="OpenBarButton.Label" xml:space="preserve">
     <value>Open</value>
   </data>
@@ -251,6 +290,10 @@
   </data>
   <data name="OptionsMenuItem.Text" xml:space="preserve">
     <value>Settings...</value>
+  </data>
+  <data name="points" xml:space="preserve">
+    <value>points</value>
+    <comment>Basic unit of uncalibrated calipers</comment>
   </data>
   <data name="PreviousPageMenuItem.Text" xml:space="preserve">
     <value>Previous PDF page</value>
@@ -336,6 +379,10 @@
   </data>
   <data name="ViewMenu.Title" xml:space="preserve">
     <value>View</value>
+  </data>
+  <data name="ZeroValueException" xml:space="preserve">
+    <value>You can't use zero to calibrate.</value>
+    <comment>Error message when a zero value is used for custom calibration</comment>
   </data>
   <data name="ZoomInBarButton.Label" xml:space="preserve">
     <value>Zoom in</value>

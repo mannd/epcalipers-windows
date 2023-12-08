@@ -62,9 +62,9 @@ namespace EPCalipersWinUI3.Views
             }
 		}
 
-		private void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
+		private async void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
 		{
-            ViewModel.SetCalibration();
+            await ViewModel.SetCalibration(XamlRoot);
             if (Window != null)
             {
                 Window.Close();

@@ -190,13 +190,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			switch (SelectedCaliperType)
 			{
 				case CaliperType.None:
-					dialog = MessageDialog.Create("NoCaliperSelectedTitle".GetLocalized(),
+					dialog = MessageHelper.CreateMessageDialog("NoCaliperSelectedTitle".GetLocalized(),
 						"NoCaliperSelectedMessage".GetLocalized());
 					dialog.XamlRoot = xamlRoot;
 					await dialog.ShowAsync();
 					break;
 				case CaliperType.Angle:
-					dialog = MessageDialog.Create("AngleCaliperSelectedTitle".GetLocalized(),
+					dialog = MessageHelper.CreateMessageDialog("AngleCaliperSelectedTitle".GetLocalized(),
 						"AngleCaliperSelectedMessage".GetLocalized());
 					dialog.XamlRoot = xamlRoot;
 					await dialog.ShowAsync();

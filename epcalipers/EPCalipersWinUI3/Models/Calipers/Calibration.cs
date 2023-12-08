@@ -51,11 +51,15 @@ namespace EPCalipersWinUI3.Models.Calipers
         public string UnitString { get; init; }
     }
 
-    public class ZeroValueException: Exception {
-        public ZeroValueException(): base("Zero value exception") { }
+    public class ZeroValueException: Exception 
+    {
+        public ZeroValueException(): base("ZeroValueException".GetLocalized()) { }
     }
 
-    public class EmptyCustomStringException: Exception { }
+    public class EmptyCustomStringException: Exception 
+    {
+        public EmptyCustomStringException() : base("EmptyCustomStringException".GetLocalized()) { }
+    }
 
     public struct Calibration 
     {
@@ -149,23 +153,22 @@ namespace EPCalipersWinUI3.Models.Calipers
             return (value, units);
         }
 
-        // TODO: callers will need to localize the results
         public static string CalibrationUnitToString(CalibrationUnit unit)
         {
             switch (unit)
             {
                 case CalibrationUnit.Msec:
-                    return "msec";
+                    return "msec".GetLocalized();
                 case CalibrationUnit.Sec:
-                    return "sec";
+                    return "sec".GetLocalized();
                 case CalibrationUnit.Mm:
-                    return "mm";
+                    return "mm".GetLocalized();
                 case CalibrationUnit.Mv:
-                    return "mV";
+                    return "mV".GetLocalized();
                 case CalibrationUnit.Bpm:
-                    return "bpm";
+                    return "bpm".GetLocalized();
                 case CalibrationUnit.Uncalibrated:
-                    return "points";
+                    return "points".GetLocalized();
                 default:
                     return string.Empty;
             }

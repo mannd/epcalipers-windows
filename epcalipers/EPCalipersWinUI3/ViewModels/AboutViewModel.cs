@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,6 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-
-	// TODO: Localize strings, possibly using satellite assemblies, or just resources.
 	public partial class AboutViewModel : ObservableObject
 	{
 
@@ -21,8 +20,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public AboutViewModel()
 		{
-			version = model.ProductVersion;
-			title = $"About {model.ProductName}";
+			version = model.FileVersion;
+			title = string.Format("AboutEPCalipersDialogTitle".GetLocalized(), model.ProductName);
 			copyright = $"{model.Copyright} {model.Company}";
 		}
 
@@ -39,14 +38,13 @@ namespace EPCalipersWinUI3.ViewModels
 		private string copyright;
 
 		[ObservableProperty]
-		private string homePage = "EP Studios home page";
+		private string homePage = "HomePageButtonTitle".GetLocalized();
 
 		[ObservableProperty]
 		private string navigateUri = "https://www.epstudiossoftware.com";
 
 		public void DebugPrintAssemblyInfo()
 		{
-			Debug.WriteLine("testing");
 			Debug.WriteLine(model.ProductName);
 			Debug.WriteLine(model.ProductVersion);
 			Debug.WriteLine(model.FileVersion);

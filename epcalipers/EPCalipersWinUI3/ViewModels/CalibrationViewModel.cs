@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Documents;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace EPCalipersWinUI3.ViewModels
 		private CaliperType _caliperType;
 		private Caliper _caliper;
 		private CaliperCollection _caliperCollection;
+
 		public CalibrationViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			_caliper = caliper;
@@ -24,38 +27,38 @@ namespace EPCalipersWinUI3.ViewModels
 			switch (_caliperType)
 			{
 				case CaliperType.Time:
-					FirstField = "1000 msec";
-					SecondField = "1.0 sec";
+					FirstField = "1000 msec".GetLocalized();
+					SecondField = "1 sec".GetLocalized();
 					break;
 				case CaliperType.Amplitude:
-					FirstField = "10 mm";
-					SecondField = "1.0 mV";
+					FirstField = "10 mm".GetLocalized();
+					SecondField = "1 mV".GetLocalized();
 					break;
 				default:
 					throw new NotImplementedException();
 			}
 		}
 
-		public void SetCalibration()
+		public async Task SetCalibration(XamlRoot xamlRoot)
 		{
-			// TODO: Need to add amplitude and angle calibration.
-			// TODO: Need to clean this up, break it up.  Need exception handling when
-			// input doesn't make sense.
 			if (_caliperCollection == null) return;
+			// Program logic should prevent setting calibration on an angle caliper.
+			Debug.Assert(_caliperType != CaliperType.Angle);
 			switch (_caliperType)
 			{
 				case CaliperType.Time:
-					CalibrateTimeCaliper();
+					await CalibrateTimeCaliper(xamlRoot);
 					break;
 				case CaliperType.Amplitude:
-					CalibrateAmplitudeCaliper();
+					await CalibrateAmplitudeCaliper(xamlRoot);
 					break;
 				case CaliperType.Angle:
+					// Shouldn't ever get here
 					break;
 			}
 		}
 
-		private void CalibrateTimeCaliper()
+		private async Task CalibrateTimeCaliper(XamlRoot xamlRoot)
 		{
 			CalibrationInput input = new();
 			switch (IntervalSelection)
@@ -71,23 +74,25 @@ namespace EPCalipersWinUI3.ViewModels
 						CalibrationUnit.Sec);
 					break;
 				case 2:
-					input = new CalibrationInput(0,
+					input = new CalibrationInput(
+						0,
 						CalibrationUnit.Custom,
 						CustomInterval);
 					break;
 			}
 			try
 			{
-				var calibration = new Calibration(_caliper.Value, input);
-				_caliperCollection.TimeCalibration = calibration;
+				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, input);
 				_caliperCollection.SetCalibration(CaliperType.Time);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				Debug.Print("Could not calibrate.");
+				var dialog = MessageHelper.CreateErrorDialog(e.Message);
+				dialog.XamlRoot = xamlRoot;
+				await dialog.ShowAsync();
 			}
 		}
-		private void CalibrateAmplitudeCaliper()
+		private async Task CalibrateAmplitudeCaliper(XamlRoot xamlRoot)
 		{
 			CalibrationInput input = new();
 			switch (IntervalSelection)
@@ -103,20 +108,22 @@ namespace EPCalipersWinUI3.ViewModels
 						CalibrationUnit.Mv);
 					break;
 				case 2:
-					input = new CalibrationInput(0,
+					input = new CalibrationInput(
+						0,
 						CalibrationUnit.Custom,
 						CustomInterval);
 					break;
 			}
 			try
 			{
-			var calibration = new Calibration(_caliper.Value, input);
-			_caliperCollection.AmplitudeCalibration = calibration;
+			_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, input);
 			_caliperCollection.SetCalibration(CaliperType.Amplitude);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
-				Debug.Print("bad calibration");
+				var dialog = MessageHelper.CreateErrorDialog(e.Message);
+				dialog.XamlRoot = xamlRoot;
+				await dialog.ShowAsync();
 			}
 		}
 
