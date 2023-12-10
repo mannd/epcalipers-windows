@@ -30,12 +30,5 @@ namespace EPCalipersWinUI3.Helpers
 			var title = "Error".GetLocalized();
 			return CreateMessageDialog(title, message);
 		}
-
-		//public void Log()
-		//{
-		//	using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
-		//	ILogger logger = factory.CreateLogger("Program");
-		//	logger.LogInformation("Hello World! Logging is {Description}.", "fun");
-		//}
 	}
 }

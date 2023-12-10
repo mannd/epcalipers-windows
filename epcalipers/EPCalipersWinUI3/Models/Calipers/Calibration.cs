@@ -11,17 +11,17 @@ using EPCalipersWinUI3.Helpers;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public enum CalibrationUnit
-	{
-		Msec,
-		Sec,
-		Mv,
-		Mm,
-		Bpm,
-		Custom,
-		Uncalibrated,
+    public enum CalibrationUnit
+    {
+        Msec,
+        Sec,
+        Mv,
+        Mm,
+        Bpm,
+        Custom,
+        Uncalibrated,
         Unknown
-	}
+    }
 
     /// <summary>
     /// Provides parameters need to calibrate the calipers.
@@ -51,17 +51,17 @@ namespace EPCalipersWinUI3.Models.Calipers
         public string UnitString { get; init; }
     }
 
-    public class ZeroValueException: Exception 
+    public class ZeroValueException : Exception
     {
-        public ZeroValueException(): base("ZeroValueException".GetLocalized()) { }
+        public ZeroValueException() : base("ZeroValueException") { }
     }
 
-    public class EmptyCustomStringException: Exception 
+    public class EmptyCustomStringException : Exception
     {
-        public EmptyCustomStringException() : base("EmptyCustomStringException".GetLocalized()) { }
+        public EmptyCustomStringException() : base("EmptyCustomStringException") { }
     }
 
-    public struct Calibration 
+    public struct Calibration
     {
         public CalibrationParameters Parameters { get; init; }
         public readonly double Multiplier { get; init; }
@@ -88,17 +88,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public Calibration()
         {
-			Parameters = UncalibratedParameters();
-			Multiplier = 1.0;
-		}
+            Parameters = UncalibratedParameters();
+            Multiplier = 1.0;
+        }
 
         public string GetText(double value)
         {
             var calibratedValue = Multiplier * value;
-			return string.Format("{0:0.00#} {1}", calibratedValue, Parameters.UnitString);
-		}
+            return string.Format("{0:0.00#} {1}", calibratedValue, Parameters.UnitString);
+        }
 
-		public static CalibrationParameters UncalibratedParameters()
+        public static CalibrationParameters UncalibratedParameters()
         {
             return new CalibrationParameters
             {
@@ -106,36 +106,36 @@ namespace EPCalipersWinUI3.Models.Calipers
                 UnitString = CalibrationUnitToString(CalibrationUnit.Uncalibrated),
                 Value = 0.0,
             };
-		}
+        }
 
-		public static CalibrationParameters ParseInput(CalibrationInput input)
-		{
-			if (input.Unit == CalibrationUnit.Custom)
-			{
-				var (value, unitString) = ParseCustomString(input.CustomInput);
-				var unit = StringToCalibrationUnit(unitString);
+        public static CalibrationParameters ParseInput(CalibrationInput input)
+        {
+            if (input.Unit == CalibrationUnit.Custom)
+            {
+                var (value, unitString) = ParseCustomString(input.CustomInput);
+                var unit = StringToCalibrationUnit(unitString);
 
-				return new CalibrationParameters
-				{
-					Value = value,
-					UnitString = unitString,
-					Unit = unit
-				};
-			}
-			return new CalibrationParameters {
-                Value = input.CalibrationValue, 
-                Unit = input.Unit, 
+                return new CalibrationParameters
+                {
+                    Value = value,
+                    UnitString = unitString,
+                    Unit = unit
+                };
+            }
+            return new CalibrationParameters {
+                Value = input.CalibrationValue,
+                Unit = input.Unit,
                 UnitString = CalibrationUnitToString(input.Unit)
             };
         }
 
         public static (double, string) ParseCustomString(string s)
         {
-			if (s == null || s.Length == 0)
-			{
-				throw new EmptyCustomStringException();
-			}
-			double value;
+            if (s == null || s.Length == 0)
+            {
+                throw new EmptyCustomStringException();
+            }
+            double value;
             string units = string.Empty;
             char[] delimiters = { ' ' };
             string[] parts = s.Split(delimiters);
@@ -158,45 +158,45 @@ namespace EPCalipersWinUI3.Models.Calipers
             switch (unit)
             {
                 case CalibrationUnit.Msec:
-                    return "msec".GetLocalized();
+                    return "msec";
                 case CalibrationUnit.Sec:
-                    return "sec".GetLocalized();
+                    return "sec";
                 case CalibrationUnit.Mm:
-                    return "mm".GetLocalized();
+                    return "mm";
                 case CalibrationUnit.Mv:
-                    return "mV".GetLocalized();
+                    return "mV";
                 case CalibrationUnit.Bpm:
-                    return "bpm".GetLocalized();
+                    return "bpm";
                 case CalibrationUnit.Uncalibrated:
-                    return "points".GetLocalized();
+                    return "points";
                 default:
                     return string.Empty;
             }
         }
 
         // TODO: Consider improving these regexs, e.g. mVolt doesn't match, millimeters doesn't match.
-		public static bool IsMillisecondsUnit(string input)
-		{
-			string pattern = @"^(msec|millis|мсек|миллис|ms|мс)$";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
+        public static bool IsMillisecondsUnit(string input)
+        {
+            string pattern = @"^(msec|millis|мсек|миллис|ms|мс)$";
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+        }
 
-		public static bool IsSecondsUnit(string input)
-		{
-			string pattern = @"^(sec|сек|s|с)$";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
-		public static bool IsMillimetersUnit(string input)
-		{
-			string pattern = @"^(millim|миллим|mm|мм)$";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
+        public static bool IsSecondsUnit(string input)
+        {
+            string pattern = @"^(sec|сек|s|с)$";
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+        }
+        public static bool IsMillimetersUnit(string input)
+        {
+            string pattern = @"^(millim|миллим|mm|мм)$";
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+        }
 
-		public static bool IsMillivoltsUnit(string input)
-		{
-			string pattern = @"^(milliv|mv|миллив|мв)$";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
+        public static bool IsMillivoltsUnit(string input)
+        {
+            string pattern = @"^(milliv|mv|миллив|мв)$";
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+        }
 
         public static CalibrationUnit StringToCalibrationUnit(string input)
         {
@@ -207,5 +207,5 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (IsMillivoltsUnit(input)) return CalibrationUnit.Mv;
             return CalibrationUnit.Unknown;
         }
-	}
+    }
 }
