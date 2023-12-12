@@ -9,16 +9,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class CalibrationViewModel: ObservableObject
 	{
-		private CaliperType _caliperType;
-		private Caliper _caliper;
+		private readonly CaliperType _caliperType;
+		private readonly Caliper _caliper;
 		private CaliperCollection _caliperCollection;
+		private struct CalibrationInput
+		{
+			public double CalibrationValue { get; init; }
+			public CalibrationUnit Unit { get; init; }
+			public string CustomInput { get; init; }
 
+			public CalibrationInput(double value, CalibrationUnit unit, string customInput = "")
+			{
+				CalibrationValue = value;
+				Unit = unit;
+				CustomInput = customInput;
+			}
+		}
 		public CalibrationViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			_caliper = caliper;
@@ -38,7 +51,6 @@ namespace EPCalipersWinUI3.ViewModels
 					throw new NotImplementedException();
 			}
 		}
-
 		public async Task SetCalibration(XamlRoot xamlRoot)
 		{
 			if (_caliperCollection == null) return;
@@ -57,7 +69,6 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 			}
 		}
-
 		private async Task CalibrateTimeCaliper(XamlRoot xamlRoot)
 		{
 			CalibrationInput input = new();
@@ -82,7 +93,8 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 			try
 			{
-				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, input);
+				CalibrationParameters parameters = ParseInput(input);
+				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
 				_caliperCollection.SetCalibration(CaliperType.Time);
 			}
 			catch (Exception e)
@@ -116,8 +128,9 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 			try
 			{
-			_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, input);
-			_caliperCollection.SetCalibration(CaliperType.Amplitude);
+				CalibrationParameters parameters = ParseInput(input);
+				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
+				_caliperCollection.SetCalibration(CaliperType.Amplitude);
 			}
 			catch (Exception e)
 			{
@@ -126,6 +139,69 @@ namespace EPCalipersWinUI3.ViewModels
 				await dialog.ShowAsync();
 			}
 		}
+        private static CalibrationParameters ParseInput(CalibrationInput input)
+        {
+            if (input.Unit == CalibrationUnit.Custom)
+            {
+                var (value, unitString) = ParseCustomString(input.CustomInput);
+                var unit = Calibration.StringToCalibrationUnit(unitString);
+
+                return new CalibrationParameters
+                {
+                    Value = value,
+                    UnitString = unitString,
+                    Unit = unit
+                };
+            }
+            return new CalibrationParameters {
+                Value = input.CalibrationValue,
+                Unit = input.Unit,
+                UnitString = CalibrationUnitToString(input.Unit)
+            };
+        }
+        public static (double, string) ParseCustomString(string s)
+        {
+            if (s == null || s.Length == 0)
+            {
+                throw new EmptyCustomStringException();
+            }
+            double value;
+            string units = string.Empty;
+            char[] delimiters = { ' ' };
+            string[] parts = s.Split(delimiters);
+            value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+            value = Math.Abs(value);
+            if (parts.Length > 1)
+            {
+                // assume second substring is units
+                units = parts[1];
+            }
+            if (value == 0)
+            {
+                throw new ZeroValueException();
+            }
+            return (value, units);
+        }
+        public static string CalibrationUnitToString(CalibrationUnit unit)
+        {
+            switch (unit)
+            {
+                case CalibrationUnit.Msec:
+                    return "msec".GetLocalized();
+                case CalibrationUnit.Sec:
+                    return "sec".GetLocalized();
+                case CalibrationUnit.Mm:
+                    return "mm".GetLocalized()	;
+                case CalibrationUnit.Mv:
+                    return "mV".GetLocalized();
+                case CalibrationUnit.Bpm:
+                    return "bpm".GetLocalized();
+                case CalibrationUnit.Uncalibrated:
+                    return "points".GetLocalized();
+                default:
+                    return string.Empty;
+            }
+        }
 
 		[ObservableProperty]
 		private int intervalSelection;

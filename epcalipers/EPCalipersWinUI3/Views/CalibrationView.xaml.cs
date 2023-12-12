@@ -32,7 +32,7 @@ namespace EPCalipersWinUI3.Views
 
         public CalibrationView(Caliper caliper, CaliperCollection caliperCollection)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             EnableCustomText();
             CaliperType = caliper.CaliperType;
             ViewModel = new CalibrationViewModel(caliper, caliperCollection);
