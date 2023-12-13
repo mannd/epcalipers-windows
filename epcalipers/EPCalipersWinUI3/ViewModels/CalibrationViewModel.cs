@@ -148,13 +148,13 @@ namespace EPCalipersWinUI3.ViewModels
 
                 return new CalibrationParameters
                 {
-                    Value = value,
+                    CalibrationInterval = value,
                     UnitString = unitString,
                     Unit = unit
                 };
             }
             return new CalibrationParameters {
-                Value = input.CalibrationValue,
+                CalibrationInterval = input.CalibrationValue,
                 Unit = input.Unit,
                 UnitString = CalibrationUnitToString(input.Unit)
             };

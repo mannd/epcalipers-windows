@@ -216,6 +216,12 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
+		private void ToggleRateInterval()
+		{ 
+			_caliperHelper.ToggleRateInterval();
+		}
+
+		[RelayCommand]
 		private static void Help() => AppHelper.Navigate(typeof(HelpWebViewPage));
 
 		[RelayCommand]
@@ -247,9 +253,9 @@ namespace EPCalipersWinUI3
 
 		#region calibration
 		[RelayCommand]
-		public async Task SetCalibration(XamlRoot xamlRoot)
+		public async Task SetCalibration()
 		{
-			await _caliperHelper.SetCalibrationAsync(xamlRoot);
+			await _caliperHelper.SetCalibrationAsync();
 		}
 
 		[RelayCommand]

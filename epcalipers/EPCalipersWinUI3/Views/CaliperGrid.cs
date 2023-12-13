@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
@@ -86,5 +87,11 @@ namespace EPCalipersWinUI3.Views
 		{
 			Debug.Print($"{line} removed.");
 		}
+
+		public XamlRoot XamlRoot
+		{
+			get { return null; }
+		}
+
 	}
 }

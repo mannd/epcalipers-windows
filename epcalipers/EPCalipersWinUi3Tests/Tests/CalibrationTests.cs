@@ -120,6 +120,8 @@ namespace EPCalipersWinUi3Tests.Tests
 		[InlineData("mv")]
 		[InlineData("mV")]
 		[InlineData("milliV")]
+		[InlineData("milliVolt")]
+		[InlineData("millivolts")]
 		public void TestIsMv(string input)
 		{
 			var result = Calibration.IsMillivoltsUnit(input);

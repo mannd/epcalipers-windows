@@ -25,6 +25,8 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			_caliperView = caliperView;
 			_caliperCollection = caliperCollection;
+			Calibration.DefaultUnit = "points".GetLocalized();
+			Calibration.DefaultBpm = "bpm".GetLocalized();
 		}
 
 		public void AddTimeCaliper(ISettings settings)
@@ -102,15 +104,20 @@ namespace EPCalipersWinUI3.Helpers
 			return _caliperCollection.SelectedCaliperType;
 		}
 
-		public async Task SetCalibrationAsync(XamlRoot xamlRoot)
+		public async Task SetCalibrationAsync()
 		{
-			await _caliperCollection.SetCalibrationAsync(xamlRoot);
+			await _caliperCollection.SetCalibrationAsync();
 		}
-
 
 		public void ClearCalibration()
 		{
 			_caliperCollection.ClearCalibration();
+		}
+
+		public async Task ToggleRateInterval()
+		{
+			await _caliperCollection.ToggleRateInterval();
+
 		}
 	}
 }

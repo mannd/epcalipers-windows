@@ -24,18 +24,17 @@ namespace EPCalipersWinUI3.Models.Calipers
     }
     public readonly struct CalibrationParameters
     {
-        public double Value { get; init; }
+        public double CalibrationInterval { get; init; }
         public CalibrationUnit Unit { get; init; }
         public string UnitString { get; init; }
 
-        public CalibrationParameters(double value, CalibrationUnit unit, string unitString)
+        public CalibrationParameters(double interval, CalibrationUnit unit, string unitString)
         {
-            Value = value;
+            CalibrationInterval = interval;
             Unit = unit;
             UnitString = unitString;
         }
     }
-
     public sealed class ZeroValueException : Exception
     {
         public ZeroValueException() : base("ZeroValueException") { }
@@ -45,7 +44,6 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         public EmptyCustomStringException() : base("EmptyCustomStringException") { }
     }
-
     public readonly struct Calibration
     {
         public CalibrationParameters Parameters { get; init; }
@@ -54,9 +52,17 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             get
             {
-                return string.Format("{0:0#} {1}", Parameters.Value, Parameters.UnitString);
+                return string.Format("{0:0#} {1}", 
+                    Parameters.CalibrationInterval, 
+                    Parameters.UnitString);
             }
         }
+
+        // These two strings are localized by CaliperHelper.
+        public static string DefaultUnit { get; set; } = "points";
+        public static string DefaultBpm { get; set; } = "bpm";
+
+        private readonly CalibrationUnit _originalUnit;
 
         /// <summary>
         /// Provides a calibration factor that calculates the actual interval.
@@ -66,7 +72,8 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Calibration(double value, CalibrationParameters parameters)
         {
             Parameters = parameters;
-            Multiplier = Parameters.Value / value;
+            Multiplier = Parameters.CalibrationInterval / value;
+            _originalUnit = Parameters.Unit;
         }
 
         public Calibration()
@@ -74,22 +81,33 @@ namespace EPCalipersWinUI3.Models.Calipers
             Parameters = new CalibrationParameters
             {
                 Unit = CalibrationUnit.Uncalibrated,
-                UnitString = "points", // Note this is not localized
-                Value = 1
+                UnitString = DefaultUnit,
+                CalibrationInterval = 1
             };
             Multiplier = 1.0;
+            _originalUnit = Parameters.Unit;
         }
 
-        public readonly string GetText(double value)
+        public readonly string GetText(double interval)
         {
-            var calibratedValue = Multiplier * value;
-            return string.Format("{0:0.00#} {1}", calibratedValue, Parameters.UnitString);
+            var valueUnit = CalibratedInterval(interval);
+            return string.Format("{0:0.00#} {1}", valueUnit.Item1, valueUnit.Item2);
+        }
+        private readonly (double, string) CalibratedInterval(double interval)
+        {
+            if (Parameters.Unit != CalibrationUnit.Bpm)
+            {
+                return (Multiplier * interval, Parameters.UnitString);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        // TODO: Consider improving these regexs, e.g. mVolt doesn't match, millimeters doesn't match.
         public static bool IsMillisecondsUnit(string input)
         {
-            string pattern = @"^(msec|millis|мсек|миллис|ms|мс)$";
+            string pattern = @"^(msec|мсек|ms|мс)$|^(millis|миллис)";
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
         }
 
@@ -100,13 +118,13 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         public static bool IsMillimetersUnit(string input)
         {
-            string pattern = @"^(millim|миллим|mm|мм)$";
+            string pattern = @"^(mm|мм)$|^(millim|миллим)";
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
         }
 
         public static bool IsMillivoltsUnit(string input)
         {
-            string pattern = @"^(milliv|mv|миллив|мв)$";
+            string pattern = @"^(mv|мв)$|^(milliv|миллив)";
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
         }
 

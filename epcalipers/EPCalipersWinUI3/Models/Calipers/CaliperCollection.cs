@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml.Hosting;
 using WinUIEx;
+using Xunit.Sdk;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -184,7 +185,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 
 		// TODO: possibly move this to CaliperHelper
-		public async Task SetCalibrationAsync(XamlRoot xamlRoot)
+		public async Task SetCalibrationAsync()
 		{
 			ContentDialog dialog;
 			switch (SelectedCaliperType)
@@ -192,13 +193,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 				case CaliperType.None:
 					dialog = MessageHelper.CreateMessageDialog("NoCaliperSelectedTitle".GetLocalized(),
 						"NoCaliperSelectedMessage".GetLocalized());
-					dialog.XamlRoot = xamlRoot;
+					dialog.XamlRoot = _caliperView.XamlRoot;
 					await dialog.ShowAsync();
 					break;
 				case CaliperType.Angle:
 					dialog = MessageHelper.CreateMessageDialog("AngleCaliperSelectedTitle".GetLocalized(),
 						"AngleCaliperSelectedMessage".GetLocalized());
-					dialog.XamlRoot = xamlRoot;
+					dialog.XamlRoot = _caliperView.XamlRoot;
 					await dialog.ShowAsync();
 					break;
 				case CaliperType.Time:
@@ -256,6 +257,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ClearCalibration()
 		{
+			TimeCalibration = new Calibration();
+			AmplitudeCalibration = new Calibration();
 			foreach (var caliper in _calipers)
 			{
 				caliper.ClearCalibration();
@@ -283,6 +286,29 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Angle:
 					// TODO: need to set both calibrations, ignore for now
+					break;
+				default:
+					break;
+			}
+		}
+
+		public async Task ToggleRateInterval()
+		{
+			Debug.Print("Toggle rate interval...");
+			ContentDialog dialog;
+			switch (TimeCalibration.Parameters.Unit)
+			{
+				case CalibrationUnit.Uncalibrated:
+					dialog = MessageHelper.CreateMessageDialog("Time calipers not calibrated",
+						"You need to calibrate a time caliper before you can measure heart rates.");
+					dialog.XamlRoot = _caliperView.XamlRoot;
+					await dialog.ShowAsync();
+					break;
+				case CalibrationUnit.Unknown:
+					dialog = MessageHelper.CreateMessageDialog("Time calipers units not correct",
+						"Calibration unit needs to be msec or sec to meaure heart rates.");
+					dialog.XamlRoot = _caliperView.XamlRoot;
+					await dialog.ShowAsync();
 					break;
 				default:
 					break;

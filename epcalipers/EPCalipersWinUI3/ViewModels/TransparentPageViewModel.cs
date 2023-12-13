@@ -95,6 +95,12 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
+		private async Task ToggleRateInterval()
+		{
+			await _caliperHelper.ToggleRateInterval();
+		}
+
+		[RelayCommand]
 		private void ToggleTransparentWindow()
 		{
 			var mainWindow = AppHelper.AppMainWindow;
@@ -111,9 +117,9 @@ namespace EPCalipersWinUI3.ViewModels
 		private static void Exit() => CommandHelper.ApplicationExit();
 
 		[RelayCommand]
-		public async Task SetCalibrationAsync(XamlRoot xamlRoot)
+		public async Task SetCalibrationAsync()
 		{
-			await _caliperHelper.SetCalibrationAsync(xamlRoot);
+			await _caliperHelper.SetCalibrationAsync();
 		}
 
 		[RelayCommand]

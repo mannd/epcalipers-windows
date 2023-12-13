@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPCalipersWinUI3.Models.Calipers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
@@ -23,5 +24,7 @@ namespace EPCalipersWinUI3.Contracts
 		public void Remove(Line line);
 
 		public Point GetOffsettedCenter();
+
+        public XamlRoot XamlRoot { get; }
     }
 }

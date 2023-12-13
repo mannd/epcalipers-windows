@@ -165,11 +165,11 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
-                                Command="{x:Bind ViewModel.SetCalibrationCommand}"
-                                CommandParameter="{x:Bind XamlRoot}" />
+                                Command="{x:Bind ViewModel.SetCalibrationCommand}" />
                 <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem">
+                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem"
+                                Command="{x:Bind ViewModel.ToggleRateIntervalCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -247,14 +247,14 @@
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
-                                        Command="{x:Bind ViewModel.SetCalibrationCommand}"
-                                        CommandParameter="{x:Bind XamlRoot}" />
+                                        Command="{x:Bind ViewModel.SetCalibrationCommand}" />
                         <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}">
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" />
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton"
+                                Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
             <AppBarButton x:Uid="MeanRateIntervalBarButton">
                 <FontIcon Glyph="&#xE94A;" />
             </AppBarButton>
