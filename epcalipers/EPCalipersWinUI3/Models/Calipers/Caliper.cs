@@ -51,6 +51,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public CaliperType CaliperType { get; init; }
 
+        public bool ShowRate { get; set; } = false;
+
         protected Bar[] Bars { get; init; }
         public CaliperLabel CaliperLabel { get; set; }
 
@@ -114,7 +116,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public Calibration Calibration { get; set; } = new Calibration();
 
-        public string Text => Calibration.GetText(Value);
+        public string Text => Calibration.GetText(Value, ShowRate);
 
         public void ToggleIsSelected()
         {

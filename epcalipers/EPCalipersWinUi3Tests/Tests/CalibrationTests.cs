@@ -72,7 +72,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			var calibration1 = new Calibration(value1, input1);
 			var unit1 = calibration1.Parameters.UnitString;
 			Assert.Equal("msec", unit1);
-			Assert.Equal("1000 msec", calibration1.Text);
+			Assert.Equal("1000.00 msec", calibration1.GetText(value1));
 		}
 
 
@@ -154,7 +154,22 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.False(result);
 		}
 
-		// Similar test methods for other functions (IsSecondsUnit, IsMillimetersUnit, IsMillivoltsUnit)...
+		[Fact]
+		public void TestBpm()
+		{
+			var input = new CalibrationParameters(1000, CalibrationUnit.Msec, "msec");
+			var value = 100;
+			var calibration1 = new Calibration(value, input);
+
+			var result = calibration1.GetText(100, false);
+
+			Assert.Equal("1000.00 msec", result);
+
+			result = calibration1.GetText(100, true);
+
+			Assert.Equal("60.00 bpm", result);
+		}
+
 	}
 }
 

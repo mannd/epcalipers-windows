@@ -27,7 +27,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         public double CalibrationInterval { get; init; }
         public CalibrationUnit Unit { get; init; }
         public string UnitString { get; init; }
-
         public CalibrationParameters(double interval, CalibrationUnit unit, string unitString)
         {
             CalibrationInterval = interval;
@@ -44,19 +43,10 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         public EmptyCustomStringException() : base("EmptyCustomStringException") { }
     }
-    public readonly struct Calibration
+    public struct Calibration
     {
         public CalibrationParameters Parameters { get; init; }
         public readonly double Multiplier { get; init; }
-        public string Text
-        {
-            get
-            {
-                return string.Format("{0:0#} {1}", 
-                    Parameters.CalibrationInterval, 
-                    Parameters.UnitString);
-            }
-        }
 
         // These two strings are localized by CaliperHelper.
         public static string DefaultUnit { get; set; } = "points";
@@ -88,24 +78,28 @@ namespace EPCalipersWinUI3.Models.Calipers
             _originalUnit = Parameters.Unit;
         }
 
-        public readonly string GetText(double interval)
+        public readonly string GetText(double interval, bool showBpm = false)
         {
-            var valueUnit = CalibratedInterval(interval);
+            var valueUnit = CalibratedInterval(interval, showBpm);
             return string.Format("{0:0.00#} {1}", valueUnit.Item1, valueUnit.Item2);
         }
-        private readonly (double, string) CalibratedInterval(double interval)
+        private readonly (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
-            if (Parameters.Unit != CalibrationUnit.Bpm)
+            if (showBpm)
             {
-                return (Multiplier * interval, Parameters.UnitString);
+                if (Parameters.Unit == CalibrationUnit.Msec)
+                {
+                    return (MathHelper.MsecToBpm(Multiplier * interval), DefaultBpm);
+                }
+                if (Parameters.Unit == CalibrationUnit.Sec)
+                {
+                    return (MathHelper.SecToBpm(Multiplier * interval), DefaultBpm);
+                }
             }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
+			return (Multiplier * interval, Parameters.UnitString);
+		}
 
-        public static bool IsMillisecondsUnit(string input)
+		public static bool IsMillisecondsUnit(string input)
         {
             string pattern = @"^(msec|мсек|ms|мс)$|^(millis|миллис)";
             return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);

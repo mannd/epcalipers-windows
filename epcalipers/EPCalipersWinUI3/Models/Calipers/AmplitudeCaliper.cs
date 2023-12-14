@@ -72,7 +72,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 bar.Y1 += delta.Y;
                 bar.Y2 += delta.Y;
             }
-            string text = Calibration.GetText(Value);
             CaliperLabel.Text = Text;
             CaliperLabel.SetPosition();
         }

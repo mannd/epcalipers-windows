@@ -31,6 +31,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Calibration TimeCalibration { get; set; } = new Calibration();
 		public Calibration AmplitudeCalibration { get; set; } = new Calibration();
 
+		public bool ShowRate { get; set; } = false;
+
 		public Caliper SelectedCaliper
 		{
 			get
@@ -78,6 +80,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				default:  // handle Angle calipers later
 					break;
 			}
+			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
 			_calipers.Add(caliper);
 		}
@@ -294,7 +297,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task ToggleRateInterval()
 		{
-			Debug.Print("Toggle rate interval...");
 			ContentDialog dialog;
 			switch (TimeCalibration.Parameters.Unit)
 			{
@@ -311,6 +313,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 					await dialog.ShowAsync();
 					break;
 				default:
+					ShowRate = !ShowRate;
+					var timeCalipers = FilteredCalipers(CaliperType.Time);
+					foreach (var caliper in timeCalipers)
+					{
+						caliper.ShowRate = ShowRate;
+						caliper.UpdateLabel();
+					}
 					break;
 			}
 		}
