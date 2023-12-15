@@ -52,5 +52,15 @@ namespace EPCalipersWinUI3.Views
 		{
 			selectedColorPickerButton.Flyout.Hide();
         }
+
+		private void Rounding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				ViewModel.Rounding = selection;
+			}
+
+        }
     }
 }

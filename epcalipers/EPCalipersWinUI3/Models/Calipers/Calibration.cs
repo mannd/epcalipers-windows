@@ -45,6 +45,22 @@ namespace EPCalipersWinUI3.Models.Calipers
     }
     public struct Calibration
     {
+        // Rounding format strings
+		private const string _roundToIntString = "D";
+		private const string _roundToFourPlacesString = "G4";
+		private const string _roundToTenthsString = "F1";
+		private const string _roundToHundredthsString = "F2";
+		private const string _noRoundingString = "G";
+
+        private IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
+        {
+            {Rounding.ToInt, _roundToIntString },
+            {Rounding.ToFourPlaces, _roundToFourPlacesString },
+            {Rounding.ToTenths, _roundToTenthsString },
+            {Rounding.ToHundredths, _roundToHundredthsString },
+            {Rounding.None, _noRoundingString },
+        };
+
         public CalibrationParameters Parameters { get; init; }
         public readonly double Multiplier { get; init; }
 
@@ -83,21 +99,66 @@ namespace EPCalipersWinUI3.Models.Calipers
             var valueUnit = CalibratedInterval(interval, showBpm);
             return string.Format("{0:0.00#} {1}", valueUnit.Item1, valueUnit.Item2);
         }
+
         private readonly (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
             if (showBpm)
             {
                 if (Parameters.Unit == CalibrationUnit.Msec)
                 {
-                    return (MathHelper.MsecToBpm(Multiplier * interval), DefaultBpm);
+                    return (MathHelper.AbsMsecToBpm(Multiplier * interval), DefaultBpm);
                 }
                 if (Parameters.Unit == CalibrationUnit.Sec)
                 {
-                    return (MathHelper.SecToBpm(Multiplier * interval), DefaultBpm);
+                    return (MathHelper.AbsSecToBpm(Multiplier * interval), DefaultBpm);
                 }
             }
 			return (Multiplier * interval, Parameters.UnitString);
 		}
+
+		//protected virtual string Measurement()
+		//{
+		//	string s;
+		//	if (CurrentCalibration.unitsAreMsecOrRate())
+		//	{
+		//		string format;
+		//		switch (Rounding)
+		//		{
+		//			case Preferences.Rounding.ToInt:
+		//				format = roundToIntString;
+		//				break;
+		//			case Preferences.Rounding.ToFourPlaces:
+		//				format = roundToFourPlacesString;
+		//				break;
+		//			case Preferences.Rounding.ToTenths:
+		//				format = roundToTenthsString;
+		//				break;
+		//			case Preferences.Rounding.ToHundredths:
+		//				format = roundToHundredthsString;
+		//				break;
+		//			case Preferences.Rounding.None:
+		//				format = noRoundingString;
+		//				break;
+		//			default:
+		//				format = roundToIntString;
+		//				break;
+		//		}
+		//		if (Rounding == Preferences.Rounding.ToInt)
+		//		{
+		//			s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
+		//			CurrentCalibration.Units);
+		//		}
+		//		else
+		//		{
+		//			s = string.Format("{0} {1}", CalibratedResult().ToString(format), CurrentCalibration.Units);
+		//		}
+		//	}
+		//	else
+		//	{
+		//		s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
+		//	}
+		//	return s;
+		//}
 
 		public static bool IsMillisecondsUnit(string input)
         {

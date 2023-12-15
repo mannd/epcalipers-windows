@@ -1,21 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPCalipersWinUI3.Models;
-using CommunityToolkit.Mvvm.Input;
-using System.ComponentModel;
-using Windows.Storage.Streams;
-using Windows.UI;
 using EPCalipersWinUI3.Models.Calipers;
+using System.ComponentModel;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-    public partial class SettingsViewModel : ObservableObject
+	public partial class SettingsViewModel : ObservableObject
 	{
-		private Settings _model = new Settings();
+		private readonly Settings _model = new();
 
 		public SettingsViewModel() {
 			AutoAlignLabel = _model.AutoAlignLabel;
@@ -24,6 +17,7 @@ namespace EPCalipersWinUI3.ViewModels
 			UnselectedCaliperColor = _model.UnselectedCaliperColor;
 			SelectedCaliperColor = _model.SelectedCaliperColor;
 			BarThickness = _model.BarThickness;
+			Rounding = (int)_model.Rounding;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -49,6 +43,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(AutoAlignLabel):
 					_model.AutoAlignLabel = AutoAlignLabel;
 					break;
+				case nameof(Rounding):
+					_model.Rounding = (Rounding)Rounding;
+					break;
 				default:
 					break;
 			}
@@ -71,5 +68,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private double barThickness;
+
+		[ObservableProperty]
+		private int rounding;
 	}
 }

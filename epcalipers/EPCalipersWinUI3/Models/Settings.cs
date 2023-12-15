@@ -12,6 +12,14 @@ using Windows.UI.Core;
 
 namespace EPCalipersWinUI3.Models
 {
+		public enum Rounding
+		{
+			ToInt,
+			ToFourPlaces,
+			ToTenths,
+			ToHundredths,
+			None
+		}
     public class Settings: ISettings
 	{
 		private Windows.Storage.ApplicationDataContainer _localSettings;
@@ -21,11 +29,11 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _unselectedCaliperColorKey = "UnselectedCaliperColorKey";
 		private readonly string _selectedCaliperColorKey = "SelectedCaliperColorKey";
 		private readonly string _barThicknessKey = "BarThicknessKey";
+		private readonly string _roundingKey = "RoundingKey";
 		
 		public Settings()
 		{
-			_localSettings =
-				Windows.Storage.ApplicationData.Current.LocalSettings;
+			_localSettings = ApplicationData.Current.LocalSettings;
 		}
 
 		public double BarThickness
@@ -33,13 +41,17 @@ namespace EPCalipersWinUI3.Models
 			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2.0);
 			set => _localSettings.Values[_barThicknessKey] = value;
 		}
+		public Rounding Rounding
+		{
+			get => (Rounding)(_localSettings.Values[_roundingKey] ?? Rounding.ToInt);
+			set => _localSettings.Values[_roundingKey] = (int)value;
+		}
 
 		public bool AutoAlignLabel
 		{
 			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? false);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
-
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
 			get
@@ -97,7 +109,6 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_selectedCaliperColorKey] = hexColor;
 			}
 		}
-
 		private Color GetColorFromString(string colorHex)
 		{
 			var a = Convert.ToByte(colorHex.Substring(1, 2), 16);
@@ -107,7 +118,6 @@ namespace EPCalipersWinUI3.Models
 			return Color.FromArgb(a, r, g, b);
 		}
 	}
-
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
@@ -116,5 +126,6 @@ namespace EPCalipersWinUI3.Models
 		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set;} = CaliperLabelAlignment.Left;
 		public Color UnselectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public Rounding Rounding { get; set; } = Rounding.None;
 	}
 }

@@ -1,22 +1,12 @@
-﻿using Microsoft.UI.Input;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
+﻿using EPCalipersWinUI3.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
-using EPCalipersWinUI3.Contracts;
-using EPCalipersWinUI3.Models;
-using Windows.Media.Miracast;
-using System.Diagnostics;
-using EPCalipersWinUI3.Models.Calipers;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-    public enum CaliperType
+	public enum CaliperType
     {
         Time,
         Amplitude,
@@ -38,11 +28,12 @@ namespace EPCalipersWinUI3.Models.Calipers
     public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
     public abstract class Caliper
     {
-        protected bool _fakeUI;
+        protected bool _fakeUI;  // Is true for testing.
 
         protected Bounds Bounds => CaliperView.Bounds;
 
         protected ICaliperView CaliperView { get; init; }
+
 
         protected Caliper(ICaliperView caliperView)
         {

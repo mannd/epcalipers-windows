@@ -1,21 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Documents;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class CalibrationViewModel: ObservableObject
+	public partial class CalibrationViewModel : ObservableObject
 	{
+		public static readonly IDictionary<CalibrationUnit, string> CalibrationStrings = 
+			new Dictionary<CalibrationUnit, string>()
+			{
+				{CalibrationUnit.Msec, "msec".GetLocalized() },
+				{CalibrationUnit.Sec, "sec".GetLocalized() },
+				{CalibrationUnit.Mm, "mm".GetLocalized() },
+				{CalibrationUnit.Mv, "mV".GetLocalized() },
+				{CalibrationUnit.Bpm, "msec".GetLocalized() },
+				{CalibrationUnit.Uncalibrated, "points".GetLocalized() },
+			};
+
 		private readonly CaliperType _caliperType;
 		private readonly Caliper _caliper;
 		private CaliperCollection _caliperCollection;
@@ -139,69 +146,49 @@ namespace EPCalipersWinUI3.ViewModels
 				await dialog.ShowAsync();
 			}
 		}
-        private static CalibrationParameters ParseInput(CalibrationInput input)
-        {
-            if (input.Unit == CalibrationUnit.Custom)
-            {
-                var (value, unitString) = ParseCustomString(input.CustomInput);
-                var unit = Calibration.StringToCalibrationUnit(unitString);
+		private static CalibrationParameters ParseInput(CalibrationInput input)
+		{
+			if (input.Unit == CalibrationUnit.Custom)
+			{
+				var (value, unitString) = ParseCustomString(input.CustomInput);
+				var unit = Calibration.StringToCalibrationUnit(unitString);
 
-                return new CalibrationParameters
-                {
-                    CalibrationInterval = value,
-                    UnitString = unitString,
-                    Unit = unit
-                };
-            }
-            return new CalibrationParameters {
-                CalibrationInterval = input.CalibrationValue,
-                Unit = input.Unit,
-                UnitString = CalibrationUnitToString(input.Unit)
-            };
-        }
-        public static (double, string) ParseCustomString(string s)
-        {
-            if (s == null || s.Length == 0)
-            {
-                throw new EmptyCustomStringException();
-            }
-            double value;
-            string units = string.Empty;
-            char[] delimiters = { ' ' };
-            string[] parts = s.Split(delimiters);
-            value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            value = Math.Abs(value);
-            if (parts.Length > 1)
-            {
-                // assume second substring is units
-                units = parts[1];
-            }
-            if (value == 0)
-            {
-                throw new ZeroValueException();
-            }
-            return (value, units);
-        }
-        public static string CalibrationUnitToString(CalibrationUnit unit)
-        {
-            switch (unit)
-            {
-                case CalibrationUnit.Msec:
-                    return "msec".GetLocalized();
-                case CalibrationUnit.Sec:
-                    return "sec".GetLocalized();
-                case CalibrationUnit.Mm:
-                    return "mm".GetLocalized()	;
-                case CalibrationUnit.Mv:
-                    return "mV".GetLocalized();
-                case CalibrationUnit.Bpm:
-                    return "bpm".GetLocalized();
-                case CalibrationUnit.Uncalibrated:
-                    return "points".GetLocalized();
-                default:
-                    return string.Empty;
-            }
-        }
+				return new CalibrationParameters
+				{
+					CalibrationInterval = value,
+					UnitString = unitString,
+					Unit = unit
+				};
+			}
+			return new CalibrationParameters {
+				CalibrationInterval = input.CalibrationValue,
+				Unit = input.Unit,
+				UnitString = CalibrationStrings[input.Unit]
+			};
+		}
+		public static (double, string) ParseCustomString(string s)
+		{
+			if (s == null || s.Length == 0)
+			{
+				throw new EmptyCustomStringException();
+			}
+			double value;
+			string units = string.Empty;
+			char[] delimiters = { ' ' };
+			string[] parts = s.Split(delimiters);
+			value = float.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+			value = Math.Abs(value);
+			if (parts.Length > 1)
+			{
+				// assume second substring is units
+				units = parts[1];
+			}
+			if (value == 0)
+			{
+				throw new ZeroValueException();
+			}
+			return (value, units);
+		}
 
 		[ObservableProperty]
 		private int intervalSelection;

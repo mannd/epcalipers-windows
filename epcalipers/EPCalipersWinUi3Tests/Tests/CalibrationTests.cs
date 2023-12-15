@@ -170,6 +170,34 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal("60.00 bpm", result);
 		}
 
+		[Fact]
+		public void TestNoNegativeBpm()
+		{
+			var input = new CalibrationParameters(1000, CalibrationUnit.Msec, "msec");
+			var value = 100;
+			var calibration1 = new Calibration(value, input);
+
+			var result = calibration1.GetText(-100, false);
+
+			Assert.Equal("-1000.00 msec", result);
+
+			result = calibration1.GetText(-100, true);
+
+			Assert.Equal("60.00 bpm", result);
+
+			input = new CalibrationParameters(1.0, CalibrationUnit.Sec, "sec");
+			value = 100;
+			calibration1 = new Calibration(value, input);
+
+			result = calibration1.GetText(-100, false);
+
+			Assert.Equal("-1.00 sec", result);
+
+			result = calibration1.GetText(-100, true);
+
+			Assert.Equal("60.00 bpm", result);
+		}
+
 	}
 }
 

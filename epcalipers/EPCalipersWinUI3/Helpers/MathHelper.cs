@@ -77,6 +77,11 @@ namespace EPCalipersWinUI3.Helpers
 			return 60000.0 / interval;
 		}
 
+		public static double AbsMsecToBpm(double interval)
+		{
+			return Math.Abs(MsecToBpm(interval));
+		}
+
 		public static double BpmToMsec(double rate)
 		{
 			return 60000.0 / rate;
@@ -87,12 +92,18 @@ namespace EPCalipersWinUI3.Helpers
 			return 60.0 / interval;
 		}
 
+		public static double AbsSecToBpm(double interval)
+		{
+			return Math.Abs(SecToBpm(interval));
+		}
+
 		public static double BpmToSec(double rate)
 		{
 			return 60.0 / rate;
 		}
 
 		public static double MsecToSec(double interval)
+
 		{
 			return interval / 1000.0;
 		}

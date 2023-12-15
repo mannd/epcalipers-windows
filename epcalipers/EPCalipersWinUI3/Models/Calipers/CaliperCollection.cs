@@ -31,7 +31,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Calibration TimeCalibration { get; set; } = new Calibration();
 		public Calibration AmplitudeCalibration { get; set; } = new Calibration();
 
-		public bool ShowRate { get; set; } = false;
+		// A calibrated time caliper can show interval or rate.
+		public bool ShowRate { get; set; } = false; 
 
 		public Caliper SelectedCaliper
 		{

@@ -113,6 +113,16 @@
                 <TextBlock VerticalAlignment="Center">Caliper line width=</TextBlock>
                     <TextBlock Text="{x:Bind thicknessSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
                 </StackPanel>
+                <RadioButtons x:Name="RoundingRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.Rounding}"  
+                          MaxColumns="5" Header="Rounding"
+                          SelectionChanged="Rounding_SelectionChanged">
+                    <x:String>To integer</x:String>
+                    <x:String>To 4 places</x:String>
+                    <x:String>To tenths</x:String>
+                    <x:String>To hundredths</x:String>
+                    <x:String>None</x:String>
+                </RadioButtons>
             </StackPanel>
         </ScrollViewer>
 
