@@ -85,26 +85,25 @@
                     <x:String>Left</x:String>
                     <x:String>Right</x:String>
                 </RadioButtons>
-
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,15,0">
+                    <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" Width="200"
+                            Flyout="{StaticResource unselectedColorPickerFlyout}">
+                    </Button>
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="15,0,0,0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="{x:Bind ViewModel.UnselectedCaliperColor, Mode=OneWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" Width="200"
-                            Flyout="{StaticResource unselectedColorPickerFlyout}">
-                    </Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="0,0,15,0">
+                    <Button x:Name="selectedColorPickerButton" x:Uid="SettingsSelectedColor" Width="200"
+                            Flyout="{StaticResource selectedColorPickerFlyout}">
+                    </Button> 
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="15,0,0,0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="{x:Bind ViewModel.SelectedCaliperColor, Mode=OneWay}"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Button x:Name="selectedColorPickerButton" x:Uid="SettingsSelectedColor" Width="200"
-                            Flyout="{StaticResource selectedColorPickerFlyout}">
-                    </Button> 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                 <Slider x:Name="thicknessSlider" Width="200" Minimum="1" Maximum="6" StepFrequency="1" HorizontalAlignment="Left"

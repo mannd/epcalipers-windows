@@ -17,7 +17,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         Sec,
         Mv,
         Mm,
-        Bpm,
         Custom,
         Uncalibrated,
         Unknown
@@ -43,14 +42,14 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         public EmptyCustomStringException() : base("EmptyCustomStringException") { }
     }
-    public struct Calibration
+    public class Calibration
     {
         // Rounding format strings
 		private const string _roundToIntString = "D";
 		private const string _roundToFourPlacesString = "G4";
 		private const string _roundToTenthsString = "F1";
 		private const string _roundToHundredthsString = "F2";
-		private const string _noRoundingString = "G";
+		private const string _noRoundingString = "G8";  // This is too precise for clinical use.
 
         private IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
         {
@@ -61,8 +60,10 @@ namespace EPCalipersWinUI3.Models.Calipers
             {Rounding.None, _noRoundingString },
         };
 
+        public Rounding Rounding { get; set; } = Rounding.ToInt;
+
         public CalibrationParameters Parameters { get; init; }
-        public readonly double Multiplier { get; init; }
+        public double Multiplier { get; init; }
 
         // These two strings are localized by CaliperHelper.
         public static string DefaultUnit { get; set; } = "points";
@@ -94,13 +95,25 @@ namespace EPCalipersWinUI3.Models.Calipers
             _originalUnit = Parameters.Unit;
         }
 
-        public readonly string GetText(double interval, bool showBpm = false)
+        public  string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);
-            return string.Format("{0:0.00#} {1}", valueUnit.Item1, valueUnit.Item2);
-        }
+            double value = valueUnit.Item1;
+            string unitString = valueUnit.Item2;
+            string format = _roundingFormat[Rounding];
+            if (Rounding == Rounding.ToInt)
+            {
+                int intValue = (int)Math.Round(value);
+				return string.Format("{0} {1}", intValue.ToString(format), unitString);
 
-        private readonly (double, string) CalibratedInterval(double interval, bool showBpm = false)
+            }
+            else
+            {
+				return string.Format("{0} {1}", valueUnit.Item1.ToString(format), valueUnit.Item2);
+			}
+		}
+
+        private  (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
             if (showBpm)
             {
@@ -115,6 +128,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
 			return (Multiplier * interval, Parameters.UnitString);
 		}
+
 
 		//protected virtual string Measurement()
 		//{

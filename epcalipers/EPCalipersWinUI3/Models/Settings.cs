@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3.Models
 		}
     public class Settings: ISettings
 	{
-		private Windows.Storage.ApplicationDataContainer _localSettings;
+		private ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
 		private readonly string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
 		private readonly string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
@@ -34,6 +34,19 @@ namespace EPCalipersWinUI3.Models
 		public Settings()
 		{
 			_localSettings = ApplicationData.Current.LocalSettings;
+		}
+
+		private static Settings _settings;
+		public static ISettings Instance
+		{
+			get
+			{
+				if (_settings == null)
+				{
+					_settings = new Settings();
+				}
+				return _settings;
+			}
 		}
 
 		public double BarThickness

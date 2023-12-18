@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections;
@@ -19,7 +20,6 @@ namespace EPCalipersWinUI3.ViewModels
 				{CalibrationUnit.Sec, "sec".GetLocalized() },
 				{CalibrationUnit.Mm, "mm".GetLocalized() },
 				{CalibrationUnit.Mv, "mV".GetLocalized() },
-				{CalibrationUnit.Bpm, "msec".GetLocalized() },
 				{CalibrationUnit.Uncalibrated, "points".GetLocalized() },
 			};
 
@@ -102,7 +102,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationParameters parameters = ParseInput(input);
 				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
-				_caliperCollection.SetCalibration(CaliperType.Time);
+				_caliperCollection.SetCalibration(CaliperType.Time, Settings.Instance);
 			}
 			catch (Exception e)
 			{
@@ -137,7 +137,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationParameters parameters = ParseInput(input);
 				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
-				_caliperCollection.SetCalibration(CaliperType.Amplitude);
+				_caliperCollection.SetCalibration(CaliperType.Amplitude, Settings.Instance);
 			}
 			catch (Exception e)
 			{

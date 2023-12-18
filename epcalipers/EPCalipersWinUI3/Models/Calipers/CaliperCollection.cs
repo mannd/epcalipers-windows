@@ -182,9 +182,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void RefreshCalipers(ISettings settings)
 		{
+			TimeCalibration.Rounding = settings.Rounding;
+			AmplitudeCalibration.Rounding = settings.Rounding;
 			foreach (var caliper in _calipers)
 			{
 				caliper.ApplySettings(settings);
+				caliper.UpdateLabel();
 			}
 		}
 
@@ -263,6 +266,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			TimeCalibration = new Calibration();
 			AmplitudeCalibration = new Calibration();
+			TimeCalibration.Rounding = Settings.Instance.Rounding;
+			AmplitudeCalibration.Rounding = Settings.Instance.Rounding;
 			foreach (var caliper in _calipers)
 			{
 				caliper.ClearCalibration();
@@ -270,7 +275,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void SetCalibration(CaliperType caliperType)
+		public void SetCalibration(CaliperType caliperType, ISettings settings)
 		{
 			switch (caliperType)
 			{
@@ -278,6 +283,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					foreach (var caliper in FilteredCalipers(CaliperType.Time))
 					{
 						caliper.Calibration = TimeCalibration;
+						TimeCalibration.Rounding = settings.Rounding;
 						caliper.UpdateLabel();
 					}
 					break;
@@ -285,6 +291,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					foreach (var caliper in FilteredCalipers(CaliperType.Amplitude))
 					{
 						caliper.Calibration = AmplitudeCalibration;
+						AmplitudeCalibration.Rounding = settings.Rounding;
 						caliper.UpdateLabel();
 					}
 					break;

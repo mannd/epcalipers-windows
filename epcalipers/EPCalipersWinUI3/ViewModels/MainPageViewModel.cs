@@ -216,9 +216,9 @@ namespace EPCalipersWinUI3
 		}
 
 		[RelayCommand]
-		private void ToggleRateInterval()
+		private async Task ToggleRateInterval()
 		{ 
-			_caliperHelper.ToggleRateInterval();
+			await _caliperHelper.ToggleRateInterval();
 		}
 
 		[RelayCommand]
