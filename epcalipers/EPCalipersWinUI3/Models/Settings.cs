@@ -20,7 +20,7 @@ namespace EPCalipersWinUI3.Models
 			ToHundredths,
 			None
 		}
-    public class Settings: ISettings
+    public sealed class Settings: ISettings
 	{
 		private ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
@@ -31,23 +31,15 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _barThicknessKey = "BarThicknessKey";
 		private readonly string _roundingKey = "RoundingKey";
 		
-		public Settings()
+		private Settings()
 		{
 			_localSettings = ApplicationData.Current.LocalSettings;
 		}
 
-		private static Settings _settings;
-		public static ISettings Instance
-		{
-			get
-			{
-				if (_settings == null)
-				{
-					_settings = new Settings();
-				}
-				return _settings;
-			}
-		}
+		private static readonly Lazy<Settings> lazy =
+		new Lazy<Settings>(() => new Settings());
+
+		public static Settings Instance { get { return lazy.Value; } }
 
 		public double BarThickness
 		{

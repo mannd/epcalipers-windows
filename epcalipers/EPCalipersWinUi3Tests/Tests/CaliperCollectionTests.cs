@@ -17,8 +17,8 @@ namespace EPCalipersWinUi3Tests.Tests
 		{
 			// TODO: Add more caliper types and calipers.
 			var stubCaliperView = new FakeCaliperView();
-			var caliperCollection = new CaliperCollection(stubCaliperView);
 			var stubSettings = new FakeSettings();
+			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
 			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
 			caliperCollection.Add(timeCaliper);
 			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
@@ -35,8 +35,8 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestSelectedCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
-			var caliperCollection = new CaliperCollection(stubCaliperView);
 			var stubSettings = new FakeSettings();
+			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
 			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
 			caliperCollection.Add(timeCaliper);
 			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);

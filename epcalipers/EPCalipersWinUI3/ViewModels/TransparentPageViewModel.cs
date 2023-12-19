@@ -25,9 +25,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public TransparentPageViewModel(ICaliperView caliperView)
 		{
-			var caliperCollection = new CaliperCollection(caliperView);
+			_settings = Settings.Instance;
+			var caliperCollection = new CaliperCollection(caliperView, _settings);
 			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
-			_settings = new Settings();
 		}
 
 		public void RefreshCalipers()
@@ -111,7 +111,7 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		private void Settings() => AppHelper.Navigate(typeof(SettingsPage));
+		private void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();

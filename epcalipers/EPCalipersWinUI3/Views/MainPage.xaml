@@ -178,7 +178,7 @@
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.SettingsCommand}">
+                <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE713;" />
                     </MenuFlyoutItem.Icon>
@@ -260,7 +260,7 @@
             </AppBarButton>
             <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.SettingsCommand}">
+                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="I" />
                     </AppBarButton.KeyboardAccelerators>

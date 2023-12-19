@@ -95,7 +95,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             _originalUnit = Parameters.Unit;
         }
 
-        public  string GetText(double interval, bool showBpm = false)
+        public string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;
@@ -128,51 +128,6 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
 			return (Multiplier * interval, Parameters.UnitString);
 		}
-
-
-		//protected virtual string Measurement()
-		//{
-		//	string s;
-		//	if (CurrentCalibration.unitsAreMsecOrRate())
-		//	{
-		//		string format;
-		//		switch (Rounding)
-		//		{
-		//			case Preferences.Rounding.ToInt:
-		//				format = roundToIntString;
-		//				break;
-		//			case Preferences.Rounding.ToFourPlaces:
-		//				format = roundToFourPlacesString;
-		//				break;
-		//			case Preferences.Rounding.ToTenths:
-		//				format = roundToTenthsString;
-		//				break;
-		//			case Preferences.Rounding.ToHundredths:
-		//				format = roundToHundredthsString;
-		//				break;
-		//			case Preferences.Rounding.None:
-		//				format = noRoundingString;
-		//				break;
-		//			default:
-		//				format = roundToIntString;
-		//				break;
-		//		}
-		//		if (Rounding == Preferences.Rounding.ToInt)
-		//		{
-		//			s = string.Format("{0} {1}", Math.Round(CalibratedResult()),
-		//			CurrentCalibration.Units);
-		//		}
-		//		else
-		//		{
-		//			s = string.Format("{0} {1}", CalibratedResult().ToString(format), CurrentCalibration.Units);
-		//		}
-		//	}
-		//	else
-		//	{
-		//		s = string.Format("{0} {1}", CalibratedResult().ToString("G4"), CurrentCalibration.Units);
-		//	}
-		//	return s;
-		//}
 
 		public static bool IsMillisecondsUnit(string input)
         {

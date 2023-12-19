@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3
 	{
 		private readonly PdfHelper _pdfHelper;
 		private CaliperHelper _caliperHelper;
-		private Settings _settings;
+		private ISettings _settings;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -36,10 +36,10 @@ namespace EPCalipersWinUI3
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 		{
 			SetZoom = setZoomDelegate;
+			_settings = Settings.Instance;
 			_pdfHelper = new PdfHelper();
-			var caliperCollection = new CaliperCollection(caliperView);
+			var caliperCollection = new CaliperCollection(caliperView, _settings);
 			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
-			_settings = new Settings();
 		}
 		#region commands
 		[RelayCommand]
@@ -205,7 +205,7 @@ namespace EPCalipersWinUI3
 		#endregion
 
 		[RelayCommand]
-		private static void Settings() => AppHelper.Navigate(typeof(SettingsPage));
+		private static void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
 		private static void TransparenWindow()

@@ -35,12 +35,14 @@ namespace EPCalipersWinUI3.Models.Calipers
         protected ICaliperView CaliperView { get; init; }
 
 
-        protected Caliper(ICaliperView caliperView)
+        // TODO: Calipers always need a calibration, even just default calibration.
+        protected Caliper(ICaliperView caliperView, Calibration calibration = null)
         {
             CaliperView = caliperView;
-        }
+			Calibration = calibration ?? new Calibration();
+		}
 
-        public CaliperType CaliperType { get; init; }
+		public CaliperType CaliperType { get; init; }
 
         public bool ShowRate { get; set; } = false;
 
@@ -105,7 +107,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private bool _isSelected = false;
 
-        public Calibration Calibration { get; set; } = new Calibration();
+        public Calibration Calibration { get; set; }
 
         public string Text => Calibration.GetText(Value, ShowRate);
 

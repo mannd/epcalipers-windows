@@ -18,7 +18,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private readonly ISettings _settings;
 
         public AmplitudeCaliper(CaliperPosition position, ICaliperView caliperView, ISettings settings,
-            bool fakeUI = false) : base(caliperView)
+            bool fakeUI = false, Calibration calibration = null) : base(caliperView, calibration)
         {
             _fakeUI = fakeUI;
             _settings = settings;

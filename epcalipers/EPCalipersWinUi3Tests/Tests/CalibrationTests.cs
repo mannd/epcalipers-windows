@@ -72,7 +72,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			var calibration1 = new Calibration(value1, input1);
 			var unit1 = calibration1.Parameters.UnitString;
 			Assert.Equal("msec", unit1);
-			Assert.Equal("1000.00 msec", calibration1.GetText(value1));
+			Assert.Equal("1000 msec", calibration1.GetText(value1));
 		}
 
 
@@ -163,11 +163,11 @@ namespace EPCalipersWinUi3Tests.Tests
 
 			var result = calibration1.GetText(100, false);
 
-			Assert.Equal("1000.00 msec", result);
+			Assert.Equal("1000 msec", result);
 
 			result = calibration1.GetText(100, true);
 
-			Assert.Equal("60.00 bpm", result);
+			Assert.Equal("60 bpm", result);
 		}
 
 		[Fact]
@@ -179,11 +179,11 @@ namespace EPCalipersWinUi3Tests.Tests
 
 			var result = calibration1.GetText(-100, false);
 
-			Assert.Equal("-1000.00 msec", result);
+			Assert.Equal("-1000 msec", result);
 
 			result = calibration1.GetText(-100, true);
 
-			Assert.Equal("60.00 bpm", result);
+			Assert.Equal("60 bpm", result);
 
 			input = new CalibrationParameters(1.0, CalibrationUnit.Sec, "sec");
 			value = 100;
@@ -191,11 +191,11 @@ namespace EPCalipersWinUi3Tests.Tests
 
 			result = calibration1.GetText(-100, false);
 
-			Assert.Equal("-1.00 sec", result);
+			Assert.Equal("-1 sec", result);
 
 			result = calibration1.GetText(-100, true);
 
-			Assert.Equal("60.00 bpm", result);
+			Assert.Equal("60 bpm", result);
 		}
 
 	}

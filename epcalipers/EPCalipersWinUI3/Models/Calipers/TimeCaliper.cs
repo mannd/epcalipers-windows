@@ -33,14 +33,14 @@ namespace EPCalipersWinUI3.Models.Calipers
         #endregion
         #region init
         public TimeCaliper(CaliperPosition position,
-            ICaliperView caliperView, ISettings settings, bool fakeUI = false) : base(caliperView)
+            ICaliperView caliperView, ISettings settings, bool fakeUI = false,
+            Calibration calibration = null) : base(caliperView, calibration)
         {
             _fakeUI = fakeUI;
             _settings = settings;
             Bars = InitBars(position);
             CaliperType = CaliperType.Time;
             InitCaliperLabel();
-            Calibration = new Calibration();
 
         }
 

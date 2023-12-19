@@ -25,7 +25,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	{
 		private IList<Caliper> _calipers;
 		private ICaliperView _caliperView;
-
+		private ISettings _settings;
 		private WindowEx _calibrationWindow;
 
 		public Calibration TimeCalibration { get; set; } = new Calibration();
@@ -57,10 +57,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// </summary>
 		public bool IsLocked { get; set; }
 
-		public CaliperCollection(ICaliperView caliperView)
+		public CaliperCollection(ICaliperView caliperView, ISettings settings)
 		{
 			_calipers = new List<Caliper>();
 			_caliperView = caliperView;
+			_settings = settings;
 		}
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
@@ -266,8 +267,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			TimeCalibration = new Calibration();
 			AmplitudeCalibration = new Calibration();
-			TimeCalibration.Rounding = Settings.Instance.Rounding;
-			AmplitudeCalibration.Rounding = Settings.Instance.Rounding;
+			TimeCalibration.Rounding = _settings.Rounding;
+			AmplitudeCalibration.Rounding = _settings.Rounding;
 			foreach (var caliper in _calipers)
 			{
 				caliper.ClearCalibration();

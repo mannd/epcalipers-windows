@@ -11,13 +11,21 @@ namespace EPCalipersWinUi3Tests.Tests
 		{
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
-			return new TimeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, stubSettings, true);
+			var calibration = new Calibration();
+			calibration.Rounding = Rounding.ToHundredths;
+			var timeCaliper = new TimeCaliper(new CaliperPosition(50, 50, 200), 
+				stubCaliperView, stubSettings, true, calibration);
+			return timeCaliper;
 		}
 		private AmplitudeCaliper GetAmplitudeCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
-			return new AmplitudeCaliper(new CaliperPosition(50, 50, 200), stubCaliperView, stubSettings, true);
+			var calibration = new Calibration();
+			calibration.Rounding = Rounding.ToHundredths;
+			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(50, 50, 200), 
+				stubCaliperView, stubSettings, true, calibration);
+			return amplitudeCaliper;
 		}
 		private AngleCaliper GetAngleCaliper()
 		{
@@ -80,12 +88,15 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.True(angleCaliper.RightAngleBar.Y2 <= bounds.Height);
 		}
 
+		// FIXME: This test fails, because passing a custom calibration to 
+		// a caliper constructor doesn't work.
 		[Fact]
 		public void TestCaliperLabel()
 		{
 			// NB: This test will need revision once Rounding is implemented.
-			var timeCaliper = GetTimeCaliper();
-			Assert.Equal("150.00 points", timeCaliper.CaliperLabel.Text);
+			var timeCaliper = GetTimeCaliper(); // calibration on init is toHundredths
+			var labelText = timeCaliper.CaliperLabel.Text;
+			Assert.Equal("150.00 points", labelText);
 			var amplitudeCaliper = GetAmplitudeCaliper();
 			Assert.Equal("150.00 points", amplitudeCaliper.CaliperLabel.Text);
 		}

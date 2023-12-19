@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using System.ComponentModel;
@@ -8,12 +9,12 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class SettingsViewModel : ObservableObject
 	{
-		private readonly Settings _model = new();
+		private readonly ISettings _model = Settings.Instance;
 
 		public SettingsViewModel() {
 			AutoAlignLabel = _model.AutoAlignLabel;
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
-			AmplitudeCaliperLabelAlignment =(int)_model.AmplitudeCaliperLabelAlignment;
+			AmplitudeCaliperLabelAlignment = (int)_model.AmplitudeCaliperLabelAlignment;
 			UnselectedCaliperColor = _model.UnselectedCaliperColor;
 			SelectedCaliperColor = _model.SelectedCaliperColor;
 			BarThickness = _model.BarThickness;
