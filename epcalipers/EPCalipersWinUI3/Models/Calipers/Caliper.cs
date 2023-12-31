@@ -34,8 +34,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         protected ICaliperView CaliperView { get; init; }
 
-
-        // TODO: Calipers always need a calibration, even just default calibration.
         protected Caliper(ICaliperView caliperView, Calibration calibration = null)
         {
             CaliperView = caliperView;

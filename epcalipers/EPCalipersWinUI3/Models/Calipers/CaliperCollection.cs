@@ -196,6 +196,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public async Task SetCalibrationAsync()
 		{
 			ContentDialog dialog;
+			SelectSoleTimeOrAmplitudeCaliper();
 			switch (SelectedCaliperType)
 			{
 				case CaliperType.None:
@@ -211,14 +212,28 @@ namespace EPCalipersWinUI3.Models.Calipers
 					await dialog.ShowAsync();
 					break;
 				case CaliperType.Time:
-					IsLocked = true;
-					ShowCalibrationDialogWindow(CaliperType.Time);
-					break;
 				case CaliperType.Amplitude:
 					IsLocked = true;
-					ShowCalibrationDialogWindow(CaliperType.Amplitude);
+					ShowCalibrationDialogWindow(SelectedCaliperType);
 					break;
 			}
+		}
+
+		private void SelectSoleTimeOrAmplitudeCaliper()
+		{
+			if (_calipers.Count == 1)
+			{ 
+				if (_calipers[0].CaliperType == CaliperType.Angle)
+				{
+					return;  // Don't bother with angle calipers
+				}
+				if (_calipers[0].IsSelected == false)
+				{
+					_calipers[0].IsSelected = true;
+					return;
+				}
+			}
+			return;  // 
 		}
 
 		private void ShowCalibrationDialogWindow(CaliperType caliperType)

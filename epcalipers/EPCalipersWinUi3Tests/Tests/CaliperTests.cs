@@ -88,8 +88,6 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.True(angleCaliper.RightAngleBar.Y2 <= bounds.Height);
 		}
 
-		// FIXME: This test fails, because passing a custom calibration to 
-		// a caliper constructor doesn't work.
 		[Fact]
 		public void TestCaliperLabel()
 		{
