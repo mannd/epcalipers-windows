@@ -19,14 +19,21 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar LeftAngleBar { get; set; }
         public Bar RightAngleBar { get; set; }
         public Bar ApexBar { get; set; } // a pseudobar
+        public Bar TriangleBaseBar { get; set; }
 
         private ISettings _settings;
 
         public AngleCaliper(AngleCaliperPosition position,
-            ICaliperView caliperView, ISettings settings, bool fakeUI = false) : base(caliperView)
+            ICaliperView caliperView,
+            ISettings settings,
+            Calibration calibration = null,
+            Calibration secondaryCalibration = null,
+            bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
             _settings = settings;
+            Calibration = calibration ?? new Calibration();
+            SecondaryCalibration = secondaryCalibration ?? new Calibration();
             Bars = InitBars(position);
             InitCaliperLabel();
             CaliperType = CaliperType.Angle;
@@ -39,14 +46,76 @@ namespace EPCalipersWinUI3.Models.Calipers
             RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeUI);
             RightAngleBar.Angle = position.LastAngle;
             ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
+            if (ShowBrugadaTriangle())
+            {
+				if (AngleInSouthernHemisphere(position.FirstAngle) && AngleInSouthernHemisphere(position.LastAngle))
+				{
+					double pointsPerMM = 1.0 / SecondaryCalibration.Multiplier;
+                    //DrawTriangleBase(g, pen, brush, 5 * pointsPerMM, rect);
+                    Debug.Print("drawing triangle...");
+				}
+            }
             return new[] { LeftAngleBar, RightAngleBar, ApexBar };
         }
+
+        private bool ShowBrugadaTriangle()
+        {
+            return (_settings.ShowBrugadaTriangle &&
+                Calibration.Parameters.Unit == CalibrationUnit.Msec &&
+                SecondaryCalibration.Parameters.Unit == CalibrationUnit.Mm);
+        }
+
+
+		private bool AngleInSouthernHemisphere(double angle)
+		{
+			// Note can't be <= because we get divide by zero error with Sin(angle) == 0
+			return (0 < angle && angle < Math.PI);
+		}
+
+		//private void DrawTriangleBase(Canvas canvas, MBrush brush, double height)
+		//{
+		//	PointF point1 = GetBasePoint1ForHeight(height);
+		//	PointF point2 = GetBasePoint2ForHeight(height);
+		//	double lengthInPoints = point2.X - point1.X;
+		//	MakeLine(ref crossbarLine, point1.X, point2.X, point1.Y, point2.Y);
+		//	var LineWidth = Math.Max(this.LineWidth - 1, 1);
+		//	crossbarLine.StrokeThickness = LineWidth;
+		//	crossbarLine.Stroke = brush;
+		//	canvas.Children.Add(crossbarLine);
+
+		//	string text = BaseMeasurement(lengthInPoints);
+		//	TextBlock baseTextBlock = new TextBlock
+		//	{
+		//		IsHitTestVisible = false,
+		//		FontFamily = new System.Windows.Media.FontFamily("Helvetica"),
+		//		FontSize = defaultCanvasFontSize,
+		//		Text = text,
+		//		TextAlignment = System.Windows.TextAlignment.Center,
+		//		Padding = new System.Windows.Thickness(3),
+		//		Foreground = brush
+		//	};
+		//	baseTextBlock.Arrange(new System.Windows.Rect(0, 0, 1000, 1000));
+		//	System.Windows.Size desiredSize = baseTextBlock.DesiredSize;
+		//	Size size = new Size((int)desiredSize.Width, (int)desiredSize.Height);
+		//	// Uncomment below for debugging text block positioning.
+		//	//baseTextBlock.Background = new SolidColorBrush(ConvertColor(System.Drawing.Color.Gray));
+
+		//	RectangleF textRect = GetCaliperTextPosition(triangleBaseTextPosition, Math.Min(point1.X, point2.X),
+		//			  Math.Max(point1.X, point2.X), point1.Y, size,
+		//			  new RectangleF(0, 0, (float)canvas.ActualWidth, (float)canvas.ActualHeight),
+		//			  true);
+
+		//	Canvas.SetLeft(baseTextBlock, textRect.X);
+		//	Canvas.SetTop(baseTextBlock, textRect.Y);
+		//	canvas.Children.Add(baseTextBlock);
+		//}
 
         private void InitCaliperLabel()
         {
             string text = string.Format("{0:0.#} degrees", Value);
             CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
                 CaliperLabelAlignment.Right, false, _fakeUI);
+            // TODO: handle triangle label
         }
 
 
@@ -59,6 +128,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
         }
 
+        // TODO: control drag from keyboard too
         public override void Drag(Bar bar, Point delta, Point location)
         {
             switch (bar.BarRole)
@@ -80,6 +150,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     RightAngleBar.Angle = RelativeTheta(location);
                     RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
                     break;
+                    // TODO: handle drag triangle base
                 default: break;
             }
             CaliperLabel.Text = string.Format("{0:0.#} degrees", Value);

@@ -34,7 +34,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			double firstAngle = 0.5 * Math.PI;
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliper(new AngleCaliperPosition(new Windows.Foundation.Point(50, 50),
-				firstAngle, secondAngle), stubCaliperView, stubSettings, true);
+				firstAngle, secondAngle), stubCaliperView, stubSettings, fakeUI: true);
 		}
 
 		[Fact]

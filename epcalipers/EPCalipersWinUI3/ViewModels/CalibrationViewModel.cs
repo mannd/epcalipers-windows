@@ -102,7 +102,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationParameters parameters = ParseInput(input);
 				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
-				_caliperCollection.SetCalibration(CaliperType.Time, Settings.Instance);
+				_caliperCollection.SetCalibration();
 			}
 			catch (Exception e)
 			{
@@ -137,7 +137,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationParameters parameters = ParseInput(input);
 				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
-				_caliperCollection.SetCalibration(CaliperType.Amplitude, Settings.Instance);
+				_caliperCollection.SetCalibration();
 			}
 			catch (Exception e)
 			{

@@ -30,6 +30,7 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _selectedCaliperColorKey = "SelectedCaliperColorKey";
 		private readonly string _barThicknessKey = "BarThicknessKey";
 		private readonly string _roundingKey = "RoundingKey";
+		private readonly string _showBrugadaTriangle = "ShowBrugadaTriangle";
 		
 		private Settings()
 		{
@@ -51,11 +52,16 @@ namespace EPCalipersWinUI3.Models
 			get => (Rounding)(_localSettings.Values[_roundingKey] ?? Rounding.ToInt);
 			set => _localSettings.Values[_roundingKey] = (int)value;
 		}
-
 		public bool AutoAlignLabel
 		{
 			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? false);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
+		}
+		// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
+		public bool ShowBrugadaTriangle
+		{
+			get => (bool)(_localSettings.Values[_showBrugadaTriangle] ?? true);
+			set => _localSettings.Values[_showBrugadaTriangle] = value;
 		}
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
@@ -132,5 +138,6 @@ namespace EPCalipersWinUI3.Models
 		public Color UnselectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Rounding Rounding { get; set; } = Rounding.None;
+		public bool ShowBrugadaTriangle { get; set; } = false;
 	}
 }

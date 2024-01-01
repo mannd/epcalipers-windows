@@ -106,6 +106,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private bool _isSelected = false;
 
         public Calibration Calibration { get; set; }
+        public Calibration SecondaryCalibration { get; set; } = new Calibration();
 
         public string Text => Calibration.GetText(Value, ShowRate);
 
@@ -172,7 +173,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         //Standard placement of new calipers
 
-        public static Caliper InitCaliper(CaliperType type, ICaliperView caliperView, ISettings settings)
+        public static Caliper InitCaliper(CaliperType type, 
+            ICaliperView caliperView, 
+            ISettings settings,
+            Calibration calibration = null,
+            Calibration secondaryCalibration = null)
         {
             CaliperPosition initialPosition;
             AngleCaliperPosition initialAnglePosition;
@@ -189,7 +194,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     break;
                 case CaliperType.Angle:
                     initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-                    caliper = new AngleCaliper(initialAnglePosition, caliperView, settings);
+                    caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, calibration, secondaryCalibration);
                     break;
             }
             ApplySettings(caliper, settings);

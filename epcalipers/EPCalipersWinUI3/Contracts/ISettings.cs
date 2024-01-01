@@ -18,5 +18,6 @@ namespace EPCalipersWinUI3.Contracts
 		public Color UnselectedCaliperColor { get; set; }	
 		public Color SelectedCaliperColor { get; set; }
 		public Rounding Rounding { get; set; }
+		public bool ShowBrugadaTriangle { get; set; }
 	}
 }

@@ -79,9 +79,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 				case CaliperType.Amplitude:
 					caliper.Calibration = AmplitudeCalibration;
 					break;
-				default:  // handle Angle calipers later
+				case CaliperType.Angle:
+					caliper.Calibration = TimeCalibration;
+					caliper.SecondaryCalibration = AmplitudeCalibration;
 					break;
 			}
+			caliper.ShowRate = ShowRate;
+			caliper.UpdateLabel();
+			_calipers.Add(caliper);
+		}
+
+		public void AddCaliper(CaliperType type)
+		{
+			if (IsLocked) return;
+			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration);
+			caliper.Add(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
 			_calipers.Add(caliper);
@@ -192,7 +204,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: possibly move this to CaliperHelper
 		public async Task SetCalibrationAsync()
 		{
 			ContentDialog dialog;
@@ -291,31 +302,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void SetCalibration(CaliperType caliperType, ISettings settings)
+		public void SetCalibration()
 		{
-			switch (caliperType)
+			TimeCalibration.Rounding = _settings.Rounding;
+			AmplitudeCalibration.Rounding = _settings.Rounding;
+			foreach (var caliper in _calipers)
 			{
-				case CaliperType.Time:
-					foreach (var caliper in FilteredCalipers(CaliperType.Time))
-					{
+				switch (caliper.CaliperType)
+				{
+					case CaliperType.Time:
 						caliper.Calibration = TimeCalibration;
-						TimeCalibration.Rounding = settings.Rounding;
-						caliper.UpdateLabel();
-					}
-					break;
-				case CaliperType.Amplitude:
-					foreach (var caliper in FilteredCalipers(CaliperType.Amplitude))
-					{
+						break;
+					case CaliperType.Amplitude:
 						caliper.Calibration = AmplitudeCalibration;
-						AmplitudeCalibration.Rounding = settings.Rounding;
-						caliper.UpdateLabel();
-					}
-					break;
-				case CaliperType.Angle:
-					// TODO: need to set both calibrations, ignore for now
-					break;
-				default:
-					break;
+						break;
+					case CaliperType.Angle:
+						caliper.Calibration = TimeCalibration;
+						caliper.SecondaryCalibration = AmplitudeCalibration;
+						break;
+				}
+				caliper.UpdateLabel();
 			}
 		}
 

@@ -66,6 +66,7 @@
                    HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle }" />
         <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
+                <TextBlock Text="Labels" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="Autoposition" IsChecked="{x:Bind ViewModel.AutoAlignLabel, Mode=TwoWay}" />
                 <RadioButtons x:Name="TimeLabelRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
@@ -85,6 +86,7 @@
                     <x:String>Left</x:String>
                     <x:String>Right</x:String>
                 </RadioButtons>
+                <TextBlock Text="Calipers" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="unselectedColorPickerButton" x:Uid="SettingsUnselectedColor" Width="200"
                             Flyout="{StaticResource unselectedColorPickerFlyout}">
@@ -122,6 +124,8 @@
                     <x:String>To hundredths</x:String>
                     <x:String>None</x:String>
                 </RadioButtons>
+                <TextBlock Text="Brugada triangle" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />
             </StackPanel>
         </ScrollViewer>
 

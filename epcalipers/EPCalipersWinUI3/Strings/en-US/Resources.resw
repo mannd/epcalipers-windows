@@ -359,6 +359,9 @@
   <data name="SettingsUnselectedColor.Content" xml:space="preserve">
     <value>Unselected caliper color</value>
   </data>
+  <data name="ShowBrugadaTriangle.Content" xml:space="preserve">
+    <value>Show Brugada triangle</value>
+  </data>
   <data name="TimeCaliperBarButton.Label" xml:space="preserve">
     <value>Time</value>
   </data>
