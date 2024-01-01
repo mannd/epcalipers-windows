@@ -32,27 +32,20 @@ namespace EPCalipersWinUI3.Helpers
 		public void AddTimeCaliper(ISettings settings)
 		{
 			_caliperCollection.AddCaliper(CaliperType.Time);
-			//var caliper = Caliper.InitCaliper(CaliperType.Time, _caliperView, settings);
-			//_caliperCollection.Add(caliper);
 		}
 
 		public void AddAmplitudeCaliper(ISettings settings)
 		{
 			_caliperCollection.AddCaliper(CaliperType.Amplitude);
-			//var caliper = Caliper.InitCaliper(CaliperType.Amplitude, _caliperView, settings);
-			//_caliperCollection.Add(caliper);
 		}
 
 		public void AddAngleCaliper(ISettings settings)
 		{
 			_caliperCollection.AddCaliper(CaliperType.Angle);
-			//var caliper = Caliper.InitCaliper(CaliperType.Angle, _caliperView, settings);
-			//_caliperCollection.Add(caliper);
 		}
 
 		public void RefreshCalipers(ISettings settings)
 		{
-			Debug.Print("Refreshing calipers...");
 			_caliperCollection.RefreshCalipers(settings);
 		}
 

@@ -51,10 +51,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (AngleInSouthernHemisphere(position.FirstAngle) && AngleInSouthernHemisphere(position.LastAngle))
 				{
 					double pointsPerMM = 1.0 / SecondaryCalibration.Multiplier;
-                    //DrawTriangleBase(g, pen, brush, 5 * pointsPerMM, rect);
+                    DrawTriangleBase(5 * pointsPerMM);
                     Debug.Print("drawing triangle...");
+					return new[] { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 				}
-            }
+			}
             return new[] { LeftAngleBar, RightAngleBar, ApexBar };
         }
 
@@ -71,6 +72,38 @@ namespace EPCalipersWinUI3.Models.Calipers
 			// Note can't be <= because we get divide by zero error with Sin(angle) == 0
 			return (0 < angle && angle < Math.PI);
 		}
+
+		private Point GetBasePoint1ForHeight(double height)
+		{
+			// Dangerous possible divide by zero here
+			double pointY = ApexBar.Position + height;
+			double pointX = height * (Math.Sin(LeftAngleBar.Angle - Math.PI / 2)
+				/ Math.Sin(Math.PI - LeftAngleBar.Angle));
+            double apexX = ApexBar.MidPoint.X;
+			pointX =  apexX - pointX;
+			Point point = new Point(pointX, pointY);
+			return point;
+		}
+
+		private Point GetBasePoint2ForHeight(double height)
+		{
+			// Dangerous possible divide by zero here
+			double pointY = ApexBar.Position + height;
+			double pointX = height * (Math.Sin(Math.PI / 2 - RightAngleBar.Angle)
+				/ Math.Sin(RightAngleBar.Angle));
+            double apexX = ApexBar.MidPoint.X;
+            pointX += apexX;
+			Point point = new Point(pointX, pointY);
+			return point;
+		}
+
+        private void DrawTriangleBase(double height)
+        {
+            Point point1 = GetBasePoint1ForHeight(height);
+            Point point2 = GetBasePoint2ForHeight(height);
+            double position = point1.Y;
+            TriangleBaseBar = new Bar(Bar.Role.TriangleBase, position, point1.X, point2.X, _fakeUI);
+        }
 
 		//private void DrawTriangleBase(Canvas canvas, MBrush brush, double height)
 		//{

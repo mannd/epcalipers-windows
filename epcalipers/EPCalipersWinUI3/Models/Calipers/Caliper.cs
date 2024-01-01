@@ -28,6 +28,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
     public abstract class Caliper
     {
+        private const double _defaultCaliperValue = 200;
         protected bool _fakeUI;  // Is true for testing.
 
         protected Bounds Bounds => CaliperView.Bounds;
@@ -185,11 +186,11 @@ namespace EPCalipersWinUI3.Models.Calipers
             switch (type)
             {
                 case CaliperType.Time:
-                    initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
+                    initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
                     caliper = new TimeCaliper(initialPosition, caliperView, settings);
                     break;
                 case CaliperType.Amplitude:
-                    initialPosition = SetInitialCaliperPosition(type, 200, caliperView);
+                    initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
                     caliper = new AmplitudeCaliper(initialPosition, caliperView, settings);
                     break;
                 case CaliperType.Angle:

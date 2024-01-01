@@ -197,6 +197,12 @@ namespace EPCalipersWinUI3.Models.Calipers
                     X2 = end;
                     Y2 = position;
                     break;
+                case Role.TriangleBase:
+                    X1 = start;
+                    Y1 = position;
+                    X2 = end;
+                    Y2 = position;
+                    break;
                 case Role.LeftAngle:
                 case Role.RightAngle:
                     throw new NotImplementedException();
