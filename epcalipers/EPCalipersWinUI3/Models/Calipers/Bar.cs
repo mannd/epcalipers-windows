@@ -51,6 +51,24 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Color SelectedColor { get; set; }
         public Color UnselectedColor { get; set; }
 
+        public Visibility Visibility
+        {
+            get
+            {
+                return _visibility;
+            }
+            set
+            {
+                _visibility = value;
+                if (_line != null)
+                {
+                    _line.Visibility = value;
+                }
+
+            }
+        }
+        private Visibility _visibility;
+
         private Line _line;
 
         // Angle is only used for angle calipers.
