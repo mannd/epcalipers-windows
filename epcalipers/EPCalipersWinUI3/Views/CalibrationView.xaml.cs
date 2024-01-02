@@ -15,6 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 using WinUIEx;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
+using System.Diagnostics;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -43,34 +45,44 @@ namespace EPCalipersWinUI3.Views
             CustomIntervalTextBox.IsEnabled = CustomRadioButton.IsChecked ?? false;
         }
 
-		private void CalibrationRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
+        private void CalibrationRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             EnableCustomText();
-			if (sender is RadioButtons rb)
-			{
-				int selection = rb.SelectedIndex;
-				ViewModel.IntervalSelection = selection;
-			}
-		}
-
-		private void CalibrationDialogCancel_Click(object sender, RoutedEventArgs e)
-		{
-            if (Window != null)
+            if (sender is RadioButtons rb)
             {
-                Window.Close();
-                Window = null;
+                int selection = rb.SelectedIndex;
+                ViewModel.IntervalSelection = selection;
             }
-		}
+        }
 
-		private async void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
-		{
+        private void CalibrationDialogCancel_Click(object sender, RoutedEventArgs e)
+        {
+            CloseWindow();
+        }
+
+        private async void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
+        {
             await ViewModel.SetCalibration(XamlRoot);
-            if (Window != null)
-            {
-                Window.Close();
-                Window = null;
-            }
+            CloseWindow();
+        }
 
-		}
-	}
+        private void CloseWindow()
+        {
+            Window?.Close();
+            Window = null;
+        }
+
+        private async void Page_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case VirtualKey.Enter:
+                    await ViewModel.SetCalibration(XamlRoot);
+                    CloseWindow();
+                    break;
+                case VirtualKey.Escape: CloseWindow(); break;
+                default: break;
+            }
+        }
+    }
 }

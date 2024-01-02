@@ -116,7 +116,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         #region calibration
         public override void ClearCalibration()
         {
-            Calibration = new Calibration();
+            Calibration = Calibration.Uncalibrated;
         }
         #endregion
     }

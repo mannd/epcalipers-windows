@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         protected Caliper(ICaliperView caliperView, Calibration calibration = null)
         {
             CaliperView = caliperView;
-			Calibration = calibration ?? new Calibration();
+			Calibration = calibration ?? Calibration.Uncalibrated;
 		}
 
 		public CaliperType CaliperType { get; init; }
@@ -107,7 +107,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private bool _isSelected = false;
 
         public Calibration Calibration { get; set; }
-        public Calibration SecondaryCalibration { get; set; } = new Calibration();
+        public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
 
         public string Text => Calibration.GetText(Value, ShowRate);
 

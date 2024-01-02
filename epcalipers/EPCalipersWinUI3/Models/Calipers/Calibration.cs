@@ -95,6 +95,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             _originalUnit = Parameters.Unit;
         }
 
+        public static Calibration Uncalibrated => new Calibration(); // Default Calibration.Unit is Uncalibrated.
+
         public string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);

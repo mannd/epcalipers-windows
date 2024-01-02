@@ -33,8 +33,8 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             _fakeUI = fakeUI;
             _settings = settings;
-            Calibration = calibration ?? new Calibration();
-            SecondaryCalibration = secondaryCalibration ?? new Calibration();
+            Calibration = calibration ?? Calibration.Uncalibrated;
+            SecondaryCalibration = secondaryCalibration ?? Calibration.Uncalibrated;
             Bars = InitBars(position);
             InitCaliperLabel();
             CaliperType = CaliperType.Angle;
@@ -65,7 +65,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 AngleInSouthernHemisphere(position.FirstAngle) &&
                 AngleInSouthernHemisphere(position.LastAngle));
         }
-
 
 		private bool AngleInSouthernHemisphere(double angle)
 		{
@@ -104,7 +103,6 @@ namespace EPCalipersWinUI3.Models.Calipers
             double position = point1.Y;
             TriangleBaseBar = new Bar(Bar.Role.TriangleBase, position, point1.X, point2.X, _fakeUI);
         }
-
 
         private void InitCaliperLabel()
         {

@@ -198,6 +198,13 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal("60 bpm", result);
 		}
 
+		[Fact]
+		public void TestUncalibrated()
+		{
+			var calibration = Calibration.Uncalibrated;
+			Assert.Equal(CalibrationUnit.Uncalibrated, calibration.Parameters.Unit);
+		}
+
 	}
 }
 

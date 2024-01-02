@@ -28,8 +28,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private ISettings _settings;
 		private WindowEx _calibrationWindow;
 
-		public Calibration TimeCalibration { get; set; } = new Calibration();
-		public Calibration AmplitudeCalibration { get; set; } = new Calibration();
+		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
+		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
 
 		// A calibrated time caliper can show interval or rate.
 		public bool ShowRate { get; set; } = false; 
@@ -291,8 +291,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ClearCalibration()
 		{
-			TimeCalibration = new Calibration();
-			AmplitudeCalibration = new Calibration();
+			TimeCalibration = Calibration.Uncalibrated;
+			AmplitudeCalibration = Calibration.Uncalibrated;
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
 			foreach (var caliper in _calipers)
