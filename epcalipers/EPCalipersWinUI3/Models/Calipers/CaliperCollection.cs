@@ -80,8 +80,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 					caliper.Calibration = AmplitudeCalibration;
 					break;
 				case CaliperType.Angle:
-					caliper.Calibration = TimeCalibration;
-					caliper.SecondaryCalibration = AmplitudeCalibration;
+					var angleCaliper = caliper as AngleCaliper;
+					angleCaliper.TimeCalibration = TimeCalibration;
+					angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
 					break;
 			}
 			caliper.ShowRate = ShowRate;
@@ -317,8 +318,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 						caliper.Calibration = AmplitudeCalibration;
 						break;
 					case CaliperType.Angle:
-						caliper.Calibration = TimeCalibration;
-						caliper.SecondaryCalibration = AmplitudeCalibration;
+						AngleCaliper angleCaliper = caliper as AngleCaliper;
+						angleCaliper.TimeCalibration = TimeCalibration;
+						angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
 						break;
 				}
 				caliper.UpdateLabel();

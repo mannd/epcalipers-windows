@@ -15,15 +15,13 @@ namespace EPCalipersWinUI3.Helpers
 {
     public class CaliperHelper
 	{
-		private ICaliperView _caliperView;
-		private CaliperCollection _caliperCollection;
+		private readonly CaliperCollection _caliperCollection;
 		private Caliper _grabbedCaliper;
 		private Bar _grabbedComponent;
 		private Point _startingDragPoint;
 
 		public CaliperHelper(ICaliperView caliperView, CaliperCollection caliperCollection)
 		{
-			_caliperView = caliperView;
 			_caliperCollection = caliperCollection;
 			Calibration.DefaultUnit = "points".GetLocalized();
 			Calibration.DefaultBpm = "bpm".GetLocalized();

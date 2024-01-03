@@ -11,7 +11,6 @@
     KeyDown="Page_KeyDown" >
 
     <RelativePanel Margin="20">
-        <!-- Content body -->
         <TextBlock x:Name="Instructions" Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
         <RadioButtons x:Name="CalibrationRadioButtons" 
                       RelativePanel.Below="Instructions"

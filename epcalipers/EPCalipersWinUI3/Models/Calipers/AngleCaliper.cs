@@ -22,19 +22,23 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar ApexBar { get; set; } // a pseudobar
         public Bar TriangleBaseBar { get; set; }
 
+        public Calibration TimeCalibration { get; set; }
+        public Calibration AmplitudeCalibration { get; set; }
+
         private ISettings _settings;
 
         public AngleCaliper(AngleCaliperPosition position,
             ICaliperView caliperView,
             ISettings settings,
-            Calibration calibration = null,
-            Calibration secondaryCalibration = null,
+            Calibration timeCalibration = null,
+            Calibration amplitudeCalibration = null,
             bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
             _settings = settings;
-            Calibration = calibration ?? Calibration.Uncalibrated;
-            SecondaryCalibration = secondaryCalibration ?? Calibration.Uncalibrated;
+            Calibration = new AngleCalibration();
+            TimeCalibration = timeCalibration ?? Calibration.Uncalibrated;
+            AmplitudeCalibration = amplitudeCalibration ?? Calibration.Uncalibrated;
             Bars = InitBars(position);
             InitCaliperLabel();
             CaliperType = CaliperType.Angle;
@@ -49,19 +53,28 @@ namespace EPCalipersWinUI3.Models.Calipers
             ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
 			if (ShowBrugadaTriangle(position))
 			{
-				double pointsPerMM = 1.0 / SecondaryCalibration.Multiplier;
-				DrawTriangleBase(5 * pointsPerMM);
-				Debug.Print("drawing triangle...");
+				InitTriangleBase(TriangleHeight());
 				return new[] { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 			}
 			return new[] { LeftAngleBar, RightAngleBar, ApexBar };
 		}
 
+        private double TriangleHeight()
+        {
+            if (AmplitudeCalibration != null)
+            {
+                double pointsPerMM = 1.0 / AmplitudeCalibration.Multiplier;
+                return 5.0 * pointsPerMM;
+            }
+            return 0;
+            // TODO: is it ok to return 0?
+		}
+
 		private bool ShowBrugadaTriangle(AngleCaliperPosition position)
         {
             return (_settings.ShowBrugadaTriangle &&
-                Calibration.Parameters.Unit == CalibrationUnit.Msec &&
-                SecondaryCalibration.Parameters.Unit == CalibrationUnit.Mm &&
+                TimeCalibration.Parameters.Unit == CalibrationUnit.Msec &&
+                AmplitudeCalibration.Parameters.Unit == CalibrationUnit.Mm &&
                 AngleInSouthernHemisphere(position.FirstAngle) &&
                 AngleInSouthernHemisphere(position.LastAngle));
         }
@@ -96,20 +109,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return point;
 		}
 
-        private void DrawTriangleBase(double height)
+        private void InitTriangleBase(double height)
         {
             Point point1 = GetBasePoint1ForHeight(height);
             Point point2 = GetBasePoint2ForHeight(height);
             double position = point1.Y;
             TriangleBaseBar = new Bar(Bar.Role.TriangleBase, position, point1.X, point2.X, _fakeUI);
+            double baseValue = point2.X - point1.X;
+            Debug.Print(Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString));
         }
 
         private void InitCaliperLabel()
         {
-            string text = string.Format("{0:0.#} °", Value);
+            string text = Calibration.GetText(Value);
             CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
                 CaliperLabelAlignment.Right, false, _fakeUI);
-            // TODO: handle triangle label
         }
 
         public override void ChangeBounds()
@@ -148,13 +162,10 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
             {
                 // Triangle base needs redrawing no matter how angle caliper moves.
-                Debug.Print("updating triangle...");
                 if (TriangleBaseBar != null)
 				{
 					TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-					double pointsPerMM = 1.0 / SecondaryCalibration.Multiplier;
-					double height = 5 * pointsPerMM;
-
+                    double height = TriangleHeight();
 					Point point1 = GetBasePoint1ForHeight(height);
 					Point point2 = GetBasePoint2ForHeight(height);
 					double position = point1.Y;
@@ -162,6 +173,8 @@ namespace EPCalipersWinUI3.Models.Calipers
                     TriangleBaseBar.Y1 = position;
                     TriangleBaseBar.X2 = point2.X;
                     TriangleBaseBar.Y2 = position;
+					double baseValue = point2.X - point1.X;
+                    Debug.Print(Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString));
 				}
 			}
             else
@@ -172,7 +185,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 }
             }
-			CaliperLabel.Text = string.Format("{0:0.#} °", Value);
+            CaliperLabel.Text = Calibration.GetText(Value);
             CaliperLabel.SetPosition();
         }
 

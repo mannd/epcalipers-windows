@@ -107,7 +107,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private bool _isSelected = false;
 
         public Calibration Calibration { get; set; }
-        public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
+        //public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
 
         public string Text => Calibration.GetText(Value, ShowRate);
 

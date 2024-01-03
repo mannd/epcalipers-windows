@@ -17,6 +17,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         Sec,
         Mv,
         Mm,
+        Degrees,
         Custom,
         Uncalibrated,
         Unknown
@@ -97,7 +98,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public static Calibration Uncalibrated => new Calibration(); // Default Calibration.Unit is Uncalibrated.
 
-        public string GetText(double interval, bool showBpm = false)
+        public virtual string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;
@@ -114,6 +115,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 				return string.Format("{0} {1}", valueUnit.Item1.ToString(format), valueUnit.Item2);
 			}
 		}
+
+        public virtual string GetSecondaryText(double interval, string unit)
+        {
+            return null;
+        }
 
         private  (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
