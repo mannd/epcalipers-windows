@@ -178,8 +178,8 @@ namespace EPCalipersWinUI3.Models.Calipers
         public static Caliper InitCaliper(CaliperType type, 
             ICaliperView caliperView, 
             ISettings settings,
-            Calibration calibration = null,
-            Calibration secondaryCalibration = null)
+            Calibration timeCalibration = null,
+            Calibration amplitudeCalibration = null)
         {
             CaliperPosition initialPosition;
             AngleCaliperPosition initialAnglePosition;
@@ -188,15 +188,15 @@ namespace EPCalipersWinUI3.Models.Calipers
             {
                 case CaliperType.Time:
                     initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
-                    caliper = new TimeCaliper(initialPosition, caliperView, settings);
+                    caliper = new TimeCaliper(initialPosition, caliperView, settings, calibration: timeCalibration);
                     break;
                 case CaliperType.Amplitude:
                     initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
-                    caliper = new AmplitudeCaliper(initialPosition, caliperView, settings);
+                    caliper = new AmplitudeCaliper(initialPosition, caliperView, settings, calibration: amplitudeCalibration);
                     break;
                 case CaliperType.Angle:
                     initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-                    caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, calibration, secondaryCalibration);
+                    caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, timeCalibration, amplitudeCalibration);
                     break;
             }
             ApplySettings(caliper, settings);
