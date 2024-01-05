@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using System;
+using System.Collections.Generic;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -27,14 +28,14 @@ namespace EPCalipersWinUI3.Models.Calipers
             CaliperType = CaliperType.Amplitude;
         }
 
-        private Bar[] InitBars(CaliperPosition position)
+        private List<Bar> InitBars(CaliperPosition position)
         {
             // NB Crossbar must be first to allow isNear to work properly.
             CrossBar = new Bar(Bar.Role.VerticalCrossBar,
                 position.Center, position.First, position.Last, _fakeUI);
             TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeUI);
             BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeUI);
-            return new[] { TopBar, BottomBar, CrossBar };
+            return new List<Bar> { TopBar, BottomBar, CrossBar };
         }
         private void InitCaliperLabel()
         {

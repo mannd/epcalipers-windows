@@ -44,13 +44,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         }
 
-        private Bar[] InitBars(CaliperPosition position)
+        private List<Bar> InitBars(CaliperPosition position)
         {
             // NB Crossbar must be first, to allow IsNear to work correctly.
             CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
             LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
             RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
-            return new[] { LeftBar, RightBar, CrossBar };
+            return new List<Bar> { LeftBar, RightBar, CrossBar };
         }
 
         private void InitCaliperLabel()

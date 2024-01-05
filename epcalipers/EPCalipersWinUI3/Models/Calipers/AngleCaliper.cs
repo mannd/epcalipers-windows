@@ -44,7 +44,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             CaliperType = CaliperType.Angle;
         }
 
-        private Bar[] InitBars(AngleCaliperPosition position)
+        private List<Bar> InitBars(AngleCaliperPosition position)
         {
             LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeUI);
             LeftAngleBar.Angle = position.FirstAngle;
@@ -54,14 +54,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (ShowBrugadaTriangle(position))
 			{
 				InitTriangleBase(TriangleHeight());
-				return new[] { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
+				return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 			}
-			return new[] { LeftAngleBar, RightAngleBar, ApexBar };
+			return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar };
 		}
 
         private double TriangleHeight()
         {
-            if (AmplitudeCalibration != null)
+            if (AmplitudeCalibration != null && AmplitudeCalibration.Multiplier != 0)
             {
                 double pointsPerMM = 1.0 / AmplitudeCalibration.Multiplier;
                 return 5.0 * pointsPerMM;
@@ -137,59 +137,66 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         // TODO: control drag from keyboard too
         public override void Drag(Bar bar, Point delta, Point location)
-        {
-            switch (bar.BarRole)
-            {
-                case Bar.Role.Apex:
-                    bar.X1 += delta.X;
-                    bar.X2 += delta.X;
-                    bar.Y1 += delta.Y;
-                    bar.Y2 += delta.Y;
-                    var apex = bar.MidPoint;
-                    LeftAngleBar.SetAngleBarPosition(apex, LeftAngleBar.Angle);
-                    RightAngleBar.SetAngleBarPosition(apex, RightAngleBar.Angle);
-                    break;
-                case Bar.Role.LeftAngle:
-                    LeftAngleBar.Angle = RelativeTheta(location);
-                    LeftAngleBar.SetAngleBarPosition(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
-                    break;
-                case Bar.Role.RightAngle:
-                    RightAngleBar.Angle = RelativeTheta(location);
-                    RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
-                    break;
-                default: break;
-            }
-            if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
-            {
-                // Triangle base needs redrawing no matter how angle caliper moves.
-                if (TriangleBaseBar != null)
-				{
-					TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-                    double height = TriangleHeight();
-					Point point1 = GetBasePoint1ForHeight(height);
-					Point point2 = GetBasePoint2ForHeight(height);
-					double position = point1.Y;
-                    TriangleBaseBar.X1 = point1.X;
-                    TriangleBaseBar.Y1 = position;
-                    TriangleBaseBar.X2 = point2.X;
-                    TriangleBaseBar.Y2 = position;
-					double baseValue = point2.X - point1.X;
-                    Debug.Print(Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString));
-				}
+		{
+			switch (bar.BarRole)
+			{
+				case Bar.Role.Apex:
+					bar.X1 += delta.X;
+					bar.X2 += delta.X;
+					bar.Y1 += delta.Y;
+					bar.Y2 += delta.Y;
+					var apex = bar.MidPoint;
+					LeftAngleBar.SetAngleBarPosition(apex, LeftAngleBar.Angle);
+					RightAngleBar.SetAngleBarPosition(apex, RightAngleBar.Angle);
+					break;
+				case Bar.Role.LeftAngle:
+					LeftAngleBar.Angle = RelativeTheta(location);
+					LeftAngleBar.SetAngleBarPosition(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
+					break;
+				case Bar.Role.RightAngle:
+					RightAngleBar.Angle = RelativeTheta(location);
+					RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
+					break;
+				default: break;
 			}
-            else
-            {
+			DrawTriangleBase();
+			CaliperLabel.Text = Calibration.GetText(Value);
+			CaliperLabel.SetPosition();
+		}
+
+		public void DrawTriangleBase()
+		{
+			if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
+			{
+				if (TriangleBaseBar == null)
+				{
+					InitTriangleBase(TriangleHeight());
+                    TriangleBaseBar.AddToView(CaliperView);
+                    Bars.Add(TriangleBaseBar);
+				}
+				// Triangle base needs redrawing no matter how angle caliper moves.
+				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+				double height = TriangleHeight();
+				Point point1 = GetBasePoint1ForHeight(height);
+				Point point2 = GetBasePoint2ForHeight(height);
+				double position = point1.Y;
+				TriangleBaseBar.X1 = point1.X;
+				TriangleBaseBar.Y1 = position;
+				TriangleBaseBar.X2 = point2.X;
+				TriangleBaseBar.Y2 = position;
+				double baseValue = point2.X - point1.X;
+				Debug.Print(Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString));
+			}
+			else
+			{
                 if (TriangleBaseBar != null)
                 {
-                    //TriangleBaseBar.
                     TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                 }
-            }
-            CaliperLabel.Text = Calibration.GetText(Value);
-            CaliperLabel.SetPosition();
-        }
+			}
+		}
 
-        public override Bar IsNearBar(Point p)
+		public override Bar IsNearBar(Point p)
         {
             if (ApexBar.IsNear(p))
             {

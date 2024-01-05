@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
@@ -45,7 +46,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public bool ShowRate { get; set; } = false;
 
-        protected Bar[] Bars { get; init; }
+        protected List<Bar> Bars { get; init; }
         public CaliperLabel CaliperLabel { get; set; }
 
         public Color Color
@@ -155,14 +156,14 @@ namespace EPCalipersWinUI3.Models.Calipers
         public void Add(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-            foreach (var bar in Bars) bar.AddToView(caliperView);
+            foreach (var bar in Bars) bar?.AddToView(caliperView);
             CaliperLabel.AddToView(caliperView);
         }
 
         public void Remove(ICaliperView caliperView)
         {
             if (caliperView == null) return;
-            foreach (var bar in Bars) bar.RemoveFromView(caliperView);
+            foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
             CaliperLabel.RemoveFromView(caliperView);
         }
 

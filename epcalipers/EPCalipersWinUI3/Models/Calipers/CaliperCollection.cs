@@ -296,11 +296,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			AmplitudeCalibration = Calibration.Uncalibrated;
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
-			foreach (var caliper in _calipers)
-			{
-				caliper.ClearCalibration();
-				caliper.UpdateLabel();
-			}
+			SetCalibration();
 		}
 
 		public void SetCalibration()
@@ -321,6 +317,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
 						angleCaliper.TimeCalibration = TimeCalibration;
 						angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
+						angleCaliper.DrawTriangleBase();
+						// Update caliper appearance
 						break;
 				}
 				caliper.UpdateLabel();
