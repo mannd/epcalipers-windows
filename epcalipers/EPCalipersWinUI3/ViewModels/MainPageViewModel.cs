@@ -38,8 +38,7 @@ namespace EPCalipersWinUI3
 			SetZoom = setZoomDelegate;
 			_settings = Settings.Instance;
 			_pdfHelper = new PdfHelper();
-			var caliperCollection = new CaliperCollection(caliperView, _settings);
-			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
+			_caliperHelper = new CaliperHelper(new CaliperCollection(caliperView, _settings));
 		}
 		#region commands
 		[RelayCommand]

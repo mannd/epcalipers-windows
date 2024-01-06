@@ -203,6 +203,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				caliper.ApplySettings(settings);
 				caliper.UpdateLabel();
 			}
+			Debug.Print("refreshing calipers...");
 		}
 
 		public async Task SetCalibrationAsync()

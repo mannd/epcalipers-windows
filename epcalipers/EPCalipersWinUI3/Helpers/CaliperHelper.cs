@@ -20,7 +20,7 @@ namespace EPCalipersWinUI3.Helpers
 		private Bar _grabbedComponent;
 		private Point _startingDragPoint;
 
-		public CaliperHelper(ICaliperView caliperView, CaliperCollection caliperCollection)
+		public CaliperHelper(CaliperCollection caliperCollection)
 		{
 			_caliperCollection = caliperCollection;
 			Calibration.DefaultUnit = "points".GetLocalized();

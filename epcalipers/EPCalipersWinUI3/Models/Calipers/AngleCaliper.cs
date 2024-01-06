@@ -22,8 +22,26 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar ApexBar { get; set; } // a pseudobar
         public Bar TriangleBaseBar { get; set; }
 
+        public TriangleBaseLabel TriangleBaseLabel { get; set; }
+
         public Calibration TimeCalibration { get; set; }
         public Calibration AmplitudeCalibration { get; set; }
+        public double LeftMostBarPosition => Math.Min(TriangleBaseBar.X1, TriangleBaseBar.X2);
+        public double RightMostBarPosition => Math.Max(TriangleBaseBar.X1, TriangleBaseBar.X2);
+        public double BaseValue
+        {
+            get
+            {
+                if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
+                {
+                    return TriangleBaseBar.X2 - TriangleBaseBar.X1;
+
+                }
+                else { return 0; }
+            }
+        }
+
+        AngleCaliperLabel AngleCaliperLabel { get; set; }
 
         private ISettings _settings;
 
@@ -36,12 +54,13 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             _fakeUI = fakeUI;
             _settings = settings;
+            CaliperType = CaliperType.Angle;
             Calibration = new AngleCalibration();
             TimeCalibration = timeCalibration ?? Calibration.Uncalibrated;
             AmplitudeCalibration = amplitudeCalibration ?? Calibration.Uncalibrated;
             Bars = InitBars(position);
             InitCaliperLabel();
-            CaliperType = CaliperType.Angle;
+            InitTriangleLabel();
         }
 
         private List<Bar> InitBars(AngleCaliperPosition position)
@@ -122,10 +141,31 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             string text = Calibration.GetText(Value);
             CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
-                CaliperLabelAlignment.Right, false, _fakeUI);
+                CaliperLabelAlignment.Top, false, _fakeUI);
         }
 
-        public override void ChangeBounds()
+        private void InitTriangleLabel()
+        {
+            var text = Calibration.GetSecondaryText(BaseValue, TimeCalibration.Parameters.UnitString);
+            var alignment = _settings.TimeCaliperLabelAlignment;
+            var autoAlignLabel = _settings.AutoAlignLabel;
+            TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
+                alignment, autoAlignLabel, _fakeUI);
+        }
+
+		public override void Add(ICaliperView caliperView)
+		{
+			base.Add(caliperView);
+            TriangleBaseLabel?.AddToView(caliperView);
+		}
+
+		public override void Remove(ICaliperView caliperView)
+		{
+			base.Remove(caliperView);
+            TriangleBaseLabel?.RemoveFromView(caliperView);
+		}
+
+		public override void ChangeBounds()
         {
             var bounds = CaliperView.Bounds;
             LeftAngleBar.Bounds = bounds;
@@ -178,13 +218,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 				TriangleBaseBar.X2 = point2.X;
 				TriangleBaseBar.Y2 = position;
 				double baseValue = point2.X - point1.X;
-				Debug.Print(Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString));
+                TriangleBaseLabel.Text = Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString);
+                TriangleBaseLabel.SetPosition();
 			}
 			else
 			{
 				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
 			}
 		}
+
+        public override void ApplySettings(ISettings settings)
+        {
+            base.ApplySettings(settings);
+            DrawTriangleBase();
+        }
 
 		public override Bar IsNearBar(Point p)
         {

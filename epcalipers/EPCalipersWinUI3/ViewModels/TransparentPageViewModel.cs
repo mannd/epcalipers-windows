@@ -27,7 +27,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_settings = Settings.Instance;
 			var caliperCollection = new CaliperCollection(caliperView, _settings);
-			_caliperHelper = new CaliperHelper(caliperView, caliperCollection);
+			_caliperHelper = new CaliperHelper(caliperCollection);
 		}
 
 		public void RefreshCalipers()

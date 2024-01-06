@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Appointments;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -16,6 +17,8 @@ namespace EPCalipersWinUI3.Models.Calipers
         private Size _size;
 
         new AngleCaliper Caliper { get; set; }
+
+        public TextBlock TriangleTextBlock { get; set; }
 
         public AngleCaliperLabel(
             AngleCaliper caliper,
@@ -31,6 +34,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             {
                 TextBlock.Text = text;
                 _size = ShapeMeasure(TextBlock);  // Estimate TextBlock size.
+
             }
             else
             {
@@ -52,11 +56,9 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (TextBlock == null) return;
             _size.Width = ShapeMeasure(TextBlock).Width;
             _size.Width = TextBlock.ActualWidth;
-            // Angle caliper labels are always at the top
-            _position.Left = (int)(Caliper.ApexBar.MidPoint.X - _size.Width / 2);
-            _position.Top = (int)(Caliper.ApexBar.Position - _size.Height - _padding);
-            // TODO: deal with brugada triangle.
-        }
-
-    }
+			// Angle caliper labels are always at the top
+			_position.Left = (int)(Caliper.ApexBar.MidPoint.X - _size.Width / 2);
+			_position.Top = (int)(Caliper.ApexBar.Position - _size.Height - _padding);
+		}
+	}
 }

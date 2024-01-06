@@ -153,14 +153,14 @@ namespace EPCalipersWinUI3.Models.Calipers
         /// </summary>
         public abstract double Value { get; }
 
-        public void Add(ICaliperView caliperView)
+        public virtual void Add(ICaliperView caliperView)
         {
             if (caliperView == null) return;
             foreach (var bar in Bars) bar?.AddToView(caliperView);
             CaliperLabel.AddToView(caliperView);
         }
 
-        public void Remove(ICaliperView caliperView)
+        public virtual void Remove(ICaliperView caliperView)
         {
             if (caliperView == null) return;
             foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
