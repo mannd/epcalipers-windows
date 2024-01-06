@@ -50,16 +50,15 @@ namespace EPCalipersWinUI3.Models.Calipers
             LeftAngleBar.Angle = position.FirstAngle;
             RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeUI);
             RightAngleBar.Angle = position.LastAngle;
-            ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
-			if (ShowBrugadaTriangle(position))
-			{
-				InitTriangleBase(TriangleHeight());
-				return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
-			}
-			return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar };
+			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
+			InitTriangleBase(TriangleHeight());
+			TriangleBaseBar.Visibility = ShowBrugadaTriangle(position) ?
+				Microsoft.UI.Xaml.Visibility.Visible :
+				Microsoft.UI.Xaml.Visibility.Collapsed;
+			return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 		}
 
-        private double TriangleHeight()
+		private double TriangleHeight()
         {
             if (AmplitudeCalibration != null && AmplitudeCalibration.Multiplier != 0)
             {
@@ -168,12 +167,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
 			{
-				if (TriangleBaseBar == null)
-				{
-					InitTriangleBase(TriangleHeight());
-                    TriangleBaseBar.AddToView(CaliperView);
-                    Bars.Add(TriangleBaseBar);
-				}
 				// Triangle base needs redrawing no matter how angle caliper moves.
 				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
 				double height = TriangleHeight();
@@ -189,10 +182,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			else
 			{
-                if (TriangleBaseBar != null)
-                {
-                    TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                }
+				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
 			}
 		}
 
