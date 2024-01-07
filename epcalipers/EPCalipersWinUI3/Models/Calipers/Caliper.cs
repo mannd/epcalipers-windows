@@ -140,6 +140,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             BarThickness = settings.BarThickness;
             SelectedColor = settings.SelectedCaliperColor;
+            
             if (IsSelected)
             {
                 Color = SelectedColor;

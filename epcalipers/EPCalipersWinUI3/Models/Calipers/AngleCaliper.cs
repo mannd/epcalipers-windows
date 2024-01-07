@@ -1,40 +1,33 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
-using EPCalipersWinUI3.Models;
-using Microsoft.UI;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-    public class AngleCaliper : Caliper
+	public class AngleCaliper : Caliper
     {
         public Bar LeftAngleBar { get; set; }
         public Bar RightAngleBar { get; set; }
-        public Bar ApexBar { get; set; } // a pseudobar
-        public Bar TriangleBaseBar { get; set; }
+        public Bar ApexBar { get; set; } // Not visible, but present so it can be grabbed.
+        public Bar TriangleBaseBar { get; set; } // Only visible under certain conditions.
 
-        public TriangleBaseLabel TriangleBaseLabel { get; set; }
+        public TriangleBaseLabel TriangleBaseLabel { get; set; } // Visible when Brugada triangle visible.
 
         public Calibration TimeCalibration { get; set; }
         public Calibration AmplitudeCalibration { get; set; }
+
         public double LeftMostBarPosition => Math.Min(TriangleBaseBar.X1, TriangleBaseBar.X2);
         public double RightMostBarPosition => Math.Max(TriangleBaseBar.X1, TriangleBaseBar.X2);
-        public double BaseValue
+        public double TriangleBaseValue
         {
             get
             {
-                if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
+                if (ShowBrugadaTriangle(caliperPosition))
                 {
                     return TriangleBaseBar.X2 - TriangleBaseBar.X1;
 
@@ -42,6 +35,9 @@ namespace EPCalipersWinUI3.Models.Calipers
                 else { return 0; }
             }
         }
+        // Current position of the angle caliper.
+        public AngleCaliperPosition caliperPosition => 
+            new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle);
 
         public override bool IsSelected
         {
@@ -52,7 +48,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 TriangleBaseLabel.IsSelected = value;
             }
         }
-
         public override Color UnselectedColor
         {
             get => base.UnselectedColor;
@@ -71,7 +66,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 TriangleBaseLabel.SelectedColor = value;
             }
         }
-
         public override Color Color
         {
             get => Color;
@@ -112,8 +106,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
 			InitTriangleBase(TriangleHeight());
 			TriangleBaseBar.Visibility = ShowBrugadaTriangle(position) ?
-				Microsoft.UI.Xaml.Visibility.Visible :
-				Microsoft.UI.Xaml.Visibility.Collapsed;
+				Visibility.Visible :
+				Visibility.Collapsed;
 			return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 		}
 
@@ -186,15 +180,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private void InitTriangleLabel(AngleCaliperPosition position)
         {
-            var text = Calibration.GetSecondaryText(BaseValue, TimeCalibration.Parameters.UnitString);
+            var text = Calibration.GetSecondaryText(TriangleBaseValue, TimeCalibration.Parameters.UnitString);
             var alignment = _settings.TimeCaliperLabelAlignment;
             var autoAlignLabel = _settings.AutoAlignLabel;
-            Visibility visbility = ShowBrugadaTriangle(position) ?
+            Visibility visibility = ShowBrugadaTriangle(position) ?
                 Visibility.Visible : Visibility.Collapsed;
             TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
-                alignment, autoAlignLabel, _fakeUI, visbility);
-            TriangleBaseLabel.SelectedColor = SelectedColor;
-            TriangleBaseLabel.UnselectedColor = UnselectedColor;
+                alignment, autoAlignLabel, _fakeUI, visibility);
         }
 
 		public override void Add(ICaliperView caliperView)
@@ -249,10 +241,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void DrawTriangleBase()
 		{
-			if (ShowBrugadaTriangle(new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle)))
+			if (ShowBrugadaTriangle(caliperPosition))
 			{
 				// Triangle base needs redrawing no matter how angle caliper moves.
-				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+				TriangleBaseBar.Visibility = Visibility.Visible;
 				double height = TriangleHeight();
 				Point point1 = GetBasePoint1ForHeight(height);
 				Point point2 = GetBasePoint2ForHeight(height);
@@ -264,18 +256,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 				double baseValue = point2.X - point1.X;
                 TriangleBaseLabel.Text = Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString);
                 TriangleBaseLabel.SetPosition();
-                TriangleBaseLabel.Visibility = Microsoft.UI.Xaml.Visibility.Visible; 
+                TriangleBaseLabel.Visibility = Visibility.Visible; 
 			}
 			else
 			{
-				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-                TriangleBaseLabel.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed; 
+				TriangleBaseBar.Visibility = Visibility.Collapsed;
+                TriangleBaseLabel.Visibility = Visibility.Collapsed; 
 			}
 		}
 
         public override void ApplySettings(ISettings settings)
         {
             base.ApplySettings(settings);
+            TriangleBaseLabel.AutoAlignLabel = settings.AutoAlignLabel;
+            TriangleBaseLabel.Alignment = settings.TimeCaliperLabelAlignment;
+            TriangleBaseLabel.SetPosition();
             DrawTriangleBase();
         }
 

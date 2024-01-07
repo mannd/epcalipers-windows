@@ -1,31 +1,20 @@
 ﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
-using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Media.Devices;
-using Windows.UI;
-using EPCalipersWinUI3.Helpers;
 using Color = Windows.UI.Color;
 using Point = Windows.Foundation.Point;
-using ABI.Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml;
-using Xunit;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
 
-    /// <summary>
-    /// One of the bars of a caliper.
-    /// </summary>
-    public sealed class Bar
+	/// <summary>
+	/// One of the bars of a caliper.
+	/// </summary>
+	public sealed class Bar
     {
         /// <summary>
         /// The direction and function of the Bar in a Caliper.
@@ -41,16 +30,11 @@ namespace EPCalipersWinUI3.Models.Calipers
             Apex,  // Invisible bar at apex of angle caliper
             TriangleBase // For BrugadaMeter.
         }
-        /// <summary>
-        /// This is a graphics object that is drawable, just a Line but can substitute
-        /// an ILine stub for testing.
-        /// </summary>
         public Role BarRole { get; set; }
         public Bounds Bounds { get; set; }
 
         public Color SelectedColor { get; set; }
         public Color UnselectedColor { get; set; }
-
         public Visibility Visibility
         {
             get
@@ -82,6 +66,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     case Role.Horizontal:
                     case Role.HorizontalCrossBar:
                     case Role.Apex:
+                    case Role.TriangleBase:
                         return Y1;
                     case Role.Vertical:
                     case Role.VerticalCrossBar:
@@ -97,6 +82,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     case Role.Horizontal:
                     case Role.HorizontalCrossBar:
                     case Role.Apex:
+                    case Role.TriangleBase:
                         Y1 = value; Y2 = value;
                         break;
                     case Role.Vertical:
@@ -168,6 +154,12 @@ namespace EPCalipersWinUI3.Models.Calipers
                 "Non-angle bar passed to angle bar constructor.");
             BarRole = role;
             _line = fakeUI ? null : new Line();
+            if (_line != null)
+            {
+                // TODO: This doesn't seem to affect the shape at the end of the line.
+                // Would like to have a rounded shape at the apex of the angle calipers.
+                _line.StrokeEndLineCap = PenLineCap.Round;
+            }
             Bounds = bounds;
             if (role == Role.Apex)
             {

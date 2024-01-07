@@ -201,7 +201,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			foreach (var caliper in _calipers)
 			{
 				caliper.ApplySettings(settings);
-				caliper.UpdateLabel();
 			}
 			Debug.Print("refreshing calipers...");
 		}

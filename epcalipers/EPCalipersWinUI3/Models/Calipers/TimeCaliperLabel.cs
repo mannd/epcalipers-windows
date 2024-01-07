@@ -51,6 +51,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
         }
 
+        // TODO: _view disappears with the cached page.  Maybe need to just pass Height and Width of Calipersview
+        // or pass in CalipersView from the CaliperCollection...
         private void GetPosition(CaliperLabelAlignment alignment)
         {
             if (TextBlock == null) return;

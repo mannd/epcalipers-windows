@@ -3,6 +3,7 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using System.ComponentModel;
+using System.Diagnostics;
 using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
