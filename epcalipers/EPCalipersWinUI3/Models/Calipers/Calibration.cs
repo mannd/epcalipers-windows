@@ -70,8 +70,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         public static string DefaultUnit { get; set; } = "points";
         public static string DefaultBpm { get; set; } = "bpm";
 
-        private readonly CalibrationUnit _originalUnit;
-
         /// <summary>
         /// Provides a calibration factor that calculates the actual interval.
         /// </summary>
@@ -81,7 +79,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             Parameters = parameters;
             Multiplier = Parameters.CalibrationInterval / value;
-            _originalUnit = Parameters.Unit;
         }
 
         public Calibration()
@@ -93,7 +90,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 CalibrationInterval = 1
             };
             Multiplier = 1.0;
-            _originalUnit = Parameters.Unit;
         }
 
         public static Calibration Uncalibrated => new Calibration(); // Default Calibration.Unit is Uncalibrated.
@@ -103,25 +99,27 @@ namespace EPCalipersWinUI3.Models.Calipers
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;
             string unitString = valueUnit.Item2;
+            string formattedValue = GetRoundedValue(value, Rounding);
+            return string.Format("{0} {1}", formattedValue, unitString);
+		}
+
+        protected string GetRoundedValue(double value, Rounding rounding)
+        {
             string format = _roundingFormat[Rounding];
             if (Rounding == Rounding.ToInt)
             {
                 int intValue = (int)Math.Round(value);
-				return string.Format("{0} {1}", intValue.ToString(format), unitString);
-
+                return intValue.ToString(format);
             }
-            else
-            {
-				return string.Format("{0} {1}", valueUnit.Item1.ToString(format), valueUnit.Item2);
-			}
+			return value.ToString(format);
 		}
 
-        public virtual string GetSecondaryText(double interval, string unit)
+		public virtual string GetSecondaryText(double interval, string unit)
         {
             return null;
         }
 
-        private  (double, string) CalibratedInterval(double interval, bool showBpm = false)
+        protected  (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
             if (showBpm)
             {

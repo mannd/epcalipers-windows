@@ -49,7 +49,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         protected List<Bar> Bars { get; init; }
         public CaliperLabel CaliperLabel { get; set; }
 
-        public Color Color
+        public virtual Color Color
         {
             get => _color;
             set
@@ -64,7 +64,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private Color _color;
 
-        public Color UnselectedColor
+        public virtual Color UnselectedColor
         {
             get => _unselectedColor;
             set
@@ -78,7 +78,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
         private Color _unselectedColor;
-        public Color SelectedColor
+        public virtual Color SelectedColor
         {
             get => _selectedColor;
             set
@@ -92,7 +92,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
         private Color _selectedColor;
-        public bool IsSelected
+        public virtual bool IsSelected
         {
             get => _isSelected;
             set

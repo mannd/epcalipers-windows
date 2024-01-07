@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,23 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private Size _size;
 
+        public Visibility Visibility
+        {
+            get
+            {
+                return _visibility;
+            }
+            set
+            {
+                _visibility = value;
+                if (TextBlock != null)
+                {
+                    TextBlock.Visibility = value;
+                }
+            }
+        } 
+        private Visibility _visibility = Visibility.Collapsed;
+
         private CaliperLabelPosition _position;
         private ICaliperView _view;
 
@@ -28,9 +46,11 @@ namespace EPCalipersWinUI3.Models.Calipers
             string text, 
             CaliperLabelAlignment alignment, 
             bool autoAlignLabel, 
-            bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoAlignLabel, fakeUI)
+            bool fakeUI = false,
+            Visibility visibility = Visibility.Collapsed)
+			: base(caliper, caliperView, text, alignment, autoAlignLabel, fakeUI)
 		{
-            Caliper = caliper;
+			Caliper = caliper;
             _view = caliperView;
             if (!fakeUI)
             {
@@ -44,6 +64,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             AutoAlignLabel = autoAlignLabel;
             _position = new CaliperLabelPosition();
             SetPosition();
+            Visibility = visibility;
 		}
 
 		public override void SetPosition()

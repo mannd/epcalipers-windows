@@ -3,6 +3,7 @@ using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using Microsoft.UI;
 using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using System;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -41,7 +43,44 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
 
-        AngleCaliperLabel AngleCaliperLabel { get; set; }
+        public override bool IsSelected
+        {
+            get => base.IsSelected;
+            set
+            {
+                base.IsSelected = value;
+                TriangleBaseLabel.IsSelected = value;
+            }
+        }
+
+        public override Color UnselectedColor
+        {
+            get => base.UnselectedColor;
+            set
+            {
+                base.UnselectedColor = value;
+                TriangleBaseLabel.UnselectedColor = value;
+            }
+        }
+        public override Color SelectedColor
+        {
+            get => base.SelectedColor;
+            set
+            {
+                base.SelectedColor = value;
+                TriangleBaseLabel.SelectedColor = value;
+            }
+        }
+
+        public override Color Color
+        {
+            get => Color;
+            set
+            {
+                base.Color = value;
+                TriangleBaseLabel.Color = value;
+            }
+        }
 
         private ISettings _settings;
 
@@ -58,9 +97,10 @@ namespace EPCalipersWinUI3.Models.Calipers
             Calibration = new AngleCalibration();
             TimeCalibration = timeCalibration ?? Calibration.Uncalibrated;
             AmplitudeCalibration = amplitudeCalibration ?? Calibration.Uncalibrated;
+            Calibration.Rounding = TimeCalibration.Rounding;
             Bars = InitBars(position);
             InitCaliperLabel();
-            InitTriangleLabel();
+            InitTriangleLabel(position);
         }
 
         private List<Bar> InitBars(AngleCaliperPosition position)
@@ -144,13 +184,17 @@ namespace EPCalipersWinUI3.Models.Calipers
                 CaliperLabelAlignment.Top, false, _fakeUI);
         }
 
-        private void InitTriangleLabel()
+        private void InitTriangleLabel(AngleCaliperPosition position)
         {
             var text = Calibration.GetSecondaryText(BaseValue, TimeCalibration.Parameters.UnitString);
             var alignment = _settings.TimeCaliperLabelAlignment;
             var autoAlignLabel = _settings.AutoAlignLabel;
+            Visibility visbility = ShowBrugadaTriangle(position) ?
+                Visibility.Visible : Visibility.Collapsed;
             TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
-                alignment, autoAlignLabel, _fakeUI);
+                alignment, autoAlignLabel, _fakeUI, visbility);
+            TriangleBaseLabel.SelectedColor = SelectedColor;
+            TriangleBaseLabel.UnselectedColor = UnselectedColor;
         }
 
 		public override void Add(ICaliperView caliperView)
@@ -220,10 +264,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 				double baseValue = point2.X - point1.X;
                 TriangleBaseLabel.Text = Calibration.GetSecondaryText(baseValue, TimeCalibration.Parameters.UnitString);
                 TriangleBaseLabel.SetPosition();
+                TriangleBaseLabel.Visibility = Microsoft.UI.Xaml.Visibility.Visible; 
 			}
 			else
 			{
 				TriangleBaseBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+                TriangleBaseLabel.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed; 
 			}
 		}
 

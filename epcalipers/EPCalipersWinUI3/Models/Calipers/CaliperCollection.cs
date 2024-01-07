@@ -318,6 +318,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
 						angleCaliper.TimeCalibration = TimeCalibration;
 						angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
+						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
+						angleCaliper.Calibration.Rounding = _settings.Rounding;
+						angleCaliper.TriangleBaseLabel.AutoAlignLabel = _settings.AutoAlignLabel;
+						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
 						angleCaliper.DrawTriangleBase();
 						// Update caliper appearance
 						break;

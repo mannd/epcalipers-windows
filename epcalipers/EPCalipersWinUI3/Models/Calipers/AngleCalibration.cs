@@ -15,9 +15,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return string.Format("{0:0.#} {1}", interval, Parameters.UnitString);
 		}
 
+		// TODO: refactor to match Time Caliper rounding, force msec, etc.
 		public override string GetSecondaryText(double interval, string unit)
 		{
-			return string.Format("{0} {1}", interval, unit);
+			var value = GetRoundedValue(interval, Rounding);
+			return string.Format("{0} {1}", value, unit);
 		}
+
 	}
 }

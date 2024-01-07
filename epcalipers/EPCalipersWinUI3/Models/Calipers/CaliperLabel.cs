@@ -110,7 +110,6 @@ namespace EPCalipersWinUI3.Models.Calipers
             AutoAlignLabel = autoPosition; 
             TextBlock = fakeUI ? null : new TextBlock() 
             { 
-                // TODO: label is offset to left when adding, and calibrating...
                 Text = text 
             };
         }

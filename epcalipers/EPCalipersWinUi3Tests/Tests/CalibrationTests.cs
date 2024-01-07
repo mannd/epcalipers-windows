@@ -205,6 +205,24 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal(CalibrationUnit.Uncalibrated, calibration.Parameters.Unit);
 		}
 
+		[Fact]
+		public void TestCalibrationText2()
+		{
+			var parameters = new CalibrationParameters(500, CalibrationUnit.Msec, "MSEC");
+			var calibration = new Calibration(1.0, parameters);
+			Assert.Equal("500 MSEC", calibration.GetText(1.0));
+			Assert.Null(calibration.GetSecondaryText(1.0, "msec"));
+		}
+
+		[Fact]
+		public void TestAngleCalibration()
+		{
+			var angleCalibration = new AngleCalibration();
+			Assert.Equal(EPCalipersWinUI3.Models.Rounding.ToInt, angleCalibration.Rounding);
+			Assert.Equal("500 MSEC", angleCalibration.GetSecondaryText(500, "MSEC"));
+			Assert.Equal("500 MSEC", angleCalibration.GetSecondaryText(500.1234, "MSEC"));
+		}
+
 	}
 }
 
