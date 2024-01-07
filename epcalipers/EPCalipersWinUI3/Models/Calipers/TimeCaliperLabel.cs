@@ -10,6 +10,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         private CaliperLabelPosition _position;
         private ICaliperView _view;
+        private Bounds _bounds;
 
         new TimeCaliper Caliper { get; set; }
 
@@ -29,6 +30,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             Caliper = caliper;
             _view = caliperView;
+            _bounds = _view.Bounds;
             if (!fakeUI)
             {
                 TextBlock.Text = text;
@@ -99,7 +101,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     break;
                 case CaliperLabelAlignment.Right:
                     distance = (int)(Caliper.RightMostBarPosition + _size.Width + _padding);
-                    if (distance > _view.Bounds.Width)
+                    if (distance > _bounds.Width)
                     {
                         return CaliperLabelAlignment.Left;
                     }
@@ -124,7 +126,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     if (distance > 0)
                     {
                         distance = (int)(Caliper.CrossBar.Position + _size.Height + _padding);
-                        if (distance > _view.Bounds.Height)
+                        if (distance > _bounds.Height)
                         {
                             return CaliperLabelAlignment.Top;
                         }

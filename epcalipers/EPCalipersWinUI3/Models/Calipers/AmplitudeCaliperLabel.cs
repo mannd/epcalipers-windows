@@ -14,6 +14,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         private CaliperLabelPosition _position;
         private ICaliperView _view;
+        private Bounds _bounds;
 
         public Size Size
         {
@@ -33,6 +34,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             Caliper = caliper;
             _view = caliperView;
+            _bounds = _view.Bounds;
             if (!fakeUI)
             {
                 TextBlock.Text = text;
@@ -100,7 +102,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     break;
                 case CaliperLabelAlignment.Bottom:
                     distance = (int)(Caliper.BottomMostBarPosition + _size.Height + _padding);
-                    if (distance > _view.Bounds.Height)
+                    if (distance > _bounds.Height)
                     {
                         return CaliperLabelAlignment.Top;
                     }
@@ -125,7 +127,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     if (distance > 0)
                     {
                         distance = (int)(Caliper.CrossBar.Position + _size.Width + _padding);
-                        if (distance > _view.Bounds.Height)
+                        if (distance > _bounds.Height)
                         {
                             return CaliperLabelAlignment.Left;
                         }
