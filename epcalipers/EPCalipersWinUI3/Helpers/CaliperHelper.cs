@@ -27,24 +27,24 @@ namespace EPCalipersWinUI3.Helpers
 			Calibration.DefaultBpm = "bpm".GetLocalized();
 		}
 
-		public void AddTimeCaliper(ISettings settings)
+		public void AddTimeCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Time);
 		}
 
-		public void AddAmplitudeCaliper(ISettings settings)
+		public void AddAmplitudeCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Amplitude);
 		}
 
-		public void AddAngleCaliper(ISettings settings)
+		public void AddAngleCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Angle);
 		}
 
-		public void RefreshCalipers(ISettings settings)
+		public void RefreshCalipers()
 		{
-			_caliperCollection.RefreshCalipers(settings);
+			_caliperCollection.RefreshCalipers();
 		}
 
 		public void DeleteAllCalipers()

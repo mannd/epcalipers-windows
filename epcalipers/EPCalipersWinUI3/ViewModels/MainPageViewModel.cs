@@ -22,7 +22,6 @@ namespace EPCalipersWinUI3
 	{
 		private readonly PdfHelper _pdfHelper;
 		private CaliperHelper _caliperHelper;
-		private ISettings _settings;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -36,27 +35,26 @@ namespace EPCalipersWinUI3
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 		{
 			SetZoom = setZoomDelegate;
-			_settings = Settings.Instance;
 			_pdfHelper = new PdfHelper();
-			_caliperHelper = new CaliperHelper(new CaliperCollection(caliperView, _settings));
+			_caliperHelper = new CaliperHelper(new CaliperCollection(caliperView));
 		}
 		#region commands
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			_caliperHelper.AddTimeCaliper(_settings);
+			_caliperHelper.AddTimeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			_caliperHelper.AddAmplitudeCaliper(_settings);
+			_caliperHelper.AddAmplitudeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			_caliperHelper.AddAngleCaliper(_settings);
+			_caliperHelper.AddAngleCaliper();
 		}
 
 		[RelayCommand]
@@ -159,7 +157,7 @@ namespace EPCalipersWinUI3
 
 		public void RefreshCalipers()
 		{
-			_caliperHelper.RefreshCalipers(_settings);
+			_caliperHelper.RefreshCalipers();
 		}
 
 		public CaliperType GetSelectedCaliperType()

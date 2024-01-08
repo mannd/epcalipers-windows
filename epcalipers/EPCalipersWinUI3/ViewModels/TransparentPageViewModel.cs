@@ -26,31 +26,31 @@ namespace EPCalipersWinUI3.ViewModels
 		public TransparentPageViewModel(ICaliperView caliperView)
 		{
 			_settings = Settings.Instance;
-			var caliperCollection = new CaliperCollection(caliperView, _settings);
+			var caliperCollection = new CaliperCollection(caliperView);
 			_caliperHelper = new CaliperHelper(caliperCollection);
 		}
 
 		public void RefreshCalipers()
 		{
-			_caliperHelper.RefreshCalipers(_settings);
+			_caliperHelper.RefreshCalipers();
 		}
 
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			_caliperHelper.AddTimeCaliper(_settings);
+			_caliperHelper.AddTimeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			_caliperHelper.AddAmplitudeCaliper(_settings);
+			_caliperHelper.AddAmplitudeCaliper();
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			_caliperHelper.AddAngleCaliper(_settings);
+			_caliperHelper.AddAngleCaliper();
 		}
 
 		[RelayCommand]

@@ -189,9 +189,9 @@ namespace EPCalipersWinUI3.Models.Calipers
                 alignment, autoAlignLabel, _fakeUI, visibility);
         }
 
-		public override void Add(ICaliperView caliperView)
+		public override void AddToView(ICaliperView caliperView)
 		{
-			base.Add(caliperView);
+			base.AddToView(caliperView);
             TriangleBaseLabel?.AddToView(caliperView);
 		}
 

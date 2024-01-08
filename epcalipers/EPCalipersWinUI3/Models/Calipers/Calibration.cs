@@ -123,6 +123,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             if (showBpm)
             {
+                // Disallow negative bpm.
                 if (Parameters.Unit == CalibrationUnit.Msec)
                 {
                     return (MathHelper.AbsMsecToBpm(Multiplier * interval), DefaultBpm);
@@ -131,6 +132,11 @@ namespace EPCalipersWinUI3.Models.Calipers
                 {
                     return (MathHelper.AbsSecToBpm(Multiplier * interval), DefaultBpm);
                 }
+            }
+            // Disallow negative amplitudes in mm, but allow negative mV, and custom units.
+            if (Parameters.Unit == CalibrationUnit.Mm)
+            {
+                return (Math.Abs(Multiplier * interval), Parameters.UnitString);
             }
 			return (Multiplier * interval, Parameters.UnitString);
 		}

@@ -1,20 +1,15 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Views;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Appointments.AppointmentsProvider;
-using Windows.Foundation;
-using EPCalipersWinUI3.Contracts;
 using System.Diagnostics;
-using EPCalipersWinUI3.Models;
-using EPCalipersWinUI3.Helpers;
-using Microsoft.UI.Xaml;
-using EPCalipersWinUI3.Views;
-using Microsoft.UI.Xaml.Hosting;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Foundation;
 using WinUIEx;
-using Xunit.Sdk;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -57,11 +52,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// </summary>
 		public bool IsLocked { get; set; }
 
-		public CaliperCollection(ICaliperView caliperView, ISettings settings)
+		public CaliperCollection(ICaliperView caliperView, ISettings settings = null)
 		{
 			_calipers = new List<Caliper>();
 			_caliperView = caliperView;
-			_settings = settings;
+			_settings = settings ?? Settings.Instance;
 		}
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
@@ -70,7 +65,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void Add(Caliper caliper)
 		{
 			if (IsLocked) return;
-			caliper.Add(_caliperView);
+			caliper.AddToView(_caliperView);
 			switch (caliper.CaliperType)
 			{
 				case CaliperType.Time:
@@ -94,7 +89,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (IsLocked) return;
 			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration);
-			caliper.Add(_caliperView);
+			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
 			_calipers.Add(caliper);
@@ -194,13 +189,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void RefreshCalipers(ISettings settings)
+		public void RefreshCalipers()
 		{
-			TimeCalibration.Rounding = settings.Rounding;
-			AmplitudeCalibration.Rounding = settings.Rounding;
+			TimeCalibration.Rounding = _settings.Rounding;
+			AmplitudeCalibration.Rounding = _settings.Rounding;
 			foreach (var caliper in _calipers)
 			{
-				caliper.ApplySettings(settings);
+				caliper.ApplySettings(_settings);
 			}
 			Debug.Print("refreshing calipers...");
 		}
@@ -314,6 +309,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 						caliper.Calibration = AmplitudeCalibration;
 						break;
 					case CaliperType.Angle:
+						// TODO: refactor
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
 						angleCaliper.TimeCalibration = TimeCalibration;
 						angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
@@ -322,7 +318,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 						angleCaliper.TriangleBaseLabel.AutoAlignLabel = _settings.AutoAlignLabel;
 						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
 						angleCaliper.DrawTriangleBase();
-						// Update caliper appearance
 						break;
 				}
 				caliper.UpdateLabel();
@@ -349,7 +344,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				default:
 					ShowRate = !ShowRate;
 					var timeCalipers = FilteredCalipers(CaliperType.Time);
-					foreach (var caliper in timeCalipers)
+					foreach (var caliper in timeCalipers) // Brugada triangle base doesn't toggle rate/interval.
 					{
 						caliper.ShowRate = ShowRate;
 						caliper.UpdateLabel();

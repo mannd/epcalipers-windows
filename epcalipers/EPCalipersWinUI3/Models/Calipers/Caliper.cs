@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
+using Xunit;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -117,14 +118,6 @@ namespace EPCalipersWinUI3.Models.Calipers
             IsSelected = !IsSelected;
         }
 
-        public void RefreshColor()
-        {
-            foreach (var bar in Bars)
-            {
-                //bar.RefreshColor(); 
-            }
-        }
-
         public double BarThickness
         {
             set
@@ -154,7 +147,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         /// </summary>
         public abstract double Value { get; }
 
-        public virtual void Add(ICaliperView caliperView)
+        public virtual void AddToView(ICaliperView caliperView)
         {
             if (caliperView == null) return;
             foreach (var bar in Bars) bar?.AddToView(caliperView);
@@ -182,6 +175,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             Calibration timeCalibration = null,
             Calibration amplitudeCalibration = null)
         {
+            Debug.Assert(type != CaliperType.None);
             CaliperPosition initialPosition;
             AngleCaliperPosition initialAnglePosition;
             Caliper caliper = null;
