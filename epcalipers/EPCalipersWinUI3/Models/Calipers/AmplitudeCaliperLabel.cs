@@ -13,8 +13,8 @@ namespace EPCalipersWinUI3.Models.Calipers
     public class AmplitudeCaliperLabel : CaliperLabel
     {
         private CaliperLabelPosition _position;
-        private ICaliperView _view;
-        private Bounds _bounds;
+        private readonly ICaliperView _view;
+        private readonly Bounds _bounds;
 
         public Size Size
         {

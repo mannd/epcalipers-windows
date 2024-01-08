@@ -52,7 +52,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private const string _roundToHundredthsString = "F2";
 		private const string _noRoundingString = "G8";  // This is too precise for clinical use.
 
-        private IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
+        private readonly IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
         {
             {Rounding.ToInt, _roundToIntString },
             {Rounding.ToFourPlaces, _roundToFourPlacesString },
@@ -92,19 +92,19 @@ namespace EPCalipersWinUI3.Models.Calipers
             Multiplier = 1.0;
         }
 
-        public static Calibration Uncalibrated => new Calibration(); // Default Calibration.Unit is Uncalibrated.
+        public static Calibration Uncalibrated => new(); // Default Calibration.Unit is Uncalibrated.
 
         public virtual string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;
             string unitString = valueUnit.Item2;
-            string formattedValue = GetRoundedValue(value, Rounding);
+            string formattedValue = GetRoundedValue(value);
             return string.Format("{0} {1}", formattedValue, unitString);
 		}
 
-        protected string GetRoundedValue(double value, Rounding rounding)
-        {
+        protected string GetRoundedValue(double value)
+		{
             string format = _roundingFormat[Rounding];
             if (Rounding == Rounding.ToInt)
             {

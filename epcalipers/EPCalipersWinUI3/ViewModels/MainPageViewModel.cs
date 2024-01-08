@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper;
-		private CaliperHelper _caliperHelper;
+		private readonly CaliperHelper _caliperHelper;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }

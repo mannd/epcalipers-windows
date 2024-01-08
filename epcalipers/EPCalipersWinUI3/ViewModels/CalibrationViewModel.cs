@@ -25,8 +25,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private readonly CaliperType _caliperType;
 		private readonly Caliper _caliper;
-		private CaliperCollection _caliperCollection;
-		private struct CalibrationInput
+		private readonly CaliperCollection _caliperCollection;
+		private readonly struct CalibrationInput
 		{
 			public double CalibrationValue { get; init; }
 			public CalibrationUnit Unit { get; init; }

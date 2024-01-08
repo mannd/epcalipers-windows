@@ -130,7 +130,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             if (textBlock == null) return new Size(0, 0);
             // Measured Size is bounded to be less than maxSize
-            Size maxSize = new Size(
+            Size maxSize = new(
                  double.PositiveInfinity,
                  double.PositiveInfinity);
             textBlock.Measure(maxSize);

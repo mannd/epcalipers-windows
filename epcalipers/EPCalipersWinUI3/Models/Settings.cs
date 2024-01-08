@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3.Models
 		}
     public sealed class Settings: ISettings
 	{
-		private ApplicationDataContainer _localSettings;
+		private readonly ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
 		private readonly string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
 		private readonly string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
@@ -37,8 +37,7 @@ namespace EPCalipersWinUI3.Models
 			_localSettings = ApplicationData.Current.LocalSettings;
 		}
 
-		private static readonly Lazy<Settings> lazy =
-		new Lazy<Settings>(() => new Settings());
+		private static readonly Lazy<Settings> lazy = new(() => new Settings());
 
 		public static Settings Instance { get { return lazy.Value; } }
 
@@ -120,7 +119,7 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_selectedCaliperColorKey] = hexColor;
 			}
 		}
-		private Color GetColorFromString(string colorHex)
+		private static Color GetColorFromString(string colorHex)
 		{
 			var a = Convert.ToByte(colorHex.Substring(1, 2), 16);
 			var r = Convert.ToByte(colorHex.Substring(3, 2), 16);

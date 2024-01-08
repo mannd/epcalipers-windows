@@ -39,7 +39,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         private Visibility _visibility = Visibility.Collapsed;
 
         private CaliperLabelPosition _position;
-        private ICaliperView _view;
+        private readonly ICaliperView _view;
 
 		public TriangleBaseLabel(AngleCaliper caliper, 
             ICaliperView caliperView, 

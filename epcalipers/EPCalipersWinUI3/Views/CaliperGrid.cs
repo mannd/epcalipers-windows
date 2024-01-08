@@ -26,7 +26,7 @@ namespace EPCalipersWinUI3.Views
 			set => ProtectedCursor = value;
 		}
 
-		public Bounds Bounds => new Bounds(ActualWidth, ActualHeight);
+		public Bounds Bounds => new(ActualWidth, ActualHeight);
 
 		public void Add(Line line)
 		{
@@ -61,7 +61,7 @@ namespace EPCalipersWinUI3.Views
 
 	public class FakeCaliperView : ICaliperView
 	{
-		public Bounds Bounds => new Bounds(800, 400);
+		public Bounds Bounds => new(800, 400);
 
 		public void Add(Line line)
 		{

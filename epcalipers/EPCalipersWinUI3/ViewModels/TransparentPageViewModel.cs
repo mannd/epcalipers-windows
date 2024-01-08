@@ -21,11 +21,9 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class TransparentPageViewModel: ObservableObject
 	{
 		private readonly CaliperHelper _caliperHelper;
-		private ISettings _settings;
 
 		public TransparentPageViewModel(ICaliperView caliperView)
 		{
-			_settings = Settings.Instance;
 			var caliperCollection = new CaliperCollection(caliperView);
 			_caliperHelper = new CaliperHelper(caliperCollection);
 		}
@@ -101,7 +99,7 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		private void ToggleTransparentWindow()
+		private static void ToggleTransparentWindow()
 		{
 			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop()
@@ -111,7 +109,7 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		private void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
+		private static void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
 		private static void Exit() => CommandHelper.ApplicationExit();

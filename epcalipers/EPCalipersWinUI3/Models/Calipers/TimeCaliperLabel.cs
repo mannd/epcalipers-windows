@@ -9,8 +9,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     public class TimeCaliperLabel : CaliperLabel
     {
         private CaliperLabelPosition _position;
-        private ICaliperView _view;
-        private Bounds _bounds;
+        private readonly Bounds _bounds;
 
         new TimeCaliper Caliper { get; set; }
 
@@ -29,8 +28,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoAlignLabel, fakeUI)
         {
             Caliper = caliper;
-            _view = caliperView;
-            _bounds = _view.Bounds;
+            _bounds = caliperView.Bounds;
             if (!fakeUI)
             {
                 TextBlock.Text = text;

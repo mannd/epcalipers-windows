@@ -18,9 +18,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// </summary>
 	public class CaliperCollection
 	{
-		private IList<Caliper> _calipers;
-		private ICaliperView _caliperView;
-		private ISettings _settings;
+		private readonly IList<Caliper> _calipers;
+		private readonly ICaliperView _caliperView;
+		private readonly ISettings _settings;
 		private WindowEx _calibrationWindow;
 
 		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
@@ -270,9 +270,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
 			//Frame frame = new Frame();
 			//frame.Navigate(typeof(CalibrationView));
-			var calibrationView = new CalibrationView(SelectedCaliper, this);
-			calibrationView.Window = _calibrationWindow;
-			calibrationView.CaliperType = caliperType;
+			var calibrationView = new CalibrationView(SelectedCaliper, this)
+			{
+				Window = _calibrationWindow,
+				CaliperType = caliperType
+			};
 			_calibrationWindow.Content = calibrationView;
 			_calibrationWindow.Closed += OnClosed;
 			_calibrationWindow.Show();

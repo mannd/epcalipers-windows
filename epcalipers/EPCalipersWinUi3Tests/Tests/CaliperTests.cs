@@ -27,7 +27,7 @@ namespace EPCalipersWinUi3Tests.Tests
 				stubCaliperView, stubSettings, true, calibration);
 			return amplitudeCaliper;
 		}
-		private AngleCaliper GetAngleCaliper()
+		private static AngleCaliper GetAngleCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();

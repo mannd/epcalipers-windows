@@ -53,7 +53,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private Visibility _visibility;
 
-        private Line _line;
+        private readonly Line _line;
 
         // Angle is only used for angle calipers.
         public double Angle { get; set; }
@@ -247,7 +247,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             return adjustedEndPoint;
         }
 
-        public Point MidPoint => new Point((X2 - X1) / 2.0 + X1, (Y2 - Y1) / 2.0 + Y1);
+        public Point MidPoint => new((X2 - X1) / 2.0 + X1, (Y2 - Y1) / 2.0 + Y1);
 
         public bool IsSelected
         {
@@ -321,12 +321,12 @@ namespace EPCalipersWinUI3.Models.Calipers
             view.Remove(_line);
         }
 
-        private Point EndPointForPosition(Point p, double angle, double length)
+        private static Point EndPointForPosition(Point p, double angle, double length)
         {
             // Note Windows coordinates origin is top left of screen
             double endX = Math.Cos(angle) * length + p.X;
             double endY = Math.Sin(angle) * length + p.Y;
-            Point endPoint = new Point(endX, endY);
+            Point endPoint = new(endX, endY);
             return endPoint;
         }
 

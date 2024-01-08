@@ -27,7 +27,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             get
             {
-                if (ShowBrugadaTriangle(caliperPosition))
+                if (ShowBrugadaTriangle(CaliperPosition))
                 {
                     return TriangleBaseBar.X2 - TriangleBaseBar.X1;
 
@@ -36,8 +36,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
         // Current position of the angle caliper.
-        public AngleCaliperPosition caliperPosition => 
-            new AngleCaliperPosition(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle);
+        public AngleCaliperPosition CaliperPosition => 
+            new(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle);
 
         public override bool IsSelected
         {
@@ -76,7 +76,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
         }
 
-        private ISettings _settings;
+		private readonly ISettings _settings;
 
         public AngleCaliper(AngleCaliperPosition position,
             ICaliperView caliperView,
@@ -99,10 +99,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private List<Bar> InitBars(AngleCaliperPosition position)
         {
-            LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeUI);
-            LeftAngleBar.Angle = position.FirstAngle;
-            RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeUI);
-            RightAngleBar.Angle = position.LastAngle;
+			LeftAngleBar = new Bar(Bar.Role.LeftAngle, position.Apex, position.FirstAngle, Bounds, _fakeUI)
+			{
+				Angle = position.FirstAngle
+			};
+			RightAngleBar = new Bar(Bar.Role.RightAngle, position.Apex, position.LastAngle, Bounds, _fakeUI)
+			{
+				Angle = position.LastAngle
+			};
 			ApexBar = new Bar(Bar.Role.Apex, position.Apex, 0, Bounds, _fakeUI); // ApexBar never drawn
 			InitTriangleBase(TriangleHeight());
 			TriangleBaseBar.Visibility = ShowBrugadaTriangle(position) ?
@@ -127,11 +131,11 @@ namespace EPCalipersWinUI3.Models.Calipers
             return (_settings.ShowBrugadaTriangle &&
                 TimeCalibration.Parameters.Unit == CalibrationUnit.Msec &&
                 AmplitudeCalibration.Parameters.Unit == CalibrationUnit.Mm &&
-                AngleInSouthernHemisphere(position.FirstAngle) &&
-                AngleInSouthernHemisphere(position.LastAngle));
+				AngleInSouthernHemisphere(position.FirstAngle) &&
+				AngleInSouthernHemisphere(position.LastAngle));
         }
 
-		private bool AngleInSouthernHemisphere(double angle)
+		private static bool AngleInSouthernHemisphere(double angle)
 		{
 			// Note can't be <= because we get divide by zero error with Sin(angle) == 0
 			return (0 < angle && angle < Math.PI);
@@ -145,7 +149,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				/ Math.Sin(Math.PI - LeftAngleBar.Angle));
             double apexX = ApexBar.MidPoint.X;
 			pointX =  apexX - pointX;
-			Point point = new Point(pointX, pointY);
+			Point point = new(pointX, pointY);
 			return point;
 		}
 
@@ -157,7 +161,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				/ Math.Sin(RightAngleBar.Angle));
             double apexX = ApexBar.MidPoint.X;
             pointX += apexX;
-			Point point = new Point(pointX, pointY);
+			Point point = new(pointX, pointY);
 			return point;
 		}
 
@@ -241,7 +245,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void DrawTriangleBase()
 		{
-			if (ShowBrugadaTriangle(caliperPosition))
+			if (ShowBrugadaTriangle(CaliperPosition))
 			{
 				// Triangle base needs redrawing no matter how angle caliper moves.
 				TriangleBaseBar.Visibility = Visibility.Visible;
