@@ -17,11 +17,15 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestParseCalibrationInput()
 		{
-			var calibration = new Calibration();
-
-			//var input1 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(1.0, CalibrationUnit.Msec, "");
-			//CalibrationParameters output1 = Calibration.ParseInput(input1);
-			//Assert.Equal(1 , output1.Value);
+			var input1 = new CalibrationParameters(100, CalibrationUnit.Msec, "");
+			var calibration1 = new Calibration(5.0, input1);
+			Assert.Equal(20.0, calibration1.Multiplier);
+			var input2 = new CalibrationParameters(100, CalibrationUnit.Custom, "rods");
+			var calibration2 = new Calibration(5.0, input2);
+			Assert.Equal("200 rods", calibration2.GetText(10, false));
+			var input3 = new CalibrationParameters(100, CalibrationUnit.Custom, "MSEC");
+			var calibration3 = new Calibration(5.0, input1);
+			Assert.Equal("300 bpm", calibration3.GetText(10, true));
 			//Assert.Equal(CalibrationUnit.Msec , output1.Unit);
 			//var input2 = new EPCalipersWinUI3.Models.Calipers.CalibrationInput(10.0, CalibrationUnit.Uncalibrated, "");
 			//CalibrationParameters output2 = Calibration.ParseInput(input2);

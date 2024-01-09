@@ -200,6 +200,9 @@
   <data name="ClearCalibrationMenuItem.Text" xml:space="preserve">
     <value>Clear calibration</value>
   </data>
+  <data name="ColorMenuItem.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="DeleteAllCalipersMenuItem.Text" xml:space="preserve">
     <value>Delete all calipers</value>
   </data>
@@ -250,6 +253,9 @@
   </data>
   <data name="MainMenuItem.Text" xml:space="preserve">
     <value>Main</value>
+  </data>
+  <data name="MarchingMenuItem.Text" xml:space="preserve">
+    <value>Marching calipers</value>
   </data>
   <data name="MeanRateIntervalBarButton.Label" xml:space="preserve">
     <value>Mean interval</value>
@@ -320,6 +326,9 @@
   <data name="Resources1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Resources2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Rotate01LMenuItem.Text" xml:space="preserve">
     <value>Rotate 0.1° L</value>
   </data>
@@ -343,6 +352,12 @@
   </data>
   <data name="sec" xml:space="preserve">
     <value>sec</value>
+  </data>
+  <data name="SelectCaliperMenuItem.Text" xml:space="preserve">
+    <value>Select caliper</value>
+  </data>
+  <data name="SelectComponentMenuItem.Text" xml:space="preserve">
+    <value>Select component</value>
   </data>
   <data name="SetCalibration.Content" xml:space="preserve">
     <value>Set calibration</value>

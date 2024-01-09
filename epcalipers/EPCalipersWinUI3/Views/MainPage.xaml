@@ -11,7 +11,18 @@
     NavigationCacheMode="Required"
     Background="Transparent" >
     <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >-->
-    <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver">
+    <Page.Resources>
+        <MenuFlyout x:Key="ContextMenuFlyout">
+            <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 
+            IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"
+                            Tag="red" Click="Right_Click"/>
+            <MenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="Right_Click"/>
+            <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" Tag="green" Click="Right_Click"/>
+            <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"/>
+            <MenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"/>
+        </MenuFlyout>
+    </Page.Resources>
+    <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver" >
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="52"/>
@@ -271,6 +282,7 @@
                         ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" Background="Transparent" 
                         VerticalScrollBarVisibility="Auto" PointerPressed="ScrollView_PointerPressed"
                           PointerMoved="ScrollViewer_PointerMoved" Tapped="ScrollViewer_Tapped"
+                          RightTapped="ScrollView_RightTapped" ContextFlyout="{StaticResource ContextMenuFlyout}"
                       DoubleTapped="ScrollViewer_DoubleTapped" PointerReleased="ScrollView_PointerReleased">
             <local:CaliperGrid x:Name="CaliperView" Background="Transparent" 
                       HorizontalAlignment="Center" VerticalAlignment="Center">

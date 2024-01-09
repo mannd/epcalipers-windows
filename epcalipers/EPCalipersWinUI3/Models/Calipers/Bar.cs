@@ -137,6 +137,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
+        // TODO: Need to inject the line method...
         public Bar(Role role,
             double position, double start, double end, bool fakeUI = false)
         {
@@ -158,7 +159,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             {
                 // TODO: This doesn't seem to affect the shape at the end of the line.
                 // Would like to have a rounded shape at the apex of the angle calipers.
-                _line.StrokeEndLineCap = PenLineCap.Round;
+                //_line.StrokeEndLineCap = PenLineCap.Round;
             }
             Bounds = bounds;
             if (role == Role.Apex)
@@ -260,10 +261,9 @@ namespace EPCalipersWinUI3.Models.Calipers
                     Color = _isSelected ? SelectedColor : UnselectedColor;
                 }
             }
-
-
         }
         private bool _isSelected;
+
         public Color Color
         {
             set
@@ -275,6 +275,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                 }
             }
         }
+
         public double Thickness
         {
             get => _thickness;
@@ -329,6 +330,5 @@ namespace EPCalipersWinUI3.Models.Calipers
             Point endPoint = new(endX, endY);
             return endPoint;
         }
-
     }
 }

@@ -62,6 +62,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
 
+		// TODO: Only used in testing so far?  Redundant?
 		public void Add(Caliper caliper)
 		{
 			if (IsLocked) return;
@@ -89,6 +90,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (IsLocked) return;
 			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration);
+			// TODO: Reduce caliper dependency on CaliperView:
+			//  _caliperView.Add(caliper); ???
 			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
@@ -150,6 +153,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (caliper == null) return (null, null);
 			Debug.Print(caliper.ToString(), bar.ToString());
 			return (caliper, bar);
+		}
+
+		public bool PointIsNearCaliper(Point point)
+		{
+			if (IsLocked) return false;
+			foreach (var caliper in _calipers)
+			{
+				var component = caliper.IsNearBar(point);
+				if (component == null) Debug.Print("Null");
+				else Debug.Print(component.ToString());
+				if (component != null) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public void ToggleCaliperSelection(Point point)

@@ -73,6 +73,12 @@ namespace EPCalipersWinUI3
 		{
 			_caliperHelper.ToggleCaliperSelection(point);
 		}
+
+		public bool PointIsNearCaliper(Point point)
+		{
+			return _caliperHelper.PointIsNearCaliper(point);
+		}
+
 		public void RemoveAtPoint(Point point)
 		{
 			_caliperHelper.RemoveAtPoint(point);
@@ -313,6 +319,8 @@ namespace EPCalipersWinUI3
 		[ObservableProperty]
 		private string titleBarName;
 
+		[ObservableProperty]
+		private bool isNearCaliper;
 
 		#endregion
 	}

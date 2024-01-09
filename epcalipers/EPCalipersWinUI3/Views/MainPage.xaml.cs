@@ -83,6 +83,17 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.RemoveAtPoint(position);
 		}
 
+		private void ScrollView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+		{
+			var position = e.GetPosition(CaliperView);
+			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position);
+		}
+
+		private void Right_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.Print("right click menu item");
+		}
+
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.CaliperView);
@@ -306,5 +317,6 @@ namespace EPCalipersWinUI3.Views
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 		#endregion
+
 	}
 }

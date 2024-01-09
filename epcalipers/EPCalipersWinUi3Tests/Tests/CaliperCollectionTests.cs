@@ -16,6 +16,7 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestFilteredCollection()
 		{
 			// TODO: Add more caliper types and calipers.
+			// TODO: CaliperCollection.Add only used in testing, not in app?
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
 			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);

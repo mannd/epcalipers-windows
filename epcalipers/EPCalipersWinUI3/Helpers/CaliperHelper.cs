@@ -27,6 +27,11 @@ namespace EPCalipersWinUI3.Helpers
 			Calibration.DefaultBpm = "bpm".GetLocalized();
 		}
 
+		public bool PointIsNearCaliper(Point point)
+		{
+			return _caliperCollection.PointIsNearCaliper(point);
+		}
+
 		public void AddTimeCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Time);
