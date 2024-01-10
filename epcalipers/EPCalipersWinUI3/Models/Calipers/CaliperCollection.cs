@@ -146,6 +146,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public void DeleteCaliperAt(Point point)
+		{
+			var caliperBar = GetGrabbedCaliperAndBar(point);
+			var caliper = caliperBar.Item1 as Caliper;
+			if (caliper != null)
+			{
+				caliper.Remove(_caliperView);
+				_calipers.Remove(caliper);
+			}
+		}
+
 		public (Caliper, Bar) GetGrabbedCaliperAndBar(Point point)
 		{
 			Bar bar = null;
@@ -190,6 +201,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 					UnselectCalipersExcept(caliper);
 				}
 			}
+		}
+
+		public void ToggleComponentSelection(Point point)
+		{
+			if (IsLocked) return;
+			Debug.Print("toggle component");
 		}
 
 		private void UnselectCalipersExcept(Caliper c)

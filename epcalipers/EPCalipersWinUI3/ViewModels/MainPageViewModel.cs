@@ -69,9 +69,20 @@ namespace EPCalipersWinUI3
 			_caliperHelper.DeleteSelectedCaliper();
 		}
 
+		public void DeleteCaliperAt(Point point)
+		{
+			_caliperHelper.DeleteCaliperAt(point);
+		}
+
 		public void ToggleCaliperSelection(Point point)
 		{
 			_caliperHelper.ToggleCaliperSelection(point);
+		}
+
+		[RelayCommand]
+		public void ToggleComponentSelection(Point point)
+		{
+			_caliperHelper.ToggleComponentSelection(point);
 		}
 
 		public bool PointIsNearCaliper(Point point)

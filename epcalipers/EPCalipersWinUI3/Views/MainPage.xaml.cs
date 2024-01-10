@@ -21,6 +21,7 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
+		private Point _rightClickPosition;
 
 		public MainPage()
 		{
@@ -86,12 +87,25 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_RightTapped(object sender, RightTappedRoutedEventArgs e)
 		{
 			var position = e.GetPosition(CaliperView);
+			_rightClickPosition = position;
 			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position);
 		}
 
 		private void Right_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("right click menu item");
+		}
+		private void SelectComponent_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleComponentSelection(_rightClickPosition);
+		}
+		private void SelectCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleCaliperSelection(_rightClickPosition);
+		}
+		private void DeleteCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.DeleteCaliperAt(_rightClickPosition);
 		}
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)

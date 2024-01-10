@@ -62,9 +62,20 @@ namespace EPCalipersWinUI3.Helpers
 			_caliperCollection.RemoveActiveCaliper();
 		}
 
+		public void DeleteCaliperAt(Point point)
+		{
+			_caliperCollection.DeleteCaliperAt(point);
+
+		}
+
 		public void ToggleCaliperSelection(Point point)
 		{
 			_caliperCollection.ToggleCaliperSelection(point);
+		}
+
+		public void ToggleComponentSelection(Point point)
+		{
+			_caliperCollection.ToggleComponentSelection(point);
 		}
 		public void RemoveAtPoint(Point point)
 		{

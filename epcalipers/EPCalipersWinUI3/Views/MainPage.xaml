@@ -14,12 +14,16 @@
     <Page.Resources>
         <MenuFlyout x:Key="ContextMenuFlyout">
             <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 
-            IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"
-                            Tag="red" Click="Right_Click"/>
-            <MenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="Right_Click"/>
-            <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" Tag="green" Click="Right_Click"/>
-            <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"/>
-            <MenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"/>
+                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"
+                            Tag="red" Click="SelectComponent_Click"/>
+            <MenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="SelectCaliper_Click"
+                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
+            <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" Tag="green" Click="DeleteCaliper_Click"
+                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
+            <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"
+                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
+            <MenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"
+                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
         </MenuFlyout>
     </Page.Resources>
     <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver" >
