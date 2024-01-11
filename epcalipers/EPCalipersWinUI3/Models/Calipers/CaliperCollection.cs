@@ -206,7 +206,28 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void ToggleComponentSelection(Point point)
 		{
 			if (IsLocked) return;
-			Debug.Print("toggle component");
+			bool caliperToggled = false;
+			Bar bar = null;
+			foreach (var caliper in _calipers)
+			{
+				bar = caliper.IsNearBar(point);
+				if (bar != null && !caliperToggled)
+				{
+					caliperToggled = true;
+					if (bar.IsSelected)
+					{
+						// Avoid ending up with 1 bar of a caliper unselected.
+						caliper.IsSelected = false;
+					}
+					else
+					{
+						// Avoid multiple selected bars.
+						caliper.IsSelected = false;
+						bar.IsSelected = true;
+					}
+					UnselectCalipersExcept(caliper);
+				}
+			}
 		}
 
 		private void UnselectCalipersExcept(Caliper c)

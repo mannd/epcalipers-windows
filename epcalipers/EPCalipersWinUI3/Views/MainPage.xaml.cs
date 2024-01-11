@@ -21,11 +21,11 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
-		private Point _rightClickPosition;
+		private Point _rightClickPosition; 
 
 		public MainPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
             ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
@@ -110,7 +110,7 @@ namespace EPCalipersWinUI3.Views
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-			var position = e.GetCurrentPoint(this.CaliperView);
+			var position = e.GetCurrentPoint(CaliperView);
 			pointerPosition = position.Position;
 			pointerDown = true;
 			ViewModel.GrabCaliper(pointerPosition);
@@ -120,7 +120,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			if (pointerDown) // && dragging caliper...
 			{
-				var position = e.GetCurrentPoint(this.CaliperView);
+				var position = e.GetCurrentPoint(CaliperView);
 				if (position.Position.X < EcgImage.ActualWidth 
 					&& position.Position.Y < EcgImage.ActualHeight
 					&& position.Position.Y > 0
