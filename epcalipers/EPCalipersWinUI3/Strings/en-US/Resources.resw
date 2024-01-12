@@ -266,8 +266,32 @@
   <data name="MeasureQTcMenuItem.Text" xml:space="preserve">
     <value>Measure QTc</value>
   </data>
+  <data name="MicroMoveDownMenuItem.Text" xml:space="preserve">
+    <value>Micromove down</value>
+  </data>
+  <data name="MicroMoveLeftMenuItem.Text" xml:space="preserve">
+    <value>Micromove left</value>
+  </data>
+  <data name="MicroMoveRightMenuItem.Text" xml:space="preserve">
+    <value>Micromove right</value>
+  </data>
+  <data name="MicroMoveUpMenuItem.Text" xml:space="preserve">
+    <value>Micromove up</value>
+  </data>
   <data name="mm" xml:space="preserve">
     <value>mm</value>
+  </data>
+  <data name="MoveDownMenuItem.Text" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="MoveLeftMenuItem.Text" xml:space="preserve">
+    <value>Move left</value>
+  </data>
+  <data name="MoveRightMenuItem.Text" xml:space="preserve">
+    <value>Move right</value>
+  </data>
+  <data name="MoveUpMenuItem.Text" xml:space="preserve">
+    <value>Move up</value>
   </data>
   <data name="msec" xml:space="preserve">
     <value>msec</value>
@@ -327,6 +351,9 @@
     <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Resources2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Resources3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources.resw;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Rotate01LMenuItem.Text" xml:space="preserve">
@@ -394,6 +421,9 @@
   </data>
   <data name="TransparentWindowMenuItem.Text" xml:space="preserve">
     <value>Transparent window</value>
+  </data>
+  <data name="UnselectAllCalipersMenuItem.Text" xml:space="preserve">
+    <value>Clear selection</value>
   </data>
   <data name="ViewMenu.Title" xml:space="preserve">
     <value>View</value>

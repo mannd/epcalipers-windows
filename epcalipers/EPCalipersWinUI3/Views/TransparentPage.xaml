@@ -70,11 +70,96 @@
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
+                <MenuFlyoutItem Icon="Clear" x:Uid="UnselectAllCalipersMenuItem"
+                                Command="{x:Bind ViewModel.UnselectAllCalipersCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Escape" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                 Command="{x:Bind ViewModel.SetCalibrationCommand}" />
                 <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="MoveLeftMenuItem"
+                                Command="{x:Bind ViewModel.MoveLeftCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Left" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xF0B0;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MoveRightMenuItem"
+                                Command="{x:Bind ViewModel.MoveRightCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Right" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xF0AF;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MoveUpMenuItem"
+                                Command="{x:Bind ViewModel.MoveUpCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Up" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xF0AD;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MoveDownMenuItem"
+                                Command="{x:Bind ViewModel.MoveDownCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Down" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xF0AE;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="MicroMoveLeftMenuItem"
+                                Command="{x:Bind ViewModel.MoveLeftCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xEC52;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MicroMoveRightMenuItem"
+                                Command="{x:Bind ViewModel.MoveRightCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xEBE7;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MicroMoveUpMenuItem"
+                                Command="{x:Bind ViewModel.MoveUpCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE74A;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="MicroMoveDownMenuItem"
+                                Command="{x:Bind ViewModel.MoveDownCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE74B;"/>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
+                                Command="{x:Bind ViewModel.SetCalibrationCommand}" />
+                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
+            </MenuBarItem>
+            <MenuBarItem x:Uid="ToolsMenu">
                 <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" >
                     <MenuFlyoutItem.KeyboardAccelerators>
@@ -83,8 +168,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"/>
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
-            </MenuBarItem>
-            <MenuBarItem x:Uid="ToolsMenu">
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}"> 
                     <MenuFlyoutItem.Icon>
                         <FontIcon Glyph="&#xE713;" />

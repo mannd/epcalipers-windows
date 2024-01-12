@@ -74,6 +74,12 @@ namespace EPCalipersWinUI3
 			_caliperHelper.DeleteCaliperAt(point);
 		}
 
+		[RelayCommand]
+		public void UnselectAllCalipers()
+		{
+			_caliperHelper.UnselectAllCalipers();
+		}
+
 		public void ToggleCaliperSelection(Point point)
 		{
 			_caliperHelper.ToggleCaliperSelection(point);
@@ -297,6 +303,63 @@ namespace EPCalipersWinUI3
 				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
 			AppHelper.AppTitleBarText = TitleBarName;
 		}
+		#region movement
+		[RelayCommand]
+		private void MoveLeft()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MoveLeft();
+		}
+
+		[RelayCommand]
+		private void MoveRight()
+		{
+			_caliperHelper.MoveRight();
+		}
+
+		[RelayCommand]
+		private void MoveUp()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MoveUp();
+		}
+
+		[RelayCommand]
+		private void MoveDown()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MoveDown();
+		}
+
+		[RelayCommand]
+		private void MicroMoveLeft()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MicroMoveLeft();
+		}
+
+		[RelayCommand]
+		private void MicroMoveRight()
+		{
+			_caliperHelper.MicroMoveRight();
+		}
+
+		[RelayCommand]
+		private void MicroMoveUp()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MicroMoveUp();
+		}
+
+		[RelayCommand]
+		private void MicroMoveDown()
+		{
+			Debug.Print("move left");
+			_caliperHelper.MicroMoveDown();
+		}
+
+		#endregion movement
+
 		#endregion
 		#region observable properties
 		[ObservableProperty]

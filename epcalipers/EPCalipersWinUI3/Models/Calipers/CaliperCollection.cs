@@ -113,6 +113,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public void MoveLeft()
+		{
+			if (IsLocked) return;
+			var caliper = SelectedCaliper;
+			if (caliper == null) return;
+			Debug.Print("move caliper left");
+			//caliper.Drag()
+
+		}
+
 		public void ChangeBounds()
 		{
 			foreach (var caliper in _calipers)
@@ -156,6 +166,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_calipers.Remove(caliper);
 			}
 		}
+
+		public void UnselectAllCalipers()
+		{
+			// TODO: may need to handle Esc for measurements differently.
+			if (IsLocked) return;
+            foreach (var caliper in _calipers)
+			{
+				caliper.IsSelected = false;
+			}
+        }
 
 		public (Caliper, Bar) GetGrabbedCaliperAndBar(Point point)
 		{

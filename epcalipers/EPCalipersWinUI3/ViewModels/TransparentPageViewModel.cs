@@ -58,6 +58,12 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
+		public void UnselectAllCalipers()
+		{
+			_caliperHelper?.UnselectAllCalipers();
+		}
+
+		[RelayCommand]
 		public void DeleteSelectedCaliper()
 		{
 			_caliperHelper.DeleteSelectedCaliper();
@@ -125,5 +131,57 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperHelper.ClearCalibration();
 		}
+
+
+		#region movement
+		[RelayCommand]
+		private void MoveLeft()
+		{
+			_caliperHelper.MoveLeft();
+		}
+
+		[RelayCommand]
+		private void MoveRight()
+		{
+			_caliperHelper.MoveRight();
+		}
+
+		[RelayCommand]
+		private void MoveUp()
+		{
+			_caliperHelper.MoveUp();
+		}
+
+		[RelayCommand]
+		private void MoveDown()
+		{
+			_caliperHelper.MoveDown();
+		}
+
+		[RelayCommand]
+		private void MicroMoveLeft()
+		{
+			_caliperHelper.MicroMoveLeft();
+		}
+
+		[RelayCommand]
+		private void MicroMoveRight()
+		{
+			_caliperHelper.MicroMoveRight();
+		}
+
+		[RelayCommand]
+		private void MicroMoveUp()
+		{
+			_caliperHelper.MicroMoveUp();
+		}
+
+		[RelayCommand]
+		private void MicroMoveDown()
+		{
+			_caliperHelper.MicroMoveDown();
+		}
+
+		#endregion movement
 	}
 }

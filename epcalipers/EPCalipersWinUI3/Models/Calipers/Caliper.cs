@@ -15,6 +15,15 @@ namespace EPCalipersWinUI3.Models.Calipers
         Angle,
         None
     }
+
+    public enum MovementDirection
+    {
+        Left,
+        Right, 
+        Up,
+        Down
+    }
+
     public readonly record struct Bounds(double Width, double Height);
 
     /// <summary>

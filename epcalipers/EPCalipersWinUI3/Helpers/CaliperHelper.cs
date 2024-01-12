@@ -68,6 +68,11 @@ namespace EPCalipersWinUI3.Helpers
 
 		}
 
+		public void UnselectAllCalipers()
+		{
+			_caliperCollection.UnselectAllCalipers();
+		}
+
 		public void ToggleCaliperSelection(Point point)
 		{
 			_caliperCollection.ToggleCaliperSelection(point);
@@ -82,6 +87,43 @@ namespace EPCalipersWinUI3.Helpers
 			_caliperCollection.RemoveAtPoint(point);
 		}
 
+		public void MoveLeft()
+		{
+			_caliperCollection.MoveLeft();
+			//_caliperCollection.Move(Bar bar, MovementDirection direction, double distance);
+		}
+
+		public void MoveRight()
+		{
+
+		}
+
+		public void MoveUp()
+		{
+
+		}
+		public void MoveDown() 
+		{
+		}
+
+		public void MicroMoveLeft()
+		{
+			_caliperCollection.MoveLeft();
+			//_caliperCollection.MicroMove(Bar bar, MicroMovementDirection direction, double distance);
+		}
+
+		public void MicroMoveRight()
+		{
+
+		}
+
+		public void MicroMoveUp()
+		{
+
+		}
+		public void MicroMoveDown() 
+		{
+		}
 		public void GrabCaliper(Point point)
 		{
 			// Detect if this is near a caliper component, and if so, load it up for movement.
