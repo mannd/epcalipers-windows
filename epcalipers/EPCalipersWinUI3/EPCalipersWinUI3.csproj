@@ -158,7 +158,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PRIResource Update="Strings\en-US\Resources.resw">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </PRIResource>
   </ItemGroup>
   <ItemGroup>

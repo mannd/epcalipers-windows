@@ -23,6 +23,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private readonly ISettings _settings;
 		private WindowEx _calibrationWindow;
 
+		private Caliper _grabbedCaliper;
+		private Bar _grabbedComponent;
+		private Point _startingDragPoint;
+
 		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
 		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
 
@@ -52,11 +56,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// </summary>
 		public bool IsLocked { get; set; }
 
-		public CaliperCollection(ICaliperView caliperView, ISettings settings = null)
+		public CaliperCollection(ICaliperView caliperView, ISettings settings = null, string defaultUnit = "points", string defaultBpm = "bpm")
 		{
 			_calipers = new List<Caliper>();
 			_caliperView = caliperView;
 			_settings = settings ?? Settings.Instance;
+			Calibration.DefaultUnit = defaultUnit;
+			Calibration.DefaultBpm = defaultBpm;
 		}
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
@@ -120,7 +126,57 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (caliper == null) return;
 			Debug.Print("move caliper left");
 			//caliper.Drag()
+		}
+		public void MoveRight()
+		{
 
+		}
+
+		public void MoveUp()
+		{
+
+		}
+		public void MoveDown() 
+		{
+		}
+
+		public void MicroMoveLeft()
+		{
+		}
+
+		public void MicroMoveRight()
+		{
+
+		}
+
+		public void MicroMoveUp()
+		{
+
+		}
+		public void MicroMoveDown() 
+		{
+		}
+		public void GrabCaliper(Point point)
+		{
+			if (IsLocked) return;
+			// Detect if this is near a caliper component, and if so, load it up for movement.
+			(_grabbedCaliper, _grabbedComponent) = GetGrabbedCaliperAndBar(point);
+			_startingDragPoint = point;
+		}
+
+		public void DragCaliperComponent(Point point)
+		{
+			if (_grabbedCaliper == null || _grabbedComponent == null) return;
+			var delta = new Point(point.X - _startingDragPoint.X, point.Y - _startingDragPoint.Y);
+			_startingDragPoint.X += delta.X;
+			_startingDragPoint.Y += delta.Y;
+			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingDragPoint);
+		}
+
+		public void ReleaseGrabbedCaliper()
+		{
+			_grabbedCaliper = null;
+			_grabbedComponent = null;
 		}
 
 		public void ChangeBounds()

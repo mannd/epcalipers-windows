@@ -66,7 +66,6 @@ namespace EPCalipersWinUI3.Models.Calipers
         public CalibrationParameters Parameters { get; init; }
         public double Multiplier { get; init; }
 
-        // These two strings are localized by CaliperHelper.
         public static string DefaultUnit { get; set; } = "points";
         public static string DefaultBpm { get; set; } = "bpm";
 

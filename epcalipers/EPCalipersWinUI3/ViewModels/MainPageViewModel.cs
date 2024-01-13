@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : ObservableObject
 	{
 		private readonly PdfHelper _pdfHelper;
-		private readonly CaliperHelper _caliperHelper;
+		private readonly CaliperCollection _caliperCollection;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -36,84 +36,85 @@ namespace EPCalipersWinUI3
 		{
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
-			_caliperHelper = new CaliperHelper(new CaliperCollection(caliperView));
+			_caliperCollection = new CaliperCollection(caliperView, 
+				defaultUnit: "points".GetLocalized(), defaultBpm: "bpm".GetLocalized());
 		}
 		#region commands
 		[RelayCommand]
 		public void AddTimeCaliper()
 		{
-			_caliperHelper.AddTimeCaliper();
+			_caliperCollection.AddCaliper(CaliperType.Time);
 		}
 
 		[RelayCommand]
 		public void AddAmplitudeCaliper()
 		{
-			_caliperHelper.AddAmplitudeCaliper();
+			_caliperCollection.AddCaliper(CaliperType.Amplitude);
 		}
 
 		[RelayCommand]
 		public void AddAngleCaliper()
 		{
-			_caliperHelper.AddAngleCaliper();
+			_caliperCollection.AddCaliper(CaliperType.Angle);
 		}
 
 		[RelayCommand]
 		public void DeleteAllCalipers()
 		{
-			_caliperHelper.DeleteAllCalipers();
+			_caliperCollection.Clear();
 		}
 
 		[RelayCommand]
 		public void DeleteSelectedCaliper()
 		{
-			_caliperHelper.DeleteSelectedCaliper();
+			_caliperCollection.RemoveActiveCaliper();
 		}
 
 		public void DeleteCaliperAt(Point point)
 		{
-			_caliperHelper.DeleteCaliperAt(point);
+			_caliperCollection.DeleteCaliperAt(point);
 		}
 
 		[RelayCommand]
 		public void UnselectAllCalipers()
 		{
-			_caliperHelper.UnselectAllCalipers();
+			_caliperCollection.UnselectAllCalipers();
 		}
 
 		public void ToggleCaliperSelection(Point point)
 		{
-			_caliperHelper.ToggleCaliperSelection(point);
+			_caliperCollection.ToggleCaliperSelection(point);
 		}
 
 		[RelayCommand]
 		public void ToggleComponentSelection(Point point)
 		{
-			_caliperHelper.ToggleComponentSelection(point);
+			_caliperCollection.ToggleComponentSelection(point);
 		}
 
 		public bool PointIsNearCaliper(Point point)
 		{
-			return _caliperHelper.PointIsNearCaliper(point);
+			return _caliperCollection.PointIsNearCaliper(point);
 		}
 
 		public void RemoveAtPoint(Point point)
 		{
-			_caliperHelper.RemoveAtPoint(point);
+			_caliperCollection.RemoveAtPoint(point);
 		}
 
 		public void GrabCaliper(Point point)
 		{
-			_caliperHelper.GrabCaliper(point);
+			_caliperCollection.GrabCaliper(point);
 		}
 
 		public void DragCaliperComponent(Point point)
 		{
-			_caliperHelper.DragCaliperComponent(point);
+			_caliperCollection.DragCaliperComponent(point);
 		}
 
 		public void ReleaseGrabbedCaliper()
 		{
-			_caliperHelper.ReleaseGrabbedCaliper();
+			_caliperCollection.ReleaseGrabbedCaliper();
 		}
 
 		public async Task OpenImageFile(StorageFile file)
@@ -180,12 +181,7 @@ namespace EPCalipersWinUI3
 
 		public void RefreshCalipers()
 		{
-			_caliperHelper.RefreshCalipers();
-		}
-
-		public CaliperType GetSelectedCaliperType()
-		{
-			return _caliperHelper.GetSelectedCaliperType();
+			_caliperCollection.RefreshCalipers();
 		}
 
 		#region zoom
@@ -238,7 +234,7 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task ToggleRateInterval()
 		{ 
-			await _caliperHelper.ToggleRateInterval();
+			await _caliperCollection.ToggleRateInterval();
 		}
 
 		[RelayCommand]
@@ -275,13 +271,13 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		public async Task SetCalibration()
 		{
-			await _caliperHelper.SetCalibrationAsync();
+			await _caliperCollection.SetCalibrationAsync();
 		}
 
 		[RelayCommand]
 		public void ClearCalibration()
 		{
-			_caliperHelper.ClearCalibration();
+			_caliperCollection.ClearCalibration();
 		}
 		#endregion
 
@@ -308,54 +304,54 @@ namespace EPCalipersWinUI3
 		private void MoveLeft()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MoveLeft();
+			_caliperCollection.MoveLeft();
 		}
 
 		[RelayCommand]
 		private void MoveRight()
 		{
-			_caliperHelper.MoveRight();
+			_caliperCollection.MoveRight();
 		}
 
 		[RelayCommand]
 		private void MoveUp()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MoveUp();
+			_caliperCollection.MoveUp();
 		}
 
 		[RelayCommand]
 		private void MoveDown()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MoveDown();
+			_caliperCollection.MoveDown();
 		}
 
 		[RelayCommand]
 		private void MicroMoveLeft()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MicroMoveLeft();
+			_caliperCollection.MicroMoveLeft();
 		}
 
 		[RelayCommand]
 		private void MicroMoveRight()
 		{
-			_caliperHelper.MicroMoveRight();
+			_caliperCollection.MicroMoveRight();
 		}
 
 		[RelayCommand]
 		private void MicroMoveUp()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MicroMoveUp();
+			_caliperCollection.MicroMoveUp();
 		}
 
 		[RelayCommand]
 		private void MicroMoveDown()
 		{
 			Debug.Print("move left");
-			_caliperHelper.MicroMoveDown();
+			_caliperCollection.MicroMoveDown();
 		}
 
 		#endregion movement
