@@ -4,6 +4,7 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -18,7 +19,7 @@ using Windows.Storage;
 
 namespace EPCalipersWinUI3
 {
-	public partial class MainPageViewModel : ObservableObject
+	public partial class MainPageViewModel : CaliperPageViewModel
 	{
 		private readonly PdfHelper _pdfHelper;
 		private readonly CaliperCollection _caliperCollection;
@@ -33,90 +34,14 @@ namespace EPCalipersWinUI3
 		public float ZoomFactor { get; set; } = 1;
 
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
+			: base(caliperView)
 		{
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
-			_caliperCollection = new CaliperCollection(caliperView, 
-				defaultUnit: "points".GetLocalized(), defaultBpm: "bpm".GetLocalized());
-		}
-		#region commands
-		[RelayCommand]
-		public void AddTimeCaliper()
-		{
-			_caliperCollection.AddCaliper(CaliperType.Time);
 		}
 
-		[RelayCommand]
-		public void AddAmplitudeCaliper()
-		{
-			_caliperCollection.AddCaliper(CaliperType.Amplitude);
-		}
 
-		[RelayCommand]
-		public void AddAngleCaliper()
-		{
-			_caliperCollection.AddCaliper(CaliperType.Angle);
-		}
-
-		[RelayCommand]
-		public void DeleteAllCalipers()
-		{
-			_caliperCollection.Clear();
-		}
-
-		[RelayCommand]
-		public void DeleteSelectedCaliper()
-		{
-			_caliperCollection.RemoveActiveCaliper();
-		}
-
-		public void DeleteCaliperAt(Point point)
-		{
-			_caliperCollection.DeleteCaliperAt(point);
-		}
-
-		[RelayCommand]
-		public void UnselectAllCalipers()
-		{
-			_caliperCollection.UnselectAllCalipers();
-		}
-
-		public void ToggleCaliperSelection(Point point)
-		{
-			_caliperCollection.ToggleCaliperSelection(point);
-		}
-
-		[RelayCommand]
-		public void ToggleComponentSelection(Point point)
-		{
-			_caliperCollection.ToggleComponentSelection(point);
-		}
-
-		public bool PointIsNearCaliper(Point point)
-		{
-			return _caliperCollection.PointIsNearCaliper(point);
-		}
-
-		public void RemoveAtPoint(Point point)
-		{
-			_caliperCollection.RemoveAtPoint(point);
-		}
-
-		public void GrabCaliper(Point point)
-		{
-			_caliperCollection.GrabCaliper(point);
-		}
-
-		public void DragCaliperComponent(Point point)
-		{
-			_caliperCollection.DragCaliperComponent(point);
-		}
-
-		public void ReleaseGrabbedCaliper()
-		{
-			_caliperCollection.ReleaseGrabbedCaliper();
-		}
-
+		#region menu
 		public async Task OpenImageFile(StorageFile file)
 		{
 			if (file != null)
@@ -179,10 +104,14 @@ namespace EPCalipersWinUI3
 			return source;
 		}
 
-		public void RefreshCalipers()
+		[RelayCommand]
+		private static void TransparenWindow()
 		{
-			_caliperCollection.RefreshCalipers();
+			var mainWindow = AppHelper.AppMainWindow;
+			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
+            mainWindow.Navigate(typeof(TransparentPage));
 		}
+		#endregion
 
 		#region zoom
 		// Zoom methods
@@ -220,29 +149,8 @@ namespace EPCalipersWinUI3
 		}
 		#endregion
 
-		[RelayCommand]
-		private static void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
-		[RelayCommand]
-		private static void TransparenWindow()
-		{
-			var mainWindow = AppHelper.AppMainWindow;
-			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
-            mainWindow.Navigate(typeof(TransparentPage));
-		}
-
-		[RelayCommand]
-		private async Task ToggleRateInterval()
-		{ 
-			await _caliperCollection.ToggleRateInterval();
-		}
-
-		[RelayCommand]
-		private static void Help() => AppHelper.Navigate(typeof(HelpWebViewPage));
-
-		[RelayCommand]
-		private static void Exit() => CommandHelper.ApplicationExit();
-
+		#region pdf
 		[RelayCommand]
 		private async Task NextPdfPage() 
 		{
@@ -267,20 +175,6 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-		#region calibration
-		[RelayCommand]
-		public async Task SetCalibration()
-		{
-			await _caliperCollection.SetCalibrationAsync();
-		}
-
-		[RelayCommand]
-		public void ClearCalibration()
-		{
-			_caliperCollection.ClearCalibration();
-		}
-		#endregion
-
 		public async Task GotoPdfPage(int pageNumber) 
 		{
 			// Users input 1 based page numbers.
@@ -299,64 +193,8 @@ namespace EPCalipersWinUI3
 				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
 			AppHelper.AppTitleBarText = TitleBarName;
 		}
-		#region movement
-		[RelayCommand]
-		private void MoveLeft()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MoveLeft();
-		}
-
-		[RelayCommand]
-		private void MoveRight()
-		{
-			_caliperCollection.MoveRight();
-		}
-
-		[RelayCommand]
-		private void MoveUp()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MoveUp();
-		}
-
-		[RelayCommand]
-		private void MoveDown()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MoveDown();
-		}
-
-		[RelayCommand]
-		private void MicroMoveLeft()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MicroMoveLeft();
-		}
-
-		[RelayCommand]
-		private void MicroMoveRight()
-		{
-			_caliperCollection.MicroMoveRight();
-		}
-
-		[RelayCommand]
-		private void MicroMoveUp()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MicroMoveUp();
-		}
-
-		[RelayCommand]
-		private void MicroMoveDown()
-		{
-			Debug.Print("move left");
-			_caliperCollection.MicroMoveDown();
-		}
-
-		#endregion movement
-
 		#endregion
+
 		#region observable properties
 		[ObservableProperty]
 		private Microsoft.UI.Xaml.Controls.Image mainImage;
