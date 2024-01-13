@@ -22,7 +22,6 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : CaliperPageViewModel
 	{
 		private readonly PdfHelper _pdfHelper;
-		private readonly CaliperCollection _caliperCollection;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom {  get; set; }
@@ -226,9 +225,6 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private string titleBarName;
-
-		[ObservableProperty]
-		private bool isNearCaliper;
 
 		#endregion
 	}

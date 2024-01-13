@@ -12,6 +12,8 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class TransparentPage : Page
 	{
 		TransparentPageViewModel ViewModel { get; set; }
+		private Point _rightClickPosition; 
+
 		public TransparentPage()
 		{
 			this.InitializeComponent();
@@ -68,7 +70,29 @@ namespace EPCalipersWinUI3.Views
 				}
 			}
 		}
+		private void CaliperGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+		{
+			var position = e.GetPosition(TransparentCaliperView);
+			_rightClickPosition = position;
+			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position);
 
+		}
+		private void Right_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.Print("right click menu item");
+		}
+		private void SelectComponent_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleComponentSelection(_rightClickPosition);
+		}
+		private void SelectCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleCaliperSelection(_rightClickPosition);
+		}
+		private void DeleteCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.DeleteCaliperAt(_rightClickPosition);
+		}
 		private void CaliperGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			Debug.WriteLine("Pointer released.");
@@ -77,5 +101,6 @@ namespace EPCalipersWinUI3.Views
 		}
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
+
 	}
 }

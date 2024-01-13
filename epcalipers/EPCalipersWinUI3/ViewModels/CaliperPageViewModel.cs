@@ -183,6 +183,11 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection.MicroMoveDown();
 		}
-		#endregion 
+		#endregion
+
+		#region observable properties
+		[ObservableProperty]
+		private bool isNearCaliper;
+		#endregion
 	}
 }
