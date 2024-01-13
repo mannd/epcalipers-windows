@@ -154,10 +154,6 @@
                         <FontIcon Glyph="&#xE74B;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
-                                Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
                 <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem"
