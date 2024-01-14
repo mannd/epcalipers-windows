@@ -18,6 +18,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// </summary>
 	public class CaliperCollection
 	{
+		private static double _delta = 1.0;
+		private static double _microDelta = 0.2;
+		private static Point _leftMovement = new Point(-_delta, 0);
+		private static Point _rightMovement = new Point(_delta, 0);
+		private static Point _upMovement = new Point(0, -_delta);
+		private static Point _downMovement = new Point(0, _delta);
+		private static Point _leftMicroMovement = new Point(-_microDelta, 0);
+		private static Point _rightMicroMovement = new Point(_microDelta, 0);
+		private static Point _upMicroMovement = new Point(0, -_microDelta);
+		private static Point _downMicroMovement = new Point(0, _microDelta);
+
 		private readonly IList<Caliper> _calipers;
 		private readonly ICaliperView _caliperView;
 		private readonly ISettings _settings;
@@ -48,13 +59,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public (Bar, Caliper) SelectedBarInCaliper
+		public (Bar, Caliper) SelectedBarAndPartiallySelectedCaliper
 		{
 			get
 			{
 				foreach (var caliper in _calipers)
 				{
-					var bar = caliper.IsSelectedBar;
+					var bar = caliper.GetSelectedBar;
 					if (bar != null)
 					{
 						return (bar, caliper);
@@ -135,46 +146,80 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void MoveLeft()
+		private void Move(Point delta)
 		{
 			if (IsLocked) return;
-			var bar = SelectedBarInCaliper.Item1;
-			var caliper = SelectedBarInCaliper.Item2;
+			Bar bar;
+			Caliper caliper;
+			if (SelectedCaliper != null)
+			{
+				caliper = SelectedCaliper;
+				bar = caliper.HandleBar;
+			}
+			else
+			{
+				bar = SelectedBarAndPartiallySelectedCaliper.Item1;
+				caliper = SelectedBarAndPartiallySelectedCaliper.Item2;
+			}
 			if (bar != null)
 			{
-				caliper.Drag(bar, new Point(-1.0, 0), new Point(0, 0));
+				if (caliper.CaliperType == CaliperType.Angle && (bar.BarRole == Bar.Role.LeftAngle || bar.BarRole == Bar.Role.RightAngle))
+				{
+					AngleCaliper angleCaliper = caliper as AngleCaliper;
+					double distance = -delta.X / 2.0;  // gives more fine grained angle caliper movement
+					bar.Angle += MathHelper.DegreesToRadians(distance);
+					bar.SetAngleBarPosition(new Point(bar.X1, bar.Y1), bar.Angle);
+					angleCaliper.DrawTriangleBase();
+					angleCaliper.CaliperLabel.Text = angleCaliper.Calibration.GetText(angleCaliper.Value);
+					angleCaliper.CaliperLabel.SetPosition();
+				}
+				else
+				{
+					//caliper.Drag(bar, delta, new Point(0, 0));
+					caliper.Drag(bar, delta, caliper.Position);
+				}
 			}
+		}
+
+		public void MoveLeft()
+		{
+			Move(_leftMovement);
 		}
 
 		public void MoveRight()
 		{
-
+			Move(_rightMovement);
 		}
 
 		public void MoveUp()
 		{
+			Move(_upMovement);
 
 		}
 		public void MoveDown() 
 		{
+			Move(_downMovement);
 		}
 
 		public void MicroMoveLeft()
 		{
+			Move(_leftMicroMovement);
 		}
 
 		public void MicroMoveRight()
 		{
-
+			Move(_rightMicroMovement);
 		}
 
 		public void MicroMoveUp()
 		{
-
+			Move(_upMicroMovement);
 		}
 		public void MicroMoveDown() 
 		{
+			Move(_downMicroMovement);
 		}
+
 		public void GrabCaliper(Point point)
 		{
 			if (IsLocked) return;
@@ -261,11 +306,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (caliper, bar);
 		}
 
-		//public (Caliper, Bar) GetSelectedCaliperAndBar()
-		//{
-		//	Bar bar = null;
-		//}
-
 		public bool PointIsNearCaliper(Point point)
 		{
 			if (IsLocked) return false;
@@ -312,19 +352,25 @@ namespace EPCalipersWinUI3.Models.Calipers
 				var bar = caliper.IsNearBar(point);
 				if (bar != null && !caliperToggled)
 				{
-					caliperToggled = true;
+					caliperToggled = true; // process stopped after caliper found.
 					if (bar.IsSelected)
 					{
-						// Avoid ending up with 1 bar of a caliper unselected.
-						caliper.IsSelected = false;
+						if (caliper.IsSelected)  // handle case where whole caliper is selected
+						{
+							caliper.IsSelected = false;
+							bar.IsSelected = true;  // change to just bar selected
+						}
+						else
+						{
+							caliper.IsSelected = false;  // unselect whole caliper
+						}
 					}
 					else
 					{
-						// Avoid multiple selected bars.
-						caliper.IsSelected = false;
-						bar.IsSelected = true;
+						caliper.IsSelected= false;  // make sure you can't select multiple bars
+						bar.IsSelected = true;  // caliper wasn't selected, so just select the bar
 					}
-					UnselectCalipersExcept(caliper);
+					UnselectCalipersExcept(caliper);  // make sure other calipers are unselected
 				}
 			}
 		}

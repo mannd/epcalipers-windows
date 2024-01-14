@@ -11,7 +11,9 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar BottomBar { get; set; }
         public Bar CrossBar { get; set; }
 
-        public override double Value => BottomBar.Position - TopBar.Position;
+        public override Bar HandleBar => CrossBar;
+
+		public override double Value => BottomBar.Position - TopBar.Position;
 
         public double TopMostBarPosition => Math.Min(TopBar.Position, BottomBar.Position);
         public double BottomMostBarPosition => Math.Max(TopBar.Position, BottomBar.Position);

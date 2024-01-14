@@ -16,7 +16,9 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar ApexBar { get; set; } // Not visible, but present so it can be grabbed.
         public Bar TriangleBaseBar { get; set; } // Only visible under certain conditions.
 
-        public TriangleBaseLabel TriangleBaseLabel { get; set; } // Visible when Brugada triangle visible.
+        public override Bar HandleBar => ApexBar;
+
+		public TriangleBaseLabel TriangleBaseLabel { get; set; } // Visible when Brugada triangle visible.
 
         public Calibration TimeCalibration { get; set; }
         public Calibration AmplitudeCalibration { get; set; }
@@ -214,8 +216,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
         }
 
-        // TODO: control drag from keyboard too
-        public override void Drag(Bar bar, Point delta, Point location)
+        public override void Drag(Bar bar, Point delta, Point position)
 		{
 			switch (bar.BarRole)
 			{
@@ -229,11 +230,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 					RightAngleBar.SetAngleBarPosition(apex, RightAngleBar.Angle);
 					break;
 				case Bar.Role.LeftAngle:
-					LeftAngleBar.Angle = RelativeTheta(location);
+					LeftAngleBar.Angle = RelativeTheta(position);
 					LeftAngleBar.SetAngleBarPosition(new Point(LeftAngleBar.X1, LeftAngleBar.Y1), LeftAngleBar.Angle);
 					break;
 				case Bar.Role.RightAngle:
-					RightAngleBar.Angle = RelativeTheta(location);
+					RightAngleBar.Angle = RelativeTheta(position);
 					RightAngleBar.SetAngleBarPosition(new Point(RightAngleBar.X1, RightAngleBar.Y1), RightAngleBar.Angle);
 					break;
 				default: break;
@@ -282,20 +283,16 @@ namespace EPCalipersWinUI3.Models.Calipers
         {
             if (ApexBar.IsNear(p))
             {
-                Debug.Print("near apex");
                 return ApexBar;
             }
             if (PointNearBar(p, LeftAngleBar.Angle))
             {
-                Debug.Print("near left angle bar");
                 return LeftAngleBar;
             }
             if (PointNearBar(p, RightAngleBar.Angle))
             {
-                Debug.Print("near right angle bar");
                 return RightAngleBar;
             }
-            Debug.Print("not near any bar");
             return null;
         }
 

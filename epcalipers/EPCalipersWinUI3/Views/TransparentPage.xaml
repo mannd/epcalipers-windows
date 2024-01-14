@@ -139,7 +139,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MicroMoveLeftMenuItem"
-                                Command="{x:Bind ViewModel.MoveLeftCommand}">
+                                Command="{x:Bind ViewModel.MicroMoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -148,7 +148,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveRightMenuItem"
-                                Command="{x:Bind ViewModel.MoveRightCommand}">
+                                Command="{x:Bind ViewModel.MicroMoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -157,7 +157,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveUpMenuItem"
-                                Command="{x:Bind ViewModel.MoveUpCommand}">
+                                Command="{x:Bind ViewModel.MicroMoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -166,7 +166,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveDownMenuItem"
-                                Command="{x:Bind ViewModel.MoveDownCommand}">
+                                Command="{x:Bind ViewModel.MicroMoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
