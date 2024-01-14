@@ -4,6 +4,7 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 
@@ -100,6 +101,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection.ReleaseGrabbedCaliper();
 		}
+
 		public void ChangeBounds()
 		{
 			_caliperCollection.ChangeBounds();
@@ -139,12 +141,14 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		private void MoveLeft()
 		{
+			Debug.Print("moving left");
 			_caliperCollection.MoveLeft();
 		}
 
 		[RelayCommand]
 		private void MoveRight()
 		{
+			Debug.Print("moving right");
 			_caliperCollection.MoveRight();
 		}
 

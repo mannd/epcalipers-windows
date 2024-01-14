@@ -117,6 +117,21 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
         private bool _isSelected = false;
 
+        public virtual Bar IsSelectedBar
+        {
+            get
+            {
+                if (_isSelected) return null;
+                foreach (var bar in Bars)
+                {
+                    if (bar.IsSelected) return bar; 
+                }
+                return null;
+            }
+        }
+
+
+
         public Calibration Calibration { get; set; }
         //public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
 

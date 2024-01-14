@@ -48,6 +48,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public (Bar, Caliper) SelectedBarInCaliper
+		{
+			get
+			{
+				foreach (var caliper in _calipers)
+				{
+					var bar = caliper.IsSelectedBar;
+					if (bar != null)
+					{
+						return (bar, caliper);
+					}
+				}
+				return (null, null);
+			}
+		}
+
 		public CaliperType SelectedCaliperType => SelectedCaliper?.CaliperType ?? CaliperType.None;
 
 		/// <summary>
@@ -122,11 +138,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void MoveLeft()
 		{
 			if (IsLocked) return;
-			var caliper = SelectedCaliper;
-			if (caliper == null) return;
-			Debug.Print("move caliper left");
-			//caliper.Drag()
+			var bar = SelectedBarInCaliper.Item1;
+			var caliper = SelectedBarInCaliper.Item2;
+			if (bar != null)
+			{
+				caliper.Drag(bar, new Point(-1.0, 0), new Point(0, 0));
+			}
 		}
+
 		public void MoveRight()
 		{
 
@@ -242,6 +261,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (caliper, bar);
 		}
 
+		//public (Caliper, Bar) GetSelectedCaliperAndBar()
+		//{
+		//	Bar bar = null;
+		//}
+
 		public bool PointIsNearCaliper(Point point)
 		{
 			if (IsLocked) return false;
@@ -283,10 +307,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (IsLocked) return;
 			bool caliperToggled = false;
-			Bar bar = null;
 			foreach (var caliper in _calipers)
 			{
-				bar = caliper.IsNearBar(point);
+				var bar = caliper.IsNearBar(point);
 				if (bar != null && !caliperToggled)
 				{
 					caliperToggled = true;
@@ -313,9 +336,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				if (caliper != c)
 				{
-					// NB.  c.IsSelected = false doesn't work.  
-					// Not sure why? Maybe because we are passing it a variable
-					// from a foreach loop (in ToggleCaliperSelection()).
 					caliper.IsSelected = false;
 				}
 			}
