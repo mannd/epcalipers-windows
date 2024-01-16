@@ -1,13 +1,14 @@
 ﻿using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using Windows.Foundation;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
 	public class CaliperTests
 	{
-		private TimeCaliper GetTimeCaliper()
+		private static TimeCaliper GetTimeCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
@@ -17,7 +18,7 @@ namespace EPCalipersWinUi3Tests.Tests
 				stubCaliperView, stubSettings, true, calibration);
 			return timeCaliper;
 		}
-		private AmplitudeCaliper GetAmplitudeCaliper()
+		private static AmplitudeCaliper GetAmplitudeCaliper()
 		{
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
@@ -97,6 +98,17 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal("150.00 points", labelText);
 			var amplitudeCaliper = GetAmplitudeCaliper();
 			Assert.Equal("150.00 points", amplitudeCaliper.CaliperLabel.Text);
+		}
+
+		[Fact]
+		public void TestHandleBar()
+		{
+			var timeCaliper = GetTimeCaliper();
+			Assert.Equal(Bar.Role.HorizontalCrossBar, timeCaliper.HandleBar.BarRole);
+			var amplitudeCaliper = GetAmplitudeCaliper();
+			Assert.Equal(Bar.Role.VerticalCrossBar, amplitudeCaliper.HandleBar.BarRole);
+			var angleCaliper = GetAngleCaliper();
+			Assert.Equal(Bar.Role.Apex, angleCaliper.HandleBar.BarRole);
 		}
 	}
 }

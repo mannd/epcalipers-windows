@@ -73,6 +73,7 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case CaliperType.Angle:
 					// Shouldn't ever get here
+					Debug.Assert(false, "Calibration dialog opened for Angle caliper!");
 					break;
 			}
 		}

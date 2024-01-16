@@ -22,6 +22,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public Calibration TimeCalibration { get; set; }
         public Calibration AmplitudeCalibration { get; set; }
+        public AngleCalibration AngleCalibration { get; set; }
 
         public double LeftMostBarPosition => Math.Min(TriangleBaseBar.X1, TriangleBaseBar.X2);
         public double RightMostBarPosition => Math.Max(TriangleBaseBar.X1, TriangleBaseBar.X2);
@@ -85,6 +86,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             ISettings settings,
             Calibration timeCalibration = null,
             Calibration amplitudeCalibration = null,
+            AngleCalibration angleCalibration = null,
             bool fakeUI = false) : base(caliperView)
         {
             _fakeUI = fakeUI;
@@ -93,6 +95,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             Calibration = new AngleCalibration();
             TimeCalibration = timeCalibration ?? Calibration.Uncalibrated;
             AmplitudeCalibration = amplitudeCalibration ?? Calibration.Uncalibrated;
+            AngleCalibration = angleCalibration ?? AngleCalibration.Uncalibrated;
             Calibration.Rounding = TimeCalibration.Rounding;
             Bars = InitBars(position);
             InitCaliperLabel();

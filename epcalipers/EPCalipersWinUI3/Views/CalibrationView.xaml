@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    KeyDown="Page_KeyDown" >
+    KeyUp="Page_KeyUp" >
 
     <RelativePanel Margin="20">
         <TextBlock x:Name="Instructions" Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />

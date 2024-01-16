@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public sealed class AngleCalibration: Calibration
+	public sealed class AngleCalibration : Calibration
 	{
+		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
+		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
 		public AngleCalibration() : base(1.0, new CalibrationParameters(1.0, CalibrationUnit.Degrees, "°")) { }
 
-		public override string GetText(double interval, bool showBpm = false)
-		{
-			return string.Format("{0:0.#} {1}", interval, Parameters.UnitString);
-		}
+		public static new AngleCalibration Uncalibrated => new AngleCalibration();
 
 		// TODO: refactor to match Time Caliper rounding, force msec, etc.
 		public override string GetSecondaryText(double interval, string unit)
 		{
-			var value = GetRoundedValue(interval);
+			var value = GetRoundedValue(interval, showBpm: false);
 			return string.Format("{0} {1}", value, unit);
 		}
 

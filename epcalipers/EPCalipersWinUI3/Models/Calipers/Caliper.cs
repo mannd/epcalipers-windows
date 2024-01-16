@@ -205,7 +205,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ICaliperView caliperView,
 			ISettings settings,
 			Calibration timeCalibration = null,
-			Calibration amplitudeCalibration = null)
+			Calibration amplitudeCalibration = null,
+			AngleCalibration angleCalibration = null)
 		{
 			Debug.Assert(type != CaliperType.None);
 			CaliperPosition initialPosition;
@@ -223,7 +224,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Angle:
 					initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, timeCalibration, amplitudeCalibration);
+					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, timeCalibration, amplitudeCalibration,
+						angleCalibration);
 					break;
 			}
 			ApplySettings(caliper, settings);

@@ -43,6 +43,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     {
         public EmptyCustomStringException() : base("EmptyCustomStringException") { }
     }
+
     public class Calibration
     {
         // Rounding format strings
@@ -98,13 +99,15 @@ namespace EPCalipersWinUI3.Models.Calipers
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;
             string unitString = valueUnit.Item2;
-            string formattedValue = GetRoundedValue(value);
+            string formattedValue = GetRoundedValue(value, showBpm);
             return string.Format("{0} {1}", formattedValue, unitString);
 		}
 
-        protected string GetRoundedValue(double value)
+        protected virtual string GetRoundedValue(double value, bool showBpm = false)
 		{
-            string format = _roundingFormat[Rounding];
+            // 
+            string format = ForceRoundingToHundredths(showBpm) ? 
+                _roundingFormat[Rounding.ToHundredths] : _roundingFormat[Rounding];
             if (Rounding == Rounding.ToInt)
             {
                 int intValue = (int)Math.Round(value);
@@ -112,6 +115,14 @@ namespace EPCalipersWinUI3.Models.Calipers
             }
 			return value.ToString(format);
 		}
+
+        // Rationale here is that sec and mV are useless without two decimal places.
+        // User can get around this by defining custom units instead of using predefined units.
+        private bool ForceRoundingToHundredths(bool showBpm)
+        {
+            return (Parameters.Unit == CalibrationUnit.Sec && !showBpm) 
+                || Parameters.Unit == CalibrationUnit.Mv;
+        }
 
 		public virtual string GetSecondaryText(double interval, string unit)
         {

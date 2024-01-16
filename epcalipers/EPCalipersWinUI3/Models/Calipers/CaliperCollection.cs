@@ -18,16 +18,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// </summary>
 	public class CaliperCollection
 	{
-		private static double _delta = 1.0;
-		private static double _microDelta = 0.2;
-		private static Point _leftMovement = new Point(-_delta, 0);
-		private static Point _rightMovement = new Point(_delta, 0);
-		private static Point _upMovement = new Point(0, -_delta);
-		private static Point _downMovement = new Point(0, _delta);
-		private static Point _leftMicroMovement = new Point(-_microDelta, 0);
-		private static Point _rightMicroMovement = new Point(_microDelta, 0);
-		private static Point _upMicroMovement = new Point(0, -_microDelta);
-		private static Point _downMicroMovement = new Point(0, _microDelta);
+		private static readonly double _delta = 1.0;
+		private static readonly double _microDelta = 0.2;
+		private static Point _leftMovement = new(-_delta, 0);
+		private static Point _rightMovement = new(_delta, 0);
+		private static Point _upMovement = new(0, -_delta);
+		private static Point _downMovement = new(0, _delta);
+		private static Point _leftMicroMovement = new(-_microDelta, 0);
+		private static Point _rightMicroMovement = new(_microDelta, 0);
+		private static Point _upMicroMovement = new(0, -_microDelta);
+		private static Point _downMicroMovement = new(0, _microDelta);
 
 		private readonly IList<Caliper> _calipers;
 		private readonly ICaliperView _caliperView;
@@ -40,6 +40,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
 		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
+		public AngleCalibration AngleCalibration { get; set; } = AngleCalibration.Uncalibrated;
 
 		// A calibrated time caliper can show interval or rate.
 		public bool ShowRate { get; set; } = false; 
@@ -110,6 +111,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Angle:
 					var angleCaliper = caliper as AngleCaliper;
+					angleCaliper.AngleCalibration.TimeCalibration = TimeCalibration;
+					angleCaliper.AngleCalibration.AmplitudeCalibration = AmplitudeCalibration;
 					angleCaliper.TimeCalibration = TimeCalibration;
 					angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
 					break;
@@ -122,7 +125,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void AddCaliper(CaliperType type)
 		{
 			if (IsLocked) return;
-			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration);
+			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration, AngleCalibration);
 			// TODO: Reduce caliper dependency on CaliperView:
 			//  _caliperView.Add(caliper); ???
 			caliper.AddToView(_caliperView);
@@ -279,8 +282,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void DeleteCaliperAt(Point point)
 		{
 			var caliperBar = GetGrabbedCaliperAndBar(point);
-			var caliper = caliperBar.Item1 as Caliper;
-			if (caliper != null)
+			if (caliperBar.Item1 is Caliper caliper)
 			{
 				caliper.Remove(_caliperView);
 				_calipers.Remove(caliper);
@@ -489,15 +491,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			TimeCalibration = Calibration.Uncalibrated;
 			AmplitudeCalibration = Calibration.Uncalibrated;
-			TimeCalibration.Rounding = _settings.Rounding;
-			AmplitudeCalibration.Rounding = _settings.Rounding;
+			AngleCalibration = AngleCalibration.Uncalibrated;
 			SetCalibration();
 		}
 
 		public void SetCalibration()
 		{
+			// TODO: Show rate below isn't changing the time caliper to interval, or maybe it is
+			ShowRate = false;
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
+			AngleCalibration.Rounding = _settings.Rounding;
 			foreach (var caliper in _calipers)
 			{
 				switch (caliper.CaliperType)

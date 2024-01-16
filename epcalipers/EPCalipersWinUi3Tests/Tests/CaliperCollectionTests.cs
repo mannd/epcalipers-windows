@@ -7,6 +7,7 @@ using Xunit;
 using EPCalipersWinUI3.Views;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
+using Windows.Foundation;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -54,6 +55,28 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Null(selectedCaliper);
 			selectedCaliperType = caliperCollection.SelectedCaliperType;
 			Assert.Equal(CaliperType.None, selectedCaliperType);
+		}
+
+		[Fact]
+		public void TestSelectBar()
+		{
+			var stubCaliperView = new FakeCaliperView();
+			var stubSettings = new FakeSettings();
+			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
+			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
+			caliperCollection.Add(timeCaliper);
+			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
+			caliperCollection.Add(amplitudeCaliper);
+			timeCaliper.IsSelected = true;
+			caliperCollection.ToggleComponentSelection(new Point(timeCaliper.LeftBar.Position, 0));
+			Assert.False(timeCaliper.IsSelected);  // toggle bar unselects caliper
+			Assert.True(timeCaliper.LeftBar.IsSelected);
+			caliperCollection.ToggleComponentSelection(new Point(timeCaliper.RightBar.Position, 0));
+			Assert.False(timeCaliper.LeftBar.IsSelected);  // toggle other bar unselects first bar
+			Assert.True(timeCaliper.RightBar.IsSelected);
+			caliperCollection.ToggleComponentSelection(new Point(timeCaliper.RightBar.Position, 0));
+			Assert.False(timeCaliper.LeftBar.IsSelected);  // toggling bar again unselects it
+			Assert.False(timeCaliper.RightBar.IsSelected);
 		}
 	}
 }

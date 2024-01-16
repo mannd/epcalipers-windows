@@ -72,11 +72,12 @@ namespace EPCalipersWinUI3.Views
             Window = null;
         }
 
-        private async void Page_KeyDown(object sender, KeyRoutedEventArgs e)
+        private async void Page_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             switch (e.Key)
             {
                 case VirtualKey.Enter:
+                    ViewModel.CustomInterval = CustomIntervalTextBox.Text;
                     await ViewModel.SetCalibration(XamlRoot);
                     CloseWindow();
                     break;
@@ -84,5 +85,5 @@ namespace EPCalipersWinUI3.Views
                 default: break;
             }
         }
-    }
+	}
 }

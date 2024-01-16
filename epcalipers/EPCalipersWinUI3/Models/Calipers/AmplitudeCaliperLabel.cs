@@ -30,8 +30,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             string text,
             CaliperLabelAlignment alignment,
             bool autoAlignLabel,
-            bool fakeUI = false) : base(caliper, caliperView, text, alignment, autoAlignLabel, fakeUI)
-        {
+            bool fakeUI = false) : base(caliper, text, alignment, autoAlignLabel, fakeUI)
+		{
             Caliper = caliper;
             _view = caliperView;
             _bounds = _view.Bounds;

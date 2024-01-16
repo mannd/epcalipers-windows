@@ -27,8 +27,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             CaliperLabelAlignment alignment,
             bool autoPosition,
             bool fakeUI = false)
-            : base(caliper, caliperView, text, alignment, autoPosition, fakeUI)
-        {
+            : base(caliper, text, alignment, autoPosition, fakeUI)
+		{
             Caliper = caliper;
             if (!fakeUI)
             {

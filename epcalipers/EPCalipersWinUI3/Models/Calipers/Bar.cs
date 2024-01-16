@@ -148,6 +148,14 @@ namespace EPCalipersWinUI3.Models.Calipers
             SetBarPosition(position, start, end);
         }
 
+        /// <summary>
+        /// Constructor for angle bars
+        /// </summary>
+        /// <param name="role">bar Role</param>
+        /// <param name="apex">hidden bar at the angle apex</param>
+        /// <param name="angle">angle of bar in radians clockwise from horizontal vector pointing rightward</param>
+        /// <param name="bounds">bounds of caliper view</param>
+        /// <param name="fakeUI">if true, don't create WinUI3 lines</param>
         public Bar(Role role, Point apex, double angle, Bounds bounds, bool fakeUI = false)
         {
 
@@ -165,8 +173,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (role == Role.Apex)
             {
                 SetBarPosition(apex.Y, apex.X - 10, apex.X + 10);
-                // Comment out this line to show hidden ApexBar for debugging.
-                if (_line != null) _line.Visibility = Visibility.Collapsed;
+                Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -238,7 +245,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             return intersection;
         }
 
-        private Point ClippedEndPoint(Point apex, double angle, double length, Point lowerBorder, Point rightBorder)
+        private static Point ClippedEndPoint(Point apex, double angle, double length, Point lowerBorder, Point rightBorder)
         {
             var endPoint = EndPointForPosition(apex, angle, length);
             var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;

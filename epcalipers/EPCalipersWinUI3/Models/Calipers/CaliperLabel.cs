@@ -44,7 +44,7 @@ namespace EPCalipersWinUI3.Models.Calipers
         protected readonly int _padding = 10;
 
         public Caliper Caliper { get; set; }
-        public ICaliperView CaliperView { get; set; }
+
         public string Text
         {
             get
@@ -97,13 +97,12 @@ namespace EPCalipersWinUI3.Models.Calipers
         private Color _color;
 
         public CaliperLabel(
-            Caliper caliper,
-            ICaliperView caliperView,
-            string text,
-            CaliperLabelAlignment alignment,
-            bool autoPosition,
-            bool fakeUI = false)
-        {
+			Caliper caliper,
+			string text,
+			CaliperLabelAlignment alignment,
+			bool autoPosition,
+			bool fakeUI = false)
+		{
             Caliper = caliper;
             Text = text;
             Alignment = alignment;
