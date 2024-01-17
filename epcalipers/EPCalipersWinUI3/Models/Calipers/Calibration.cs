@@ -124,11 +124,6 @@ namespace EPCalipersWinUI3.Models.Calipers
                 || Parameters.Unit == CalibrationUnit.Mv;
         }
 
-		public virtual string GetSecondaryText(double interval, string unit)
-        {
-            return null;
-        }
-
         protected  (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
             if (showBpm)

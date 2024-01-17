@@ -111,10 +111,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Angle:
 					var angleCaliper = caliper as AngleCaliper;
-					angleCaliper.AngleCalibration.TimeCalibration = TimeCalibration;
-					angleCaliper.AngleCalibration.AmplitudeCalibration = AmplitudeCalibration;
-					angleCaliper.TimeCalibration = TimeCalibration;
-					angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
+					angleCaliper.AngleCalibration = AngleCalibration;
 					break;
 			}
 			caliper.ShowRate = ShowRate;
@@ -393,6 +390,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
+			AngleCalibration.Rounding = _settings.Rounding;
 			foreach (var caliper in _calipers)
 			{
 				caliper.ApplySettings(_settings);
@@ -515,8 +513,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 					case CaliperType.Angle:
 						// TODO: refactor
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
-						angleCaliper.TimeCalibration = TimeCalibration;
-						angleCaliper.AmplitudeCalibration = AmplitudeCalibration;
+						angleCaliper.AngleCalibration.TimeCalibration = TimeCalibration;
+						angleCaliper.AngleCalibration.AmplitudeCalibration = AmplitudeCalibration;
 						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
 						angleCaliper.Calibration.Rounding = _settings.Rounding;
 						angleCaliper.TriangleBaseLabel.AutoAlignLabel = _settings.AutoAlignLabel;

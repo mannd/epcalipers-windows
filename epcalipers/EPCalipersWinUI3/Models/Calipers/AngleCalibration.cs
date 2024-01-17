@@ -14,11 +14,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public static new AngleCalibration Uncalibrated => new AngleCalibration();
 
-		// TODO: refactor to match Time Caliper rounding, force msec, etc.
-		public override string GetSecondaryText(double interval, string unit)
+		public override string GetText(double interval, bool showBpm = false)
 		{
-			var value = GetRoundedValue(interval, showBpm: false);
-			return string.Format("{0} {1}", value, unit);
+			return base.GetText(interval, showBpm);
+		}
+
+		// TODO: refactor to match Time Caliper rounding, force msec, etc.
+		public string GetSecondaryText(double interval)
+		{
+			return TimeCalibration.GetText(interval);
+			//var value = GetRoundedValue(interval, showBpm: false);
+			//return string.Format("{0} {1}", value, unit);
 		}
 
 	}

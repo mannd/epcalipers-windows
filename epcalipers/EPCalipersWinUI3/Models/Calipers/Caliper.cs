@@ -143,7 +143,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Calibration Calibration { get; set; }
 		//public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
 
-		public string Text => Calibration.GetText(Value, ShowRate);
+		public virtual string Text => Calibration.GetText(Value, ShowRate);
 
 		public void ToggleIsSelected()
 		{
@@ -172,6 +172,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				// TODO: setting to change all unselected colors too?
 				// If selected, all unselected colors are changed.
 			}
+			UpdateLabel();
 		}
 
 		/// <summary>
@@ -224,8 +225,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Angle:
 					initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, timeCalibration, amplitudeCalibration,
-						angleCalibration);
+					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration);
 					break;
 			}
 			ApplySettings(caliper, settings);
