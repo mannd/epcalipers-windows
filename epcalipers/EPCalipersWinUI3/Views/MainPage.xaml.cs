@@ -88,7 +88,8 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetPosition(CaliperView);
 			_rightClickPosition = position;
-			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position);
+			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position).Item1;
+			ViewModel.CaliperIsMarching = ViewModel.PointIsNearCaliper(position).Item2;
 		}
 
 		private void Right_Click(object sender, RoutedEventArgs e)

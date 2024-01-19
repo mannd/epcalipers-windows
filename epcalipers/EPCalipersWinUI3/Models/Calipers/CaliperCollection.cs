@@ -286,9 +286,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void ToggleMarchingCaliper(Point point)
+		public bool ToggleMarchingCaliper(Point point)
 		{
-			if (IsLocked) return;
+			if (IsLocked) return false;
+			bool isMarching = false;
 			foreach (var caliper in _calipers)
 			{
 				if (caliper.IsNearBar(point) != null)
@@ -304,11 +305,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 						else
 						{
 							AddMarchingCaliper(timeCaliper);
-							timeCaliper.IsMarching= true;
+							timeCaliper.IsMarching = true;
+							isMarching = true;
 						}
 					}
 				}
 			}
+			return isMarching;
 		}
 
 		private void AddMarchingCaliper(TimeCaliper timeCaliper)
@@ -340,19 +343,23 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (caliper, bar);
 		}
 
-		public bool PointIsNearCaliper(Point point)
+		public (bool, bool) PointIsNearCaliper(Point point)
 		{
-			if (IsLocked) return false;
+			if (IsLocked) return (false, false);
 			foreach (var caliper in _calipers)
 			{
 				var component = caliper.IsNearBar(point);
 				if (component == null) Debug.Print("Null");
 				else Debug.Print(component.ToString());
 				if (component != null) {
-					return true;
+					if (caliper is TimeCaliper timeCaliper && timeCaliper.IsMarching)
+					{
+						return (true, true);
+					}
+					else return (true, false);
 				}
 			}
-			return false;
+			return (false, false);
 		}
 
 		public void ToggleCaliperSelection(Point point)

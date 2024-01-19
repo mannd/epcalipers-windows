@@ -24,6 +24,24 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public TimeCaliper TimeCaliper { get; set; }
 
+		public override bool IsSelected
+		{
+			get => _isSelected;
+			set
+			{
+				foreach (var bar in LeftBars)
+				{
+					bar.IsSelected = value;
+				}
+				foreach (var bar in RightBars)
+				{
+					bar.IsSelected = value;
+				}
+				_isSelected = value;
+			}
+		}
+		private bool _isSelected = false;
+
 
 		public MarchingCaliper(ICaliperView caliperView, TimeCaliper caliper, int numberOfBars, double left, double right, bool fakeUI = false) : base(caliperView, Calibration.None)
 		{
@@ -39,18 +57,23 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var value = RightPosition - LeftPosition;
 			var leftOrigin = LeftPosition;
 			var rightOrigin = RightPosition;
-			for (int i = 1; i <= NumberOfBars; i++)
+			var height = TimeCaliper.LeftBar.Y2;
+			for (int i = 0; i < NumberOfBars; i++)
 			{
-				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * i), 0, Bounds.Height, _fakeUI);
+				// TODO: make bars outside of bounds invisible
+				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
 				leftBar.SelectedColor = TimeCaliper.SelectedColor;
 				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				leftBar.IsSelected = TimeCaliper.IsSelected;
+				leftBar.Thickness = 2;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
-				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * i), 0, Bounds.Height, _fakeUI); 
+				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
 				rightBar.SelectedColor = TimeCaliper.SelectedColor;
 				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				rightBar.IsSelected = TimeCaliper.IsSelected;
+				rightBar.Thickness = 2;
+				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);
 				RightBars.Add(rightBar);
 			}
@@ -67,9 +90,32 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override double Value => throw new NotImplementedException();
 
-		public override void ChangeBounds()
+        public override void ChangeBounds()
+        {
+            var bounds = CaliperView.Bounds;
+			foreach (var bar in LeftBars)
+			{
+				bar.Y2 = bounds.Height;
+			}
+			foreach (var bar in RightBars)
+			{
+				bar.Y2 = bounds.Height;
+			}
+        }
+
+		public void Move()
 		{
-			throw new NotImplementedException();
+			var left = TimeCaliper.LeftMostBarPosition;
+			var right = TimeCaliper.RightMostBarPosition;
+			var value = TimeCaliper.Value;
+			for (var i = 0; i < NumberOfBars; i++)
+			{
+				LeftBars[i].X1 = left - (value * (i + 1));
+				LeftBars[i].X2 = LeftBars[i].X1;
+				RightBars[i].X1 = right + (value * (i + 1));
+				RightBars[i].X2 = RightBars[i].X1;
+				RightBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+			}
 		}
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)

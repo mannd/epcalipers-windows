@@ -26,7 +26,8 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.RefreshCalipers();
 		}
 
-		public bool PointIsNearCaliper(Point point)
+		// (near caliper, is marching)
+		public (bool, bool) PointIsNearCaliper(Point point)
 		{
 			return _caliperCollection.PointIsNearCaliper(point);
 		}
@@ -61,7 +62,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void ToggleMarchingCaliper(Point point)
 		{
-			_caliperCollection.ToggleMarchingCaliper(point);
+			CaliperIsMarching = _caliperCollection.ToggleMarchingCaliper(point);
 		}
 
 		[RelayCommand]
@@ -197,6 +198,9 @@ namespace EPCalipersWinUI3.ViewModels
 		#region observable properties
 		[ObservableProperty]
 		private bool isNearCaliper;
+
+		[ObservableProperty]
+		private bool caliperIsMarching;
 		#endregion
 	}
 }

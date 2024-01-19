@@ -23,7 +23,7 @@
             <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
             <ToggleMenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="MarchingCaliper_Click"
-                
+                IsChecked="{x:Bind ViewModel.CaliperIsMarching, Mode=OneWay}"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
         </MenuFlyout>
     </Page.Resources>

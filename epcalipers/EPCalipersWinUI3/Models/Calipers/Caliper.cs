@@ -145,7 +145,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual string Text => Calibration.GetText(Value, ShowRate);
 
-		public void ToggleIsSelected()
+		public virtual void ToggleIsSelected()
 		{
 			IsSelected = !IsSelected;
 		}

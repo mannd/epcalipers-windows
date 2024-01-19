@@ -22,7 +22,8 @@
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
             <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
-            <MenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"
+            <ToggleMenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"
+                IsChecked="{x:Bind ViewModel.CaliperIsMarching, Mode=OneWay}"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
         </MenuFlyout>
     </Page.Resources>

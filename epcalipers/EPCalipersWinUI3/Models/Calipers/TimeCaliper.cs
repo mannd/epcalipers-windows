@@ -28,7 +28,20 @@ namespace EPCalipersWinUI3.Models.Calipers
         public Bar RightBar { get; set; }
         public Bar CrossBar { get; set; }
 
-        public override Bar HandleBar => CrossBar;
+		public override bool IsSelected
+        {
+            get => base.IsSelected;
+            set
+            {
+                if (MarchingCaliper != null)
+                {
+					MarchingCaliper.IsSelected = value;
+                }
+                base.IsSelected = value;
+            }
+        }
+
+		public override Bar HandleBar => CrossBar;
 
         public override double Value => RightBar.Position - LeftBar.Position;
         public double LeftMostBarPosition => Math.Min(LeftBar.Position, RightBar.Position);
@@ -59,6 +72,18 @@ namespace EPCalipersWinUI3.Models.Calipers
             MarchingCaliper?.Remove(CaliperView);
             MarchingCaliper = null;
         }
+
+		public override void ToggleIsSelected()
+		{
+            MarchingCaliper?.ToggleIsSelected();
+			base.ToggleIsSelected();
+		}
+
+		public override void Remove(ICaliperView caliperView)
+		{
+            RemoveMarchingCaliper();
+			base.Remove(caliperView);
+		}
 
 		private List<Bar> InitBars(CaliperPosition position)
         {
@@ -125,7 +150,10 @@ namespace EPCalipersWinUI3.Models.Calipers
                 bar.X2 += delta.X;
                 bar.Position += delta.Y;
             }
-
+            if (IsMarching)
+            {
+                MarchingCaliper?.Move();
+            }
             UpdateLabel();
         }
         #endregion
