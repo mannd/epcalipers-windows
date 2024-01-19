@@ -28,7 +28,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             LeftAngle,
             RightAngle,
             Apex,  // Invisible bar at apex of angle caliper
-            TriangleBase // For BrugadaMeter.
+            TriangleBase, // For BrugadaMeter.
+            Marching  // For marching calipers
         }
         public Role BarRole { get; set; }
         public Bounds Bounds { get; set; }
@@ -192,6 +193,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                     Y2 = position;
                     break;
                 case Role.Vertical:
+                case Role.Marching:
                     X1 = position;
                     Y1 = 0;
                     X2 = position;

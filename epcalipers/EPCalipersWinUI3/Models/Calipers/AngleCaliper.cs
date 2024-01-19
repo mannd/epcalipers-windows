@@ -170,13 +170,12 @@ namespace EPCalipersWinUI3.Models.Calipers
             Point point2 = GetBasePoint2ForHeight(height);
             double position = point1.Y;
             TriangleBaseBar = new Bar(Bar.Role.TriangleBase, position, point1.X, point2.X, _fakeUI);
-            double baseValue = point2.X - point1.X;
         }
 
         private void InitCaliperLabel()
         {
             string text = AngleCalibration.GetText(Value);
-            CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
+            CaliperLabel = new AngleCaliperLabel(this, text,
                 CaliperLabelAlignment.Top, false, _fakeUI);
         }
 

@@ -20,7 +20,8 @@ namespace EPCalipersWinUI3.Models.Calipers
         Degrees,
         Custom,
         Uncalibrated,
-        Unknown
+        Unknown,
+        None
     }
     public readonly struct CalibrationParameters
     {
@@ -47,11 +48,11 @@ namespace EPCalipersWinUI3.Models.Calipers
     public class Calibration
     {
         // Rounding format strings
-		private const string _roundToIntString = "D";
-		private const string _roundToFourPlacesString = "G4";
-		private const string _roundToTenthsString = "F1";
-		private const string _roundToHundredthsString = "F2";
-		private const string _noRoundingString = "G8";  // This is too precise for clinical use.
+        private const string _roundToIntString = "D";
+        private const string _roundToFourPlacesString = "G4";
+        private const string _roundToTenthsString = "F1";
+        private const string _roundToHundredthsString = "F2";
+        private const string _noRoundingString = "G8";  // This is too precise for clinical use.
 
         private readonly IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
         {
@@ -93,8 +94,9 @@ namespace EPCalipersWinUI3.Models.Calipers
         }
 
         public static Calibration Uncalibrated => new(); // Default Calibration.Unit is Uncalibrated.
+        public static Calibration None => new(1.0, new CalibrationParameters(1.0, CalibrationUnit.None, ""));
 
-        public virtual string GetText(double interval, bool showBpm = false)
+		public virtual string GetText(double interval, bool showBpm = false)
         {
             var valueUnit = CalibratedInterval(interval, showBpm);
             double value = valueUnit.Item1;

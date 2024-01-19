@@ -286,6 +286,41 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public void ToggleMarchingCaliper(Point point)
+		{
+			if (IsLocked) return;
+			foreach (var caliper in _calipers)
+			{
+				if (caliper.IsNearBar(point) != null)
+				{
+					if (caliper.CaliperType != CaliperType.Time) break;
+					if (caliper is TimeCaliper timeCaliper)
+					{
+						if (timeCaliper.IsMarching)
+						{
+							RemoveMarchingCaliper(timeCaliper);
+							timeCaliper.IsMarching = false;
+						}
+						else
+						{
+							AddMarchingCaliper(timeCaliper);
+							timeCaliper.IsMarching= true;
+						}
+					}
+				}
+			}
+		}
+
+		private void AddMarchingCaliper(TimeCaliper timeCaliper)
+		{
+			timeCaliper.AddMarchingCaliper();
+		}
+
+		private void RemoveMarchingCaliper(TimeCaliper timeCaliper)
+		{
+			timeCaliper.RemoveMarchingCaliper();
+		}
+
 		public void UnselectAllCalipers()
 		{
 			// TODO: may need to handle Esc for measurements differently.

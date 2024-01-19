@@ -59,6 +59,11 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.DeleteCaliperAt(point);
 		}
 
+		public void ToggleMarchingCaliper(Point point)
+		{
+			_caliperCollection.ToggleMarchingCaliper(point);
+		}
+
 		[RelayCommand]
 		public void UnselectAllCalipers()
 		{

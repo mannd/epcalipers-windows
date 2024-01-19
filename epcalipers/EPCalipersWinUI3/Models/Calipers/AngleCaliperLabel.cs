@@ -22,7 +22,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         public AngleCaliperLabel(
             AngleCaliper caliper,
-            ICaliperView caliperView,
             string text,
             CaliperLabelAlignment alignment,
             bool autoPosition,

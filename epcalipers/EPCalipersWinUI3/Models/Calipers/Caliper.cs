@@ -191,7 +191,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (caliperView == null) return;
 			foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
-			CaliperLabel.RemoveFromView(caliperView);
+			CaliperLabel?.RemoveFromView(caliperView);
 		}
 
 		public abstract void ChangeBounds();

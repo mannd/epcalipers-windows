@@ -107,6 +107,10 @@ namespace EPCalipersWinUI3.Views
 		{
 			ViewModel.DeleteCaliperAt(_rightClickPosition);
 		}
+		private void MarchingCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleMarchingCaliper(_rightClickPosition);
+        }
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
@@ -332,5 +336,5 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 
-	}
+    }
 }

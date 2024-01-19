@@ -20,6 +20,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 
     public sealed class TimeCaliper : Caliper
     {
+        public bool IsMarching {  get; set; } = false;
+        public MarchingCaliper MarchingCaliper { get; set; }
+
         #region properties
         public Bar LeftBar { get; set; }
         public Bar RightBar { get; set; }
@@ -44,10 +47,20 @@ namespace EPCalipersWinUI3.Models.Calipers
             Bars = InitBars(position);
             CaliperType = CaliperType.Time;
             InitCaliperLabel();
-
         }
 
-        private List<Bar> InitBars(CaliperPosition position)
+        public void AddMarchingCaliper()
+        {
+			MarchingCaliper = new MarchingCaliper(CaliperView, this, 10, LeftMostBarPosition, RightMostBarPosition, _fakeUI);
+		}
+
+        public void RemoveMarchingCaliper()
+        {
+            MarchingCaliper?.Remove(CaliperView);
+            MarchingCaliper = null;
+        }
+
+		private List<Bar> InitBars(CaliperPosition position)
         {
             // NB Crossbar must be first, to allow IsNear to work correctly.
             CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
