@@ -35,7 +35,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private WindowEx _calibrationWindow;
 
 		private Caliper _grabbedCaliper;
-		private Bar _grabbedComponent;
+		private Bar _grabbedBar;
 		private Point _startingDragPoint;
 
 		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
@@ -223,24 +223,24 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void GrabCaliper(Point point)
 		{
 			if (IsLocked) return;
-			// Detect if this is near a caliper component, and if so, load it up for movement.
-			(_grabbedCaliper, _grabbedComponent) = GetGrabbedCaliperAndBar(point);
+			// Detect if this is near a caliper bar, and if so, load it up for movement.
+			(_grabbedCaliper, _grabbedBar) = GetCaliperAndBarAt(point);
 			_startingDragPoint = point;
 		}
 
-		public void DragCaliperComponent(Point point)
+		public void DragCaliperBar(Point point)
 		{
-			if (_grabbedCaliper == null || _grabbedComponent == null) return;
+			if (_grabbedCaliper == null || _grabbedBar == null) return;
 			var delta = new Point(point.X - _startingDragPoint.X, point.Y - _startingDragPoint.Y);
 			_startingDragPoint.X += delta.X;
 			_startingDragPoint.Y += delta.Y;
-			_grabbedCaliper.Drag(_grabbedComponent, delta, _startingDragPoint);
+			_grabbedCaliper.Drag(_grabbedBar, delta, _startingDragPoint);
 		}
 
 		public void ReleaseGrabbedCaliper()
 		{
 			_grabbedCaliper = null;
-			_grabbedComponent = null;
+			_grabbedBar = null;
 		}
 
 		public void ChangeBounds()
@@ -278,8 +278,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void DeleteCaliperAt(Point point)
 		{
-			var caliperBar = GetGrabbedCaliperAndBar(point);
-			if (caliperBar.Item1 is Caliper caliper)
+			var caliperAndBar = GetCaliperAndBarAt(point);
+			if (caliperAndBar.Item1 is Caliper caliper)
 			{
 				caliper.Remove(_caliperView);
 				_calipers.Remove(caliper);
@@ -334,32 +334,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
         }
 
-		public (Caliper, Bar) GetGrabbedCaliperAndBar(Point point)
+		public (Caliper, Bar) GetCaliperAndBarAt(Point point)
 		{
 			Bar bar = null;
 			var caliper = _calipers.Where(x => (bar = x.IsNearBar(point)) != null).FirstOrDefault();
 			if (caliper == null) return (null, null);
-			Debug.Print(caliper.ToString(), bar.ToString());
 			return (caliper, bar);
 		}
 
-		public (bool, bool) PointIsNearCaliper(Point point)
+		public Caliper GetCaliperAt(Point point)
 		{
-			if (IsLocked) return (false, false);
-			foreach (var caliper in _calipers)
-			{
-				var component = caliper.IsNearBar(point);
-				if (component == null) Debug.Print("Null");
-				else Debug.Print(component.ToString());
-				if (component != null) {
-					if (caliper is TimeCaliper timeCaliper && timeCaliper.IsMarching)
-					{
-						return (true, true);
-					}
-					else return (true, false);
-				}
-			}
-			return (false, false);
+			return GetCaliperAndBarAt(point).Item1 ?? null;
 		}
 
 		public void ToggleCaliperSelection(Point point)

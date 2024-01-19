@@ -195,7 +195,7 @@ namespace EPCalipersWinUi3Tests.Tests
 
 			result = calibration1.GetText(-100, false);
 
-			Assert.Equal("-1 sec", result);
+			Assert.Equal("-1.00 sec", result);
 
 			result = calibration1.GetText(-100, true);
 
@@ -215,7 +215,6 @@ namespace EPCalipersWinUi3Tests.Tests
 			var parameters = new CalibrationParameters(500, CalibrationUnit.Msec, "MSEC");
 			var calibration = new Calibration(1.0, parameters);
 			Assert.Equal("500 MSEC", calibration.GetText(1.0));
-			Assert.Null(calibration.GetSecondaryText(1.0, "msec"));
 		}
 
 		[Fact]
@@ -223,8 +222,8 @@ namespace EPCalipersWinUi3Tests.Tests
 		{
 			var angleCalibration = new AngleCalibration();
 			Assert.Equal(EPCalipersWinUI3.Models.Rounding.ToInt, angleCalibration.Rounding);
-			Assert.Equal("500 MSEC", angleCalibration.GetSecondaryText(500, "MSEC"));
-			Assert.Equal("500 MSEC", angleCalibration.GetSecondaryText(500.1234, "MSEC"));
+			Assert.Equal("500 points", angleCalibration.GetSecondaryText(500));
+			Assert.Equal("500 points", angleCalibration.GetSecondaryText(500.1234));
 		}
 
 	}

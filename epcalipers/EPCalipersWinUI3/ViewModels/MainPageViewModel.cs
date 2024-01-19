@@ -2,11 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
-using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -14,7 +12,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
 
 namespace EPCalipersWinUI3

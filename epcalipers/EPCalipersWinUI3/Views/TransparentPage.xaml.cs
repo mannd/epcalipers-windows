@@ -1,4 +1,5 @@
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -74,10 +75,18 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetPosition(TransparentCaliperView);
 			_rightClickPosition = position;
-			ViewModel.IsNearCaliper = ViewModel.PointIsNearCaliper(position).Item1;
-			ViewModel.CaliperIsMarching = ViewModel.PointIsNearCaliper(position).Item2;
-
+			var caliper = ViewModel.GetCaliperAt(position);
+			ViewModel.IsNearCaliper = caliper != null;
+			if (caliper != null && caliper is TimeCaliper timeCaliper)
+			{
+				ViewModel.CaliperIsMarching = timeCaliper.IsMarching;
+			}
+			else
+			{
+				ViewModel.CaliperIsMarching = false;
+			}
 		}
+
 		private void Right_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("right click menu item");

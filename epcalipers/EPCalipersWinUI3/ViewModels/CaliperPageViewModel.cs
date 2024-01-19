@@ -26,10 +26,9 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.RefreshCalipers();
 		}
 
-		// (near caliper, is marching)
-		public (bool, bool) PointIsNearCaliper(Point point)
+		public Caliper GetCaliperAt(Point point)
 		{
-			return _caliperCollection.PointIsNearCaliper(point);
+			return _caliperCollection.GetCaliperAt(point);
 		}
 
 		[RelayCommand]
@@ -100,7 +99,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void DragCaliperComponent(Point point)
 		{
-			_caliperCollection.DragCaliperComponent(point);
+			_caliperCollection.DragCaliperBar(point);
 		}
 
 		public void ReleaseGrabbedCaliper()
