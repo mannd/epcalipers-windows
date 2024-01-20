@@ -19,12 +19,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return base.GetText(interval, showBpm);
 		}
 
-		// TODO: refactor to match Time Caliper rounding, force msec, etc.
 		public string GetSecondaryText(double interval)
 		{
 			return TimeCalibration.GetText(interval);
-			//var value = GetRoundedValue(interval, showBpm: false);
-			//return string.Format("{0} {1}", value, unit);
 		}
 
 	}

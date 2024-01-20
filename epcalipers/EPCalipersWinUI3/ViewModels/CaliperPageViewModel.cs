@@ -7,6 +7,7 @@ using EPCalipersWinUI3.Views;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -62,6 +63,17 @@ namespace EPCalipersWinUI3.ViewModels
 		public void ToggleMarchingCaliper(Point point)
 		{
 			CaliperIsMarching = _caliperCollection.ToggleMarchingCaliper(point);
+		}
+
+		public Color CurrentCaliperColorAt(Point point)
+		{
+			return _caliperCollection.CurrentCaliperColorAt(point);
+		}
+
+		public void SetCurrentCaliperColor(Point point, Color color)
+		{
+			_caliperCollection.SetCurrentCaliperColor(point, color);
+
 		}
 
 		[RelayCommand]

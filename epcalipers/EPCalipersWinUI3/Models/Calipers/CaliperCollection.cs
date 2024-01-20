@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI;
 using WinUIEx;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -123,8 +124,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (IsLocked) return;
 			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration, AngleCalibration);
-			// TODO: Reduce caliper dependency on CaliperView:
-			//  _caliperView.Add(caliper); ???
 			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
@@ -322,6 +321,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void RemoveMarchingCaliper(TimeCaliper timeCaliper)
 		{
 			timeCaliper.RemoveMarchingCaliper();
+		}
+
+		public Color CurrentCaliperColorAt(Point point)
+		{
+			var caliper = GetCaliperAt(point);
+			if (caliper == null) return Microsoft.UI.Colors.Black;
+			return caliper.UnselectedColor;
+		}
+
+		public void SetCurrentCaliperColor(Point point, Color color)
+		{
+			var caliper = GetCaliperAt(point);
+			if (caliper == null) return;
+			caliper.UnselectedColor = color;
+			caliper.IsSelected = false;
 		}
 
 		public void UnselectAllCalipers()
@@ -522,7 +536,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void SetCalibration()
 		{
-			// TODO: Show rate below isn't changing the time caliper to interval, or maybe it is
 			ShowRate = false;
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
@@ -542,10 +555,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
 						angleCaliper.AngleCalibration.TimeCalibration = TimeCalibration;
 						angleCaliper.AngleCalibration.AmplitudeCalibration = AmplitudeCalibration;
-						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
-						angleCaliper.Calibration.Rounding = _settings.Rounding;
-						angleCaliper.TriangleBaseLabel.AutoAlignLabel = _settings.AutoAlignLabel;
-						angleCaliper.TriangleBaseLabel.Alignment = _settings.TimeCaliperLabelAlignment;
 						angleCaliper.DrawTriangleBase();
 						break;
 				}

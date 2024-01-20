@@ -119,10 +119,9 @@ namespace EPCalipersWinUI3.Models.Calipers
             if (AngleCalibration.AmplitudeCalibration != null && AngleCalibration.AmplitudeCalibration.Multiplier != 0)
             {
                 double pointsPerMM = 1.0 / AngleCalibration.AmplitudeCalibration.Multiplier;
-                return 5.0 * pointsPerMM;
+                return 5.0 * pointsPerMM; // Triangle base is drawn 5 mm below apex of triangle.
             }
-            return 0;
-            // TODO: is it ok to return 0?
+            return 5.0; // If no calibration, triangle is drawn hidden 5 points below apex.
 		}
 
 		private bool ShowBrugadaTriangle(AngleCaliperPosition position)

@@ -138,7 +138,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
         private readonly double _precision = 10; // Used to determine if touches are nearby.
 
-        // TODO: Need to inject the line method...
         public Bar(Role role,
             double position, double start, double end, bool fakeUI = false)
         {
