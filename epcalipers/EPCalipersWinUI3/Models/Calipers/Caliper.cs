@@ -1,4 +1,5 @@
 ﻿using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +9,11 @@ using Xunit;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
+    public sealed class NumberOutOfRangeException : Exception
+    {
+        public NumberOutOfRangeException() : base("NumberOutOfRangeException") { }
+    }
+
 	public enum CaliperType
 	{
 		Time,
@@ -40,6 +46,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	public abstract class Caliper
 	{
 		private const double _defaultCaliperValue = 200;
+		private static readonly int _maxNumberIntervals = 10;
 		protected bool _fakeUI;  // Is true for testing.
 
 		protected Bounds Bounds => CaliperView.Bounds;
@@ -273,6 +280,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			CaliperLabel.Text = Text;
 			CaliperLabel.SetPosition();
+		}
+
+		public static double MeanInterval(double interval, int number)
+		{
+			if (number < 1 || number > _maxNumberIntervals)
+			{
+				throw new NumberOutOfRangeException();
+			}
+			return MathHelper.MeanInterval(interval, number);
 		}
 	}
 }

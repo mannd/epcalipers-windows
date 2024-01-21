@@ -110,5 +110,14 @@ namespace EPCalipersWinUi3Tests.Tests
 			var angleCaliper = GetAngleCaliper();
 			Assert.Equal(Bar.Role.Apex, angleCaliper.HandleBar.BarRole);
 		}
+
+		[Fact]
+		public void TestMeanInterval()
+		{
+			var meanInterval = Caliper.MeanInterval(500, 5);
+			Assert.Equal(100, meanInterval);
+			Assert.Throws<NumberOutOfRangeException>(() => Caliper.MeanInterval(500, 0));
+			Assert.Throws<NumberOutOfRangeException>(() => Caliper.MeanInterval(500, 20));
+		}
 	}
 }

@@ -185,7 +185,6 @@ namespace EPCalipersWinUI3.Views
 
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
-			Debug.WriteLine("Pointer released.");
 			ViewModel.ReleaseGrabbedCaliper();
 			pointerDown = false;
 		}

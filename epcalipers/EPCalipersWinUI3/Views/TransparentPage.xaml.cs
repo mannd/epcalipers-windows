@@ -105,7 +105,6 @@ namespace EPCalipersWinUI3.Views
 		}
 		private void CaliperGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
-			Debug.WriteLine("Pointer released.");
 			ViewModel.ReleaseGrabbedCaliper();
 			pointerDown = false;
 		}

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -14,11 +15,13 @@ using WinUIEx;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
+
 	/// <summary>
 	/// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
 	/// </summary>
 	public class CaliperCollection
 	{
+		private static readonly int _maxNumberIntervals = 10;
 		private static readonly double _delta = 1.0;
 		private static readonly double _microDelta = 0.2;
 		private static Point _leftMovement = new(-_delta, 0);
@@ -34,10 +37,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private readonly ICaliperView _caliperView;
 		private readonly ISettings _settings;
 		private WindowEx _calibrationWindow;
+		private WindowEx _meanRateIntervalWindow;
+
 
 		private Caliper _grabbedCaliper;
 		private Bar _grabbedBar;
 		private Point _startingDragPoint;
+
+		private async Task ShowMessage(string title, string message)
+		{
+			var dialog = MessageHelper.CreateMessageDialog(title, message);
+			dialog.XamlRoot = _caliperView.XamlRoot;
+			await dialog.ShowAsync();
+		}
 
 		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
 		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
@@ -147,7 +159,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void Move(Point delta)
 		{
-			if (IsLocked) return;
 			Bar bar;
 			Caliper caliper;
 			if (SelectedCaliper != null)
@@ -221,7 +232,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void GrabCaliper(Point point)
 		{
-			if (IsLocked) return;
 			// Detect if this is near a caliper bar, and if so, load it up for movement.
 			(_grabbedCaliper, _grabbedBar) = GetCaliperAndBarAt(point);
 			_startingDragPoint = point;
@@ -417,7 +427,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void UnselectCalipersExcept(Caliper c)
 		{
-			if (IsLocked) return;
 			foreach (var caliper in _calipers)
 			{
 				if (caliper != c)
@@ -441,21 +450,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task SetCalibrationAsync()
 		{
-			ContentDialog dialog;
 			SelectSoleTimeOrAmplitudeCaliper();
 			switch (SelectedCaliperType)
 			{
 				case CaliperType.None:
-					dialog = MessageHelper.CreateMessageDialog("NoCaliperSelectedTitle".GetLocalized(),
+					await ShowMessage("NoCaliperSelectedTitle".GetLocalized(),
 						"NoCaliperSelectedMessage".GetLocalized());
-					dialog.XamlRoot = _caliperView.XamlRoot;
-					await dialog.ShowAsync();
 					break;
 				case CaliperType.Angle:
-					dialog = MessageHelper.CreateMessageDialog("AngleCaliperSelectedTitle".GetLocalized(),
+					await ShowMessage("AngleCaliperSelectedTitle".GetLocalized(),
 						"AngleCaliperSelectedMessage".GetLocalized());
-					dialog.XamlRoot = _caliperView.XamlRoot;
-					await dialog.ShowAsync();
 					break;
 				case CaliperType.Time:
 				case CaliperType.Amplitude:
@@ -465,6 +469,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		/// <summary>
+		/// If the only caliper in collection is a time or amplitude caliper, select it, otherwise do nothing.
+		/// Used to simplify caliper calibration.
+		/// </summary>
 		private void SelectSoleTimeOrAmplitudeCaliper()
 		{
 			if (_calipers.Count == 1)
@@ -482,6 +490,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return;  // 
 		}
 
+		/// <summary>
+		/// If only 1 time caliper in collection, select it, otherwise do nothing.
+		/// Used to simplify mean interval and QTc measurements.
+		/// </summary>
+		private void SelectSoleTimeCaliper()
+		{
+			var timeCalipers = FilteredCalipers(CaliperType.Time);
+			if (timeCalipers.Count == 1)
+			{
+				timeCalipers[0].IsSelected = true;
+				UnselectCalipersExcept(timeCalipers[0]);
+			}
+		}
+
 		private void ShowCalibrationDialogWindow(CaliperType caliperType)
 		{
 			Debug.Assert(SelectedCaliper != null);
@@ -492,6 +514,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow.Height = 400;
 			_calibrationWindow.Width = 400;
 			_calibrationWindow.SetIsAlwaysOnTop(true);
+			_calibrationWindow.CenterOnScreen();
 			string title;
 			switch (caliperType)
 			{
@@ -522,8 +545,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void OnClosed(object sender, WindowEventArgs args)
 		{
 			IsLocked = false;
-			_calibrationWindow.Content = null;
+			if (_calibrationWindow != null )
+			{
+				_calibrationWindow.Content = null;
+			}
+			if (_meanRateIntervalWindow != null )
+			{
+				_meanRateIntervalWindow.Content = null;
+			}
 			_calibrationWindow = null;
+			_meanRateIntervalWindow = null;
 		}
 
 		public void ClearCalibration()
@@ -564,20 +595,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task ToggleRateInterval()
 		{
-			ContentDialog dialog;
 			switch (TimeCalibration.Parameters.Unit)
 			{
 				case CalibrationUnit.Uncalibrated:
-					dialog = MessageHelper.CreateMessageDialog("Time calipers not calibrated",
+					await ShowMessage("Time calipers not calibrated",
 						"You need to calibrate a time caliper before you can measure heart rates.");
-					dialog.XamlRoot = _caliperView.XamlRoot;
-					await dialog.ShowAsync();
 					break;
 				case CalibrationUnit.Unknown:
-					dialog = MessageHelper.CreateMessageDialog("Time calipers units not correct",
+				case CalibrationUnit.None:
+					await ShowMessage("Time calipers units not correct",
 						"Calibration unit needs to be msec or sec to meaure heart rates.");
-					dialog.XamlRoot = _caliperView.XamlRoot;
-					await dialog.ShowAsync();
 					break;
 				default:
 					ShowRate = !ShowRate;
@@ -589,6 +616,46 @@ namespace EPCalipersWinUI3.Models.Calipers
 					}
 					break;
 			}
+		}
+
+		public async Task MeanRateInterval()
+		{
+			if (SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time)
+			{
+				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
+					"HowToMeasureMeanIntervalMessage".GetLocalized());
+			}
+			else
+			{
+				// show dialog, get number of interval
+				ShowMeanRateIntervalDialog(SelectedCaliper);
+				//var numberIntervals = 5;
+				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
+			}
+		}
+			
+		public void ShowMeanRateIntervalDialog(Caliper caliper)
+		{
+			Debug.Assert(SelectedCaliper != null);
+			if (_meanRateIntervalWindow == null)
+			{
+				_meanRateIntervalWindow = new WindowEx();
+			}
+			_meanRateIntervalWindow.Height = 300;
+			_meanRateIntervalWindow.Width = 400;
+			_meanRateIntervalWindow.SetIsAlwaysOnTop(true);
+			_meanRateIntervalWindow.CenterOnScreen();
+			_meanRateIntervalWindow.Title = "Mean interval and rate";
+			_meanRateIntervalWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+			//Frame frame = new Frame();
+			//frame.Navigate(typeof(CalibrationView));
+			var meanRateIntervalView = new MeanRateIntervalView(caliper)
+			{
+				Window = _meanRateIntervalWindow
+			};
+			_meanRateIntervalWindow.Content = meanRateIntervalView;
+			_meanRateIntervalWindow.Closed += OnClosed;
+			_meanRateIntervalWindow.Show();
 		}
 	}
 }

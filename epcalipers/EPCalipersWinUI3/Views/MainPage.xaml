@@ -271,7 +271,8 @@
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"/>
+                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"
+                                Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
@@ -351,7 +352,8 @@
             </AppBarButton>
             <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
-            <AppBarButton x:Uid="MeanRateIntervalBarButton">
+            <AppBarButton x:Uid="MeanRateIntervalBarButton"
+                                Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon Glyph="&#xE94A;" />
             </AppBarButton>
             <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>

@@ -133,6 +133,12 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
+		private async Task MeanRateInterval()
+		{
+			await _caliperCollection.MeanRateInterval();
+		}
+
+		[RelayCommand]
 		private static void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]
