@@ -515,6 +515,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow.Width = 400;
 			_calibrationWindow.SetIsAlwaysOnTop(true);
 			_calibrationWindow.CenterOnScreen();
+			_calibrationWindow.PersistenceId = "CalibrationWindowID";
 			string title;
 			switch (caliperType)
 			{
@@ -645,6 +646,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_meanRateIntervalWindow.Width = 400;
 			_meanRateIntervalWindow.SetIsAlwaysOnTop(true);
 			_meanRateIntervalWindow.CenterOnScreen();
+			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
 			_meanRateIntervalWindow.Title = "Mean interval and rate";
 			_meanRateIntervalWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
 			//Frame frame = new Frame();

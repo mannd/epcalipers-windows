@@ -19,22 +19,7 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MeanRateIntervalView : Page
 	{
 		private static Point _meanRateIntervalWindowPosition;
-        public WindowEx Window
-        {
-            get
-            {
-                return _window;
-            }
-            set
-            {
-                _window = value;
-                if (_window != null && _meanRateIntervalWindowPosition != new Point(0, 0))
-                {
-                    _window.Move((int)_meanRateIntervalWindowPosition.X, (int)_meanRateIntervalWindowPosition.Y);
-                }
-            }
-        }
-        private WindowEx _window;
+        public WindowEx Window { get; set; }
 
         public MeanRateIntervalViewModel ViewModel { get; set; }
 
@@ -57,15 +42,11 @@ namespace EPCalipersWinUI3.Views
 
         private void CloseWindow()
         {
-			// Save coordinates to open window the same place next time...
-			_meanRateIntervalWindowPosition = new Point(Window.AppWindow.Position.X,
-				Window.AppWindow.Position.Y);
-			Debug.Print("X = " + Window.AppWindow.Position.X.ToString() + "Y = " +
-				Window.AppWindow.Position.Y.ToString());
             Window?.Close();
             Window = null;
         }
 
+        // TODO: Why aren't keys being detected here?
         private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             switch (e.Key)

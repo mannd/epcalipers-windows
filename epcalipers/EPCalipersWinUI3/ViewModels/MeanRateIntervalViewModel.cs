@@ -11,10 +11,11 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		public int NumberOfIntervals { get; set; }
 
+
+		// TODO Create message box with results, mean interval and mean rate
 		public static double Calculate(double interval, int numberOfIntervals)
 		{
 			return MathHelper.MeanInterval(interval, numberOfIntervals);
-
 		}
 	}
 }

@@ -37,6 +37,7 @@ namespace EPCalipersWinUI3
             SetTitleBar(TitleBar);
 			AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
             MainFrame.Navigate(typeof(Views.MainPage));
+			PersistenceId = "EPCalipersMainWindowID";
 			Activated += MainWindow_Activated;
 		}
 
