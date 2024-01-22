@@ -23,7 +23,7 @@ namespace EPCalipersWinUI3.Views
         public MeanRateIntervalView(Caliper caliper)
         {
             InitializeComponent();
-            ViewModel = new MeanRateIntervalViewModel();
+            ViewModel = new MeanRateIntervalViewModel(caliper);
         }
 
         private void MeanRateIntervalViewCancel_Click(object sender, RoutedEventArgs e)
@@ -31,10 +31,10 @@ namespace EPCalipersWinUI3.Views
             CloseWindow();
         }
 
-        private void MeanRateIntervalViewMeasure_Click(object sender, RoutedEventArgs e)
+        private async void MeanRateIntervalViewMeasure_Click(object sender, RoutedEventArgs e)
         {
-            //await ViewModel.SetCalibration(XamlRoot);
-            CloseWindow();
+			ViewModel.NumberOfIntervals = (int)NumberOfIntervalsBox.Value;
+            await ViewModel.ShowResult(XamlRoot);
         }
 
         private void CloseWindow()
@@ -43,13 +43,13 @@ namespace EPCalipersWinUI3.Views
         }
 
         // TODO: Why aren't keys being detected here?
-        private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
+        private async void Page_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             switch (e.Key)
             {
                 case VirtualKey.Enter:
                     ViewModel.NumberOfIntervals = (int)NumberOfIntervalsBox.Value;
-                    //await ViewModel.SetCalibration(XamlRoot);
+                    await ViewModel.ShowResult(XamlRoot);
                     CloseWindow();
                     break;
                 case VirtualKey.Escape: CloseWindow(); break;

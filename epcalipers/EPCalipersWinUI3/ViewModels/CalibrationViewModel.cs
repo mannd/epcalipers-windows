@@ -41,6 +41,7 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 		public CalibrationViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
+			ErrorRaised = false;
 			_caliper = caliper;
 			_caliperType = caliper.CaliperType;
 			_caliperCollection = caliperCollection;
@@ -107,6 +108,7 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 			catch (Exception e)
 			{
+				ErrorRaised = true;
 				var dialog = MessageHelper.CreateErrorDialog(e.Message);
 				dialog.XamlRoot = xamlRoot;
 				await dialog.ShowAsync();
@@ -142,6 +144,7 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 			catch (Exception e)
 			{
+				ErrorRaised = true;
 				var dialog = MessageHelper.CreateErrorDialog(e.Message);
 				dialog.XamlRoot = xamlRoot;
 				await dialog.ShowAsync();
@@ -202,5 +205,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private string customInterval;
+
+		[ObservableProperty]
+		private bool errorRaised;
 	}
 }

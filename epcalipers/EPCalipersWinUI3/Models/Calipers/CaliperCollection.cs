@@ -514,6 +514,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			_calibrationWindow.Height = 400;
 			_calibrationWindow.Width = 400;
+			_calibrationWindow.MinHeight = 400;
 			_calibrationWindow.SetIsAlwaysOnTop(true);
 			_calibrationWindow.CenterOnScreen();
 			_calibrationWindow.PersistenceId = "CalibrationWindowID";
@@ -650,6 +651,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			_meanRateIntervalWindow.Height = 300;
 			_meanRateIntervalWindow.Width = 400;
+			_meanRateIntervalWindow.MinHeight = 300;
+			_meanRateIntervalWindow.MinWidth = 400;
 			_meanRateIntervalWindow.SetIsAlwaysOnTop(true);
 			_meanRateIntervalWindow.CenterOnScreen();
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
@@ -674,6 +677,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			_colorWindow.Height = 550;
 			_colorWindow.Width = 400;
+			_colorWindow.MinHeight = 550;
+			_colorWindow.MinWidth = 400;
 			_colorWindow.SetIsAlwaysOnTop(true);
 			_colorWindow.CenterOnScreen();
 			_colorWindow.Title = "ColorWindowTitle".GetLocalized();

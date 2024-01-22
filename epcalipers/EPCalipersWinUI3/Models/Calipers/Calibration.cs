@@ -105,7 +105,16 @@ namespace EPCalipersWinUI3.Models.Calipers
             return string.Format("{0} {1}", formattedValue, unitString);
 		}
 
-        protected virtual string GetRoundedValue(double value, bool showBpm = false)
+        // TODO: Need static method that return rounded interval and rate using calibration units for mean interval
+        public static (string, string) GetCalibratedRateInterval(double interval, Calibration calibration)
+        {
+            var calibratedInterval = calibration.CalibratedInterval(interval).Item1;
+            string formattedRate = calibration.GetRoundedValue(calibratedInterval, true);
+            string formattedInterval = calibration.GetRoundedValue(calibratedInterval, false);
+            return (formattedRate, formattedInterval);
+        }
+
+        private string GetRoundedValue(double value, bool showBpm = false)
 		{
             // 
             string format = ForceRoundingToHundredths(showBpm) ? 
@@ -126,7 +135,7 @@ namespace EPCalipersWinUI3.Models.Calipers
                 || Parameters.Unit == CalibrationUnit.Mv;
         }
 
-        protected  (double, string) CalibratedInterval(double interval, bool showBpm = false)
+        public (double, string) CalibratedInterval(double interval, bool showBpm = false)
         {
             if (showBpm)
             {

@@ -51,7 +51,7 @@ namespace EPCalipersWinUI3.Views
         private async void CalibrationDialogCalibrate_Click(object sender, RoutedEventArgs e)
         {
             await ViewModel.SetCalibration(XamlRoot);
-            CloseWindow();
+            if (!ViewModel.ErrorRaised) CloseWindow();
         }
 
         private void CloseWindow()
