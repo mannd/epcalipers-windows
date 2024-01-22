@@ -36,9 +36,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private readonly IList<Caliper> _calipers;
 		private readonly ICaliperView _caliperView;
 		private readonly ISettings _settings;
+
 		private WindowEx _calibrationWindow;
 		private WindowEx _meanRateIntervalWindow;
-
+		private WindowEx _colorWindow;
 
 		private Caliper _grabbedCaliper;
 		private Bar _grabbedBar;
@@ -546,16 +547,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void OnClosed(object sender, WindowEventArgs args)
 		{
 			IsLocked = false;
-			if (_calibrationWindow != null )
+			if (_calibrationWindow != null)
 			{
 				_calibrationWindow.Content = null;
 			}
-			if (_meanRateIntervalWindow != null )
+			if (_meanRateIntervalWindow != null)
 			{
 				_meanRateIntervalWindow.Content = null;
 			}
+			if (_colorWindow != null)
+			{
+				_colorWindow.Content = null;
+			}
 			_calibrationWindow = null;
 			_meanRateIntervalWindow = null;
+			_colorWindow = null;
 		}
 
 		public void ClearCalibration()
@@ -649,8 +655,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
 			_meanRateIntervalWindow.Title = "Mean interval and rate";
 			_meanRateIntervalWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-			//Frame frame = new Frame();
-			//frame.Navigate(typeof(CalibrationView));
 			var meanRateIntervalView = new MeanRateIntervalView(caliper)
 			{
 				Window = _meanRateIntervalWindow
@@ -658,6 +662,30 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_meanRateIntervalWindow.Content = meanRateIntervalView;
 			_meanRateIntervalWindow.Closed += OnClosed;
 			_meanRateIntervalWindow.Show();
+		}
+
+		public void ShowColorDialog(Point point)
+		{
+			var caliper = GetCaliperAt(point);
+			if (caliper == null) return;
+			if (_colorWindow == null)
+			{
+				_colorWindow = new WindowEx();
+			}
+			_colorWindow.Height = 550;
+			_colorWindow.Width = 400;
+			_colorWindow.SetIsAlwaysOnTop(true);
+			_colorWindow.CenterOnScreen();
+			_colorWindow.Title = "ColorWindowTitle".GetLocalized();
+			_colorWindow.PersistenceId = "ColorWindowID";
+			_colorWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+			var colorView = new ColorView(caliper)
+			{
+				Window = _colorWindow
+			};
+			_colorWindow.Content = colorView;
+			_colorWindow.Closed += OnClosed;
+			_colorWindow.Show();
 		}
 	}
 }

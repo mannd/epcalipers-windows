@@ -76,6 +76,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		}
 
+		public void ShowColorDialog(Point point)
+		{
+			_caliperCollection.ShowColorDialog(point);
+		}
+
 		[RelayCommand]
 		public void UnselectAllCalipers()
 		{

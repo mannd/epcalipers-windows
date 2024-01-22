@@ -57,7 +57,6 @@ namespace EPCalipersWinUI3.Views
         private void CloseWindow()
         {
             Window?.Close();
-            Window = null;
         }
 
         private async void Page_KeyUp(object sender, KeyRoutedEventArgs e)

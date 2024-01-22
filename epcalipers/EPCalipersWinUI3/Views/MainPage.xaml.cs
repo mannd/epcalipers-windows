@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MainPage : Page
 	{
         public MainPageViewModel ViewModel { get; set; }
-		private Point _rightClickPosition; 
+		private Point _rightClickPosition;
 
 		public MainPage()
 		{
@@ -121,44 +121,9 @@ namespace EPCalipersWinUI3.Views
 		{
 			ViewModel.ToggleMarchingCaliper(_rightClickPosition);
         }
-		private async void ColorCaliper_Click(object sender, RoutedEventArgs e)
+		private void ColorCaliper_Click(object sender, RoutedEventArgs e)
 		{
-			ContentDialog colorContentDialog = new ContentDialog()
-			{
-				Title = "Pick a color for this caliper",
-				//Content = colorPicker,
-				PrimaryButtonText = "Choose",
-				CloseButtonText = "Cancel"
-			};
-
-			colorContentDialog.XamlRoot = this.Content.XamlRoot;
-			colorContentDialog.Loaded += ColorContentDialog_Loaded;
-			var result = await colorContentDialog.ShowAsync();
-			if (result == ContentDialogResult.Primary)
-			{
-				var colorPicker = colorContentDialog.Content as ColorPicker;
-				var color = colorPicker.Color;
-				ViewModel.SetCurrentCaliperColor(_rightClickPosition, color);
-			}
-		}
-
-		// This is a workaround of a bug in WinUI 3.
-		// See https://stackoverflow.com/questions/75958694/colorpicker-in-contentdialog-in-winui3-does-not-show-spectrum-always
-		private void ColorContentDialog_Loaded(object sender, RoutedEventArgs e)
-		{
-
-			ColorPicker colorPicker = new ColorPicker();
-			colorPicker.ColorSpectrumShape = ColorSpectrumShape.Box;
-			colorPicker.IsColorSpectrumVisible = true;
-			colorPicker.IsColorChannelTextInputVisible = false;
-			colorPicker.IsHexInputVisible = false;
-			colorPicker.IsAlphaEnabled = false;
-			colorPicker.Color = ViewModel.CurrentCaliperColorAt(_rightClickPosition);
-
-			if (sender is ContentDialog contentDialog)
-			{
-				contentDialog.Content = colorPicker;
-			}
+			ViewModel.ShowColorDialog(_rightClickPosition);
 		}
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)

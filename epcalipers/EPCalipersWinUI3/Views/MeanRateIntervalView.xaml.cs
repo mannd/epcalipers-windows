@@ -13,9 +13,6 @@ using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class MeanRateIntervalView : Page
 	{
 		private static Point _meanRateIntervalWindowPosition;
@@ -43,7 +40,6 @@ namespace EPCalipersWinUI3.Views
         private void CloseWindow()
         {
             Window?.Close();
-            Window = null;
         }
 
         // TODO: Why aren't keys being detected here?

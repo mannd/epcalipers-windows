@@ -1,4 +1,6 @@
-﻿using EPCalipersWinUI3.Helpers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public class MeanRateIntervalViewModel
+	public partial class MeanRateIntervalViewModel: ObservableObject
 	{
 		public int NumberOfIntervals { get; set; }
 

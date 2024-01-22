@@ -203,6 +203,9 @@
   <data name="ColorMenuItem.Text" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="ColorWindowTitle" xml:space="preserve">
+    <value>Choose color for this caliper</value>
+  </data>
   <data name="DeleteAllCalipersMenuItem.Text" xml:space="preserve">
     <value>Delete all calipers</value>
   </data>
