@@ -24,17 +24,12 @@ namespace EPCalipersWinUI3.ViewModels
 
 		}
 
-		public static double Calculate(double interval, int numberOfIntervals)
-		{
-			return MathHelper.MeanInterval(interval, numberOfIntervals);
-		}
-
 		[RelayCommand]
 		public async Task ShowResult(XamlRoot xamlRoot)
 		{
-			var result = Calculate(_caliper.Value, NumberOfIntervals);
-			var formattedValues = Calibration.GetCalibratedRateInterval(result, _caliper.Calibration);
-			var message = $"Mean rate = {formattedValues.Item1}\nMean interval = {formattedValues.Item2}";
+			var intervalResult = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
+			var rateResult = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
+			var message = $"Mean rate = {rateResult.Item1} {rateResult.Item2}\nMean interval = {intervalResult.Item1} {intervalResult.Item2}";
 			var dialog = MessageHelper.CreateMessageDialog("Results", message);
 			dialog.XamlRoot = xamlRoot;
 			await dialog.ShowAsync();

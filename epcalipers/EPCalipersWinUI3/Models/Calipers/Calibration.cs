@@ -105,16 +105,7 @@ namespace EPCalipersWinUI3.Models.Calipers
             return string.Format("{0} {1}", formattedValue, unitString);
 		}
 
-        // TODO: Need static method that return rounded interval and rate using calibration units for mean interval
-        public static (string, string) GetCalibratedRateInterval(double interval, Calibration calibration)
-        {
-            var calibratedInterval = calibration.CalibratedInterval(interval).Item1;
-            string formattedRate = calibration.GetRoundedValue(calibratedInterval, true);
-            string formattedInterval = calibration.GetRoundedValue(calibratedInterval, false);
-            return (formattedRate, formattedInterval);
-        }
-
-        private string GetRoundedValue(double value, bool showBpm = false)
+        public string GetRoundedValue(double value, bool showBpm = false)
 		{
             // 
             string format = ForceRoundingToHundredths(showBpm) ? 
@@ -127,9 +118,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return value.ToString(format);
 		}
 
-        // Rationale here is that sec and mV are useless without two decimal places.
-        // User can get around this by defining custom units instead of using predefined units.
-        private bool ForceRoundingToHundredths(bool showBpm)
+        public (string, string) GetMeanCalibratedInterval(double interval, int numberOfIntervals, bool showBpm = false)
+        {
+            if (numberOfIntervals < 1) throw new ZeroValueException();
+            interval = Math.Abs(interval);  // no negative mean intervals
+			var meanInterval = MathHelper.MeanInterval(interval, numberOfIntervals);
+			var intervalPlusUnit = CalibratedInterval(meanInterval, showBpm);
+			var calibratedMeanInterval = intervalPlusUnit.Item1;
+			var roundedInterval = GetRoundedValue(calibratedMeanInterval, showBpm: showBpm);
+            return (roundedInterval, intervalPlusUnit.Item2);
+		}
+
+		// Rationale here is that sec and mV are useless without two decimal places.
+		// User can get around this by defining custom units instead of using predefined units.
+		private bool ForceRoundingToHundredths(bool showBpm)
         {
             return (Parameters.Unit == CalibrationUnit.Sec && !showBpm) 
                 || Parameters.Unit == CalibrationUnit.Mv;

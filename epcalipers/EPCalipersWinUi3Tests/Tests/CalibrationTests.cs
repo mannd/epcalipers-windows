@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using EPCalipersWinUI3;
+﻿using Xunit;
 using EPCalipersWinUI3.Models.Calipers;
-using EPCalipersWinUI3.Contracts;
-using EPCalipersWinUI3.Helpers;
-using System.Text.RegularExpressions;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -224,6 +215,26 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal(EPCalipersWinUI3.Models.Rounding.ToInt, angleCalibration.Rounding);
 			Assert.Equal("500 points", angleCalibration.GetSecondaryText(500));
 			Assert.Equal("500 points", angleCalibration.GetSecondaryText(500.1234));
+		}
+
+		[Fact]
+		public void TestMeanRateInterval()
+		{
+			var parameters = new CalibrationParameters(1000, CalibrationUnit.Msec, "msec");
+			var calibration = new Calibration(100, parameters);
+			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToInt;
+			Assert.Equal(1000.0, calibration.CalibratedInterval(100.0).Item1);
+			var meanInterval = calibration.GetMeanCalibratedInterval(500, 4, false);
+			Assert.Equal("1250", meanInterval.Item1);
+			var meanRate = calibration.GetMeanCalibratedInterval(500, 4, true);
+			Assert.Equal("48", meanRate.Item1);
+			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToHundredths;
+			meanInterval = calibration.GetMeanCalibratedInterval(500, 4, false);
+			Assert.Equal("1250.00", meanInterval.Item1);
+			meanRate = calibration.GetMeanCalibratedInterval(500, 4, true);
+			Assert.Equal("48.00", meanRate.Item1);
+			Assert.Equal("msec", meanInterval.Item2);
+			Assert.Equal("bpm", meanRate.Item2);
 		}
 
 	}
