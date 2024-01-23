@@ -39,6 +39,12 @@ namespace EPCalipersWinUI3
             MainFrame.Navigate(typeof(Views.MainPage));
 			PersistenceId = "EPCalipersMainWindowID";
 			Activated += MainWindow_Activated;
+			Closed += MainWindow_Closed;
+		}
+
+		private void MainWindow_Closed(object sender, WindowEventArgs args)
+		{
+			CommandHelper.ApplicationExit();
 		}
 
 		public TextBlock GetTitleBar()
