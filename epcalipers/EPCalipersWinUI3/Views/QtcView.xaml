@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EPCalipersWinUI3.Views.QtcView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EPCalipersWinUI3.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 1</TextBlock>
+        <Button HorizontalAlignment="Left">Measure RR Interval</Button>
+        <TextBlock></TextBlock>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 2</TextBlock>
+        <Button>Measure QT Interval</Button>
+        <TextBlock></TextBlock>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 3</TextBlock>
+        <ComboBox Header="QTc Formula" SelectedIndex="0">
+            <ComboBoxItem>Bazett</ComboBoxItem>
+            <ComboBoxItem>Hodges</ComboBoxItem>
+        </ComboBox>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
+                   Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
+            <Button Grid.Column="1" Margin="2,12,0,0" 
+                    HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
+        </Grid>
+    </StackPanel>
+</Page>

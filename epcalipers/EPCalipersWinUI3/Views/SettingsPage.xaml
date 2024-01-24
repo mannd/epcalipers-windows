@@ -63,7 +63,7 @@
             </StackPanel>
         </Button>
         <TextBlock Grid.Row="1" Text="Settings" 
-                   HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle }" />
+                   HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle}" />
         <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Text="Labels" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>

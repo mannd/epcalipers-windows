@@ -184,6 +184,9 @@
   <data name="bpm" xml:space="preserve">
     <value>bpm</value>
   </data>
+  <data name="ButtonCalculate.Content" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="ButtonDone.Content" xml:space="preserve">
     <value>Done</value>
   </data>

@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
                     Click="MeanRateIntervalViewMeasure_Click" 
-                   Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonMeasure" />
+                   Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
                     HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
         </Grid>

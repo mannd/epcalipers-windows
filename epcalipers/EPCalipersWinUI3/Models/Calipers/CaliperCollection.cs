@@ -40,6 +40,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private WindowEx _calibrationWindow;
 		private WindowEx _meanRateIntervalWindow;
 		private WindowEx _colorWindow;
+		private WindowEx _measureQtcWindow;
 
 		private Caliper _grabbedCaliper;
 		private Bar _grabbedBar;
@@ -512,12 +513,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_calibrationWindow = new WindowEx();
 			}
-			_calibrationWindow.Height = 400;
-			_calibrationWindow.Width = 400;
-			_calibrationWindow.MinHeight = 400;
-			_calibrationWindow.SetIsAlwaysOnTop(true);
-			_calibrationWindow.CenterOnScreen();
-			_calibrationWindow.PersistenceId = "CalibrationWindowID";
 			string title;
 			switch (caliperType)
 			{
@@ -531,10 +526,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 					title = "Calibration";
 					break;
 			}
-			_calibrationWindow.Title = title;
-			_calibrationWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-			//Frame frame = new Frame();
-			//frame.Navigate(typeof(CalibrationView));
+			SetupFloatingWindow(_calibrationWindow, 400, 400, title);
+			_calibrationWindow.PersistenceId = "CalibrationWindowID";
 			var calibrationView = new CalibrationView(SelectedCaliper, this)
 			{
 				Window = _calibrationWindow,
@@ -560,9 +553,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_colorWindow.Content = null;
 			}
+			if (_measureQtcWindow != null)
+			{
+				_measureQtcWindow.Content = null;
+			}
 			_calibrationWindow = null;
 			_meanRateIntervalWindow = null;
 			_colorWindow = null;
+			_measureQtcWindow = null;
 		}
 
 		public void ClearCalibration()
@@ -649,15 +647,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_meanRateIntervalWindow = new WindowEx();
 			}
-			_meanRateIntervalWindow.Height = 300;
-			_meanRateIntervalWindow.Width = 400;
-			_meanRateIntervalWindow.MinHeight = 300;
-			_meanRateIntervalWindow.MinWidth = 400;
-			_meanRateIntervalWindow.SetIsAlwaysOnTop(true);
-			_meanRateIntervalWindow.CenterOnScreen();
+			SetupFloatingWindow(_meanRateIntervalWindow, 400, 300, "Mean interval and rate");
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
-			_meanRateIntervalWindow.Title = "Mean interval and rate";
-			_meanRateIntervalWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
 			var meanRateIntervalView = new MeanRateIntervalView(caliper)
 			{
 				Window = _meanRateIntervalWindow
@@ -665,6 +656,52 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_meanRateIntervalWindow.Content = meanRateIntervalView;
 			_meanRateIntervalWindow.Closed += OnClosed;
 			_meanRateIntervalWindow.Show();
+		}
+
+		private static void SetupFloatingWindow(WindowEx window, int width, int height, string title)
+		{
+			window.Height = window.MinHeight = height;
+			window.Width = window.MinWidth = width;
+			window.SetIsAlwaysOnTop(true);
+			window.CenterOnScreen();
+			// TODO: need to do more work if we want the titlebar to show title and icon, otherwise we
+			// just have a blank title bar
+			window.ExtendsContentIntoTitleBar = true;
+			window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+			window.Title = title;	
+		}
+
+		public async Task MeasureQtc()
+		{
+			if (SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time)
+			{
+				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
+					"HowToMeasureMeanIntervalMessage".GetLocalized());
+			}
+			else
+			{
+				// show dialog, get number of interval
+				ShowMeasureQtcDialog();
+				//var numberIntervals = 5;
+				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
+			}
+		}
+		public void ShowMeasureQtcDialog()
+		{
+			Debug.Assert(SelectedCaliper != null);
+			if (_measureQtcWindow == null)
+			{
+				_measureQtcWindow = new WindowEx();
+			}
+			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
+			//_measureQtcWindow.PersistenceId = "MeanRateIntervalWindowID";
+			var qtcView = new QtcView();
+			//{
+			//	Window = _measureQtcWindow
+			//};
+			_measureQtcWindow.Content = qtcView;
+			_measureQtcWindow.Closed += OnClosed;
+			_measureQtcWindow.Show();
 		}
 
 		public void ShowColorDialog(Point point)
@@ -675,15 +712,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_colorWindow = new WindowEx();
 			}
-			_colorWindow.Height = 550;
-			_colorWindow.Width = 400;
-			_colorWindow.MinHeight = 550;
-			_colorWindow.MinWidth = 400;
-			_colorWindow.SetIsAlwaysOnTop(true);
-			_colorWindow.CenterOnScreen();
-			_colorWindow.Title = "ColorWindowTitle".GetLocalized();
+			SetupFloatingWindow(_colorWindow, 400, 550, "ColorWindowTitle".GetLocalized());
 			_colorWindow.PersistenceId = "ColorWindowID";
-			_colorWindow.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
 			var colorView = new ColorView(caliper)
 			{
 				Window = _colorWindow

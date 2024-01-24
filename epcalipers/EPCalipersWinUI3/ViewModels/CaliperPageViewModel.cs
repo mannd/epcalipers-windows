@@ -144,6 +144,12 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
+		private async Task MeasureQtc()
+		{
+			await _caliperCollection.MeasureQtc();
+		}
+
+		[RelayCommand]
 		private static void ShowSettings() => AppHelper.Navigate(typeof(SettingsPage));
 
 		[RelayCommand]

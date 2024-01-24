@@ -356,7 +356,8 @@
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"
+                          Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <AppBarButton.KeyboardAccelerators>
