@@ -649,7 +649,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_meanRateIntervalWindow = new WindowEx();
 			}
-			SetupFloatingWindow(_meanRateIntervalWindow, 400, 300, "Mean interval and rate");
+			SetupFloatingWindow(_meanRateIntervalWindow, 400, 400, "Mean interval and rate");
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
 			var meanRateIntervalView = new MeanRateIntervalView(caliper)
 			{

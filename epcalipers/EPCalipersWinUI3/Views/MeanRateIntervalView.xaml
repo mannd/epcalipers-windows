@@ -10,24 +10,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     KeyUp="Page_KeyUp" >
 
-    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock x:Name="Instructions" Margin="10">Enter number of intervals being averaged</TextBlock>
-        <TextBlock x:Name="TotalInterval" Text="{x:Bind ViewModel.TotalInterval, Mode=TwoWay}"/>
-        <NumberBox x:Name="NumberOfIntervalsBox" Margin="10"
+    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">Mean rate/interval</TextBlock>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
+        <TextBlock x:Name="Instructions">Number of intervals</TextBlock>
+        <NumberBox x:Name="NumberOfIntervalsBox" Header="Number"
             Value="{x:Bind ViewModel.NumberOfIntervals, Mode=TwoWay}"
             SpinButtonPlacementMode="Inline"
             Minimum="1"
             Maximum="10" />
+        <TextBlock x:Name="TotalInterval" Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,5,0,0">Results</TextBlock>
+        <TextBlock x:Name="MeanInterval" Text="{x:Bind ViewModel.MeanInterval, Mode=OneWay}"/>
+        <TextBlock x:Name="MeanRate" Text="{x:Bind ViewModel.MeanRate, Mode=OneWay}"/>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
-                    Click="MeanRateIntervalViewMeasure_Click" 
-                   Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
-                    HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
+                    HorizontalAlignment="Right" x:Uid="ButtonDone" />
         </Grid>
     </StackPanel>
 </Page>

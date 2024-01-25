@@ -121,6 +121,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					bar.IsSelected = value;
 				}
 				CaliperLabel.IsSelected = value;
+				OnPropertyChanged(nameof(IsSelected));
 			}
 		}
 		private bool _isSelected = false;
