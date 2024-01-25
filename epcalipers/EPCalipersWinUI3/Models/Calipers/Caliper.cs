@@ -2,7 +2,9 @@
 using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Windows.Foundation;
 using Windows.UI;
 using Xunit;
@@ -43,7 +45,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// <param name="Last"></param>
 	public readonly record struct CaliperPosition(double Center, double First, double Last);
 	public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
-	public abstract class Caliper
+	public abstract class Caliper: INotifyPropertyChanged
 	{
 		private const double _defaultCaliperValue = 200;
 		private static readonly int _maxNumberIntervals = 10;
@@ -58,7 +60,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperView = caliperView;
 			Calibration = calibration ?? Calibration.Uncalibrated;
 		}
-
 		public CaliperType CaliperType { get; init; }
 
 		public bool ShowRate { get; set; } = false;
@@ -123,6 +124,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 		private bool _isSelected = false;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
 		public virtual Bar GetSelectedBar
 		{
@@ -279,7 +287,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void UpdateLabel()
 		{
 			CaliperLabel.Text = Text;
+			LabelText = Text;
 			CaliperLabel.SetPosition();
+		}
+
+		private string _labelText;
+		public string LabelText
+		{
+			get
+			{
+				return _labelText;
+			}
+			set
+			{
+				_labelText = value;
+				OnPropertyChanged(nameof(LabelText));	
+			}
 		}
 
 		public static double MeanInterval(double interval, int number)

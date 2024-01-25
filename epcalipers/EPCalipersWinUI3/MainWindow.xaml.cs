@@ -35,9 +35,11 @@ namespace EPCalipersWinUI3
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
-			AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
-            MainFrame.Navigate(typeof(Views.MainPage));
+			//AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
+			AppTitleTextBlock.Text = GetAppTitleFromSystem();
 			PersistenceId = "EPCalipersMainWindowID";
+            MainFrame.Navigate(typeof(Views.MainPage));
+			MainFrame.NavigationFailed += OnNavigationFailed;
 			Activated += MainWindow_Activated;
 			Closed += MainWindow_Closed;
 		}
@@ -56,6 +58,11 @@ namespace EPCalipersWinUI3
 		{
 			get => AppTitleTextBlock.Text;
 			set => AppTitleTextBlock.Text = value;
+		}
+
+		public string GetAppTitleFromSystem()
+		{
+			return Windows.ApplicationModel.Package.Current.DisplayName;
 		}
 
 		public void Navigate(System.Type type)
@@ -82,6 +89,11 @@ namespace EPCalipersWinUI3
 				AppTitleTextBlock.Foreground =
 					(SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
 			}
+		}
+
+		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+		{
+			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
 	}
 }

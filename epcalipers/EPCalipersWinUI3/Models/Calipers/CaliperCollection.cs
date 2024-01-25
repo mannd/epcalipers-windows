@@ -1,8 +1,10 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Views;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -664,11 +666,31 @@ namespace EPCalipersWinUI3.Models.Calipers
 			window.Width = window.MinWidth = width;
 			window.SetIsAlwaysOnTop(true);
 			window.CenterOnScreen();
+			window.ExtendsContentIntoTitleBar = true;
 			// TODO: need to do more work if we want the titlebar to show title and icon, otherwise we
 			// just have a blank title bar
-			window.ExtendsContentIntoTitleBar = true;
-			window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-			window.Title = title;	
+			// NOTE the titlebar api only seems to work for the main window of the app, so below doesn't work.
+			//Grid titleBar = new Grid()
+			//{
+			//	Height = 32,
+			//	Background = new SolidColorBrush(Colors.CornflowerBlue),
+			//	HorizontalAlignment = HorizontalAlignment.Stretch
+			//};
+
+			//// Add a text block to the title bar element
+			//TextBlock titleText = new TextBlock()
+			//{
+			//	Text = "Custom Title Bar App",
+			//	VerticalAlignment = VerticalAlignment.Center,
+			//	Margin = new Thickness(12, 0, 0, 0),
+			//	Foreground = new SolidColorBrush(Colors.White)
+			//};
+			//titleBar.Children.Add(titleText);
+
+			//// Set the custom title bar element as the draggable region of the window
+			//window.SetTitleBar(titleBar);
+			//window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
+			//window.Title = title;
 		}
 
 		public async Task MeasureQtc()
@@ -695,11 +717,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
 			//_measureQtcWindow.PersistenceId = "MeanRateIntervalWindowID";
-			var qtcView = new QtcView();
-			//{
-			//	Window = _measureQtcWindow
-			//};
-			_measureQtcWindow.Content = qtcView;
+			var qtcView = new QtcView()
+			{
+				Window = _measureQtcWindow
+			};
+			Frame frame = new Frame();
+			//frame.Content = qtcView;
+			frame.Navigate(typeof(QtcView));
+			_measureQtcWindow.Content = frame;
 			_measureQtcWindow.Closed += OnClosed;
 			_measureQtcWindow.Show();
 		}

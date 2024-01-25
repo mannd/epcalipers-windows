@@ -10,8 +10,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     KeyUp="Page_KeyUp" >
 
-    <RelativePanel Margin="20">
-        <TextBlock x:Name="Instructions" Text="Make sure the selected caliper is set to the interval below." TextWrapping="Wrap" />
+    <RelativePanel Margin="10" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock x:Name="Instructions" Text="Calibrate selected caliper" 
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                   TextWrapping="Wrap" />
         <RadioButtons x:Name="CalibrationRadioButtons" 
                       RelativePanel.Below="Instructions"
                       SelectionChanged="CalibrationRadioButtons_SelectionChanged">

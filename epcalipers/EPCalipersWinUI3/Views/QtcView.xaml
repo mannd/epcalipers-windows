@@ -11,10 +11,12 @@
 
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 1</TextBlock>
-        <Button HorizontalAlignment="Left">Measure RR Interval</Button>
+        <Button HorizontalAlignment="Left" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}">
+            Measure RR Interval</Button>
         <TextBlock></TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 2</TextBlock>
-        <Button>Measure QT Interval</Button>
+        <Button Command="{x:Bind ViewModel.MeasureQTIntervalCommand}">
+            Measure QT Interval</Button>
         <TextBlock></TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 3</TextBlock>
         <ComboBox Header="QTc Formula" SelectedIndex="0">
@@ -27,8 +29,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
+                    Click="QtcView_Calculate"
                    Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
-            <Button Grid.Column="1" Margin="2,12,0,0" 
+            <Button Grid.Column="1" Margin="2,12,0,0" Click="QtcView_Cancel"
                     HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
         </Grid>
     </StackPanel>
