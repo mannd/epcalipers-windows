@@ -53,10 +53,10 @@ namespace EPCalipersWinUI3.ViewModels
 			// If the original selected caliper is deleted, the new caliper is not the in selected, and it doesn't send 
 			// notifications.
 			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged) 
-				|| e.PropertyName == nameof(_caliperCollection.SelectedCaliper.IsSelected))
+				|| e.PropertyName == nameof(_caliperCollection.PartiallyOrFullySelectedCaliper.IsSelected))
 			{
 				Debug.Print("ISSELECTED change");
-				_caliper = _caliperCollection.SelectedCaliper;
+				_caliper = _caliperCollection.PartiallyOrFullySelectedCaliper;
 				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged; 
 				TotalInterval = GetTotalInterval();
 				MeanInterval = GetMeanInterval();
@@ -66,7 +66,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private bool IsValidCaliper()
 		{
-			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.IsSelected;
+			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration != Calibration.Uncalibrated ;
 			// or caliper is partially selected...
 		}
 

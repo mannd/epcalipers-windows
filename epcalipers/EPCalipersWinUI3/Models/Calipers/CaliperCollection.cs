@@ -23,7 +23,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// <summary>
 	/// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
 	/// </summary>
-	public class CaliperCollection: INotifyPropertyChanged
+	public class CaliperCollection : INotifyPropertyChanged
 	{
 		private static readonly int _maxNumberIntervals = 10;
 		private static readonly double _delta = 1.0;
@@ -79,7 +79,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public AngleCalibration AngleCalibration { get; set; } = AngleCalibration.Uncalibrated;
 
 		// A calibrated time caliper can show interval or rate.
-		public bool ShowRate { get; set; } = false; 
+		public bool ShowRate { get; set; } = false;
 
 		public Caliper SelectedCaliper
 		{
@@ -109,6 +109,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 					}
 				}
 				return (null, null);
+			}
+		}
+
+		public Caliper PartiallyOrFullySelectedCaliper
+		{
+			get 
+			{ 
+				if (SelectedCaliper != null) return SelectedCaliper;
+				if (SelectedBarAndPartiallySelectedCaliper.Item2 != null)
+					return SelectedBarAndPartiallySelectedCaliper.Item2;
+				return null;
 			}
 		}
 
@@ -434,6 +445,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 						{
 							caliper.IsSelected = false;
 							bar.IsSelected = true;  // change to just bar selected
+							CaliperSelectionChanged = true;
 						}
 						else
 						{
@@ -444,6 +456,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					{
 						caliper.IsSelected= false;  // make sure you can't select multiple bars
 						bar.IsSelected = true;  // caliper wasn't selected, so just select the bar
+						CaliperSelectionChanged = true;
 					}
 					UnselectCalipersExcept(caliper);  // make sure other calipers are unselected
 				}
@@ -649,7 +662,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task MeanRateInterval()
 		{
-			if (SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time)
+			if (PartiallyOrFullySelectedCaliper == null || PartiallyOrFullySelectedCaliper.CaliperType != CaliperType.Time
+				|| PartiallyOrFullySelectedCaliper.Calibration == Calibration.Uncalibrated)
 			{
 				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
 					"HowToMeasureMeanIntervalMessage".GetLocalized());
@@ -657,7 +671,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			else
 			{
 				// show dialog, get number of interval
-				ShowMeanRateIntervalDialog(SelectedCaliper);
+				ShowMeanRateIntervalDialog(PartiallyOrFullySelectedCaliper);
 				//var numberIntervals = 5;
 				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
@@ -665,7 +679,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			
 		public void ShowMeanRateIntervalDialog(Caliper caliper)
 		{
-			Debug.Assert(SelectedCaliper != null);
+			Debug.Assert(PartiallyOrFullySelectedCaliper != null);
 			if (_meanRateIntervalWindow == null)
 			{
 				_meanRateIntervalWindow = new WindowEx();
