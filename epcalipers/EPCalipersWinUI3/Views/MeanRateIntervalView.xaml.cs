@@ -20,10 +20,10 @@ namespace EPCalipersWinUI3.Views
 
         public MeanRateIntervalViewModel ViewModel { get; set; }
 
-        public MeanRateIntervalView(Caliper caliper)
+        public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
         {
             InitializeComponent();
-            ViewModel = new MeanRateIntervalViewModel(caliper);
+            ViewModel = new MeanRateIntervalViewModel(caliper, caliperCollection);
         }
 
         private void MeanRateIntervalViewCancel_Click(object sender, RoutedEventArgs e)

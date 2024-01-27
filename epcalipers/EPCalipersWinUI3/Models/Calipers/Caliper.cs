@@ -121,6 +121,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					bar.IsSelected = value;
 				}
 				CaliperLabel.IsSelected = value;
+				Debug.Print("caliper is selected set...");
 				OnPropertyChanged(nameof(IsSelected));
 			}
 		}
@@ -205,6 +206,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual void Remove(ICaliperView caliperView)
 		{
+			IsSelected = false;
 			if (caliperView == null) return;
 			foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
 			CaliperLabel?.RemoveFromView(caliperView);

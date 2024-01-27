@@ -7,6 +7,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// <summary>
 	/// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
 	/// </summary>
-	public class CaliperCollection
+	public class CaliperCollection: INotifyPropertyChanged
 	{
 		private static readonly int _maxNumberIntervals = 10;
 		private static readonly double _delta = 1.0;
@@ -47,6 +49,23 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private Caliper _grabbedCaliper;
 		private Bar _grabbedBar;
 		private Point _startingDragPoint;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public bool CaliperSelectionChanged
+		{
+			get => _caliperSelectionChanged;
+			set
+			{
+				_caliperSelectionChanged = value;
+				OnPropertyChanged(nameof(CaliperSelectionChanged));
+			}
+		}
+		private bool _caliperSelectionChanged;
 
 		private async Task ShowMessage(string title, string message)
 		{
@@ -109,6 +128,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Calibration.DefaultUnit = defaultUnit;
 			Calibration.DefaultBpm = defaultBpm;
 		}
+
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
@@ -391,6 +411,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					else
 					{
 						caliper.IsSelected = true;
+						CaliperSelectionChanged = true;
 					}
 					UnselectCalipersExcept(caliper);
 				}
@@ -651,7 +672,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_meanRateIntervalWindow, 400, 400, "Mean interval and rate");
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
-			var meanRateIntervalView = new MeanRateIntervalView(caliper)
+			var meanRateIntervalView = new MeanRateIntervalView(caliper, this)
 			{
 				Window = _meanRateIntervalWindow
 			};

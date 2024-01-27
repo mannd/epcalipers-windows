@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -18,12 +19,15 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		public int Interval { get; set; }
 		private Caliper _caliper;
+		private CaliperCollection _caliperCollection;
 
-		public MeanRateIntervalViewModel(Caliper caliper)
+		public MeanRateIntervalViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			_caliper = caliper;
-			_caliper.PropertyChanged += OnMyPropertyChanged;
-			this.PropertyChanged += OnMyPropertyChanged;
+			_caliperCollection = caliperCollection;
+			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
+			if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
+			PropertyChanged += OnMyPropertyChanged;
 			NumberOfIntervals = 3;
 			TotalInterval = GetTotalInterval();
 			MeanInterval = GetMeanInterval();
@@ -39,27 +43,48 @@ namespace EPCalipersWinUI3.ViewModels
 		// time calipers are calibrated.  Need to deal with calibration being cleared too.  
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
+			// TODO: Needs to work for partially selected calipers too!
 			if (e.PropertyName == nameof(_caliper.LabelText) || e.PropertyName == nameof(NumberOfIntervals)) {
+				TotalInterval = GetTotalInterval();
+				MeanInterval = GetMeanInterval();
+				MeanRate = GetMeanRate();
+			}
+			// TODO: stops working when there are zero calipers, and then one is added
+			// If the original selected caliper is deleted, the new caliper is not the in selected, and it doesn't send 
+			// notifications.
+			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged) 
+				|| e.PropertyName == nameof(_caliperCollection.SelectedCaliper.IsSelected))
+			{
+				Debug.Print("ISSELECTED change");
+				_caliper = _caliperCollection.SelectedCaliper;
+				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged; 
 				TotalInterval = GetTotalInterval();
 				MeanInterval = GetMeanInterval();
 				MeanRate = GetMeanRate();
 			}
 		}
 
+		private bool IsValidCaliper()
+		{
+			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.IsSelected;
+			// or caliper is partially selected...
+		}
+
 		private string GetTotalInterval()
 		{
-			var interval = _caliper.LabelText;
-			return $"Total interval = {interval} ";
+			var interval = _caliper?.LabelText;
+			return IsValidCaliper() ? $"Total interval = {interval} " : "Invalid caliper";
 		}
 		private string GetMeanInterval()
 		{
-			var interval = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
-			return $"Mean interval = {interval.Item1} {interval.Item2} ";
+			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
+			return IsValidCaliper() ? $"Mean interval = {interval?.Item1} {interval?.Item2} " : "Invalid caliper";
 		}
 		private string GetMeanRate()
 		{
-			var interval = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
-			return $"Mean rate = {interval.Item1} {interval.Item2} ";
+			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
+			return IsValidCaliper() ? $"Mean rate = {interval?.Item1} {interval?.Item2} " : "Invalid caliper";
+
 		}
 
 		[RelayCommand]

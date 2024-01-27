@@ -10,11 +10,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     KeyUp="Page_KeyUp" >
 
-    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Top">
+    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">Mean rate/interval</TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
-        <TextBlock x:Name="Instructions">Number of intervals</TextBlock>
-        <NumberBox x:Name="NumberOfIntervalsBox" Header="Number"
+        <NumberBox x:Name="NumberOfIntervalsBox" Header="Number of Intervals"
             Value="{x:Bind ViewModel.NumberOfIntervals, Mode=TwoWay}"
             SpinButtonPlacementMode="Inline"
             Minimum="1"
