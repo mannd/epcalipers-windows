@@ -96,13 +96,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public Caliper NewSelectedCaliper {  get; set; }
+
 		public (Bar, Caliper) SelectedBarAndPartiallySelectedCaliper
 		{
 			get
 			{
 				foreach (var caliper in _calipers)
 				{
-					var bar = caliper.GetSelectedBar;
+					var bar = caliper.GetSelectedBar;  // Note GetSelectedBar excludes fully selected calipers.
 					if (bar != null)
 					{
 						return (bar, caliper);
@@ -124,6 +126,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 
 		public CaliperType SelectedCaliperType => SelectedCaliper?.CaliperType ?? CaliperType.None;
+		public CaliperType NewSelectedCaliperType => NewSelectedCaliper?.CaliperType ?? CaliperType.None;
 
 		/// <summary>
 		/// If the caliper collection is locked, then calipers can not be added, deleted, selected or
@@ -220,7 +223,29 @@ namespace EPCalipersWinUI3.Models.Calipers
 				}
 				else
 				{
-					//caliper.Drag(bar, delta, new Point(0, 0));
+					caliper.Drag(bar, delta, caliper.Position);
+				}
+			}
+		}
+		private void NewMove(Point delta)
+		{
+			if (NewSelectedCaliper == null) return;
+			Caliper caliper = NewSelectedCaliper;
+			Bar bar = caliper.NewSelectedBar;
+			if (bar != null)
+			{
+				if (caliper.CaliperType == CaliperType.Angle && (bar.BarRole == Bar.Role.LeftAngle || bar.BarRole == Bar.Role.RightAngle))
+				{
+					AngleCaliper angleCaliper = caliper as AngleCaliper;
+					double distance = -delta.X / 2.0;  // gives more fine grained angle caliper movement
+					bar.Angle += MathHelper.DegreesToRadians(distance);
+					bar.SetAngleBarPosition(new Point(bar.X1, bar.Y1), bar.Angle);
+					angleCaliper.DrawTriangleBase();
+					angleCaliper.CaliperLabel.Text = angleCaliper.Calibration.GetText(angleCaliper.Value);
+					angleCaliper.CaliperLabel.SetPosition();
+				}
+				else
+				{
 					caliper.Drag(bar, delta, caliper.Position);
 				}
 			}
@@ -228,41 +253,41 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void MoveLeft()
 		{
-			Move(_leftMovement);
+			NewMove(_leftMovement);
 		}
 
 		public void MoveRight()
 		{
-			Move(_rightMovement);
+			NewMove(_rightMovement);
 		}
 
 		public void MoveUp()
 		{
-			Move(_upMovement);
+			NewMove(_upMovement);
 
 		}
 		public void MoveDown() 
 		{
-			Move(_downMovement);
+			NewMove(_downMovement);
 		}
 
 		public void MicroMoveLeft()
 		{
-			Move(_leftMicroMovement);
+			NewMove(_leftMicroMovement);
 		}
 
 		public void MicroMoveRight()
 		{
-			Move(_rightMicroMovement);
+			NewMove(_rightMicroMovement);
 		}
 
 		public void MicroMoveUp()
 		{
-			Move(_upMicroMovement);
+			NewMove(_upMicroMovement);
 		}
 		public void MicroMoveDown() 
 		{
-			Move(_downMicroMovement);
+			NewMove(_downMicroMovement);
 		}
 
 		public void GrabCaliper(Point point)
@@ -405,6 +430,80 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			return GetCaliperAndBarAt(point).Item1 ?? null;
 		}
+
+// New stuff
+
+		public void NewToggleCaliperSelection(Point point)
+		{
+			if (IsLocked) return;
+			bool caliperToggled = false;
+			foreach (var caliper in _calipers)
+			{
+				if (caliper.IsNearBar(point) != null && !caliperToggled)
+				{
+					caliperToggled = true;
+					if (caliper.NewIsSelected)
+					{
+						caliper.UnselectFullCaliper();
+						NewSelectedCaliper = null;
+					}
+					else
+					{
+						caliper.SelectFullCaliper();
+						NewSelectedCaliper = caliper;
+						CaliperSelectionChanged = true;
+					}
+					NewUnselectCalipersExcept(caliper);
+				}
+			}
+		}
+
+		public void NewToggleComponentSelection(Point point)
+		{
+			if (IsLocked) return;
+			bool caliperToggled = false;
+			foreach (var caliper in _calipers)
+			{
+				var bar = caliper.IsNearBar(point);
+				if (bar != null && !caliperToggled)
+				{
+					caliperToggled = true; // process stopped after caliper found.
+					if (bar.IsSelected)
+					{
+						if (caliper.Selection == CaliperSelection.Full) // go from full to partial selection
+						{
+							caliper.SelectPartialCaliper(bar);
+							NewSelectedCaliper = caliper;
+						}
+						else // toggle off partial selection
+						{
+							caliper.UnselectFullCaliper();
+							NewSelectedCaliper = null;
+						}
+					}
+					else // toggle on partial selection
+					{
+						caliper.SelectPartialCaliper(bar);
+						NewSelectedCaliper = caliper;
+					}
+					NewUnselectCalipersExcept(caliper);  // make sure other calipers are unselected
+					CaliperSelectionChanged = true;
+				}
+			}
+		}
+
+		private void NewUnselectCalipersExcept(Caliper c)
+		{
+			foreach (var caliper in _calipers)
+			{
+				if (caliper != c)
+				{
+					caliper.UnselectFullCaliper();
+				}
+			}
+		}
+
+		// old stuff
 
 		public void ToggleCaliperSelection(Point point)
 		{

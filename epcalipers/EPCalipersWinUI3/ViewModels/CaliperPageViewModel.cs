@@ -95,13 +95,13 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void ToggleCaliperSelection(Point point)
 		{
-			_caliperCollection.ToggleCaliperSelection(point);
+			_caliperCollection.NewToggleCaliperSelection(point);
 		}
 
 		[RelayCommand]
 		public void ToggleComponentSelection(Point point)
 		{
-			_caliperCollection.ToggleComponentSelection(point);
+			_caliperCollection.NewToggleComponentSelection(point);
 		}
 
 		public void RemoveAtPoint(Point point)

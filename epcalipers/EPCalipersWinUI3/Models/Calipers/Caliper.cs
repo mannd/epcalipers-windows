@@ -11,10 +11,17 @@ using Xunit;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-    public sealed class NumberOutOfRangeException : Exception
-    {
-        public NumberOutOfRangeException() : base("NumberOutOfRangeException") { }
-    }
+	public sealed class NumberOutOfRangeException : Exception
+	{
+		public NumberOutOfRangeException() : base("NumberOutOfRangeException") { }
+	}
+
+	public enum CaliperSelection
+	{
+		Full,
+		Partial,
+		None
+	}
 
 	public enum CaliperType
 	{
@@ -22,14 +29,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		Amplitude,
 		Angle,
 		None
-	}
-
-	public enum MovementDirection
-	{
-		Left,
-		Right,
-		Up,
-		Down
 	}
 
 	public readonly record struct Bounds(double Width, double Height);
@@ -45,13 +44,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// <param name="Last"></param>
 	public readonly record struct CaliperPosition(double Center, double First, double Last);
 	public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
-	public abstract class Caliper: INotifyPropertyChanged
+	public abstract class Caliper : INotifyPropertyChanged
 	{
 		private const double _defaultCaliperValue = 200;
 		private static readonly int _maxNumberIntervals = 10;
 		protected bool _fakeUI;  // Is true for testing.
 
 		protected Bounds Bounds => CaliperView.Bounds;
+
+		public CaliperSelection Selection { get; set; } = CaliperSelection.None;
 
 		protected ICaliperView CaliperView { get; init; }
 
@@ -121,11 +122,41 @@ namespace EPCalipersWinUI3.Models.Calipers
 					bar.IsSelected = value;
 				}
 				CaliperLabel.IsSelected = value;
-				Debug.Print("caliper is selected set...");
 				OnPropertyChanged(nameof(IsSelected));
 			}
 		}
 		private bool _isSelected = false;
+
+		public virtual bool NewIsSelected => Selection != CaliperSelection.None;
+
+		public virtual void SelectFullCaliper()
+		{
+			foreach (var bar in Bars)
+			{
+				bar.IsSelected = true;
+			}
+			CaliperLabel.IsSelected = true;
+			Selection = CaliperSelection.Full;
+		}
+		public virtual void UnselectFullCaliper()
+		{
+			foreach (var bar in Bars)
+			{
+				bar.IsSelected = false;
+			}
+			CaliperLabel.IsSelected = false;
+			Selection = CaliperSelection.None;
+		}
+
+		public virtual void SelectPartialCaliper(Bar bar)
+		{
+			foreach (var b in Bars)
+			{
+				b.IsSelected = false;
+			}
+			bar.IsSelected = true;
+			Selection = CaliperSelection.Partial;
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -147,10 +178,40 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		/// <summary>
-		/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
-		/// </summary>
-		public abstract Bar HandleBar { get; }
+		public Bar NewSelectedBar
+		{
+			get
+			{
+				switch (Selection)
+				{
+					case CaliperSelection.None:
+						return null;
+					case CaliperSelection.Full:
+						return HandleBar;
+					case CaliperSelection.Partial:
+						return GetFirstSelectedBar();
+					default:
+						return null;
+				}
+			}
+		}
+
+		private Bar GetFirstSelectedBar()
+		{
+			foreach (var bar in Bars)
+			{
+				if (bar.IsSelected) return bar;
+			}
+			return null;
+		}
+
+
+
+
+/// <summary>
+/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
+/// </summary>
+public abstract Bar HandleBar { get; }
 
 		/// <summary>
 		/// The Position of a Caliper is the midpoint of the HandleBar.
@@ -158,7 +219,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Point Position => HandleBar.MidPoint;
 
 		public Calibration Calibration { get; set; }
-		//public Calibration SecondaryCalibration { get; set; } = Calibration.Uncalibrated;
 
 		public virtual string Text => Calibration.GetText(Value, ShowRate);
 
