@@ -13,7 +13,7 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class TransparentPage : Page
 	{
 		TransparentPageViewModel ViewModel { get; set; }
-		private Point _rightClickPosition; 
+		private Point _rightClickPosition;
 
 		public TransparentPage()
 		{
@@ -63,10 +63,11 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(this.TransparentCaliperView);
-				if (position.Position.X < TransparentCaliperView.ActualWidth 
+				if (position.Position.X < TransparentCaliperView.ActualWidth
 					&& position.Position.Y < TransparentCaliperView.ActualHeight
 					&& position.Position.Y > 0
-					&& position.Position.X > 0) {
+					&& position.Position.X > 0)
+				{
 					ViewModel.DragCaliperComponent(position.Position);
 				}
 			}

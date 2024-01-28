@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Windows.Foundation;
 using Windows.UI;
-using Xunit;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -367,7 +365,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			set
 			{
 				_labelText = value;
-				OnPropertyChanged(nameof(LabelText));	
+				OnPropertyChanged(nameof(LabelText));
 			}
 		}
 

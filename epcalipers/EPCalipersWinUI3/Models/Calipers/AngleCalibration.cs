@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EPCalipersWinUI3.Models.Calipers
+﻿namespace EPCalipersWinUI3.Models.Calipers
 {
 	public sealed class AngleCalibration : Calibration
 	{

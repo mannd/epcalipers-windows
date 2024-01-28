@@ -2,25 +2,20 @@
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Core;
 
 namespace EPCalipersWinUI3.Models
 {
-		public enum Rounding
-		{
-			ToInt,
-			ToFourPlaces,
-			ToTenths,
-			ToHundredths,
-			None
-		}
-    public sealed class Settings: ISettings
+	public enum Rounding
+	{
+		ToInt,
+		ToFourPlaces,
+		ToTenths,
+		ToHundredths,
+		None
+	}
+	public sealed class Settings : ISettings
 	{
 		private readonly ApplicationDataContainer _localSettings;
 		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
@@ -31,7 +26,7 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _barThicknessKey = "BarThicknessKey";
 		private readonly string _roundingKey = "RoundingKey";
 		private readonly string _showBrugadaTriangle = "ShowBrugadaTriangle";
-		
+
 		private Settings()
 		{
 			_localSettings = ApplicationData.Current.LocalSettings;
@@ -69,7 +64,7 @@ namespace EPCalipersWinUI3.Models
 				var value = (int)(_localSettings.Values[_timeCaliperLabelAlignmentKey] ?? 0);
 				var alignment = (CaliperLabelAlignment)value;
 				return alignment;
-			} 
+			}
 			set => _localSettings.Values[_timeCaliperLabelAlignmentKey] = (int)value;
 		}
 		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment
@@ -132,8 +127,8 @@ namespace EPCalipersWinUI3.Models
 	{
 		public double BarThickness { get; set; } = 2.0;
 		public bool AutoAlignLabel { get; set; } = false;
-		public CaliperLabelAlignment TimeCaliperLabelAlignment {  get; set; } = CaliperLabelAlignment.Left;
-		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set;} = CaliperLabelAlignment.Left;
+		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
+		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
 		public Color UnselectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Rounding Rounding { get; set; } = Rounding.None;

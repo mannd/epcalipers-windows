@@ -1,5 +1,5 @@
-﻿using Xunit;
-using EPCalipersWinUI3.Models.Calipers;
+﻿using EPCalipersWinUI3.Models.Calipers;
+using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {

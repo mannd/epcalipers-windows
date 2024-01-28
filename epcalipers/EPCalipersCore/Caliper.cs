@@ -1,6 +1,5 @@
 ﻿using EPCalipersCore.Properties;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -91,7 +90,7 @@ namespace EPCalipersCore
 			switch (ChosenComponent)
 			{
 				case CaliperComponent.LeftBar:
-					case CaliperComponent.UpperBar:
+				case CaliperComponent.UpperBar:
 					chosenComponentLine = bar1Line;
 					break;
 				case CaliperComponent.RightBar:

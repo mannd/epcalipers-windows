@@ -1,11 +1,6 @@
 ﻿using EPCalipersWinUI3.Models.Calipers;
-using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Point = Windows.Foundation.Point;
 
 namespace EPCalipersWinUI3.Helpers

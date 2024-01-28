@@ -19,8 +19,8 @@ namespace EPCalipersWinUI3.Views
 			ViewModel = new SettingsViewModel();
 			AppHelper.SaveTitleBarText();
 			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
-		
-			
+
+
 		}
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -47,11 +47,11 @@ namespace EPCalipersWinUI3.Views
 		private void UnselectedColorButton_Click(object sender, RoutedEventArgs e)
 		{
 			unselectedColorPickerButton.Flyout.Hide();
-        }
+		}
 		private void SelectedColorButton_Click(object sender, RoutedEventArgs e)
 		{
 			selectedColorPickerButton.Flyout.Hide();
-        }
+		}
 
 		private void Rounding_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -61,6 +61,6 @@ namespace EPCalipersWinUI3.Views
 				ViewModel.Rounding = selection;
 			}
 
-        }
-    }
+		}
+	}
 }

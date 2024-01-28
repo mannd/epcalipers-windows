@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EPCalipersWinUI3.Models;
+﻿using EPCalipersWinUI3.Models;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
@@ -12,7 +7,7 @@ namespace EPCalipersWinUi3Tests.Tests
 	{
 		private AppInfo appInfo;
 
-		public AppInfoModelTests() 
+		public AppInfoModelTests()
 		{
 			appInfo = new AppInfo();
 		}

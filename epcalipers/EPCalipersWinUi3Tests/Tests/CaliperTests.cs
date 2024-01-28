@@ -1,7 +1,6 @@
 ﻿using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
-using Windows.Foundation;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
@@ -14,7 +13,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubSettings = new FakeSettings();
 			var calibration = new Calibration();
 			calibration.Rounding = Rounding.ToHundredths;
-			var timeCaliper = new TimeCaliper(new CaliperPosition(50, 50, 200), 
+			var timeCaliper = new TimeCaliper(new CaliperPosition(50, 50, 200),
 				stubCaliperView, stubSettings, true, calibration);
 			return timeCaliper;
 		}
@@ -24,7 +23,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubSettings = new FakeSettings();
 			var calibration = new Calibration();
 			calibration.Rounding = Rounding.ToHundredths;
-			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(50, 50, 200), 
+			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(50, 50, 200),
 				stubCaliperView, stubSettings, true, calibration);
 			return amplitudeCaliper;
 		}

@@ -1,18 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Models.Calipers;
-using EPCalipersWinUI3.Views;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class QtcViewModel
 	{
-		public Caliper caliper {  get; set; }
+		public Caliper caliper { get; set; }
 
 		[RelayCommand]
 		private void MeasureRRInterval()

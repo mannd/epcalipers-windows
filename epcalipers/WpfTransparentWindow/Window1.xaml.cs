@@ -2,7 +2,6 @@
 using EPCalipersCore.Properties;
 using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,7 +43,7 @@ namespace WpfTransparentWindow
 		#endregion
 		#region Window
 		public Window1()
-		
+
 		{
 			InitializeComponent();
 			CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,

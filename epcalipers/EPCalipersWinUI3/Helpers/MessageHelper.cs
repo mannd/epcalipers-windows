@@ -1,14 +1,4 @@
-﻿using EPCalipersWinUI3.Models.Calipers;
-using EPCalipersWinUI3.Views;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.WebUI;
-using WinUIEx;
-using EPCalipersWinUI3;
+﻿using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Helpers

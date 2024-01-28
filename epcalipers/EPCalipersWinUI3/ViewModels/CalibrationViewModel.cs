@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
-using EPCalipersWinUI3.Models;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -13,7 +11,7 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class CalibrationViewModel : ObservableObject
 	{
-		public static readonly IDictionary<CalibrationUnit, string> CalibrationStrings = 
+		public static readonly IDictionary<CalibrationUnit, string> CalibrationStrings =
 			new Dictionary<CalibrationUnit, string>()
 			{
 				{CalibrationUnit.Msec, "msec".GetLocalized() },
@@ -164,7 +162,8 @@ namespace EPCalipersWinUI3.ViewModels
 					Unit = unit
 				};
 			}
-			return new CalibrationParameters {
+			return new CalibrationParameters
+			{
 				CalibrationInterval = input.CalibrationValue,
 				Unit = input.Unit,
 				UnitString = CalibrationStrings[input.Unit]

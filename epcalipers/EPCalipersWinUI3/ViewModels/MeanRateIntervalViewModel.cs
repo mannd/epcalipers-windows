@@ -3,14 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
@@ -44,7 +39,8 @@ namespace EPCalipersWinUI3.ViewModels
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			// TODO: Needs to work for partially selected calipers too!
-			if (e.PropertyName == nameof(_caliper.LabelText) || e.PropertyName == nameof(NumberOfIntervals)) {
+			if (e.PropertyName == nameof(_caliper.LabelText) || e.PropertyName == nameof(NumberOfIntervals))
+			{
 				TotalInterval = GetTotalInterval();
 				MeanInterval = GetMeanInterval();
 				MeanRate = GetMeanRate();
@@ -52,12 +48,12 @@ namespace EPCalipersWinUI3.ViewModels
 			// TODO: stops working when there are zero calipers, and then one is added
 			// If the original selected caliper is deleted, the new caliper is not the in selected, and it doesn't send 
 			// notifications.
-			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged) 
+			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged)
 				|| e.PropertyName == nameof(_caliperCollection.PartiallyOrFullySelectedCaliper.IsSelected))
 			{
 				Debug.Print("ISSELECTED change");
 				_caliper = _caliperCollection.PartiallyOrFullySelectedCaliper;
-				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged; 
+				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
 				TotalInterval = GetTotalInterval();
 				MeanInterval = GetMeanInterval();
 				MeanRate = GetMeanRate();
@@ -66,7 +62,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private bool IsValidCaliper()
 		{
-			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration != Calibration.Uncalibrated ;
+			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration != Calibration.Uncalibrated;
 			// or caliper is partially selected...
 		}
 

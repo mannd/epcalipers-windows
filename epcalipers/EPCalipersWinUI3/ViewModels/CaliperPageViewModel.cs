@@ -128,7 +128,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection.ChangeBounds();
 		}
-		#endregion 
+		#endregion
 
 		#region menu comands
 		[RelayCommand]

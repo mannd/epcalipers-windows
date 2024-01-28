@@ -1,10 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Devices.HumanInterfaceDevice;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -101,9 +97,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override double Value => throw new NotImplementedException();
 
-        public override void ChangeBounds()
-        {
-            var bounds = CaliperView.Bounds;
+		public override void ChangeBounds()
+		{
+			var bounds = CaliperView.Bounds;
 			foreach (var bar in LeftBars)
 			{
 				bar.Y2 = bounds.Height;
@@ -112,7 +108,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				bar.Y2 = bounds.Height;
 			}
-        }
+		}
 
 		public void Move()
 		{

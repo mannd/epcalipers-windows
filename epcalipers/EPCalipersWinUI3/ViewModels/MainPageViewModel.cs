@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3
 		private readonly PdfHelper _pdfHelper;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
-		public SetZoomDelegate SetZoom {  get; set; }
+		public SetZoomDelegate SetZoom { get; set; }
 
 		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
 		// It should only allow reset rotation to be false if image is multipage PDF.
@@ -105,7 +105,7 @@ namespace EPCalipersWinUI3
 		{
 			var mainWindow = AppHelper.AppMainWindow;
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
-            mainWindow.Navigate(typeof(TransparentPage));
+			mainWindow.Navigate(typeof(TransparentPage));
 		}
 		#endregion
 
@@ -114,9 +114,9 @@ namespace EPCalipersWinUI3
 		// Note zoom factors used in Mac OS X version
 		// These are taken from the Apple IKImageView demo
 		private readonly float _zoomInFactor = 1.414214f;
-        private readonly float _zoomOutFactor = 0.7071068f;
-        private readonly static float _maxZoom = 10;
-        private readonly static float _minZoom = 0.1f;
+		private readonly float _zoomOutFactor = 0.7071068f;
+		private readonly static float _maxZoom = 10;
+		private readonly static float _minZoom = 0.1f;
 		private void ZoomView(float multiple)
 		{
 			var zoomTarget = multiple * ZoomFactor;
@@ -148,21 +148,21 @@ namespace EPCalipersWinUI3
 
 		#region pdf
 		[RelayCommand]
-		private async Task NextPdfPage() 
+		private async Task NextPdfPage()
 		{
 			var nextPage = await _pdfHelper.GetNextPage();
 			if (nextPage != null)
 			{
 				MainImageSource = nextPage;
 				UpdatePageNumber();
-					
+
 			}
 			Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
 		}
 
 		[RelayCommand]
-		private async Task PreviousPdfPage() 
-		{ 
+		private async Task PreviousPdfPage()
+		{
 			var previousPage = await _pdfHelper.GetPreviousPage();
 			if (previousPage != null)
 			{
@@ -171,7 +171,7 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-		public async Task GotoPdfPage(int pageNumber) 
+		public async Task GotoPdfPage(int pageNumber)
 		{
 			// Users input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
@@ -185,7 +185,7 @@ namespace EPCalipersWinUI3
 		{
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
-			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(), 
+			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(),
 				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
 			AppHelper.AppTitleBarText = TitleBarName;
 		}

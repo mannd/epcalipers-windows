@@ -1,11 +1,10 @@
 ﻿using EPCalipersWinUI3.Models.Calipers;
-using Microsoft.UI;
 using Windows.Foundation;
 using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-    public class CaliperComponentTests
+	public class CaliperComponentTests
 	{
 
 		private Bar GetFakeComponent(Bar.Role role)

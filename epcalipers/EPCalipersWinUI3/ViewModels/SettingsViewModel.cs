@@ -3,7 +3,6 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using System.ComponentModel;
-using System.Diagnostics;
 using Windows.UI;
 
 namespace EPCalipersWinUI3.ViewModels
@@ -12,7 +11,8 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		private readonly ISettings _model = Settings.Instance;
 
-		public SettingsViewModel() {
+		public SettingsViewModel()
+		{
 			AutoAlignLabel = _model.AutoAlignLabel;
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
 			AmplitudeCaliperLabelAlignment = (int)_model.AmplitudeCaliperLabelAlignment;

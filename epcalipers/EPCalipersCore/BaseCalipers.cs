@@ -465,8 +465,8 @@ namespace EPCalipersCore
 			//if (HorizontalCalibration.Calibrated ||
 			//	VerticalCalibration.Calibrated)
 			//{
-				HorizontalCalibration.CurrentZoom = zoomFactor;
-				VerticalCalibration.CurrentZoom = zoomFactor;
+			HorizontalCalibration.CurrentZoom = zoomFactor;
+			VerticalCalibration.CurrentZoom = zoomFactor;
 			//}
 			return NumberOfCalipers() > 0;
 		}

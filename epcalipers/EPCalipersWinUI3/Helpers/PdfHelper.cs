@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.UI.Xaml.Media.Imaging;
+using PdfiumViewer;
+using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Media.Imaging;
-using PdfiumViewer;
 using Windows.Storage;
-using EPCalipersWinUI3.Models;
-using Microsoft.UI.Xaml.Printing;
 
 namespace EPCalipersWinUI3.Helpers
 {

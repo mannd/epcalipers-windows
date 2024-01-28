@@ -1,6 +1,5 @@
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
-using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -11,36 +10,34 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using WinUIEx;
 
 namespace EPCalipersWinUI3.Views
 {
 	public sealed partial class MainPage : Page
 	{
-        public MainPageViewModel ViewModel { get; set; }
+		public MainPageViewModel ViewModel { get; set; }
 		private Point _rightClickPosition;
 
 		public MainPage()
 		{
 			InitializeComponent();
-            ViewModel = new MainPageViewModel(SetZoom, CaliperView);
+			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
 			// so should be the default.
 			CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
 			CaliperView.VerticalAlignment = VerticalAlignment.Top;
 
-            ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
-            {
+			ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
+			{
 				ViewModel.ZoomFactor = ScrollView.ZoomFactor;
-            });
+			});
 
-            EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
-            {
+			EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
+			{
 				ViewModel.Bounds = CaliperView.Bounds;
 				ViewModel.DeleteAllCalipersCommand.Execute(null);
 
@@ -50,16 +47,17 @@ namespace EPCalipersWinUI3.Views
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
 				}
-				if (ViewModel.ResetRotationWithNewImage) {
+				if (ViewModel.ResetRotationWithNewImage)
+				{
 					RotateImageWithoutAnimation(0);
-				} 
+				}
 				else
 				{
 					var originalRotation = _imageRotation;
 					RotateImageWithoutAnimation(originalRotation);
 				}
-            });
-        }
+			});
+		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
@@ -120,7 +118,7 @@ namespace EPCalipersWinUI3.Views
 		private void MarchingCaliper_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.ToggleMarchingCaliper(_rightClickPosition);
-        }
+		}
 		private void ColorCaliper_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.ShowColorDialog(_rightClickPosition);
@@ -139,10 +137,11 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
-				if (position.Position.X < EcgImage.ActualWidth 
+				if (position.Position.X < EcgImage.ActualWidth
 					&& position.Position.Y < EcgImage.ActualHeight
 					&& position.Position.Y > 0
-					&& position.Position.X > 0) {
+					&& position.Position.X > 0)
+				{
 					ViewModel.DragCaliperComponent(position.Position);
 				}
 			}
@@ -159,10 +158,10 @@ namespace EPCalipersWinUI3.Views
 		/// Delegate method that view model uses to set zoom on scroll view
 		/// </summary>
 		/// <param name="zoom"></param>
-        private void SetZoom(float zoom)
-        {
-            ScrollView?.ChangeView(0, 0, zoom);
-        }
+		private void SetZoom(float zoom)
+		{
+			ScrollView?.ChangeView(0, 0, zoom);
+		}
 		#endregion
 		#region drag and drop
 		private async void EcgImage_Drop(object sender, DragEventArgs e)
@@ -173,24 +172,24 @@ namespace EPCalipersWinUI3.Views
 				if (items.Count > 0)
 				{
 					var storageFile = items[0] as StorageFile;
-                    // check file types first???
-                    await ViewModel.OpenImageFile(storageFile);
-                }
+					// check file types first???
+					await ViewModel.OpenImageFile(storageFile);
+				}
 			}
 		}
 
 		private void EcgImage_DragOver(object sender, DragEventArgs e)
 		{
-            e.AcceptedOperation = DataPackageOperation.Link; 
-            e.Handled = true;
+			e.AcceptedOperation = DataPackageOperation.Link;
+			e.Handled = true;
 		}
 		#endregion
 		#region rotation
 		// Note rotation is handled in the code behind file because it is purely a
 		// manipulation of the view, with no affect on the view model.
 
-        private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
-        private double _imageRotation = 0;
+		private readonly static TimeSpan _rotationDuration = TimeSpan.FromSeconds(0.4);
+		private double _imageRotation = 0;
 		private double _rotatedImageScale = 1.0;
 
 		private void Rotate90R_Click(object sender, RoutedEventArgs e)
@@ -225,26 +224,26 @@ namespace EPCalipersWinUI3.Views
 
 		private void ResetRotation_Click(object sender, RoutedEventArgs e)
 		{
-            RotateImageToAngle(0);
+			RotateImageToAngle(0);
 		}
 
 		private void RotateImageByAngle(double angle)
 		{
 			var originalRotation = _imageRotation;
-			_imageRotation += angle; 
+			_imageRotation += angle;
 			RotateImage(originalRotation, _imageRotation);
 		}
 
-        private void RotateImageToAngle(double angle)
-        {
+		private void RotateImageToAngle(double angle)
+		{
 			var originalRotation = _imageRotation;
-			_imageRotation = angle; 
+			_imageRotation = angle;
 			RotateImage(originalRotation, _imageRotation);
-        }
+		}
 
 		private void RotateImage(double startAngle, double endAngle)
 		{
-            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
+			EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
 			Storyboard storyboard = new()
 			{
 				Duration = new Duration(_rotationDuration)
@@ -287,15 +286,15 @@ namespace EPCalipersWinUI3.Views
 
 		private void RotateImageWithoutAnimation(double angle)
 		{
-			if (EcgImage?.Source  == null) { return; }
+			if (EcgImage?.Source == null) { return; }
 			_imageRotation = angle;
-            EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
-            CompositeTransform rotateTransform = new()
-            {
-                CenterX = EcgImage.Width / 2,
-                CenterY = EcgImage.Height / 2,
+			EcgImage.RenderTransformOrigin = new Point(0.5, 0.5);
+			CompositeTransform rotateTransform = new()
+			{
+				CenterX = EcgImage.Width / 2,
+				CenterY = EcgImage.Height / 2,
 				Rotation = _imageRotation,
-            };
+			};
 			EcgImage.RenderTransform = rotateTransform;
 		}
 		#endregion
@@ -349,5 +348,5 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 
-    }
+	}
 }

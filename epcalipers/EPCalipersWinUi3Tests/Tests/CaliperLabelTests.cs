@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using EPCalipersWinUI3.Views;
-using EPCalipersWinUI3.Models;
+﻿using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Views;
+using Xunit;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
-    public class CaliperLabelTests
+	public class CaliperLabelTests
 	{
 		[Fact]
 		public void TestTimeCaliperAutoAlign()
@@ -39,11 +34,11 @@ namespace EPCalipersWinUi3Tests.Tests
 			autoAlignment = label.AutoAlign(alignment, true);
 			Assert.Equal(CaliperLabelAlignment.Right, autoAlignment);
 			alignment = CaliperLabelAlignment.Right;
-			caliper.LeftBar.Position = 500;  
+			caliper.LeftBar.Position = 500;
 			caliper.RightBar.Position = 600;  // plenty of room all around
 			autoAlignment = label.AutoAlign(alignment, true);
 			Assert.Equal(CaliperLabelAlignment.Right, autoAlignment);
-			caliper.LeftBar.Position = 500;  
+			caliper.LeftBar.Position = 500;
 			caliper.RightBar.Position = 710;  // too close to right side of view
 			autoAlignment = label.AutoAlign(alignment, true);
 			Assert.Equal(CaliperLabelAlignment.Left, autoAlignment);
@@ -71,7 +66,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			caliper.BottomBar.Position = 210;  // make them too close
 			autoAlignment = label.AutoAlign(alignment, true);
 			Assert.Equal(CaliperLabelAlignment.Top, autoAlignment);
-			caliper.TopBar.Position = 50;  
+			caliper.TopBar.Position = 50;
 			caliper.BottomBar.Position = 200;
 			caliper.CrossBar.Position = 50;  // too close to left edge of view
 			autoAlignment = label.AutoAlign(alignment, true);

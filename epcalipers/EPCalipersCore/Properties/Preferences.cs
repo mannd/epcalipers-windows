@@ -154,7 +154,7 @@ namespace EPCalipersCore.Properties
 		public bool RecalibrationOnChangePDFPage
 		{
 			get { return recalibrateOnChangePDFPage; }
-			set { recalibrateOnChangePDFPage = value;  }
+			set { recalibrateOnChangePDFPage = value; }
 		}
 
 		[Browsable(true),

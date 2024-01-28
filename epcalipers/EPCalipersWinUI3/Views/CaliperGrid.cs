@@ -4,21 +4,14 @@ using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Appointments.AppointmentsProvider;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Views
 {
-    public partial class CaliperGrid : Grid, ICaliperView
+	public partial class CaliperGrid : Grid, ICaliperView
 	{
 		public InputCursor InputCursor
 		{

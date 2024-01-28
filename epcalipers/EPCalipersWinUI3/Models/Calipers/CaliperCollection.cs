@@ -1,16 +1,12 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Views;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -96,7 +92,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public Caliper NewSelectedCaliper {  get; set; }
+		public Caliper NewSelectedCaliper { get; set; }
 
 		public (Bar, Caliper) SelectedBarAndPartiallySelectedCaliper
 		{
@@ -116,8 +112,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public Caliper PartiallyOrFullySelectedCaliper
 		{
-			get 
-			{ 
+			get
+			{
 				if (SelectedCaliper != null) return SelectedCaliper;
 				if (SelectedBarAndPartiallySelectedCaliper.Item2 != null)
 					return SelectedBarAndPartiallySelectedCaliper.Item2;
@@ -266,7 +262,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			NewMove(_upMovement);
 
 		}
-		public void MoveDown() 
+		public void MoveDown()
 		{
 			NewMove(_downMovement);
 		}
@@ -285,7 +281,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			NewMove(_upMicroMovement);
 		}
-		public void MicroMoveDown() 
+		public void MicroMoveDown()
 		{
 			NewMove(_downMicroMovement);
 		}
@@ -415,13 +411,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			// TODO: may need to handle Esc for measurements differently.
 			if (IsLocked) return;
-            foreach (var caliper in _calipers)
+			foreach (var caliper in _calipers)
 			{
 				caliper.IsSelected = false;
 				caliper.UnselectFullCaliper();
 				NewSelectedCaliper = null;
 			}
-        }
+		}
 
 		public (Caliper, Bar) GetCaliperAndBarAt(Point point)
 		{
@@ -436,7 +432,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return GetCaliperAndBarAt(point).Item1 ?? null;
 		}
 
-// New stuff
+		// New stuff
 
 		public void NewToggleCaliperSelection(Point point)
 		{
@@ -558,7 +554,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					}
 					else
 					{
-						caliper.IsSelected= false;  // make sure you can't select multiple bars
+						caliper.IsSelected = false;  // make sure you can't select multiple bars
 						bar.IsSelected = true;  // caliper wasn't selected, so just select the bar
 						CaliperSelectionChanged = true;
 					}
@@ -618,7 +614,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void SelectSoleTimeOrAmplitudeCaliper()
 		{
 			if (_calipers.Count == 1)
-			{ 
+			{
 				if (_calipers.First().CaliperType == CaliperType.Angle)
 				{
 					return;  // Don't bother with angle calipers
@@ -656,7 +652,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				case CaliperType.Time:
 					title = "Time caliper calibration";
-					break; 
+					break;
 				case CaliperType.Amplitude:
 					title = "Amplitude caliper calibration";
 					break;
@@ -778,7 +774,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
 		}
-			
+
 		public void ShowMeanRateIntervalDialog(Caliper caliper)
 		{
 			Debug.Assert(PartiallyOrFullySelectedCaliper != null);

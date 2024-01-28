@@ -38,28 +38,37 @@ namespace EPCalipersCore
 			}
 		}
 
-		public float Bar1Position { 
-			get {
+		public float Bar1Position
+		{
+			get
+			{
 				return _bar1Position * (float)CurrentCalibration.CurrentZoom;
-			} 
-			set { 
-				_bar1Position = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+			set
+			{
+				_bar1Position = value / (float)CurrentCalibration.CurrentZoom;
 			}
 		}
-		public float Bar2Position { 
-			get {
+		public float Bar2Position
+		{
+			get
+			{
 				return _bar2Position * (float)CurrentCalibration.CurrentZoom;
-			} 
-			set { 
-				_bar2Position = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+			set
+			{
+				_bar2Position = value / (float)CurrentCalibration.CurrentZoom;
 			}
 		}
-		public float CrossbarPosition { 
-			get {
+		public float CrossbarPosition
+		{
+			get
+			{
 				return _crossbarPosition * (float)CurrentCalibration.CurrentZoom;
-			} 
-			set { 
-				_crossbarPosition = value / (float)CurrentCalibration.CurrentZoom; 
+			}
+			set
+			{
+				_crossbarPosition = value / (float)CurrentCalibration.CurrentZoom;
 			}
 		}
 

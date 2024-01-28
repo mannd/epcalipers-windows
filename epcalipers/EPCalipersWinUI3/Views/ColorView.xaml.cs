@@ -1,21 +1,8 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 using WinUIEx;
 
@@ -52,17 +39,17 @@ namespace EPCalipersWinUI3.Views
 
 		private void CloseWindow() => Window.Close();
 
-        private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case VirtualKey.Enter:
+		private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case VirtualKey.Enter:
 					ViewModel.CaliperColor = CaliperColorPicker.Color;
-                    CloseWindow();
-                    break;
-                case VirtualKey.Escape: CloseWindow(); break;
-                default: break;
-            }
-        }
+					CloseWindow();
+					break;
+				case VirtualKey.Escape: CloseWindow(); break;
+				default: break;
+			}
+		}
 	}
 }
