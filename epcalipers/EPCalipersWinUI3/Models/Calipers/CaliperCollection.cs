@@ -769,7 +769,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			else
 			{
 				// show dialog, get number of interval
-				ShowMeanRateIntervalDialog(PartiallyOrFullySelectedCaliper);
+				ShowMeanRateIntervalDialog(NewSelectedCaliper);
 				//var numberIntervals = 5;
 				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}

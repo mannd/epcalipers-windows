@@ -123,6 +123,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				RightBars[i].X2 = RightBars[i].X1;
 				RightBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 			}
+			// TODO: hide bars when cycle length less than minimum value.
 		}
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)

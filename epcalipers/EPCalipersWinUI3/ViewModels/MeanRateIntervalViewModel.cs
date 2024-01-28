@@ -52,7 +52,7 @@ namespace EPCalipersWinUI3.ViewModels
 				|| e.PropertyName == nameof(_caliperCollection.PartiallyOrFullySelectedCaliper.IsSelected))
 			{
 				Debug.Print("ISSELECTED change");
-				_caliper = _caliperCollection.PartiallyOrFullySelectedCaliper;
+				_caliper = _caliperCollection.NewSelectedCaliper;
 				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
 				TotalInterval = GetTotalInterval();
 				MeanInterval = GetMeanInterval();
