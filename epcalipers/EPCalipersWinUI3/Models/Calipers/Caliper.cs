@@ -131,30 +131,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual void SelectFullCaliper()
 		{
-			foreach (var bar in Bars)
-			{
-				bar.IsSelected = true;
-			}
-			CaliperLabel.IsSelected = true;
+			SetFullSelectionTo(true);
 			Selection = CaliperSelection.Full;
 		}
 		public virtual void UnselectFullCaliper()
 		{
-			foreach (var bar in Bars)
-			{
-				bar.IsSelected = false;
-			}
-			CaliperLabel.IsSelected = false;
+			SetFullSelectionTo(false);
 			Selection = CaliperSelection.None;
+		}
+
+		public virtual void SetFullSelectionTo(bool value)
+		{
+			Bars.ForEach(bar => bar.IsSelected = value);
+			CaliperLabel.IsSelected = value;
 		}
 
 		public virtual void SelectPartialCaliper(Bar bar)
 		{
-			foreach (var b in Bars)
-			{
-				b.IsSelected = false;
-			}
+			Bars.ForEach(bar => bar.IsSelected = false);
 			bar.IsSelected = true;
+			CaliperLabel.IsSelected = true; // ? keep label selected with partial selections?
 			Selection = CaliperSelection.Partial;
 		}
 
@@ -206,12 +202,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 
 
-
-
-/// <summary>
-/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
-/// </summary>
-public abstract Bar HandleBar { get; }
+		/// <summary>
+		/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
+		/// </summary>
+		public abstract Bar HandleBar { get; }
 
 		/// <summary>
 		/// The Position of a Caliper is the midpoint of the HandleBar.
@@ -224,6 +218,14 @@ public abstract Bar HandleBar { get; }
 
 		public virtual void ToggleIsSelected()
 		{
+			if (NewIsSelected)
+			{
+				UnselectFullCaliper();
+			}
+			else
+			{
+				SelectFullCaliper();
+			}
 			IsSelected = !IsSelected;
 		}
 
@@ -267,6 +269,7 @@ public abstract Bar HandleBar { get; }
 		public virtual void Remove(ICaliperView caliperView)
 		{
 			IsSelected = false;
+			Selection = CaliperSelection.None;
 			if (caliperView == null) return;
 			foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
 			CaliperLabel?.RemoveFromView(caliperView);

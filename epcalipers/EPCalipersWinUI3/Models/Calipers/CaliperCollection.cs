@@ -328,6 +328,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.Remove(_caliperView);
 			}
+			NewSelectedCaliper = null;
 			_calipers.Clear();
 		}
 
@@ -336,8 +337,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (IsLocked) return;
 			foreach (var caliper in _calipers)
 			{
-				if (caliper.IsSelected)
+				if (caliper.NewIsSelected)
 				{
+					NewSelectedCaliper = null;
 					caliper.Remove(_caliperView);
 					_calipers.Remove(caliper);
 					break;  // Can only be one selected caliper, so no point checking the rest.
@@ -406,6 +408,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (caliper == null) return;
 			caliper.UnselectedColor = color;
 			caliper.IsSelected = false;
+			caliper.UnselectFullCaliper();
 		}
 
 		public void UnselectAllCalipers()
@@ -415,6 +418,8 @@ namespace EPCalipersWinUI3.Models.Calipers
             foreach (var caliper in _calipers)
 			{
 				caliper.IsSelected = false;
+				caliper.UnselectFullCaliper();
+				NewSelectedCaliper = null;
 			}
         }
 
@@ -588,7 +593,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public async Task SetCalibrationAsync()
 		{
 			SelectSoleTimeOrAmplitudeCaliper();
-			switch (SelectedCaliperType)
+			switch (NewSelectedCaliperType)
 			{
 				case CaliperType.None:
 					await ShowMessage("NoCaliperSelectedTitle".GetLocalized(),
@@ -601,7 +606,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				case CaliperType.Time:
 				case CaliperType.Amplitude:
 					IsLocked = true;
-					ShowCalibrationDialogWindow(SelectedCaliperType);
+					ShowCalibrationDialogWindow(NewSelectedCaliperType);
 					break;
 			}
 		}
@@ -614,15 +619,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (_calipers.Count == 1)
 			{ 
-				if (_calipers[0].CaliperType == CaliperType.Angle)
+				if (_calipers.First().CaliperType == CaliperType.Angle)
 				{
 					return;  // Don't bother with angle calipers
 				}
-				if (_calipers[0].IsSelected == false)
-				{
-					_calipers[0].IsSelected = true;
-					return;
-				}
+				_calipers.First().SelectFullCaliper();
+				NewSelectedCaliper = _calipers.First();
 			}
 			return;  // 
 		}
@@ -636,14 +638,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var timeCalipers = FilteredCalipers(CaliperType.Time);
 			if (timeCalipers.Count == 1)
 			{
-				timeCalipers[0].IsSelected = true;
-				UnselectCalipersExcept(timeCalipers[0]);
+				timeCalipers.First().IsSelected = true;
+				timeCalipers.First().SelectFullCaliper();
+				UnselectCalipersExcept(timeCalipers.First());
 			}
 		}
 
 		private void ShowCalibrationDialogWindow(CaliperType caliperType)
 		{
-			Debug.Assert(SelectedCaliper != null);
+			Debug.Assert(NewSelectedCaliper != null);
 			if (_calibrationWindow == null)
 			{
 				_calibrationWindow = new WindowEx();
@@ -663,7 +666,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_calibrationWindow, 400, 400, title);
 			_calibrationWindow.PersistenceId = "CalibrationWindowID";
-			var calibrationView = new CalibrationView(SelectedCaliper, this)
+			var calibrationView = new CalibrationView(NewSelectedCaliper, this)
 			{
 				Window = _calibrationWindow,
 				CaliperType = caliperType

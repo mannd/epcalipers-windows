@@ -73,11 +73,23 @@ namespace EPCalipersWinUI3.Models.Calipers
             MarchingCaliper = null;
         }
 
-		public override void ToggleIsSelected()
+		public override void SelectPartialCaliper(Bar bar)
 		{
-            MarchingCaliper?.ToggleIsSelected();
-			base.ToggleIsSelected();
+            MarchingCaliper?.UnselectFullCaliper();
+			base.SelectPartialCaliper(bar);
 		}
+
+		public override void SetFullSelectionTo(bool value)
+		{
+			base.SetFullSelectionTo(value);
+            MarchingCaliper?.SetFullSelectionTo(value);
+		}
+
+		//public override void ToggleIsSelected()
+		//{
+		//          MarchingCaliper?.ToggleIsSelected();
+		//	base.ToggleIsSelected();
+		//}
 
 		public override void Remove(ICaliperView caliperView)
 		{

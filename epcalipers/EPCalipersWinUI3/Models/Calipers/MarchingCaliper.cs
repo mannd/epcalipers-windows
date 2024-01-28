@@ -42,6 +42,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private bool _isSelected = false;
 
+		public override void SetFullSelectionTo(bool value)
+		{
+			foreach (var bar in LeftBars)
+			{
+				bar.IsSelected = value;
+			}
+			foreach (var bar in RightBars)
+			{
+				bar.IsSelected = value;
+			}
+		}
 
 		public MarchingCaliper(ICaliperView caliperView, TimeCaliper caliper, int numberOfBars, double left, double right, bool fakeUI = false) : base(caliperView, Calibration.None)
 		{
