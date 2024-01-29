@@ -41,15 +41,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public AngleCaliperPosition CaliperPosition =>
 			new(ApexBar.MidPoint, LeftAngleBar.Angle, RightAngleBar.Angle);
 
-		public override bool IsSelected
-		{
-			get => base.IsSelected;
-			set
-			{
-				base.IsSelected = value;
-				TriangleBaseLabel.IsSelected = value;
-			}
-		}
 		public override Color UnselectedColor
 		{
 			get => base.UnselectedColor;

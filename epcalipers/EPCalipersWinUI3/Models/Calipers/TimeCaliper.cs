@@ -16,19 +16,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Bar RightBar { get; set; }
 		public Bar CrossBar { get; set; }
 
-		public override bool IsSelected
-		{
-			get => base.IsSelected;
-			set
-			{
-				if (MarchingCaliper != null)
-				{
-					MarchingCaliper.IsSelected = value;
-				}
-				base.IsSelected = value;
-			}
-		}
-
 		public override Bar HandleBar => CrossBar;
 
 		public override double Value => RightBar.Position - LeftBar.Position;

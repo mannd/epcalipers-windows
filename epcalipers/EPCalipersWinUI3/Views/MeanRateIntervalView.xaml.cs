@@ -14,7 +14,6 @@ namespace EPCalipersWinUI3.Views
 {
 	public sealed partial class MeanRateIntervalView : Page
 	{
-		private static Point _meanRateIntervalWindowPosition;
 		public WindowEx Window { get; set; }
 
 		public MeanRateIntervalViewModel ViewModel { get; set; }

@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3.ViewModels
 			if (e.PropertyName == nameof(CaliperColor))
 			{
 				Caliper.UnselectedColor = CaliperColor;
-				Caliper.IsSelected = false;  // Forces color to be changed even if already unselected.
+				Caliper.UnselectFullCaliper();  // Forces color to be changed even if already unselected.
 			}
 		}
 

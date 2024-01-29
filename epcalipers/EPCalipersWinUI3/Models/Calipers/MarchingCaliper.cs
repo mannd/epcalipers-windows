@@ -20,23 +20,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public TimeCaliper TimeCaliper { get; set; }
 
-		public override bool IsSelected
-		{
-			get => _isSelected;
-			set
-			{
-				foreach (var bar in LeftBars)
-				{
-					bar.IsSelected = value;
-				}
-				foreach (var bar in RightBars)
-				{
-					bar.IsSelected = value;
-				}
-				_isSelected = value;
-			}
-		}
-		private bool _isSelected = false;
 
 		public override void SetFullSelectionTo(bool value)
 		{
@@ -70,15 +53,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 				// TODO: make bars outside of bounds invisible
 				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
 				leftBar.SelectedColor = TimeCaliper.SelectedColor;
-				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
-				leftBar.IsSelected = TimeCaliper.IsSelected;
+				leftBar.UnselectedColor = TimeCaliper.SelectedColor;
+				leftBar.IsSelected = TimeCaliper.NewIsSelected;
 				leftBar.Thickness = 2;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
 				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
 				rightBar.SelectedColor = TimeCaliper.SelectedColor;
 				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
-				rightBar.IsSelected = TimeCaliper.IsSelected;
+				rightBar.IsSelected = TimeCaliper.NewIsSelected;
 				rightBar.Thickness = 2;
 				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);
@@ -122,6 +105,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 				RightBars[i].X1 = right + (value * (i + 1));
 				RightBars[i].X2 = RightBars[i].X1;
 				RightBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+				// TODO: leftbars need to be hidden when caliper is negative and left bars are on the right
+				//LeftBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 			}
 			// TODO: hide bars when cycle length less than minimum value.
 		}

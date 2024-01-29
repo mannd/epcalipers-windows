@@ -45,11 +45,8 @@ namespace EPCalipersWinUI3.ViewModels
 				MeanInterval = GetMeanInterval();
 				MeanRate = GetMeanRate();
 			}
-			// TODO: stops working when there are zero calipers, and then one is added
-			// If the original selected caliper is deleted, the new caliper is not the in selected, and it doesn't send 
-			// notifications.
 			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged)
-				|| e.PropertyName == nameof(_caliperCollection.PartiallyOrFullySelectedCaliper.IsSelected))
+				|| e.PropertyName == nameof(_caliperCollection.NewSelectedCaliper.Selection))
 			{
 				Debug.Print("ISSELECTED change");
 				_caliper = _caliperCollection.NewSelectedCaliper;

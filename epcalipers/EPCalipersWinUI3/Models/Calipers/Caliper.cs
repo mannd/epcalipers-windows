@@ -9,11 +9,11 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public sealed class NumberOutOfRangeException : Exception
-	{
-		public NumberOutOfRangeException() : base("NumberOutOfRangeException") { }
-	}
-
+	/// <summary>
+	/// Indicates whether a caliper is fully, partially, or not selected.
+	/// A fully selected caliper has all bars selected.  A partially selected caliper has exactly one
+	/// bar selected.
+	/// </summary>
 	public enum CaliperSelection
 	{
 		Full,
@@ -21,6 +21,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 		None
 	}
 
+	/// <summary>
+	/// Indicates whether a caliper measures time, amplitude, or angles.
+	/// </summary>
 	public enum CaliperType
 	{
 		Time,
@@ -42,29 +45,105 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// <param name="Last"></param>
 	public readonly record struct CaliperPosition(double Center, double First, double Last);
 	public readonly record struct AngleCaliperPosition(Point Apex, double FirstAngle, double LastAngle);
+	public sealed class NumberOutOfRangeException : Exception
+	{
+		public NumberOutOfRangeException() : base("NumberOutOfRangeException") { }
+	}
+
 	public abstract class Caliper : INotifyPropertyChanged
 	{
 		private const double _defaultCaliperValue = 200;
 		private static readonly int _maxNumberIntervals = 10;
 		protected bool _fakeUI;  // Is true for testing.
-
 		protected Bounds Bounds => CaliperView.Bounds;
-
-		public CaliperSelection Selection { get; set; } = CaliperSelection.None;
-
-		protected ICaliperView CaliperView { get; init; }
 
 		protected Caliper(ICaliperView caliperView, Calibration calibration = null)
 		{
 			CaliperView = caliperView;
 			Calibration = calibration ?? Calibration.Uncalibrated;
 		}
+			
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public CaliperSelection Selection
+		{
+			get => _selection;
+			set
+			{
+				if (_selection != value)
+				{
+					_selection = value;
+				}
+				OnPropertyChanged(nameof(Selection));
+			}
+		}
+		private CaliperSelection _selection = CaliperSelection.None;
+
 		public CaliperType CaliperType { get; init; }
-
-		public bool ShowRate { get; set; } = false;
-
-		protected List<Bar> Bars { get; init; }
 		public CaliperLabel CaliperLabel { get; set; }
+		public bool ShowRate { get; set; } = false;
+		public virtual bool NewIsSelected => Selection != CaliperSelection.None;
+		public Bar NewSelectedBar
+		{
+			get
+			{
+				switch (Selection)
+				{
+					case CaliperSelection.None:
+						return null;
+					case CaliperSelection.Full:
+						return HandleBar;
+					case CaliperSelection.Partial:
+						return GetFirstSelectedBar();
+					default:
+						return null;
+				}
+			}
+		}
+
+		/// <summary>
+		/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
+		/// </summary>
+		public abstract Bar HandleBar { get; }
+
+		/// <summary>
+		/// The Position of a Caliper is the midpoint of the HandleBar.
+		/// </summary>
+		public Point Position => HandleBar.MidPoint;
+
+		public Calibration Calibration { get; set; }
+
+		/// <summary>
+		/// The raw measurement of a caliper, in points, or in degrees for angle calipers.
+		/// </summary>
+		public abstract double Value { get; }
+
+		public virtual string Text => Calibration.GetText(Value, ShowRate);
+
+		public string LabelText
+		{
+			get
+			{
+				return _labelText;
+			}
+			set
+			{
+				_labelText = value;
+				OnPropertyChanged(nameof(LabelText));
+			}
+		}
+		private string _labelText;
+
+		public double BarThickness
+		{
+			set
+			{
+				foreach (var bar in Bars)
+				{
+					bar.Thickness = value;
+				}
+			}
+		}
 
 		public virtual Color Color
 		{
@@ -109,177 +188,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 		private Color _selectedColor;
-		public virtual bool IsSelected
-		{
-			get => _isSelected;
-			set
-			{
-				_isSelected = value;
-				foreach (var bar in Bars)
-				{
-					bar.IsSelected = value;
-				}
-				CaliperLabel.IsSelected = value;
-				OnPropertyChanged(nameof(IsSelected));
-			}
-		}
-		private bool _isSelected = false;
 
-		public virtual bool NewIsSelected => Selection != CaliperSelection.None;
+		protected ICaliperView CaliperView { get; init; }
 
-		public virtual void SelectFullCaliper()
-		{
-			SetFullSelectionTo(true);
-			Selection = CaliperSelection.Full;
-		}
-		public virtual void UnselectFullCaliper()
-		{
-			SetFullSelectionTo(false);
-			Selection = CaliperSelection.None;
-		}
-
-		public virtual void SetFullSelectionTo(bool value)
-		{
-			Bars.ForEach(bar => bar.IsSelected = value);
-			CaliperLabel.IsSelected = value;
-		}
-
-		public virtual void SelectPartialCaliper(Bar bar)
-		{
-			Bars.ForEach(bar => bar.IsSelected = false);
-			bar.IsSelected = true;
-			CaliperLabel.IsSelected = true; // ? keep label selected with partial selections?
-			Selection = CaliperSelection.Partial;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected virtual void OnPropertyChanged(string propertyName)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		public virtual Bar GetSelectedBar
-		{
-			get
-			{
-				if (_isSelected) return null;
-				foreach (var bar in Bars)
-				{
-					if (bar.IsSelected) return bar;
-				}
-				return null;
-			}
-		}
-
-		public Bar NewSelectedBar
-		{
-			get
-			{
-				switch (Selection)
-				{
-					case CaliperSelection.None:
-						return null;
-					case CaliperSelection.Full:
-						return HandleBar;
-					case CaliperSelection.Partial:
-						return GetFirstSelectedBar();
-					default:
-						return null;
-				}
-			}
-		}
-
-		private Bar GetFirstSelectedBar()
-		{
-			foreach (var bar in Bars)
-			{
-				if (bar.IsSelected) return bar;
-			}
-			return null;
-		}
-
-
-		/// <summary>
-		/// The HandleBar for a Caliper is the Bar that moves the caliper as a unit.
-		/// </summary>
-		public abstract Bar HandleBar { get; }
-
-		/// <summary>
-		/// The Position of a Caliper is the midpoint of the HandleBar.
-		/// </summary>
-		public Point Position => HandleBar.MidPoint;
-
-		public Calibration Calibration { get; set; }
-
-		public virtual string Text => Calibration.GetText(Value, ShowRate);
-
-		public virtual void ToggleIsSelected()
-		{
-			if (NewIsSelected)
-			{
-				UnselectFullCaliper();
-			}
-			else
-			{
-				SelectFullCaliper();
-			}
-			IsSelected = !IsSelected;
-		}
-
-		public double BarThickness
-		{
-			set
-			{
-				foreach (var bar in Bars)
-				{
-					bar.Thickness = value;
-				}
-			}
-		}
-
-		public virtual void ApplySettings(ISettings settings)
-		{
-			BarThickness = settings.BarThickness;
-			SelectedColor = settings.SelectedCaliperColor;
-
-			if (IsSelected)
-			{
-				Color = SelectedColor;
-				// TODO: setting to change all unselected colors too?
-				// If selected, all unselected colors are changed.
-			}
-			UpdateLabel();
-		}
-
-		/// <summary>
-		/// The raw measurement of a caliper, in points, or in degrees for angle calipers.
-		/// </summary>
-		public abstract double Value { get; }
-
-		public virtual void AddToView(ICaliperView caliperView)
-		{
-			if (caliperView == null) return;
-			foreach (var bar in Bars) bar?.AddToView(caliperView);
-			CaliperLabel.AddToView(caliperView);
-		}
-
-		public virtual void Remove(ICaliperView caliperView)
-		{
-			IsSelected = false;
-			Selection = CaliperSelection.None;
-			if (caliperView == null) return;
-			foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
-			CaliperLabel?.RemoveFromView(caliperView);
-		}
-
-		public abstract void ChangeBounds();
-
-		public abstract void Drag(Bar bar, Point delta, Point previousPoint);
-
-		public abstract Bar IsNearBar(Point p);
-
-		//Standard placement of new calipers
+		protected List<Bar> Bars { get; init; }
 
 		public static Caliper InitCaliper(CaliperType type,
 			ICaliperView caliperView,
@@ -311,13 +223,124 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return caliper;
 		}
 
+		public static double MeanInterval(double interval, int number)
+		{
+			if (number < 1 || number > _maxNumberIntervals)
+			{
+				throw new NumberOutOfRangeException();
+			}
+			return MathHelper.MeanInterval(interval, number);
+		}
+
+		public virtual void SelectFullCaliper()
+		{
+			SetFullSelectionTo(true);
+		}
+		public virtual void UnselectFullCaliper()
+		{
+			SetFullSelectionTo(false);
+		}
+
+		public virtual void SetFullSelectionTo(bool value)
+		{
+			Bars.ForEach(bar => bar.IsSelected = value);
+			CaliperLabel.IsSelected = value;
+			Selection = value ? CaliperSelection.Full : CaliperSelection.None;
+		}
+
+		public virtual void SelectPartialCaliper(Bar bar)
+		{
+			Bars.ForEach(bar => bar.IsSelected = false);
+			bar.IsSelected = true;
+			CaliperLabel.IsSelected = true; // ? keep label selected with partial selections?
+			Selection = CaliperSelection.Partial;
+		}
+
+		//public virtual void ToggleIsSelected()
+		//{
+		//	if (NewIsSelected)
+		//	{
+		//		UnselectFullCaliper();
+		//	}
+		//	else
+		//	{
+		//		SelectFullCaliper();
+		//	}
+		//}
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private Bar GetFirstSelectedBar()
+		{
+			foreach (var bar in Bars)
+			{
+				if (bar.IsSelected) return bar;
+			}
+			return null;
+		}
+
+		public virtual void ApplySettings(ISettings settings)
+		{
+			BarThickness = settings.BarThickness;
+			SelectedColor = settings.SelectedCaliperColor;
+
+			if (Selection == CaliperSelection.Full)
+			{
+				Color = SelectedColor;
+				// TODO: setting to change all unselected colors too?
+				// If selected, all unselected colors are changed.
+			}
+			else if (Selection == CaliperSelection.Partial)
+			{
+				foreach(var bar in Bars)
+				{
+					if (bar.IsSelected) 
+					{
+						bar.Color = SelectedColor;
+					}
+				}
+			}
+			UpdateLabel();
+		}
+
+		public virtual void AddToView(ICaliperView caliperView)
+		{
+			if (caliperView == null) return;
+			foreach (var bar in Bars) bar?.AddToView(caliperView);
+			CaliperLabel.AddToView(caliperView);
+		}
+
+		public virtual void Remove(ICaliperView caliperView)
+		{
+			Selection = CaliperSelection.None;
+			if (caliperView == null) return;
+			foreach (var bar in Bars) bar?.RemoveFromView(caliperView);
+			CaliperLabel?.RemoveFromView(caliperView);
+		}
+
+		public abstract void ChangeBounds();
+
+		public abstract void Drag(Bar bar, Point delta, Point previousPoint);
+
+		public abstract Bar IsNearBar(Point p);
+
+		public void UpdateLabel()
+		{
+			CaliperLabel.Text = Text;
+			LabelText = Text;
+			CaliperLabel.SetPosition();
+		}
+
 		private static void ApplySettings(Caliper c, ISettings settings)
 		{
 			if (c == null) return;
 			c.UnselectedColor = settings.UnselectedCaliperColor;
 			c.SelectedColor = settings.SelectedCaliperColor;
 			c.BarThickness = settings.BarThickness;
-			c.IsSelected = false;
+			c.UnselectFullCaliper();
 		}
 
 		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
@@ -341,41 +364,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			double firstAngle = 0.5 * Math.PI;
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
-		}
-
-		public virtual void ClearCalibration()
-		{
-			Debug.Print("clearing calibration");
-		}
-
-		public void UpdateLabel()
-		{
-			CaliperLabel.Text = Text;
-			LabelText = Text;
-			CaliperLabel.SetPosition();
-		}
-
-		private string _labelText;
-		public string LabelText
-		{
-			get
-			{
-				return _labelText;
-			}
-			set
-			{
-				_labelText = value;
-				OnPropertyChanged(nameof(LabelText));
-			}
-		}
-
-		public static double MeanInterval(double interval, int number)
-		{
-			if (number < 1 || number > _maxNumberIntervals)
-			{
-				throw new NumberOutOfRangeException();
-			}
-			return MathHelper.MeanInterval(interval, number);
 		}
 	}
 }
