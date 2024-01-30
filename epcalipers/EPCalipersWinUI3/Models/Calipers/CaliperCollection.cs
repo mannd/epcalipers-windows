@@ -77,51 +77,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// A calibrated time caliper can show interval or rate.
 		public bool ShowRate { get; set; } = false;
 
-		//public Caliper SelectedCaliper
-		//{
-		//	get
-		//	{
-		//		foreach (var caliper in _calipers)
-		//		{
-		//			if (caliper.IsSelected)
-		//			{
-		//				return caliper;
-		//			}
-		//		}
-		//		return null;
-		//	}
-		//}
+		public Caliper SelectedCaliper
+		{
+			get => _selectedCaliper;
+			set
+			{
+				if (_selectedCaliper != value)
+				{
+					_selectedCaliper = value;
+				}
+				OnPropertyChanged(nameof(SelectedCaliper));
+			}
+		}
+		private Caliper _selectedCaliper;
 
-		public Caliper NewSelectedCaliper { get; set; }
-
-		//public (Bar, Caliper) SelectedBarAndPartiallySelectedCaliper
-		//{
-		//	get
-		//	{
-		//		foreach (var caliper in _calipers)
-		//		{
-		//			var bar = caliper.GetSelectedBar;  // Note GetSelectedBar excludes fully selected calipers.
-		//			if (bar != null)
-		//			{
-		//				return (bar, caliper);
-		//			}
-		//		}
-		//		return (null, null);
-		//	}
-		//}
-
-		//public Caliper PartiallyOrFullySelectedCaliper
-		//{
-		//	get
-		//	{
-		//		if (SelectedCaliper != null) return SelectedCaliper;
-		//		if (SelectedBarAndPartiallySelectedCaliper.Item2 != null)
-		//			return SelectedBarAndPartiallySelectedCaliper.Item2;
-		//		return null;
-		//	}
-		//}
-
-		public CaliperType NewSelectedCaliperType => NewSelectedCaliper?.CaliperType ?? CaliperType.None;
+		public CaliperType SelectedCaliperType => SelectedCaliper?.CaliperType ?? CaliperType.None;
 
 		/// <summary>
 		/// If the caliper collection is locked, then calipers can not be added, deleted, selected or
@@ -190,11 +160,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		private void NewMove(Point delta)
+		private void Move(Point delta)
 		{
-			if (NewSelectedCaliper == null) return;
-			Caliper caliper = NewSelectedCaliper;
-			Bar bar = caliper.NewSelectedBar;
+			if (SelectedCaliper == null) return;
+			Caliper caliper = SelectedCaliper;
+			Bar bar = caliper.SelectedBar;
 			if (bar != null)
 			{
 				if (caliper.CaliperType == CaliperType.Angle && (bar.BarRole == Bar.Role.LeftAngle || bar.BarRole == Bar.Role.RightAngle))
@@ -216,41 +186,41 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void MoveLeft()
 		{
-			NewMove(_leftMovement);
+			Move(_leftMovement);
 		}
 
 		public void MoveRight()
 		{
-			NewMove(_rightMovement);
+			Move(_rightMovement);
 		}
 
 		public void MoveUp()
 		{
-			NewMove(_upMovement);
+			Move(_upMovement);
 
 		}
 		public void MoveDown()
 		{
-			NewMove(_downMovement);
+			Move(_downMovement);
 		}
 
 		public void MicroMoveLeft()
 		{
-			NewMove(_leftMicroMovement);
+			Move(_leftMicroMovement);
 		}
 
 		public void MicroMoveRight()
 		{
-			NewMove(_rightMicroMovement);
+			Move(_rightMicroMovement);
 		}
 
 		public void MicroMoveUp()
 		{
-			NewMove(_upMicroMovement);
+			Move(_upMicroMovement);
 		}
 		public void MicroMoveDown()
 		{
-			NewMove(_downMicroMovement);
+			Move(_downMicroMovement);
 		}
 
 		public void GrabCaliper(Point point)
@@ -281,7 +251,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.ChangeBounds();
 			}
-
 		}
 
 		public void Clear()
@@ -291,7 +260,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.Remove(_caliperView);
 			}
-			NewSelectedCaliper = null;
+			SelectedCaliper = null;
 			_calipers.Clear();
 		}
 
@@ -300,9 +269,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (IsLocked) return;
 			foreach (var caliper in _calipers)
 			{
-				if (caliper.NewIsSelected)
+				if (caliper.IsSelected)
 				{
-					NewSelectedCaliper = null;
+					SelectedCaliper = null;
 					caliper.Remove(_caliperView);
 					_calipers.Remove(caliper);
 					break;  // Can only be one selected caliper, so no point checking the rest.
@@ -315,6 +284,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var caliperAndBar = GetCaliperAndBarAt(point);
 			if (caliperAndBar.Item1 is Caliper caliper)
 			{
+				SelectedCaliper = null;
 				caliper.Remove(_caliperView);
 				_calipers.Remove(caliper);
 			}
@@ -380,7 +350,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			foreach (var caliper in _calipers)
 			{
 				caliper.UnselectFullCaliper();
-				NewSelectedCaliper = null;
+				SelectedCaliper = null;
 			}
 		}
 
@@ -408,15 +378,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (caliper.IsNearBar(point) != null && !caliperToggled)
 				{
 					caliperToggled = true;
-					if (caliper.NewIsSelected)
+					if (caliper.IsSelected)
 					{
 						caliper.UnselectFullCaliper();
-						NewSelectedCaliper = null;
+						SelectedCaliper = null;
 					}
 					else
 					{
 						caliper.SelectFullCaliper();
-						NewSelectedCaliper = caliper;
+						SelectedCaliper = caliper;
 						CaliperSelectionChanged = true;
 					}
 					NewUnselectCalipersExcept(caliper);
@@ -439,18 +409,18 @@ namespace EPCalipersWinUI3.Models.Calipers
 						if (caliper.Selection == CaliperSelection.Full) // go from full to partial selection
 						{
 							caliper.SelectPartialCaliper(bar);
-							NewSelectedCaliper = caliper;
+							SelectedCaliper = caliper;
 						}
 						else // toggle off partial selection
 						{
 							caliper.UnselectFullCaliper();
-							NewSelectedCaliper = null;
+							SelectedCaliper = null;
 						}
 					}
 					else // toggle on partial selection
 					{
 						caliper.SelectPartialCaliper(bar);
-						NewSelectedCaliper = caliper;
+						SelectedCaliper = caliper;
 					}
 					NewUnselectCalipersExcept(caliper);  // make sure other calipers are unselected
 					CaliperSelectionChanged = true;
@@ -469,76 +439,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// old stuff
-
-		//public void ToggleCaliperSelection(Point point)
-		//{
-		//	if (IsLocked) return;
-		//	bool caliperToggled = false;
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		if (caliper.IsNearBar(point) != null && !caliperToggled)
-		//		{
-		//			caliperToggled = true;
-		//			if (caliper.IsSelected)
-		//			{
-		//				caliper.IsSelected = false;
-		//			}
-		//			else
-		//			{
-		//				caliper.IsSelected = true;
-		//				CaliperSelectionChanged = true;
-		//			}
-		//			UnselectCalipersExcept(caliper);
-		//		}
-		//	}
-		//}
-
-		//public void ToggleComponentSelection(Point point)
-		//{
-		//	if (IsLocked) return;
-		//	bool caliperToggled = false;
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		var bar = caliper.IsNearBar(point);
-		//		if (bar != null && !caliperToggled)
-		//		{
-		//			caliperToggled = true; // process stopped after caliper found.
-		//			if (bar.IsSelected)
-		//			{
-		//				if (caliper.IsSelected)  // handle case where whole caliper is selected
-		//				{
-		//					caliper.IsSelected = false;
-		//					bar.IsSelected = true;  // change to just bar selected
-		//					CaliperSelectionChanged = true;
-		//				}
-		//				else
-		//				{
-		//					caliper.IsSelected = false;  // unselect whole caliper
-		//				}
-		//			}
-		//			else
-		//			{
-		//				caliper.IsSelected = false;  // make sure you can't select multiple bars
-		//				bar.IsSelected = true;  // caliper wasn't selected, so just select the bar
-		//				CaliperSelectionChanged = true;
-		//			}
-		//			UnselectCalipersExcept(caliper);  // make sure other calipers are unselected
-		//		}
-		//	}
-		//}
-
-		//private void UnselectCalipersExcept(Caliper c)
-		//{
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		if (caliper != c)
-		//		{
-		//			caliper.IsSelected = false;
-		//		}
-		//	}
-		//}
-
 		public void RefreshCalipers()
 		{
 			TimeCalibration.Rounding = _settings.Rounding;
@@ -554,7 +454,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public async Task SetCalibrationAsync()
 		{
 			SelectSoleTimeOrAmplitudeCaliper();
-			switch (NewSelectedCaliperType)
+			switch (SelectedCaliperType)
 			{
 				case CaliperType.None:
 					await ShowMessage("NoCaliperSelectedTitle".GetLocalized(),
@@ -567,7 +467,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				case CaliperType.Time:
 				case CaliperType.Amplitude:
 					IsLocked = true;
-					ShowCalibrationDialogWindow(NewSelectedCaliperType);
+					ShowCalibrationDialogWindow(SelectedCaliperType);
 					break;
 			}
 		}
@@ -585,7 +485,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					return;  // Don't bother with angle calipers
 				}
 				_calipers.First().SelectFullCaliper();
-				NewSelectedCaliper = _calipers.First();
+				SelectedCaliper = _calipers.First();
 			}
 			return;  // 
 		}
@@ -606,7 +506,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void ShowCalibrationDialogWindow(CaliperType caliperType)
 		{
-			Debug.Assert(NewSelectedCaliper != null);
+			Debug.Assert(SelectedCaliper != null);
 			if (_calibrationWindow == null)
 			{
 				_calibrationWindow = new WindowEx();
@@ -626,13 +526,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_calibrationWindow, 400, 400, title);
 			_calibrationWindow.PersistenceId = "CalibrationWindowID";
-			var calibrationView = new CalibrationView(NewSelectedCaliper, this)
+			var calibrationView = new CalibrationView(SelectedCaliper, this)
 			{
 				Window = _calibrationWindow,
 				CaliperType = caliperType
 			};
 			_calibrationWindow.Content = calibrationView;
-			_calibrationWindow.Closed += OnClosed;
+			_calibrationWindow.Closed += OnCalibrationWindowClosed;
 			_calibrationWindow.Show();
 		}
 
@@ -658,6 +558,40 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow = null;
 			_meanRateIntervalWindow = null;
 			_colorWindow = null;
+			_measureQtcWindow = null;
+		}
+
+		private void OnCalibrationWindowClosed(object sender, WindowEventArgs args)
+		{
+			IsLocked = false;
+			if (_calibrationWindow != null)
+			{
+				_calibrationWindow.Content = null;
+			}
+			_calibrationWindow = null;
+		}
+		private void OnMeanRateIntervalWindowClosed(object sender, WindowEventArgs args)
+		{
+			if (_meanRateIntervalWindow != null)
+			{
+				_meanRateIntervalWindow.Content = null;
+			}
+			_meanRateIntervalWindow = null;
+		}
+		private void OnColorWindowClosed(object sender, WindowEventArgs args)
+		{
+			if (_colorWindow != null)
+			{
+				_colorWindow.Content = null;
+			}
+			_colorWindow = null;
+		}
+		private void OnMeasureQtcWindowClosed(object sender, WindowEventArgs args)
+		{
+			if (_measureQtcWindow != null)
+			{
+				_measureQtcWindow.Content = null;
+			}
 			_measureQtcWindow = null;
 		}
 
@@ -724,9 +658,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task MeanRateInterval()
 		{
-			if (NewSelectedCaliper == null 
-				|| NewSelectedCaliper.CaliperType != CaliperType.Time 
-				|| NewSelectedCaliper.Calibration == Calibration.Uncalibrated)
+			if (SelectedCaliper == null 
+				|| SelectedCaliper.CaliperType != CaliperType.Time 
+				|| SelectedCaliper.Calibration == Calibration.Uncalibrated)
 			{
 				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
 					"HowToMeasureMeanIntervalMessage".GetLocalized());
@@ -734,7 +668,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			else
 			{
 				// show dialog, get number of interval
-				ShowMeanRateIntervalDialog(NewSelectedCaliper);
+				ShowMeanRateIntervalDialog(SelectedCaliper);
 				//var numberIntervals = 5;
 				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
@@ -742,7 +676,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ShowMeanRateIntervalDialog(Caliper caliper)
 		{
-			Debug.Assert(NewSelectedCaliper != null);
+			Debug.Assert(SelectedCaliper != null);
 			if (_meanRateIntervalWindow == null)
 			{
 				_meanRateIntervalWindow = new WindowEx();
@@ -754,7 +688,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Window = _meanRateIntervalWindow
 			};
 			_meanRateIntervalWindow.Content = meanRateIntervalView;
-			_meanRateIntervalWindow.Closed += OnClosed;
+			_meanRateIntervalWindow.Closed += OnMeanRateIntervalWindowClosed;
 			_meanRateIntervalWindow.Show();
 		}
 
@@ -793,7 +727,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task MeasureQtc()
 		{
-			if (NewSelectedCaliper == null || NewSelectedCaliper.CaliperType != CaliperType.Time)
+			if (SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time)
 			{
 				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
 					"HowToMeasureMeanIntervalMessage".GetLocalized());
@@ -808,7 +742,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		public void ShowMeasureQtcDialog()
 		{
-			Debug.Assert(NewSelectedCaliper != null);
+			Debug.Assert(SelectedCaliper != null);
 			if (_measureQtcWindow == null)
 			{
 				_measureQtcWindow = new WindowEx();
@@ -823,7 +757,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			//frame.Content = qtcView;
 			frame.Navigate(typeof(QtcView));
 			_measureQtcWindow.Content = frame;
-			_measureQtcWindow.Closed += OnClosed;
+			_measureQtcWindow.Closed += OnMeasureQtcWindowClosed;
 			_measureQtcWindow.Show();
 		}
 
@@ -842,7 +776,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Window = _colorWindow
 			};
 			_colorWindow.Content = colorView;
-			_colorWindow.Closed += OnClosed;
+			_colorWindow.Closed += OnColorWindowClosed;
 			_colorWindow.Show();
 		}
 	}

@@ -54,14 +54,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
 				leftBar.SelectedColor = TimeCaliper.SelectedColor;
 				leftBar.UnselectedColor = TimeCaliper.SelectedColor;
-				leftBar.IsSelected = TimeCaliper.NewIsSelected;
+				leftBar.IsSelected = TimeCaliper.IsSelected;
 				leftBar.Thickness = 2;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
 				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
 				rightBar.SelectedColor = TimeCaliper.SelectedColor;
 				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
-				rightBar.IsSelected = TimeCaliper.NewIsSelected;
+				rightBar.IsSelected = TimeCaliper.IsSelected;
 				rightBar.Thickness = 2;
 				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);

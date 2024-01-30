@@ -29,12 +29,6 @@ namespace EPCalipersWinUI3.Views
 			CloseWindow();
 		}
 
-		private async void MeanRateIntervalViewMeasure_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.NumberOfIntervals = (int)NumberOfIntervalsBox.Value;
-			await ViewModel.ShowResult(XamlRoot);
-		}
-
 		private void CloseWindow()
 		{
 			Window?.Close();
@@ -45,11 +39,6 @@ namespace EPCalipersWinUI3.Views
 		{
 			switch (e.Key)
 			{
-				case VirtualKey.Enter:
-					ViewModel.NumberOfIntervals = (int)NumberOfIntervalsBox.Value;
-					await ViewModel.ShowResult(XamlRoot);
-					CloseWindow();
-					break;
 				case VirtualKey.Escape: CloseWindow(); break;
 				default: break;
 			}

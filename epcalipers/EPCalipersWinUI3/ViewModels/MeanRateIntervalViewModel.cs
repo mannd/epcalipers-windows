@@ -12,9 +12,11 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class MeanRateIntervalViewModel : ObservableObject
 	{
-		public int Interval { get; set; }
+		// TODO: localize
+		private static string _invalidCaliperText = "Invalid caliper";
 		private Caliper _caliper;
 		private CaliperCollection _caliperCollection;
+
 
 		public MeanRateIntervalViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
@@ -23,72 +25,55 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
 			if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
 			PropertyChanged += OnMyPropertyChanged;
-			NumberOfIntervals = 3;
+			NumberOfIntervals = 3; // TODO: either set default in settings, or remember last number
 			TotalInterval = GetTotalInterval();
 			MeanInterval = GetMeanInterval();
 			MeanRate = GetMeanRate();
 		}
 
-		// TODO: 
-		// 1) Show real time total interval, mean interval, mean rate in View
-		// 2) Either prohibit changing selected caliper (IsLocked = true) or deal with IsSelected changes.
-		// 3) If we are dealing with IsSelected changes, we need to pass whole CaliperCollection to these floating windows
-		// 4) E.g., if no time caliper selected, show No Time caliper selected message
-		// If we implement the above, no need for Calculate button.  Only restriction before entering measurement is to assure
-		// time calipers are calibrated.  Need to deal with calibration being cleared too.  
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			// TODO: Needs to work for partially selected calipers too!
-			if (e.PropertyName == nameof(_caliper.LabelText) || e.PropertyName == nameof(NumberOfIntervals))
+			if (e.PropertyName == nameof(_caliper.LabelText) 
+				|| e.PropertyName == nameof(NumberOfIntervals))
 			{
-				TotalInterval = GetTotalInterval();
-				MeanInterval = GetMeanInterval();
-				MeanRate = GetMeanRate();
+				GetResults();
 			}
-			if (e.PropertyName == nameof(_caliperCollection.CaliperSelectionChanged)
-				|| e.PropertyName == nameof(_caliperCollection.NewSelectedCaliper.Selection))
+			else if (e.PropertyName == nameof(_caliperCollection.SelectedCaliper))
 			{
-				Debug.Print("ISSELECTED change");
-				_caliper = _caliperCollection.NewSelectedCaliper;
+				_caliper = _caliperCollection.SelectedCaliper;
 				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
-				TotalInterval = GetTotalInterval();
-				MeanInterval = GetMeanInterval();
-				MeanRate = GetMeanRate();
+				GetResults();
 			}
+		}
+
+		private void GetResults()
+		{
+			TotalInterval = GetTotalInterval();
+			MeanInterval = GetMeanInterval();
+			MeanRate = GetMeanRate();
 		}
 
 		private bool IsValidCaliper()
 		{
-			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration != Calibration.Uncalibrated;
-			// or caliper is partially selected...
+			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration.IsCalibrated;
 		}
 
 		private string GetTotalInterval()
 		{
-			var interval = _caliper?.LabelText;
-			return IsValidCaliper() ? $"Total interval = {interval} " : "Invalid caliper";
+			// Number of intervals = 1 forces total interval, and showBpm false forces interval, not bpm.
+			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, 1, false);
+			return IsValidCaliper() ? $"Total interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetMeanInterval()
 		{
 			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
-			return IsValidCaliper() ? $"Mean interval = {interval?.Item1} {interval?.Item2} " : "Invalid caliper";
+			return IsValidCaliper() ? $"Mean interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetMeanRate()
 		{
 			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
-			return IsValidCaliper() ? $"Mean rate = {interval?.Item1} {interval?.Item2} " : "Invalid caliper";
+			return IsValidCaliper() ? $"Mean rate = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 
-		}
-
-		[RelayCommand]
-		public async Task ShowResult(XamlRoot xamlRoot)
-		{
-			var intervalResult = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
-			var rateResult = _caliper.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
-			var message = $"Mean rate = {rateResult.Item1} {rateResult.Item2}\nMean interval = {intervalResult.Item1} {intervalResult.Item2}";
-			var dialog = MessageHelper.CreateMessageDialog("Results", message);
-			dialog.XamlRoot = xamlRoot;
-			await dialog.ShowAsync();
 		}
 
 		[ObservableProperty]

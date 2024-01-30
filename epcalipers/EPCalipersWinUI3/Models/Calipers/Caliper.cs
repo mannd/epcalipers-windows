@@ -82,8 +82,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CaliperType CaliperType { get; init; }
 		public CaliperLabel CaliperLabel { get; set; }
 		public bool ShowRate { get; set; } = false;
-		public virtual bool NewIsSelected => Selection != CaliperSelection.None;
-		public Bar NewSelectedBar
+		public virtual bool IsSelected => Selection != CaliperSelection.None;
+		public Bar SelectedBar
 		{
 			get
 			{
@@ -255,18 +255,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabel.IsSelected = true; // ? keep label selected with partial selections?
 			Selection = CaliperSelection.Partial;
 		}
-
-		//public virtual void ToggleIsSelected()
-		//{
-		//	if (NewIsSelected)
-		//	{
-		//		UnselectFullCaliper();
-		//	}
-		//	else
-		//	{
-		//		SelectFullCaliper();
-		//	}
-		//}
 
 		protected virtual void OnPropertyChanged(string propertyName)
 		{

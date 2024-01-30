@@ -62,6 +62,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CalibrationParameters Parameters { get; init; }
 		public double Multiplier { get; init; }
 
+		public bool IsUncalibrated => Parameters.Unit == CalibrationUnit.Uncalibrated;
+		public bool IsCalibrated => !IsUncalibrated;
 		public static string DefaultUnit { get; set; } = "points";
 		public static string DefaultBpm { get; set; } = "bpm";
 
