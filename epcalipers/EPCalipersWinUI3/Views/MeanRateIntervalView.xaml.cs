@@ -3,6 +3,8 @@ using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.System;
 using WinUIEx;
@@ -15,12 +17,27 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class MeanRateIntervalView : Page
 	{
 		public WindowEx Window { get; set; }
+		public QtcParameters QtcParameters { get; set; }	
 
 		public MeanRateIntervalViewModel ViewModel { get; set; }
 
 		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			InitializeComponent();
+			ViewModel = new MeanRateIntervalViewModel();
+		}
+
+		public MeanRateIntervalView()
+		{
+			InitializeComponent();
+		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			QtcParameters = e.Parameter as QtcParameters;
+			var caliper = QtcParameters.Caliper;
+			var caliperCollection = QtcParameters.CaliperCollection;
 			ViewModel = new MeanRateIntervalViewModel(caliper, caliperCollection);
 		}
 

@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -536,31 +537,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_calibrationWindow.Show();
 		}
 
-		private void OnClosed(object sender, WindowEventArgs args)
-		{
-			IsLocked = false;
-			if (_calibrationWindow != null)
-			{
-				_calibrationWindow.Content = null;
-			}
-			if (_meanRateIntervalWindow != null)
-			{
-				_meanRateIntervalWindow.Content = null;
-			}
-			if (_colorWindow != null)
-			{
-				_colorWindow.Content = null;
-			}
-			if (_measureQtcWindow != null)
-			{
-				_measureQtcWindow.Content = null;
-			}
-			_calibrationWindow = null;
-			_meanRateIntervalWindow = null;
-			_colorWindow = null;
-			_measureQtcWindow = null;
-		}
-
 		private void OnCalibrationWindowClosed(object sender, WindowEventArgs args)
 		{
 			IsLocked = false;
@@ -748,14 +724,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_measureQtcWindow = new WindowEx();
 			}
 			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
-			//_measureQtcWindow.PersistenceId = "MeanRateIntervalWindowID";
-			var qtcView = new QtcView()
+			//_measureQtcWindow.PersistenceId = "MeasureQtcWindowID";
+			QtcParameters parameters = new QtcParameters()
 			{
-				Window = _measureQtcWindow
+				Window = _measureQtcWindow,
+				Caliper = SelectedCaliper,
+				CaliperCollection = this
 			};
 			Frame frame = new Frame();
-			//frame.Content = qtcView;
-			frame.Navigate(typeof(QtcView));
+			frame.Navigate(typeof(QtcView), parameters);
 			_measureQtcWindow.Content = frame;
 			_measureQtcWindow.Closed += OnMeasureQtcWindowClosed;
 			_measureQtcWindow.Show();

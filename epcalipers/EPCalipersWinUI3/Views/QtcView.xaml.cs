@@ -1,6 +1,8 @@
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -14,14 +16,24 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class QtcView : Page
 	{
 		QtcViewModel ViewModel { get; set; }
-		public WindowEx Window { get; set; }
+		WindowEx Window { get; set; }
+		QtcParameters QtcParameters { get; set; }
 
 		public QtcView()
 		{
 			this.InitializeComponent();
 			ViewModel = new QtcViewModel();
 		}
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
+			QtcParameters = e.Parameter as QtcParameters;
+			if (QtcParameters != null)
+			{
+				ViewModel.QtcParameters = QtcParameters;
+			}
 
+		}
 		private void QtcView_Cancel(object sender, RoutedEventArgs e)
 		{
 			CloseWindow();
@@ -35,7 +47,7 @@ namespace EPCalipersWinUI3.Views
 
 		private void CloseWindow()
 		{
-			Window?.Close();
+			QtcParameters.Window?.Close();
 		}
 	}
 }

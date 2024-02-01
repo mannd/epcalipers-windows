@@ -14,16 +14,16 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		// TODO: localize
 		private static string _invalidCaliperText = "Invalid caliper";
-		private Caliper _caliper;
-		private CaliperCollection _caliperCollection;
 
+		public Caliper Caliper { get; set; }
+		public CaliperCollection CaliperCollection { get; set; }
 
 		public MeanRateIntervalViewModel(Caliper caliper, CaliperCollection caliperCollection)
 		{
-			_caliper = caliper;
-			_caliperCollection = caliperCollection;
-			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
-			if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
+			Caliper = caliper;
+			CaliperCollection = caliperCollection;
+			CaliperCollection.PropertyChanged += OnMyPropertyChanged;
+			if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
 			PropertyChanged += OnMyPropertyChanged;
 			NumberOfIntervals = 3; // TODO: either set default in settings, or remember last number
 			TotalInterval = GetTotalInterval();
@@ -31,17 +31,19 @@ namespace EPCalipersWinUI3.ViewModels
 			MeanRate = GetMeanRate();
 		}
 
+		public MeanRateIntervalViewModel() { }
+
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof(_caliper.LabelText) 
+			if (e.PropertyName == nameof(Caliper.LabelText) 
 				|| e.PropertyName == nameof(NumberOfIntervals))
 			{
 				GetResults();
 			}
-			else if (e.PropertyName == nameof(_caliperCollection.SelectedCaliper))
+			else if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
 			{
-				_caliper = _caliperCollection.SelectedCaliper;
-				if (_caliper != null) _caliper.PropertyChanged += OnMyPropertyChanged;
+				Caliper = CaliperCollection.SelectedCaliper;
+				if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
 				GetResults();
 			}
 		}
@@ -55,23 +57,23 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private bool IsValidCaliper()
 		{
-			return _caliper != null && _caliper.CaliperType == CaliperType.Time && _caliper.Calibration.IsCalibrated;
+			return Caliper != null && Caliper.CaliperType == CaliperType.Time && Caliper.Calibration.IsCalibrated;
 		}
 
 		private string GetTotalInterval()
 		{
 			// Number of intervals = 1 forces total interval, and showBpm false forces interval, not bpm.
-			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, 1, false);
+			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, 1, false);
 			return IsValidCaliper() ? $"Total interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetMeanInterval()
 		{
-			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, false);
+			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, false);
 			return IsValidCaliper() ? $"Mean interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetMeanRate()
 		{
-			var interval = _caliper?.Calibration.GetMeanCalibratedInterval(_caliper.Value, NumberOfIntervals, true);
+			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, true);
 			return IsValidCaliper() ? $"Mean rate = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 
 		}
@@ -87,5 +89,6 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int numberOfIntervals;
+
 	}
 }
