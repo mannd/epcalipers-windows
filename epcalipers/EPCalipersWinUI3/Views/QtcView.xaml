@@ -10,27 +10,21 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 1</TextBlock>
-        <Button HorizontalAlignment="Left" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}">
-            Measure RR Interval</Button>
-        <TextBlock></TextBlock>
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 2</TextBlock>
-        <Button Command="{x:Bind ViewModel.MeasureQTIntervalCommand}">
-            Measure QT Interval</Button>
-        <TextBlock></TextBlock>
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Step 3</TextBlock>
-        <ComboBox Header="QTc Formula" SelectedIndex="0">
-            <ComboBoxItem>Bazett</ComboBoxItem>
-            <ComboBoxItem>Hodges</ComboBoxItem>
-        </ComboBox>
-        <Grid >
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureRR" />
+        <Button HorizontalAlignment="Left" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}"
+                   Content="{x:Bind ViewModel.RrInterval, Mode=TwoWay}" />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureQT" />
+        <Button Command="{x:Bind ViewModel.MeasureQTIntervalCommand}" Content="{x:Bind ViewModel.QtInterval, Mode=TwoWay}" />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepChooseFormula" />
+        <ComboBox  SelectedIndex="0" ItemsSource="{x:Bind ViewModel.QtcFormulas}" />
+        <Grid Margin="0, 40, 0, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
-                    Click="QtcView_Calculate"
-                   Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
+                    Command="{x:Bind ViewModel.CalculateQTcCommand}"
+                    Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="QtcView_Cancel"
                     HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
         </Grid>

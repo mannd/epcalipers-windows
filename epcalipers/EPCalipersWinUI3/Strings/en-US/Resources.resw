@@ -142,6 +142,10 @@
   <data name="AddCaliperBarButton.Label" xml:space="preserve">
     <value>Add caliper</value>
   </data>
+  <data name="AllQTcFormulas" xml:space="preserve">
+    <value>All</value>
+    <comment>Use all 4 QTc formulas</comment>
+  </data>
   <data name="AmplitudeCaliperBarButton.Label" xml:space="preserve">
     <value>Amplitude</value>
   </data>
@@ -180,6 +184,10 @@
   </data>
   <data name="BackButton.Text" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="BazettFormula" xml:space="preserve">
+    <value>Bazett</value>
+    <comment>Name of a QTc formula</comment>
   </data>
   <data name="bpm" xml:space="preserve">
     <value>bpm</value>
@@ -232,6 +240,14 @@
   <data name="FileMenu.Title" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="FraminghamFormula" xml:space="preserve">
+    <value>Framingham</value>
+    <comment>Name of a QTc formula</comment>
+  </data>
+  <data name="FridericiaFormula" xml:space="preserve">
+    <value>Fridericia</value>
+    <comment>Name of a QTc formula</comment>
+  </data>
   <data name="GotoPageMenuItem.Text" xml:space="preserve">
     <value>Goto PDF page...</value>
   </data>
@@ -252,6 +268,10 @@
   </data>
   <data name="HelpMenuItem.Text" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="HodgesFormula" xml:space="preserve">
+    <value>Hodges</value>
+    <comment>Name of a QTc formula</comment>
   </data>
   <data name="HomePageButtonTitle" xml:space="preserve">
     <value>EP Studios home page</value>
@@ -322,6 +342,10 @@
   </data>
   <data name="NoCaliperSelectedTitle" xml:space="preserve">
     <value>No time or amplitude caliper selected</value>
+  </data>
+  <data name="NotMeasured" xml:space="preserve">
+    <value>Not measured</value>
+    <comment>used to show interval not measured in QTc dialog</comment>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -418,6 +442,15 @@
   </data>
   <data name="ShowBrugadaTriangle.Content" xml:space="preserve">
     <value>Show Brugada triangle</value>
+  </data>
+  <data name="StepChooseFormula.Text" xml:space="preserve">
+    <value>Step 3 Choose QTc formula</value>
+  </data>
+  <data name="StepMeasureQT.Text" xml:space="preserve">
+    <value>Step 2 Measure QT interval</value>
+  </data>
+  <data name="StepMeasureRR.Text" xml:space="preserve">
+    <value>Step 1 Measure RR interval</value>
   </data>
   <data name="TimeCaliperBarButton.Label" xml:space="preserve">
     <value>Time</value>
