@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
+	// TODO: add more default calibrations, e.g. 200 msec, 0.2 sec for time
 	public partial class CalibrationViewModel : ObservableObject
 	{
 		public static readonly IDictionary<CalibrationUnit, string> CalibrationStrings =

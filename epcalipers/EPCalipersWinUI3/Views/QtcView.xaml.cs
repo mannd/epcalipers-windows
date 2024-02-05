@@ -1,8 +1,10 @@
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System.Diagnostics;
+using Windows.System;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -32,8 +34,10 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.QtcParameters = QtcParameters;
 			}
-
+			Debug.Print(QtcParameters.Caliper?.LabelText ?? string.Empty);
+			Debug.Print(QtcParameters.NumberOfIntervals.ToString());
 		}
+
 		private void QtcView_Cancel(object sender, RoutedEventArgs e)
 		{
 			CloseWindow();
@@ -48,6 +52,15 @@ namespace EPCalipersWinUI3.Views
 		private void CloseWindow()
 		{
 			QtcParameters.Window?.Close();
+		}
+
+		private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
+		{
+			switch (e.Key)
+			{
+				case VirtualKey.Escape: CloseWindow(); break;
+				default: break;
+			}
 		}
 	}
 }

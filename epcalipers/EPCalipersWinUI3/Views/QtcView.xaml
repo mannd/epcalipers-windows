@@ -7,7 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Required"
+    KeyUp="Page_KeyUp" >
 
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureRR" />
@@ -16,7 +18,7 @@
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureQT" />
         <Button Command="{x:Bind ViewModel.MeasureQTIntervalCommand}" Content="{x:Bind ViewModel.QtInterval, Mode=TwoWay}" />
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepChooseFormula" />
-        <ComboBox  SelectedIndex="0" ItemsSource="{x:Bind ViewModel.QtcFormulas}" />
+        <ComboBox  SelectedIndex="{x:Bind ViewModel.SelectedFormulaIndex, Mode=TwoWay}" ItemsSource="{x:Bind ViewModel.QtcFormulas}" />
         <Grid Margin="0, 40, 0, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

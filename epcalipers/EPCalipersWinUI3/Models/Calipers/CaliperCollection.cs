@@ -729,7 +729,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				Window = _measureQtcWindow,
 				Caliper = SelectedCaliper,
-				CaliperCollection = this
+				CaliperCollection = this,
+				NumberOfIntervals = 1
 			};
 			Frame frame = new Frame();
 			frame.Navigate(typeof(QtcView), parameters);

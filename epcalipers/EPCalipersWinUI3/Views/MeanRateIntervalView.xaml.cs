@@ -16,6 +16,7 @@ namespace EPCalipersWinUI3.Views
 {
 	public sealed partial class MeanRateIntervalView : Page
 	{
+		private bool _forQtcMeasurement = false;
 		public WindowEx Window { get; set; }
 		public QtcParameters QtcParameters { get; set; }	
 
@@ -24,7 +25,7 @@ namespace EPCalipersWinUI3.Views
 		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			InitializeComponent();
-			ViewModel = new MeanRateIntervalViewModel();
+			ViewModel = new MeanRateIntervalViewModel(caliper, caliperCollection);
 		}
 
 		public MeanRateIntervalView()
@@ -32,13 +33,16 @@ namespace EPCalipersWinUI3.Views
 			InitializeComponent();
 		}
 
+		// Only navigated to in context of QTc measurement.
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
+			_forQtcMeasurement = true;
 			base.OnNavigatedTo(e);
 			QtcParameters = e.Parameter as QtcParameters;
 			var caliper = QtcParameters.Caliper;
 			var caliperCollection = QtcParameters.CaliperCollection;
-			ViewModel = new MeanRateIntervalViewModel(caliper, caliperCollection);
+			var numberOfIntervals = QtcParameters.NumberOfIntervals;
+			ViewModel = new MeanRateIntervalViewModel(caliper, caliperCollection, numberOfIntervals);
 		}
 
 		private void MeanRateIntervalViewCancel_Click(object sender, RoutedEventArgs e)
@@ -48,14 +52,28 @@ namespace EPCalipersWinUI3.Views
 
 		private void CloseWindow()
 		{
-			Window?.Close();
+			if (_forQtcMeasurement)
+			{
+				_forQtcMeasurement = false;
+
+				Frame frame = QtcParameters.Window?.Content as Frame;
+				if (frame != null && frame.CanGoBack)
+				{
+					frame.GoBack();
+				}
+			} 
+			else
+			{
+				Window?.Close();
+			}
 		}
 
-		// TODO: Why aren't keys being detected here?
-		private async void Page_KeyUp(object sender, KeyRoutedEventArgs e)
+		private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
 		{
 			switch (e.Key)
 			{
+				// Note if focus in on the number picker, it will suck up the keystrokes and 
+				// this won't close the window.  If not, the window closes fine.
 				case VirtualKey.Escape: CloseWindow(); break;
 				default: break;
 			}

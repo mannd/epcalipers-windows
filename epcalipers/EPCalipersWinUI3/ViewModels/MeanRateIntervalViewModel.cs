@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI.Xaml;
 using System;
 using System.ComponentModel;
@@ -15,17 +16,24 @@ namespace EPCalipersWinUI3.ViewModels
 		// TODO: localize
 		private static string _invalidCaliperText = "Invalid caliper";
 
+		public QtcMeasurement QtcMeasurement { get; set; }
+
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
 
-		public MeanRateIntervalViewModel(Caliper caliper, CaliperCollection caliperCollection)
+		// TODO: Refactor to pass QtcParameters (maybe renamed to MeasurementParameters)
+		// so that we use QtcParameters.Caliper, QtcParameters.CaliperCollection and
+		// QtcParameters.NumberOfIntervals directly...
+		public MeanRateIntervalViewModel(Caliper caliper,
+			CaliperCollection caliperCollection,
+			int numberOfIntervals = 3)
 		{
 			Caliper = caliper;
 			CaliperCollection = caliperCollection;
 			CaliperCollection.PropertyChanged += OnMyPropertyChanged;
 			if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
 			PropertyChanged += OnMyPropertyChanged;
-			NumberOfIntervals = 3; // TODO: either set default in settings, or remember last number
+			NumberOfIntervals = numberOfIntervals;
 			TotalInterval = GetTotalInterval();
 			MeanInterval = GetMeanInterval();
 			MeanRate = GetMeanRate();
@@ -53,6 +61,10 @@ namespace EPCalipersWinUI3.ViewModels
 			TotalInterval = GetTotalInterval();
 			MeanInterval = GetMeanInterval();
 			MeanRate = GetMeanRate();
+			if (QtcMeasurement != null)
+			{
+				QtcMeasurement.RRInterval = Caliper.Value;
+			}
 		}
 
 		private bool IsValidCaliper()
