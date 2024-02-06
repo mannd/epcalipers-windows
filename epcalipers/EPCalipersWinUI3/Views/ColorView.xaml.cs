@@ -18,7 +18,7 @@ namespace EPCalipersWinUI3.Views
 	{
 		public ColorViewModel ViewModel { get; set; }
 		public WindowEx Window { get; set; }
-		public Caliper caliper { get; set; }
+		public Caliper Caliper { get; set; }
 
 		public ColorView(Caliper caliper)
 		{

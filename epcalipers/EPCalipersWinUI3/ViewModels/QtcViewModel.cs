@@ -19,18 +19,35 @@ namespace EPCalipersWinUI3.ViewModels
 	/// </summary>
 	// TODO: we are forced to send a bunch of unrelated stuff as a blob to each dialog.
 	// Really need specific dialogs for each measurement...
-	public class QtcParameters
+	public class QtcParameters: INotifyPropertyChanged
 	{
 		public WindowEx Window {  get; set; }
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
 		public int NumberOfIntervals { get; set; }
-		public QtcMeasurement QtcMeasurement { get; set; } = new QtcMeasurement();
+		public double RawRRInterval
+		{
+			get => _rawRRInterval;
+			set
+			{
+				_rawRRInterval = value;
+				OnPropertyChanged(nameof(RawRRInterval));
+			}
+		}
+		private double _rawRRInterval;
+		public double QTInterval { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		public virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 
 	public partial class QtcViewModel: ObservableObject
 	{
-		private QtcMeasurement _model = new QtcMeasurement();
+		// TODO: QtcMeasurement or QtcParameters must notify QtcViewModel when RR interval and number of intervals change.
+		// Display the current value on the button label... 
 
 		public QtcViewModel()
 		{
@@ -42,7 +59,28 @@ namespace EPCalipersWinUI3.ViewModels
 			QtcFormulas.Add("AllQTcFormulas".GetLocalized());
 		}
 
-		public QtcParameters QtcParameters { get; set; }	
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(QtcParameters.RawRRInterval))
+			{
+				Debug.Print(QtcParameters.RawRRInterval.ToString());
+				RrInterval = QtcParameters.RawRRInterval.ToString();
+			}
+		}
+
+
+
+		public QtcParameters QtcParameters
+		{
+			get => _qtcParameters;
+			set
+			{
+				_qtcParameters = value;
+				QtcParameters.PropertyChanged += OnMyPropertyChanged;
+			}
+		}
+
+		private QtcParameters _qtcParameters;
 
 		[RelayCommand]
 		private void MeasureRRInterval()
@@ -64,7 +102,6 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public void CalculateQTc()
 		{
-			Debug.Print($"{_model.QTc}");
 			// TODO: use QtcParameters to either calculate QTc or give incomplete
 			// data error message.
 			// need another floating window or a dialog??  Maybe replace main QTc view with a new frame containing

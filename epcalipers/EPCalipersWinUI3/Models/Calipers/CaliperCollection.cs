@@ -22,7 +22,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// </summary>
 	public class CaliperCollection : INotifyPropertyChanged
 	{
-		private static readonly int _maxNumberIntervals = 10;
 		private static readonly double _delta = 1.0;
 		private static readonly double _microDelta = 0.2;
 		private static Point _leftMovement = new(-_delta, 0);
