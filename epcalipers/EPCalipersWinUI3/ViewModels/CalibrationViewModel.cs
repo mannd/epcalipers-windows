@@ -12,14 +12,14 @@ namespace EPCalipersWinUI3.ViewModels
 	// TODO: add more default calibrations, e.g. 200 msec, 0.2 sec for time
 	public partial class CalibrationViewModel : ObservableObject
 	{
-		public static readonly IDictionary<CalibrationUnit, string> CalibrationStrings =
-			new Dictionary<CalibrationUnit, string>()
+		public static readonly IDictionary<Unit, string> CalibrationStrings =
+			new Dictionary<Unit, string>()
 			{
-				{CalibrationUnit.Msec, "msec".GetLocalized() },
-				{CalibrationUnit.Sec, "sec".GetLocalized() },
-				{CalibrationUnit.Mm, "mm".GetLocalized() },
-				{CalibrationUnit.Mv, "mV".GetLocalized() },
-				{CalibrationUnit.Uncalibrated, "points".GetLocalized() },
+				{Unit.Msec, "msec".GetLocalized() },
+				{Unit.Sec, "sec".GetLocalized() },
+				{Unit.Mm, "mm".GetLocalized() },
+				{Unit.Mv, "mV".GetLocalized() },
+				{Unit.Uncalibrated, "points".GetLocalized() },
 			};
 
 		private readonly CaliperType _caliperType;
@@ -28,10 +28,10 @@ namespace EPCalipersWinUI3.ViewModels
 		private readonly struct CalibrationInput
 		{
 			public double CalibrationValue { get; init; }
-			public CalibrationUnit Unit { get; init; }
+			public Unit Unit { get; init; }
 			public string CustomInput { get; init; }
 
-			public CalibrationInput(double value, CalibrationUnit unit, string customInput = "")
+			public CalibrationInput(double value, Unit unit, string customInput = "")
 			{
 				CalibrationValue = value;
 				Unit = unit;
@@ -85,23 +85,23 @@ namespace EPCalipersWinUI3.ViewModels
 				case 0:
 					input = new CalibrationInput(
 						1000,
-						CalibrationUnit.Msec);
+						Unit.Msec);
 					break;
 				case 1:
 					input = new CalibrationInput(
 						1.0,
-						CalibrationUnit.Sec);
+						Unit.Sec);
 					break;
 				case 2:
 					input = new CalibrationInput(
 						0,
-						CalibrationUnit.Custom,
+						Unit.Custom,
 						CustomInterval);
 					break;
 			}
 			try
 			{
-				CalibrationParameters parameters = ParseInput(input);
+				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
 				_caliperCollection.SetCalibration();
 			}
@@ -121,23 +121,23 @@ namespace EPCalipersWinUI3.ViewModels
 				case 0:
 					input = new CalibrationInput(
 						10,
-						CalibrationUnit.Mm);
+						Unit.Mm);
 					break;
 				case 1:
 					input = new CalibrationInput(
 						1.0,
-						CalibrationUnit.Mv);
+						Unit.Mv);
 					break;
 				case 2:
 					input = new CalibrationInput(
 						0,
-						CalibrationUnit.Custom,
+						Unit.Custom,
 						CustomInterval);
 					break;
 			}
 			try
 			{
-				CalibrationParameters parameters = ParseInput(input);
+				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
 				_caliperCollection.SetCalibration();
 			}
@@ -149,26 +149,18 @@ namespace EPCalipersWinUI3.ViewModels
 				await dialog.ShowAsync();
 			}
 		}
-		private static CalibrationParameters ParseInput(CalibrationInput input)
+		private static CalibrationMeasurement ParseInput(CalibrationInput input)
 		{
-			if (input.Unit == CalibrationUnit.Custom)
+			if (input.Unit == Unit.Custom)
 			{
 				var (value, unitString) = ParseCustomString(input.CustomInput);
 				var unit = Calibration.StringToCalibrationUnit(unitString);
 
-				return new CalibrationParameters
-				{
-					CalibrationInterval = value,
-					UnitString = unitString,
-					Unit = unit
-				};
+				return new CalibrationMeasurement(value, unit, unitString);
 			}
-			return new CalibrationParameters
-			{
-				CalibrationInterval = input.CalibrationValue,
-				Unit = input.Unit,
-				UnitString = CalibrationStrings[input.Unit]
-			};
+			return new CalibrationMeasurement(input.CalibrationValue,
+				input.Unit,
+				CalibrationStrings[input.Unit]);
 		}
 		public static (double, string) ParseCustomString(string s)
 		{

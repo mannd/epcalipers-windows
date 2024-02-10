@@ -17,7 +17,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override Bar HandleBar => ApexBar;
 
-		public override string Text => AngleCalibration.GetText(Value);
+		public override string Text => AngleCalibration.GetFormattedMeasurement(Value);
 
 		public TriangleBaseLabel TriangleBaseLabel { get; set; } // Visible when Brugada triangle visible.
 
@@ -117,8 +117,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private bool ShowBrugadaTriangle(AngleCaliperPosition position)
 		{
 			return (_settings.ShowBrugadaTriangle &&
-				AngleCalibration.TimeCalibration.Parameters.Unit == CalibrationUnit.Msec &&
-				AngleCalibration.AmplitudeCalibration.Parameters.Unit == CalibrationUnit.Mm &&
+				AngleCalibration.TimeCalibration.CalibrationMeasurment.Unit == Unit.Msec &&
+				AngleCalibration.AmplitudeCalibration.CalibrationMeasurment.Unit == Unit.Mm &&
 				AngleInSouthernHemisphere(position.FirstAngle) &&
 				AngleInSouthernHemisphere(position.LastAngle));
 		}
@@ -163,7 +163,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void InitCaliperLabel()
 		{
-			string text = AngleCalibration.GetText(Value);
+			string text = AngleCalibration.GetFormattedMeasurement(Value);
 			CaliperLabel = new AngleCaliperLabel(this, text,
 				CaliperLabelAlignment.Top, false, _fakeUI);
 		}
@@ -224,7 +224,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				default: break;
 			}
 			DrawTriangleBase();
-			CaliperLabel.Text = AngleCalibration.GetText(Value);
+			CaliperLabel.Text = AngleCalibration.GetFormattedMeasurement(Value);
 			CaliperLabel.SetPosition();
 		}
 

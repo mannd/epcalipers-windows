@@ -1,11 +1,14 @@
 ﻿using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+
+[assembly: InternalsVisibleTo("EPCalipersWinUi3Tests")]
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public enum CalibrationUnit
+	public enum Unit
 	{
 		Msec,
 		Sec,
@@ -17,18 +20,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		Unknown,
 		None
 	}
-	public readonly struct CalibrationParameters
+	// TODO: If possible, refactor this to just be a Measurement, provided this struct
+	// remains as just a wrapper of a Measurement.
+	public readonly struct CalibrationMeasurement
 	{
-		public double CalibrationInterval { get; init; }
-		public CalibrationUnit Unit { get; init; }
-		public string UnitString { get; init; }
-		public CalibrationParameters(double interval, CalibrationUnit unit, string unitString)
+		public Measurement Measurement { get; init; }
+		public double Value => Measurement.Value;
+		public Unit Unit => Measurement.Unit;
+		public string UnitString => Measurement.UnitString;
+		public CalibrationMeasurement(double interval, Unit unit, string unitString)
 		{
-			CalibrationInterval = interval;
-			Unit = unit;
-			UnitString = unitString;
+			Measurement = new Measurement(interval, unit, unitString);
 		}
 	}
+
 	public sealed class ZeroValueException : Exception
 	{
 		public ZeroValueException() : base("ZeroValueException") { }
@@ -39,13 +44,18 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public EmptyCustomStringException() : base("EmptyCustomStringException") { }
 	}
 
+	public sealed class CantShowBpmException: Exception
+	{
+		public CantShowBpmException() : base("Can't show BPM with this type of calibration") { }
+	}
+
 	public class Calibration
 	{
 		// Rounding format strings
 		private const string _roundToIntString = "D";
-		private const string _roundToFourPlacesString = "G4";
+		private const string _roundToFourPlacesString = "G4"; // Useful?
 		private const string _roundToTenthsString = "F1";
-		private const string _roundToHundredthsString = "F2";
+		private const string _roundToHundredthsString = "F2"; // This is needed for units in seconds.
 		private const string _noRoundingString = "G8";  // This is too precise for clinical use.
 
 		private readonly IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
@@ -57,51 +67,54 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{Rounding.None, _noRoundingString },
 		};
 
-		public Rounding Rounding { get; set; } = Rounding.ToInt;
-
-		public CalibrationParameters Parameters { get; init; }
-		public double Multiplier { get; init; }
-
-		public bool IsUncalibrated => Parameters.Unit == CalibrationUnit.Uncalibrated;
-		public bool IsCalibrated => !IsUncalibrated;
-		public static string DefaultUnit { get; set; } = "points";
-		public static string DefaultBpm { get; set; } = "bpm";
-
 		/// <summary>
 		/// Provides a calibration factor that calculates the actual interval.
 		/// </summary>
-		/// <param name="value">The value of the caliper in points at the time of calibration.</param>
+		/// <param name="uncalibratedValue">The value of the caliper in points at the time of calibration.</param>
 		/// <param name="input">The desired calibration interval parameters, e.g. "1000 msec"</param>
-		public Calibration(double value, CalibrationParameters parameters)
+		public Calibration(double uncalibratedValue, CalibrationMeasurement calibrationMeasurement)
 		{
-			Parameters = parameters;
-			Multiplier = Parameters.CalibrationInterval / value;
+			if (uncalibratedValue == 0) throw new ZeroValueException();
+			CalibrationMeasurment = calibrationMeasurement;
+			Multiplier = CalibrationMeasurment.Value / uncalibratedValue;
 		}
-
 		public Calibration()
 		{
-			Parameters = new CalibrationParameters
-			{
-				Unit = CalibrationUnit.Uncalibrated,
-				UnitString = DefaultUnit,
-				CalibrationInterval = 1
-			};
+			CalibrationMeasurment = new CalibrationMeasurement(1, Unit.Uncalibrated, DefaultUnit);
 			Multiplier = 1.0;
 		}
 
+		public static string DefaultUnit { get; set; } = "points";
+		public static string DefaultBpm { get; set; } = "bpm";
 		public static Calibration Uncalibrated => new(); // Default Calibration.Unit is Uncalibrated.
-		public static Calibration None => new(1.0, new CalibrationParameters(1.0, CalibrationUnit.None, ""));
+		public static Calibration None => new(1.0, new CalibrationMeasurement(1.0, Unit.None, ""));
 
-		public virtual string GetText(double interval, bool showBpm = false)
+		public Rounding Rounding { get; set; } = Rounding.ToInt;
+		public CalibrationMeasurement CalibrationMeasurment { get; init; }
+		public double Multiplier { get; init; }
+		public bool IsUncalibrated => CalibrationMeasurment.Unit == Unit.Uncalibrated;
+		public bool IsCalibrated => !IsUncalibrated;
+
+		public static Unit StringToCalibrationUnit(string input)
 		{
-			var valueUnit = CalibratedInterval(interval, showBpm);
-			double value = valueUnit.Item1;
-			string unitString = valueUnit.Item2;
-			string formattedValue = GetRoundedValue(value, showBpm);
+			if (string.IsNullOrEmpty(input)) return Unit.Unknown;
+			if (IsMillimetersUnit(input)) return Unit.Mm;
+			if (IsMillisecondsUnit(input)) return Unit.Msec;
+			if (IsSecondsUnit(input)) return Unit.Sec;
+			if (IsMillivoltsUnit(input)) return Unit.Mv;
+			return Unit.Unknown;
+		}
+
+		public virtual string GetFormattedMeasurement(double interval, bool showBpm = false)
+		{
+			var measurement = CalibratedInterval(interval, showBpm);
+			double value = measurement.Value;
+			string unitString = measurement.UnitString;
+			string formattedValue = GetFormattedRoundedValue(value, showBpm);
 			return string.Format("{0} {1}", formattedValue, unitString);
 		}
 
-		public string GetRoundedValue(double value, bool showBpm = false)
+		public string GetFormattedRoundedValue(double value, bool showBpm = false)
 		{
 			// 
 			string format = ForceRoundingToHundredths(showBpm) ?
@@ -120,72 +133,94 @@ namespace EPCalipersWinUI3.Models.Calipers
 			interval = Math.Abs(interval);  // no negative mean intervals
 			var meanInterval = MathHelper.MeanInterval(interval, numberOfIntervals);
 			var intervalPlusUnit = CalibratedInterval(meanInterval, showBpm);
-			var calibratedMeanInterval = intervalPlusUnit.Item1;
-			var roundedInterval = GetRoundedValue(calibratedMeanInterval, showBpm: showBpm);
-			return (roundedInterval, intervalPlusUnit.Item2);
+			var calibratedMeanInterval = intervalPlusUnit.Value;
+			var roundedInterval = GetFormattedRoundedValue(calibratedMeanInterval, showBpm: showBpm);
+			return (roundedInterval, intervalPlusUnit.UnitString);
+		}
+
+		public (string, string) GetNewMeanCalibratedInterval(double interval, int numberOfIntervals, bool showBpm = false)
+		{
+			var meanInterval = GetMeanInterval(interval, numberOfIntervals);
+			var meanMeasurement = CalibratedInterval(meanInterval, showBpm);
+			var calibratedMeanInterval = meanMeasurement.Value;
+			var roundedInterval = GetFormattedRoundedValue(calibratedMeanInterval, showBpm: showBpm);
+			return (roundedInterval, meanMeasurement.UnitString);
+		}
+
+		public double GetMeanInterval(double interval, int numberOfIntervals)
+		{
+			if (numberOfIntervals < 1) throw new ZeroValueException();
+			interval = Math.Abs(interval);
+			return MathHelper.MeanInterval(interval, numberOfIntervals);
+		}
+
+		public Measurement MeanCalibratedInterval(double interval, int n)
+		{
+			var meanInterval = GetMeanInterval(interval, n);
+			return new Measurement(meanInterval, CalibrationMeasurment.Unit,
+				CalibrationMeasurment.UnitString);
+		}
+
+		public Measurement CalibratedInterval(double interval, bool showBpm = false)
+		{
+			double value;
+			string unitString;
+
+			if (showBpm)
+			{
+				unitString = DefaultBpm;
+				value = CalibrationMeasurment.Unit switch
+				{
+					Unit.Msec => MathHelper.AbsMsecToBpm(Multiplier * interval),
+					Unit.Sec => MathHelper.AbsSecToBpm(Multiplier * interval),
+					_ => Multiplier * interval
+				};
+			}
+			else
+			{
+				if (CalibrationMeasurment.Unit == Unit.Mm)
+				{
+					value = Math.Abs(Multiplier * interval);
+				}
+				else
+				{
+					value = Multiplier * interval;
+				}
+				unitString = CalibrationMeasurment.UnitString;
+			}
+
+			return new Measurement(value, CalibrationMeasurment.Unit, unitString);
+		}
+
+		internal static bool IsMillisecondsUnit(string input)
+		{
+			string pattern = @"^(msec|мсек|ms|мс)$|^(millis|миллис)";
+			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+		}
+
+		internal static bool IsSecondsUnit(string input)
+		{
+			string pattern = @"^(sec|сек|s|с)$";
+			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+		}
+		internal static bool IsMillimetersUnit(string input)
+		{
+			string pattern = @"^(mm|мм)$|^(millim|миллим)";
+			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+		}
+		internal static bool IsMillivoltsUnit(string input)
+		{
+			string pattern = @"^(mv|мв)$|^(milliv|миллив)";
+			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
 		}
 
 		// Rationale here is that sec and mV are useless without two decimal places.
 		// User can get around this by defining custom units instead of using predefined units.
 		private bool ForceRoundingToHundredths(bool showBpm)
 		{
-			return (Parameters.Unit == CalibrationUnit.Sec && !showBpm)
-				|| Parameters.Unit == CalibrationUnit.Mv;
+			return (CalibrationMeasurment.Unit == Unit.Sec && !showBpm)
+				|| CalibrationMeasurment.Unit == Unit.Mv;
 		}
 
-		public (double, string) CalibratedInterval(double interval, bool showBpm = false)
-		{
-			if (showBpm)
-			{
-				// Disallow negative bpm.
-				if (Parameters.Unit == CalibrationUnit.Msec)
-				{
-					return (MathHelper.AbsMsecToBpm(Multiplier * interval), DefaultBpm);
-				}
-				if (Parameters.Unit == CalibrationUnit.Sec)
-				{
-					return (MathHelper.AbsSecToBpm(Multiplier * interval), DefaultBpm);
-				}
-			}
-			// Disallow negative amplitudes in mm, but allow negative mV, and custom units.
-			if (Parameters.Unit == CalibrationUnit.Mm)
-			{
-				return (Math.Abs(Multiplier * interval), Parameters.UnitString);
-			}
-			return (Multiplier * interval, Parameters.UnitString);
-		}
-
-		public static bool IsMillisecondsUnit(string input)
-		{
-			string pattern = @"^(msec|мсек|ms|мс)$|^(millis|миллис)";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
-
-		public static bool IsSecondsUnit(string input)
-		{
-			string pattern = @"^(sec|сек|s|с)$";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
-		public static bool IsMillimetersUnit(string input)
-		{
-			string pattern = @"^(mm|мм)$|^(millim|миллим)";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
-
-		public static bool IsMillivoltsUnit(string input)
-		{
-			string pattern = @"^(mv|мв)$|^(milliv|миллив)";
-			return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-		}
-
-		public static CalibrationUnit StringToCalibrationUnit(string input)
-		{
-			if (string.IsNullOrEmpty(input)) return CalibrationUnit.Unknown;
-			if (IsMillimetersUnit(input)) return CalibrationUnit.Mm;
-			if (IsMillisecondsUnit(input)) return CalibrationUnit.Msec;
-			if (IsSecondsUnit(input)) return CalibrationUnit.Sec;
-			if (IsMillivoltsUnit(input)) return CalibrationUnit.Mv;
-			return CalibrationUnit.Unknown;
-		}
 	}
 }

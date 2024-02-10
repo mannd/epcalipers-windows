@@ -34,6 +34,7 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.QtcParameters = QtcParameters;
 			}
+			ViewModel.SetRR();
 			Debug.Print(QtcParameters.Caliper?.LabelText ?? string.Empty);
 			Debug.Print(QtcParameters.NumberOfIntervals.ToString());
 		}

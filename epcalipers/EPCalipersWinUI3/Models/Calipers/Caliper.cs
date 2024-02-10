@@ -118,7 +118,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// </summary>
 		public abstract double Value { get; }
 
-		public virtual string Text => Calibration.GetText(Value, ShowRate);
+		public virtual string Text => Calibration.GetFormattedMeasurement(Value, ShowRate);
 
 		public string LabelText
 		{

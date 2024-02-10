@@ -19,7 +19,7 @@ namespace EPCalipersWinUi3Tests.Tests
 			Assert.Equal("3.0.0.0", appInfo.FileVersion);
 			Assert.Equal("EPCalipersWinUI3", appInfo.Title);
 			Assert.Equal("EP Calipers 3", appInfo.ProductName);
-			Assert.Equal("Copyright (c) 2023", appInfo.Copyright);
+			Assert.Equal("Copyright (c) 2023-2024", appInfo.Copyright);
 			Assert.Equal("EP Studios", appInfo.Company);
 		}
 	}

@@ -174,7 +174,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					bar.Angle += MathHelper.DegreesToRadians(distance);
 					bar.SetAngleBarPosition(new Point(bar.X1, bar.Y1), bar.Angle);
 					angleCaliper.DrawTriangleBase();
-					angleCaliper.CaliperLabel.Text = angleCaliper.Calibration.GetText(angleCaliper.Value);
+					angleCaliper.CaliperLabel.Text = angleCaliper.Calibration.GetFormattedMeasurement(angleCaliper.Value);
 					angleCaliper.CaliperLabel.SetPosition();
 				}
 				else
@@ -608,14 +608,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task ToggleRateInterval()
 		{
-			switch (TimeCalibration.Parameters.Unit)
+			switch (TimeCalibration.CalibrationMeasurment.Unit)
 			{
-				case CalibrationUnit.Uncalibrated:
+				case Unit.Uncalibrated:
 					await ShowMessage("Time calipers not calibrated",
 						"You need to calibrate a time caliper before you can measure heart rates.");
 					break;
-				case CalibrationUnit.Unknown:
-				case CalibrationUnit.None:
+				case Unit.Unknown:
+				case Unit.None:
 					await ShowMessage("Time calipers units not correct",
 						"Calibration unit needs to be msec or sec to meaure heart rates.");
 					break;
@@ -729,7 +729,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Window = _measureQtcWindow,
 				Caliper = SelectedCaliper,
 				CaliperCollection = this,
-				NumberOfIntervals = 1
+				RRMeasurement = new Measurement(),
+				QTMeasurement = new Measurement(),
 			};
 			Frame frame = new Frame();
 			frame.Navigate(typeof(QtcView), parameters);

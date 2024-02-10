@@ -15,7 +15,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Company>EP Studios</Company>
     <Description>Test description</Description>
-    <Copyright>Copyright (c) 2023</Copyright>
+    <Copyright>Copyright (c) 2023-2024</Copyright>
     <PackageProjectUrl>https://www.epstudiossoftware.com</PackageProjectUrl>
     <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
     <Version>3.0.0.0-alpha</Version>

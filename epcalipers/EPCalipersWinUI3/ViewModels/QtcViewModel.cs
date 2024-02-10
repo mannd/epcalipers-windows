@@ -1,15 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
-using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using Windows.Security.Isolation;
 using WinUIEx;
 
 namespace EPCalipersWinUI3.ViewModels
@@ -24,18 +21,13 @@ namespace EPCalipersWinUI3.ViewModels
 		public WindowEx Window {  get; set; }
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
-		public int NumberOfIntervals { get; set; }
-		public double RawRRInterval
-		{
-			get => _rawRRInterval;
-			set
-			{
-				_rawRRInterval = value;
-				OnPropertyChanged(nameof(RawRRInterval));
-			}
-		}
-		private double _rawRRInterval;
-		public double QTInterval { get; set; }
+
+		public Measurement RRMeasurement {  get; set; }
+
+		public Measurement QTMeasurement {  get; set; }
+
+		// TODO: refactor this away, use settings to set
+		public int NumberOfIntervals = 1;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public virtual void OnPropertyChanged(string propertyName)
@@ -46,9 +38,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 	public partial class QtcViewModel: ObservableObject
 	{
-		// TODO: QtcMeasurement or QtcParameters must notify QtcViewModel when RR interval and number of intervals change.
-		// Display the current value on the button label... 
-
+		// TODO: localize
+		public static string NotMeasured { get; set; } = "Not measured";
 		public QtcViewModel()
 		{
 			Debug.Print("reload QtcViewModel");
@@ -59,27 +50,70 @@ namespace EPCalipersWinUI3.ViewModels
 			QtcFormulas.Add("AllQTcFormulas".GetLocalized());
 		}
 
-		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		public void SetRR()
 		{
-			if (e.PropertyName == nameof(QtcParameters.RawRRInterval))
+			var rrMeasurement = QtcParameters.RRMeasurement;
+			RrInterval = NotMeasured;
+			if (rrMeasurement.Unit == Unit.None)
 			{
-				Debug.Print(QtcParameters.RawRRInterval.ToString());
-				RrInterval = QtcParameters.RawRRInterval.ToString();
+				return;
+			}
+			var calibration = QtcParameters.CaliperCollection.TimeCalibration;
+			if (calibration == null)
+			{
+				return;
+
+			}
+			var formattedRRMeasurement = calibration.GetFormattedMeasurement(rrMeasurement.Value);
+			if (formattedRRMeasurement != null)
+			{
+				RrInterval = formattedRRMeasurement;
 			}
 		}
 
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			//if (e.PropertyName == nameof(QtcParameters.RRMeasurement))
+			//{
+			//	// set RRInterval
+			//	var rrMeasurement = QtcParameters.RRMeasurement;
+			//	var calibration = QtcParameters.CaliperCollection.TimeCalibration;
+			//	if (calibration == null)
+			//	{
+			//		RrInterval = "Not measured.";
+			//		return;
+			//	}
+			//	var formattedRRMeasurement = calibration.GetFormattedMeasurement(rrMeasurement.Value);
+			//	if (formattedRRMeasurement != null)
+			//	{
+			//		RrInterval = formattedRRMeasurement;
+			//	}
+			//	else
+			//	{
+			//		RrInterval = "Not measured.";
+			//	}
 
+			//}
+			//if (e.PropertyName == nameof(QtcParameters.QTMeasurement))
+			//{
+			//	// set QTInterval
+			//}
+		}
+
+	
 
 		public QtcParameters QtcParameters
 		{
 			get => _qtcParameters;
 			set
 			{
-				_qtcParameters = value;
-				QtcParameters.PropertyChanged += OnMyPropertyChanged;
+				if (_qtcParameters != value)
+				{
+					_qtcParameters = value;
+					QtcParameters.PropertyChanged += OnMyPropertyChanged;
+				}
 			}
 		}
-
 		private QtcParameters _qtcParameters;
 
 		[RelayCommand]
@@ -96,23 +130,20 @@ namespace EPCalipersWinUI3.ViewModels
 		private void MeasureQTInterval()
 		{
 			Debug.Print("clicked measure QT interval");
-			CalculateQTc();
 		}
 
 		[RelayCommand]
 		public void CalculateQTc()
 		{
 			// TODO: use QtcParameters to either calculate QTc or give incomplete
-			// data error message.
-			// need another floating window or a dialog??  Maybe replace main QTc view with a new frame containing
-			// the meanRateIntervalView??, just change the page, and go back when done.  Same for QTc.
+			// TODO: Inactivate Calculate button until RR and QT are measured.
 		}
 
 		[ObservableProperty]
-		private string rrInterval = "Not measured";
+		private string rrInterval = NotMeasured;
 
 		[ObservableProperty]
-		private string qtInterval = "Not measured";
+		private string qtInterval = NotMeasured;
 
 		[ObservableProperty]
 		private List<string> qtcFormulas = new List<string>();
