@@ -723,7 +723,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_measureQtcWindow = new WindowEx();
 			}
 			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
-			//_measureQtcWindow.PersistenceId = "MeasureQtcWindowID";
+			_measureQtcWindow.PersistenceId = "MeasureQtcWindowID";
 			QtcParameters parameters = new QtcParameters()
 			{
 				Window = _measureQtcWindow,

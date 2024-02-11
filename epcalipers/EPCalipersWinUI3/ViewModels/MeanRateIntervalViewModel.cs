@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class MeanRateIntervalViewModel : ObservableObject
+	public partial class MeasureIntervalViewModel : ObservableObject
 	{
 		// TODO: localize
 		private static string _invalidCaliperText = "Invalid caliper";
@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3.ViewModels
 		public CaliperCollection CaliperCollection { get; set; }
 		public IntervalMeasured IntervalMeasured { get; set; } = IntervalMeasured.MeanRR;
 
-		public MeanRateIntervalViewModel(CaliperCollection caliperCollection,
+		public MeasureIntervalViewModel(CaliperCollection caliperCollection,
 			int numberOfIntervals = 3)
 		{
 			Caliper = caliperCollection.SelectedCaliper;
@@ -34,7 +34,7 @@ namespace EPCalipersWinUI3.ViewModels
 			GetResults();
 		}
 
-		public MeanRateIntervalViewModel() { }
+		public MeasureIntervalViewModel() { }
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{

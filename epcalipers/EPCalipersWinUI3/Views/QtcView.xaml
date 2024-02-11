@@ -12,6 +12,7 @@
     KeyUp="Page_KeyUp" >
 
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}">QT Measurement</TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureRR" />
         <Button HorizontalAlignment="Left" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}"
                    Content="{x:Bind ViewModel.RrInterval, Mode=TwoWay}" />
@@ -26,6 +27,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
                     Command="{x:Bind ViewModel.CalculateQTcCommand}"
+                    IsEnabled="{x:Bind ViewModel.CanCalculate}"
                     Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="QtcView_Cancel"
                     HorizontalAlignment="Stretch" x:Uid="ButtonDone" />

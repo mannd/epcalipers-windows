@@ -26,7 +26,7 @@ namespace EPCalipersWinUI3.Views
 	/// </summary>
 	public sealed partial class MeasureIntervalView : Page
 	{
-		MeanRateIntervalViewModel ViewModel { get; set; }
+		MeasureIntervalViewModel ViewModel { get; set; }
 
 		private bool _forQtcMeasurement = false;
 		public WindowEx Window { get; set; }
@@ -35,7 +35,7 @@ namespace EPCalipersWinUI3.Views
 		public MeasureIntervalView()
 		{
 			this.InitializeComponent();
-			ViewModel = new MeanRateIntervalViewModel();
+			ViewModel = new MeasureIntervalViewModel();
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -45,7 +45,7 @@ namespace EPCalipersWinUI3.Views
 			QtcParameters = e.Parameter as QtcParameters;
 			var caliperCollection = QtcParameters.CaliperCollection;
 			var numberOfIntervals = QtcParameters.NumberOfIntervals;
-			ViewModel = new MeanRateIntervalViewModel(caliperCollection, numberOfIntervals);
+			ViewModel = new MeasureIntervalViewModel(caliperCollection, numberOfIntervals);
 			ViewModel.QtcParameters = QtcParameters;
 			ViewModel.GetResults();
 		}

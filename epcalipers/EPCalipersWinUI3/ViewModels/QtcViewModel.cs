@@ -55,6 +55,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			UpdateRRInterval();
 			UpdateQTInterval();
+			CheckCanCalculate();
 		}
 
 		public void UpdateRRInterval()
@@ -86,6 +87,20 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				QtInterval = formattedQTMeasurement;
 			}
+		}
+
+		private void CheckCanCalculate()
+		{
+			CanCalculate = true; // TEMP.
+
+			// TODO: below is not working, want calculate button to only be enabled
+			// when two legal measurements are made...
+			//var rrUnit = QtcParameters.RRMeasurement.Unit;
+			//var qtUnit = QtcParameters.QTMeasurement.Unit;
+			//if (rrUnit == Unit.None || qtUnit == Unit.None) CanCalculate = false;
+			//var rrIsMeasured = rrUnit != Unit.None;
+			//var qtIsMeasured = qtUnit != Unit.None;	
+			//CanCalculate = rrIsMeasured && qtIsMeasured;
 		}
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -173,5 +188,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int selectedFormulaIndex = 0;
+
+		[ObservableProperty]
+		private bool canCalculate;
 	}
 }

@@ -20,12 +20,12 @@ namespace EPCalipersWinUI3.Views
 		public WindowEx Window { get; set; }
 		public QtcParameters QtcParameters { get; set; }	
 
-		public MeanRateIntervalViewModel ViewModel { get; set; }
+		public MeasureIntervalViewModel ViewModel { get; set; }
 
 		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
 		{
 			InitializeComponent();
-			ViewModel = new MeanRateIntervalViewModel(caliperCollection);
+			ViewModel = new MeasureIntervalViewModel(caliperCollection);
 		}
 
 		public MeanRateIntervalView()
@@ -41,7 +41,7 @@ namespace EPCalipersWinUI3.Views
 			QtcParameters = e.Parameter as QtcParameters;
 			var caliperCollection = QtcParameters.CaliperCollection;
 			var numberOfIntervals = QtcParameters.NumberOfIntervals;
-			ViewModel = new MeanRateIntervalViewModel(caliperCollection, numberOfIntervals);
+			ViewModel = new MeasureIntervalViewModel(caliperCollection, numberOfIntervals);
 			ViewModel.QtcParameters = QtcParameters;
 			ViewModel.GetResults();
 		}

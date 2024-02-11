@@ -10,11 +10,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     KeyUp="Page_KeyUp" >
 
-    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">QT interval</TextBlock>
+    <StackPanel Margin="10" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}">QT interval</TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
-        <TextBlock x:Name="Interval" Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
-        <Grid Margin="10">
+        <TextBlock x:Name="Interval" Style="{StaticResource BodyStrongTextBlockStyle}"
+                   Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
