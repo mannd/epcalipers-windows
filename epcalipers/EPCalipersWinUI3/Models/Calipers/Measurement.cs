@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
+	public enum IntervalMeasured
+	{
+		RR,
+		QT,
+		MeanRR
+	}
+
 	public readonly struct Measurement
 	{
 		public Measurement(double value, Unit unit, string unitString)

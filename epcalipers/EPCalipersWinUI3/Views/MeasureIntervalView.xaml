@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="EPCalipersWinUI3.Views.MeasureIntervalView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EPCalipersWinUI3.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    KeyUp="Page_KeyUp" >
+
+    <StackPanel Margin="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">QT interval</TextBlock>
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
+        <TextBlock x:Name="Interval" Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
+                    HorizontalAlignment="Right" x:Uid="ButtonDone" />
+        </Grid>
+    </StackPanel>
+</Page>

@@ -21,14 +21,15 @@ namespace EPCalipersWinUI3.ViewModels
 		public WindowEx Window {  get; set; }
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
-
 		public Measurement RRMeasurement {  get; set; }
-
 		public Measurement QTMeasurement {  get; set; }
+		public IntervalMeasured IntervalMeasured { get; set; }
 
 		// TODO: refactor this away, use settings to set
 		public int NumberOfIntervals = 1;
 
+		// TODO: do we still need to notify for any events in this class?
+		// maybe if CaliperCollection changes or Calibration changes?
 		public event PropertyChangedEventHandler PropertyChanged;
 		public virtual void OnPropertyChanged(string propertyName)
 		{
@@ -50,7 +51,13 @@ namespace EPCalipersWinUI3.ViewModels
 			QtcFormulas.Add("AllQTcFormulas".GetLocalized());
 		}
 
-		public void SetRR()
+		public void UpdateIntervals()
+		{
+			UpdateRRInterval();
+			UpdateQTInterval();
+		}
+
+		public void UpdateRRInterval()
 		{
 			var rrMeasurement = QtcParameters.RRMeasurement;
 			RrInterval = NotMeasured;
@@ -59,15 +66,25 @@ namespace EPCalipersWinUI3.ViewModels
 				return;
 			}
 			var calibration = QtcParameters.CaliperCollection.TimeCalibration;
-			if (calibration == null)
-			{
-				return;
-
-			}
-			var formattedRRMeasurement = calibration.GetFormattedMeasurement(rrMeasurement.Value);
+			var formattedRRMeasurement = calibration?.GetFormattedMeasurement(rrMeasurement.Value);
 			if (formattedRRMeasurement != null)
 			{
 				RrInterval = formattedRRMeasurement;
+			}
+		}
+		public void UpdateQTInterval()
+		{
+			var qtMeasurement = QtcParameters.QTMeasurement;
+			QtInterval = NotMeasured;
+			if (qtMeasurement.Unit == Unit.None)
+			{
+				return;
+			}
+			var calibration = QtcParameters.CaliperCollection.TimeCalibration;
+			var formattedQTMeasurement = calibration?.GetFormattedMeasurement(qtMeasurement.Value);
+			if (formattedQTMeasurement != null)
+			{
+				QtInterval = formattedQTMeasurement;
 			}
 		}
 
@@ -119,6 +136,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		private void MeasureRRInterval()
 		{
+			QtcParameters.IntervalMeasured = IntervalMeasured.RR;
 			Frame frame = QtcParameters.Window.Content as Frame;
 			if (frame != null)
 			{
@@ -129,7 +147,12 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		private void MeasureQTInterval()
 		{
-			Debug.Print("clicked measure QT interval");
+			QtcParameters.IntervalMeasured = IntervalMeasured.QT;
+			Frame frame = QtcParameters.Window.Content as Frame;
+			if (frame != null)
+			{
+				frame.Navigate(typeof(MeasureIntervalView), QtcParameters);
+			}
 		}
 
 		[RelayCommand]

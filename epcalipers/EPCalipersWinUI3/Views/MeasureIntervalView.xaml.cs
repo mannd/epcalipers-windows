@@ -1,11 +1,18 @@
-using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.System;
 using WinUIEx;
 
@@ -14,26 +21,23 @@ using WinUIEx;
 
 namespace EPCalipersWinUI3.Views
 {
-	public sealed partial class MeanRateIntervalView : Page
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class MeasureIntervalView : Page
 	{
+		MeanRateIntervalViewModel ViewModel { get; set; }
+
 		private bool _forQtcMeasurement = false;
 		public WindowEx Window { get; set; }
 		public QtcParameters QtcParameters { get; set; }	
 
-		public MeanRateIntervalViewModel ViewModel { get; set; }
-
-		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
+		public MeasureIntervalView()
 		{
-			InitializeComponent();
-			ViewModel = new MeanRateIntervalViewModel(caliperCollection);
+			this.InitializeComponent();
+			ViewModel = new MeanRateIntervalViewModel();
 		}
 
-		public MeanRateIntervalView()
-		{
-			InitializeComponent();
-		}
-
-		// Only navigated to in context of QTc measurement.
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			_forQtcMeasurement = true;
@@ -68,7 +72,6 @@ namespace EPCalipersWinUI3.Views
 				Window?.Close();
 			}
 		}
-
 		private void Page_KeyUp(object sender, KeyRoutedEventArgs e)
 		{
 			switch (e.Key)

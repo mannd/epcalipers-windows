@@ -20,10 +20,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
+		public IntervalMeasured IntervalMeasured { get; set; } = IntervalMeasured.MeanRR;
 
-		// TODO: Refactor to pass QtcParameters (maybe renamed to MeasurementParameters)
-		// so that we use QtcParameters.Caliper, QtcParameters.CaliperCollection and
-		// QtcParameters.NumberOfIntervals directly...
 		public MeanRateIntervalViewModel(CaliperCollection caliperCollection,
 			int numberOfIntervals = 3)
 		{
@@ -34,13 +32,9 @@ namespace EPCalipersWinUI3.ViewModels
 			PropertyChanged += OnMyPropertyChanged;
 			NumberOfIntervals = numberOfIntervals;
 			GetResults();
-			//TotalInterval = GetFormattedTotalInterval();
-			//MeanInterval = GetFormattedMeanInterval();
-			//MeanRate = GetFormattedMeanRate();
 		}
 
 		public MeanRateIntervalViewModel() { }
-
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -62,17 +56,33 @@ namespace EPCalipersWinUI3.ViewModels
 			TotalInterval = GetFormattedTotalInterval();
 			MeanInterval = GetFormattedMeanInterval();
 			MeanRate = GetFormattedMeanRate();
-			if (QtcParameters != null) 
+			if (QtcParameters == null) return;
+			switch (QtcParameters.IntervalMeasured)
 			{
-				if (IsValidCaliper())
-				{
-					QtcParameters.RRMeasurement = Caliper.Calibration
-						.MeanCalibratedInterval(Caliper.Value, NumberOfIntervals);
-				}
-				else
-				{
-					QtcParameters.RRMeasurement = new Measurement();
-				}
+				case IntervalMeasured.MeanRR:
+					return;
+				case IntervalMeasured.RR:
+					if (IsValidCaliper())
+					{
+						QtcParameters.RRMeasurement = Caliper.Calibration
+							.MeanCalibratedInterval(Caliper.Value, NumberOfIntervals);
+					}
+					else
+					{
+						QtcParameters.RRMeasurement = new Measurement();
+					}
+					break;
+				case IntervalMeasured.QT:
+					if (IsValidCaliper())
+					{
+						QtcParameters.QTMeasurement = Caliper.Calibration
+							.MeanCalibratedInterval(Caliper.Value, 1);
+					}
+					else
+					{
+						QtcParameters.QTMeasurement = new Measurement();
+					}
+					break;
 			}
 		}
 
