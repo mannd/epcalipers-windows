@@ -5,8 +5,9 @@ This is an experimental branch of the EP Calipers for Windows
 repository.  The current main branch is the epcalipers-2 branch.
 
 This epcalipers-3 branch is a rewrite nearly from scratch of EP
-Calipers.  It does not yet have functionality as a calipers app, and
-it may not even build.
+Calipers.  It is still under development, and we are still adding
+functionality to get it to the same level of functionality as the
+epcalipers-2 branch.
 
 The goals of this new branch are to recreate the app with the
 following improvements:
@@ -16,6 +17,15 @@ following improvements:
 - Update the Help system to Modern Windows style.
 - Support dark mode
 - MSIX installation via side-loading or Microsoft Store.
+
+## Beta testing
+If you are interested in beta-testing this new version, email us at
+mannd@epstudiossoftware.com.  When the first beta version is
+available, we will contact you.
+
+## Note
+The rest of the README for now just duplicates the version 2 README.
+It does NOT reflect the version 3 functionality.
 
 ## Description 
 This is the Microsoft Windows™ version of EP Calipers.

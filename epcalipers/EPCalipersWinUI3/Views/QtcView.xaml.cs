@@ -26,6 +26,7 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new QtcViewModel();
 		}
+		// TODO: Need cancel button on Measure and QT dialogs, so that interval is NOT updated if user doesn't want to update it.
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
@@ -42,12 +43,6 @@ namespace EPCalipersWinUI3.Views
 			CloseWindow();
 		}
 
-		private void QtcView_Calculate(object sender, RoutedEventArgs e)
-		{
-			// calculate QTc
-			CloseWindow();
-		}
-
 		private void CloseWindow()
 		{
 			QtcParameters.Window?.Close();
@@ -60,6 +55,11 @@ namespace EPCalipersWinUI3.Views
 				case VirtualKey.Escape: CloseWindow(); break;
 				default: break;
 			}
+		}
+
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			ViewModel.XamlRoot = XamlRoot;
 		}
 	}
 }

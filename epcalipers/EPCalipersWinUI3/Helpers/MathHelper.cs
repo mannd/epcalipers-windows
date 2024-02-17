@@ -128,8 +128,7 @@ namespace EPCalipersWinUI3.Helpers
 			QtcFormula.qtcBzt,
 			QtcFormula.qtcFrm,
 			QtcFormula.qtcHdg,
-			QtcFormula.qtcFrd
-	};
+			QtcFormula.qtcFrd };
 
 			private QtcFormula formula;
 			private Dictionary<QtcFormula, string> formulaNames;
@@ -143,6 +142,31 @@ namespace EPCalipersWinUI3.Helpers
 				formulaNames.Add(QtcFormula.qtcFrm, "Framingham");
 				formulaNames.Add(QtcFormula.qtcHdg, "Hodges");
 				formulaNames.Add(QtcFormula.qtcFrd, "Fridericia");
+				formulaNames.Add(QtcFormula.qtcAll, "All formulas");
+			}
+
+			public string Calculate(Measurement rr, Measurement qt, Calibration calibration)
+			{
+				if (!ValidUnit(rr) || !ValidUnit(qt)) return "Invalid unit";
+				if (rr.Unit != qt.Unit) return "Mismatched units";
+				double rrInSec = calibration.CalibratedInterval(rr.Value, false).Value;
+				double qtInSec = calibration.CalibratedInterval(qt.Value, false).Value;
+				if (rr.Unit == Unit.Msec)
+				{
+					rrInSec = MsecToSec(rrInSec);
+				}
+				if (qt.Unit == Unit.Msec)
+				{
+					qtInSec = MsecToSec(qtInSec);
+				}
+				string unitString = rr.UnitString;
+				bool convertToMsec = rr.Unit == Unit.Msec;
+				return Calculate(qtInSec, rrInSec, convertToMsec, unitString);
+			}
+
+			private bool ValidUnit(Measurement measurement)
+			{
+				return measurement.Unit == Unit.Msec || measurement.Unit == Unit.Sec;
 			}
 
 			public string Calculate(double qtInSec, double rrInSec,

@@ -711,8 +711,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				// show dialog, get number of interval
 				ShowMeasureQtcDialog();
-				//var numberIntervals = 5;
-				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
 		}
 		public void ShowMeasureQtcDialog()

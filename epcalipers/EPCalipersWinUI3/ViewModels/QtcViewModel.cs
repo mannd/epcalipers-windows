@@ -3,11 +3,16 @@ using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using WinUIEx;
+using static EPCalipersWinUI3.Helpers.MathHelper;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -41,14 +46,24 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		// TODO: localize
 		public static string NotMeasured { get; set; } = "Not measured";
+		public XamlRoot XamlRoot { get; set; }
 		public QtcViewModel()
 		{
-			Debug.Print("reload QtcViewModel");
-			QtcFormulas.Add("BazettFormula".GetLocalized());
-			QtcFormulas.Add("FraminghamFormula".GetLocalized());
-			QtcFormulas.Add("HodgesFormula".GetLocalized());
-			QtcFormulas.Add("FridericiaFormula".GetLocalized());
-			QtcFormulas.Add("AllQTcFormulas".GetLocalized());
+			QtcFormulas = new();
+			QtcFormulas.Add(QtcFormula.qtcBzt, "BazettFormula".GetLocalized());
+			QtcFormulas.Add(QtcFormula.qtcFrm, "FraminghamFormula".GetLocalized());
+			QtcFormulas.Add(QtcFormula.qtcHdg, "HodgesFormula".GetLocalized());
+			QtcFormulas.Add(QtcFormula.qtcFrd, "FridericiaFormula".GetLocalized());
+			QtcFormulas.Add(QtcFormula.qtcAll, "AllQTcFormulas".GetLocalized());
+
+			QtcFormulaNames = QtcFormulas.Values.ToList();
+		}
+
+		[RelayCommand]
+		public void FormulaComboBoxLoaded()
+		{
+			// TODO: store this from session to session
+			SelectedFormulaIndex = 1;
 		}
 
 		public void UpdateIntervals()
@@ -170,10 +185,22 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		public void CalculateQTc()
+		public async Task CalculateQTc()
 		{
 			// TODO: use QtcParameters to either calculate QTc or give incomplete
 			// TODO: Inactivate Calculate button until RR and QT are measured.
+			var calculator = new QtcCalculator((QtcFormula)SelectedFormulaIndex);
+			var result = calculator.Calculate(
+				QtcParameters.RRMeasurement, 
+				QtcParameters.QTMeasurement, 
+				QtcParameters.CaliperCollection.TimeCalibration);
+			if (result != null)
+			{
+				Debug.Print(result);
+			}
+			var dialog = MessageHelper.CreateMessageDialog("QTc", result);
+			dialog.XamlRoot = XamlRoot;
+			await dialog.ShowAsync();
 		}
 
 		[ObservableProperty]
@@ -183,10 +210,13 @@ namespace EPCalipersWinUI3.ViewModels
 		private string qtInterval = NotMeasured;
 
 		[ObservableProperty]
-		private List<string> qtcFormulas = new List<string>();
+		private Dictionary<QtcFormula, string> qtcFormulas;
 
 		[ObservableProperty]
-		private int selectedFormulaIndex = 0;
+		private List<string> qtcFormulaNames;
+
+		[ObservableProperty]
+		private int selectedFormulaIndex;
 
 		[ObservableProperty]
 		private bool canCalculate;
