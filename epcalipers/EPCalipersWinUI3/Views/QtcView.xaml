@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
                     Command="{x:Bind ViewModel.CalculateQTcCommand}"
-                    IsEnabled="{x:Bind ViewModel.CanCalculate}"
+                    IsEnabled="{x:Bind ViewModel.CanCalculate, Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" x:Uid="ButtonCalculate" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="QtcView_Cancel"
                     HorizontalAlignment="Stretch" x:Uid="ButtonDone" />
