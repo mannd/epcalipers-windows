@@ -20,7 +20,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
+            <Button Grid.Column="1" Margin="2,12,0,0" Click="Done_Click"
                     HorizontalAlignment="Right" x:Uid="ButtonDone" />
         </Grid>
     </StackPanel>

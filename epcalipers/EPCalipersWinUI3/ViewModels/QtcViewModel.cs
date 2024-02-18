@@ -66,6 +66,27 @@ namespace EPCalipersWinUI3.ViewModels
 			SelectedFormulaIndex = 1;
 		}
 
+		[RelayCommand]
+		public void ResetRRInterval()
+		{
+			_qtcParameters.RRMeasurement = new Measurement();
+			UpdateIntervals();
+		}
+
+		[RelayCommand]
+		public void ResetQTInterval()
+		{
+			_qtcParameters.QTMeasurement = new Measurement();
+			UpdateIntervals();
+		}
+
+		[RelayCommand]
+		public void ResetIntervals()
+		{
+			ResetRRInterval();
+			ResetQTInterval();
+		}
+
 		public void UpdateIntervals()
 		{
 			UpdateRRInterval();
@@ -106,10 +127,6 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private void CheckCanCalculate()
 		{
-			//CanCalculate = true; // TEMP.
-
-			// TODO: below is not working, want calculate button to only be enabled
-			// when two legal measurements are made...
 			var rrUnit = QtcParameters.RRMeasurement.Unit;
 			var qtUnit = QtcParameters.QTMeasurement.Unit;
 			var rrIsMeasured = rrUnit != Unit.None;

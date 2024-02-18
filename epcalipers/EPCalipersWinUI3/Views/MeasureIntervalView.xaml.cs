@@ -46,11 +46,12 @@ namespace EPCalipersWinUI3.Views
 			var caliperCollection = QtcParameters.CaliperCollection;
 			var numberOfIntervals = QtcParameters.NumberOfIntervals;
 			ViewModel = new MeasureIntervalViewModel(caliperCollection, numberOfIntervals);
+			QtcParameters.IntervalMeasured = Models.Calipers.IntervalMeasured.QT;
 			ViewModel.QtcParameters = QtcParameters;
 			ViewModel.GetResults();
 		}
 
-		private void MeanRateIntervalViewCancel_Click(object sender, RoutedEventArgs e)
+		private void Done_Click(object sender, RoutedEventArgs e)
 		{
 			CloseWindow();
 		}

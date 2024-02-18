@@ -61,5 +61,6 @@ namespace EPCalipersWinUI3.Views
 		{
 			ViewModel.XamlRoot = XamlRoot;
 		}
+		
 	}
 }

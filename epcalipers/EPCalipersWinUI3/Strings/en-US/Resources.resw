@@ -201,6 +201,9 @@
   <data name="ButtonMeasure.Content" xml:space="preserve">
     <value>Measure</value>
   </data>
+  <data name="ButtonReset.Content" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="CalibrationBarButton.Label" xml:space="preserve">
     <value>Calibration</value>
   </data>
