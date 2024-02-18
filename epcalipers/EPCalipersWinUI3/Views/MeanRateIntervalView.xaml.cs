@@ -42,6 +42,9 @@ namespace EPCalipersWinUI3.Views
 			var caliperCollection = QtcParameters.CaliperCollection;
 			var numberOfIntervals = QtcParameters.NumberOfIntervals;
 			ViewModel = new MeasureIntervalViewModel(caliperCollection, numberOfIntervals);
+			ViewModel.Title = "Measure RR Interval";
+			ViewModel.RateVisibility = Visibility.Collapsed;
+			QtcParameters.IntervalMeasured = Models.Calipers.IntervalMeasured.RR;
 			ViewModel.QtcParameters = QtcParameters;
 			ViewModel.GetResults();
 		}

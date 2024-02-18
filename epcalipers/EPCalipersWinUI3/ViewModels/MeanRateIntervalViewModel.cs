@@ -31,6 +31,7 @@ namespace EPCalipersWinUI3.ViewModels
 			if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
 			PropertyChanged += OnMyPropertyChanged;
 			NumberOfIntervals = numberOfIntervals;
+			Title = "Mean Rate/Interval";
 			GetResults();
 		}
 
@@ -128,6 +129,12 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int numberOfIntervals;
+
+		[ObservableProperty]
+		private Visibility rateVisibility;
+
+		[ObservableProperty]
+		private string title;
 
 	}
 }

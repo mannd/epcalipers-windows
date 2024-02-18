@@ -15,10 +15,25 @@
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="300" >
         <TextBlock Style="{StaticResource TitleTextBlockStyle}">QT Measurement</TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureRR" />
-        <Button HorizontalAlignment="Left" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{x:Bind ViewModel.MeasureRRIntervalCommand}"
                    Content="{x:Bind ViewModel.RrInterval, Mode=TwoWay}" />
+            <Button Grid.Column="1" Command="{x:Bind ViewModel.ResetRRIntervalCommand}" x:Uid="ButtonReset" />
+        </Grid>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepMeasureQT" />
-        <Button Command="{x:Bind ViewModel.MeasureQTIntervalCommand}" Content="{x:Bind ViewModel.QtInterval, Mode=TwoWay}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{x:Bind ViewModel.MeasureQTIntervalCommand}" 
+                    Content="{x:Bind ViewModel.QtInterval, Mode=TwoWay}" />
+            <Button Grid.Column="1" Command="{x:Bind ViewModel.ResetQTIntervalCommand}" x:Uid="ButtonReset" />
+        </Grid>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="StepChooseFormula" />
         <ComboBox  x:Name="FormulaComboBox" SelectedIndex="{x:Bind ViewModel.SelectedFormulaIndex, Mode=TwoWay}" 
                    ItemsSource="{x:Bind ViewModel.QtcFormulaNames}" 

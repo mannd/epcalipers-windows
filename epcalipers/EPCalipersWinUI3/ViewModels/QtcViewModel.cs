@@ -89,8 +89,14 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void UpdateIntervals()
 		{
-			UpdateRRInterval();
-			UpdateQTInterval();
+			if (_qtcParameters.IntervalMeasured == IntervalMeasured.RR)
+			{
+				UpdateRRInterval();
+			}
+			if (_qtcParameters.IntervalMeasured == IntervalMeasured.QT)
+			{
+				UpdateQTInterval();
+			}
 			CheckCanCalculate();
 		}
 
@@ -134,36 +140,7 @@ namespace EPCalipersWinUI3.ViewModels
 			CanCalculate = rrIsMeasured && qtIsMeasured;
 		}
 
-		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			//if (e.PropertyName == nameof(QtcParameters.RRMeasurement))
-			//{
-			//	// set RRInterval
-			//	var rrMeasurement = QtcParameters.RRMeasurement;
-			//	var calibration = QtcParameters.CaliperCollection.TimeCalibration;
-			//	if (calibration == null)
-			//	{
-			//		RrInterval = "Not measured.";
-			//		return;
-			//	}
-			//	var formattedRRMeasurement = calibration.GetFormattedMeasurement(rrMeasurement.Value);
-			//	if (formattedRRMeasurement != null)
-			//	{
-			//		RrInterval = formattedRRMeasurement;
-			//	}
-			//	else
-			//	{
-			//		RrInterval = "Not measured.";
-			//	}
-
-			//}
-			//if (e.PropertyName == nameof(QtcParameters.QTMeasurement))
-			//{
-			//	// set QTInterval
-			//}
-		}
-
-	
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e) { }
 
 		public QtcParameters QtcParameters
 		{

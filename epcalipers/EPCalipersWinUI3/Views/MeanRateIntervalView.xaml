@@ -11,7 +11,7 @@
     KeyUp="Page_KeyUp" >
 
     <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Style="{StaticResource TitleTextBlockStyle}">Mean rate/interval</TextBlock>
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Bind ViewModel.Title}"></TextBlock>
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
         <TextBlock x:Name="TotalInterval" 
                    Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
@@ -23,7 +23,7 @@
             Maximum="10" />
         <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,5,0,0">Results</TextBlock>
         <TextBlock x:Name="MeanRate" Style="{StaticResource BodyStrongTextBlockStyle}"
-                   Text="{x:Bind ViewModel.MeanRate, Mode=OneWay}"/>
+                   Text="{x:Bind ViewModel.MeanRate, Mode=OneWay}" Visibility="{x:Bind ViewModel.RateVisibility}"/>
         <TextBlock x:Name="MeanInterval" Style="{StaticResource BodyStrongTextBlockStyle}"
                    Text="{x:Bind ViewModel.MeanInterval, Mode=OneWay}"/>
         <Grid>
