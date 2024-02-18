@@ -206,7 +206,7 @@ namespace EPCalipersWinUI3.Helpers
 					qt *= 1000.0;
 					meanRR *= 1000.0;
 				}
-				string result = string.Format("Mean RR interval = {0} {2}\nQT interval = {1} {2}", meanRR.ToString("G4"),
+				string result = string.Format("RR interval = {0} {2}\nQT interval = {1} {2}", meanRR.ToString("G4"),
 						qt.ToString("G4"), units);
 				foreach (QtcFormula qtcFormula in qtcFormulas)
 				{

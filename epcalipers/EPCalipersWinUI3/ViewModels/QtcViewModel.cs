@@ -70,14 +70,14 @@ namespace EPCalipersWinUI3.ViewModels
 		public void ResetRRInterval()
 		{
 			_qtcParameters.RRMeasurement = new Measurement();
-			UpdateIntervals();
+			UpdateRRInterval();
 		}
 
 		[RelayCommand]
 		public void ResetQTInterval()
 		{
 			_qtcParameters.QTMeasurement = new Measurement();
-			UpdateIntervals();
+			UpdateQTInterval();
 		}
 
 		[RelayCommand]
