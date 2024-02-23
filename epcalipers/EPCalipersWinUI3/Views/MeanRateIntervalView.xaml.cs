@@ -20,10 +20,9 @@ namespace EPCalipersWinUI3.Views
 		private bool _forQtcMeasurement = false;
 		public WindowEx Window { get; set; }
 		public QtcParameters QtcParameters { get; set; }	
-
 		public MeasureIntervalViewModel ViewModel { get; set; }
 
-		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
+		public MeanRateIntervalView(CaliperCollection caliperCollection)
 		{
 			Debug.Print("MeanRateIntervalView Constructor");
 			InitializeComponent();

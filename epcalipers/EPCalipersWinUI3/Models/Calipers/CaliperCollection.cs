@@ -633,8 +633,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public async Task MeanRateInterval()
 		{
-			if (SelectedCaliper == null 
-				|| SelectedCaliper.CaliperType != CaliperType.Time 
+			if (SelectedCaliper == null
+				|| SelectedCaliper.CaliperType != CaliperType.Time
 				|| SelectedCaliper.Calibration == Calibration.Uncalibrated)
 			{
 				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
@@ -658,7 +658,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_meanRateIntervalWindow, 400, 400, "Mean interval and rate");
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
-			var meanRateIntervalView = new MeanRateIntervalView(caliper, this)
+			var meanRateIntervalView = new MeanRateIntervalView(this)
 			{
 				Window = _meanRateIntervalWindow
 			};
@@ -700,22 +700,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 			//window.Title = title;
 		}
 
+		private bool CanMeasureQtc()
+		{
+			return !(SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time);
+		}	
+
 		public async Task MeasureQtc()
 		{
-			if (SelectedCaliper == null || SelectedCaliper.CaliperType != CaliperType.Time)
+			if (CanMeasureQtc())
 			{
-				await ShowMessage("HowToMeasureMeanIntervalTitle".GetLocalized(),
-					"HowToMeasureMeanIntervalMessage".GetLocalized());
+				ShowMeasureQtcDialog();
 			}
 			else
 			{
-				// show dialog, get number of interval
-				ShowMeasureQtcDialog();
+				await ShowMessage("HowToMeasureQTcTitle".GetLocalized(),
+					"HowToMeasureQTcMessage".GetLocalized());
 			}
 		}
 		public void ShowMeasureQtcDialog()
 		{
-			Debug.Assert(SelectedCaliper != null);
+			//Debug.Assert(SelectedCaliper != null);
 			if (_measureQtcWindow == null)
 			{
 				_measureQtcWindow = new WindowEx();

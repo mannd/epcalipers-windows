@@ -504,4 +504,10 @@
   <data name="InvalidCaliperText" xml:space="preserve">
     <value>Invalid caliper</value>
   </data>
+  <data name="HowToMeasureQTcMessage" xml:space="preserve">
+    <value>To be done.</value>
+  </data>
+  <data name="HowToMeasureQTcTitle" xml:space="preserve">
+    <value>How to measure the QTc interval</value>
+  </data>
 </root>

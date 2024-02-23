@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WinUIEx;
 using static EPCalipersWinUI3.Helpers.MathHelper;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -59,8 +60,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public void FormulaComboBoxLoaded()
 		{
-			// TODO: store this from session to session
-			SelectedFormulaIndex = 1;
+			SelectedFormulaIndex = (int)Settings.Instance.QtcFormula;
 		}
 
 		[RelayCommand]
@@ -178,8 +178,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public async Task CalculateQTc()
 		{
-			// TODO: use QtcParameters to either calculate QTc or give incomplete
-			// TODO: Inactivate Calculate button until RR and QT are measured.
+			Settings.Instance.QtcFormula = (QtcFormula)SelectedFormulaIndex;
 			var calculator = new QtcCalculator((QtcFormula)SelectedFormulaIndex);
 			var result = calculator.Calculate(
 				QtcParameters.RRMeasurement, 

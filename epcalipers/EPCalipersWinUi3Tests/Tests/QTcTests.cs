@@ -15,9 +15,6 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestQtcFormulas()
 		{
-			//var calculator = new MathHelper.QtcCalculator(MathHelper.QtcFormula.qtcBzt);
-			//var calibration = new Calibration();
-			//Assert.Equal("700 msec", calculator.Calculate(100, 200, false, "msec"));
 			var result = MathHelper.QtcCalculator.QtcBazettMsec(345, 879);
 			Assert.Equal(368, Math.Round(result));
 			result = MathHelper.QtcCalculator.QtcBazettMsec(499, 999);

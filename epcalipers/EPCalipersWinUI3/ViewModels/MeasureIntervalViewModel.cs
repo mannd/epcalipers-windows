@@ -20,9 +20,6 @@ namespace EPCalipersWinUI3.ViewModels
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
 
-		// TODO: We are having trouble initializing NumberOfIntervals properly between the use of
-		// this ViewModel for Mean RR interval measurement and RR interval measurement for QTc.
-		// The two settings are not being initialized or updated properly.....
 		public MeasureIntervalViewModel(CaliperCollection caliperCollection,
 			QtcParameters qtcParameters = null)
 		{

@@ -3,8 +3,10 @@ using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using System;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using Windows.Storage;
 using Windows.UI;
+using static EPCalipersWinUI3.Helpers.MathHelper;
 
 namespace EPCalipersWinUI3.Models
 {
@@ -19,18 +21,19 @@ namespace EPCalipersWinUI3.Models
 	public sealed class Settings : ISettings
 	{
 		private readonly ApplicationDataContainer _localSettings;
-		private readonly string _autoAlignLabelKey = "AutoAlignLabel";
-		private readonly string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
-		private readonly string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
-		private readonly string _unselectedCaliperColorKey = "UnselectedCaliperColorKey";
-		private readonly string _selectedCaliperColorKey = "SelectedCaliperColorKey";
-		private readonly string _barThicknessKey = "BarThicknessKey";
-		private readonly string _roundingKey = "RoundingKey";
-		private readonly string _showBrugadaTriangle = "ShowBrugadaTriangle";
+		private const string _autoAlignLabelKey = "AutoAlignLabel";
+		private const string _timeCaliperLabelAlignmentKey = "TimeCaliperLabelAlignmentKey";
+		private const string _amplitudeCaliperLabelAlignmentKey = "AmplitudeCaliperLabelAlignmentKey";
+		private const string _unselectedCaliperColorKey = "UnselectedCaliperColorKey";
+		private const string _selectedCaliperColorKey = "SelectedCaliperColorKey";
+		private const string _barThicknessKey = "BarThicknessKey";
+		private const string _roundingKey = "RoundingKey";
+		private const string _showBrugadaTriangle = "ShowBrugadaTriangle";
 
 		// Saved parameters not set directly by the user.
-		private readonly string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
-		private readonly string _numberOfRRIntervalsKey = "NumberOfRRIntervals";
+		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
+		private const string _numberOfRRIntervalsKey = "NumberOfRRIntervals";
+		private const string _qtcFormulaKey = "QTcFormula";
 
 		private Settings()
 		{
@@ -54,11 +57,13 @@ namespace EPCalipersWinUI3.Models
 		public int NumberOfRRIntervals
 		{
 			get => (int)(_localSettings.Values[_numberOfRRIntervalsKey] ?? 1);
-			set
-			{
-				_localSettings.Values[_numberOfRRIntervalsKey] = value;
-				Debug.Print($"numberOfRRIntervals = {value}");
-			} 
+			set => _localSettings.Values[_numberOfRRIntervalsKey] = value;
+		}
+
+		public QtcFormula QtcFormula
+		{
+			get => (QtcFormula)(_localSettings.Values[_qtcFormulaKey] ?? QtcFormula.qtcBzt);
+			set => _localSettings.Values[_qtcFormulaKey] = (int)value;
 		}
 
 		public double BarThickness
@@ -139,6 +144,8 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_selectedCaliperColorKey] = hexColor;
 			}
 		}
+
+
 		private static Color GetColorFromString(string colorHex)
 		{
 			var a = Convert.ToByte(colorHex.Substring(1, 2), 16);
@@ -163,5 +170,7 @@ namespace EPCalipersWinUI3.Models
 
 		public int NumberOfMeanIntervals { get; set; } = 3;
 		public int NumberOfRRIntervals { get; set; } = 1;
+
+		public QtcFormula QtcFormula { get; set; } = QtcFormula.qtcBzt;
 	}
 }
