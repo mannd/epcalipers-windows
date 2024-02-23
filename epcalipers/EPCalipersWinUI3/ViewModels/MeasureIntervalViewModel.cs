@@ -13,8 +13,7 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class MeasureIntervalViewModel : ObservableObject
 	{
-		// TODO: localize
-		private static readonly string _invalidCaliperText = "Invalid caliper";
+		private static readonly string _invalidCaliperText = "InvalidCaliperText".GetLocalized();
 		private static readonly string _dialogTitle = "MeanRateIntervalTitle".GetLocalized();
 
 		public QtcParameters QtcParameters {  get; set; }
@@ -28,7 +27,7 @@ namespace EPCalipersWinUI3.ViewModels
 			QtcParameters qtcParameters = null)
 		{
 			QtcParameters = qtcParameters;
-			if (qtcParameters == null)
+			if (qtcParameters == null) // qtcParmaters only non-null for QTc dialog.
 			{
 				NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
 			}
@@ -37,7 +36,8 @@ namespace EPCalipersWinUI3.ViewModels
 					case IntervalMeasured.RR:
 						NumberOfIntervals = Settings.Instance.NumberOfRRIntervals;
 						break;
-					case IntervalMeasured.MeanRR:
+					case IntervalMeasured.MeanRR:  // Shouldn't happen though.
+						Debug.Assert(false, "qtcParameters contains IntervalMeasured.MeanRR!");
 						NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
 						break;
 					case IntervalMeasured.QT:

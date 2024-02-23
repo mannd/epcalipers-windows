@@ -501,4 +501,7 @@
   <data name="QTcMeasurementDialogTitle.Text" xml:space="preserve">
     <value>QTc measurement</value>
   </data>
+  <data name="InvalidCaliperText" xml:space="preserve">
+    <value>Invalid caliper</value>
+  </data>
 </root>
