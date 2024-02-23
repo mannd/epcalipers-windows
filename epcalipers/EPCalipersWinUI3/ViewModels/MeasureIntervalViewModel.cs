@@ -14,24 +14,42 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class MeasureIntervalViewModel : ObservableObject
 	{
 		// TODO: localize
-		private static string _invalidCaliperText = "Invalid caliper";
+		private static readonly string _invalidCaliperText = "Invalid caliper";
+		private static readonly string _dialogTitle = "MeanRateIntervalTitle".GetLocalized();
 
-		public QtcParameters QtcParameters { get; set; }
-
+		public QtcParameters QtcParameters {  get; set; }
 		public Caliper Caliper { get; set; }
 		public CaliperCollection CaliperCollection { get; set; }
-		public IntervalMeasured IntervalMeasured { get; set; } = IntervalMeasured.MeanRR;
 
+		// TODO: We are having trouble initializing NumberOfIntervals properly between the use of
+		// this ViewModel for Mean RR interval measurement and RR interval measurement for QTc.
+		// The two settings are not being initialized or updated properly.....
 		public MeasureIntervalViewModel(CaliperCollection caliperCollection,
-			int numberOfIntervals = 3)
+			QtcParameters qtcParameters = null)
 		{
+			QtcParameters = qtcParameters;
+			if (qtcParameters == null)
+			{
+				NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
+			}
+			else switch (qtcParameters.IntervalMeasured)
+				{
+					case IntervalMeasured.RR:
+						NumberOfIntervals = Settings.Instance.NumberOfRRIntervals;
+						break;
+					case IntervalMeasured.MeanRR:
+						NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
+						break;
+					case IntervalMeasured.QT:
+						NumberOfIntervals = 1;
+						break;
+				}
 			Caliper = caliperCollection.SelectedCaliper;
 			CaliperCollection = caliperCollection;
 			CaliperCollection.PropertyChanged += OnMyPropertyChanged;
 			if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
 			PropertyChanged += OnMyPropertyChanged;
-			NumberOfIntervals = numberOfIntervals;
-			Title = "Mean Rate/Interval";
+			Title = _dialogTitle;
 			GetResults();
 		}
 
@@ -43,6 +61,20 @@ namespace EPCalipersWinUI3.ViewModels
 				|| e.PropertyName == nameof(NumberOfIntervals))
 			{
 				GetResults();
+				if (QtcParameters != null)
+				{
+					switch (QtcParameters.IntervalMeasured)
+					{
+						case IntervalMeasured.RR:
+							Settings.Instance.NumberOfRRIntervals = NumberOfIntervals;
+							break;
+						default:
+							break;
+					}
+				} else
+				{
+					Settings.Instance.NumberOfMeanIntervals = NumberOfIntervals;
+				}
 			}
 			else if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
 			{

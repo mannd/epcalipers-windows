@@ -182,7 +182,7 @@
   <data name="Autoposition.Content" xml:space="preserve">
     <value>Autoposition caliper labels</value>
   </data>
-  <data name="BackButton.Text" xml:space="preserve">
+  <data name="ButtonBack.Text" xml:space="preserve">
     <value>Back</value>
   </data>
   <data name="BazettFormula" xml:space="preserve">
@@ -494,5 +494,11 @@
   </data>
   <data name="ZoomOutMenuItem.Text" xml:space="preserve">
     <value>Zoom out</value>
+  </data>
+  <data name="MeanRateIntervalTitle" xml:space="preserve">
+    <value>Mean rate/interval</value>
+  </data>
+  <data name="QTcMeasurementDialogTitle.Text" xml:space="preserve">
+    <value>QTc measurement</value>
   </data>
 </root>

@@ -30,9 +30,6 @@ namespace EPCalipersWinUI3.ViewModels
 		public Measurement QTMeasurement {  get; set; }
 		public IntervalMeasured IntervalMeasured { get; set; }
 
-		// TODO: refactor this away, use settings to set
-		public int NumberOfIntervals = 1;
-
 		// TODO: do we still need to notify for any events in this class?
 		// maybe if CaliperCollection changes or Calibration changes?
 		public event PropertyChangedEventHandler PropertyChanged;

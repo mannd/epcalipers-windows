@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using System;
+using System.Diagnostics;
 using Windows.Storage;
 using Windows.UI;
 
@@ -27,6 +28,10 @@ namespace EPCalipersWinUI3.Models
 		private readonly string _roundingKey = "RoundingKey";
 		private readonly string _showBrugadaTriangle = "ShowBrugadaTriangle";
 
+		// Saved parameters not set directly by the user.
+		private readonly string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
+		private readonly string _numberOfRRIntervalsKey = "NumberOfRRIntervals";
+
 		private Settings()
 		{
 			_localSettings = ApplicationData.Current.LocalSettings;
@@ -35,6 +40,26 @@ namespace EPCalipersWinUI3.Models
 		private static readonly Lazy<Settings> lazy = new(() => new Settings());
 
 		public static Settings Instance { get { return lazy.Value; } }
+
+		public int NumberOfMeanIntervals
+		{
+			get => (int)(_localSettings.Values[_numberOfMeanIntervalsKey] ?? 3);
+			set
+			{
+				_localSettings.Values[_numberOfMeanIntervalsKey] = value;
+				Debug.Print($"numberOfMeanIntervals = {value}");
+			} 
+		}
+
+		public int NumberOfRRIntervals
+		{
+			get => (int)(_localSettings.Values[_numberOfRRIntervalsKey] ?? 1);
+			set
+			{
+				_localSettings.Values[_numberOfRRIntervalsKey] = value;
+				Debug.Print($"numberOfRRIntervals = {value}");
+			} 
+		}
 
 		public double BarThickness
 		{
@@ -122,7 +147,9 @@ namespace EPCalipersWinUI3.Models
 			var b = Convert.ToByte(colorHex.Substring(7, 2), 16);
 			return Color.FromArgb(a, r, g, b);
 		}
+
 	}
+
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
@@ -133,5 +160,8 @@ namespace EPCalipersWinUI3.Models
 		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public Rounding Rounding { get; set; } = Rounding.None;
 		public bool ShowBrugadaTriangle { get; set; } = false;
+
+		public int NumberOfMeanIntervals { get; set; } = 3;
+		public int NumberOfRRIntervals { get; set; } = 1;
 	}
 }

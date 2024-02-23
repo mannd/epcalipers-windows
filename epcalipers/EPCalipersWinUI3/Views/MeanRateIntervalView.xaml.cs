@@ -1,3 +1,4 @@
+using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
@@ -24,6 +25,7 @@ namespace EPCalipersWinUI3.Views
 
 		public MeanRateIntervalView(Caliper caliper, CaliperCollection caliperCollection)
 		{
+			Debug.Print("MeanRateIntervalView Constructor");
 			InitializeComponent();
 			ViewModel = new MeasureIntervalViewModel(caliperCollection);
 		}
@@ -36,16 +38,15 @@ namespace EPCalipersWinUI3.Views
 		// Only navigated to in context of QTc measurement.
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
+			Debug.Print("Navigated to MeanRateIntervalView");
 			_forQtcMeasurement = true;
 			base.OnNavigatedTo(e);
 			QtcParameters = e.Parameter as QtcParameters;
+			QtcParameters.IntervalMeasured = IntervalMeasured.RR;
 			var caliperCollection = QtcParameters.CaliperCollection;
-			var numberOfIntervals = QtcParameters.NumberOfIntervals;
-			ViewModel = new MeasureIntervalViewModel(caliperCollection, numberOfIntervals);
+			ViewModel = new MeasureIntervalViewModel(caliperCollection, QtcParameters);
 			ViewModel.Title = "Measure RR Interval";
 			ViewModel.RateVisibility = Visibility.Collapsed;
-			QtcParameters.IntervalMeasured = Models.Calipers.IntervalMeasured.RR;
-			ViewModel.QtcParameters = QtcParameters;
 			ViewModel.GetResults();
 		}
 
@@ -82,5 +83,6 @@ namespace EPCalipersWinUI3.Views
 				default: break;
 			}
 		}
+
 	}
 }
