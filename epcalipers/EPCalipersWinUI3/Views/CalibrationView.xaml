@@ -15,15 +15,19 @@
                     Style="{StaticResource SubtitleTextBlockStyle}"
                    TextWrapping="Wrap" />
         <RadioButtons x:Name="CalibrationRadioButtons" 
+                      Margin="0,10,0,0"
                       RelativePanel.Below="Instructions"
                       SelectionChanged="CalibrationRadioButtons_SelectionChanged">
-            <RadioButton IsChecked="True" Content="{x:Bind ViewModel.FirstField}" />
-            <RadioButton Content="{x:Bind ViewModel.SecondField}" />
             <RadioButton x:Name="CustomRadioButton">
                 <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)"
                          Text="{x:Bind ViewModel.CustomInterval, Mode=TwoWay}"/>
-
             </RadioButton>
+            <RadioButton IsChecked="True" Content="{x:Bind ViewModel.FirstField}" />
+            <RadioButton Content="{x:Bind ViewModel.SecondField}" />
+            <RadioButton Visibility="{x:Bind ViewModel.ExtraFieldVisibility}"
+                         Content="{x:Bind ViewModel.ThirdField}" />
+            <RadioButton Visibility="{x:Bind ViewModel.ExtraFieldVisibility}"
+                         Content="{x:Bind ViewModel.FourthField}" />
         </RadioButtons>
         <Grid RelativePanel.Below="CalibrationRadioButtons"
               RelativePanel.AlignLeftWithPanel="True"

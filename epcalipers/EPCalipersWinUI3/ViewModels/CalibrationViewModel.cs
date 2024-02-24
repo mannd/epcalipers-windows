@@ -48,11 +48,15 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				case CaliperType.Time:
 					FirstField = "1000 msec".GetLocalized();
-					SecondField = "1 sec".GetLocalized();
+					SecondField = "200 msec";
+					ThirdField = "1 sec".GetLocalized();
+					FourthField = "0.2 sec";
+					ExtraFieldVisibility = Visibility.Visible;
 					break;
 				case CaliperType.Amplitude:
 					FirstField = "10 mm".GetLocalized();
 					SecondField = "1 mV".GetLocalized();
+					ExtraFieldVisibility = Visibility.Collapsed;
 					break;
 				default:
 					throw new NotImplementedException();
@@ -84,19 +88,29 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				case 0:
 					input = new CalibrationInput(
+						0,
+						Unit.Custom,
+						CustomInterval);
+					break;
+				case 1:
+					input = new CalibrationInput(
 						1000,
 						Unit.Msec);
 					break;
-				case 1:
+				case 2:
+					input = new CalibrationInput(
+						200,
+						Unit.Msec);
+					break;
+				case 3:
 					input = new CalibrationInput(
 						1.0,
 						Unit.Sec);
 					break;
-				case 2:
+				case 4:
 					input = new CalibrationInput(
-						0,
-						Unit.Custom,
-						CustomInterval);
+						0.2,
+						Unit.Sec);
 					break;
 			}
 			try
@@ -120,19 +134,19 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				case 0:
 					input = new CalibrationInput(
-						10,
-						Unit.Mm);
-					break;
-				case 1:
-					input = new CalibrationInput(
-						1.0,
-						Unit.Mv);
-					break;
-				case 2:
-					input = new CalibrationInput(
 						0,
 						Unit.Custom,
 						CustomInterval);
+					break;
+				case 1:
+					input = new CalibrationInput(
+						10,
+						Unit.Mm);
+					break;
+				case 2:
+					input = new CalibrationInput(
+						1.0,
+						Unit.Mv);
 					break;
 			}
 			try
@@ -200,5 +214,14 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool errorRaised;
+
+		[ObservableProperty]
+		private string thirdField;
+
+		[ObservableProperty]
+		private string fourthField;
+
+		[ObservableProperty]
+		private Visibility extraFieldVisibility;
 	}
 }

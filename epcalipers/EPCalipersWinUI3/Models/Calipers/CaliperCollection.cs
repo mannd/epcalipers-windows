@@ -512,6 +512,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_calibrationWindow = new WindowEx();
 			}
 			string title;
+			// TODO: title not shown, since title bar is opaque.  
 			switch (caliperType)
 			{
 				case CaliperType.Time:
@@ -524,8 +525,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 					title = "Calibration";
 					break;
 			}
-			SetupFloatingWindow(_calibrationWindow, 400, 400, title);
-			_calibrationWindow.PersistenceId = "CalibrationWindowID";
+			SetupFloatingWindow(_calibrationWindow, 400, 500, title);
+			// TODO: uncomment
+			//_calibrationWindow.PersistenceId = "CalibrationWindowID";
 			var calibrationView = new CalibrationView(SelectedCaliper, this)
 			{
 				Window = _calibrationWindow,
