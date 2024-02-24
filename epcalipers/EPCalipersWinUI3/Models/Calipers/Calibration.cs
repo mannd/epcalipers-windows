@@ -34,14 +34,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 	}
 
+	// TODO: Localize and improve exception error messages.
 	public sealed class ZeroValueException : Exception
 	{
-		public ZeroValueException() : base("ZeroValueException") { }
+		public ZeroValueException() : base("Divide by zero error.") { }
 	}
 
 	public sealed class EmptyCustomStringException : Exception
 	{
-		public EmptyCustomStringException() : base("EmptyCustomStringException") { }
+		public EmptyCustomStringException() : base("Custom calibration can't be empty.") { }
 	}
 
 	public sealed class CantShowBpmException: Exception
