@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -52,11 +53,15 @@ namespace EPCalipersWinUI3.ViewModels
 					ThirdField = "1 sec".GetLocalized();
 					FourthField = "0.2 sec";
 					ExtraFieldVisibility = Visibility.Visible;
+					SelectedIndex = Settings.Instance.SelectedTimeCalibrationRadioButton;
+					CustomInterval = Settings.Instance.CustomTimeCalibration;
 					break;
 				case CaliperType.Amplitude:
 					FirstField = "10 mm".GetLocalized();
 					SecondField = "1 mV".GetLocalized();
 					ExtraFieldVisibility = Visibility.Collapsed;
+					SelectedIndex = Settings.Instance.SelectedAmplitudeCalibrationRadioButton;
+					CustomInterval = Settings.Instance.CustomAmplitudeCalibration;
 					break;
 				default:
 					throw new NotImplementedException();
@@ -118,6 +123,8 @@ namespace EPCalipersWinUI3.ViewModels
 				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
 				_caliperCollection.SetCalibration();
+				Settings.Instance.SelectedTimeCalibrationRadioButton = IntervalSelection;
+				Settings.Instance.CustomTimeCalibration = CustomInterval;
 			}
 			catch (Exception e)
 			{
@@ -154,6 +161,8 @@ namespace EPCalipersWinUI3.ViewModels
 				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
 				_caliperCollection.SetCalibration();
+				Settings.Instance.SelectedAmplitudeCalibrationRadioButton = IntervalSelection;
+				Settings.Instance.CustomAmplitudeCalibration = CustomInterval;
 			}
 			catch (Exception e)
 			{
@@ -223,5 +232,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private Visibility extraFieldVisibility;
+
+		[ObservableProperty]
+		private int selectedIndex = 1;
 	}
 }

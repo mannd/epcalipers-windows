@@ -17,6 +17,7 @@
         <RadioButtons x:Name="CalibrationRadioButtons" 
                       Margin="0,10,0,0"
                       RelativePanel.Below="Instructions"
+                      SelectedIndex="{x:Bind ViewModel.SelectedIndex}"
                       SelectionChanged="CalibrationRadioButtons_SelectionChanged">
             <RadioButton x:Name="CustomRadioButton">
                 <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)"

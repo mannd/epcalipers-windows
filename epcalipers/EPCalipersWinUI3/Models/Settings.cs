@@ -34,6 +34,10 @@ namespace EPCalipersWinUI3.Models
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
 		private const string _numberOfRRIntervalsKey = "NumberOfRRIntervals";
 		private const string _qtcFormulaKey = "QTcFormula";
+		private const string _selectedAmplitudeCalibrationRadioButtonKey = "SelectedAmplitudeCalibrationRadioButton";
+		private const string _selectedTimeCalibrationRadioButtonKey = "SelectedTimeCalibrationRadioButton";
+		private const string _customTimeCalibrationKey = "CustomTimeCalibration";
+		private const string _customAmplitudeCalibrationKey = "CustomAmplitudeCalibration";
 
 		private Settings()
 		{
@@ -58,6 +62,29 @@ namespace EPCalipersWinUI3.Models
 		{
 			get => (int)(_localSettings.Values[_numberOfRRIntervalsKey] ?? 1);
 			set => _localSettings.Values[_numberOfRRIntervalsKey] = value;
+		}
+
+		public int SelectedTimeCalibrationRadioButton
+		{
+			get => (int)(_localSettings.Values[_selectedTimeCalibrationRadioButtonKey] ?? 1);
+			set => _localSettings.Values[_selectedTimeCalibrationRadioButtonKey] = value;
+		}
+
+		public int SelectedAmplitudeCalibrationRadioButton
+		{
+			get => (int)(_localSettings.Values[_selectedAmplitudeCalibrationRadioButtonKey] ?? 1);
+			set => _localSettings.Values[_selectedAmplitudeCalibrationRadioButtonKey] = value;
+		}
+
+		public string CustomTimeCalibration
+		{
+			get => (string)_localSettings.Values[_customTimeCalibrationKey] ?? string.Empty;
+			set => _localSettings.Values[_customTimeCalibrationKey ] = value;
+		}
+		public string CustomAmplitudeCalibration
+		{
+			get => (string)_localSettings.Values[_customAmplitudeCalibrationKey] ?? string.Empty;
+			set => _localSettings.Values[_customAmplitudeCalibrationKey ] = value;
 		}
 
 		public QtcFormula QtcFormula
@@ -172,5 +199,9 @@ namespace EPCalipersWinUI3.Models
 		public int NumberOfRRIntervals { get; set; } = 1;
 
 		public QtcFormula QtcFormula { get; set; } = QtcFormula.qtcBzt;
+		public int SelectedTimeCalibrationRadioButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public int SelectedAmplitudeCalibrationRadioButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public string CustomTimeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public string CustomAmplitudeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 	}
 }
