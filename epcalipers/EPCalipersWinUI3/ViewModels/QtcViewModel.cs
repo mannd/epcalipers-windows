@@ -42,8 +42,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 	public partial class QtcViewModel: ObservableObject
 	{
-		// TODO: localize
-		public static string NotMeasured { get; set; } = "Not measured";
+		public static string NotMeasured { get; set; } = "Not measured".GetLocalized();
 		public XamlRoot XamlRoot { get; set; }
 		public QtcViewModel()
 		{

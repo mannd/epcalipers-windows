@@ -10,7 +10,6 @@ using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	// TODO: add more default calibrations, e.g. 200 msec, 0.2 sec for time
 	public partial class CalibrationViewModel : ObservableObject
 	{
 		public static readonly IDictionary<Unit, string> CalibrationStrings =
@@ -49,9 +48,9 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				case CaliperType.Time:
 					FirstField = "1000 msec".GetLocalized();
-					SecondField = "200 msec";
+					SecondField = "200 msec".GetLocalized();
 					ThirdField = "1 sec".GetLocalized();
-					FourthField = "0.2 sec";
+					FourthField = "02 sec".GetLocalized(); // Note can't localize strings like "0.2" with "."s.
 					ExtraFieldVisibility = Visibility.Visible;
 					SelectedIndex = Settings.Instance.SelectedTimeCalibrationRadioButton;
 					CustomInterval = Settings.Instance.CustomTimeCalibration;

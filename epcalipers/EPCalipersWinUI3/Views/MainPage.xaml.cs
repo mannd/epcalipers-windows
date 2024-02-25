@@ -65,8 +65,6 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.RefreshCalipers();
 		}
 
-
-
 		#region touches
 		private bool pointerDown = false;
 		private Point pointerPosition;

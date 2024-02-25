@@ -21,5 +21,7 @@ namespace EPCalipersWinUI3.Contracts
 		public Point GetOffsettedCenter();
 
 		public XamlRoot XamlRoot { get; }
+
+		public void UpdateLayout();
 	}
 }

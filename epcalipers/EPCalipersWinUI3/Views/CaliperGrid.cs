@@ -86,5 +86,7 @@ namespace EPCalipersWinUI3.Views
 			get { return null; }
 		}
 
+		public void UpdateLayout() { }
+
 	}
 }

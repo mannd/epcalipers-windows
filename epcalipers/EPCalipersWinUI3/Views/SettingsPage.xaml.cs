@@ -19,8 +19,6 @@ namespace EPCalipersWinUI3.Views
 			ViewModel = new SettingsViewModel();
 			AppHelper.SaveTitleBarText();
 			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
-
-
 		}
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{

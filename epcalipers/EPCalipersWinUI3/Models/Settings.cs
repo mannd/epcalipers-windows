@@ -38,6 +38,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _selectedTimeCalibrationRadioButtonKey = "SelectedTimeCalibrationRadioButton";
 		private const string _customTimeCalibrationKey = "CustomTimeCalibration";
 		private const string _customAmplitudeCalibrationKey = "CustomAmplitudeCalibration";
+		private const string _numberOfMarchingCalipersKey = "NumberOfMarchingCalipers";
 
 		private Settings()
 		{
@@ -62,6 +63,11 @@ namespace EPCalipersWinUI3.Models
 		{
 			get => (int)(_localSettings.Values[_numberOfRRIntervalsKey] ?? 1);
 			set => _localSettings.Values[_numberOfRRIntervalsKey] = value;
+		}
+		public int NumberOfMarchingCalipers
+		{
+			get => (int)(_localSettings.Values[_numberOfMarchingCalipersKey] ?? 10);
+			set => _localSettings.Values[_numberOfMarchingCalipersKey] = value;
 		}
 
 		public int SelectedTimeCalibrationRadioButton
@@ -203,5 +209,6 @@ namespace EPCalipersWinUI3.Models
 		public int SelectedAmplitudeCalibrationRadioButton { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public string CustomTimeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public string CustomAmplitudeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public int NumberOfMarchingCalipers { get; set; } = 20;
 	}
 }

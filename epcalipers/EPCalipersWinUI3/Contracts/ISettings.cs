@@ -23,5 +23,6 @@ namespace EPCalipersWinUI3.Contracts
 		public int SelectedAmplitudeCalibrationRadioButton {  get; set; }
 		public string CustomTimeCalibration {  get; set; }
 		public string CustomAmplitudeCalibration { get; set; }
+		public int NumberOfMarchingCalipers { get; set; }
 	}
 }

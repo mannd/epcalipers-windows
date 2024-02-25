@@ -20,7 +20,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public TimeCaliper TimeCaliper { get; set; }
 
-
 		public override void SetFullSelectionTo(bool value)
 		{
 			foreach (var bar in LeftBars)
@@ -33,9 +32,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public MarchingCaliper(ICaliperView caliperView, TimeCaliper caliper, int numberOfBars, double left, double right, bool fakeUI = false) : base(caliperView, Calibration.None)
+		public MarchingCaliper(ICaliperView caliperView, 
+			TimeCaliper caliper, double left, double right, bool fakeUI = false) : base(caliperView, Calibration.None)
 		{
-			NumberOfBars = Math.Clamp(numberOfBars, _minBars, _maxBars);
+			NumberOfBars = Settings.Instance.NumberOfMarchingCalipers;
 			LeftPosition = left;
 			RightPosition = right;
 			TimeCaliper = caliper;
@@ -50,11 +50,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var height = TimeCaliper.LeftBar.Y2;
 			for (int i = 0; i < NumberOfBars; i++)
 			{
-				// TODO: make bars outside of bounds invisible
 				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
 				leftBar.SelectedColor = TimeCaliper.SelectedColor;
-				leftBar.UnselectedColor = TimeCaliper.SelectedColor;
+				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				leftBar.IsSelected = TimeCaliper.IsSelected;
+				// TODO: Barthickness is a Setting
 				leftBar.Thickness = 2;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
@@ -62,6 +62,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				rightBar.SelectedColor = TimeCaliper.SelectedColor;
 				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				rightBar.IsSelected = TimeCaliper.IsSelected;
+				// TODO: Barthickness is a Setting
 				rightBar.Thickness = 2;
 				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);

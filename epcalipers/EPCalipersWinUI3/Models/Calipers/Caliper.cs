@@ -189,7 +189,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private Color _selectedColor;
 
-		protected ICaliperView CaliperView { get; init; }
+		public ICaliperView CaliperView { get; init; }
 
 		protected List<Bar> Bars { get; init; }
 

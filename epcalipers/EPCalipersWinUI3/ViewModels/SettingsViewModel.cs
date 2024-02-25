@@ -21,6 +21,7 @@ namespace EPCalipersWinUI3.ViewModels
 			BarThickness = _model.BarThickness;
 			Rounding = (int)_model.Rounding;
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
+			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -52,6 +53,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(ShowBrugadaTriangle):
 					_model.ShowBrugadaTriangle = ShowBrugadaTriangle;
 					break;
+				case nameof(NumberOfMarchingCalipers):
+					_model.NumberOfMarchingCalipers = NumberOfMarchingCalipers;
+					break;
 				default:
 					break;
 			}
@@ -80,5 +84,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool showBrugadaTriangle;
+
+		[ObservableProperty]
+		private int numberOfMarchingCalipers;
 	}
 }

@@ -504,10 +504,19 @@
   <data name="InvalidCaliperText" xml:space="preserve">
     <value>Invalid caliper</value>
   </data>
+  <data name="02 sec" xml:space="preserve">
+    <value>0.2 sec</value>
+  </data>
+  <data name="200 msec" xml:space="preserve">
+    <value>200 msec</value>
+  </data>
   <data name="HowToMeasureQTcMessage" xml:space="preserve">
     <value>To be done.</value>
   </data>
   <data name="HowToMeasureQTcTitle" xml:space="preserve">
     <value>How to measure the QTc interval</value>
+  </data>
+  <data name="Not measured" xml:space="preserve">
+    <value>Not measured</value>
   </data>
 </root>
