@@ -129,8 +129,8 @@
                         StepFrequency="1" HorizontalAlignment="Left"
                     VerticalAlignment="Center" Margin="0,0,20,0"
                     Value="{x:Bind ViewModel.NumberOfMarchingCalipers, Mode=TwoWay}" TickFrequency="1" TickPlacement="Outside" />
-                <TextBlock VerticalAlignment="Center">Caliper line width=</TextBlock>
-                    <TextBlock Text="{x:Bind thicknessSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
+                <TextBlock VerticalAlignment="Center">Number of marching calipers=</TextBlock>
+                    <TextBlock Text="{x:Bind NumberOfMarchingCalipersSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
                 </StackPanel>
                 <TextBlock Text="Brugada triangle" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />

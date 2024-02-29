@@ -104,6 +104,14 @@ namespace EPCalipersWinUI3.Views
 		{
 			ViewModel.DeleteCaliperAt(_rightClickPosition);
 		}
+		private void MarchingCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ToggleMarchingCaliper(_rightClickPosition);
+		}
+		private void ColorCaliper_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ShowColorDialog(_rightClickPosition);
+		}
 		private void CaliperGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			ViewModel.ReleaseGrabbedCaliper();
@@ -111,6 +119,7 @@ namespace EPCalipersWinUI3.Views
 		}
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
+
 
 	}
 }

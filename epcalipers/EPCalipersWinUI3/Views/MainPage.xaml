@@ -273,7 +273,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
-                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
+                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>

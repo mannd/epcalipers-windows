@@ -20,9 +20,9 @@
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
             <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" Tag="green" Click="DeleteCaliper_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
-            <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="Right_Click"
+            <MenuFlyoutItem x:Uid="ColorMenuItem" Tag="green" Click="ColorCaliper_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
-            <ToggleMenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="Right_Click"
+            <ToggleMenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="MarchingCaliper_Click"
                 IsChecked="{x:Bind ViewModel.CaliperIsMarching, Mode=OneWay}"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
         </MenuFlyout>
@@ -185,7 +185,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
-                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem"/>
+                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}"> 
                     <MenuFlyoutItem.Icon>
@@ -256,7 +256,7 @@
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"/>
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton">
                     <AppBarButton.KeyboardAccelerators>
