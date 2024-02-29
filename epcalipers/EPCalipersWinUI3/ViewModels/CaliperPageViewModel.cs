@@ -4,10 +4,15 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using Microsoft.UI.Xaml;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
+using WinUIEx;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -19,6 +24,13 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
+		}
+
+
+		[RelayCommand]
+		public void CaptureScreen()
+		{
+			GraphicsHelper.CaptureScreenshot();
 		}
 
 		#region calipers
