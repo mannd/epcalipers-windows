@@ -6,16 +6,20 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing.Imaging;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
+using Windows.Graphics.Capture;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using WinRT.Interop;
 
 namespace EPCalipersWinUI3.Views
 {
@@ -348,9 +352,41 @@ namespace EPCalipersWinUI3.Views
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 		#endregion
+		//private async void StartCaptureFromItem(GraphicsCaptureItem item)
+		//{
+		//	var surface = await CaptureSnapshot.CaptureAsync(_device, item);
+		//	var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
 
+		//	var source = new SoftwareBitmapSource();
+		//	await source.SetBitmapAsync(softwareBitmap);
+
+		//	//ScreenshotImage.Source = source;
+		//}
 		private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
 		{
+			if (GraphicsCaptureSession.IsSupported())
+			{
+				var hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
+				var _d3dDevice = Direct3D11Helper.CreateD3DDevice();
+				var _device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
+				var picker = new GraphicsCapturePicker();
+				InitializeWithWindow.Initialize(picker, hwnd);
+				var capturedItem = await picker.PickSingleItemAsync();
+				if (capturedItem != null)
+				{
+					var surface =	await CaptureSnapshot.CaptureAsync(_device, capturedItem);
+					var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
+
+					var source = new SoftwareBitmapSource();
+					await source.SetBitmapAsync(softwareBitmap);
+
+					ViewModel.MainImageSource = source;
+
+				}
+			} // else error message
+		
+			return;
+
 			// Clear previous returned file name, if it exists, between iterations of this scenario
 			//SaveFileOutputTextBlock.Text = "";
 
@@ -369,11 +405,11 @@ namespace EPCalipersWinUI3.Views
 			// Set options for your file picker
 			savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 			// Dropdown of file types the user can save the file as
-			savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".txt" });
+			savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
 			// Default file name if the user does not type one in or select a file to replace
 			//var enteredFileName = ((sender as Button).Parent as StackPanel)
 			//.FindName("FileNameTextBox") as TextBox;
-			//savePicker.SuggestedFileName = enteredFileName.Text;
+			savePicker.SuggestedFileName = "EPCsavedimage.jpg";
 
 			// Open the picker for the user to pick a file
 			StorageFile file = await savePicker.PickSaveFileAsync();
@@ -382,16 +418,21 @@ namespace EPCalipersWinUI3.Views
 				// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
 				CachedFileManager.DeferUpdates(file);
 
+
 				// write to file
-				var textBox = ((sender as Button).Parent as StackPanel)
-				.FindName("FileContentTextBox") as TextBox;
-				using (var stream = await file.OpenStreamForWriteAsync())
-				{
-					using (var tw = new StreamWriter(stream))
-					{
-						tw.WriteLine(textBox?.Text);
-					}
-				}
+				var imageStream = GraphicsHelper.CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg);
+
+				//await FileIO.WriteBufferAsync(file, (Windows.Storage.Streams.IBuffer)imageStream);
+
+				//var textBox = ((sender as Button).Parent as StackPanel)
+				//.FindName("FileContentTextBox") as TextBox;
+				//using (var stream = await file.OpenStreamForWriteAsync())
+				//{
+				//	using (var tw = new StreamWriter(stream))
+				//	{
+				//		tw.WriteLine(textBox?.Text);
+				//	}
+				//}
 				// Another way to write a string to the file is to use this instead:
 				// await FileIO.WriteTextAsync(file, "Example file contents.");
 
