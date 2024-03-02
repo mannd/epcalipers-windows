@@ -10,16 +10,19 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics.Capture;
+using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace EPCalipersWinUI3.Views
 {
@@ -28,10 +31,16 @@ namespace EPCalipersWinUI3.Views
 		public MainPageViewModel ViewModel { get; set; }
 		private Point _rightClickPosition;
 
+		private Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
+		private IDirect3DDevice _device;
+
 		public MainPage()
 		{
 			InitializeComponent();
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
+
+			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
+			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
 
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
 			// so should be the default.
@@ -366,12 +375,13 @@ namespace EPCalipersWinUI3.Views
 		{
 			if (GraphicsCaptureSession.IsSupported())
 			{
-				var hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
-				var _d3dDevice = Direct3D11Helper.CreateD3DDevice();
-				var _device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
+				IntPtr hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
 				var picker = new GraphicsCapturePicker();
 				InitializeWithWindow.Initialize(picker, hwnd);
-				var capturedItem = await picker.PickSingleItemAsync();
+				// Use picker to load any screen window into app
+				//var capturedItem = await picker.PickSingleItemAsync();
+				// This just gets the EP Calipers window
+				var capturedItem = CaptureSnapshot.CreateItemForWindow((Windows.Win32.Foundation.HWND)hwnd);
 				if (capturedItem != null)
 				{
 					var surface =	await CaptureSnapshot.CaptureAsync(_device, capturedItem);
@@ -380,6 +390,7 @@ namespace EPCalipersWinUI3.Views
 					var source = new SoftwareBitmapSource();
 					await source.SetBitmapAsync(softwareBitmap);
 
+					// TODO: change this to save image to a file!!!
 					ViewModel.MainImageSource = source;
 
 				}

@@ -4,9 +4,14 @@ using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
+using System;
 using System.Diagnostics;
 using Windows.Foundation;
+using Windows.Graphics.Capture;
+using Windows.Graphics.Imaging;
+using WinRT.Interop;
 
 namespace EPCalipersWinUI3.Views
 {
@@ -120,6 +125,32 @@ namespace EPCalipersWinUI3.Views
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
 
+		private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (GraphicsCaptureSession.IsSupported())
+			{
+				var hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
+				var _d3dDevice = Direct3D11Helper.CreateD3DDevice();
+				var _device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
+				var picker = new GraphicsCapturePicker();
+				InitializeWithWindow.Initialize(picker, hwnd);
+				var capturedItem = await picker.PickSingleItemAsync();
+				if (capturedItem != null)
+				{
+					var surface = await CaptureSnapshot.CaptureAsync(_device, capturedItem);
+					var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
+
+					var source = new SoftwareBitmapSource();
+					await source.SetBitmapAsync(softwareBitmap);
+
+					// TODO: change this to save image to a file!!!
+					//ViewModel.MainImageSource = source;
+
+				}
+			} // else error message
+
+			return;
+		}
 
 	}
 }

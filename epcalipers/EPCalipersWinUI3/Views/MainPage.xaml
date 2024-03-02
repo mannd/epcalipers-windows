@@ -374,7 +374,7 @@
                       DoubleTapped="ScrollViewer_DoubleTapped" PointerReleased="ScrollView_PointerReleased">
             <local:CaliperGrid x:Name="CaliperView" Background="Transparent" 
                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="Fill"
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
             </local:CaliperGrid>
