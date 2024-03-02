@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics.Capture;
@@ -21,6 +22,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.Win32.Foundation;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -39,6 +41,7 @@ namespace EPCalipersWinUI3.Views
 			InitializeComponent();
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
+			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
 			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
 
@@ -79,6 +82,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
+			// TODO: change titlebar back to the filename, so need to store filename...
 		}
 
 		#region touches
@@ -360,42 +364,75 @@ namespace EPCalipersWinUI3.Views
 			AppHelper.AppTitleBarText = ViewModel.TitleBarName;
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
-		#endregion
-		//private async void StartCaptureFromItem(GraphicsCaptureItem item)
-		//{
-		//	var surface = await CaptureSnapshot.CaptureAsync(_device, item);
-		//	var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
 
-		//	var source = new SoftwareBitmapSource();
-		//	await source.SetBitmapAsync(softwareBitmap);
-
-		//	//ScreenshotImage.Source = source;
-		//}
-		private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
+		private void StartHwndCapture(HWND hwnd)
 		{
-			if (GraphicsCaptureSession.IsSupported())
+			var item = CaptureSnapshot.CreateItemForWindow(hwnd);
+			if (item != null)
 			{
-				IntPtr hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
-				var picker = new GraphicsCapturePicker();
-				InitializeWithWindow.Initialize(picker, hwnd);
-				// Use picker to load any screen window into app
-				//var capturedItem = await picker.PickSingleItemAsync();
-				// This just gets the EP Calipers window
-				var capturedItem = CaptureSnapshot.CreateItemForWindow((Windows.Win32.Foundation.HWND)hwnd);
-				if (capturedItem != null)
-				{
-					var surface =	await CaptureSnapshot.CaptureAsync(_device, capturedItem);
-					var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
+				StartCaptureFromItem(item);
+			}
+		}
+		private async Task StartPickerCaptureAsync()
+		{
+			var hwnd = new HWND(WindowNative.GetWindowHandle(AppHelper.AppMainWindow));
+			var picker = new GraphicsCapturePicker();
+			InitializeWithWindow.Initialize(picker, hwnd);
+			var item = await picker.PickSingleItemAsync();
 
-					var source = new SoftwareBitmapSource();
-					await source.SetBitmapAsync(softwareBitmap);
+			if (item != null)
+			{
+				StartCaptureFromItem(item);
+			}
+		}
 
-					// TODO: change this to save image to a file!!!
-					ViewModel.MainImageSource = source;
+		private async void StartCaptureFromItem(GraphicsCaptureItem item)
+		{
+			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
+			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
 
-				}
-			} // else error message
-		
+			var source = new SoftwareBitmapSource();
+			await source.SetBitmapAsync(softwareBitmap);
+
+			ViewModel.MainImageSource = source;
+			ViewModel.IsMultipagePdf = false;
+			AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
+			ViewModel.TitleBarName = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
+		}
+
+
+
+		private async void OpenFromScreenshot_Click(object sender, RoutedEventArgs e)
+		{
+			if (!GraphicsCaptureSession.IsSupported()) return;
+			await StartPickerCaptureAsync();
+
+		}
+
+		private async void SaveScreenshot_Click(object sender, RoutedEventArgs e)
+		{
+			if (!GraphicsCaptureSession.IsSupported()) return;
+			var hwnd = new Windows.Win32.Foundation.HWND(WindowNative.GetWindowHandle(AppHelper.AppMainWindow));
+			StartHwndCapture(hwnd);
+			//var picker = new GraphicsCapturePicker();
+			//InitializeWithWindow.Initialize(picker, hwnd);
+			//// Use picker to load any screen window into app
+			////var capturedItem = await picker.PickSingleItemAsync();
+			//// This just gets the EP Calipers window
+			//var capturedItem = CaptureSnapshot.CreateItemForWindow((Windows.Win32.Foundation.HWND)hwnd);
+			//if (capturedItem != null)
+			//{
+			//	var surface = await CaptureSnapshot.CaptureAsync(_device, capturedItem);
+			//	var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
+
+			//	var source = new SoftwareBitmapSource();
+			//	await source.SetBitmapAsync(softwareBitmap);
+
+			//	// TODO: change this to save image to a file!!!
+			//	ViewModel.MainImageSource = source;
+
+			//}
+
 			return;
 
 			// Clear previous returned file name, if it exists, between iterations of this scenario
@@ -469,5 +506,7 @@ namespace EPCalipersWinUI3.Views
 				//}
 			}
 		}
+		#endregion
+
 	}
 }

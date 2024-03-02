@@ -11,6 +11,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Graphics.Capture;
 using Windows.UI;
 using WinUIEx;
 
@@ -24,6 +25,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
+			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
 		}
 
 
@@ -241,6 +243,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool caliperIsMarching;
+
+		[ObservableProperty]
+		private bool areScreenshotsSupported;
 		#endregion
 	}
 }

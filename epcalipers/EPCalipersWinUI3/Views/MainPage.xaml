@@ -46,14 +46,13 @@
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="SaveMenuItem" Click="SaveFileButton_Click">
+                <MenuFlyoutItem x:Uid="OpenFromScreenshotMenuItem" Click="OpenFromScreenshot_Click"
+                    IsEnabled="{x:Bind ViewModel.AreScreenshotsSupported}">
+                </MenuFlyoutItem>
+                <MenuFlyoutItem x:Uid="SaveScreenshotMenuItem" Click="SaveScreenshot_Click" 
+                                IsEnabled="{x:Bind ViewModel.AreScreenshotsSupported}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="S" Modifiers="Control"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="PrintMenuItem">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="P" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
@@ -67,11 +66,13 @@
             <MenuBarItem x:Uid="ViewMenu">
                 <MenuFlyoutItem x:Uid="MainMenuItem">
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="TransparentMenuItem" Command="{x:Bind ViewModel.TransparenWindowCommand}">
+                <MenuFlyoutItem x:Uid="TransparentMenuItem" 
+                                Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu">
-                <MenuFlyoutItem x:Uid="ZoomInMenuItem" Command="{x:Bind ViewModel.ZoomInCommand}">
+                <MenuFlyoutItem x:Uid="ZoomInMenuItem" 
+                                Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="ZoomIn" />
                     </MenuFlyoutItem.Icon>
@@ -374,7 +375,7 @@
                       DoubleTapped="ScrollViewer_DoubleTapped" PointerReleased="ScrollView_PointerReleased">
             <local:CaliperGrid x:Name="CaliperView" Background="Transparent" 
                       HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="Fill"
+                <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
             </local:CaliperGrid>

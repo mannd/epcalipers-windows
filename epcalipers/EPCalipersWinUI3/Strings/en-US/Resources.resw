@@ -519,4 +519,10 @@
   <data name="Not measured" xml:space="preserve">
     <value>Not measured</value>
   </data>
+  <data name="OpenFromScreenshotMenuItem.Text" xml:space="preserve">
+    <value>Open from screenshot</value>
+  </data>
+  <data name="SaveScreenshotMenuItem.Text" xml:space="preserve">
+    <value>Save screenshot</value>
+  </data>
 </root>
