@@ -63,11 +63,10 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuBarItem>
-            <MenuBarItem x:Uid="ViewMenu">
-                <MenuFlyoutItem x:Uid="MainMenuItem">
-                </MenuFlyoutItem>
+            <MenuBarItem x:Name="ViewMenuBarItem" x:Uid="ViewMenu">
+                <MenuFlyoutItem x:Uid="MainMenuItem" />
                 <MenuFlyoutItem x:Uid="TransparentMenuItem" 
-                                Command="{x:Bind ViewModel.TransparenWindowCommand}">
+                    Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu">

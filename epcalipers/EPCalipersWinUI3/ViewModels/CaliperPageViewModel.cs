@@ -30,13 +30,6 @@ namespace EPCalipersWinUI3.ViewModels
 			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
 		}
 
-
-		[RelayCommand]
-		public void CaptureScreen()
-		{
-			GraphicsHelper.CaptureScreenshot();
-		}
-
 		#region calipers
 		public void RefreshCalipers()
 		{

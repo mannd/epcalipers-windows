@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -33,12 +34,21 @@ namespace EPCalipersWinUI3.Views
 {
 	public sealed partial class MainPage : Page
 	{
+		#region fields
 		public MainPageViewModel ViewModel { get; set; }
+
 		private Point _rightClickPosition;
+
+		private static readonly string _saveFileDialogTitle = "FileSavedTitle".GetLocalized();
+		private static readonly string _fileSavedMessage = "FileSavedMessage".GetLocalized();
+		private static readonly string _fileSavedAndRenamedMessage = "FileSavedAndRenamedMessage".GetLocalized();
+		private static readonly string _fileCouldntBeSavedMessage = "FileCouldntBeSavedMessage".GetLocalized();
+		private static readonly string _fileSaveCancelledMessage = "FileSaveCancelledMessage".GetLocalized();
 
 		private Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
 		private IDirect3DDevice _device;
-
+		#endregion
+		#region constructor, navigation
 		public MainPage()
 		{
 			InitializeComponent();
@@ -91,7 +101,7 @@ namespace EPCalipersWinUI3.Views
 				AppHelper.RestoreTitleBarText();
 			}
 		}
-
+		#endregion
 		#region touches
 		private bool pointerDown = false;
 		private Point pointerPosition;
@@ -378,11 +388,12 @@ namespace EPCalipersWinUI3.Views
 			var item = CaptureSnapshot.CreateItemForWindow(hwnd);
 			if (item != null)
 			{
-				var source = await GetBitmapCaptureFromItem(item);
+				var source = await GetSoftwareBitmapFromItemAsync(item);
 				// save to file
 				SaveScreenshotToFile(source);
 			}
 		}
+
 		private async Task StartPickerCaptureAsync()
 		{
 			var hwnd = new HWND(WindowNative.GetWindowHandle(AppHelper.AppMainWindow));
@@ -392,7 +403,7 @@ namespace EPCalipersWinUI3.Views
 
 			if (item != null)
 			{
-				var source = await StartCaptureFromItem(item);
+				var source = await StartCaptureFromItemAsync(item);
 				ViewModel.MainImageSource = source;
 				ViewModel.IsMultipagePdf = false;
 				AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
@@ -400,17 +411,15 @@ namespace EPCalipersWinUI3.Views
 			}
 		}
 
-		private async Task<SoftwareBitmapSource> StartCaptureFromItem(GraphicsCaptureItem item)
+		private async Task<SoftwareBitmapSource> StartCaptureFromItemAsync(GraphicsCaptureItem item)
 		{
-			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
-			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
-
+			var softwareBitmap = await GetSoftwareBitmapFromItemAsync(item);
 			var source = new SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
 			return source;
 		}
 
-		private async Task<SoftwareBitmap> GetBitmapCaptureFromItem(GraphicsCaptureItem item)
+		private async Task<SoftwareBitmap> GetSoftwareBitmapFromItemAsync(GraphicsCaptureItem item)
 		{
 			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
 			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
@@ -425,61 +434,80 @@ namespace EPCalipersWinUI3.Views
 
 		private async void SaveScreenshot_Click(object sender, RoutedEventArgs e)
 		{
+			var softwareBitmap = await RenderCaliperView();
+			SaveScreenshotToFile(softwareBitmap);
+		}
+
+		// Alternative screenshot methods, inferior to SaveScreenshot_Click because it screenshots
+		// the whole app window, including menus etc.  Currently unused.
+		private async Task SaveAppWindowScreenshot_Click(object sender, RoutedEventArgs e)
+		{
 			if (!GraphicsCaptureSession.IsSupported()) return;
 			await Task.Yield(); // Updates UI, ensuring menu closes before screenshot.
 			await StartHwndCapture();
 		}
 
 		// See https://learn.microsoft.com/en-us/uwp/api/windows.graphics.imaging.bitmapencoder?view=winrt-22621&devlangs=csharp&f1url=%3FappId%3DDev17IDEF1%26l%3DEN-US%26k%3Dk(Windows.Graphics.Imaging.BitmapEncoder)%3Bk(DevLang-csharp)%26rd%3Dtrue
-		private async void SaveScreenshotToFile(SoftwareBitmap source)
+		private async void SaveScreenshotToFile(SoftwareBitmap bitmap)
 		{
-			//Create a file picker
-			FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
-			var window = AppHelper.AppMainWindow;
-			var hWnd = WindowNative.GetWindowHandle(window);
-			InitializeWithWindow.Initialize(savePicker, hWnd);
-
-			//Set options for your file picker
-		    savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-			//Dropdown of file types the user can save the file as
-			savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-			//Default file name if the user does not type one in or select a file to replace
-			savePicker.SuggestedFileName = "EPCsavedimage.jpg";
-
-			// Open the picker for the user to pick a file
-			StorageFile file = await savePicker.PickSaveFileAsync();
-			if (file != null)
+			try
 			{
-				// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
-				CachedFileManager.DeferUpdates(file);
-				// write to file
-				SaveSoftwareBitmapToFile(source, file);
-
-				//Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
-				// Completing updates may require Windows to ask for user input.
-				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-				if (status == FileUpdateStatus.Complete)
+				FileSavePicker savePicker = new FileSavePicker();
+				var hWnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
+				InitializeWithWindow.Initialize(savePicker, hWnd);
+				savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+				// TODO: consider allowing save to other file types.
+				savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
+				//Default file name if the user does not type one in or select a file to replace
+				savePicker.SuggestedFileName = "EPCalipersScreenshot.jpg";
+				// Open the picker for the user to pick a file
+				StorageFile file = await savePicker.PickSaveFileAsync();
+				if (file != null)
 				{
-					Debug.Print("status complete");
-					//SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";
-				}
-				else if (status == FileUpdateStatus.CompleteAndRenamed)
-				{
-					Debug.Print("status complete and renamed");
-					//SaveFileOutputTextBlock.Text = "File " + file.Name + " was renamed and saved.";
+					// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
+					CachedFileManager.DeferUpdates(file);
+					// write to file
+					SaveSoftwareBitmapToFile(bitmap, file);
+					FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+					if (status == FileUpdateStatus.Complete)
+					{
+						Debug.Print(_fileSavedMessage);
+						var dialog = MessageHelper.CreateMessageDialog(_saveFileDialogTitle, _fileSavedMessage);
+						dialog.XamlRoot = XamlRoot;
+						await dialog.ShowAsync();
+					}
+					else if (status == FileUpdateStatus.CompleteAndRenamed)
+					{
+						Debug.Print(_fileSavedAndRenamedMessage);
+						var dialog = MessageHelper.CreateMessageDialog(_saveFileDialogTitle, _fileSavedAndRenamedMessage);
+						dialog.XamlRoot = XamlRoot;
+						await dialog.ShowAsync();
+					}
+					else
+					{
+						Debug.Print(_fileCouldntBeSavedMessage);
+						var dialog = MessageHelper.CreateErrorDialog(_fileCouldntBeSavedMessage);
+						dialog.XamlRoot = XamlRoot;
+						await dialog.ShowAsync();
+					}
 				}
 				else
 				{
-					Debug.Print("couldn't be saved");
-					//SaveFileOutputTextBlock.Text = "File " + file.Name + " couldn't be saved.";
+					Debug.Print(_fileSaveCancelledMessage);
+					var dialog = MessageHelper.CreateMessageDialog(_saveFileDialogTitle, _fileSaveCancelledMessage);
+					dialog.XamlRoot = XamlRoot;
+					await dialog.ShowAsync();
 				}
 			}
-			else
+			catch (Exception ex)
 			{
-				Debug.Print("operation cancelled.");
-				//SaveFileOutputTextBlock.Text = "Operation cancelled.";
+				Debug.Print(ex.ToString());
+				var dialog = MessageHelper.CreateErrorDialog(ex.ToString());
+				dialog.XamlRoot = XamlRoot;
+				await dialog.ShowAsync();
 			}
 		}
+
 		private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
 		{
 			using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
@@ -516,8 +544,23 @@ namespace EPCalipersWinUI3.Views
 				}
 			}
 		}
+
+		private async Task<SoftwareBitmap> RenderCaliperView()
+		{
+			var renderTargetBitmap = new RenderTargetBitmap();
+			await renderTargetBitmap.RenderAsync(CaliperView);
+			var pixelBuffer = await renderTargetBitmap.GetPixelsAsync();
+			var softwareBitmap = SoftwareBitmap.CreateCopyFromBuffer(
+				pixelBuffer,
+				BitmapPixelFormat.Bgra8,
+				renderTargetBitmap.PixelWidth,
+				renderTargetBitmap.PixelHeight
+				);
+			return softwareBitmap;
+		}
+
+		#endregion
 	}
-	#endregion
 
 }
 

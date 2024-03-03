@@ -519,6 +519,21 @@
   <data name="Not measured" xml:space="preserve">
     <value>Not measured</value>
   </data>
+  <data name="FileCouldntBeSavedMessage" xml:space="preserve">
+    <value>File couldn't be saved.</value>
+  </data>
+  <data name="FileSaveCancelledMessage" xml:space="preserve">
+    <value>File save cancelled.</value>
+  </data>
+  <data name="FileSavedAndRenamedMessage" xml:space="preserve">
+    <value>File saved and renamed successfully.</value>
+  </data>
+  <data name="FileSavedMessage" xml:space="preserve">
+    <value>File saved successfully.</value>
+  </data>
+  <data name="FileSavedTitle" xml:space="preserve">
+    <value>Save file</value>
+  </data>
   <data name="OpenFromScreenshotMenuItem.Text" xml:space="preserve">
     <value>Open from screenshot</value>
   </data>
