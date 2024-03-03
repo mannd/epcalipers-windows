@@ -34,7 +34,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public void CaptureScreen()
 		{
-			GraphicsHelper.CaptureScreenshot(_caliperView.Bounds);
+			GraphicsHelper.CaptureScreenshot();
 		}
 
 		#region calipers

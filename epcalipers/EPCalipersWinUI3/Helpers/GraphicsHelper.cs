@@ -31,7 +31,7 @@ namespace EPCalipersWinUI3.Helpers
 			public int Height { get { return Bottom - Top; } }
 		}
 
-		public static Stream CaptureScreenshot(WindowEx window, ImageFormat format, Bounds bounds)
+		public static Stream CaptureScreenshot(WindowEx window, ImageFormat format)
 		{
 			MemoryStream result = null;
 
@@ -88,9 +88,9 @@ namespace EPCalipersWinUI3.Helpers
 
 
 
-		public static async Task<SoftwareBitmap> CaptureScreenshot(Bounds bounds)
+		public static async Task<SoftwareBitmap> CaptureScreenshot()
 		{
-			var ms = CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg, bounds);
+			var ms = CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg);
 			//using (FileStream file = new FileStream("C:\\Users\\mannd\\OneDrive\\Documents\\test\\testEPC3.jpg", FileMode.Open, FileAccess.ReadWrite))
 			//	file.CopyTo(ms);
 			var decoder = await BitmapDecoder.CreateAsync(ms.AsRandomAccessStream());

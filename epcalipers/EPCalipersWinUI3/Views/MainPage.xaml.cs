@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -22,9 +23,11 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.Storage.Streams;
 using Windows.Win32.Foundation;
 using WinRT.Interop;
 using WinUIEx;
+
 
 namespace EPCalipersWinUI3.Views
 {
@@ -375,7 +378,9 @@ namespace EPCalipersWinUI3.Views
 			var item = CaptureSnapshot.CreateItemForWindow(hwnd);
 			if (item != null)
 			{
-				await StartCaptureFromItem(item);
+				var source = await GetBitmapCaptureFromItem(item);
+				// save to file
+				SaveScreenshotToFile(source);
 			}
 		}
 		private async Task StartPickerCaptureAsync()
@@ -387,22 +392,29 @@ namespace EPCalipersWinUI3.Views
 
 			if (item != null)
 			{
-				await StartCaptureFromItem(item);
+				var source = await StartCaptureFromItem(item);
+				ViewModel.MainImageSource = source;
+				ViewModel.IsMultipagePdf = false;
+				AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
+				ViewModel.TitleBarName = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
 			}
 		}
 
-		private async Task StartCaptureFromItem(GraphicsCaptureItem item)
+		private async Task<SoftwareBitmapSource> StartCaptureFromItem(GraphicsCaptureItem item)
 		{
 			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
 			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
 
 			var source = new SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
+			return source;
+		}
 
-			ViewModel.MainImageSource = source;
-			ViewModel.IsMultipagePdf = false;
-			AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
-			ViewModel.TitleBarName = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
+		private async Task<SoftwareBitmap> GetBitmapCaptureFromItem(GraphicsCaptureItem item)
+		{
+			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
+			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
+			return softwareBitmap;
 		}
 
 		private async void OpenFromScreenshot_Click(object sender, RoutedEventArgs e)
@@ -414,89 +426,98 @@ namespace EPCalipersWinUI3.Views
 		private async void SaveScreenshot_Click(object sender, RoutedEventArgs e)
 		{
 			if (!GraphicsCaptureSession.IsSupported()) return;
-			await Task.Yield();
+			await Task.Yield(); // Updates UI, ensuring menu closes before screenshot.
 			await StartHwndCapture();
 		}
 
-			//	//	// TODO: change this to save image to a file!!!
-			//	//	ViewModel.MainImageSource = source;
+		// See https://learn.microsoft.com/en-us/uwp/api/windows.graphics.imaging.bitmapencoder?view=winrt-22621&devlangs=csharp&f1url=%3FappId%3DDev17IDEF1%26l%3DEN-US%26k%3Dk(Windows.Graphics.Imaging.BitmapEncoder)%3Bk(DevLang-csharp)%26rd%3Dtrue
+		private async void SaveScreenshotToFile(SoftwareBitmap source)
+		{
+			//Create a file picker
+			FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+			var window = AppHelper.AppMainWindow;
+			var hWnd = WindowNative.GetWindowHandle(window);
+			InitializeWithWindow.Initialize(savePicker, hWnd);
 
-			//	//}
+			//Set options for your file picker
+		    savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+			//Dropdown of file types the user can save the file as
+			savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
+			//Default file name if the user does not type one in or select a file to replace
+			savePicker.SuggestedFileName = "EPCsavedimage.jpg";
 
-			//	return;
+			// Open the picker for the user to pick a file
+			StorageFile file = await savePicker.PickSaveFileAsync();
+			if (file != null)
+			{
+				// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
+				CachedFileManager.DeferUpdates(file);
+				// write to file
+				SaveSoftwareBitmapToFile(source, file);
 
-			//	// Clear previous returned file name, if it exists, between iterations of this scenario
-			//	//SaveFileOutputTextBlock.Text = "";
-
-			//	// Create a file picker
-			//	FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
-
-			//	// See the sample code below for how to make the window accessible from the App class.
-			//	var window = AppHelper.AppMainWindow;
-
-			//	// Retrieve the window handle (HWND) of the current WinUI 3 window.
-			//	var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-
-			//	// Initialize the file picker with the window handle (HWND).
-			//	WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
-
-			//	// Set options for your file picker
-			//	savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-			//	// Dropdown of file types the user can save the file as
-			//	savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-			//	// Default file name if the user does not type one in or select a file to replace
-			//	//var enteredFileName = ((sender as Button).Parent as StackPanel)
-			//	//.FindName("FileNameTextBox") as TextBox;
-			//	savePicker.SuggestedFileName = "EPCsavedimage.jpg";
-
-			//	// Open the picker for the user to pick a file
-			//	StorageFile file = await savePicker.PickSaveFileAsync();
-			//	if (file != null)
-			//	{
-			//		// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
-			//		CachedFileManager.DeferUpdates(file);
-
-
-			//		// write to file
-			//		var imageStream = GraphicsHelper.CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg);
-
-			//		//await FileIO.WriteBufferAsync(file, (Windows.Storage.Streams.IBuffer)imageStream);
-
-			//		//var textBox = ((sender as Button).Parent as StackPanel)
-			//		//.FindName("FileContentTextBox") as TextBox;
-			//		//using (var stream = await file.OpenStreamForWriteAsync())
-			//		//{
-			//		//	using (var tw = new StreamWriter(stream))
-			//		//	{
-			//		//		tw.WriteLine(textBox?.Text);
-			//		//	}
-			//		//}
-			//		// Another way to write a string to the file is to use this instead:
-			//		// await FileIO.WriteTextAsync(file, "Example file contents.");
-
-			//		// Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
-			//		// Completing updates may require Windows to ask for user input.
-			//		FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-			//		//if (status == FileUpdateStatus.Complete)
-			//		//{
-			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";
-			//		//}
-			//		//else if (status == FileUpdateStatus.CompleteAndRenamed)
-			//		//{
-			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was renamed and saved.";
-			//		//}
-			//		//else
-			//		//{
-			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " couldn't be saved.";
-			//		//}
-			//		//}
-			//		//else
-			//		//{
-			//		//	SaveFileOutputTextBlock.Text = "Operation cancelled.";
-			//		//}
-			//	}
-			//}
-			#endregion
-
+				//Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
+				// Completing updates may require Windows to ask for user input.
+				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+				if (status == FileUpdateStatus.Complete)
+				{
+					Debug.Print("status complete");
+					//SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";
+				}
+				else if (status == FileUpdateStatus.CompleteAndRenamed)
+				{
+					Debug.Print("status complete and renamed");
+					//SaveFileOutputTextBlock.Text = "File " + file.Name + " was renamed and saved.";
+				}
+				else
+				{
+					Debug.Print("couldn't be saved");
+					//SaveFileOutputTextBlock.Text = "File " + file.Name + " couldn't be saved.";
+				}
+			}
+			else
+			{
+				Debug.Print("operation cancelled.");
+				//SaveFileOutputTextBlock.Text = "Operation cancelled.";
+			}
 		}
+		private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
+		{
+			using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
+			{
+				// Create an encoder with the desired format
+				BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+
+				// Set the software bitmap
+				encoder.SetSoftwareBitmap(softwareBitmap);
+				encoder.IsThumbnailGenerated = true;
+
+				try
+				{
+					await encoder.FlushAsync();
+				}
+				catch (Exception err)
+				{
+					const int WINCODEC_ERR_UNSUPPORTEDOPERATION = unchecked((int)0x88982F81);
+					switch (err.HResult)
+					{
+						case WINCODEC_ERR_UNSUPPORTEDOPERATION:
+							// If the encoder does not support writing a thumbnail, then try again
+							// but disable thumbnail generation.
+							encoder.IsThumbnailGenerated = false;
+							break;
+						default:
+							throw;
+					}
+				}
+
+				if (encoder.IsThumbnailGenerated == false)
+				{
+					await encoder.FlushAsync();
+				}
+			}
+		}
+	}
+	#endregion
+
 }
+
