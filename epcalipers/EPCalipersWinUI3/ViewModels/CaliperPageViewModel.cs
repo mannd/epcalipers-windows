@@ -20,11 +20,13 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class CaliperPageViewModel : ObservableObject
 	{
 		private readonly CaliperCollection _caliperCollection;
+		private ICaliperView _caliperView;
 
 		public CaliperPageViewModel(ICaliperView caliperView)
 		{
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
+			_caliperView = caliperView;
 			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
 		}
 
@@ -32,7 +34,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public void CaptureScreen()
 		{
-			GraphicsHelper.CaptureScreenshot();
+			GraphicsHelper.CaptureScreenshot(_caliperView.Bounds);
 		}
 
 		#region calipers

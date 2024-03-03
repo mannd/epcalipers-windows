@@ -104,6 +104,7 @@ namespace EPCalipersWinUI3
 		private static void TransparenWindow()
 		{
 			var mainWindow = AppHelper.AppMainWindow;
+			// TODO: Save Main Page title (different from save title bar)
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
 			mainWindow.Navigate(typeof(TransparentPage));
 		}

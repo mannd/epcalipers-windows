@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 
 namespace EPCalipersWinUI3.Helpers
@@ -32,7 +33,7 @@ namespace EPCalipersWinUI3.Helpers
 
 		public static void RestoreTitleBarText()
 		{
-			AppTitleBarText = CachedTitleBarText;
+			AppTitleBarText = CachedTitleBarText ?? string.Empty;
 		}
 	}
 }

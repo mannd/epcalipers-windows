@@ -36,8 +36,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <MenuBar Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <MenuBarItem x:Uid="FileMenu">
+        <MenuBar x:Name="MainMenuBar" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <MenuBarItem x:Name="FileMenuBarItem" x:Uid="FileMenu">
                 <MenuFlyoutItem x:Uid="OpenMenuItem" Click="OpenFile_Click">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="OpenFile" />

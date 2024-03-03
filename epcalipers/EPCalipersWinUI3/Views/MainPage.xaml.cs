@@ -83,6 +83,10 @@ namespace EPCalipersWinUI3.Views
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
 			// TODO: change titlebar back to the filename, so need to store filename...
+			if (AppHelper.AppMainWindow != null)
+			{
+				AppHelper.RestoreTitleBarText();
+			}
 		}
 
 		#region touches
@@ -365,12 +369,13 @@ namespace EPCalipersWinUI3.Views
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 
-		private void StartHwndCapture(HWND hwnd)
+		private async Task StartHwndCapture()
 		{
+			var hwnd = new HWND(WindowNative.GetWindowHandle(AppHelper.AppMainWindow));
 			var item = CaptureSnapshot.CreateItemForWindow(hwnd);
 			if (item != null)
 			{
-				StartCaptureFromItem(item);
+				await StartCaptureFromItem(item);
 			}
 		}
 		private async Task StartPickerCaptureAsync()
@@ -382,11 +387,11 @@ namespace EPCalipersWinUI3.Views
 
 			if (item != null)
 			{
-				StartCaptureFromItem(item);
+				await StartCaptureFromItem(item);
 			}
 		}
 
-		private async void StartCaptureFromItem(GraphicsCaptureItem item)
+		private async Task StartCaptureFromItem(GraphicsCaptureItem item)
 		{
 			var surface = await CaptureSnapshot.CaptureAsync(_device, item);
 			var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
@@ -400,113 +405,98 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.TitleBarName = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
 		}
 
-
-
 		private async void OpenFromScreenshot_Click(object sender, RoutedEventArgs e)
 		{
 			if (!GraphicsCaptureSession.IsSupported()) return;
 			await StartPickerCaptureAsync();
-
 		}
 
 		private async void SaveScreenshot_Click(object sender, RoutedEventArgs e)
 		{
 			if (!GraphicsCaptureSession.IsSupported()) return;
-			var hwnd = new Windows.Win32.Foundation.HWND(WindowNative.GetWindowHandle(AppHelper.AppMainWindow));
-			StartHwndCapture(hwnd);
-			//var picker = new GraphicsCapturePicker();
-			//InitializeWithWindow.Initialize(picker, hwnd);
-			//// Use picker to load any screen window into app
-			////var capturedItem = await picker.PickSingleItemAsync();
-			//// This just gets the EP Calipers window
-			//var capturedItem = CaptureSnapshot.CreateItemForWindow((Windows.Win32.Foundation.HWND)hwnd);
-			//if (capturedItem != null)
-			//{
-			//	var surface = await CaptureSnapshot.CaptureAsync(_device, capturedItem);
-			//	var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
-
-			//	var source = new SoftwareBitmapSource();
-			//	await source.SetBitmapAsync(softwareBitmap);
-
-			//	// TODO: change this to save image to a file!!!
-			//	ViewModel.MainImageSource = source;
-
-			//}
-
-			return;
-
-			// Clear previous returned file name, if it exists, between iterations of this scenario
-			//SaveFileOutputTextBlock.Text = "";
-
-			// Create a file picker
-			FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
-
-			// See the sample code below for how to make the window accessible from the App class.
-			var window = AppHelper.AppMainWindow;
-
-			// Retrieve the window handle (HWND) of the current WinUI 3 window.
-			var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-
-			// Initialize the file picker with the window handle (HWND).
-			WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
-
-			// Set options for your file picker
-			savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-			// Dropdown of file types the user can save the file as
-			savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-			// Default file name if the user does not type one in or select a file to replace
-			//var enteredFileName = ((sender as Button).Parent as StackPanel)
-			//.FindName("FileNameTextBox") as TextBox;
-			savePicker.SuggestedFileName = "EPCsavedimage.jpg";
-
-			// Open the picker for the user to pick a file
-			StorageFile file = await savePicker.PickSaveFileAsync();
-			if (file != null)
-			{
-				// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
-				CachedFileManager.DeferUpdates(file);
-
-
-				// write to file
-				var imageStream = GraphicsHelper.CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg);
-
-				//await FileIO.WriteBufferAsync(file, (Windows.Storage.Streams.IBuffer)imageStream);
-
-				//var textBox = ((sender as Button).Parent as StackPanel)
-				//.FindName("FileContentTextBox") as TextBox;
-				//using (var stream = await file.OpenStreamForWriteAsync())
-				//{
-				//	using (var tw = new StreamWriter(stream))
-				//	{
-				//		tw.WriteLine(textBox?.Text);
-				//	}
-				//}
-				// Another way to write a string to the file is to use this instead:
-				// await FileIO.WriteTextAsync(file, "Example file contents.");
-
-				// Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
-				// Completing updates may require Windows to ask for user input.
-				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
-				//if (status == FileUpdateStatus.Complete)
-				//{
-				//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";
-				//}
-				//else if (status == FileUpdateStatus.CompleteAndRenamed)
-				//{
-				//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was renamed and saved.";
-				//}
-				//else
-				//{
-				//	SaveFileOutputTextBlock.Text = "File " + file.Name + " couldn't be saved.";
-				//}
-				//}
-				//else
-				//{
-				//	SaveFileOutputTextBlock.Text = "Operation cancelled.";
-				//}
-			}
+			await Task.Yield();
+			await StartHwndCapture();
 		}
-		#endregion
 
-	}
+			//	//	// TODO: change this to save image to a file!!!
+			//	//	ViewModel.MainImageSource = source;
+
+			//	//}
+
+			//	return;
+
+			//	// Clear previous returned file name, if it exists, between iterations of this scenario
+			//	//SaveFileOutputTextBlock.Text = "";
+
+			//	// Create a file picker
+			//	FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+
+			//	// See the sample code below for how to make the window accessible from the App class.
+			//	var window = AppHelper.AppMainWindow;
+
+			//	// Retrieve the window handle (HWND) of the current WinUI 3 window.
+			//	var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+
+			//	// Initialize the file picker with the window handle (HWND).
+			//	WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
+
+			//	// Set options for your file picker
+			//	savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+			//	// Dropdown of file types the user can save the file as
+			//	savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
+			//	// Default file name if the user does not type one in or select a file to replace
+			//	//var enteredFileName = ((sender as Button).Parent as StackPanel)
+			//	//.FindName("FileNameTextBox") as TextBox;
+			//	savePicker.SuggestedFileName = "EPCsavedimage.jpg";
+
+			//	// Open the picker for the user to pick a file
+			//	StorageFile file = await savePicker.PickSaveFileAsync();
+			//	if (file != null)
+			//	{
+			//		// Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
+			//		CachedFileManager.DeferUpdates(file);
+
+
+			//		// write to file
+			//		var imageStream = GraphicsHelper.CaptureScreenshot(AppHelper.AppMainWindow, ImageFormat.Jpeg);
+
+			//		//await FileIO.WriteBufferAsync(file, (Windows.Storage.Streams.IBuffer)imageStream);
+
+			//		//var textBox = ((sender as Button).Parent as StackPanel)
+			//		//.FindName("FileContentTextBox") as TextBox;
+			//		//using (var stream = await file.OpenStreamForWriteAsync())
+			//		//{
+			//		//	using (var tw = new StreamWriter(stream))
+			//		//	{
+			//		//		tw.WriteLine(textBox?.Text);
+			//		//	}
+			//		//}
+			//		// Another way to write a string to the file is to use this instead:
+			//		// await FileIO.WriteTextAsync(file, "Example file contents.");
+
+			//		// Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
+			//		// Completing updates may require Windows to ask for user input.
+			//		FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+			//		//if (status == FileUpdateStatus.Complete)
+			//		//{
+			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";
+			//		//}
+			//		//else if (status == FileUpdateStatus.CompleteAndRenamed)
+			//		//{
+			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " was renamed and saved.";
+			//		//}
+			//		//else
+			//		//{
+			//		//	SaveFileOutputTextBlock.Text = "File " + file.Name + " couldn't be saved.";
+			//		//}
+			//		//}
+			//		//else
+			//		//{
+			//		//	SaveFileOutputTextBlock.Text = "Operation cancelled.";
+			//		//}
+			//	}
+			//}
+			#endregion
+
+		}
 }

@@ -199,7 +199,7 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="HelpMenu">
-                <MenuFlyoutItem x:Uid="HelpMenuItem" >
+                <MenuFlyoutItem x:Uid="HelpMenuItem" Command="{x:Bind ViewModel.HelpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
