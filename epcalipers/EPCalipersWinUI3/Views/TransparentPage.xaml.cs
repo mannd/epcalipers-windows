@@ -7,10 +7,17 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics.Capture;
+using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.Storage.Streams;
 using WinRT.Interop;
 
 namespace EPCalipersWinUI3.Views
@@ -20,6 +27,15 @@ namespace EPCalipersWinUI3.Views
 		TransparentPageViewModel ViewModel { get; set; }
 		private Point _rightClickPosition;
 
+		private static readonly string _saveFileDialogTitle = "FileSavedTitle".GetLocalized();
+		private static readonly string _fileSavedMessage = "FileSavedMessage".GetLocalized();
+		private static readonly string _fileSavedAndRenamedMessage = "FileSavedAndRenamedMessage".GetLocalized();
+		private static readonly string _fileCouldntBeSavedMessage = "FileCouldntBeSavedMessage".GetLocalized();
+		private static readonly string _fileSaveCancelledMessage = "FileSaveCancelledMessage".GetLocalized();
+
+		private Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
+		private IDirect3DDevice _device;
+
 		public TransparentPage()
 		{
 			this.InitializeComponent();
@@ -27,6 +43,11 @@ namespace EPCalipersWinUI3.Views
 			SizeChanged += TransparentPage_SizeChanged;
 			AppHelper.SaveTitleBarText();
 			AppHelper.AppTitleBarText = "AppTransparentWindowTitle".GetLocalized();
+
+			// Used for screenshot features
+			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
+			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
+
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -124,33 +145,5 @@ namespace EPCalipersWinUI3.Views
 		}
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
-
-		private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
-		{
-			if (GraphicsCaptureSession.IsSupported())
-			{
-				var hwnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
-				var _d3dDevice = Direct3D11Helper.CreateD3DDevice();
-				var _device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
-				var picker = new GraphicsCapturePicker();
-				InitializeWithWindow.Initialize(picker, hwnd);
-				var capturedItem = await picker.PickSingleItemAsync();
-				if (capturedItem != null)
-				{
-					var surface = await CaptureSnapshot.CaptureAsync(_device, capturedItem);
-					var softwareBitmap = await SoftwareBitmap.CreateCopyFromSurfaceAsync(surface, BitmapAlphaMode.Premultiplied);
-
-					var source = new SoftwareBitmapSource();
-					await source.SetBitmapAsync(softwareBitmap);
-
-					// TODO: change this to save image to a file!!!
-					//ViewModel.MainImageSource = source;
-
-				}
-			} // else error message
-
-			return;
-		}
-
 	}
 }

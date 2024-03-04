@@ -38,11 +38,6 @@
         </Grid.ColumnDefinitions>
         <MenuBar Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <MenuBarItem x:Uid="FileMenu">
-                <MenuFlyoutItem x:Uid="SaveMenuItem" Click="SaveFileButton_Click">
-                    <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
-                    </MenuFlyoutItem.KeyboardAccelerators>
-                </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="ExitMenuItem" Command="{x:Bind ViewModel.ExitCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F4" Modifiers="Menu"/>
