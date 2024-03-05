@@ -20,13 +20,11 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class CaliperPageViewModel : BasePageViewModel
 	{
 		private readonly CaliperCollection _caliperCollection;
-		private ICaliperView _caliperView;
 
 		public CaliperPageViewModel(ICaliperView caliperView)
 		{
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
-			_caliperView = caliperView;
 			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
 		}
 

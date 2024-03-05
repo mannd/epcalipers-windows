@@ -19,7 +19,6 @@ MONITORINFOEXW
 GetShellWindow
 IsWindowVisible
 GetAncestor
-GetWindowLongPtr
 DwmGetWindowAttribute
 WINDOW_STYLE
 IsIconic

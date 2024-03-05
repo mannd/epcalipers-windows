@@ -25,7 +25,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				titleBarName = appName + " - " + extension;
 			}
-			if (AppHelper.AppMainWindow != null)
+			if (AppHelper.AppMainWindow != null) // can be null at program startup
 			{
 				AppHelper.AppTitleBarText = titleBarName;
 			}

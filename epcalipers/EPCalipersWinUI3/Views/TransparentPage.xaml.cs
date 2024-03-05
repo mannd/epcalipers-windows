@@ -27,14 +27,6 @@ namespace EPCalipersWinUI3.Views
 		TransparentPageViewModel ViewModel { get; set; }
 		private Point _rightClickPosition;
 
-		private static readonly string _saveFileDialogTitle = "FileSavedTitle".GetLocalized();
-		private static readonly string _fileSavedMessage = "FileSavedMessage".GetLocalized();
-		private static readonly string _fileSavedAndRenamedMessage = "FileSavedAndRenamedMessage".GetLocalized();
-		private static readonly string _fileCouldntBeSavedMessage = "FileCouldntBeSavedMessage".GetLocalized();
-		private static readonly string _fileSaveCancelledMessage = "FileSaveCancelledMessage".GetLocalized();
-
-		private Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
-		private IDirect3DDevice _device;
 
 		public TransparentPage()
 		{
@@ -42,11 +34,6 @@ namespace EPCalipersWinUI3.Views
 			ViewModel = new TransparentPageViewModel(TransparentCaliperView);
 			SizeChanged += TransparentPage_SizeChanged;
 			ViewModel.SetTitleBarName("TransparentWindow".GetLocalized());
-
-			// Used for screenshot features
-			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
-			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
-
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -114,10 +101,6 @@ namespace EPCalipersWinUI3.Views
 			}
 		}
 
-		private void Right_Click(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("right click menu item");
-		}
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.ToggleComponentSelection(_rightClickPosition);

@@ -442,7 +442,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			try
 			{
-				FileSavePicker savePicker = new FileSavePicker();
+				FileSavePicker savePicker = new();
 				var hWnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
 				InitializeWithWindow.Initialize(savePicker, hWnd);
 				savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
@@ -491,7 +491,7 @@ namespace EPCalipersWinUI3.Views
 			}
 		}
 
-		private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
+		private static async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
 		{
 			using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
 			{

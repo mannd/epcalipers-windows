@@ -318,12 +318,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return isMarching;
 		}
 
-		private void AddMarchingCaliper(TimeCaliper timeCaliper)
+		private static void AddMarchingCaliper(TimeCaliper timeCaliper)
 		{
 			timeCaliper.AddMarchingCaliper();
 		}
 
-		private void RemoveMarchingCaliper(TimeCaliper timeCaliper)
+		private static void RemoveMarchingCaliper(TimeCaliper timeCaliper)
 		{
 			timeCaliper.RemoveMarchingCaliper();
 		}
@@ -645,13 +645,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			else
 			{
 				// show dialog, get number of interval
-				ShowMeanRateIntervalDialog(SelectedCaliper);
+				ShowMeanRateIntervalDialog();
 				//var numberIntervals = 5;
 				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
 		}
 
-		public void ShowMeanRateIntervalDialog(Caliper caliper)
+		public void ShowMeanRateIntervalDialog()
 		{
 			Debug.Assert(SelectedCaliper != null);
 			if (_meanRateIntervalWindow == null)
@@ -728,7 +728,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
 			_measureQtcWindow.PersistenceId = "MeasureQtcWindowID";
-			QtcParameters parameters = new QtcParameters()
+			QtcParameters parameters = new()
 			{
 				Window = _measureQtcWindow,
 				Caliper = SelectedCaliper,
@@ -736,7 +736,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				RRMeasurement = new Measurement(),
 				QTMeasurement = new Measurement(),
 			};
-			Frame frame = new Frame();
+			Frame frame = new();
 			frame.Navigate(typeof(QtcView), parameters);
 			_measureQtcWindow.Content = frame;
 			_measureQtcWindow.Closed += OnMeasureQtcWindowClosed;

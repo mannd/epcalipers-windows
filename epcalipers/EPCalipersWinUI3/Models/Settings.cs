@@ -145,8 +145,7 @@ namespace EPCalipersWinUI3.Models
 		{
 			get
 			{
-				var hexColor = _localSettings.Values[_unselectedCaliperColorKey] as string;
-				if (hexColor == null)
+				if (_localSettings.Values[_unselectedCaliperColorKey] is not string hexColor)
 				{
 					return Colors.Blue;
 				}
@@ -163,8 +162,7 @@ namespace EPCalipersWinUI3.Models
 		{
 			get
 			{
-				var hexColor = _localSettings.Values[_selectedCaliperColorKey] as string;
-				if (hexColor == null)
+				if (_localSettings.Values[_selectedCaliperColorKey] is not string hexColor)
 				{
 					return Colors.Red;
 				}
