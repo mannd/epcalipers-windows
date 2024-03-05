@@ -54,6 +54,7 @@ namespace EPCalipersWinUI3.Views
 			InitializeComponent();
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
+
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
 			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);

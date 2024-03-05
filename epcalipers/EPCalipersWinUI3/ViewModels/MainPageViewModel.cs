@@ -33,10 +33,30 @@ namespace EPCalipersWinUI3
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 			: base(caliperView)
 		{
+			// TODO: Can we implement open with???
+			// this can't work, since the constructor is not async.
+			//if (AppHelper.StartUpFile != null)
+			//{
+			//	// open the file
+			//	await OpenImageFile(AppHelper.StartUpFile);
+			//}
+			// TODO: setting to start with blank screen, inactivate most menu items.
+
+			if (AppHelper.StartUpImage != null)
+			{
+				MainImageSource = AppHelper.StartUpImage;
+				// TODO: Need file name, need to register more than just jpg files.
+			}
+			else
+			{
+				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+				// TODO: AppMainWindow is still null at this point...have to wait to set this?
+				SetTitleBarName("SampleECG".GetLocalized());
+			}
+			HasMainImage = true;
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}
-
 
 		#region menu
 		public async Task OpenImageFile(StorageFile file)
@@ -201,8 +221,7 @@ namespace EPCalipersWinUI3
 		private Microsoft.UI.Xaml.Controls.Image mainImage;
 
 		[ObservableProperty]
-		private ImageSource mainImageSource
-			= new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
+		private ImageSource mainImageSource;
 
 		[ObservableProperty]
 		private int maximumPdfPage;
@@ -227,6 +246,9 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private string titleBarName;
+
+		[ObservableProperty]
+		private bool hasMainImage;
 
 		#endregion
 	}

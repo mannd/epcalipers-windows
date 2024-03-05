@@ -544,6 +544,10 @@
     <value>Help</value>
     <comment>Used n titlebar for help window</comment>
   </data>
+  <data name="SampleECG" xml:space="preserve">
+    <value>Sample ECG</value>
+    <comment>Used in titlebar for sample ECG</comment>
+  </data>
   <data name="Screenshot" xml:space="preserve">
     <value>Screenshot</value>
     <comment>Used in titlebar for screenshots</comment>
