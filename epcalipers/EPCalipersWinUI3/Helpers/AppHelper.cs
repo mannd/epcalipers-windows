@@ -14,6 +14,8 @@ namespace EPCalipersWinUI3.Helpers
 			set => AppMainWindow.AppTitleBarText = value;
 		}
 
+		public static string AppDisplayName => MainWindow.GetAppTitleFromSystem();
+
 		public static void Navigate(Type type)
 		{
 			AppMainWindow?.Navigate(type);
@@ -25,6 +27,10 @@ namespace EPCalipersWinUI3.Helpers
 		}
 
 		private static string CachedTitleBarText { get; set; }
+		public static string MainPageTitleBarText { get; set; }
+		public static string TransparentPageTitleBarText { get; set; }
+		public static string SettingsPageTitleBarText { get; set; }
+		public static string HelpPageTitleBarText { get; set; }
 
 		public static void SaveTitleBarText()
 		{

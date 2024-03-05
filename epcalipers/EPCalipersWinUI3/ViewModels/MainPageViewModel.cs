@@ -7,6 +7,7 @@ using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Windows.Security.AccessControl;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -61,8 +62,7 @@ namespace EPCalipersWinUI3
 					// Set the image on the main page to the dropped image
 					MainImageSource = bitmapImage;
 					IsMultipagePdf = false;
-					AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + FileName;
-					TitleBarName = "AppDisplayName".GetLocalized() + " - " + FileName;
+					SetTitleBarName(FileName);
 				}
 			}
 			else
@@ -186,10 +186,14 @@ namespace EPCalipersWinUI3
 		{
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
-			TitleBarName = string.Format("AppMultipagePDFTitle".GetLocalized(),
+			var extension = string.Format("AppMultipagePDFTitle".GetLocalized(),
 				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
-			AppHelper.AppTitleBarText = TitleBarName;
+			SetTitleBarName(extension);
 		}
+
+
+
+
 		#endregion
 
 		#region observable properties

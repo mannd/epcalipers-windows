@@ -17,7 +17,7 @@ using WinUIEx;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class CaliperPageViewModel : ObservableObject
+	public partial class CaliperPageViewModel : BasePageViewModel
 	{
 		private readonly CaliperCollection _caliperCollection;
 		private ICaliperView _caliperView;

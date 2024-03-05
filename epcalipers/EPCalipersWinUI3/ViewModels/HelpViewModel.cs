@@ -2,7 +2,7 @@
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class HelpViewModel : ObservableObject
+	public partial class HelpViewModel : BasePageViewModel
 	{
 		[ObservableProperty]
 		private string source = "https://epstudiossoftware.com";

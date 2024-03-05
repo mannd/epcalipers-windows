@@ -18,13 +18,11 @@ namespace EPCalipersWinUI3.Views
 		{
 			this.InitializeComponent();
 			ViewModel = new HelpViewModel();
-			AppHelper.SaveTitleBarText();
-			AppHelper.AppTitleBarText = "AppSimpleTitle".GetLocalized();
+			ViewModel.SetTitleBarName("Help".GetLocalized());
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)
 		{
-			AppHelper.RestoreTitleBarText();
 			AppHelper.NavigateBack();
 		}
 	}

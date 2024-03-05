@@ -41,8 +41,7 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new TransparentPageViewModel(TransparentCaliperView);
 			SizeChanged += TransparentPage_SizeChanged;
-			AppHelper.SaveTitleBarText();
-			AppHelper.AppTitleBarText = "AppTransparentWindowTitle".GetLocalized();
+			ViewModel.SetTitleBarName("TransparentWindow".GetLocalized());
 
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
@@ -54,6 +53,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
+			ViewModel.RestoreTitleBarName();
 		}
 
 		private void TransparentPage_SizeChanged(object sender, SizeChangedEventArgs e)

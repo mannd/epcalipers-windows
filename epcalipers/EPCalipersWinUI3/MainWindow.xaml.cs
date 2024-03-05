@@ -45,7 +45,7 @@ namespace EPCalipersWinUI3
 			set => AppTitleTextBlock.Text = value;
 		}
 
-		public string GetAppTitleFromSystem()
+		public static string GetAppTitleFromSystem()
 		{
 			return Windows.ApplicationModel.Package.Current.DisplayName;
 		}

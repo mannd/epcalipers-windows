@@ -540,4 +540,20 @@
   <data name="SaveScreenshotMenuItem.Text" xml:space="preserve">
     <value>Save screenshot</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+    <comment>Used n titlebar for help window</comment>
+  </data>
+  <data name="Screenshot" xml:space="preserve">
+    <value>Screenshot</value>
+    <comment>Used in titlebar for screenshots</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Used in titlebar for settings window</comment>
+  </data>
+  <data name="TransparentWindow" xml:space="preserve">
+    <value>Transparent window</value>
+    <comment>Used in titlebar for transparent window</comment>
+  </data>
 </root>

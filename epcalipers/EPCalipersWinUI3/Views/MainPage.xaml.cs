@@ -45,8 +45,8 @@ namespace EPCalipersWinUI3.Views
 		private static readonly string _fileCouldntBeSavedMessage = "FileCouldntBeSavedMessage".GetLocalized();
 		private static readonly string _fileSaveCancelledMessage = "FileSaveCancelledMessage".GetLocalized();
 
-		private Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
-		private IDirect3DDevice _device;
+		private readonly Windows.Win32.Graphics.Direct3D11.ID3D11Device _d3dDevice;
+		private readonly IDirect3DDevice _device;
 		#endregion
 		#region constructor, navigation
 		public MainPage()
@@ -95,11 +95,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
-			// TODO: change titlebar back to the filename, so need to store filename...
-			if (AppHelper.AppMainWindow != null)
-			{
-				AppHelper.RestoreTitleBarText();
-			}
+			ViewModel.RestoreTitleBarName();
 		}
 		#endregion
 		#region touches
@@ -134,10 +130,6 @@ namespace EPCalipersWinUI3.Views
 			}
 		}
 
-		private void Right_Click(object sender, RoutedEventArgs e)
-		{
-			Debug.Print("right click menu item");
-		}
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.ToggleComponentSelection(_rightClickPosition);
@@ -378,7 +370,6 @@ namespace EPCalipersWinUI3.Views
 			// Change the cursor to a wait icon
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Wait);
 			await ViewModel.OpenImageFile(file);
-			AppHelper.AppTitleBarText = ViewModel.TitleBarName;
 			CaliperView.InputCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
 		}
 
@@ -394,8 +385,7 @@ namespace EPCalipersWinUI3.Views
 				var source = await StartCaptureFromItemAsync(item);
 				ViewModel.MainImageSource = source;
 				ViewModel.IsMultipagePdf = false;
-				AppHelper.AppTitleBarText = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
-				ViewModel.TitleBarName = "AppDisplayName".GetLocalized() + " - " + "Screenshot";
+				ViewModel.SetTitleBarName("Screenshot".GetLocalized());
 			}
 		}
 
