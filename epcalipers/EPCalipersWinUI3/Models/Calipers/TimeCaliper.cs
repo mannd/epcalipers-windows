@@ -82,7 +82,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var text = Text;
 			var alignment = _settings.TimeCaliperLabelAlignment;
 			var autoAlignLabel = _settings.AutoAlignLabel;
-			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, _fakeUI);
+			var caliperLabelSize = _settings.CaliperLabelSize;
+			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, caliperLabelSize, _fakeUI);
 		}
 
 		public override void ApplySettings(ISettings settings)
@@ -90,6 +91,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			base.ApplySettings(settings);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
+			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
+			// TODO: This does NOT adjust the label position, but the position corrects as soon as the caliper is moved.
 			CaliperLabel.SetPosition();
 			if (MarchingCaliper != null)
 			{

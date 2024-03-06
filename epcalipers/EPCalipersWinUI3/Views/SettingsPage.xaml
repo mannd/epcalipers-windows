@@ -124,6 +124,16 @@
                     <x:String>To hundredths</x:String>
                     <x:String>None</x:String>
                 </RadioButtons>
+                <RadioButtons x:Name="CaliperLabelSizeRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.CaliperLabelSize}"  
+                          MaxColumns="5" Header="Caliper label size"
+                          SelectionChanged="CaliperLabelSize_SelectionChanged">
+                    <x:String>Extra-small</x:String>
+                    <x:String>Small</x:String>
+                    <x:String>Medium</x:String>
+                    <x:String>Large</x:String>
+                    <x:String>Extra-large</x:String>
+                </RadioButtons>
                 <StackPanel Orientation="Horizontal">
                 <Slider x:Name="NumberOfMarchingCalipersSlider" Width="200" Minimum="1" Maximum="20" 
                         StepFrequency="1" HorizontalAlignment="Left"

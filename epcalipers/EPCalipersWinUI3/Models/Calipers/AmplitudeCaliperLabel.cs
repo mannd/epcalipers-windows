@@ -25,8 +25,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ICaliperView caliperView,
 			string text,
 			CaliperLabelAlignment alignment,
+			CaliperLabelSize caliperLabelSize,
 			bool autoAlignLabel,
-			bool fakeUI = false) : base(caliper, text, alignment, autoAlignLabel, fakeUI)
+			bool fakeUI = false) : base(caliper, text, alignment, autoAlignLabel, caliperLabelSize, fakeUI)
 		{
 			Caliper = caliper;
 			_view = caliperView;

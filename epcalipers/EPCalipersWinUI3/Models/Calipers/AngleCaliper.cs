@@ -164,8 +164,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void InitCaliperLabel()
 		{
 			string text = AngleCalibration.GetFormattedMeasurement(Value);
+			CaliperLabelSize caliperLabelSize = _settings.CaliperLabelSize;
 			CaliperLabel = new AngleCaliperLabel(this, text,
-				CaliperLabelAlignment.Top, false, _fakeUI);
+				CaliperLabelAlignment.Top, false, caliperLabelSize, _fakeUI);
 		}
 
 		private void InitTriangleLabel(AngleCaliperPosition position)
@@ -175,8 +176,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var autoAlignLabel = _settings.AutoAlignLabel;
 			Visibility visibility = ShowBrugadaTriangle(position) ?
 				Visibility.Visible : Visibility.Collapsed;
+			CaliperLabelSize caliperLabelSize = _settings.CaliperLabelSize;
 			TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
-				alignment, autoAlignLabel, _fakeUI, visibility);
+				alignment, autoAlignLabel, caliperLabelSize, _fakeUI, visibility);
 		}
 
 		public override void AddToView(ICaliperView caliperView)
@@ -257,6 +259,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public override void ApplySettings(ISettings settings)
 		{
 			base.ApplySettings(settings);
+			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
+			TriangleBaseLabel.CaliperLabelSize = settings.CaliperLabelSize;
 			TriangleBaseLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			TriangleBaseLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			TriangleBaseLabel.SetPosition();

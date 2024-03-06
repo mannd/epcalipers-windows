@@ -46,10 +46,6 @@ namespace EPCalipersWinUI3
 				fileActivatedEventArgs.Files.FirstOrDefault() is StorageFile storageFile)
 			{
 				AppHelper.StartupFile = storageFile;
-				// TODO: Error handling
-				//var bitmapImage = new BitmapImage();
-				//await bitmapImage.SetSourceAsync(await storageFile.OpenAsync(FileAccessMode.Read));
-				//AppHelper.StartUpImage = bitmapImage;
 			}
 			_window = new MainWindow();
 			_window.Activate();

@@ -59,5 +59,14 @@ namespace EPCalipersWinUI3.Views
 			}
 
 		}
+
+		private void CaliperLabelSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				ViewModel.CaliperLabelSize = selection;
+			}
+		}
 	}
 }

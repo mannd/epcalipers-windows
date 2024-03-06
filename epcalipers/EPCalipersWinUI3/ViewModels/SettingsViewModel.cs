@@ -22,6 +22,34 @@ namespace EPCalipersWinUI3.ViewModels
 			Rounding = (int)_model.Rounding;
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
+			CaliperLabelSize = CaliperLabelConvertFromSize(_model.CaliperLabelSize);
+		}
+
+		// TODO: Nicer to just use an indexed array to do this conversion.
+		private int CaliperLabelConvertFromSize(CaliperLabelSize size)
+		{
+			switch (size)
+			{
+				case Models.Calipers.CaliperLabelSize.ExtraSmall: return 0;
+				case Models.Calipers.CaliperLabelSize.Small: return 1;
+				case Models.Calipers.CaliperLabelSize.Medium: return 2;
+				case Models.Calipers.CaliperLabelSize.Large: return 3;
+				case Models.Calipers.CaliperLabelSize.ExtraLarge: return 4;
+			}
+			return 2;  // Medium
+		}
+
+		private CaliperLabelSize CaliperLabelConvertToSize(int n)
+		{
+			switch (n)
+			{
+				case 0: return Models.Calipers.CaliperLabelSize.ExtraSmall;
+				case 1: return Models.Calipers.CaliperLabelSize.Small;
+				case 2: return Models.Calipers.CaliperLabelSize.Medium;
+				case 3: return Models.Calipers.CaliperLabelSize.Large;
+				case 4: return Models.Calipers.CaliperLabelSize.ExtraLarge;
+			}
+			return Models.Calipers.CaliperLabelSize.Medium;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -56,6 +84,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(NumberOfMarchingCalipers):
 					_model.NumberOfMarchingCalipers = NumberOfMarchingCalipers;
 					break;
+				case nameof(CaliperLabelSize):
+					_model.CaliperLabelSize = CaliperLabelConvertToSize(CaliperLabelSize);
+					break;
 				default:
 					break;
 			}
@@ -87,5 +118,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int numberOfMarchingCalipers;
+
+		[ObservableProperty]
+		private int caliperLabelSize;
 	}
 }

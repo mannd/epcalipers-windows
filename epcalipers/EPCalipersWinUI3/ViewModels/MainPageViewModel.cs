@@ -28,7 +28,16 @@ namespace EPCalipersWinUI3
 		// It should only allow reset rotation to be false if image is multipage PDF.
 		public bool ResetZoomWithNewImage { get; private set; } = true;
 		public bool ResetRotationWithNewImage { get; private set; } = true;
-		public float ZoomFactor { get; set; } = 1;
+		public float ZoomFactor
+		{
+			get => _zoomFactor;
+			set
+			{
+				Debug.Print("Zoom Factor = {0}", value);
+				_zoomFactor = value;
+			}
+		}
+		private float _zoomFactor;
 
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 			: base(caliperView)

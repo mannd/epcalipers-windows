@@ -28,7 +28,8 @@ namespace EPCalipersWinUI3.Models
 		private const string _selectedCaliperColorKey = "SelectedCaliperColorKey";
 		private const string _barThicknessKey = "BarThicknessKey";
 		private const string _roundingKey = "RoundingKey";
-		private const string _showBrugadaTriangle = "ShowBrugadaTriangle";
+		private const string _showBrugadaTriangleKey = "ShowBrugadaTriangle";
+		private const string _labelFontSizeKey = "LabelFontSize";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -57,6 +58,12 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_numberOfMeanIntervalsKey] = value;
 				Debug.Print($"numberOfMeanIntervals = {value}");
 			} 
+		}
+
+		public CaliperLabelSize CaliperLabelSize
+		{
+			get => (CaliperLabelSize)(_localSettings.Values[_labelFontSizeKey] ?? CaliperLabelSize.Medium);
+			set => _localSettings.Values[_labelFontSizeKey] = (int)value;
 		}
 
 		public int NumberOfRRIntervals
@@ -117,8 +124,8 @@ namespace EPCalipersWinUI3.Models
 		// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
 		public bool ShowBrugadaTriangle
 		{
-			get => (bool)(_localSettings.Values[_showBrugadaTriangle] ?? true);
-			set => _localSettings.Values[_showBrugadaTriangle] = value;
+			get => (bool)(_localSettings.Values[_showBrugadaTriangleKey] ?? true);
+			set => _localSettings.Values[_showBrugadaTriangleKey] = value;
 		}
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
@@ -191,6 +198,7 @@ namespace EPCalipersWinUI3.Models
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
+		public CaliperLabelSize CaliperLabelSize { get; set; } = CaliperLabelSize.Medium;
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
 		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
