@@ -12,6 +12,8 @@ namespace EPCalipersWinUI3.Helpers
 
 		public static BitmapImage StartUpImage { get; set; }
 
+		public static StorageFile StartupFile {  get; set; }
+
 		public static string AppTitleBarText
 		{
 			get => AppMainWindow.AppTitleBarText;

@@ -78,7 +78,7 @@ namespace EPCalipersWinUI3
 				else
 				{
 					var bitmapImage = new BitmapImage();
-					bitmapImage.SetSource(await file.OpenAsync(FileAccessMode.Read));
+					await bitmapImage.SetSourceAsync(await file.OpenAsync(FileAccessMode.Read));
 					// Set the image on the main page to the dropped image
 					MainImageSource = bitmapImage;
 					IsMultipagePdf = false;

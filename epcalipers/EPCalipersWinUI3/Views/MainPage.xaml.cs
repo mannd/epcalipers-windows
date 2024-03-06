@@ -21,6 +21,7 @@ using Windows.Foundation;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;
+using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
@@ -92,9 +93,14 @@ namespace EPCalipersWinUI3.Views
 			});
 		}
 
-		protected override void OnNavigatedTo(NavigationEventArgs e)
+		protected async override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+			if (AppHelper.StartupFile != null)
+			{
+				await ViewModel.OpenImageFile(AppHelper.StartupFile);
+				AppHelper.StartupFile = null;
+			}
 			ViewModel.RefreshCalipers();
 			ViewModel.RestoreTitleBarName();
 		}

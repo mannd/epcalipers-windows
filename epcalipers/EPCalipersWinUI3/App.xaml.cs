@@ -35,8 +35,9 @@ namespace EPCalipersWinUI3
 		/// Invoked when the application is launched.
 		/// </summary>
 		/// <param name="args">Details about the launch request and process.</param>
-		protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 		{
+			// TODO: WinUI3 Bug? First attempt to open file type fails, but subsequent attempts work.
 			// see https://stackoverflow.com/questions/76650127/how-to-handle-activation-through-files-in-winui-3-packaged
 			AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 
@@ -44,10 +45,11 @@ namespace EPCalipersWinUI3
 				appActivationArguments.Data is IFileActivatedEventArgs fileActivatedEventArgs &&
 				fileActivatedEventArgs.Files.FirstOrDefault() is StorageFile storageFile)
 			{
-				// TODO: open file
-				var bitmapImage = new BitmapImage();
-				bitmapImage.SetSource(await storageFile.OpenAsync(FileAccessMode.Read));
-				AppHelper.StartUpImage = bitmapImage;
+				AppHelper.StartupFile = storageFile;
+				// TODO: Error handling
+				//var bitmapImage = new BitmapImage();
+				//await bitmapImage.SetSourceAsync(await storageFile.OpenAsync(FileAccessMode.Read));
+				//AppHelper.StartUpImage = bitmapImage;
 			}
 			_window = new MainWindow();
 			_window.Activate();

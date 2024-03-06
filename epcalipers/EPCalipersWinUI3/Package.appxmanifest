@@ -45,11 +45,16 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="jpg">
+          <uap:FileTypeAssociation Name="image">
             <uap:SupportedFileTypes>
               <uap:FileType ContentType="image/jpeg">.jpg</uap:FileType>
+              <uap:FileType ContentType="image/bmp">.bmp</uap:FileType>
+              <uap:FileType ContentType="image/png">.png</uap:FileType>
+              <uap:FileType ContentType="application/pdf">.pdf</uap:FileType>
+              <uap:FileType ContentType="image/jpeg">.jpeg</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:DisplayName>jpg</uap:DisplayName>
+            <uap:DisplayName>Image</uap:DisplayName>
+            <uap:EditFlags OpenIsSafe="true"/>
           </uap:FileTypeAssociation>
         </uap:Extension>
       </Extensions>
