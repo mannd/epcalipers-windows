@@ -69,7 +69,7 @@
                     Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
-            <MenuBarItem x:Uid="ImageMenu" IsEnabled="{x:Bind ViewModel.HasMainImage}">
+            <MenuBarItem x:Uid="ImageMenu" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <MenuFlyoutItem x:Uid="ZoomInMenuItem" 
                                 Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>
@@ -141,7 +141,7 @@
                 <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
-            <MenuBarItem x:Uid="CalipersMenu" IsEnabled="{x:Bind ViewModel.HasMainImage}">
+            <MenuBarItem x:Uid="CalipersMenu" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />

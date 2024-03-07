@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -18,6 +19,7 @@ namespace EPCalipersWinUI3
 		public MainWindow()
 		{
 			this.InitializeComponent();
+			Debug.Print("MainWindow constructor");
 			ExtendsContentIntoTitleBar = true;
 			SetTitleBar(TitleBar);
 			//AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
@@ -64,6 +66,7 @@ namespace EPCalipersWinUI3
 
 		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
 		{
+			Debug.Print("MainWindow_Activated");
 			if (args.WindowActivationState == WindowActivationState.Deactivated)
 			{
 				AppTitleTextBlock.Foreground =

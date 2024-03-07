@@ -53,8 +53,9 @@ namespace EPCalipersWinUI3.Views
 		public MainPage()
 		{
 			InitializeComponent();
+			Debug.Print("MainPage constructor");
+			this.Loaded += MainPage_Loaded;
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
-
 
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
@@ -92,16 +93,26 @@ namespace EPCalipersWinUI3.Views
 			});
 		}
 
+		private void MainPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			Debug.Print("MainPage_Loaded()");
+			ViewModel.LoadStartupImage();
+		}
+
 		protected async override void OnNavigatedTo(NavigationEventArgs e)
 		{
+			Debug.Print("MainPage OnNavigatorTo");
 			base.OnNavigatedTo(e);
 			if (AppHelper.StartupFile != null)
 			{
 				await ViewModel.OpenImageFile(AppHelper.StartupFile);
 				AppHelper.StartupFile = null;
 			}
-			ViewModel.RefreshCalipers();
-			ViewModel.RestoreTitleBarName();
+			else // either starting first time without StartupFile, or navigating back here.
+			{
+				ViewModel.RefreshCalipers();
+				ViewModel.RestoreTitleBarName();
+			}
 		}
 		#endregion
 		#region touches

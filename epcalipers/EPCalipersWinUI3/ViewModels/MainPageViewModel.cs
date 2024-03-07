@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.Security.AccessControl;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace EPCalipersWinUI3
 	public partial class MainPageViewModel : CaliperPageViewModel
 	{
 		private readonly PdfHelper _pdfHelper;
+		private bool _isStartup = true;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom { get; set; }
@@ -42,15 +44,17 @@ namespace EPCalipersWinUI3
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 			: base(caliperView)
 		{
-			// TODO: Can we implement open with???
-			// this can't work, since the constructor is not async.
-			//if (AppHelper.StartUpFile != null)
-			//{
-			//	// open the file
-			//	await OpenImageFile(AppHelper.StartUpFile);
-			//}
 			// TODO: setting to start with blank screen, inactivate most menu items.
+			Debug.Print("MainPageViewModel constructor");
 
+			SetZoom = setZoomDelegate;
+			_pdfHelper = new PdfHelper();
+		}
+
+		public void LoadStartupImage()
+		{
+			RefreshCalipers();
+			if (!_isStartup) { return; }
 			if (AppHelper.StartUpImage != null)
 			{
 				MainImageSource = AppHelper.StartUpImage;
@@ -59,12 +63,10 @@ namespace EPCalipersWinUI3
 			else
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
-				// TODO: AppMainWindow is still null at this point...have to wait to set this?
 				SetTitleBarName("SampleECG".GetLocalized());
 			}
 			HasMainImage = true;
-			SetZoom = setZoomDelegate;
-			_pdfHelper = new PdfHelper();
+			_isStartup = false;
 		}
 
 		#region menu

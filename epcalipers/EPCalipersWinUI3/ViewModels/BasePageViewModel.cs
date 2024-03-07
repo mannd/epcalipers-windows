@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void SetTitleBarName(string extension)
 		{
+			Debug.Print("SetTitleBarName");
 			_titleBarExtension = extension;
 			var appName = AppHelper.AppDisplayName;
 			string titleBarName;
