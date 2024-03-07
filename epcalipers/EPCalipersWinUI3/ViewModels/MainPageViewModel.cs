@@ -55,12 +55,7 @@ namespace EPCalipersWinUI3
 		{
 			RefreshCalipers();
 			if (!_isStartup) { return; }
-			if (AppHelper.StartUpImage != null)
-			{
-				MainImageSource = AppHelper.StartUpImage;
-				// TODO: Need file name, need to register more than just jpg files.
-			}
-			else
+			if (AppHelper.StartUpImage == null) 
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 				SetTitleBarName("SampleECG".GetLocalized());
