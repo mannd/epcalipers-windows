@@ -103,6 +103,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Visibility.Collapsed;
 			return new List<Bar> { LeftAngleBar, RightAngleBar, ApexBar, TriangleBaseBar };
 		}
+		public override void SetFullSelectionTo(bool value)
+		{
+			base.SetFullSelectionTo(value);
+			TriangleBaseLabel.IsSelected = value;
+		}
+
+		public override void SelectPartialCaliper(Bar bar)
+		{
+			base.SelectPartialCaliper(bar);
+			TriangleBaseLabel.IsSelected = true;
+		}
 
 		private double TriangleHeight()
 		{

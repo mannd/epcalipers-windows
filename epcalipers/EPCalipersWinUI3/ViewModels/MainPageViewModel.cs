@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
@@ -51,11 +52,11 @@ namespace EPCalipersWinUI3
 			_pdfHelper = new PdfHelper();
 		}
 
-		public void LoadStartupImage()
+		public void LoadSampleImage()
 		{
-			RefreshCalipers();
 			if (!_isStartup) { return; }
-			if (AppHelper.StartUpImage == null) 
+			var settings = Settings.Instance;
+			if (AppHelper.StartUpImage == null && settings.ShowSampleEcgAtStartUp) 
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 				SetTitleBarName("SampleECG".GetLocalized());

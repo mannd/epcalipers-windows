@@ -582,6 +582,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			SetCalibration();
 		}
 
+		// TODO: Set Calibration won't activate triangle unless there is already an
+		// angle caliper. 
 		public void SetCalibration()
 		{
 			ShowRate = false;

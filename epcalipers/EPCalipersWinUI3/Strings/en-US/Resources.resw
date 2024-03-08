@@ -560,4 +560,7 @@
     <value>Transparent window</value>
     <comment>Used in titlebar for transparent window</comment>
   </data>
+  <data name="ShowSampleEcgAtStartUp.Content" xml:space="preserve">
+    <value>Show sample ECG at startup (requires restart)</value>
+  </data>
 </root>

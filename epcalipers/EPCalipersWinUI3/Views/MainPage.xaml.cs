@@ -93,10 +93,13 @@ namespace EPCalipersWinUI3.Views
 			});
 		}
 
+		// TODO: Investigate further.  It appears necessary to refresh calipers TWICE, first in OnNavigatedTo() and
+		// then in MainPage_Loaded() to get changes to update.  Why??
 		private void MainPage_Loaded(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("MainPage_Loaded()");
-			ViewModel.LoadStartupImage();
+			ViewModel.LoadSampleImage();
+			ViewModel.RefreshCalipers();
 			ViewModel.RestoreTitleBarName();
 		}
 
@@ -105,10 +108,11 @@ namespace EPCalipersWinUI3.Views
 			Debug.Print("MainPage OnNavigatorTo");
 			base.OnNavigatedTo(e);
 			if (AppHelper.StartupFile != null)
-			{
+			{ 
 				await ViewModel.OpenImageFile(AppHelper.StartupFile);
 				AppHelper.StartupFile = null;
 			}
+			ViewModel.RefreshCalipers();
 		}
 		#endregion
 		#region touches

@@ -40,7 +40,9 @@ namespace EPCalipersWinUI3.Views
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+			ViewModel.RefreshCalipers();
 		}
+
 		private void TransparentPage_Loaded(object sender, RoutedEventArgs e)
 		{
 			Debug.Print("MainPage_Loaded()");

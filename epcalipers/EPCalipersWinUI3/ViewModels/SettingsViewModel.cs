@@ -23,6 +23,7 @@ namespace EPCalipersWinUI3.ViewModels
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
 			CaliperLabelSize = CaliperLabelConvertFromSize(_model.CaliperLabelSize);
+			ShowSampleEcgAtStartUp = _model.ShowSampleEcgAtStartUp;
 		}
 
 		// TODO: Nicer to just use an indexed array to do this conversion.
@@ -87,6 +88,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(CaliperLabelSize):
 					_model.CaliperLabelSize = CaliperLabelConvertToSize(CaliperLabelSize);
 					break;
+				case nameof(ShowSampleEcgAtStartUp):
+					_model.ShowSampleEcgAtStartUp = ShowSampleEcgAtStartUp;
+					break;
 				default:
 					break;
 			}
@@ -121,5 +125,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int caliperLabelSize;
+
+		[ObservableProperty]
+		private bool showSampleEcgAtStartUp;
 	}
 }

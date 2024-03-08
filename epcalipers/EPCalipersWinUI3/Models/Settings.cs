@@ -30,6 +30,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _roundingKey = "RoundingKey";
 		private const string _showBrugadaTriangleKey = "ShowBrugadaTriangle";
 		private const string _labelFontSizeKey = "LabelFontSize";
+		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -122,6 +123,13 @@ namespace EPCalipersWinUI3.Models
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
 		// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
+
+		public bool ShowSampleEcgAtStartUp
+		{
+			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? false);
+			set => _localSettings.Values[_showSampleEcgAtStartUpKey ] = value;	
+		}
+
 		public bool ShowBrugadaTriangle
 		{
 			get => (bool)(_localSettings.Values[_showBrugadaTriangleKey] ?? true);
@@ -216,5 +224,6 @@ namespace EPCalipersWinUI3.Models
 		public string CustomTimeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public string CustomAmplitudeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public int NumberOfMarchingCalipers { get; set; } = 20;
+		public bool ShowSampleEcgAtStartUp { get; set; } = false;
 	}
 }
