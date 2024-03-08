@@ -439,8 +439,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		// TODO: Angle caliper label not positioning correctly with label text sizes
 		public void RefreshCalipers()
 		{
+			Debug.Print("RefreshCalipers()");
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
 			AngleCalibration.Rounding = _settings.Rounding;

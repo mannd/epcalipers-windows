@@ -33,12 +33,17 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new TransparentPageViewModel(TransparentCaliperView);
 			SizeChanged += TransparentPage_SizeChanged;
+			Loaded += TransparentPage_Loaded;
 			ViewModel.SetTitleBarName("TransparentWindow".GetLocalized());
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+		}
+		private void TransparentPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			Debug.Print("MainPage_Loaded()");
 			ViewModel.RefreshCalipers();
 			ViewModel.RestoreTitleBarName();
 		}

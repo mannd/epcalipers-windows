@@ -97,6 +97,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			Debug.Print("MainPage_Loaded()");
 			ViewModel.LoadStartupImage();
+			ViewModel.RestoreTitleBarName();
 		}
 
 		protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -107,11 +108,6 @@ namespace EPCalipersWinUI3.Views
 			{
 				await ViewModel.OpenImageFile(AppHelper.StartupFile);
 				AppHelper.StartupFile = null;
-			}
-			else // either starting first time without StartupFile, or navigating back here.
-			{
-				ViewModel.RefreshCalipers();
-				ViewModel.RestoreTitleBarName();
 			}
 		}
 		#endregion
