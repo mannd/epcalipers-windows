@@ -299,14 +299,18 @@
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="ZoomInBarButton" Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
+            <AppBarButton x:Uid="ZoomInBarButton" 
+                          IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                          Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
                 <SymbolIcon Symbol="ZoomIn" />
             </AppBarButton>
-            <AppBarButton x:Uid="ZoomOutBarButton" Command="{x:Bind ViewModel.ZoomOutCommand}" ToolTipService.ToolTip="Zoom out">
+            <AppBarButton x:Uid="ZoomOutBarButton" 
+                          IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                          Command="{x:Bind ViewModel.ZoomOutCommand}" ToolTipService.ToolTip="Zoom out">
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="AddCaliperBarButton"  >
+            <AppBarButton x:Uid="AddCaliperBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>

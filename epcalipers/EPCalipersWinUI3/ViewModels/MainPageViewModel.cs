@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Windows.Security.AccessControl;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -51,6 +52,17 @@ namespace EPCalipersWinUI3
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}
+		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if (e.PropertyName == nameof(MainImageSource))
+			{
+				if (MainImageSource  != null)
+				{
+					HasMainImage = true;
+				}
+			}
+		}
 
 		public void LoadSampleImage()
 		{
@@ -60,8 +72,12 @@ namespace EPCalipersWinUI3
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 				SetTitleBarName("SampleECG".GetLocalized());
+				HasMainImage = true;
 			}
-			HasMainImage = true;
+			else
+			{
+				HasMainImage = false;
+			}
 			_isStartup = false;
 		}
 
