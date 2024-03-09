@@ -18,8 +18,6 @@ namespace EPCalipersWinUI3
 	/// </summary>
 	public partial class App : Application
 	{
-		private MainWindow _window;
-
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,7 +28,7 @@ namespace EPCalipersWinUI3
 			Debug.Print("App constructor");
 		}
 
-		public MainWindow MainWindow => _window;
+		public static MainWindow MainWindow = new();
 
 		/// <summary>
 		/// Invoked when the application is launched.
@@ -49,8 +47,7 @@ namespace EPCalipersWinUI3
 			{
 				AppHelper.StartupFile = storageFile;
 			}
-			_window = new MainWindow();
-			_window.Activate();
+			MainWindow.Activate();
 
 #if DEBUG
 			if (System.Diagnostics.Debugger.IsAttached)

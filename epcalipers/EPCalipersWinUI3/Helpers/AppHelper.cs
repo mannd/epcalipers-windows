@@ -8,7 +8,7 @@ namespace EPCalipersWinUI3.Helpers
 {
 	public static class AppHelper
 	{
-		public static MainWindow AppMainWindow => (Application.Current as App)?.MainWindow;
+		public static MainWindow AppMainWindow => App.MainWindow;
 
 		public static BitmapImage StartUpImage { get; set; }
 
