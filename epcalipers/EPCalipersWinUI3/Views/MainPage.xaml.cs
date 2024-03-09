@@ -61,6 +61,21 @@ namespace EPCalipersWinUI3.Views
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
 			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
 
+			ZoomInMenuItem.KeyboardAccelerators.Add(new KeyboardAccelerator()
+			{
+				// Plus key on keyboard
+				Key = (Windows.System.VirtualKey)0xBB,
+				Modifiers = Windows.System.VirtualKeyModifiers.Control
+			});
+
+			ZoomOutMenuItem.KeyboardAccelerators.Add(new KeyboardAccelerator()
+			{
+				// Minus key on keyboard
+				Key = (Windows.System.VirtualKey)0xBD,
+				Modifiers = Windows.System.VirtualKeyModifiers.Control
+			});
+
+
 			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
 			// so should be the default.
 			CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
@@ -433,6 +448,8 @@ namespace EPCalipersWinUI3.Views
 			SaveScreenshotToFile(softwareBitmap);
 		}
 
+		
+
 		// Alternative screenshot methods, inferior to SaveScreenshot_Click because it screenshots
 		// the whole app window, including menus etc.  Currently unused.
 		//private async Task SaveAppWindowScreenshot_Click(object sender, RoutedEventArgs e)
@@ -463,11 +480,9 @@ namespace EPCalipersWinUI3.Views
 				var hWnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
 				InitializeWithWindow.Initialize(savePicker, hWnd);
 				savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-				// TODO: consider allowing save to other file types.
 				savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-				// TODO: support these filetypes
-				//savePicker.FileTypeChoices.Add("PNG image", new List<string>() { ".png" });
-				//savePicker.FileTypeChoices.Add("BMP image", new List<string>() { ".bmp" });
+				savePicker.FileTypeChoices.Add("PNG image", new List<string>() { ".png" });
+				savePicker.FileTypeChoices.Add("BMP image", new List<string>() { ".bmp" });
 				savePicker.SuggestedFileName = "EPCalipersScreenshot";
 				StorageFile file = await savePicker.PickSaveFileAsync();
 				ContentDialog dialog;
@@ -516,7 +531,22 @@ namespace EPCalipersWinUI3.Views
 			using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
 			{
 				// Create an encoder with the desired format
-				BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+				var ext = outputFile.FileType;
+				ext = ext.ToLower();
+				Debug.Print(ext);
+				Guid encoderID;
+				switch (ext)
+				{
+					default:
+					case ".jpg":
+						encoderID = BitmapEncoder.JpegEncoderId; break;
+					case ".png":
+						encoderID = BitmapEncoder.PngEncoderId; break;
+					case ".bmp":
+						encoderID = BitmapEncoder.BmpEncoderId; break;
+				}
+
+				BitmapEncoder encoder = await BitmapEncoder.CreateAsync(encoderID, stream);
 
 				// Set the software bitmap
 				encoder.SetSoftwareBitmap(softwareBitmap);

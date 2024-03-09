@@ -70,7 +70,7 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
-                <MenuFlyoutItem x:Uid="ZoomInMenuItem" 
+                <MenuFlyoutItem x:Name="ZoomInMenuItem" x:Uid="ZoomInMenuItem" 
                                 Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="ZoomIn" />
@@ -79,7 +79,7 @@
                         <KeyboardAccelerator Key="Add" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
+                <MenuFlyoutItem x:Name="ZoomOutMenuItem" x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="ZoomOut" />
                     </MenuFlyoutItem.Icon>
