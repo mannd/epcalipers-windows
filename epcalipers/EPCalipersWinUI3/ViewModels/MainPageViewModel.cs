@@ -57,7 +57,7 @@ namespace EPCalipersWinUI3
 			base.OnPropertyChanged(e);
 			if (e.PropertyName == nameof(MainImageSource))
 			{
-				if (MainImageSource  != null)
+				if (MainImageSource != null)
 				{
 					HasMainImage = true;
 				}

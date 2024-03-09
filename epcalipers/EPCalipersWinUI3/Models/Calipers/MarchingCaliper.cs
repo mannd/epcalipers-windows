@@ -48,22 +48,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var leftOrigin = LeftPosition;
 			var rightOrigin = RightPosition;
 			var height = TimeCaliper.LeftBar.Y2;
+			// TODO: Other means to deemphasize marching calipers?
+			var thickness = Math.Max(Settings.Instance.BarThickness - 1, 1);
 			for (int i = 0; i < NumberOfBars; i++)
 			{
 				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
 				leftBar.SelectedColor = TimeCaliper.SelectedColor;
 				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				leftBar.IsSelected = TimeCaliper.IsSelected;
-				// TODO: Barthickness is a Setting
-				leftBar.Thickness = 2;
+				leftBar.Thickness = thickness;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
 				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
 				rightBar.SelectedColor = TimeCaliper.SelectedColor;
 				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				rightBar.IsSelected = TimeCaliper.IsSelected;
-				// TODO: Barthickness is a Setting
-				rightBar.Thickness = 2;
+				rightBar.Thickness = thickness;
 				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);
 				RightBars.Add(rightBar);

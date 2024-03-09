@@ -465,7 +465,10 @@ namespace EPCalipersWinUI3.Views
 				savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
 				// TODO: consider allowing save to other file types.
 				savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-				savePicker.SuggestedFileName = "EPCalipersScreenshot.jpg";
+				// TODO: support these filetypes
+				//savePicker.FileTypeChoices.Add("PNG image", new List<string>() { ".png" });
+				//savePicker.FileTypeChoices.Add("BMP image", new List<string>() { ".bmp" });
+				savePicker.SuggestedFileName = "EPCalipersScreenshot";
 				StorageFile file = await savePicker.PickSaveFileAsync();
 				ContentDialog dialog;
 				if (file != null)
