@@ -15,11 +15,13 @@ using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX.Direct3D11;
+using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.Media.Capture;
 using Windows.Storage;
@@ -54,7 +56,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			InitializeComponent();
 			Debug.Print("MainPage constructor");
-			this.Loaded += MainPage_Loaded;
+			Loaded += MainPage_Loaded;
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
 
 			// Used for screenshot features

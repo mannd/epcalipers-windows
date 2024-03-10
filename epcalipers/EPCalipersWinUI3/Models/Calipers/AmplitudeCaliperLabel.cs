@@ -56,6 +56,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void GetPosition(CaliperLabelAlignment alignment)
 		{
 			if (TextBlock == null) return;
+			_size = ShapeMeasure(TextBlock);
 			_size.Width = TextBlock.ActualWidth;
 			_size.Height = TextBlock.ActualHeight;
 			switch (alignment)

@@ -574,6 +574,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
 			AngleCalibration.Rounding = _settings.Rounding;
+			
 			foreach (var caliper in _calipers)
 			{
 				switch (caliper.CaliperType)

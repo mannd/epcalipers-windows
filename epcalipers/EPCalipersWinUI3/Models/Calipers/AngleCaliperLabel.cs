@@ -47,6 +47,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void GetPosition()
 		{
 			if (TextBlock == null) return;
+			_size = ShapeMeasure(TextBlock);
 			_size.Width = TextBlock.ActualWidth;
 			_size.Height = TextBlock.ActualHeight;
 			// Angle caliper labels are always at the top

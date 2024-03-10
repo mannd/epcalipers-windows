@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using EPCalipersWinUI3.Models;
+using Microsoft.UI.Dispatching;
 
 namespace EPCalipersWinUI3.ViewModels
 {
@@ -173,6 +174,12 @@ namespace EPCalipersWinUI3.ViewModels
 				await dialog.ShowAsync();
 			}
 		}
+
+		public void RefreshCalipers()
+		{
+			_caliperCollection?.RefreshCalipers();
+		}
+
 		private static CalibrationMeasurement ParseInput(CalibrationInput input)
 		{
 			if (input.Unit == Unit.Custom)
