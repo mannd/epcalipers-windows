@@ -1,6 +1,7 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using Microsoft.UI.Xaml;
 using System;
+using System.Diagnostics;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -65,10 +66,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void SetPosition()
 		{
+			Debug.Print("TriangleBaseLabel.SetPosition()");
 			if (TextBlock == null) return;
 			var alignment = AutoAlign(Alignment, AutoAlignLabel);
 			GetPosition(alignment);
 			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
+			Debug.Print(TextBlock.Text);
+			Debug.Print(TextBlock.Margin.ToString());
 		}
 
 		private void GetPosition(CaliperLabelAlignment alignment)

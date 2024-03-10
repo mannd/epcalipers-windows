@@ -3,6 +3,7 @@ using EPCalipersWinUI3.Helpers;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -247,6 +248,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (ShowBrugadaTriangle(CaliperPosition))
 			{
+				Debug.Print("AngleCaliper.DrawTriangleBase()");
 				// Triangle base needs redrawing no matter how angle caliper moves.
 				TriangleBaseBar.Visibility = Visibility.Visible;
 				double height = TriangleHeight();
@@ -271,6 +273,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void ApplySettings(ISettings settings)
 		{
+			Debug.Print("AngleCaliper.ApplySettings()");
 			base.ApplySettings(settings);
 			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
 			TriangleBaseLabel.CaliperLabelSize = settings.CaliperLabelSize;

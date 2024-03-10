@@ -174,7 +174,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					bar.Angle += MathHelper.DegreesToRadians(distance);
 					bar.SetAngleBarPosition(new Point(bar.X1, bar.Y1), bar.Angle);
 					angleCaliper.DrawTriangleBase();
-					angleCaliper.CaliperLabel.Text = angleCaliper.Calibration.GetFormattedMeasurement(angleCaliper.Value);
+					angleCaliper.CaliperLabel.Text = angleCaliper.AngleCalibration.GetFormattedMeasurement(angleCaliper.Value);
 					angleCaliper.CaliperLabel.SetPosition();
 				}
 				else
@@ -449,7 +449,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.ApplySettings(_settings);
 			}
-			Debug.Print("refreshing calipers...");
 		}
 
 		public async Task SetCalibrationAsync()
@@ -527,6 +526,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private void OnCalibrationWindowClosed(object sender, WindowEventArgs args)
 		{
 			IsLocked = false;
+			RefreshCalipers();
 			if (_calibrationWindow != null)
 			{
 				_calibrationWindow.Content = null;
@@ -570,6 +570,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// angle caliper. 
 		public void SetCalibration()
 		{
+			Debug.Print("SetCalibration()");
 			ShowRate = false;
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
@@ -586,7 +587,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 						caliper.Calibration = AmplitudeCalibration;
 						break;
 					case CaliperType.Angle:
-						// TODO: refactor
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
 						angleCaliper.AngleCalibration = AngleCalibration;
 						angleCaliper.DrawTriangleBase();

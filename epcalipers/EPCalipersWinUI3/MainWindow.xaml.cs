@@ -66,7 +66,6 @@ namespace EPCalipersWinUI3
 
 		private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
 		{
-			Debug.Print("MainWindow_Activated");
 			if (args.WindowActivationState == WindowActivationState.Deactivated)
 			{
 				AppTitleTextBlock.Foreground =
