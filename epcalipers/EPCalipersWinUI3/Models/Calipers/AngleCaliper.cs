@@ -241,6 +241,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabel.SetPosition();
 		}
 
+		// TODO: triangle label slightly off when calipers first drawn (also applies to 
+		// other caliper labels.
 		public void DrawTriangleBase()
 		{
 			if (ShowBrugadaTriangle(CaliperPosition))

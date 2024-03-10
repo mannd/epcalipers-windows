@@ -20,9 +20,7 @@ namespace EPCalipersWinUI3.ViewModels
 	/// <summary>
 	/// Contains all the parameters passed back and forth to calculate the QTc.
 	/// </summary>
-	// TODO: we are forced to send a bunch of unrelated stuff as a blob to each dialog.
-	// Really need specific dialogs for each measurement...
-	public class QtcParameters: INotifyPropertyChanged
+	public class QtcParameters
 	{
 		public WindowEx Window {  get; set; }
 		public Caliper Caliper { get; set; }
@@ -30,14 +28,6 @@ namespace EPCalipersWinUI3.ViewModels
 		public Measurement RRMeasurement {  get; set; }
 		public Measurement QTMeasurement {  get; set; }
 		public IntervalMeasured IntervalMeasured { get; set; }
-
-		// TODO: do we still need to notify for any events in this class?
-		// maybe if CaliperCollection changes or Calibration changes?
-		public event PropertyChangedEventHandler PropertyChanged;
-		public virtual void OnPropertyChanged(string propertyName)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
 	}
 
 	public partial class QtcViewModel: ObservableObject
@@ -46,13 +36,14 @@ namespace EPCalipersWinUI3.ViewModels
 		public XamlRoot XamlRoot { get; set; }
 		public QtcViewModel()
 		{
-			QtcFormulas = new();
-			QtcFormulas.Add(QtcFormula.qtcBzt, "BazettFormula".GetLocalized());
-			QtcFormulas.Add(QtcFormula.qtcFrm, "FraminghamFormula".GetLocalized());
-			QtcFormulas.Add(QtcFormula.qtcHdg, "HodgesFormula".GetLocalized());
-			QtcFormulas.Add(QtcFormula.qtcFrd, "FridericiaFormula".GetLocalized());
-			QtcFormulas.Add(QtcFormula.qtcAll, "AllQTcFormulas".GetLocalized());
-
+			QtcFormulas = new()
+			{
+				{ QtcFormula.qtcBzt, "BazettFormula".GetLocalized() },
+				{ QtcFormula.qtcFrm, "FraminghamFormula".GetLocalized() },
+				{ QtcFormula.qtcHdg, "HodgesFormula".GetLocalized() },
+				{ QtcFormula.qtcFrd, "FridericiaFormula".GetLocalized() },
+				{ QtcFormula.qtcAll, "AllQTcFormulas".GetLocalized() }
+			};
 			QtcFormulaNames = QtcFormulas.Values.ToList();
 		}
 
@@ -146,7 +137,6 @@ namespace EPCalipersWinUI3.ViewModels
 				if (_qtcParameters != value)
 				{
 					_qtcParameters = value;
-					QtcParameters.PropertyChanged += OnMyPropertyChanged;
 				}
 			}
 		}

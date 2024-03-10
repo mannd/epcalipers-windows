@@ -109,7 +109,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				// TODO: leftbars need to be hidden when caliper is negative and left bars are on the right
 				//LeftBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 			}
-			// TODO: hide bars when cycle length less than minimum value.
+			// TODO: hide bars when cycle length less than minimum value ? necessary
 		}
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)

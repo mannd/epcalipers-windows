@@ -439,7 +439,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: Angle caliper label not positioning correctly with label text sizes
 		public void RefreshCalipers()
 		{
 			Debug.Print("RefreshCalipers()");
@@ -513,23 +512,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_calibrationWindow = new WindowEx();
 			}
-			string title;
-			// TODO: title not shown, since title bar is opaque.  
-			switch (caliperType)
-			{
-				case CaliperType.Time:
-					title = "Time caliper calibration";
-					break;
-				case CaliperType.Amplitude:
-					title = "Amplitude caliper calibration";
-					break;
-				default:
-					title = "Calibration";
-					break;
-			}
-			SetupFloatingWindow(_calibrationWindow, 400, 500, title);
-			// TODO: uncomment
-			//_calibrationWindow.PersistenceId = "CalibrationWindowID";
+			SetupFloatingWindow(_calibrationWindow, 400, 500);
+			_calibrationWindow.PersistenceId = "CalibrationWindowID";
 			var calibrationView = new CalibrationView(SelectedCaliper, this)
 			{
 				Window = _calibrationWindow,
@@ -603,8 +587,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					case CaliperType.Angle:
 						// TODO: refactor
 						AngleCaliper angleCaliper = caliper as AngleCaliper;
-						angleCaliper.AngleCalibration.TimeCalibration = TimeCalibration;
-						angleCaliper.AngleCalibration.AmplitudeCalibration = AmplitudeCalibration;
+						angleCaliper.AngleCalibration = AngleCalibration;
 						angleCaliper.DrawTriangleBase();
 						break;
 				}
@@ -662,7 +645,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_meanRateIntervalWindow = new WindowEx();
 			}
-			SetupFloatingWindow(_meanRateIntervalWindow, 400, 400, "Mean interval and rate");
+			SetupFloatingWindow(_meanRateIntervalWindow, 400, 400);
 			_meanRateIntervalWindow.PersistenceId = "MeanRateIntervalWindowID";
 			var meanRateIntervalView = new MeanRateIntervalView(this)
 			{
@@ -673,37 +656,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_meanRateIntervalWindow.Show();
 		}
 
-		private static void SetupFloatingWindow(WindowEx window, int width, int height, string title)
+		private static void SetupFloatingWindow(WindowEx window, int width, int height)
 		{
 			window.Height = window.MinHeight = height;
 			window.Width = window.MinWidth = width;
 			window.SetIsAlwaysOnTop(true);
 			window.CenterOnScreen();
 			window.ExtendsContentIntoTitleBar = true;
-			// TODO: need to do more work if we want the titlebar to show title and icon, otherwise we
-			// just have a blank title bar
-			// NOTE the titlebar api only seems to work for the main window of the app, so below doesn't work.
-			//Grid titleBar = new Grid()
-			//{
-			//	Height = 32,
-			//	Background = new SolidColorBrush(Colors.CornflowerBlue),
-			//	HorizontalAlignment = HorizontalAlignment.Stretch
-			//};
-
-			//// Add a text block to the title bar element
-			//TextBlock titleText = new TextBlock()
-			//{
-			//	Text = "Custom Title Bar App",
-			//	VerticalAlignment = VerticalAlignment.Center,
-			//	Margin = new Thickness(12, 0, 0, 0),
-			//	Foreground = new SolidColorBrush(Colors.White)
-			//};
-			//titleBar.Children.Add(titleText);
-
-			//// Set the custom title bar element as the draggable region of the window
-			//window.SetTitleBar(titleBar);
-			//window.SetTaskBarIcon(Icon.FromFile("Assets/EpCalipersLargeTemplate1.ico"));
-			//window.Title = title;
 		}
 
 		private bool CanMeasureQtc()
@@ -730,7 +689,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_measureQtcWindow = new WindowEx();
 			}
-			SetupFloatingWindow(_measureQtcWindow, 400, 400, "Measure QTc");
+			SetupFloatingWindow(_measureQtcWindow, 400, 400);
 			_measureQtcWindow.PersistenceId = "MeasureQtcWindowID";
 			QtcParameters parameters = new()
 			{
@@ -755,7 +714,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				_colorWindow = new WindowEx();
 			}
-			SetupFloatingWindow(_colorWindow, 400, 550, "ColorWindowTitle".GetLocalized());
+			SetupFloatingWindow(_colorWindow, 400, 550);
 			_colorWindow.PersistenceId = "ColorWindowID";
 			var colorView = new ColorView(caliper)
 			{

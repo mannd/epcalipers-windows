@@ -92,14 +92,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
-			// TODO: This does NOT adjust the label position, but the position corrects as soon as the caliper is moved.
 			CaliperLabel.SetPosition();
 			if (MarchingCaliper != null)
 			{
 				// Need to force update layout, or bounds are 0,0.  
 				// Bounds are based on ActualHeight, ActualWidth, which may default to 0,0 when
 				// view is first shown, like when returning from Settings.
-				// TODO: Do we need to do this with every update?  Maybe when view is navigated too?
 				CaliperView.UpdateLayout();
 				RemoveMarchingCaliper();
 				AddMarchingCaliper();

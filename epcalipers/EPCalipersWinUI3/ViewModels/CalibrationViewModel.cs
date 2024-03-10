@@ -121,6 +121,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.TimeCalibration = new Calibration(_caliper.Value, parameters);
+				_caliperCollection.AngleCalibration.TimeCalibration = _caliperCollection.TimeCalibration;
 				_caliperCollection.SetCalibration();
 				Settings.Instance.SelectedTimeCalibrationRadioButton = IntervalSelection;
 				Settings.Instance.CustomTimeCalibration = CustomInterval;
@@ -159,6 +160,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				CalibrationMeasurement parameters = ParseInput(input);
 				_caliperCollection.AmplitudeCalibration = new Calibration(_caliper.Value, parameters);
+				_caliperCollection.AngleCalibration.AmplitudeCalibration = _caliperCollection.AmplitudeCalibration;
 				_caliperCollection.SetCalibration();
 				Settings.Instance.SelectedAmplitudeCalibrationRadioButton = IntervalSelection;
 				Settings.Instance.CustomAmplitudeCalibration = CustomInterval;
