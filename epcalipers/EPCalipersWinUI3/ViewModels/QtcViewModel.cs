@@ -17,6 +17,7 @@ using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.ViewModels
 {
+	// TODO: Handle misbehavior like clearing or changing calibration in middle of measurement...
 	/// <summary>
 	/// Contains all the parameters passed back and forth to calculate the QTc.
 	/// </summary>
@@ -147,10 +148,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			QtcParameters.IntervalMeasured = IntervalMeasured.RR;
 			Frame frame = QtcParameters.Window.Content as Frame;
-			if (frame != null)
-			{
-				frame.Navigate(typeof(MeanRateIntervalView), QtcParameters);
-			}
+			frame?.Navigate(typeof(MeanRateIntervalView), QtcParameters);
 		}
 
 		[RelayCommand]
@@ -158,10 +156,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			QtcParameters.IntervalMeasured = IntervalMeasured.QT;
 			Frame frame = QtcParameters.Window.Content as Frame;
-			if (frame != null)
-			{
-				frame.Navigate(typeof(MeasureIntervalView), QtcParameters);
-			}
+			frame?.Navigate(typeof(MeasureIntervalView), QtcParameters);
 		}
 
 		[RelayCommand]

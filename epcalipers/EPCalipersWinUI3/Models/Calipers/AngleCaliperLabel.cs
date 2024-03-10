@@ -7,7 +7,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	public class AngleCaliperLabel : CaliperLabel
 	{
 		private CaliperLabelPosition _position;
-		private Size _size;
+        private Size _size;
 
 		new AngleCaliper Caliper { get; set; }
 

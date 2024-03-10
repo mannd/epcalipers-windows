@@ -31,6 +31,9 @@
     <Product>EP Calipers 3</Product>
     <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <StartupObject>EPCalipersWinUI3.Program</StartupObject>
+    <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Helpers\WindowHelper.cs" />

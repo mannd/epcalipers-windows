@@ -16,8 +16,10 @@ namespace EPCalipersWinUi3Tests.Tests
 			var caliper = new TimeCaliper(position, stubCaliperView, stubSettings, true);
 			var alignment = CaliperLabelAlignment.Top;
 			var label = new TimeCaliperLabel(caliper, stubCaliperView, "100 points",
-				alignment, false, CaliperLabelSize.Medium, true);
-			label.Size = new Windows.Foundation.Size(100, 50);
+				alignment, false, CaliperLabelSize.Medium, true)
+			{
+				Size = new Windows.Foundation.Size(100, 50)
+			};
 			var autoAlignment = label.AutoAlign(alignment, false);
 			Assert.Equal(CaliperLabelAlignment.Top, autoAlignment);
 			caliper.CrossBar.Position = 100;
@@ -53,8 +55,10 @@ namespace EPCalipersWinUi3Tests.Tests
 			var caliper = new AmplitudeCaliper(position, stubCaliperView, stubSettings, true);
 			var alignment = CaliperLabelAlignment.Left;
 			var label = new AmplitudeCaliperLabel(caliper, stubCaliperView, "100 points",
-				alignment, CaliperLabelSize.Medium, true, true);
-			label.Size = new Windows.Foundation.Size(100, 50);
+				alignment, CaliperLabelSize.Medium, true, true)
+			{
+				Size = new Windows.Foundation.Size(100, 50)
+			};
 			var autoAlignment = label.AutoAlign(alignment, false);
 			Assert.Equal(CaliperLabelAlignment.Left, autoAlignment);
 			caliper.CrossBar.Position = 200;
