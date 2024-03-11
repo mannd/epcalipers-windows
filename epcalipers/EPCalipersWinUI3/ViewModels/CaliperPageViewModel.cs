@@ -19,7 +19,7 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class CaliperPageViewModel : BasePageViewModel
 	{
-		private readonly CaliperCollection _caliperCollection;
+		protected readonly CaliperCollection _caliperCollection;
 
 		public CaliperPageViewModel(ICaliperView caliperView)
 		{

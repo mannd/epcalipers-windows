@@ -136,6 +136,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public double BarThickness
 		{
+			get => Value;
 			set
 			{
 				foreach (var bar in Bars)
