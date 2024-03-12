@@ -31,6 +31,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _showBrugadaTriangleKey = "ShowBrugadaTriangle";
 		private const string _labelFontSizeKey = "LabelFontSize";
 		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
+		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -112,6 +113,13 @@ namespace EPCalipersWinUI3.Models
 			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2.0);
 			set => _localSettings.Values[_barThicknessKey] = value;
 		}
+
+		public bool AdjustBarThicknessWithZoom
+		{
+			get => (bool)(_localSettings.Values[_adjustBarThicknessWithZoomKey] ?? false);
+			set => _localSettings.Values[_adjustBarThicknessWithZoomKey] = value;
+		}
+
 		public Rounding Rounding
 		{
 			get => (Rounding)(_localSettings.Values[_roundingKey] ?? Rounding.ToInt);
@@ -225,5 +233,6 @@ namespace EPCalipersWinUI3.Models
 		public string CustomAmplitudeCalibration { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 		public int NumberOfMarchingCalipers { get; set; } = 20;
 		public bool ShowSampleEcgAtStartUp { get; set; } = false;
+		public bool AdjustBarThicknessWithZoom {  get; set; } = false;
 	}
 }
