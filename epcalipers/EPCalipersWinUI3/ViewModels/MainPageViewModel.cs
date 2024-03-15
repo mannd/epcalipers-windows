@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly PdfHelper _pdfHelper;
+		private readonly IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
@@ -54,6 +54,7 @@ namespace EPCalipersWinUI3
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}
+
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
