@@ -12,6 +12,9 @@ app.
 EP Calipers is open source, and licensed under the
 [GNU GPL v3 license.](http://www.gnu.org/licenses/gpl.html).
 
+## Development
+NOTE: The active development branch is now epcalipers-3, not epcalipers-2.  The epcalipers-2 branch will be maintained for support for older versions of Windows.  But check out (no pun intended) the epcalipers-3 branch, which is a complete rewrite for Windows 10/11 based on WinUI 3.
+
 ## Dependencies
 The program no longer needs installation of Ghostscript on your computer in order to load PDF files.  Ghostscript support files are included with the program.
 
