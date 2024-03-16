@@ -2,15 +2,21 @@
 
 ## IMPORTANT!!
 This is an experimental branch of the EP Calipers for Windows
-repository.  The current main branch is the epcalipers-2 branch.
+repository.  The current main branch is the epcalipers-2 branch.  The
+epcalipers-2 branch contains the current production code.  However in
+the near future this epcalipers-3 branch will become the main branch
+going forward, once the code reaches beta status.  At that point the
+epcalipers-2 branch will continue to be maintained to support current
+users with older versions of Windows.
 
 This epcalipers-3 branch is a rewrite nearly from scratch of EP
 Calipers.  It is still under development, and we are still adding
 functionality to get it to the same level of functionality as the
-epcalipers-2 branch.
+epcalipers-2 branch.  
 
 The goals of this new branch are to recreate the app with the
 following improvements:
+- Target Windows 10/11.
 - Use the most modern Windows desktop system, WinUI 3.
 - Improve the archecture of the app (XAML views, MVVM).
 - Eliminate PDF processing via Ghostscript, and use Nuget packages instead.
@@ -25,7 +31,7 @@ available, we will contact you.
 
 ## Note
 The rest of the README for now just duplicates the version 2 README.
-It does NOT reflect the version 3 functionality.
+It does NOT necessarily reflect the version 3 functionality.
 
 ## Description 
 This is the Microsoft Windows™ version of EP Calipers.
