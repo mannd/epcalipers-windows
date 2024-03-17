@@ -9,10 +9,25 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Graphics.Imaging;
-using EPCalipersWinUI3.Contracts;
 
-namespace EPCalipersWinUI3.Helpers
+namespace EPCalipersWinUI3PDFHandler
 {
+    public interface IPdfHelper
+    {
+        int CurrentPageNumber { get; }
+        string FilePath { get; set; }
+        bool IsMultiPage { get; }
+        int MaximumPageNumber { get; }
+        int NumberOfPdfPages { get; }
+        bool PdfIsLoaded { get; }
+
+        void ClearPdfFile();
+        Task<SoftwareBitmapSource> GetNextPage();
+        Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber);
+        Task<SoftwareBitmapSource> GetPreviousPage();
+        void LoadPdfFile(StorageFile file);
+    }
+
     /// <summary>
     /// Encapsulate and isolate nasty PDF code.
     /// </summary>

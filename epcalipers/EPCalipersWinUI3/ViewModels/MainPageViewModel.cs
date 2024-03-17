@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3
 {
 	public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly IPdfHelper _pdfHelper;
+		private readonly EPCalipersWinUI3PDFHandler.IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
@@ -52,7 +52,7 @@ namespace EPCalipersWinUI3
 			Debug.Print("MainPageViewModel constructor");
 
 			SetZoom = setZoomDelegate;
-			_pdfHelper = new PdfHelper();
+			_pdfHelper = new EPCalipersWinUI3PDFHandler.PdfHelper();
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -92,7 +92,7 @@ namespace EPCalipersWinUI3
 				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
 				// NB can get OOM errors with large PDF files when running on x86 system.
-				if (PdfHelper.IsPdfFile(file))
+				if (EPCalipersWinUI3PDFHandler.PdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
