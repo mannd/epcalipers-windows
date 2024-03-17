@@ -146,6 +146,8 @@
                 <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />
                 <TextBlock Text="Startup" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="ShowSampleEcgAtStartUp" IsChecked="{x:Bind ViewModel.ShowSampleEcgAtStartUp, Mode=TwoWay}" />
+                <TextBlock Text="Zooming" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />
             </StackPanel>
         </ScrollViewer>
 

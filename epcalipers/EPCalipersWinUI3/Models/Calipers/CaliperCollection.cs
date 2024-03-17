@@ -439,6 +439,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		// TODO: handle new calipers.  
+		// TODO: similar method to adjust font size?
+		public void ZoomBarThickness(double zoomFactor)
+		{
+			if (!_settings.AdjustBarThicknessWithZoom) return;
+			// Looks like it's best to avoid thickening bars when zooming out.
+			var zoomedBarThickness = Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
+			foreach (var caliper in _calipers)
+			{
+				caliper.BarThickness = zoomedBarThickness;
+			}
+		}
+
 		public void RefreshCalipers()
 		{
 			Debug.Print("RefreshCalipers()");

@@ -25,7 +25,8 @@ namespace EPCalipersWinUI3
 		public App()
 		{
 			this.InitializeComponent();
-			Debug.Print("App constructor");
+			var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+			Debug.Print("System architecture = {0}", arch.ToString());
 		}
 
 		public static MainWindow MainWindow = new();

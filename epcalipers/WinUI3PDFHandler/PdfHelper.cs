@@ -3,17 +3,35 @@ using PdfiumViewer;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Graphics.Imaging;
 
-namespace EPCalipersWinUI3.Helpers
+namespace EPCalipersWinUI3PDFHandler
 {
-	/// <summary>
-	/// Encapsulate and isolate nasty PDF code.
-	/// </summary>
-	public class PdfHelper
+    public interface IPdfHelper
+    {
+        int CurrentPageNumber { get; }
+        string FilePath { get; set; }
+        bool IsMultiPage { get; }
+        int MaximumPageNumber { get; }
+        int NumberOfPdfPages { get; }
+        bool PdfIsLoaded { get; }
+
+        void ClearPdfFile();
+        Task<SoftwareBitmapSource> GetNextPage();
+        Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber);
+        Task<SoftwareBitmapSource> GetPreviousPage();
+        void LoadPdfFile(StorageFile file);
+    }
+
+    /// <summary>
+    /// Encapsulate and isolate nasty PDF code.
+    /// </summary>
+    public class PdfHelper : IPdfHelper
 	{
 		private PdfDocument _pdfDocument = null;
 		private int _pageNumber = 0;
@@ -97,23 +115,23 @@ namespace EPCalipersWinUI3.Helpers
 		{
 			if (bmp == null)
 				return null;
-
 			// get pixels as an array of bytes
-			var data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
+			var data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+				ImageLockMode.ReadOnly, bmp.PixelFormat);
 			var bytes = new byte[data.Stride * data.Height];
 			Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
 			bmp.UnlockBits(data);
 
 			// get WinRT SoftwareBitmap
-			var softwareBitmap = new Windows.Graphics.Imaging.SoftwareBitmap(
-				Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+			var softwareBitmap = new SoftwareBitmap(
+				BitmapPixelFormat.Bgra8,
 				bmp.Width,
 				bmp.Height,
-				Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
+				BitmapAlphaMode.Premultiplied);
 			softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
 
 			// build WinUI3 SoftwareBitmapSource
-			var source = new Microsoft.UI.Xaml.Media.Imaging.SoftwareBitmapSource();
+			var source = new SoftwareBitmapSource();
 			await source.SetBitmapAsync(softwareBitmap);
 			return source;
 		}

@@ -25,7 +25,7 @@ namespace EPCalipersWinUI3.Contracts
 		public string CustomTimeCalibration {  get; set; }
 		public string CustomAmplitudeCalibration { get; set; }
 		public int NumberOfMarchingCalipers { get; set; }
-
 		public bool ShowSampleEcgAtStartUp {  get; set; }
+		public bool AdjustBarThicknessWithZoom { get; set; }
 	}
 }

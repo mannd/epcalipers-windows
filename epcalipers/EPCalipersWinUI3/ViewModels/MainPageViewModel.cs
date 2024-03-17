@@ -8,21 +8,20 @@ using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.Windows.Security.AccessControl;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
+using EPCalipersWinUI3PDFHandler;
 
 namespace EPCalipersWinUI3
 {
-	public partial class MainPageViewModel : CaliperPageViewModel
+    public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly PdfHelper _pdfHelper;
+		private readonly IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
@@ -37,8 +36,10 @@ namespace EPCalipersWinUI3
 			get => _zoomFactor;
 			set
 			{
-				Debug.Print("Zoom Factor = {0}", value);
 				_zoomFactor = value;
+				// TODO: EXPERIMENTAL
+				_caliperCollection.ZoomBarThickness(value);
+
 			}
 		}
 		private float _zoomFactor;
@@ -52,6 +53,7 @@ namespace EPCalipersWinUI3
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}
+
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
@@ -233,9 +235,6 @@ namespace EPCalipersWinUI3
 				FileName, _pdfHelper.CurrentPageNumber, _pdfHelper.NumberOfPdfPages);
 			SetTitleBarName(extension);
 		}
-
-
-
 
 		#endregion
 
