@@ -39,6 +39,7 @@ namespace EPCalipersWinUI3
 				_zoomFactor = value;
 				// TODO: EXPERIMENTAL
 				_caliperCollection.ZoomBarThickness(value);
+				_caliperCollection.ScaleFactor = value;
 
 			}
 		}
@@ -65,6 +66,32 @@ namespace EPCalipersWinUI3
 				}
 			}
 		}
+
+		public override void RefreshCalipers()
+		{
+			base.RefreshCalipers();
+			_caliperCollection.ZoomBarThickness(ZoomFactor);
+
+		}
+
+		public override void AddTimeCaliper()
+		{
+			base.AddTimeCaliper();
+			_caliperCollection.ZoomBarThickness(ZoomFactor);
+		}
+
+		public override void AddAmplitudeCaliper()
+		{
+			base.AddAmplitudeCaliper();
+			_caliperCollection.ZoomBarThickness(ZoomFactor);
+		}
+
+		public override void AddAngleCaliper()
+		{
+			base.AddAngleCaliper();
+			_caliperCollection.ZoomBarThickness(ZoomFactor);
+		}
+
 
 		public void LoadSampleImage()
 		{

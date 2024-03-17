@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		#region calipers
-		public void RefreshCalipers()
+		public virtual void RefreshCalipers()
 		{
 			_caliperCollection.RefreshCalipers();
 		}
@@ -40,19 +40,19 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 		[RelayCommand]
-		public void AddTimeCaliper()
+		public virtual void AddTimeCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Time);
 		}
 
 		[RelayCommand]
-		public void AddAmplitudeCaliper()
+		public virtual void AddAmplitudeCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Amplitude);
 		}
 
 		[RelayCommand]
-		public void AddAngleCaliper()
+		public virtual void AddAngleCaliper()
 		{
 			_caliperCollection.AddCaliper(CaliperType.Angle);
 		}

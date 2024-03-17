@@ -77,6 +77,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// A calibrated time caliper can show interval or rate.
 		public bool ShowRate { get; set; } = false;
 
+		public double ScaleFactor { get; set; } = 1.0;  // This is used to change caliper line thickness and label size according to zoom.
+
 		public Caliper SelectedCaliper
 		{
 			get => _selectedCaliper;
@@ -443,15 +445,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// TODO: similar method to adjust font size?
 		public void ZoomBarThickness(double zoomFactor)
 		{
+			// TODO: have separate font and barthickness zoom settings.
+			Debug.Print("CaliperCollection.ZoomBarThickness()");
 			if (!_settings.AdjustBarThicknessWithZoom) return;
 			// Looks like it's best to avoid thickening bars when zooming out.
 			var zoomedBarThickness = Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
+			var fontSize = (int)_settings.CaliperLabelSize;
+			var adjustedSize = fontSize / zoomFactor;
+			adjustedSize = Math.Max((int)CaliperLabelSize.ExtraSmall, adjustedSize);
+			adjustedSize = Math.Min((int)CaliperLabelSize.ExtraLarge, adjustedSize);
+			CaliperLabelSize adjustedCaliperLabelSize = (CaliperLabelSize)(int)adjustedSize;
+			Debug.Print(((int)adjustedCaliperLabelSize).ToString());
 			foreach (var caliper in _calipers)
 			{
 				caliper.BarThickness = zoomedBarThickness;
+				caliper.CaliperLabel.CaliperLabelSize = adjustedCaliperLabelSize;
+				caliper.CaliperLabel.SetPosition();
 			}
 		}
 
+		// TODO: this is where we need to apply zoom settings.
 		public void RefreshCalipers()
 		{
 			Debug.Print("RefreshCalipers()");
@@ -462,6 +475,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.ApplySettings(_settings);
 			}
+			// TODO: this obviously needs to be optimized, we're looping twice through the calipers.
+			ZoomBarThickness(ScaleFactor);
 		}
 
 		public async Task SetCalibrationAsync()

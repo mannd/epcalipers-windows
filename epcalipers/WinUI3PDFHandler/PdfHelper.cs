@@ -12,26 +12,11 @@ using Windows.Graphics.Imaging;
 
 namespace EPCalipersWinUI3PDFHandler
 {
-    public interface IPdfHelper
-    {
-        int CurrentPageNumber { get; }
-        string FilePath { get; set; }
-        bool IsMultiPage { get; }
-        int MaximumPageNumber { get; }
-        int NumberOfPdfPages { get; }
-        bool PdfIsLoaded { get; }
 
-        void ClearPdfFile();
-        Task<SoftwareBitmapSource> GetNextPage();
-        Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber);
-        Task<SoftwareBitmapSource> GetPreviousPage();
-        void LoadPdfFile(StorageFile file);
-    }
-
-    /// <summary>
-    /// Encapsulate and isolate nasty PDF code.
-    /// </summary>
-    public class PdfHelper : IPdfHelper
+	/// <summary>
+	/// Encapsulate and isolate nasty PDF code.
+	/// </summary>
+	public class PdfHelper : IPdfHelper
 	{
 		private PdfDocument _pdfDocument = null;
 		private int _pageNumber = 0;
