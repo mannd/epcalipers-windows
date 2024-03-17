@@ -563,4 +563,7 @@
   <data name="ShowSampleEcgAtStartUp.Content" xml:space="preserve">
     <value>Show sample ECG at startup (requires restart)</value>
   </data>
+  <data name="AdjustBarThicknessWithZoom.Content" xml:space="preserve">
+    <value>Adjust bar thickness when zooming</value>
+  </data>
 </root>

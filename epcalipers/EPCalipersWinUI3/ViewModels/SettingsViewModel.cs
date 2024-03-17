@@ -24,6 +24,7 @@ namespace EPCalipersWinUI3.ViewModels
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
 			CaliperLabelSize = CaliperLabelConvertFromSize(_model.CaliperLabelSize);
 			ShowSampleEcgAtStartUp = _model.ShowSampleEcgAtStartUp;
+			AdjustBarThicknessWithZoom = _model.AdjustBarThicknessWithZoom;
 		}
 
 		// TODO: Nicer to just use an indexed array to do this conversion.
@@ -91,6 +92,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(ShowSampleEcgAtStartUp):
 					_model.ShowSampleEcgAtStartUp = ShowSampleEcgAtStartUp;
 					break;
+				case nameof(AdjustBarThicknessWithZoom):
+					_model.AdjustBarThicknessWithZoom = AdjustBarThicknessWithZoom;
+					break;
 				default:
 					break;
 			}
@@ -128,5 +132,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool showSampleEcgAtStartUp;
+
+		[ObservableProperty]
+		private bool adjustBarThicknessWithZoom;
 	}
 }
