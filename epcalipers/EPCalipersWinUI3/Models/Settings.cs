@@ -32,6 +32,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _labelFontSizeKey = "LabelFontSize";
 		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
 		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
+		private const string _adjustCaliperLabelSizeWithZoomKey = "AdjustCaliperLabelSize";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -118,6 +119,12 @@ namespace EPCalipersWinUI3.Models
 		{
 			get => (bool)(_localSettings.Values[_adjustBarThicknessWithZoomKey] ?? false);
 			set => _localSettings.Values[_adjustBarThicknessWithZoomKey] = value;
+		}
+
+		public bool AdjustCaliperLabelSizeWithZoom
+		{
+			get => (bool)(_localSettings.Values[_adjustCaliperLabelSizeWithZoomKey] ?? false);
+			set => _localSettings.Values[_adjustCaliperLabelSizeWithZoomKey ] = value;	
 		}
 
 		public Rounding Rounding
@@ -234,5 +241,6 @@ namespace EPCalipersWinUI3.Models
 		public int NumberOfMarchingCalipers { get; set; } = 20;
 		public bool ShowSampleEcgAtStartUp { get; set; } = false;
 		public bool AdjustBarThicknessWithZoom {  get; set; } = false;
+		public bool AdjustCaliperLabelSizeWithZoom { get; set; } = false;
 	}
 }

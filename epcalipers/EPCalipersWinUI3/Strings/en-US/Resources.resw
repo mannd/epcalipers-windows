@@ -566,4 +566,7 @@
   <data name="AdjustBarThicknessWithZoom.Content" xml:space="preserve">
     <value>Adjust bar thickness when zooming</value>
   </data>
+  <data name="AdjustCaliperLabelSizeWithZoom.Content" xml:space="preserve">
+    <value>Adjust label size while zooming</value>
+  </data>
 </root>

@@ -441,12 +441,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: handle new calipers.  
-		// TODO: similar method to adjust font size?
+		// TODO: Refactor this.
+		// Need to set bar thickness and label size:
+		// 1) when adding new calipers
+		// 2) after changing settings
+		// 3) when scale factor changes
+		// We can track scale factor from the zoom factor continuously, but we only need to change when these things change.
+
 		public void ZoomBarThickness(double zoomFactor)
 		{
 			// TODO: have separate font and barthickness zoom settings.
-			Debug.Print("CaliperCollection.ZoomBarThickness()");
 			if (!_settings.AdjustBarThicknessWithZoom) return;
 			// Looks like it's best to avoid thickening bars when zooming out.
 			var zoomedBarThickness = Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
