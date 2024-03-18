@@ -30,6 +30,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _roundingKey = "RoundingKey";
 		private const string _showBrugadaTriangleKey = "ShowBrugadaTriangle";
 		private const string _labelFontSizeKey = "LabelFontSize";
+		private const string _newLabelFontSizeKey = "NewLabelFontSize";
 		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
 		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
 		private const string _adjustCaliperLabelSizeWithZoomKey = "AdjustCaliperLabelSize";
@@ -67,6 +68,17 @@ namespace EPCalipersWinUI3.Models
 		{
 			get => (CaliperLabelSize)(_localSettings.Values[_labelFontSizeKey] ?? CaliperLabelSize.Medium);
 			set => _localSettings.Values[_labelFontSizeKey] = (int)value;
+		}
+
+		public int FontSize
+		{
+			get => (int)(_localSettings.Values[_newLabelFontSizeKey] ?? CaliperLabel.MediumFont);
+			//set => _localSettings.Values[_newLabelFontSizeKey] = (int)value;
+			set
+			{
+				_localSettings.Values[_newLabelFontSizeKey] = (int)value;
+				Debug.Print("Font size = {0}", value);
+			}
 		}
 
 		public int NumberOfRRIntervals
@@ -222,6 +234,8 @@ namespace EPCalipersWinUI3.Models
 	{
 		public double BarThickness { get; set; } = 2.0;
 		public CaliperLabelSize CaliperLabelSize { get; set; } = CaliperLabelSize.Medium;
+
+		public int FontSize { get; set; } = CaliperLabel.MediumFont;
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
 		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;

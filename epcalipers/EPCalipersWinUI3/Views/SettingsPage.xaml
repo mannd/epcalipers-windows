@@ -125,7 +125,7 @@
                     <x:String>None</x:String>
                 </RadioButtons>
                 <RadioButtons x:Name="CaliperLabelSizeRadioButtons" 
-                              SelectedIndex="{x:Bind ViewModel.CaliperLabelSize}"  
+                              SelectedIndex="{x:Bind ViewModel.FontSize}"  
                           MaxColumns="5" Header="Caliper label size"
                           SelectionChanged="CaliperLabelSize_SelectionChanged">
                     <x:String>Extra-small</x:String>

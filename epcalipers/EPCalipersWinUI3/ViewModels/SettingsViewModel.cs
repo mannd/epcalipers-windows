@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI;
 
@@ -10,6 +11,15 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class SettingsViewModel : BasePageViewModel
 	{
 		private readonly ISettings _model = Settings.Instance;
+
+		private readonly List<int> _fontSizes = new List<int>
+		{
+			CaliperLabel.ExtraSmallFont,
+			CaliperLabel.SmallFont,
+			CaliperLabel.MediumFont,
+			CaliperLabel.LargeFont,
+			CaliperLabel.ExtraLargeFont
+		};
 
 		public SettingsViewModel()
 		{
@@ -23,6 +33,7 @@ namespace EPCalipersWinUI3.ViewModels
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
 			CaliperLabelSize = CaliperLabelConvertFromSize(_model.CaliperLabelSize);
+			FontSize = _fontSizes.IndexOf(_model.FontSize);
 			ShowSampleEcgAtStartUp = _model.ShowSampleEcgAtStartUp;
 			AdjustBarThicknessWithZoom = _model.AdjustBarThicknessWithZoom;
 			AdjustCaliperLabelSizeWithZoom = _model.AdjustCaliperLabelSizeWithZoom;
@@ -90,6 +101,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(CaliperLabelSize):
 					_model.CaliperLabelSize = CaliperLabelConvertToSize(CaliperLabelSize);
 					break;
+				case nameof(FontSize):
+					_model.FontSize = _fontSizes[FontSize];
+					break;
 				case nameof(ShowSampleEcgAtStartUp):
 					_model.ShowSampleEcgAtStartUp = ShowSampleEcgAtStartUp;
 					break;
@@ -103,7 +117,7 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 			}
 		}
-
+		
 		[ObservableProperty]
 		private bool autoAlignLabel;
 
@@ -133,6 +147,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int caliperLabelSize;
+
+		[ObservableProperty]
+		private int fontSize;
 
 		[ObservableProperty]
 		private bool showSampleEcgAtStartUp;

@@ -42,6 +42,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 	}
 	public abstract class CaliperLabel
 	{
+		public const int ExtraSmallFont = 12;
+		public const int SmallFont = 16;
+		public const int MediumFont = 24;
+		public const int LargeFont = 32;
+		public const int ExtraLargeFont = 46;
+
 		protected readonly int _padding = 10;
 
 		public Caliper Caliper { get; set; }
@@ -67,7 +73,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CaliperLabelAlignment Alignment { get; set; }
 		public bool AutoAlignLabel { get; set; }
 		public TextBlock TextBlock { get; set; }
-		public int FontSize { get; set; } = 24;
+
+		public int FontSize
+		{
+			get => _fontSize;
+			set
+			{
+				_fontSize = value;
+				if (TextBlock != null)
+				{
+					TextBlock.FontSize = (int)value;
+				}
+			}
+		}
+		private int _fontSize = CaliperLabel.MediumFont;
 
 		public CaliperLabelSize CaliperLabelSize
 		{

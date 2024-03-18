@@ -50,12 +50,14 @@ namespace EPCalipersWinUI3.Views
 			selectedColorPickerButton.Flyout.Hide();
 		}
 
+		// NOTE: Due to a bug(?) in WinUI 3, the selection changed event is fired twice, and
+		// the first time returns a SelectedIndex of -1!  thus need to ignore those events.
 		private void Rounding_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (sender is RadioButtons rb)
 			{
 				int selection = rb.SelectedIndex;
-				ViewModel.Rounding = selection;
+				if (selection >= 0) ViewModel.Rounding = selection;
 			}
 
 		}
@@ -65,7 +67,8 @@ namespace EPCalipersWinUI3.Views
 			if (sender is RadioButtons rb)
 			{
 				int selection = rb.SelectedIndex;
-				ViewModel.CaliperLabelSize = selection;
+				//ViewModel.CaliperLabelSize = selection;
+				if (selection >= 0) ViewModel.FontSize = selection;
 			}
 		}
 	}
