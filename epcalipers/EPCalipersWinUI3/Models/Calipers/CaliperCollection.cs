@@ -446,26 +446,40 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// 1) when adding new calipers
 		// 2) after changing settings
 		// 3) when scale factor changes
+		// 4) after clearing or setting calibration
 		// We can track scale factor from the zoom factor continuously, but we only need to change when these things change.
 
 		public void ZoomBarThickness(double zoomFactor)
 		{
 			// TODO: have separate font and barthickness zoom settings.
 			if (!_settings.AdjustBarThicknessWithZoom) return;
-			// Looks like it's best to avoid thickening bars when zooming out.
-			var zoomedBarThickness = Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
-			var fontSize = (int)_settings.CaliperLabelSize;
-			var adjustedSize = fontSize / zoomFactor;
-			adjustedSize = Math.Max((int)CaliperLabelSize.ExtraSmall, adjustedSize);
-			adjustedSize = Math.Min((int)CaliperLabelSize.ExtraLarge, adjustedSize);
-			CaliperLabelSize adjustedCaliperLabelSize = (CaliperLabelSize)(int)adjustedSize;
-			Debug.Print(((int)adjustedCaliperLabelSize).ToString());
+
+			var zoomedBarThickness = AdjustBarThickness(_settings.BarThickness, zoomFactor);
+
+			CaliperLabelSize adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.CaliperLabelSize, zoomFactor);
+
 			foreach (var caliper in _calipers)
 			{
 				caliper.BarThickness = zoomedBarThickness;
 				caliper.CaliperLabel.CaliperLabelSize = adjustedCaliperLabelSize;
 				caliper.CaliperLabel.SetPosition();
 			}
+		}
+
+		private CaliperLabelSize AdjustCaliperLabelSize(CaliperLabelSize caliperLabelSize, double zoomFactor)
+		{
+			var fontSize = (int)caliperLabelSize;
+			var adjustedSize = fontSize / zoomFactor;
+			adjustedSize = Math.Max((int)CaliperLabelSize.ExtraSmall, adjustedSize);
+			adjustedSize = Math.Min((int)CaliperLabelSize.ExtraLarge, adjustedSize);
+			CaliperLabelSize adjustedCaliperLabelSize = (CaliperLabelSize)(int)adjustedSize;
+			return adjustedCaliperLabelSize;
+		}
+
+		private double AdjustBarThickness(double barThickness, double zoomFactor)
+		{
+			// Looks like it's best to avoid thickening bars when zooming out.
+			return Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
 		}
 
 		// TODO: this is where we need to apply zoom settings.
