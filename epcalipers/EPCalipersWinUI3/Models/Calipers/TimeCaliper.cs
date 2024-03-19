@@ -83,7 +83,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var alignment = _settings.TimeCaliperLabelAlignment;
 			var autoAlignLabel = _settings.AutoAlignLabel;
 			var caliperLabelSize = _settings.CaliperLabelSize;
-			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, caliperLabelSize, _fakeUI);
+			var fontSize = _settings.FontSize;
+			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, caliperLabelSize, fontSize, _fakeUI);
 		}
 
 		public override void ApplySettings(ISettings settings)
@@ -92,6 +93,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
+			CaliperLabel.FontSize = settings.FontSize;
 			CaliperLabel.SetPosition();
 			if (MarchingCaliper != null)
 			{

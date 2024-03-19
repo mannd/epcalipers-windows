@@ -26,7 +26,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabelAlignment alignment,
 			bool autoAlignLabel,
 			CaliperLabelSize caliperLabelSize,
-			bool fakeUI = false) : base(caliper, text, alignment, autoAlignLabel, caliperLabelSize, fakeUI)
+			int fontSize, bool fakeUI = false) : base(caliper, text, alignment, autoAlignLabel, caliperLabelSize, fontSize, fakeUI)
 		{
 			Caliper = caliper;
 			_bounds = caliperView.Bounds;

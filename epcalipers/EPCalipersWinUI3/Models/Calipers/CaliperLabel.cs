@@ -94,10 +94,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			set
 			{
 				_caliperLabelSize = value;
-				if (TextBlock != null)
-				{
-					TextBlock.FontSize = (int)value;
-				}
+				//if (TextBlock != null)
+				//{
+				//	TextBlock.FontSize = (int)value;
+				//}
 			}
 		}
 		private CaliperLabelSize _caliperLabelSize;
@@ -136,8 +136,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			string text,
 			CaliperLabelAlignment alignment,
 			bool autoPosition,
-			CaliperLabelSize caliperLabelSize, 
-			bool fakeUI = false)
+			CaliperLabelSize caliperLabelSize,
+			int fontSize, bool fakeUI = false)
 		{
 			Caliper = caliper;
 			Text = text;
@@ -148,6 +148,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Text = text
 			};
 			CaliperLabelSize = caliperLabelSize;
+			FontSize = fontSize;
 		}
 
 		public void AddToView(ICaliperView view)
