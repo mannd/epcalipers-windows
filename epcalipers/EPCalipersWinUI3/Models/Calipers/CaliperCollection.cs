@@ -456,23 +456,23 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 			var zoomedBarThickness = AdjustBarThickness(_settings.BarThickness, zoomFactor);
 
-			CaliperLabelSize adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.CaliperLabelSize, zoomFactor);
+			int adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.FontSize, zoomFactor);
 
 			foreach (var caliper in _calipers)
 			{
 				caliper.BarThickness = zoomedBarThickness;
-				caliper.CaliperLabel.CaliperLabelSize = adjustedCaliperLabelSize;
+				caliper.CaliperLabel.FontSize = adjustedCaliperLabelSize;
 				caliper.CaliperLabel.SetPosition();
 			}
 		}
 
-		private CaliperLabelSize AdjustCaliperLabelSize(CaliperLabelSize caliperLabelSize, double zoomFactor)
+		private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
 		{
-			var fontSize = (int)caliperLabelSize;
+			var fontSize = caliperLabelSize;
 			var adjustedSize = fontSize / zoomFactor;
-			adjustedSize = Math.Max((int)CaliperLabelSize.ExtraSmall, adjustedSize);
-			adjustedSize = Math.Min((int)CaliperLabelSize.ExtraLarge, adjustedSize);
-			CaliperLabelSize adjustedCaliperLabelSize = (CaliperLabelSize)(int)adjustedSize;
+			adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
+			adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
+			int adjustedCaliperLabelSize = (int)adjustedSize;
 			return adjustedCaliperLabelSize;
 		}
 

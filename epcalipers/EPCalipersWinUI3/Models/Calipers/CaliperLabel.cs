@@ -14,15 +14,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		Right,
 	}
 
-	public enum CaliperLabelSize
-	{
-		ExtraSmall = 12,
-		Small = 16,
-		Medium = 24,
-		Large = 32,
-		ExtraLarge = 46
-	}
-
 	public struct CaliperLabelPosition
 	{
 		public int Left { get; set; }
@@ -88,20 +79,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private int _fontSize = CaliperLabel.MediumFont;
 
-		public CaliperLabelSize CaliperLabelSize
-		{
-			get => _caliperLabelSize;
-			set
-			{
-				_caliperLabelSize = value;
-				//if (TextBlock != null)
-				//{
-				//	TextBlock.FontSize = (int)value;
-				//}
-			}
-		}
-		private CaliperLabelSize _caliperLabelSize;
-
 		public bool IsSelected
 		{
 			set
@@ -136,8 +113,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			string text,
 			CaliperLabelAlignment alignment,
 			bool autoPosition,
-			CaliperLabelSize caliperLabelSize,
-			int fontSize, bool fakeUI = false)
+			int fontSize,
+			bool fakeUI = false)
 		{
 			Caliper = caliper;
 			Text = text;
@@ -147,7 +124,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				Text = text
 			};
-			CaliperLabelSize = caliperLabelSize;
 			FontSize = fontSize;
 		}
 

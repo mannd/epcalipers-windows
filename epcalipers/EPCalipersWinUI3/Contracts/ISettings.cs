@@ -9,7 +9,6 @@ namespace EPCalipersWinUI3.Contracts
 	public interface ISettings
 	{
 		public double BarThickness { get; set; }
-		public CaliperLabelSize CaliperLabelSize { get; set; }
 		public int FontSize { get; set; }
 		public bool AutoAlignLabel { get; set; }
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; }

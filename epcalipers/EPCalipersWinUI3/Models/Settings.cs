@@ -29,8 +29,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _barThicknessKey = "BarThicknessKey";
 		private const string _roundingKey = "RoundingKey";
 		private const string _showBrugadaTriangleKey = "ShowBrugadaTriangle";
-		private const string _labelFontSizeKey = "LabelFontSize";
-		private const string _newLabelFontSizeKey = "NewLabelFontSize";
+		private const string _newLabelFontSizeKey = "LabelFontSize";
 		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
 		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
 		private const string _adjustCaliperLabelSizeWithZoomKey = "AdjustCaliperLabelSize";
@@ -62,12 +61,6 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_numberOfMeanIntervalsKey] = value;
 				Debug.Print($"numberOfMeanIntervals = {value}");
 			} 
-		}
-
-		public CaliperLabelSize CaliperLabelSize
-		{
-			get => (CaliperLabelSize)(_localSettings.Values[_labelFontSizeKey] ?? CaliperLabelSize.Medium);
-			set => _localSettings.Values[_labelFontSizeKey] = (int)value;
 		}
 
 		public int FontSize
@@ -233,8 +226,6 @@ namespace EPCalipersWinUI3.Models
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
-		public CaliperLabelSize CaliperLabelSize { get; set; } = CaliperLabelSize.Medium;
-
 		public int FontSize { get; set; } = CaliperLabel.MediumFont;
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;

@@ -44,10 +44,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var text = Text;
 			var alignment = _settings.AmplitudeCaliperLabelAlignment;
 			var autoAlignLabel = _settings.AutoAlignLabel;
-			var caliperLabelSize = _settings.CaliperLabelSize;
 			var fontSize = _settings.FontSize;
 			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
-				alignment, caliperLabelSize, autoAlignLabel, fontSize, _fakeUI);
+				alignment, autoAlignLabel, fontSize, _fakeUI);
 		}
 
 		public override void ChangeBounds()
@@ -98,7 +97,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			base.ApplySettings(settings);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
-			CaliperLabel.CaliperLabelSize = settings.CaliperLabelSize;
 			CaliperLabel.FontSize = settings.FontSize;
 			CaliperLabel.SetPosition();
 		}

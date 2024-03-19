@@ -42,10 +42,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			string text,
 			CaliperLabelAlignment alignment,
 			bool autoAlignLabel,
-			CaliperLabelSize caliperLabelSize,
 			int fontSize,
-			bool fakeUI = false, Visibility visibility = Visibility.Collapsed)
-			: base(caliper, text, alignment, autoAlignLabel, caliperLabelSize, fontSize, fakeUI)
+			bool fakeUI = false,
+			Visibility visibility = Visibility.Collapsed)
+			: base(caliper, text, alignment, autoAlignLabel, fontSize, fakeUI)
 		{
 			Caliper = caliper;
 			_view = caliperView;
