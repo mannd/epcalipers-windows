@@ -52,17 +52,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public bool CaliperSelectionChanged
-		{
-			get => _caliperSelectionChanged;
-			set
-			{
-				_caliperSelectionChanged = value;
-				OnPropertyChanged(nameof(CaliperSelectionChanged));
-			}
-		}
-		private bool _caliperSelectionChanged;
-
 		private async Task ShowMessage(string title, string message)
 		{
 			var dialog = MessageHelper.CreateMessageDialog(title, message);
@@ -371,7 +360,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		// New stuff
 
-		public void NewToggleCaliperSelection(Point point)
+		public void ToggleCaliperSelection(Point point)
 		{
 			if (IsLocked) return;
 			bool caliperToggled = false;
@@ -389,14 +378,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 					{
 						caliper.SelectFullCaliper();
 						SelectedCaliper = caliper;
-						CaliperSelectionChanged = true;
 					}
-					NewUnselectCalipersExcept(caliper);
+					UnselectCalipersExcept(caliper);
 				}
 			}
 		}
 
-		public void NewToggleComponentSelection(Point point)
+		public void ToggleComponentSelection(Point point)
 		{
 			if (IsLocked) return;
 			bool caliperToggled = false;
@@ -424,13 +412,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 						caliper.SelectPartialCaliper(bar);
 						SelectedCaliper = caliper;
 					}
-					NewUnselectCalipersExcept(caliper);  // make sure other calipers are unselected
-					CaliperSelectionChanged = true;
+					UnselectCalipersExcept(caliper);  // make sure other calipers are unselected
 				}
 			}
 		}
 
-		private void NewUnselectCalipersExcept(Caliper c)
+		private void UnselectCalipersExcept(Caliper c)
 		{
 			foreach (var caliper in _calipers)
 			{
@@ -533,7 +520,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_calipers.First().SelectFullCaliper();
 				SelectedCaliper = _calipers.First();
 			}
-			return;  // 
 		}
 
 		/// <summary>
@@ -546,7 +532,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (timeCalipers.Count == 1)
 			{
 				timeCalipers.First().SelectFullCaliper();
-				NewUnselectCalipersExcept(timeCalipers.First());
+				UnselectCalipersExcept(timeCalipers.First());
 			}
 		}
 
