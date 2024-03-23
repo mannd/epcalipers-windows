@@ -441,7 +441,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: Refactor this.
+		// TODO: Refactor this, and find places where calipers are refreshed.
 		// Need to set bar thickness and label size:
 		// 1) when adding new calipers
 		// 2) after changing settings

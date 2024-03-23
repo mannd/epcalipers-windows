@@ -175,11 +175,6 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 		}
 
-		public void RefreshCalipers()
-		{
-			_caliperCollection?.RefreshCalipers();
-		}
-
 		private static CalibrationMeasurement ParseInput(CalibrationInput input)
 		{
 			if (input.Unit == Unit.Custom)

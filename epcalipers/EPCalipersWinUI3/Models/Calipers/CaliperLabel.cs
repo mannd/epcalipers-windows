@@ -73,11 +73,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_fontSize = value;
 				if (TextBlock != null)
 				{
-					TextBlock.FontSize = (int)value;
+					TextBlock.FontSize = value;
 				}
 			}
 		}
-		private int _fontSize = CaliperLabel.MediumFont;
+		private int _fontSize = MediumFont;
 
 		public bool IsSelected
 		{
