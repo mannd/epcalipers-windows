@@ -76,8 +76,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				bar.Y1 += delta.Y;
 				bar.Y2 += delta.Y;
 			}
-			CaliperLabel.Text = Text;
-			CaliperLabel.SetPosition();
+			UpdateLabel();
 		}
 
 		public override Bar IsNearBar(Point p)

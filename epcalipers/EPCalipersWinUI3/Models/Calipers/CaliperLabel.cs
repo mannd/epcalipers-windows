@@ -1,6 +1,7 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System.ComponentModel;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -31,7 +32,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Top = (int)top;
 		}
 	}
-	public abstract class CaliperLabel
+	public abstract class CaliperLabel: INotifyPropertyChanged
 	{
 		public const int ExtraSmallFont = 12;
 		public const int SmallFont = 16;
@@ -56,7 +57,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				{
 					TextBlock.Text = Text;
 				}
-
+				OnPropertyChanged(nameof(Text));
 			}
 		}
 		private string _text;
@@ -125,6 +126,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Text = text
 			};
 			FontSize = fontSize;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void AddToView(ICaliperView view)

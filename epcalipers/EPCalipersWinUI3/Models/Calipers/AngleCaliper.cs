@@ -238,6 +238,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 				default: break;
 			}
 			DrawTriangleBase();
+			UpdateLabel();
+		}
+
+		public override void UpdateLabel()
+		{
 			CaliperLabel.Text = AngleCalibration.GetFormattedMeasurement(Value);
 			CaliperLabel.SetPosition();
 		}

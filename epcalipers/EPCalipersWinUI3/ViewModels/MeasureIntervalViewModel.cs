@@ -44,7 +44,11 @@ namespace EPCalipersWinUI3.ViewModels
 			Caliper = caliperCollection.SelectedCaliper;
 			CaliperCollection = caliperCollection;
 			CaliperCollection.PropertyChanged += OnMyPropertyChanged;
-			if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
+			if (Caliper != null)
+			{
+				Caliper.PropertyChanged += OnMyPropertyChanged;
+				Caliper.CaliperLabel.PropertyChanged += OnMyPropertyChanged;
+			}
 			PropertyChanged += OnMyPropertyChanged;
 			Title = _dialogTitle;
 			GetResults();
@@ -54,9 +58,10 @@ namespace EPCalipersWinUI3.ViewModels
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if (e.PropertyName == nameof(Caliper.LabelText) 
+			if (e.PropertyName == nameof(Caliper.CaliperLabel.Text) 
 				|| e.PropertyName == nameof(NumberOfIntervals))
 			{
+				if (NumberOfIntervals < 1) return;
 				GetResults();
 				if (QtcParameters != null)
 				{
@@ -76,7 +81,11 @@ namespace EPCalipersWinUI3.ViewModels
 			else if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
 			{
 				Caliper = CaliperCollection.SelectedCaliper;
-				if (Caliper != null) Caliper.PropertyChanged += OnMyPropertyChanged;
+				if (Caliper != null)
+				{
+					Caliper.PropertyChanged += OnMyPropertyChanged;
+					Caliper.CaliperLabel.PropertyChanged += OnMyPropertyChanged;
+				}
 				GetResults();
 			}
 		}

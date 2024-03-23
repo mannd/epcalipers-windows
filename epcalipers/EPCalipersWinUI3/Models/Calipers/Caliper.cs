@@ -81,19 +81,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public CaliperType CaliperType { get; init; }
 		public CaliperLabel CaliperLabel { get; set; }
-		public string LabelText
-		{
-			get
-			{
-				return _labelText;
-			}
-			set
-			{
-				_labelText = value;
-				OnPropertyChanged(nameof(LabelText));
-			}
-		}
-		private string _labelText;
 		public bool ShowRate { get; set; } = false;
 		public virtual bool IsSelected => Selection != CaliperSelection.None;
 		public Bar SelectedBar
@@ -315,10 +302,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public abstract Bar IsNearBar(Point p);
 
-		public void UpdateLabel()
+		public virtual void UpdateLabel()
 		{
 			CaliperLabel.Text = Text;
-			LabelText = Text;
 			CaliperLabel.SetPosition();
 		}
 
