@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public class BarThickness
+	public class ScaledBarThickness
 	{
 		public double Thickness;
 		public double ScaleFactor;
-		public bool ScaleThickness;
+		public bool DoScaling;
 
-		public BarThickness(double thickness, double scaleFactor, bool scaleThickness = false)
+		public ScaledBarThickness(double thickness, double scaleFactor, bool doScaling = false)
 		{
 			Debug.Assert(scaleFactor > 0);
 			Thickness = thickness;
 			ScaleFactor = scaleFactor;
-			ScaleThickness = scaleThickness;
+			DoScaling = doScaling;
 		}
 
-		public double ScaledThickness() => ScaleThickness ? Thickness / ScaleFactor : Thickness;
+		public double ScaledThickness() => DoScaling ? Thickness / ScaleFactor : Thickness;
 	}
 }

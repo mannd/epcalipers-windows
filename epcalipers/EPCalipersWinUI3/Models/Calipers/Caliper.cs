@@ -55,7 +55,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private const double _defaultCaliperValue = 200;
 		private static readonly int _maxNumberIntervals = 10;
 		protected bool _fakeUI;  // Is true for testing.
-		protected Bounds Bounds => CaliperView.Bounds;
 
 		protected Caliper(ICaliperView caliperView, Calibration calibration = null)
 		{
@@ -64,6 +63,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 			
 		public event PropertyChangedEventHandler PropertyChanged;
+		protected Bounds Bounds => CaliperView.Bounds;
 
 		public CaliperSelection Selection
 		{
@@ -135,7 +135,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private double _barThickness;
 
-		public BarThickness ScaledBarThickness
+		public ScaledBarThickness ScaledBarThickness
 		{
 			get => _scaledBarThickness;
 			set
@@ -150,7 +150,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 				}
 			}
 		}
-		private BarThickness _scaledBarThickness;
+		private ScaledBarThickness _scaledBarThickness;
+
+		public double ScaleFactor { get; set; } = 1.0;
 
 		public virtual Color Color
 		{
@@ -302,14 +304,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			UpdateLabel();
 		}
 
-		// TODO: if we do this then caliper must know about UI scaling, not a good look...
-		protected void ScaledBarThickness(double scaleFactor)
-		{
-			Debug.Assert(scaleFactor != 0);
-			// Looks like it's best to avoid thickening bars when zooming out.
-			BarThickness =  Math.Min(BarThickness / scaleFactor, BarThickness);
-		}
-
 		public virtual void AddToView(ICaliperView caliperView)
 		{
 			if (caliperView == null) return;
@@ -343,6 +337,18 @@ namespace EPCalipersWinUI3.Models.Calipers
 			c.UnselectedColor = settings.UnselectedCaliperColor;
 			c.SelectedColor = settings.SelectedCaliperColor;
 			c.BarThickness = settings.BarThickness;
+			// TODO: set ScaledBarThickness
+			if (c.ScaledBarThickness == null)
+			{
+				c.ScaledBarThickness = new ScaledBarThickness(settings.BarThickness, c.ScaleFactor,
+					settings.AdjustBarThicknessWithZoom);
+			}
+			else
+			{
+				c.ScaledBarThickness.Thickness = settings.BarThickness;
+				c.ScaledBarThickness.ScaleFactor = c.ScaleFactor;
+				c.ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
+			}
 			c.UnselectFullCaliper();
 		}
 
