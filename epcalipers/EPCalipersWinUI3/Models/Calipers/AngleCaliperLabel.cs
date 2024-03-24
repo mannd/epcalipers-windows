@@ -20,7 +20,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			bool autoPosition,
 			int fontSize,
 			bool fakeUI = false)
-			: base(caliper, text, alignment, autoPosition, fontSize, fakeUI)
+			: base(caliper, text, alignment, autoPosition, fontSize, fakeUI: fakeUI)
 		{
 			Caliper = caliper;
 			if (!fakeUI)

@@ -123,14 +123,34 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public double BarThickness
 		{
+			get => _barThickness;
 			set
 			{
+				_barThickness = value;
 				foreach (var bar in Bars)
 				{
 					bar.Thickness = value;
 				}
 			}
 		}
+		private double _barThickness;
+
+		public BarThickness ScaledBarThickness
+		{
+			get => _scaledBarThickness;
+			set
+			{
+				if (value != _scaledBarThickness)
+				{
+					_scaledBarThickness = value;
+					foreach (var bar in Bars)
+					{
+						bar.Thickness = value.ScaledThickness();
+					}
+				}
+			}
+		}
+		private BarThickness _scaledBarThickness;
 
 		public virtual Color Color
 		{
@@ -185,7 +205,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ISettings settings,
 			Calibration timeCalibration = null,
 			Calibration amplitudeCalibration = null,
-			AngleCalibration angleCalibration = null)
+			AngleCalibration angleCalibration = null, 
+			bool fakeUI = false)
 		{
 			Debug.Assert(type != CaliperType.None);
 			CaliperPosition initialPosition;
@@ -195,15 +216,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				case CaliperType.Time:
 					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
-					caliper = new TimeCaliper(initialPosition, caliperView, settings, calibration: timeCalibration);
+					caliper = new TimeCaliper(initialPosition, caliperView, settings, fakeUI, calibration: timeCalibration);
 					break;
 				case CaliperType.Amplitude:
 					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
-					caliper = new AmplitudeCaliper(initialPosition, caliperView, settings, calibration: amplitudeCalibration);
+					caliper = new AmplitudeCaliper(initialPosition, caliperView, settings, fakeUI, calibration: amplitudeCalibration);
 					break;
 				case CaliperType.Angle:
 					initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
-					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration);
+					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration, fakeUI);
 					break;
 			}
 			ApplySettings(caliper, settings);
@@ -279,6 +300,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 				}
 			}
 			UpdateLabel();
+		}
+
+		// TODO: if we do this then caliper must know about UI scaling, not a good look...
+		protected void ScaledBarThickness(double scaleFactor)
+		{
+			Debug.Assert(scaleFactor != 0);
+			// Looks like it's best to avoid thickening bars when zooming out.
+			BarThickness =  Math.Min(BarThickness / scaleFactor, BarThickness);
 		}
 
 		public virtual void AddToView(ICaliperView caliperView)

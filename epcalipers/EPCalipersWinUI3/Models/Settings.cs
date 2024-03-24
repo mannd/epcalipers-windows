@@ -230,8 +230,8 @@ namespace EPCalipersWinUI3.Models
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
 		public CaliperLabelAlignment AmplitudeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
-		public Color UnselectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		public Color SelectedCaliperColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public Color UnselectedCaliperColor { get; set; }
+		public Color SelectedCaliperColor { get; set; }
 		public Rounding Rounding { get; set; } = Rounding.None;
 		public bool ShowBrugadaTriangle { get; set; } = false;
 

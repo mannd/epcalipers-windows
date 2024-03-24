@@ -15,10 +15,8 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
 			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
-			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
-			caliperCollection.Add(timeCaliper);
-			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
-			caliperCollection.Add(amplitudeCaliper);
+			caliperCollection.AddCaliper(CaliperType.Time, true);
+			caliperCollection.AddCaliper(CaliperType.Amplitude, true);
 			var timeCalipers = caliperCollection.FilteredCalipers(CaliperType.Time);
 			Assert.Single(timeCalipers);
 			var amplitudeCalipers = caliperCollection.FilteredCalipers(CaliperType.Amplitude);
@@ -30,6 +28,7 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestSelectedCaliper()
 		{
+			// TODO: redo this
 			//var stubCaliperView = new FakeCaliperView();
 			//var stubSettings = new FakeSettings();
 			//var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
@@ -57,13 +56,13 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
 			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
-			var timeCaliper = new TimeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
-			caliperCollection.Add(timeCaliper);
-			var amplitudeCaliper = new AmplitudeCaliper(new CaliperPosition(100, 100, 200), stubCaliperView, stubSettings, true);
-			caliperCollection.Add(amplitudeCaliper);
-			//timeCaliper.IsSelected = true;
-			//caliperCollection.ToggleComponentSelection(new Point(timeCaliper.LeftBar.Position, 0));
-			//Assert.False(timeCaliper.IsSelected);  // toggle bar unselects caliper
+			var timeCaliper = (TimeCaliper)caliperCollection.AddCaliper(CaliperType.Time, true);
+			var amplitudeCaliper = (AmplitudeCaliper)caliperCollection.AddCaliper(CaliperType.Amplitude, true);
+			timeCaliper.SelectFullCaliper();
+			Assert.True(timeCaliper.IsSelected);  // toggle bar unselects caliper
+			caliperCollection.ToggleCaliperSelection(new Point(timeCaliper.LeftBar.Position, 0));
+			Assert.False(timeCaliper.IsSelected);  // toggle bar unselects caliper
+			// TODO: finish this
 			//Assert.True(timeCaliper.LeftBar.IsSelected);
 			//caliperCollection.ToggleComponentSelection(new Point(timeCaliper.RightBar.Position, 0));
 			//Assert.False(timeCaliper.LeftBar.IsSelected);  // toggle other bar unselects first bar

@@ -45,7 +45,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			int fontSize,
 			bool fakeUI = false,
 			Visibility visibility = Visibility.Collapsed)
-			: base(caliper, text, alignment, autoAlignLabel, fontSize, fakeUI)
+			: base(caliper, text, alignment, autoAlignLabel, fontSize, fakeUI: fakeUI)
 		{
 			Caliper = caliper;
 			_view = caliperView;

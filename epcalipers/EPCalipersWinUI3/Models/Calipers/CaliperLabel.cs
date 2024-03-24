@@ -42,6 +42,27 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		protected readonly int _padding = 10;
 
+		public CaliperLabel(
+			Caliper caliper,
+			string text,
+			CaliperLabelAlignment alignment,
+			bool autoPosition,
+			int fontSize,
+			bool scaleFont = false, 
+			double scaleFactor = 1, 
+			bool fakeUI = false)
+		{
+			Caliper = caliper;
+			Text = text;
+			Alignment = alignment;
+			AutoAlignLabel = autoPosition;
+			TextBlock = fakeUI ? null : new TextBlock()
+			{
+				Text = text
+			};
+			FontSize = fontSize;
+		}
+
 		public Caliper Caliper { get; set; }
 
 		public string Text
@@ -65,7 +86,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CaliperLabelAlignment Alignment { get; set; }
 		public bool AutoAlignLabel { get; set; }
 		public TextBlock TextBlock { get; set; }
-
 		public int FontSize
 		{
 			get => _fontSize;
@@ -109,24 +129,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private Color _color;
 
-		public CaliperLabel(
-			Caliper caliper,
-			string text,
-			CaliperLabelAlignment alignment,
-			bool autoPosition,
-			int fontSize,
-			bool fakeUI = false)
-		{
-			Caliper = caliper;
-			Text = text;
-			Alignment = alignment;
-			AutoAlignLabel = autoPosition;
-			TextBlock = fakeUI ? null : new TextBlock()
-			{
-				Text = text
-			};
-			FontSize = fontSize;
-		}
+		public bool ScaleFont { get; set; }
+		public double ScaleFactor { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

@@ -99,41 +99,24 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Calibration.DefaultBpm = defaultBpm;
 		}
 
-
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
 
-		// TODO: Only used in testing so far?  Redundant?
-		public void Add(Caliper caliper)
+		public Caliper AddCaliper(CaliperType type, bool fakeUI = false)
 		{
-			if (IsLocked) return;
-			caliper.AddToView(_caliperView);
-			switch (caliper.CaliperType)
-			{
-				case CaliperType.Time:
-					caliper.Calibration = TimeCalibration;
-					break;
-				case CaliperType.Amplitude:
-					caliper.Calibration = AmplitudeCalibration;
-					break;
-				case CaliperType.Angle:
-					var angleCaliper = caliper as AngleCaliper;
-					angleCaliper.AngleCalibration = AngleCalibration;
-					break;
-			}
-			caliper.ShowRate = ShowRate;
-			caliper.UpdateLabel();
-			_calipers.Add(caliper);
-		}
-
-		public void AddCaliper(CaliperType type)
-		{
-			if (IsLocked) return;
-			var caliper = Caliper.InitCaliper(type, _caliperView, _settings, TimeCalibration, AmplitudeCalibration, AngleCalibration);
+			if (IsLocked) return null;
+			var caliper = Caliper.InitCaliper(type, 
+				_caliperView, 
+				_settings, 
+				TimeCalibration, 
+				AmplitudeCalibration, 
+				AngleCalibration, 
+				fakeUI);
 			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();
 			_calipers.Add(caliper);
+			return caliper;  // returned caliper usually ignored, but this is handy for testing.
 		}
 
 		public void RemoveAtPoint(Point point)

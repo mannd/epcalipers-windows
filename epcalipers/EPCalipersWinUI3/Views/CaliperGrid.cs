@@ -73,7 +73,7 @@ namespace EPCalipersWinUI3.Views
 
 		public Point GetOffsettedCenter()
 		{
-			throw new NotImplementedException();
+			return new Point( 0, 0 );
 		}
 
 		public void Remove(Line line)
