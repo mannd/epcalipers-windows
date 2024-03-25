@@ -71,7 +71,16 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				Debug.Print("scale factor changed.");
 				ScaledBarThickness.ScaleFactor = ScaleFactor;
+				UpdateScaledBarThickness();
 				Debug.Print(ScaledBarThickness.ScaledThickness().ToString());
+			}
+		}
+
+		private void UpdateScaledBarThickness()
+		{
+			foreach (var bar in Bars)
+			{
+				bar.Thickness = ScaledBarThickness.ScaledThickness();
 			}
 		}
 
@@ -141,7 +150,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				_barThickness = value;
 				foreach (var bar in Bars)
 				{
-					bar.Thickness = value;
+				//	bar.Thickness = value;
 				}
 			}
 		}
@@ -307,6 +316,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual void ApplySettings(ISettings settings)
 		{
+			ScaledBarThickness.Thickness = settings.BarThickness;
+			ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
+			UpdateScaledBarThickness();
 			UpdateBarThickness(settings.BarThickness);
 			UpdateColors(settings.SelectedCaliperColor);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;

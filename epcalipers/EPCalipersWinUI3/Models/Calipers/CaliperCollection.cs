@@ -434,38 +434,38 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// 4) after clearing or setting calibration
 		// We can track scale factor from the zoom factor continuously, but we only need to change when these things change.
 
-		public void ZoomBarThickness(double zoomFactor)
-		{
-			// TODO: have separate font and barthickness zoom settings.
-			if (!_settings.AdjustBarThicknessWithZoom) return;
+		//public void ZoomBarThickness(double zoomFactor)
+		//{
+		//	// TODO: have separate font and barthickness zoom settings.
+		//	if (!_settings.AdjustBarThicknessWithZoom) return;
 
-			var zoomedBarThickness = AdjustBarThickness(_settings.BarThickness, zoomFactor);
+		//	var zoomedBarThickness = AdjustBarThickness(_settings.BarThickness, zoomFactor);
 
-			int adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.FontSize, zoomFactor);
+		//	int adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.FontSize, zoomFactor);
 
-			foreach (var caliper in _calipers)
-			{
-				caliper.BarThickness = zoomedBarThickness;
-				caliper.CaliperLabel.FontSize = adjustedCaliperLabelSize;
-				caliper.CaliperLabel.SetPosition();
-			}
-		}
+		//	foreach (var caliper in _calipers)
+		//	{
+		//		caliper.BarThickness = zoomedBarThickness;
+		//		caliper.CaliperLabel.FontSize = adjustedCaliperLabelSize;
+		//		caliper.CaliperLabel.SetPosition();
+		//	}
+		//}
 
-		private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
-		{
-			var fontSize = caliperLabelSize;
-			var adjustedSize = fontSize / zoomFactor;
-			adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
-			adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
-			int adjustedCaliperLabelSize = (int)adjustedSize;
-			return adjustedCaliperLabelSize;
-		}
+		//private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
+		//{
+		//	var fontSize = caliperLabelSize;
+		//	var adjustedSize = fontSize / zoomFactor;
+		//	adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
+		//	adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
+		//	int adjustedCaliperLabelSize = (int)adjustedSize;
+		//	return adjustedCaliperLabelSize;
+		//}
 
-		private double AdjustBarThickness(double barThickness, double zoomFactor)
-		{
-			// Looks like it's best to avoid thickening bars when zooming out.
-			return Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
-		}
+		//private double AdjustBarThickness(double barThickness, double zoomFactor)
+		//{
+		//	// Looks like it's best to avoid thickening bars when zooming out.
+		//	return Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
+		//}
 
 		// TODO: this is where we need to apply zoom settings.
 		public void RefreshCalipers()
@@ -479,34 +479,34 @@ namespace EPCalipersWinUI3.Models.Calipers
 				caliper.ApplySettings(_settings);
 			}
 			// TODO: this obviously needs to be optimized, we're looping twice through the calipers.
-			ZoomBarThickness(ScaleFactor);
+			//ZoomBarThickness(ScaleFactor);
 		}
 
 		// Sometimes we need to just changes these aspects of the calipers.
-		public void SetBarThickness()
-		{
-			foreach (var caliper in _calipers)
-			{
-				caliper.BarThickness = _settings.BarThickness;
-			}
-		}
+		//public void SetBarThickness()
+		//{
+		//	foreach (var caliper in _calipers)
+		//	{
+		//		caliper.BarThickness = _settings.BarThickness;
+		//	}
+		//}
 
-		public void SetFontSize()
-		{
-			foreach (var caliper in _calipers)
-			{
-				caliper.CaliperLabel.FontSize = _settings.FontSize;
-			}
-		}
+		//public void SetFontSize()
+		//{
+		//	foreach (var caliper in _calipers)
+		//	{
+		//		caliper.CaliperLabel.FontSize = _settings.FontSize;
+		//	}
+		//}
 
-		public void SetBarThicknessAndFontSize()
-		{
-			foreach (var caliper in _calipers)
-			{
-				caliper.BarThickness = _settings.BarThickness;
-				caliper.CaliperLabel.FontSize = _settings.FontSize;
-			}
-		}
+		//public void SetBarThicknessAndFontSize()
+		//{
+		//	foreach (var caliper in _calipers)
+		//	{
+		//		caliper.BarThickness = _settings.BarThickness;
+		//		caliper.CaliperLabel.FontSize = _settings.FontSize;
+		//	}
+		//}
 
 		public async Task SetCalibrationAsync()
 		{
