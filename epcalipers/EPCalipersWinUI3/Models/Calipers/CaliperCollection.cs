@@ -66,7 +66,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// A calibrated time caliper can show interval or rate.
 		public bool ShowRate { get; set; } = false;
 
-		public double ScaleFactor { get; set; } = 1.0;  // This is used to change caliper line thickness and label size according to zoom.
+		public double ScaleFactor
+		{
+			get => _scaleFactor;
+			set
+			{
+				if (_scaleFactor != value)
+				{
+					_scaleFactor = value;
+					foreach (var caliper in  _calipers)
+					{
+						caliper.ScaleFactor = _scaleFactor;
+					}
+				}
+			}
+		}
+		private double _scaleFactor = 1.0;
 
 		public Caliper SelectedCaliper
 		{
@@ -465,6 +480,32 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			// TODO: this obviously needs to be optimized, we're looping twice through the calipers.
 			ZoomBarThickness(ScaleFactor);
+		}
+
+		// Sometimes we need to just changes these aspects of the calipers.
+		public void SetBarThickness()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.BarThickness = _settings.BarThickness;
+			}
+		}
+
+		public void SetFontSize()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.CaliperLabel.FontSize = _settings.FontSize;
+			}
+		}
+
+		public void SetBarThicknessAndFontSize()
+		{
+			foreach (var caliper in _calipers)
+			{
+				caliper.BarThickness = _settings.BarThickness;
+				caliper.CaliperLabel.FontSize = _settings.FontSize;
+			}
 		}
 
 		public async Task SetCalibrationAsync()

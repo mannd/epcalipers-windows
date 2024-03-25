@@ -94,9 +94,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public override void ApplySettings(ISettings settings)
 		{
 			base.ApplySettings(settings);
-			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.Alignment = settings.AmplitudeCaliperLabelAlignment;
-			CaliperLabel.FontSize = settings.FontSize;
 			CaliperLabel.SetPosition();
 		}
 

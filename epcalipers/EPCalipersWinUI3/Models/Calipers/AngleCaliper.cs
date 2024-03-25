@@ -280,7 +280,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			Debug.Print("AngleCaliper.ApplySettings()");
 			base.ApplySettings(settings);
-			CaliperLabel.FontSize = settings.FontSize;
 			TriangleBaseLabel.FontSize = settings.FontSize;
 			TriangleBaseLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			TriangleBaseLabel.Alignment = settings.TimeCaliperLabelAlignment;

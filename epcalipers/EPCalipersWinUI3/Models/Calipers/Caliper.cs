@@ -60,9 +60,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			CaliperView = caliperView;
 			Calibration = calibration ?? Calibration.Uncalibrated;
+			PropertyChanged += OnMyPropertyChanged;
 		}
 			
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(ScaleFactor))
+			{
+				Debug.Print("scale factor changed.");
+				ScaledBarThickness.ScaleFactor = ScaleFactor;
+				Debug.Print(ScaledBarThickness.ScaledThickness().ToString());
+			}
+		}
+
 		protected Bounds Bounds => CaliperView.Bounds;
 
 		public CaliperSelection Selection
@@ -143,16 +155,29 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (value != _scaledBarThickness)
 				{
 					_scaledBarThickness = value;
+					double thickness = value.ScaledThickness();
 					foreach (var bar in Bars)
 					{
-						bar.Thickness = value.ScaledThickness();
+						bar.Thickness = thickness;
 					}
 				}
 			}
 		}
 		private ScaledBarThickness _scaledBarThickness;
 
-		public double ScaleFactor { get; set; } = 1.0;
+		public double ScaleFactor
+		{
+			get => _scaleFactor;
+			set
+			{
+				if (_scaleFactor != value)
+				{
+					_scaleFactor = value;
+					OnPropertyChanged(nameof(ScaleFactor));
+				}
+			}
+		}
+		private double _scaleFactor = 1.0;
 
 		public virtual Color Color
 		{
@@ -229,7 +254,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration, fakeUI);
 					break;
 			}
-			ApplySettings(caliper, settings);
+			InitCaliperParameters(caliper, settings);
 			return caliper;
 		}
 
@@ -282,9 +307,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual void ApplySettings(ISettings settings)
 		{
-			BarThickness = settings.BarThickness;
-			SelectedColor = settings.SelectedCaliperColor;
+			UpdateBarThickness(settings.BarThickness);
+			UpdateColors(settings.SelectedCaliperColor);
+			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
+			CaliperLabel.FontSize = settings.FontSize;
+			UpdateLabel();
+		}
 
+		public void UpdateBarThickness(double thickness)
+		{
+			BarThickness = thickness;
+		}
+
+		public void UpdateColors(Color selectedCaliperColor)
+		{
+			SelectedColor = selectedCaliperColor;
 			if (Selection == CaliperSelection.Full)
 			{
 				Color = SelectedColor;
@@ -293,15 +330,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			else if (Selection == CaliperSelection.Partial)
 			{
-				foreach(var bar in Bars)
+				foreach (var bar in Bars)
 				{
-					if (bar.IsSelected) 
+					if (bar.IsSelected)
 					{
 						bar.Color = SelectedColor;
 					}
 				}
 			}
-			UpdateLabel();
+		}
+		public virtual void UpdateLabel()
+		{
+			CaliperLabel.Text = Text;
+			CaliperLabel.SetPosition();
 		}
 
 		public virtual void AddToView(ICaliperView caliperView)
@@ -325,13 +366,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public abstract Bar IsNearBar(Point p);
 
-		public virtual void UpdateLabel()
-		{
-			CaliperLabel.Text = Text;
-			CaliperLabel.SetPosition();
-		}
 
-		private static void ApplySettings(Caliper c, ISettings settings)
+		private static void InitCaliperParameters(Caliper c, ISettings settings)
 		{
 			if (c == null) return;
 			c.UnselectedColor = settings.UnselectedCaliperColor;
