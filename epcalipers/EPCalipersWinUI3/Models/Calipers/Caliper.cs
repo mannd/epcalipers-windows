@@ -141,21 +141,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual string Text => Calibration.GetFormattedMeasurement(Value, ShowRate);
 
-
-		//public double BarThickness
-		//{
-		//	get => _barThickness;
-		//	set
-		//	{
-		//		_barThickness = value;
-		//		foreach (var bar in Bars)
-		//		{
-		//		//	bar.Thickness = value;
-		//		}
-		//	}
-		//}
-		//private double _barThickness;
-
 		public ScaledBarThickness ScaledBarThickness
 		{
 			get => _scaledBarThickness;
@@ -380,17 +365,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (c == null) return;
 			c.UnselectedColor = settings.UnselectedCaliperColor;
 			c.SelectedColor = settings.SelectedCaliperColor;
-			if (c.ScaledBarThickness == null)
-			{
-				c.ScaledBarThickness = new ScaledBarThickness(settings.BarThickness, scaleFactor,
-					settings.AdjustBarThicknessWithZoom);
-			}
-			else
-			{
-				c.ScaledBarThickness.Thickness = settings.BarThickness;
-				c.ScaledBarThickness.ScaleFactor = scaleFactor;
-				c.ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
-			}
+			c.ScaledBarThickness = new ScaledBarThickness(settings.BarThickness, scaleFactor,
+				settings.AdjustBarThicknessWithZoom);
 			c.UnselectFullCaliper();
 		}
 

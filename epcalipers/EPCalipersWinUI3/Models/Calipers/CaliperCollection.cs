@@ -105,9 +105,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// </summary>
 		public bool IsLocked { get; set; }
 
-		public CaliperCollection(ICaliperView caliperView, ISettings settings = null, string defaultUnit = "points", string defaultBpm = "bpm")
+		public CaliperCollection(
+			ICaliperView caliperView,
+			ISettings settings = null,
+			string defaultUnit = "points",
+			string defaultBpm = "bpm")
 		{
-			_calipers = new List<Caliper>();
+			_calipers = [];
 			_caliperView = caliperView;
 			_settings = settings ?? Settings.Instance;
 			Calibration.DefaultUnit = defaultUnit;
@@ -479,35 +483,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				caliper.ApplySettings(_settings);
 			}
-			// TODO: this obviously needs to be optimized, we're looping twice through the calipers.
-			//ZoomBarThickness(ScaleFactor);
 		}
-
-		// Sometimes we need to just changes these aspects of the calipers.
-		//public void SetBarThickness()
-		//{
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		caliper.BarThickness = _settings.BarThickness;
-		//	}
-		//}
-
-		//public void SetFontSize()
-		//{
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		caliper.CaliperLabel.FontSize = _settings.FontSize;
-		//	}
-		//}
-
-		//public void SetBarThicknessAndFontSize()
-		//{
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		caliper.BarThickness = _settings.BarThickness;
-		//		caliper.CaliperLabel.FontSize = _settings.FontSize;
-		//	}
-		//}
 
 		public async Task SetCalibrationAsync()
 		{

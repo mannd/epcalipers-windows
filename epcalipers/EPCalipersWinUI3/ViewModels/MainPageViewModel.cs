@@ -36,11 +36,11 @@ namespace EPCalipersWinUI3
 			get => _zoomFactor;
 			set
 			{
-				_zoomFactor = value;
-				// TODO: EXPERIMENTAL
-				//_caliperCollection.ZoomBarThickness(value);
-				_caliperCollection.ScaleFactor = value;
-
+				if (_zoomFactor != value)
+				{
+					_zoomFactor = value;
+					_caliperCollection.ScaleFactor = value;
+				}
 			}
 		}
 		private float _zoomFactor;
