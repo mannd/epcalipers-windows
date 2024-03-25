@@ -120,13 +120,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public Caliper AddCaliper(CaliperType type, bool fakeUI = false)
 		{
 			if (IsLocked) return null;
-			var caliper = Caliper.InitCaliper(type, 
-				_caliperView, 
-				_settings, 
-				TimeCalibration, 
-				AmplitudeCalibration, 
-				AngleCalibration, 
-				fakeUI);
+			var caliper = Caliper.InitCaliper(type,
+				_caliperView,
+				_settings,
+				TimeCalibration,
+				AmplitudeCalibration,
+				AngleCalibration,
+				ScaleFactor,
+				fakeUI: fakeUI);
 			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
 			caliper.UpdateLabel();

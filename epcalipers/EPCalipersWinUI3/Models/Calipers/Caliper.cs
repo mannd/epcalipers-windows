@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 	/// A caliper's position is defined by the positions of the 3 bars.
 	/// The Center position is the crossbar, and First and Last are Left and Right
 	/// for Time calipers, and Top and Bottom for Amplitude calipers.
-	/// Angle calipers may need a different structure.
+	/// Angle calipers have a different structure.
 	/// </summary>
 	/// <param name="Center"></param>
 	/// <param name="First"></param>
@@ -76,7 +76,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		private void UpdateScaledBarThickness()
+		public void UpdateScaledBarThickness()
 		{
 			foreach (var bar in Bars)
 			{
@@ -142,19 +142,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public virtual string Text => Calibration.GetFormattedMeasurement(Value, ShowRate);
 
 
-		public double BarThickness
-		{
-			get => _barThickness;
-			set
-			{
-				_barThickness = value;
-				foreach (var bar in Bars)
-				{
-				//	bar.Thickness = value;
-				}
-			}
-		}
-		private double _barThickness;
+		//public double BarThickness
+		//{
+		//	get => _barThickness;
+		//	set
+		//	{
+		//		_barThickness = value;
+		//		foreach (var bar in Bars)
+		//		{
+		//		//	bar.Thickness = value;
+		//		}
+		//	}
+		//}
+		//private double _barThickness;
 
 		public ScaledBarThickness ScaledBarThickness
 		{
@@ -179,6 +179,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			get => _scaleFactor;
 			set
 			{
+				// TODO: consider only triggering OnPropertyChanged if scaleFactor changes significantly?
 				if (_scaleFactor != value)
 				{
 					_scaleFactor = value;
@@ -241,7 +242,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ISettings settings,
 			Calibration timeCalibration = null,
 			Calibration amplitudeCalibration = null,
-			AngleCalibration angleCalibration = null, 
+			AngleCalibration angleCalibration = null,
+			double scaleFactor = 1.0, 
 			bool fakeUI = false)
 		{
 			Debug.Assert(type != CaliperType.None);
@@ -263,7 +265,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration, fakeUI);
 					break;
 			}
-			InitCaliperParameters(caliper, settings);
+			InitCaliperParameters(caliper, settings, scaleFactor);
 			return caliper;
 		}
 
@@ -319,16 +321,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ScaledBarThickness.Thickness = settings.BarThickness;
 			ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
 			UpdateScaledBarThickness();
-			UpdateBarThickness(settings.BarThickness);
 			UpdateColors(settings.SelectedCaliperColor);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.FontSize = settings.FontSize;
 			UpdateLabel();
-		}
-
-		public void UpdateBarThickness(double thickness)
-		{
-			BarThickness = thickness;
 		}
 
 		public void UpdateColors(Color selectedCaliperColor)
@@ -379,22 +375,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public abstract Bar IsNearBar(Point p);
 
 
-		private static void InitCaliperParameters(Caliper c, ISettings settings)
+		private static void InitCaliperParameters(Caliper c, ISettings settings, double scaleFactor)
 		{
 			if (c == null) return;
 			c.UnselectedColor = settings.UnselectedCaliperColor;
 			c.SelectedColor = settings.SelectedCaliperColor;
-			c.BarThickness = settings.BarThickness;
-			// TODO: set ScaledBarThickness
 			if (c.ScaledBarThickness == null)
 			{
-				c.ScaledBarThickness = new ScaledBarThickness(settings.BarThickness, c.ScaleFactor,
+				c.ScaledBarThickness = new ScaledBarThickness(settings.BarThickness, scaleFactor,
 					settings.AdjustBarThicknessWithZoom);
 			}
 			else
 			{
 				c.ScaledBarThickness.Thickness = settings.BarThickness;
-				c.ScaledBarThickness.ScaleFactor = c.ScaleFactor;
+				c.ScaledBarThickness.ScaleFactor = scaleFactor;
 				c.ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
 			}
 			c.UnselectFullCaliper();
