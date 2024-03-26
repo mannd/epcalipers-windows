@@ -1,6 +1,7 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Models.Calipers
@@ -49,7 +50,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var rightOrigin = RightPosition;
 			var height = TimeCaliper.LeftBar.Y2;
 			// TODO: Other means to deemphasize marching calipers?
-			var thickness = Math.Max(Settings.Instance.BarThickness - 1, 1);
+			// TODO: Need to respond to TimeCaliper.OnMyPropertyChanged and adjust bar thickness
+			var thickness = TimeCaliper.ScaledBarThickness.Thickness - 1;
 			for (int i = 0; i < NumberOfBars; i++)
 			{
 				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
@@ -67,6 +69,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				rightBar.AddToView(CaliperView);
 				RightBars.Add(rightBar);
+			}
+		}
+
+		// TODO: Why isn't this being called when updating?
+		public void UpdateMarchingScaledBarThickness()
+		{
+			var thickness = Math.Max(1.0, TimeCaliper.ScaledBarThickness.ScaledThickness() - 1);
+			foreach (var bar in LeftBars)
+			{
+				bar.Thickness = thickness;
+			}
+			foreach (var bar in RightBars)
+			{
+				bar.Thickness = thickness;
 			}
 		}
 

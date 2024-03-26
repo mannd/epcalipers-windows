@@ -43,6 +43,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			MarchingCaliper = new MarchingCaliper(CaliperView, this, LeftMostBarPosition, RightMostBarPosition, _fakeUI);
 		}
+		public override void UpdateScaledBarThickness()
+		{
+			base.UpdateScaledBarThickness();
+			if (MarchingCaliper != null)
+			{
+				MarchingCaliper.UpdateMarchingScaledBarThickness();
+			}
+		}
 
 		public void RemoveMarchingCaliper()
 		{

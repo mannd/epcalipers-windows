@@ -76,7 +76,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		public void UpdateScaledBarThickness()
+		public virtual void UpdateScaledBarThickness()
 		{
 			foreach (var bar in Bars)
 			{
