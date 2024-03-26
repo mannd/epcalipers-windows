@@ -9,9 +9,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 {
 	public class ScaledBarThickness
 	{
-		public double Thickness;
-		public double ScaleFactor;
-		public bool DoScaling;
+		private const double _minThickness = 1;
+		private const double _maxThickness = 10;
+		public double Thickness { get; set; }
+		public double ScaleFactor { get; set; }
+		public bool DoScaling { get; set; }
 
 		public ScaledBarThickness(double thickness, double scaleFactor, bool doScaling = false)
 		{
@@ -21,6 +23,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			DoScaling = doScaling;
 		}
 
-		public double ScaledThickness() => DoScaling ? Thickness / ScaleFactor : Thickness;
+		public double ScaledThickness() => DoScaling ? Math.Clamp(Thickness / ScaleFactor, _minThickness, _maxThickness) 
+			: Thickness;
 	}
 }

@@ -107,6 +107,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				CaliperView.UpdateLayout();
 				RemoveMarchingCaliper();
 				AddMarchingCaliper();
+				MarchingCaliper.UpdateMarchingScaledBarThickness();
 			}
 		}
 		#endregion
