@@ -91,7 +91,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var alignment = _settings.TimeCaliperLabelAlignment;
 			var autoAlignLabel = _settings.AutoAlignLabel;
 			var fontSize = _settings.FontSize;
-			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, fontSize, _fakeUI);
+			CaliperLabel = new TimeCaliperLabel(this, CaliperView, text, alignment, autoAlignLabel, fontSize, 
+				_settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI);
 		}
 
 		public override void ApplySettings(ISettings settings)

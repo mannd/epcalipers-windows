@@ -431,48 +431,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: Refactor this, and find places where calipers are refreshed.
-		// Need to set bar thickness and label size:
-		// 1) when adding new calipers
-		// 2) after changing settings
-		// 3) when scale factor changes
-		// 4) after clearing or setting calibration
-		// We can track scale factor from the zoom factor continuously, but we only need to change when these things change.
-
-		//public void ZoomBarThickness(double zoomFactor)
-		//{
-		//	// TODO: have separate font and barthickness zoom settings.
-		//	if (!_settings.AdjustBarThicknessWithZoom) return;
-
-		//	var zoomedBarThickness = AdjustBarThickness(_settings.BarThickness, zoomFactor);
-
-		//	int adjustedCaliperLabelSize = AdjustCaliperLabelSize(_settings.FontSize, zoomFactor);
-
-		//	foreach (var caliper in _calipers)
-		//	{
-		//		caliper.BarThickness = zoomedBarThickness;
-		//		caliper.CaliperLabel.FontSize = adjustedCaliperLabelSize;
-		//		caliper.CaliperLabel.SetPosition();
-		//	}
-		//}
-
-		//private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
-		//{
-		//	var fontSize = caliperLabelSize;
-		//	var adjustedSize = fontSize / zoomFactor;
-		//	adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
-		//	adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
-		//	int adjustedCaliperLabelSize = (int)adjustedSize;
-		//	return adjustedCaliperLabelSize;
-		//}
-
-		//private double AdjustBarThickness(double barThickness, double zoomFactor)
-		//{
-		//	// Looks like it's best to avoid thickening bars when zooming out.
-		//	return Math.Min(_settings.BarThickness / zoomFactor, _settings.BarThickness);
-		//}
-
-		// TODO: this is where we need to apply zoom settings.
 		public void RefreshCalipers()
 		{
 			Debug.Print("RefreshCalipers()");

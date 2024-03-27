@@ -46,7 +46,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var autoAlignLabel = _settings.AutoAlignLabel;
 			var fontSize = _settings.FontSize;
 			CaliperLabel = new AmplitudeCaliperLabel(this, CaliperView, text,
-				alignment, autoAlignLabel, fontSize, _fakeUI);
+				alignment, autoAlignLabel, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI);
 		}
 
 		public override void ChangeBounds()

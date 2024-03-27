@@ -69,10 +69,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (e.PropertyName == nameof(ScaleFactor))
 			{
-				Debug.Print("scale factor changed.");
 				ScaledBarThickness.ScaleFactor = ScaleFactor;
 				UpdateScaledBarThickness();
-				Debug.Print(ScaledBarThickness.ScaledThickness().ToString());
+				CaliperLabel.ScaleFactor = ScaleFactor;
+				UpdateScaledFontSize();
 			}
 		}
 
@@ -82,6 +82,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				bar.Thickness = ScaledBarThickness.ScaledThickness();
 			}
+		}
+
+		public virtual void UpdateScaledFontSize()
+		{
+			CaliperLabel.UpdateScaledFontSize();
+			CaliperLabel.SetPosition();
 		}
 
 		protected Bounds Bounds => CaliperView.Bounds;
@@ -303,12 +309,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public virtual void ApplySettings(ISettings settings)
 		{
+			Debug.Print("Caliper.ApplySettings()");
 			ScaledBarThickness.Thickness = settings.BarThickness;
 			ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
 			UpdateScaledBarThickness();
+			CaliperLabel.DoScaleFontSize = settings.AdjustCaliperLabelSizeWithZoom;
 			UpdateColors(settings.SelectedCaliperColor);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			CaliperLabel.FontSize = settings.FontSize;
+			UpdateScaledFontSize();
 			UpdateLabel();
 		}
 

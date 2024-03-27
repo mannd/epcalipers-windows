@@ -11,6 +11,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 {
 	public class AngleCaliper : Caliper
 	{
+		private readonly ISettings _settings;
+
+		public AngleCaliper(AngleCaliperPosition position,
+			ICaliperView caliperView,
+			ISettings settings,
+			AngleCalibration angleCalibration = null,
+			bool fakeUI = false) : base(caliperView)
+		{
+			_fakeUI = fakeUI;
+			_settings = settings;
+			CaliperType = CaliperType.Angle;
+			AngleCalibration = angleCalibration ?? AngleCalibration.Uncalibrated;
+			Bars = InitBars(position);
+			InitCaliperLabel();
+			InitTriangleLabel(position);
+		}
 		public Bar LeftAngleBar { get; set; }
 		public Bar RightAngleBar { get; set; }
 		public Bar ApexBar { get; set; } // Not visible, but present so it can be grabbed.
@@ -70,22 +86,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		private readonly ISettings _settings;
-
-		public AngleCaliper(AngleCaliperPosition position,
-			ICaliperView caliperView,
-			ISettings settings,
-			AngleCalibration angleCalibration = null,
-			bool fakeUI = false) : base(caliperView)
-		{
-			_fakeUI = fakeUI;
-			_settings = settings;
-			CaliperType = CaliperType.Angle;
-			AngleCalibration = angleCalibration ?? AngleCalibration.Uncalibrated;
-			Bars = InitBars(position);
-			InitCaliperLabel();
-			InitTriangleLabel(position);
-		}
 
 		private List<Bar> InitBars(AngleCaliperPosition position)
 		{
@@ -178,7 +178,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			string text = AngleCalibration.GetFormattedMeasurement(Value);
 			int fontSize = _settings.FontSize;
 			CaliperLabel = new AngleCaliperLabel(this, text,
-				CaliperLabelAlignment.Top, false, fontSize, _fakeUI);
+				CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI);
 		}
 
 		private void InitTriangleLabel(AngleCaliperPosition position)
@@ -190,7 +190,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Visibility.Visible : Visibility.Collapsed;
 			int fontSize = _settings.FontSize;
 			TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
-				alignment, autoAlignLabel, fontSize, _fakeUI, visibility);
+				alignment, autoAlignLabel, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI, visibility);
 		}
 
 		public override void AddToView(ICaliperView caliperView)
@@ -247,6 +247,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabel.SetPosition();
 		}
 
+
+		// TODO: resurrect
+		//public override void UpdateScaledFontSize()
+		//{
+		//	base.UpdateScaledFontSize();
+		//	TriangleBaseLabel.UpdateScaledFontSize();
+		//	TriangleBaseLabel.SetPosition();
+		//}
+
 		// TODO: triangle label slightly off when calipers first drawn (also applies to 
 		// other caliper labels.
 		public void DrawTriangleBase()
@@ -283,6 +292,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TriangleBaseLabel.FontSize = settings.FontSize;
 			TriangleBaseLabel.AutoAlignLabel = settings.AutoAlignLabel;
 			TriangleBaseLabel.Alignment = settings.TimeCaliperLabelAlignment;
+			TriangleBaseLabel.DoScaleFontSize = settings.AdjustCaliperLabelSizeWithZoom;
+			TriangleBaseLabel.ScaleFactor = ScaleFactor;
 			TriangleBaseLabel.SetPosition();
 			DrawTriangleBase();
 		}

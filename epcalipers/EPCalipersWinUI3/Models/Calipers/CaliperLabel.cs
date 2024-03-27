@@ -1,7 +1,9 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -48,8 +50,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperLabelAlignment alignment,
 			bool autoPosition,
 			int fontSize,
-			bool scaleFont = false, 
-			double scaleFactor = 1, 
+			bool scaleFont, 
+			double scaleFactor, 
 			bool fakeUI = false)
 		{
 			Caliper = caliper;
@@ -61,6 +63,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 				Text = text
 			};
 			FontSize = fontSize;
+			ScaleFactor = scaleFactor;
+			DoScaleFontSize = scaleFont;
 		}
 
 		public Caliper Caliper { get; set; }
@@ -86,19 +90,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CaliperLabelAlignment Alignment { get; set; }
 		public bool AutoAlignLabel { get; set; }
 		public TextBlock TextBlock { get; set; }
-		public int FontSize
+		public double ScaleFactor {  get; set; }
+		public bool DoScaleFontSize { get; set; }
+		public int FontSize { get; set; }
+
+		public int ScaledFontSize
 		{
-			get => _fontSize;
 			set
 			{
-				_fontSize = value;
-				if (TextBlock != null)
+				if (_scaledFontSize != value)
 				{
-					TextBlock.FontSize = value;
+					_scaledFontSize = value;
+					if (TextBlock != null)
+					{
+						TextBlock.FontSize = value;
+					}
 				}
 			}
+
 		}
-		private int _fontSize = MediumFont;
+		private int _scaledFontSize;
 
 		public bool IsSelected
 		{
@@ -129,9 +140,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 		private Color _color;
 
-		public bool ScaleFont { get; set; }
-		public double ScaleFactor { get; set; }
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		protected virtual void OnPropertyChanged(string propertyName)
@@ -160,6 +168,34 @@ namespace EPCalipersWinUI3.Models.Calipers
 				 double.PositiveInfinity);
 			textBlock.Measure(maxSize);
 			return textBlock.DesiredSize;
+		}
+
+		public void UpdateScaledFontSize()
+		{
+			Debug.Print("Update font scale factor");
+			if (DoScaleFontSize)
+			{
+				var adjustedSize = FontSize / ScaleFactor;
+				adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
+				adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
+				int adjustedCaliperLabelSize = (int)adjustedSize;
+				ScaledFontSize = adjustedCaliperLabelSize;
+			}
+			else
+			{
+				ScaledFontSize = FontSize;
+			}
+			SetPosition();
+		}
+
+		private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
+		{
+			var fontSize = caliperLabelSize;
+			var adjustedSize = fontSize / zoomFactor;
+			adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
+			adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
+			int adjustedCaliperLabelSize = (int)adjustedSize;
+			return adjustedCaliperLabelSize;
 		}
 	}
 }

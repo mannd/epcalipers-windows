@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	public class ScaledBarThickness
+    public class ScaledBarThickness
 	{
 		private const double _minThickness = 1;
 		private const double _maxThickness = 10;
