@@ -62,6 +62,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			AutoAlignLabel = autoAlignLabel;
 			_position = new CaliperLabelPosition();
+			UpdateScaledFontSize();
 			SetPosition();
 			Visibility = visibility;
 		}
@@ -73,8 +74,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var alignment = AutoAlign(Alignment, AutoAlignLabel);
 			GetPosition(alignment);
 			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
-			Debug.Print(TextBlock.Text);
-			Debug.Print(TextBlock.Margin.ToString());
 		}
 
 		private void GetPosition(CaliperLabelAlignment alignment)

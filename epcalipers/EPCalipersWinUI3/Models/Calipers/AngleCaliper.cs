@@ -249,12 +249,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 
 		// TODO: resurrect
-		//public override void UpdateScaledFontSize()
-		//{
-		//	base.UpdateScaledFontSize();
-		//	TriangleBaseLabel.UpdateScaledFontSize();
-		//	TriangleBaseLabel.SetPosition();
-		//}
+		public override void UpdateScaledFontSize()
+		{
+			Debug.Print("AngleCaliper.UpdateScaledFontSize()");
+			base.UpdateScaledFontSize();
+			TriangleBaseLabel.ScaleFactor = ScaleFactor;
+			TriangleBaseLabel.UpdateScaledFontSize();
+			TriangleBaseLabel.SetPosition();
+		}
 
 		// TODO: triangle label slightly off when calipers first drawn (also applies to 
 		// other caliper labels.
@@ -294,6 +296,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TriangleBaseLabel.Alignment = settings.TimeCaliperLabelAlignment;
 			TriangleBaseLabel.DoScaleFontSize = settings.AdjustCaliperLabelSizeWithZoom;
 			TriangleBaseLabel.ScaleFactor = ScaleFactor;
+			TriangleBaseLabel.UpdateScaledFontSize();
 			TriangleBaseLabel.SetPosition();
 			DrawTriangleBase();
 		}
