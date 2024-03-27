@@ -134,6 +134,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				fakeUI: fakeUI);
 			caliper.AddToView(_caliperView);
 			caliper.ShowRate = ShowRate;
+			caliper.ScaleFactor = ScaleFactor;
 			caliper.UpdateLabel();
 			_calipers.Add(caliper);
 			return caliper;  // returned caliper usually ignored, but this is handy for testing.

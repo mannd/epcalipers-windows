@@ -185,7 +185,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				ScaledFontSize = FontSize;
 			}
-			SetPosition();
+			//SetPosition();
 		}
 
 		private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
