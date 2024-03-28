@@ -87,7 +87,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public virtual void UpdateScaledFontSize()
 		{
 			CaliperLabel.UpdateScaledFontSize();
-			CaliperLabel.SetPosition();
 		}
 
 		protected Bounds Bounds => CaliperView.Bounds;

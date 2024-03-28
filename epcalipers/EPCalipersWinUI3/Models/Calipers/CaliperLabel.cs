@@ -175,7 +175,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Debug.Print("Update font scale factor");
 			if (DoScaleFontSize)
 			{
-				var adjustedSize = FontSize / ScaleFactor;
+				double adjustedSize = FontSize / ScaleFactor;
 				adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
 				adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
 				int adjustedCaliperLabelSize = (int)adjustedSize;
@@ -185,17 +185,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				ScaledFontSize = FontSize;
 			}
-			//SetPosition();
-		}
-
-		private int AdjustCaliperLabelSize(int caliperLabelSize, double zoomFactor)
-		{
-			var fontSize = caliperLabelSize;
-			var adjustedSize = fontSize / zoomFactor;
-			adjustedSize = Math.Max(CaliperLabel.ExtraSmallFont, adjustedSize);
-			adjustedSize = Math.Min(CaliperLabel.ExtraLargeFont, adjustedSize);
-			int adjustedCaliperLabelSize = (int)adjustedSize;
-			return adjustedCaliperLabelSize;
+			SetPosition();
 		}
 	}
 }

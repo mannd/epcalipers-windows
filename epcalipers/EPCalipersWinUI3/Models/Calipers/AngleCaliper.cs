@@ -255,7 +255,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			base.UpdateScaledFontSize();
 			TriangleBaseLabel.ScaleFactor = ScaleFactor;
 			TriangleBaseLabel.UpdateScaledFontSize();
-			TriangleBaseLabel.SetPosition();
 		}
 
 		// TODO: triangle label slightly off when calipers first drawn (also applies to 
@@ -297,7 +296,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TriangleBaseLabel.DoScaleFontSize = settings.AdjustCaliperLabelSizeWithZoom;
 			TriangleBaseLabel.ScaleFactor = ScaleFactor;
 			TriangleBaseLabel.UpdateScaledFontSize();
-			TriangleBaseLabel.SetPosition();
 			DrawTriangleBase();
 		}
 

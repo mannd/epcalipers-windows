@@ -63,7 +63,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			AutoAlignLabel = autoAlignLabel;
 			_position = new CaliperLabelPosition();
 			UpdateScaledFontSize();
-			SetPosition();
 			Visibility = visibility;
 		}
 

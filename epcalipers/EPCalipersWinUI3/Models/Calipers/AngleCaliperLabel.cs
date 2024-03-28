@@ -37,7 +37,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			_position = new CaliperLabelPosition();
 			UpdateScaledFontSize();
-			SetPosition();
 		}
 
 		public override void SetPosition()
