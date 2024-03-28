@@ -1,4 +1,6 @@
+using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -77,12 +79,6 @@ namespace EPCalipersWinUI3.Views
 				Modifiers = Windows.System.VirtualKeyModifiers.Control
 			});
 
-
-			// TODO: make this a setting?  Note that left/top alignment avoids image shifting, and
-			// so should be the default.
-			CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
-			CaliperView.VerticalAlignment = VerticalAlignment.Top;
-
 			ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
 			{
 				ViewModel.ZoomFactor = ScrollView.ZoomFactor;
@@ -125,11 +121,29 @@ namespace EPCalipersWinUI3.Views
 			Debug.Print("MainPage OnNavigatorTo");
 			base.OnNavigatedTo(e);
 			if (AppHelper.StartupFile != null)
-			{ 
+			{
 				await ViewModel.OpenImageFile(AppHelper.StartupFile);
 				AppHelper.StartupFile = null;
 			}
 			ViewModel.RefreshCalipers();
+			SetCaliperViewOrientation();
+		}
+
+		// TODO: Calipers outside of bounds MUST be invisible to avoid moving caliperview!
+		private void SetCaliperViewOrientation()
+		{
+			ISettings settings = Settings.Instance;
+			switch (settings.CaliperViewAlignment)
+			{
+				case CaliperViewAlignment.TopLeft:
+					CaliperView.HorizontalAlignment = HorizontalAlignment.Left;
+					CaliperView.VerticalAlignment = VerticalAlignment.Top;
+					break;
+				case CaliperViewAlignment.Center:
+					CaliperView.HorizontalAlignment = HorizontalAlignment.Center;
+					CaliperView.VerticalAlignment = VerticalAlignment.Center;
+					break;
+			}
 		}
 		#endregion
 		#region touches

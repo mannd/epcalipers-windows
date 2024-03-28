@@ -71,5 +71,14 @@ namespace EPCalipersWinUI3.Views
 				if (selection >= 0) ViewModel.FontSize = selection;
 			}
 		}
-	}
+
+		private void CaliperViewOrientationRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				if (selection >= 0) ViewModel.CaliperViewAlignment = selection;
+			}
+        }
+    }
 }

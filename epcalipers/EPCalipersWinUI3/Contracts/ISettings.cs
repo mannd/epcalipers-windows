@@ -3,9 +3,10 @@ using EPCalipersWinUI3.Models.Calipers;
 using System.Reflection.Metadata;
 using Windows.UI;
 using static EPCalipersWinUI3.Helpers.MathHelper;
+using EPCalipersWinUI3.Views;
 
 namespace EPCalipersWinUI3.Contracts
-{
+{ 
 	public interface ISettings
 	{
 		public double BarThickness { get; set; }
@@ -28,5 +29,6 @@ namespace EPCalipersWinUI3.Contracts
 		public bool ShowSampleEcgAtStartUp {  get; set; }
 		public bool AdjustBarThicknessWithZoom { get; set; }
 		public bool AdjustCaliperLabelSizeWithZoom { get; set; }
+		public CaliperViewAlignment CaliperViewAlignment { get; set; }
 	}
 }

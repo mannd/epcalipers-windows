@@ -2,6 +2,7 @@
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Views;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI;
@@ -36,6 +37,7 @@ namespace EPCalipersWinUI3.ViewModels
 			ShowSampleEcgAtStartUp = _model.ShowSampleEcgAtStartUp;
 			AdjustBarThicknessWithZoom = _model.AdjustBarThicknessWithZoom;
 			AdjustCaliperLabelSizeWithZoom = _model.AdjustCaliperLabelSizeWithZoom;
+			CaliperViewAlignment = (int)_model.CaliperViewAlignment;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -81,6 +83,9 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(AdjustCaliperLabelSizeWithZoom):
 					_model.AdjustCaliperLabelSizeWithZoom = AdjustCaliperLabelSizeWithZoom;
+					break;
+					case nameof(CaliperViewAlignment):
+					_model.CaliperViewAlignment = (CaliperViewAlignment)CaliperViewAlignment;
 					break;
 				default:
 					break;
@@ -128,5 +133,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool adjustCaliperLabelSizeWithZoom;
+
+		[ObservableProperty]
+		private int caliperViewAlignment;
 	}
 }

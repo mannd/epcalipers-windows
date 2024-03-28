@@ -11,6 +11,12 @@ using Windows.Foundation;
 
 namespace EPCalipersWinUI3.Views
 {
+	public enum CaliperViewAlignment
+	{
+		TopLeft,
+		Center
+	}
+
 	public partial class CaliperGrid : Grid, ICaliperView
 	{
 		public InputCursor InputCursor

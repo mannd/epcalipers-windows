@@ -1,5 +1,6 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models.Calipers;
+using EPCalipersWinUI3.Views;
 using Microsoft.UI;
 using System;
 using System.Diagnostics;
@@ -33,6 +34,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _showSampleEcgAtStartUpKey = "ShowSampleEcgAtStartUp";
 		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
 		private const string _adjustCaliperLabelSizeWithZoomKey = "AdjustCaliperLabelSize";
+		private const string _caliperViewAlignmentKey = "CaliperViewAlignment";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -112,6 +114,12 @@ namespace EPCalipersWinUI3.Models
 		{
 			get => (QtcFormula)(_localSettings.Values[_qtcFormulaKey] ?? QtcFormula.qtcBzt);
 			set => _localSettings.Values[_qtcFormulaKey] = (int)value;
+		}
+
+		public CaliperViewAlignment CaliperViewAlignment
+		{
+			get => (CaliperViewAlignment)(_localSettings.Values[_caliperViewAlignmentKey] ?? CaliperViewAlignment.TopLeft);
+			set => _localSettings.Values[_caliperViewAlignmentKey ] = (int)value;
 		}
 
 		public double BarThickness
@@ -247,5 +255,6 @@ namespace EPCalipersWinUI3.Models
 		public bool ShowSampleEcgAtStartUp { get; set; } = false;
 		public bool AdjustBarThicknessWithZoom {  get; set; } = false;
 		public bool AdjustCaliperLabelSizeWithZoom { get; set; } = false;
+		public CaliperViewAlignment CaliperViewAlignment { get; set; } = CaliperViewAlignment.TopLeft;
 	}
 }

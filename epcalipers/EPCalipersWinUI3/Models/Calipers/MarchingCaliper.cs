@@ -59,6 +59,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
 				leftBar.IsSelected = TimeCaliper.IsSelected;
 				leftBar.Thickness = thickness;
+				leftBar.Visibility = leftOrigin - (value * (i + 1)) < 0 ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
 				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
@@ -121,11 +122,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 				LeftBars[i].X2 = LeftBars[i].X1;
 				RightBars[i].X1 = right + (value * (i + 1));
 				RightBars[i].X2 = RightBars[i].X1;
-				RightBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
-				// TODO: leftbars need to be hidden when caliper is negative and left bars are on the right
-				//LeftBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+				RightBars[i].Visibility = right + (value * (i + 1)) > Bounds.Width || right + (value * (i + 1)) < 0 
+					? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+				LeftBars[i].Visibility = left - (value * (i + 1)) < 0 || left - (value * (i + 1)) > Bounds.Width 
+					? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 			}
 			// TODO: hide bars when cycle length less than minimum value ? necessary
+			// Can do this by adding a abs(value) < minimumValue to the Visibility statements above.
 		}
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
