@@ -129,7 +129,6 @@ namespace EPCalipersWinUI3.Views
 			SetCaliperViewOrientation();
 		}
 
-		// TODO: Calipers outside of bounds MUST be invisible to avoid moving caliperview!
 		private void SetCaliperViewOrientation()
 		{
 			ISettings settings = Settings.Instance;

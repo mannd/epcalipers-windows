@@ -31,6 +31,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TriangleBase, // For BrugadaMeter.
 			Marching  // For marching calipers
 		}
+
+		private double _barMargin = 5;  // offset from margin of CaliperView.
+
 		public Role BarRole { get; set; }
 		public Bounds Bounds { get; set; }
 
@@ -186,17 +189,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 			switch (BarRole)
 			{
 				case Role.Horizontal:
-					X1 = 0;
+					X1 = _barMargin;
 					Y1 = position;
-					X2 = end;
+					X2 = end - _barMargin;
 					Y2 = position;
 					break;
 				case Role.Vertical:
+					X1 = position;
+					Y1 = _barMargin;
+					X2 = position;
+					Y2 = end - _barMargin;
+					break;
 				case Role.Marching:
 					X1 = position;
-					Y1 = 0;
+					Y1 = _barMargin;
 					X2 = position;
-					Y2 = end;
+					Y2 = end; // Marching calipers have same end as time calipers, so margin already added
 					break;
 				case Role.HorizontalCrossBar:
 					X1 = start;
@@ -236,8 +244,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var adjustedEndPoint = ClippedEndPoint(apex, angle, length, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
 			X1 = apex.X;
 			Y1 = apex.Y;
-			X2 = adjustedEndPoint.X;
-			Y2 = adjustedEndPoint.Y;
+			X2 = adjustedEndPoint.X - _barMargin;
+			Y2 = adjustedEndPoint.Y - _barMargin;
 		}
 
 		private static Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)

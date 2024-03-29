@@ -132,6 +132,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return null;
 		}
 
+		// TODO: Consider hiding out of bounds caliper components, to avoid image shifting when it is centered.
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
 			if (bar == LeftBar)
@@ -157,6 +158,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 				MarchingCaliper?.Move();
 			}
 			UpdateLabel();
+			if (RightBar.Position > Bounds.Width)
+			{
+				RightBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
+			}
+			else
+			{
+				RightBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+			}
 		}
 		#endregion
 	}
