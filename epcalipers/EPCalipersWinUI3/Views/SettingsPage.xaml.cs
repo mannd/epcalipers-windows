@@ -80,5 +80,15 @@ namespace EPCalipersWinUI3.Views
 				if (selection >= 0) ViewModel.CaliperViewAlignment = selection;
 			}
         }
-    }
+
+		private void StartupPageRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				if (selection >= 0) ViewModel.StartupPage = selection;
+			}
+
+		}
+	}
 }

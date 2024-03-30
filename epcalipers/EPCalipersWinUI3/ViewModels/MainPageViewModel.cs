@@ -48,7 +48,6 @@ namespace EPCalipersWinUI3
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
 			: base(caliperView)
 		{
-			// TODO: setting to start with blank screen, inactivate most menu items.
 			Debug.Print("MainPageViewModel constructor");
 
 			SetZoom = setZoomDelegate;

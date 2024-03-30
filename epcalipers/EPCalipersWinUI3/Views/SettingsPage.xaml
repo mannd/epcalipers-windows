@@ -153,6 +153,14 @@
                     <x:String>Top left</x:String>
                     <x:String>Center</x:String>
                 </RadioButtons>
+                <RadioButtons x:Name="StartupWindowRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.StartupPage}"  
+                          MaxColumns="2" Header="Startup window"
+                              SelectionChanged="StartupPageRadioButtons_SelectionChanged" >
+                    <x:String>Main window</x:String>
+                    <x:String>Transparent window</x:String>
+                </RadioButtons>
+                <CheckBox x:Uid="IsAlwaysOnTop" IsChecked="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 <TextBlock Text="Zooming" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />
                 <CheckBox x:Uid="AdjustCaliperLabelSizeWithZoom" IsChecked="{x:Bind ViewModel.AdjustCaliperLabelSizeWithZoom, Mode=TwoWay}" />

@@ -15,10 +15,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0">
-            <Button Content="Back" Click="BackButton_Click"/>
-        </StackPanel>
-
+        <Button Grid.Row="0"  Click="BackButton_Click" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon>Back</SymbolIcon>
+                <TextBlock Margin="5" x:Uid="BackButton" />
+            </StackPanel>
+        </Button>
 
         <WebView2
             x:Name="WebView" Grid.Row="1"

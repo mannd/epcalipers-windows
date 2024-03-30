@@ -30,5 +30,7 @@ namespace EPCalipersWinUI3.Contracts
 		public bool AdjustBarThicknessWithZoom { get; set; }
 		public bool AdjustCaliperLabelSizeWithZoom { get; set; }
 		public CaliperViewAlignment CaliperViewAlignment { get; set; }
+		public StartupPage StartupPage { get; set; }
+		public bool IsAlwaysOnTop { get; set; }
 	}
 }

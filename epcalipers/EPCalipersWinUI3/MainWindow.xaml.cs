@@ -1,4 +1,5 @@
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -25,7 +26,27 @@ namespace EPCalipersWinUI3
 			//AppTitleTextBlock.Text = "AppDisplayName".GetLocalized();
 			AppTitleTextBlock.Text = GetAppTitleFromSystem();
 			PersistenceId = "EPCalipersMainWindowID";
-			MainFrame.Navigate(typeof(Views.MainPage));
+			var settings = Settings.Instance;
+			Debug.Assert(settings != null);
+			// Ignore starting with transparent window if using open with to open an image at startup
+			if (AppHelper.StartupFile == null)
+			{
+				switch (settings.StartupPage)
+				{
+					case StartupPage.Transparent:
+						SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
+						MainFrame.Navigate(typeof(Views.TransparentPage));
+						break;
+					case StartupPage.Main:
+						MainFrame.Navigate(typeof(Views.MainPage));
+						break;
+				}
+			}
+			else
+			{
+				MainFrame.Navigate(typeof(Views.MainPage));
+			}
+			IsAlwaysOnTop = settings.IsAlwaysOnTop;
 			MainFrame.NavigationFailed += OnNavigationFailed;
 			Activated += MainWindow_Activated;
 			Closed += MainWindow_Closed;

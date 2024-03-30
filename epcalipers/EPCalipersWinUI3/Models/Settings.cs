@@ -19,6 +19,13 @@ namespace EPCalipersWinUI3.Models
 		ToHundredths,
 		None
 	}
+
+	public enum StartupPage
+	{
+		Main,
+		Transparent
+	}
+
 	public sealed class Settings : ISettings
 	{
 		private readonly ApplicationDataContainer _localSettings;
@@ -35,6 +42,8 @@ namespace EPCalipersWinUI3.Models
 		private const string _adjustBarThicknessWithZoomKey = "AdjustBarThicknessWithZoom";
 		private const string _adjustCaliperLabelSizeWithZoomKey = "AdjustCaliperLabelSize";
 		private const string _caliperViewAlignmentKey = "CaliperViewAlignment";
+		private const string _startupPageKey = "StartupPage";
+		private const string _isAlwaysOnTopKey = "IsAlwaysOnTop";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -163,6 +172,19 @@ namespace EPCalipersWinUI3.Models
 			get => (bool)(_localSettings.Values[_showBrugadaTriangleKey] ?? true);
 			set => _localSettings.Values[_showBrugadaTriangleKey] = value;
 		}
+
+		public StartupPage StartupPage
+		{
+			get => (StartupPage)(_localSettings.Values[_startupPageKey] ?? StartupPage.Main);
+			set => _localSettings.Values[_startupPageKey] = (int)value;
+		}
+
+		public bool IsAlwaysOnTop
+		{
+			get => (bool)(_localSettings.Values[_isAlwaysOnTopKey] ?? false);
+			set => _localSettings.Values[_isAlwaysOnTopKey] = value;
+		}
+
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
 			get
@@ -256,5 +278,7 @@ namespace EPCalipersWinUI3.Models
 		public bool AdjustBarThicknessWithZoom {  get; set; } = false;
 		public bool AdjustCaliperLabelSizeWithZoom { get; set; } = false;
 		public CaliperViewAlignment CaliperViewAlignment { get; set; } = CaliperViewAlignment.TopLeft;
+		public StartupPage StartupPage { get; set; } = StartupPage.Main;
+		public bool IsAlwaysOnTop {  get; set; } = false;
 	}
 }

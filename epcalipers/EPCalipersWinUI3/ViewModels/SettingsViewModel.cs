@@ -38,6 +38,8 @@ namespace EPCalipersWinUI3.ViewModels
 			AdjustBarThicknessWithZoom = _model.AdjustBarThicknessWithZoom;
 			AdjustCaliperLabelSizeWithZoom = _model.AdjustCaliperLabelSizeWithZoom;
 			CaliperViewAlignment = (int)_model.CaliperViewAlignment;
+			StartupPage = (int)_model.StartupPage;
+			IsAlwaysOnTop = _model.IsAlwaysOnTop;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -84,8 +86,14 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(AdjustCaliperLabelSizeWithZoom):
 					_model.AdjustCaliperLabelSizeWithZoom = AdjustCaliperLabelSizeWithZoom;
 					break;
-					case nameof(CaliperViewAlignment):
+				case nameof(CaliperViewAlignment):
 					_model.CaliperViewAlignment = (CaliperViewAlignment)CaliperViewAlignment;
+					break;
+				case nameof(StartupPage):
+					_model.StartupPage = (StartupPage)StartupPage;
+					break;
+				case nameof(IsAlwaysOnTop):
+					_model.IsAlwaysOnTop = IsAlwaysOnTop;
 					break;
 				default:
 					break;
@@ -136,5 +144,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private int caliperViewAlignment;
+
+		[ObservableProperty]
+		private int startupPage;
+
+		[ObservableProperty]
+		private bool isAlwaysOnTop;
 	}
 }

@@ -569,4 +569,10 @@
   <data name="AdjustCaliperLabelSizeWithZoom.Content" xml:space="preserve">
     <value>Adjust label size while zooming</value>
   </data>
+  <data name="IsAlwaysOnTop.Content" xml:space="preserve">
+    <value>Window stays on top of other windows</value>
+  </data>
+  <data name="IsAlwaysOnTop.ToolTipService.ToolTip" xml:space="preserve">
+    <value>This is most useful when using the transparent window.  Requires restart to take effect.</value>
+  </data>
 </root>
