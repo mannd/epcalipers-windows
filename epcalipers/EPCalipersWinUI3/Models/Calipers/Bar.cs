@@ -32,7 +32,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Marching  // For marching calipers
 		}
 
-		private double _barMargin = 5;  // offset from margin of CaliperView.
+		private readonly double _barMargin = 5;  // offset from margin of CaliperView.
 
 		public Role BarRole { get; set; }
 		public Bounds Bounds { get; set; }
@@ -190,45 +190,38 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				case Role.Horizontal:
 					X1 = _barMargin;
-					Y1 = position;
+					Y1 = Y2 = position;
 					X2 = end - _barMargin;
-					Y2 = position;
 					break;
 				case Role.Vertical:
-					X1 = position;
+					X1 = X2 = position;
 					Y1 = _barMargin;
-					X2 = position;
 					Y2 = end - _barMargin;
 					break;
 				case Role.Marching:
-					X1 = position;
+					X1 = X2 = position;
 					Y1 = _barMargin;
-					X2 = position;
 					Y2 = end; // Marching calipers have same end as time calipers, so margin already added
 					break;
 				case Role.HorizontalCrossBar:
 					X1 = start;
-					Y1 = position;
+					Y1 = Y2 = position;
 					X2 = end;
-					Y2 = position;
 					break;
 				case Role.VerticalCrossBar:
-					X1 = position;
+					X1 = X2 = position;
 					Y1 = start;
-					X2 = position;
 					Y2 = end;
 					break;
 				case Role.Apex:
 					X1 = start;
-					Y1 = position;
+					Y1 = Y2 = position;
 					X2 = end;
-					Y2 = position;
 					break;
 				case Role.TriangleBase:
 					X1 = start;
-					Y1 = position;
+					Y1 = Y2 = position;
 					X2 = end;
-					Y2 = position;
 					break;
 				case Role.LeftAngle:
 				case Role.RightAngle:
@@ -245,7 +238,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			X1 = apex.X;
 			Y1 = apex.Y;
 			X2 = adjustedEndPoint.X - _barMargin;
+			X2 = Math.Max(X2, _barMargin);
 			Y2 = adjustedEndPoint.Y - _barMargin;
+			Y2 = Math.Max(Y2, _barMargin);	
 		}
 
 		private static Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)

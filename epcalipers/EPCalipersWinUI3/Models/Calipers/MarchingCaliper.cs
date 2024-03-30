@@ -8,16 +8,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 {
 	public class MarchingCaliper : Caliper
 	{
-		private const int _maxBars = 10;
-		private const int _minBars = 1;
-		private const int _minimumValue = 20;
-
 		public int NumberOfBars { get; set; }
 		public double LeftPosition { get; set; }
 		public double RightPosition { get; set; }
 
-		public List<Bar> LeftBars { get; set; } = new List<Bar>();
-		public List<Bar> RightBars { get; set; } = new List<Bar>();
+		public List<Bar> LeftBars { get; set; } = [];
+		public List<Bar> RightBars { get; set; } = [];
 
 		public TimeCaliper TimeCaliper { get; set; }
 
@@ -54,20 +50,24 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var thickness = TimeCaliper.ScaledBarThickness.Thickness - 1;
 			for (int i = 0; i < NumberOfBars; i++)
 			{
-				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI);
-				leftBar.SelectedColor = TimeCaliper.SelectedColor;
-				leftBar.UnselectedColor = TimeCaliper.UnselectedColor;
-				leftBar.IsSelected = TimeCaliper.IsSelected;
-				leftBar.Thickness = thickness;
-				leftBar.Visibility = leftOrigin - (value * (i + 1)) < 0 ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+				Bar leftBar = new Bar(Bar.Role.Marching, leftOrigin - (value * (i + 1)), 0, height, _fakeUI)
+				{
+					SelectedColor = TimeCaliper.SelectedColor,
+					UnselectedColor = TimeCaliper.UnselectedColor,
+					IsSelected = TimeCaliper.IsSelected,
+					Thickness = thickness,
+					Visibility = leftOrigin - (value * (i + 1)) < 0 ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible
+				};
 				leftBar.AddToView(CaliperView);
 				LeftBars.Add(leftBar);
-				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI);
-				rightBar.SelectedColor = TimeCaliper.SelectedColor;
-				rightBar.UnselectedColor = TimeCaliper.UnselectedColor;
-				rightBar.IsSelected = TimeCaliper.IsSelected;
-				rightBar.Thickness = thickness;
-				rightBar.Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
+				Bar rightBar = new Bar(Bar.Role.Marching, rightOrigin + (value * (i + 1)), 0, height, _fakeUI)
+				{
+					SelectedColor = TimeCaliper.SelectedColor,
+					UnselectedColor = TimeCaliper.UnselectedColor,
+					IsSelected = TimeCaliper.IsSelected,
+					Thickness = thickness,
+					Visibility = rightOrigin + (value * (i + 1)) > Bounds.Width ? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible
+				};
 				rightBar.AddToView(CaliperView);
 				RightBars.Add(rightBar);
 			}

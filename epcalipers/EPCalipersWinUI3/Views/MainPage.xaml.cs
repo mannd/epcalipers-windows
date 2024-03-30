@@ -42,6 +42,7 @@ namespace EPCalipersWinUI3.Views
 		#region fields
 		public MainPageViewModel ViewModel { get; set; }
 
+		private const int _dragMargin = 5;
 		private Point _rightClickPosition;
 
 		private static readonly string _saveFileDialogTitle = "FileSavedTitle".GetLocalized();
@@ -211,10 +212,10 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
-				if (position.Position.X < EcgImage.ActualWidth
-					&& position.Position.Y < EcgImage.ActualHeight
-					&& position.Position.Y > 0
-					&& position.Position.X > 0)
+				if (position.Position.X < EcgImage.ActualWidth - _dragMargin
+					&& position.Position.Y < EcgImage.ActualHeight - 5
+					&& position.Position.Y > 5
+					&& position.Position.X > 5)
 				{
 					ViewModel.DragCaliperComponent(position.Position);
 				}

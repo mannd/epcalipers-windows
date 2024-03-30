@@ -46,10 +46,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public override void UpdateScaledBarThickness()
 		{
 			base.UpdateScaledBarThickness();
-			if (MarchingCaliper != null)
-			{
-				MarchingCaliper.UpdateMarchingScaledBarThickness();
-			}
+			MarchingCaliper?.UpdateMarchingScaledBarThickness();
 		}
 
 		public void RemoveMarchingCaliper()
@@ -82,7 +79,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
 			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
 			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
-			return new List<Bar> { LeftBar, RightBar, CrossBar };
+			return [LeftBar, RightBar, CrossBar];
 		}
 
 		private void InitCaliperLabel()
@@ -158,14 +155,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 				MarchingCaliper?.Move();
 			}
 			UpdateLabel();
-			if (RightBar.Position > Bounds.Width)
-			{
-				RightBar.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
-			}
-			else
-			{
-				RightBar.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
-			}
 		}
 		#endregion
 	}
