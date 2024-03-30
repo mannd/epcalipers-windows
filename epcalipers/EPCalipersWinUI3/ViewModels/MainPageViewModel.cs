@@ -23,6 +23,7 @@ namespace EPCalipersWinUI3
 	{
 		private readonly IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
+		private ISettings _settings = Settings.Instance;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom { get; set; }
@@ -91,8 +92,7 @@ namespace EPCalipersWinUI3
 		public void LoadSampleImage()
 		{
 			if (!_isStartup) { return; }
-			var settings = Settings.Instance;
-			if (AppHelper.StartUpImage == null && settings.ShowSampleEcgAtStartUp) 
+			if (AppHelper.StartUpImage == null && _settings.ShowSampleEcgAtStartUp) 
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 				SetTitleBarName("SampleECG".GetLocalized());
@@ -131,6 +131,7 @@ namespace EPCalipersWinUI3
 					IsMultipagePdf = false;
 					SetTitleBarName(FileName);
 				}
+				_caliperCollection.ClearCalibration();
 			}
 			else
 			{
@@ -223,6 +224,7 @@ namespace EPCalipersWinUI3
 			{
 				MainImageSource = nextPage;
 				UpdatePageNumber();
+				HandleBetweenPagePdfCalibration();
 
 			}
 			Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
@@ -236,6 +238,7 @@ namespace EPCalipersWinUI3
 			{
 				MainImageSource = previousPage;
 				UpdatePageNumber();
+				HandleBetweenPagePdfCalibration();
 			}
 		}
 
@@ -247,8 +250,18 @@ namespace EPCalipersWinUI3
 			{
 				MainImageSource = page;
 				UpdatePageNumber();
+				HandleBetweenPagePdfCalibration();
 			}
 		}
+
+		private void HandleBetweenPagePdfCalibration()
+		{
+			if (!_settings.RecalibrateBetweenPdfPages)
+			{
+				_caliperCollection.ClearCalibration();
+			}
+		}
+
 		private void UpdatePageNumber()
 		{
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;

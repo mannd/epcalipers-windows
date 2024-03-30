@@ -575,4 +575,7 @@
   <data name="IsAlwaysOnTop.ToolTipService.ToolTip" xml:space="preserve">
     <value>This is most useful when using the transparent window.  Requires restart to take effect.</value>
   </data>
+  <data name="RecalibrateBetweenPdfPages.Content" xml:space="preserve">
+    <value>Recalibrate when changing PDF pages</value>
+  </data>
 </root>

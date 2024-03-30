@@ -40,6 +40,7 @@ namespace EPCalipersWinUI3.ViewModels
 			CaliperViewAlignment = (int)_model.CaliperViewAlignment;
 			StartupPage = (int)_model.StartupPage;
 			IsAlwaysOnTop = _model.IsAlwaysOnTop;
+			RecalibrateBetweenPdfPages = _model.RecalibrateBetweenPdfPages;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -94,6 +95,9 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(IsAlwaysOnTop):
 					_model.IsAlwaysOnTop = IsAlwaysOnTop;
+					break;
+				case nameof(RecalibrateBetweenPdfPages):
+					_model.RecalibrateBetweenPdfPages = RecalibrateBetweenPdfPages;
 					break;
 				default:
 					break;
@@ -150,5 +154,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool isAlwaysOnTop;
+
+		[ObservableProperty]
+		private bool recalibrateBetweenPdfPages;
 	}
 }

@@ -164,6 +164,8 @@
                 <TextBlock Text="Zooming" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />
                 <CheckBox x:Uid="AdjustCaliperLabelSizeWithZoom" IsChecked="{x:Bind ViewModel.AdjustCaliperLabelSizeWithZoom, Mode=TwoWay}" />
+                <TextBlock Text="PDF" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <CheckBox x:Uid="RecalibrateBetweenPdfPages" IsChecked="{x:Bind ViewModel.RecalibrateBetweenPdfPages, Mode=TwoWay}" />
             </StackPanel>
         </ScrollViewer>
 

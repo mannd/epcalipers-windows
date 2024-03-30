@@ -44,6 +44,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _caliperViewAlignmentKey = "CaliperViewAlignment";
 		private const string _startupPageKey = "StartupPage";
 		private const string _isAlwaysOnTopKey = "IsAlwaysOnTop";
+		private const string _recalibrateBetweenPdfPagesKey = "RecalibrateBetweenPdfPages";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -185,6 +186,12 @@ namespace EPCalipersWinUI3.Models
 			set => _localSettings.Values[_isAlwaysOnTopKey] = value;
 		}
 
+		public bool RecalibrateBetweenPdfPages
+		{
+			get => (bool)(_localSettings.Values[_recalibrateBetweenPdfPagesKey] ?? true);
+			set => _localSettings.Values[_recalibrateBetweenPdfPagesKey] = value;
+		}
+
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
 			get
@@ -280,5 +287,7 @@ namespace EPCalipersWinUI3.Models
 		public CaliperViewAlignment CaliperViewAlignment { get; set; } = CaliperViewAlignment.TopLeft;
 		public StartupPage StartupPage { get; set; } = StartupPage.Main;
 		public bool IsAlwaysOnTop {  get; set; } = false;
+		public bool RecalibrateBetweenPdfPages { get; set; } = true;
+
 	}
 }
