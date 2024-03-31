@@ -45,17 +45,19 @@ namespace EPCalipersWinUI3.Views
 		}
 
 		private static double _offset = 0;
+
 		private readonly static double _offsetIncrement = 10;
 		private readonly static double _maxOffset = 100;
+
 		public Point GetOffsettedCenter()
 		{
 			Point center = MathHelper.Center(Bounds);
+			//Point center = AppHelper.CenterOfMainWindow();
 			center = MathHelper.OffsetPoint(center, _offset);
 			_offset += _offsetIncrement;
 			if (_offset > _maxOffset) _offset = 0;
 			return center;
 		}
-
 	}
 
 	public class FakeCaliperView : ICaliperView

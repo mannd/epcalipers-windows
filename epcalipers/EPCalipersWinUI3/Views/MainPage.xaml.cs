@@ -60,7 +60,7 @@ namespace EPCalipersWinUI3.Views
 			InitializeComponent();
 			Debug.Print("MainPage constructor");
 			Loaded += MainPage_Loaded;
-			ViewModel = new MainPageViewModel(SetZoom, CaliperView);
+			ViewModel = new MainPageViewModel(SetZoom, CaliperView, ScrollView);
 
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();

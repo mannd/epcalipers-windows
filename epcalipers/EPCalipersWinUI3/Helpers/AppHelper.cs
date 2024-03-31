@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using Windows.Foundation;
 using Windows.Storage;
 
 namespace EPCalipersWinUI3.Helpers
@@ -30,6 +31,17 @@ namespace EPCalipersWinUI3.Helpers
 		public static void NavigateBack()
 		{
 			AppMainWindow?.NavigateBack();
+		}
+
+		public static Point CenterOfMainWindow()
+		{
+			if (AppMainWindow == null)
+			{
+				return new Point(0, 0);
+			}
+			var width = AppMainWindow.Bounds.Width;
+			var height = AppMainWindow.Bounds.Height;
+			return new Point(width / 2, height / 2);
 		}
 
 		private static string CachedTitleBarText { get; set; }

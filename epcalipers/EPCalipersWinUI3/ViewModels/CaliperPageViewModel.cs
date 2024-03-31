@@ -5,6 +5,7 @@ using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -17,16 +18,53 @@ using WinUIEx;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	public partial class CaliperPageViewModel : BasePageViewModel
+
+    public partial class CaliperPageViewModel : BasePageViewModel
 	{
 		protected readonly CaliperCollection _caliperCollection;
+		private ScrollViewer _scrollViewer;
+		private ICaliperView _caliperView;
 
-		public CaliperPageViewModel(ICaliperView caliperView)
+		public CaliperPageViewModel(ICaliperView caliperView, ScrollViewer scrollViewer)
 		{
+			_scrollViewer = scrollViewer;
+			_caliperView = caliperView;
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
 			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
 		}
+
+		private Bounds ViewportBounds
+		{
+			get
+			{
+				if (_scrollViewer == null)
+				{
+					return _caliperView.Bounds;
+				}
+				var scrollW = _scrollViewer.ViewportWidth  / _scrollViewer.ZoomFactor;
+				var scrollH = _scrollViewer.ViewportHeight / _scrollViewer.ZoomFactor;
+				var caliperViewW = _caliperView.Bounds.Width;
+				var caliperViewH = _caliperView.Bounds.Height;
+				Debug.Print(new Bounds(Math.Min(scrollW, caliperViewW), Math.Min(scrollH, caliperViewH)).ToString());
+				return new Bounds(Math.Min(scrollW, caliperViewW), Math.Min(scrollH, caliperViewH));
+			}
+		}
+
+		private Point ViewportOffset
+		{
+			get
+			{
+				if (_scrollViewer == null)
+				{
+					return new Point();
+				}
+				return new Point(_scrollViewer.HorizontalOffset / _scrollViewer.ZoomFactor, _scrollViewer.VerticalOffset / _scrollViewer.ZoomFactor);
+			}
+		}
+
+		private ViewportBoundsOffset _viewportBoundsOffset => new ViewportBoundsOffset(ViewportBounds, ViewportOffset);
+
 
 		#region calipers
 		public virtual void RefreshCalipers()
@@ -42,19 +80,19 @@ namespace EPCalipersWinUI3.ViewModels
 		[RelayCommand]
 		public virtual void AddTimeCaliper()
 		{
-			_caliperCollection.AddCaliper(CaliperType.Time);
+			_caliperCollection.AddCaliper(CaliperType.Time, _viewportBoundsOffset);
 		}
 
 		[RelayCommand]
 		public virtual void AddAmplitudeCaliper()
 		{
-			_caliperCollection.AddCaliper(CaliperType.Amplitude);
+			_caliperCollection.AddCaliper(CaliperType.Amplitude, _viewportBoundsOffset);
 		}
 
 		[RelayCommand]
 		public virtual void AddAngleCaliper()
 		{
-			_caliperCollection.AddCaliper(CaliperType.Angle);
+			_caliperCollection.AddCaliper(CaliperType.Angle, _viewportBoundsOffset);
 		}
 
 		[RelayCommand]

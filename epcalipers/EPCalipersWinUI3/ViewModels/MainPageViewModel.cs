@@ -16,6 +16,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
 using EPCalipersWinUI3PDFHandler;
+using Microsoft.UI.Xaml.Controls;
 
 namespace EPCalipersWinUI3
 {
@@ -46,11 +47,10 @@ namespace EPCalipersWinUI3
 		}
 		private float _zoomFactor;
 
-		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView)
-			: base(caliperView)
+		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView, ScrollViewer scrollViewer)
+			: base(caliperView, scrollViewer)
 		{
 			Debug.Print("MainPageViewModel constructor");
-
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
 		}

@@ -7,7 +7,7 @@ namespace EPCalipersWinUI3.ViewModels
 {
 	public partial class TransparentPageViewModel : CaliperPageViewModel
 	{
-		public TransparentPageViewModel(ICaliperView caliperView) : base(caliperView) { }
+		public TransparentPageViewModel(ICaliperView caliperView) : base(caliperView, null) { }
 
 		[RelayCommand]
 		private static void ToggleTransparentWindow()

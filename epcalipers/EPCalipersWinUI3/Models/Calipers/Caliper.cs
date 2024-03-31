@@ -9,12 +9,12 @@ using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-	/// <summary>
-	/// Indicates whether a caliper is fully, partially, or not selected.
-	/// A fully selected caliper has all bars selected.  A partially selected caliper has exactly one
-	/// bar selected.
-	/// </summary>
-	public enum CaliperSelection
+    /// <summary>
+    /// Indicates whether a caliper is fully, partially, or not selected.
+    /// A fully selected caliper has all bars selected.  A partially selected caliper has exactly one
+    /// bar selected.
+    /// </summary>
+    public enum CaliperSelection
 	{
 		Full,
 		Partial,
@@ -230,11 +230,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public static Caliper InitCaliper(CaliperType type,
 			ICaliperView caliperView,
 			ISettings settings,
+			ViewportBoundsOffset boundsOffset,
 			Calibration timeCalibration = null,
 			Calibration amplitudeCalibration = null,
 			AngleCalibration angleCalibration = null,
-			double scaleFactor = 1.0, 
-			bool fakeUI = false)
+			double scaleFactor = 1.0, bool fakeUI = false)
 		{
 			Debug.Assert(type != CaliperType.None);
 			CaliperPosition initialPosition;
@@ -243,15 +243,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 			switch (type)
 			{
 				case CaliperType.Time:
-					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
+					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, boundsOffset, scaleFactor);
 					caliper = new TimeCaliper(initialPosition, caliperView, settings, fakeUI, calibration: timeCalibration);
 					break;
 				case CaliperType.Amplitude:
-					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, caliperView);
+					initialPosition = SetInitialCaliperPosition(type, _defaultCaliperValue, boundsOffset, scaleFactor);
 					caliper = new AmplitudeCaliper(initialPosition, caliperView, settings, fakeUI, calibration: amplitudeCalibration);
 					break;
 				case CaliperType.Angle:
-					initialAnglePosition = SetInitialAngleCaliperPosition(caliperView);
+					initialAnglePosition = SetInitialAngleCaliperPosition(boundsOffset, scaleFactor);
 					caliper = new AngleCaliper(initialAnglePosition, caliperView, settings, angleCalibration, fakeUI);
 					break;
 			}
@@ -378,9 +378,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			c.UnselectFullCaliper();
 		}
 
-		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ICaliperView caliperView)
+		// TODO: Initial placement of caliper needs to be within image AND within scrollview for MainPage.  For Transparent page
+		// it can just be centered in caliper view...
+		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ViewportBoundsOffset boundsOffset, double scaleFactor = 1.0)
 		{
-			Point p = caliperView.GetOffsettedCenter();
+			Point p = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);
+			//p.X /= scaleFactor;
+			//p.Y /= scaleFactor;
 			double halfSpacing = spacing / 2.0;
 			switch (type)
 			{
@@ -393,9 +397,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		private static AngleCaliperPosition SetInitialAngleCaliperPosition(ICaliperView caliperView)
+		private static AngleCaliperPosition SetInitialAngleCaliperPosition(ViewportBoundsOffset boundsOffset, double scaleFactor = 1.0)
 		{
-			var apex = caliperView.GetOffsettedCenter();
+			Point apex = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);			
+			//apex.X /= scaleFactor;
+			//apex.Y /= scaleFactor;
 			double firstAngle = 0.5 * Math.PI;
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliperPosition(apex, firstAngle, secondAngle);

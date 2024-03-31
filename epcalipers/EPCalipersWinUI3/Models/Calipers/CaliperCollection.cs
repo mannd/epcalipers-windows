@@ -17,10 +17,10 @@ using WinUIEx;
 namespace EPCalipersWinUI3.Models.Calipers
 {
 
-	/// <summary>
-	/// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
-	/// </summary>
-	public class CaliperCollection : INotifyPropertyChanged
+    /// <summary>
+    /// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
+    /// </summary>
+    public class CaliperCollection : INotifyPropertyChanged
 	{
 		private static readonly double _delta = 1.0;
 		private static readonly double _microDelta = 0.2;
@@ -121,12 +121,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
 
-		public Caliper AddCaliper(CaliperType type, bool fakeUI = false)
+		public Caliper AddCaliper(CaliperType type, ViewportBoundsOffset boundsOffset, bool fakeUI = false)
 		{
 			if (IsLocked) return null;
 			var caliper = Caliper.InitCaliper(type,
 				_caliperView,
 				_settings,
+				boundsOffset, 
 				TimeCalibration,
 				AmplitudeCalibration,
 				AngleCalibration,
