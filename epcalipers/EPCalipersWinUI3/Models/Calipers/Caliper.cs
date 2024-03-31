@@ -367,6 +367,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public abstract Bar IsNearBar(Point p);
 
+		private static double _offset = 0;
+		private readonly static double _offsetIncrement = 5;
+		private readonly static double _maxOffset = 20;
+
+		public static Point GetOffsettedCenter(Point p)
+		{
+			var offsettedPoint = MathHelper.OffsetPoint(p, _offset);
+			_offset += _offsetIncrement;
+			if (_offset > _maxOffset) _offset = 0;
+			return offsettedPoint;
+		}
 
 		private static void InitCaliperParameters(Caliper c, ISettings settings, double scaleFactor)
 		{
@@ -383,8 +394,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ViewportBoundsOffset boundsOffset, double scaleFactor = 1.0)
 		{
 			Point p = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);
-			//p.X /= scaleFactor;
-			//p.Y /= scaleFactor;
+			p = GetOffsettedCenter(p);
 			double halfSpacing = spacing / 2.0;
 			switch (type)
 			{
@@ -399,9 +409,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private static AngleCaliperPosition SetInitialAngleCaliperPosition(ViewportBoundsOffset boundsOffset, double scaleFactor = 1.0)
 		{
-			Point apex = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);			
-			//apex.X /= scaleFactor;
-			//apex.Y /= scaleFactor;
+			Point apex = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);
+			apex = GetOffsettedCenter(apex);
 			double firstAngle = 0.5 * Math.PI;
 			double secondAngle = 0.25 * Math.PI;
 			return new AngleCaliperPosition(apex, firstAngle, secondAngle);
