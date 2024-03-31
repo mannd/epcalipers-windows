@@ -368,8 +368,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public abstract Bar IsNearBar(Point p);
 
 		private static double _offset = 0;
-		private readonly static double _offsetIncrement = 5;
-		private readonly static double _maxOffset = 20;
+		private readonly static double _offsetIncrement = 10;
+		private readonly static double _maxOffset = 100;
 
 		public static Point GetOffsettedCenter(Point p)
 		{
