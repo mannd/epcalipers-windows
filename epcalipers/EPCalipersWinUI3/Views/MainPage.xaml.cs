@@ -88,7 +88,11 @@ namespace EPCalipersWinUI3.Views
 			EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
 			{
 				ViewModel.Bounds = CaliperView.Bounds;
-				ViewModel.DeleteAllCalipersCommand.Execute(null);
+
+				if (ViewModel.ClearCalipersBetweenPdfPages)
+				{
+					ViewModel.DeleteAllCalipersCommand.Execute(null);
+				}
 
 				// TODO: Change to settings.  Settings.ResetZoomWithNewImage, etc.
 				if (ViewModel.ResetZoomWithNewImage)
@@ -248,6 +252,13 @@ namespace EPCalipersWinUI3.Views
 				{
 					var storageFile = items[0] as StorageFile;
 					// check file types first???
+					// The commands below are needed to avoid retaining calipers when dropping a new file.
+					// Otherwise, when going from a multipage PDF to dropping a file, calipers can be retained inadvertently.
+					// Also need to avoid retaining zoom, rotation.
+					ViewModel.DeleteAllCalipersCommand.Execute(null);
+					ViewModel.ClearCalibrationCommand.Execute(null);
+					ViewModel.ResetZoomCommand.Execute(null);
+					RotateImageWithoutAnimation(0);
 					await ViewModel.OpenImageFile(storageFile);
 				}
 			}

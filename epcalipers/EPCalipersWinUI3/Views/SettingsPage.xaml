@@ -168,6 +168,7 @@
                 <CheckBox x:Uid="RecalibrateBetweenPdfPages" IsChecked="{x:Bind ViewModel.RecalibrateBetweenPdfPages, Mode=TwoWay}" />
                 <CheckBox x:Uid="ResetZoomBetweenPdfPages" IsChecked="{x:Bind ViewModel.ResetZoomBetweenPdfPages, Mode=TwoWay}" />
                 <CheckBox x:Uid="ResetRotationBetweenPdfPages" IsChecked="{x:Bind ViewModel.ResetRotationBetweenPdfPages, Mode=TwoWay}" />
+                <CheckBox x:Uid="ClearCalipersBetweenPdfPages" IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
             </StackPanel>
         </ScrollViewer>
 

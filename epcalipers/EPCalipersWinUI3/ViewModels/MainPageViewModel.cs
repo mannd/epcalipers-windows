@@ -31,6 +31,14 @@ namespace EPCalipersWinUI3
 
 		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
 		// It should only allow reset rotation to be false if image is multipage PDF.
+		public bool ClearCalipersBetweenPdfPages
+		{
+			get
+			{
+				if (IsMultipagePdf && !_settings.ClearCalipersBetweenPdfPages) return false;
+				return true;
+			}
+		}
 		public bool ResetZoomWithNewImage
 		{
 			get 

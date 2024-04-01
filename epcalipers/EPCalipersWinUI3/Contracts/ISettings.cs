@@ -35,5 +35,6 @@ namespace EPCalipersWinUI3.Contracts
 		public bool RecalibrateBetweenPdfPages { get; set; }
 		public bool ResetZoomBetweenPdfPages { get; set; }
 		public bool ResetRotationBetweenPdfPages { get; set; }
+		public bool ClearCalipersBetweenPdfPages { get; set; }
 	}
 }
