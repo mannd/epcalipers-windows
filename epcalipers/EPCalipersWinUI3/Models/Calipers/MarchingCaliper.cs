@@ -46,7 +46,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var rightOrigin = RightPosition;
 			var height = TimeCaliper.LeftBar.Y2;
 			// TODO: Other means to deemphasize marching calipers?
-			// TODO: Need to respond to TimeCaliper.OnMyPropertyChanged and adjust bar thickness
 			var thickness = TimeCaliper.ScaledBarThickness.Thickness - 1;
 			for (int i = 0; i < NumberOfBars; i++)
 			{

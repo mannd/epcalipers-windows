@@ -17,7 +17,6 @@ using EPCalipersWinUI3.Models;
 
 namespace EPCalipersWinUI3.ViewModels
 {
-	// TODO: Handle misbehavior like clearing or changing calibration in middle of measurement...
 	/// <summary>
 	/// Contains all the parameters passed back and forth to calculate the QTc.
 	/// </summary>

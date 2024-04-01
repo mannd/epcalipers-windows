@@ -352,7 +352,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void UnselectAllCalipers()
 		{
-			// TODO: may need to handle Esc for measurements differently.
 			if (IsLocked) return;
 			foreach (var caliper in _calipers)
 			{

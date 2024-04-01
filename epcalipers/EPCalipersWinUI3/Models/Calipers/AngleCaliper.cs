@@ -248,7 +248,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 
 
-		// TODO: resurrect
 		public override void UpdateScaledFontSize()
 		{
 			Debug.Print("AngleCaliper.UpdateScaledFontSize()");
@@ -257,8 +256,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TriangleBaseLabel.UpdateScaledFontSize();
 		}
 
-		// TODO: triangle label slightly off when calipers first drawn (also applies to 
-		// other caliper labels.
 		public void DrawTriangleBase()
 		{
 			if (ShowBrugadaTriangle(CaliperPosition))

@@ -389,8 +389,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			c.UnselectFullCaliper();
 		}
 
-		// TODO: Initial placement of caliper needs to be within image AND within scrollview for MainPage.  For Transparent page
-		// it can just be centered in caliper view...
 		private static CaliperPosition SetInitialCaliperPosition(CaliperType type, double spacing, ViewportBoundsOffset boundsOffset, double scaleFactor = 1.0)
 		{
 			Point p = new Point(boundsOffset.Bounds.Width / 2 + boundsOffset.Offset.X, boundsOffset.Bounds.Height / 2 + boundsOffset.Offset.Y);

@@ -93,8 +93,6 @@ namespace EPCalipersWinUI3.Views
 				{
 					ViewModel.DeleteAllCalipersCommand.Execute(null);
 				}
-
-				// TODO: Change to settings.  Settings.ResetZoomWithNewImage, etc.
 				if (ViewModel.ResetZoomWithNewImage)
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
