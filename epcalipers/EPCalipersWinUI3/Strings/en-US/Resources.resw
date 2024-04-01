@@ -578,4 +578,10 @@
   <data name="RecalibrateBetweenPdfPages.Content" xml:space="preserve">
     <value>Recalibrate when changing PDF pages</value>
   </data>
+  <data name="ResetRotationBetweenPdfPages.Content" xml:space="preserve">
+    <value>Reset image zoom between PDF pages</value>
+  </data>
+  <data name="ResetZoomBetweenPdfPages.Content" xml:space="preserve">
+    <value>Reset image zoom between PDF pages</value>
+  </data>
 </root>

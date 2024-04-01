@@ -3,6 +3,7 @@ using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI;
@@ -41,6 +42,8 @@ namespace EPCalipersWinUI3.ViewModels
 			StartupPage = (int)_model.StartupPage;
 			IsAlwaysOnTop = _model.IsAlwaysOnTop;
 			RecalibrateBetweenPdfPages = _model.RecalibrateBetweenPdfPages;
+			ResetZoomBetweenPdfPages = _model.ResetZoomBetweenPdfPages;
+			ResetRotationBetweenPdfPages = _model.ResetRotationBetweenPdfPages;
 		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -98,6 +101,12 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(RecalibrateBetweenPdfPages):
 					_model.RecalibrateBetweenPdfPages = RecalibrateBetweenPdfPages;
+					break;
+				case nameof(ResetZoomBetweenPdfPages):
+					_model.ResetZoomBetweenPdfPages = ResetZoomBetweenPdfPages;
+					break;
+				case nameof(ResetRotationBetweenPdfPages):
+					_model.ResetRotationBetweenPdfPages = ResetRotationBetweenPdfPages;
 					break;
 				default:
 					break;
@@ -157,5 +166,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool recalibrateBetweenPdfPages;
+
+		[ObservableProperty]
+		private bool resetZoomBetweenPdfPages;
+
+		[ObservableProperty]
+		private bool resetRotationBetweenPdfPages;
 	}
 }

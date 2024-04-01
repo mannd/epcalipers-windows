@@ -35,7 +35,7 @@ namespace EPCalipersWinUI3.Views
 				{
 					ViewModel = new QtcViewModel(QtcParameters);
 				}
-				ViewModel.UpdateIntervals();
+				ViewModel?.UpdateIntervals();
 			}
 		}
 

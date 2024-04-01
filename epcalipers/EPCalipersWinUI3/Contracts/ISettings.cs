@@ -33,5 +33,7 @@ namespace EPCalipersWinUI3.Contracts
 		public StartupPage StartupPage { get; set; }
 		public bool IsAlwaysOnTop { get; set; }
 		public bool RecalibrateBetweenPdfPages { get; set; }
+		public bool ResetZoomBetweenPdfPages { get; set; }
+		public bool ResetRotationBetweenPdfPages { get; set; }
 	}
 }

@@ -45,6 +45,8 @@ namespace EPCalipersWinUI3.Models
 		private const string _startupPageKey = "StartupPage";
 		private const string _isAlwaysOnTopKey = "IsAlwaysOnTop";
 		private const string _recalibrateBetweenPdfPagesKey = "RecalibrateBetweenPdfPages";
+		private const string _resetZoomBetweenPdfPagesKey = "ResetZoomBetweenPdfPages";
+		private const string _resetRotationBetweenPdfPagesKey = "ResetRotationBetweenPdfPages";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -192,6 +194,17 @@ namespace EPCalipersWinUI3.Models
 			set => _localSettings.Values[_recalibrateBetweenPdfPagesKey] = value;
 		}
 
+		public bool ResetZoomBetweenPdfPages
+		{
+			get => (bool)(_localSettings.Values[_resetZoomBetweenPdfPagesKey] ?? true);
+			set => _localSettings.Values[_resetZoomBetweenPdfPagesKey] = value;
+		}
+		public bool ResetRotationBetweenPdfPages
+		{
+			get => (bool)(_localSettings.Values[_resetRotationBetweenPdfPagesKey] ?? true);
+			set => _localSettings.Values[_resetRotationBetweenPdfPagesKey] = value;
+		}
+
 		public CaliperLabelAlignment TimeCaliperLabelAlignment
 		{
 			get
@@ -288,6 +301,7 @@ namespace EPCalipersWinUI3.Models
 		public StartupPage StartupPage { get; set; } = StartupPage.Main;
 		public bool IsAlwaysOnTop {  get; set; } = false;
 		public bool RecalibrateBetweenPdfPages { get; set; } = true;
-
+		public bool ResetZoomBetweenPdfPages { get; set; } = true;
+		public bool ResetRotationBetweenPdfPages { get; set; } = true;
 	}
 }
