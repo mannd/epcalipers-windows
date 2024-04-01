@@ -88,6 +88,15 @@ namespace EPCalipersWinUI3.ViewModels
 				}
 				GetResults();
 			}
+			else if (e.PropertyName == nameof(CaliperCollection.TimeCalibration))
+			{
+				Debug.Print("Time calibration changed");
+				if (QtcParameters != null)
+				{
+					QtcParameters.RRMeasurement = new Measurement();
+					QtcParameters.QTMeasurement = new Measurement();
+				}
+			}
 		}
 
 		public void GetResults()

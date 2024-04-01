@@ -35,7 +35,7 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		public static string NotMeasured { get; set; } = "Not measured".GetLocalized();
 		public XamlRoot XamlRoot { get; set; }
-		public QtcViewModel()
+		public QtcViewModel(QtcParameters qtcParameters)
 		{
 			QtcFormulas = new()
 			{
@@ -46,6 +46,16 @@ namespace EPCalipersWinUI3.ViewModels
 				{ QtcFormula.qtcAll, "AllQTcFormulas".GetLocalized() }
 			};
 			QtcFormulaNames = QtcFormulas.Values.ToList();
+			_qtcParameters = qtcParameters;
+			if (_qtcParameters != null)
+			{
+				var caliperCollection = qtcParameters.CaliperCollection;
+				if (caliperCollection != null)
+				{
+					caliperCollection.PropertyChanged += OnMyPropertyChanged;
+					caliperCollection.TimeCalibration.PropertyChanged += OnMyPropertyChanged;
+				}
+			}
 		}
 
 		[RelayCommand]
@@ -128,7 +138,18 @@ namespace EPCalipersWinUI3.ViewModels
 			CanCalculate = rrIsMeasured && qtIsMeasured;
 		}
 
-		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e) { }
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{ 
+			if (e.PropertyName == nameof(CaliperCollection.TimeCalibration))
+			{
+				Debug.Print("**************************Time calibration changed");
+				if (QtcParameters != null)
+				{
+					// TODO: this is not resetting the interval.
+					ResetIntervals();
+				}
+			}
+		}
 
 		public QtcParameters QtcParameters
 		{

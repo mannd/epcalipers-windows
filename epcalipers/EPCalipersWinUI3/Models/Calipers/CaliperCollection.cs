@@ -51,6 +51,18 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+		public CaliperCollection(
+			ICaliperView caliperView,
+			ISettings settings = null,
+			string defaultUnit = "points",
+			string defaultBpm = "bpm")
+		{
+			_calipers = [];
+			_caliperView = caliperView;
+			_settings = settings ?? Settings.Instance;
+			Calibration.DefaultUnit = defaultUnit;
+			Calibration.DefaultBpm = defaultBpm;
+		}
 
 		private async Task ShowMessage(string title, string message)
 		{
@@ -59,7 +71,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 			await dialog.ShowAsync();
 		}
 
-		public Calibration TimeCalibration { get; set; } = Calibration.Uncalibrated;
+		public Calibration TimeCalibration
+		{
+			get => _timeCalibration;
+			set
+			{
+				if (_timeCalibration != value)
+				{
+					_timeCalibration = value;
+					OnPropertyChanged(nameof(TimeCalibration));
+				}
+			}
+		}
+		private Calibration _timeCalibration = Calibration.Uncalibrated;
 		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
 		public AngleCalibration AngleCalibration { get; set; } = AngleCalibration.Uncalibrated;
 
@@ -91,8 +115,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (_selectedCaliper != value)
 				{
 					_selectedCaliper = value;
+					OnPropertyChanged(nameof(SelectedCaliper));
 				}
-				OnPropertyChanged(nameof(SelectedCaliper));
 			}
 		}
 		private Caliper _selectedCaliper;
@@ -104,19 +128,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// unselected.  They can be moved, however.  This allows calibration to focus on one caliper.
 		/// </summary>
 		public bool IsLocked { get; set; }
-
-		public CaliperCollection(
-			ICaliperView caliperView,
-			ISettings settings = null,
-			string defaultUnit = "points",
-			string defaultBpm = "bpm")
-		{
-			_calipers = [];
-			_caliperView = caliperView;
-			_settings = settings ?? Settings.Instance;
-			Calibration.DefaultUnit = defaultUnit;
-			Calibration.DefaultBpm = defaultBpm;
-		}
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();

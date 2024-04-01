@@ -18,13 +18,11 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class QtcView : Page
 	{
 		QtcViewModel ViewModel { get; set; }
-		WindowEx Window { get; set; }
 		QtcParameters QtcParameters { get; set; }
 
 		public QtcView()
 		{
 			this.InitializeComponent();
-			ViewModel = new QtcViewModel();
 		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -33,9 +31,12 @@ namespace EPCalipersWinUI3.Views
 			QtcParameters = e.Parameter as QtcParameters;
 			if (QtcParameters != null)
 			{
-				ViewModel.QtcParameters = QtcParameters;
+				if (ViewModel == null)
+				{
+					ViewModel = new QtcViewModel(QtcParameters);
+				}
+				ViewModel.UpdateIntervals();
 			}
-			ViewModel.UpdateIntervals();
 		}
 
 		private void QtcView_Cancel(object sender, RoutedEventArgs e)

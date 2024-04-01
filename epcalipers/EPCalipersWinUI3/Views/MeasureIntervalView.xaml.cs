@@ -27,10 +27,13 @@ namespace EPCalipersWinUI3.Views
 			_forQtcMeasurement = true;
 			base.OnNavigatedTo(e);
 			QtcParameters = e.Parameter as QtcParameters;
-			QtcParameters.IntervalMeasured = Models.Calipers.IntervalMeasured.QT;
-			var caliperCollection = QtcParameters.CaliperCollection;
-			ViewModel = new MeasureIntervalViewModel(caliperCollection, QtcParameters);
-			ViewModel.GetResults();
+			if (QtcParameters != null)
+			{
+				QtcParameters.IntervalMeasured = Models.Calipers.IntervalMeasured.QT;
+				var caliperCollection = QtcParameters.CaliperCollection;
+				ViewModel = new MeasureIntervalViewModel(caliperCollection, QtcParameters);
+				ViewModel.GetResults();
+			}
 		}
 
 		private void Done_Click(object sender, RoutedEventArgs e)

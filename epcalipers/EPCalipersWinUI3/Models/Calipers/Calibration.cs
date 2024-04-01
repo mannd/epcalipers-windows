@@ -1,6 +1,7 @@
 ﻿using EPCalipersWinUI3.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -50,7 +51,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public CantShowBpmException() : base("Can't show BPM with this type of calibration") { }
 	}
 
-	public class Calibration
+	public class Calibration: INotifyPropertyChanged
 	{
 		// Rounding format strings
 		private const string _roundToIntString = "D";
@@ -85,6 +86,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Multiplier = 1.0;
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 		public static string DefaultUnit { get; set; } = "points";
 		public static string DefaultBpm { get; set; } = "bpm";
 		public static Calibration Uncalibrated => new(); // Default Calibration.Unit is Uncalibrated.
