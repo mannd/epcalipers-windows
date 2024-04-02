@@ -9,18 +9,20 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
-    <Grid x:Name="ContentArea">
+    <Grid x:Name="ContentArea" MinWidth="400" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0"  Click="BackButton_Click" HorizontalAlignment="Left">
+        <Button Grid.Row="0" Margin="10" Click="BackButton_Click" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon>Back</SymbolIcon>
-                <TextBlock Margin="5" x:Uid="BackButton" />
+                <TextBlock Margin="10" x:Uid="ButtonBack" />
             </StackPanel>
         </Button>
+        <TextBlock Grid.Row="0" x:Uid="HelpPageTitle" Margin="10"
+                   HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle}" />
 
         <WebView2
             x:Name="WebView" Grid.Row="1"

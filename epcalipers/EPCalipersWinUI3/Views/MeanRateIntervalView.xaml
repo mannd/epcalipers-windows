@@ -10,28 +10,28 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     KeyUp="Page_KeyUp" >
 
-    <StackPanel Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Bind ViewModel.Title}"></TextBlock>
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Measurement</TextBlock>
-        <TextBlock x:Name="TotalInterval" 
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center"
+                   Text="{x:Bind ViewModel.Title}" Margin="15" />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="Measurement" />
+        <TextBlock x:Name="TotalInterval" Margin="10,0,0,0"
                    Text="{x:Bind ViewModel.TotalInterval, Mode=OneWay}"/>
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">Number of intervals measured</TextBlock>
-        <NumberBox x:Name="NumberOfIntervalsBox" Margin="0,5,0,0"
-            Value="{x:Bind ViewModel.NumberOfIntervals, Mode=TwoWay}"
+        <NumberBox x:Name="NumberOfIntervalsBox" Margin="10,0,0,0" x:Uid="NumberOfIntervals"
+            Value="{x:Bind ViewModel.NumberOfIntervals, Mode=TwoWay}" 
             SpinButtonPlacementMode="Inline" ValidationMode="InvalidInputOverwritten"
             Minimum="1"
             Maximum="10" />
-        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,5,0,0">Results</TextBlock>
-        <TextBlock x:Name="MeanRate" Style="{StaticResource BodyStrongTextBlockStyle}"
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Margin="0,5,0,0" x:Uid="Results" />
+        <TextBlock x:Name="MeanRate" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="10,0,0,0"
                    Text="{x:Bind ViewModel.MeanRate, Mode=OneWay}" Visibility="{x:Bind ViewModel.RateVisibility}"/>
-        <TextBlock x:Name="MeanInterval" Style="{StaticResource BodyStrongTextBlockStyle}"
+        <TextBlock x:Name="MeanInterval" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="10,0,0,0"
                    Text="{x:Bind ViewModel.MeanInterval, Mode=OneWay}"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
+            <Button x:Name="DoneButton" Grid.Column="1" Margin="2,12,0,0" Click="MeanRateIntervalViewCancel_Click"
                     HorizontalAlignment="Right" x:Uid="ButtonDone" />
         </Grid>
     </StackPanel>

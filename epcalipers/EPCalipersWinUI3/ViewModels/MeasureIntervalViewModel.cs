@@ -15,6 +15,12 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		private static readonly string _invalidCaliperText = "InvalidCaliperText".GetLocalized();
 		private static readonly string _dialogTitle = "MeanRateIntervalTitle".GetLocalized();
+		private static readonly string _totalInterval = "TotalInterval".GetLocalized();
+		private static readonly string _qtTotalInterval = "QTTotalInterval".GetLocalized();
+		private static readonly string _meanInterval = "MeanInterval".GetLocalized();
+		private static readonly string _meanRate = "MeanRate".GetLocalized();
+
+		private readonly string _totalIntervalText;
 
 		public QtcParameters QtcParameters {  get; set; }
 		public Caliper Caliper { get; set; }
@@ -27,18 +33,22 @@ namespace EPCalipersWinUI3.ViewModels
 			if (qtcParameters == null) // qtcParmaters only non-null for QTc dialog.
 			{
 				NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
+				_totalIntervalText = _totalInterval;
 			}
 			else switch (qtcParameters.IntervalMeasured)
 				{
 					case IntervalMeasured.RR:
 						NumberOfIntervals = Settings.Instance.NumberOfRRIntervals;
+						_totalIntervalText = _totalInterval;
 						break;
 					case IntervalMeasured.MeanRR:  // Shouldn't happen though.
 						Debug.Assert(false, "qtcParameters contains IntervalMeasured.MeanRR!");
 						NumberOfIntervals = Settings.Instance.NumberOfMeanIntervals;
+						_totalIntervalText = _totalInterval;
 						break;
 					case IntervalMeasured.QT:
 						NumberOfIntervals = 1;
+						_totalIntervalText = _qtTotalInterval;
 						break;
 				}
 			Caliper = caliperCollection.SelectedCaliper;
@@ -143,17 +153,17 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			// Number of intervals = 1 forces total interval, and showBpm false forces interval, not bpm.
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, 1, false);
-			return IsValidCaliper() ? $"Total interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _totalIntervalText + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetFormattedMeanInterval()
 		{
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, false);
-			return IsValidCaliper() ? $"Mean interval = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _meanInterval + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 		private string GetFormattedMeanRate()
 		{
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, true);
-			return IsValidCaliper() ? $"Mean rate = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _meanRate + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
 		}
 
 		private Measurement MeanIntervalMeasurement()

@@ -49,22 +49,22 @@
         </Flyout>
     </Page.Resources>
 
-    <Grid x:Name="ContentArea" Margin="20">
+    <Grid x:Name="ContentArea" Margin="20" MinWidth="400">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0"  Click="BackButton_Click" HorizontalAlignment="Left">
+        <Button Grid.Row="0" Click="BackButton_Click" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <SymbolIcon>Back</SymbolIcon>
-                <TextBlock Margin="5" x:Uid="BackButton" />
+                <TextBlock Margin="10" x:Uid="ButtonBack" />
             </StackPanel>
         </Button>
-        <TextBlock Grid.Row="1" Text="Settings" 
+        <TextBlock Grid.Row="0" Text="Settings" Margin="10"
                    HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle}" />
-        <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" Margin="10" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Text="Labels" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="Autoposition" IsChecked="{x:Bind ViewModel.AutoAlignLabel, Mode=TwoWay}" />

@@ -10,7 +10,6 @@
     x:Name="mainPage"
     NavigationCacheMode="Required"
     Background="Transparent" >
-    <!--Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >-->
     <Page.Resources>
         <MenuFlyout x:Key="ContextMenuFlyout">
             <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 

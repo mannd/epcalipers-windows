@@ -599,8 +599,38 @@
     <value>Custom interval (including units)</value>
     <comment>Custom calibration text box header</comment>
   </data>
+  <data name="HelpPageTitle.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MeanInterval" xml:space="preserve">
+    <value>Mean interval</value>
+  </data>
+  <data name="MeanRate" xml:space="preserve">
+    <value>Mean rate</value>
+  </data>
+  <data name="Measurement.Text" xml:space="preserve">
+    <value>Measurement</value>
+  </data>
+  <data name="MeasureRRInterval" xml:space="preserve">
+    <value>Measure RR interval</value>
+  </data>
+  <data name="NumberOfIntervals.Header" xml:space="preserve">
+    <value>Number of intervals measured</value>
+  </data>
   <data name="OkButton.Content" xml:space="preserve">
     <value>OK</value>
     <comment>Used for all OK buttons</comment>
+  </data>
+  <data name="QTInterval.Text" xml:space="preserve">
+    <value>Measure QT interval</value>
+  </data>
+  <data name="QTTotalInterval" xml:space="preserve">
+    <value>QT interval</value>
+  </data>
+  <data name="Results.Text" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="TotalInterval" xml:space="preserve">
+    <value>Total interval</value>
   </data>
 </root>

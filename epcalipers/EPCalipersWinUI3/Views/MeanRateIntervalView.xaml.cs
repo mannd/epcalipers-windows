@@ -1,3 +1,4 @@
+using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
@@ -44,7 +45,7 @@ namespace EPCalipersWinUI3.Views
 			QtcParameters.IntervalMeasured = IntervalMeasured.RR;
 			var caliperCollection = QtcParameters.CaliperCollection;
 			ViewModel = new MeasureIntervalViewModel(caliperCollection, QtcParameters);
-			ViewModel.Title = "Measure RR Interval";
+			ViewModel.Title = "MeasureRRInterval".GetLocalized();
 			ViewModel.RateVisibility = Visibility.Collapsed;
 			ViewModel.GetResults();
 		}
