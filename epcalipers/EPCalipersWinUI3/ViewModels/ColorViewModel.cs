@@ -15,13 +15,12 @@ namespace EPCalipersWinUI3.ViewModels
 			Caliper = caliper;
 			CaliperColor = Caliper.UnselectedColor;
 		}
-		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+		public void SetColor(Color color)
 		{
-			base.OnPropertyChanged(e);
-			if (e.PropertyName == nameof(CaliperColor))
+			if (Caliper != null)
 			{
-				Caliper.UnselectedColor = CaliperColor;
-				Caliper.UnselectFullCaliper();  // Forces color to be changed even if already unselected.
+				Caliper.UnselectedColor = color;
+				Caliper.UnselectFullCaliper();
 			}
 		}
 

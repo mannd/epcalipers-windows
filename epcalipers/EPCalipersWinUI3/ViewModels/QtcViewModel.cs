@@ -141,10 +141,8 @@ namespace EPCalipersWinUI3.ViewModels
 		{ 
 			if (e.PropertyName == nameof(CaliperCollection.TimeCalibration))
 			{
-				Debug.Print("**************************Time calibration changed");
 				if (QtcParameters != null)
 				{
-					// TODO: this is not resetting the interval.
 					ResetIntervals();
 				}
 			}

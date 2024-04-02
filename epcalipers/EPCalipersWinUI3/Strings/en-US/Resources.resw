@@ -587,4 +587,20 @@
   <data name="ResetZoomBetweenPdfPages.Content" xml:space="preserve">
     <value>Reset image zoom between PDF pages</value>
   </data>
+  <data name="CalibrationInstructions.Text" xml:space="preserve">
+    <value>Calibrate selected caliper</value>
+    <comment>Calibration dialog instructions</comment>
+  </data>
+  <data name="CancelButton.Content" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Used for all cancel buttons</comment>
+  </data>
+  <data name="CustomIntervalTextBox.Header" xml:space="preserve">
+    <value>Custom interval (including units)</value>
+    <comment>Custom calibration text box header</comment>
+  </data>
+  <data name="OkButton.Content" xml:space="preserve">
+    <value>OK</value>
+    <comment>Used for all OK buttons</comment>
+  </data>
 </root>

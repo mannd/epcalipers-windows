@@ -25,9 +25,9 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Margin="0,12,2,0" HorizontalAlignment="Stretch" 
                     Click="ColorViewOk_Click"
-                   Style="{StaticResource AccentButtonStyle}">Choose</Button>
+                   Style="{StaticResource AccentButtonStyle}" x:Uid="OkButton" />
             <Button Grid.Column="1" Margin="2,12,0,0" Click="ColorViewCancel_Click"
-                    HorizontalAlignment="Stretch">Cancel</Button>
+                    HorizontalAlignment="Stretch" x:Uid="CancelButton" />
         </Grid>
     </StackPanel>
 </Page>

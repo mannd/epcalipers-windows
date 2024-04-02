@@ -11,7 +11,7 @@
     KeyUp="Page_KeyUp" >
 
     <RelativePanel Margin="10" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock x:Name="Instructions" Text="Calibrate selected caliper" 
+        <TextBlock x:Name="Instructions" x:Uid="CalibrationInstructions"
                     Style="{StaticResource SubtitleTextBlockStyle}"
                    TextWrapping="Wrap" />
         <RadioButtons x:Name="CalibrationRadioButtons" 
@@ -20,7 +20,7 @@
                       SelectedIndex="{x:Bind ViewModel.SelectedIndex}"
                       SelectionChanged="CalibrationRadioButtons_SelectionChanged">
             <RadioButton x:Name="CustomRadioButton">
-                <TextBox x:Name="CustomIntervalTextBox" Header="Custom interval (including units)"
+                <TextBox x:Name="CustomIntervalTextBox" x:Uid="CustomIntervalTextBox"
                          Text="{x:Bind ViewModel.CustomInterval, Mode=TwoWay}"/>
             </RadioButton>
             <RadioButton IsChecked="True" Content="{x:Bind ViewModel.FirstField}" />
@@ -41,7 +41,7 @@
            Margin="0,12,2,0" HorizontalAlignment="Stretch" Click="CalibrationDialogCalibrate_Click"
                    Style="{StaticResource AccentButtonStyle}" x:Uid="SetCalibration" />
             <Button Grid.Column="1" Margin="2,12,0,0" HorizontalAlignment="Stretch" 
-                    Click="CalibrationDialogCancel_Click">Cancel</Button>
+                    Click="CalibrationDialogCancel_Click" x:Uid="CancelButton" />
         </Grid>
     </RelativePanel>
 </Page>

@@ -29,8 +29,6 @@ namespace EPCalipersWinUI3
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom { get; set; }
 
-		// TODO: Setting should allow reset zoom with each opened image or new PDF page to be false.
-		// It should only allow reset rotation to be false if image is multipage PDF.
 		public bool ClearCalipersBetweenPdfPages
 		{
 			get
@@ -194,7 +192,6 @@ namespace EPCalipersWinUI3
 		private static void TransparenWindow()
 		{
 			var mainWindow = AppHelper.AppMainWindow;
-			// TODO: Save Main Page title (different from save title bar)
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
 			mainWindow.Navigate(typeof(TransparentPage));
 		}

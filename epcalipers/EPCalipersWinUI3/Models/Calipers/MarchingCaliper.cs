@@ -72,7 +72,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: Why isn't this being called when updating?
 		public void UpdateMarchingScaledBarThickness()
 		{
 			var thickness = Math.Max(1.0, TimeCaliper.ScaledBarThickness.ScaledThickness() - 1);

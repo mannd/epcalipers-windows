@@ -33,7 +33,12 @@ namespace EPCalipersWinUI3.Views
 
 		private void ColorViewOk_Click(object sender, RoutedEventArgs e)
 		{
-			ViewModel.CaliperColor = CaliperColorPicker.Color;
+			SaveColorAndClose();
+		}
+
+		private void SaveColorAndClose()
+		{
+			ViewModel.SetColor(CaliperColorPicker.Color);
 			CloseWindow();
 		}
 
@@ -44,8 +49,7 @@ namespace EPCalipersWinUI3.Views
 			switch (e.Key)
 			{
 				case VirtualKey.Enter:
-					ViewModel.CaliperColor = CaliperColorPicker.Color;
-					CloseWindow();
+					SaveColorAndClose();
 					break;
 				case VirtualKey.Escape: CloseWindow(); break;
 				default: break;
