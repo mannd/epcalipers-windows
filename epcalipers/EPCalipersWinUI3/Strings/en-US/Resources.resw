@@ -633,4 +633,66 @@
   <data name="TotalInterval" xml:space="preserve">
     <value>Total interval</value>
   </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="ExtraLarge" xml:space="preserve">
+    <value>Extra-large</value>
+    <comment>font size setting</comment>
+  </data>
+  <data name="ExtraSmall" xml:space="preserve">
+    <value>Extra-small</value>
+    <comment>font size setting</comment>
+  </data>
+  <data name="FourPlaces" xml:space="preserve">
+    <value>To 4 places</value>
+    <comment>rounding setting</comment>
+  </data>
+  <data name="Hundredths" xml:space="preserve">
+    <value>To hundredths</value>
+    <comment>rounding setting</comment>
+  </data>
+  <data name="Integer" xml:space="preserve">
+    <value>To integer</value>
+    <comment>rounding setting</comment>
+  </data>
+  <data name="Large" xml:space="preserve">
+    <value>Large</value>
+    <comment>font size setting</comment>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="MainWindow" xml:space="preserve">
+    <value>Main window</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+    <comment>font size setting</comment>
+  </data>
+  <data name="NoRounding" xml:space="preserve">
+    <value>None</value>
+    <comment>rounding setting</comment>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Small" xml:space="preserve">
+    <value>Small</value>
+    <comment>font size setting</comment>
+  </data>
+  <data name="Tenths" xml:space="preserve">
+    <value>To tenths</value>
+    <comment>rounding setting</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="TopLeft" xml:space="preserve">
+    <value>Top left</value>
+    <comment>image position setting</comment>
+  </data>
 </root>

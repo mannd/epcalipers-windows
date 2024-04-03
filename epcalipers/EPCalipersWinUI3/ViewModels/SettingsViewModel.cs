@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EPCalipersWinUI3.Contracts;
+using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
@@ -45,7 +46,38 @@ namespace EPCalipersWinUI3.ViewModels
 			ResetZoomBetweenPdfPages = _model.ResetZoomBetweenPdfPages;
 			ResetRotationBetweenPdfPages = _model.ResetRotationBetweenPdfPages;
 			ClearCalipersBetweenPdfPages = _model.ClearCalipersBetweenPdfPages;
+
+			ViewItems = new List<string>() { "MainWindow".GetLocalized(), "TransparentWindow".GetLocalized() };
+			Alignments = new List<string>() 
+			{
+				"Top".GetLocalized(),
+				"Bottom".GetLocalized(),
+				"Left".GetLocalized(),
+				"Right".GetLocalized() 
+			};
+			RoundingItems = new List<string>()
+			{
+				"Integer".GetLocalized(),
+				"FourPlaces".GetLocalized(),
+				"Tenths".GetLocalized(),
+				"Hundredths".GetLocalized(),
+				"NoRounding".GetLocalized()
+			};
+			FontSizeItems = new List<string>()
+			{
+					"ExtraSmall".GetLocalized(),
+					"Small".GetLocalized(),
+					"Medium".GetLocalized(),
+					"Large".GetLocalized(),
+					"ExtraLarge".GetLocalized()
+			};
+			ImagePositionItems = new List<string>()
+			{
+				"TopLeft".GetLocalized(),
+				"Center".GetLocalized()
+			};
 		}
+
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
@@ -179,5 +211,20 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool clearCalipersBetweenPdfPages;
+
+		[ObservableProperty]
+		private List<string> viewItems;
+
+		[ObservableProperty]
+		private List<string> alignments;
+
+		[ObservableProperty]
+		private List<string> roundingItems;
+
+		[ObservableProperty]
+		private List<string> fontSizeItems;
+
+		[ObservableProperty]
+		private List<string> imagePositionItems;
 	}
 }

@@ -71,20 +71,14 @@
                 <RadioButtons x:Name="TimeLabelRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.TimeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Time caliper label alignment" 
-                          SelectionChanged="TimeLabelAlignment_SelectionChanged">
-                    <x:String>Top</x:String>
-                    <x:String>Bottom</x:String>
-                    <x:String>Left</x:String>
-                    <x:String>Right</x:String>
+                          SelectionChanged="TimeLabelAlignment_SelectionChanged"
+                              ItemsSource="{x:Bind ViewModel.Alignments}">
                 </RadioButtons>
                 <RadioButtons x:Name="AmplitudeLabelRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.AmplitudeCaliperLabelAlignment}"  
                           MaxColumns="4" Header="Amplitude caliper label position"
-                          SelectionChanged="AmplitudeLabelAlignment_SelectionChanged">
-                    <x:String>Top</x:String>
-                    <x:String>Bottom</x:String>
-                    <x:String>Left</x:String>
-                    <x:String>Right</x:String>
+                          SelectionChanged="AmplitudeLabelAlignment_SelectionChanged"
+                              ItemsSource="{x:Bind ViewModel.Alignments}">
                 </RadioButtons>
                 <TextBlock Text="Calipers" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <StackPanel Orientation="Horizontal">
@@ -117,22 +111,14 @@
                 <RadioButtons x:Name="RoundingRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.Rounding}"  
                           MaxColumns="5" Header="Rounding"
-                          SelectionChanged="Rounding_SelectionChanged">
-                    <x:String>To integer</x:String>
-                    <x:String>To 4 places</x:String>
-                    <x:String>To tenths</x:String>
-                    <x:String>To hundredths</x:String>
-                    <x:String>None</x:String>
+                          SelectionChanged="Rounding_SelectionChanged"
+                              ItemsSource="{x:Bind ViewModel.RoundingItems}">
                 </RadioButtons>
                 <RadioButtons x:Name="CaliperLabelSizeRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.FontSize}"  
                           MaxColumns="5" Header="Caliper label size"
-                          SelectionChanged="CaliperLabelSize_SelectionChanged">
-                    <x:String>Extra-small</x:String>
-                    <x:String>Small</x:String>
-                    <x:String>Medium</x:String>
-                    <x:String>Large</x:String>
-                    <x:String>Extra-large</x:String>
+                          SelectionChanged="CaliperLabelSize_SelectionChanged"
+                              ItemsSource="{x:Bind ViewModel.FontSizeItems}">
                 </RadioButtons>
                 <StackPanel Orientation="Horizontal">
                 <Slider x:Name="NumberOfMarchingCalipersSlider" Width="200" Minimum="1" Maximum="20" 
@@ -149,16 +135,14 @@
                 <RadioButtons x:Name="CaliperViewOrientationRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.CaliperViewAlignment}"  
                           MaxColumns="2" Header="Image orientation"
-                              SelectionChanged="CaliperViewOrientationRadioButtons_SelectionChanged" >
-                    <x:String>Top left</x:String>
-                    <x:String>Center</x:String>
+                              SelectionChanged="CaliperViewOrientationRadioButtons_SelectionChanged" 
+                              ItemsSource="{x:Bind ViewModel.ImagePositionItems}">
                 </RadioButtons>
                 <RadioButtons x:Name="StartupWindowRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.StartupPage}"  
                           MaxColumns="2" Header="Startup window"
-                              SelectionChanged="StartupPageRadioButtons_SelectionChanged" >
-                    <x:String>Main window</x:String>
-                    <x:String>Transparent window</x:String>
+                              SelectionChanged="StartupPageRadioButtons_SelectionChanged" 
+                              ItemsSource="{x:Bind ViewModel.ViewItems}">
                 </RadioButtons>
                 <CheckBox x:Uid="IsAlwaysOnTop" IsChecked="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 <TextBlock Text="Zooming" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
