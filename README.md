@@ -1,11 +1,9 @@
 # EP Calipers for Microsoft Windows
 
 ## IMPORTANT!!
-This is an experimental branch of the EP Calipers for Windows
-repository.  The current main branch is the epcalipers-2 branch.  The
-epcalipers-2 branch contains the current production code.  However in
-the near future this epcalipers-3 branch will become the main branch
-going forward, once the code reaches beta status.  At that point the
+The epcalipers-3 branch is now the default branch for this repo.
+However, epcalipers-3 is still in beta.  The
+epcalipers-2 branch contains the current production code.  The
 epcalipers-2 branch will continue to be maintained to support current
 users with older versions of Windows.
 
