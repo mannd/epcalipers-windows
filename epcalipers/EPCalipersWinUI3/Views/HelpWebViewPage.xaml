@@ -8,7 +8,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
     <Grid x:Name="ContentArea" MinWidth="400" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,9 +23,8 @@
         <TextBlock Grid.Row="0" x:Uid="HelpPageTitle" Margin="10"
                    HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle}" />
 
-        <WebView2
-            x:Name="WebView" Grid.Row="1"
-            Source="{x:Bind ViewModel.Source, Mode=OneWay}" />
+        <WebView2 DefaultBackgroundColor="Transparent"
+            x:Name="WebView" Grid.Row="1" />
 
         <!--<StackPanel
             HorizontalAlignment="Center"
