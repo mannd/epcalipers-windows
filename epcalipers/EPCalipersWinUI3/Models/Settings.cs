@@ -137,7 +137,7 @@ namespace EPCalipersWinUI3.Models
 
 		public double BarThickness
 		{
-			get => (double)(_localSettings.Values[_barThicknessKey] ?? 2.0);
+			get => (double)(_localSettings.Values[_barThicknessKey] ?? 3.0);
 			set => _localSettings.Values[_barThicknessKey] = value;
 		}
 
@@ -167,7 +167,7 @@ namespace EPCalipersWinUI3.Models
 
 		public bool ShowSampleEcgAtStartUp
 		{
-			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? false);
+			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? true);
 			set => _localSettings.Values[_showSampleEcgAtStartUpKey ] = value;	
 		}
 

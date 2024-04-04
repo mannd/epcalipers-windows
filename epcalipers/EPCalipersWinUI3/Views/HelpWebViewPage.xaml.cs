@@ -21,8 +21,19 @@ namespace EPCalipersWinUI3.Views
 			this.InitializeComponent();
 			ViewModel = new HelpViewModel();
 			ViewModel.SetTitleBarName("Help".GetLocalized());
+			WebView.NavigationStarting += NavigationStarting;
+			WebView.NavigationCompleted += NavigationCompleted;
 			Init();
+		}
 
+		private void NavigationStarting(WebView2 sender, CoreWebView2NavigationStartingEventArgs args)
+		{
+			ViewModel.IsLoading = true;
+		}
+
+		private void NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
+		{
+			ViewModel.IsLoading = false;
 		}
 
 		private async void Init()
@@ -34,7 +45,6 @@ namespace EPCalipersWinUI3.Views
 
 			WebView.Source = new Uri("http://appassets/Help/beta-help.html");
 			//WebView.CoreWebView2.OpenDevToolsWindow();
-
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)

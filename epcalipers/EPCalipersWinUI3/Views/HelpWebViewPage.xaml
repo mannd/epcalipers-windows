@@ -26,7 +26,7 @@
         <WebView2 DefaultBackgroundColor="Transparent"
             x:Name="WebView" Grid.Row="1" />
 
-        <!--<StackPanel
+        <StackPanel Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
@@ -34,7 +34,7 @@
             <TextBlock x:Uid="WebView_Loading" />
         </StackPanel>
 
-        <StackPanel
+        <!--<StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Visibility="{x:Bind ViewModel.HasFailures, Mode=OneWay}">
@@ -58,7 +58,7 @@
                 <Button x:Uid="OpenInBrowserButton" Command="{x:Bind ViewModel.OpenInBrowserCommand}" Margin="{StaticResource XSmallLeftTopRightBottomMargin}" Padding="{StaticResource XXSmallLeftTopRightBottomMargin}">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE774;" />
                 </Button>
-            </StackPanel>
-        </Grid>-->
+            </StackPanel>-->
+        <!--</Grid>-->
     </Grid>
 </Page>

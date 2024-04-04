@@ -7,5 +7,8 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		[ObservableProperty]
 		private string source;
+
+		[ObservableProperty]
+		private bool isLoading;
 	}
 }

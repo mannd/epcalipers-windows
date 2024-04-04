@@ -9,11 +9,11 @@
   IgnorableNamespaces="uap rescap uap6">
 
   <Identity
-    Name="5a11a93a-e1f5-4d7b-9c5b-7db1236300e8"
+    Name="EPStudios.50317C53AD165"
     Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"
     Version="3.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="5a11a93a-e1f5-4d7b-9c5b-7db1236300e8" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="233945dc-653f-425d-a123-c26d259d669a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ms-resource:AppDisplayName</DisplayName>
