@@ -15,8 +15,8 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
 			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
-			caliperCollection.AddCaliper(CaliperType.Time, TODO, true);
-			caliperCollection.AddCaliper(CaliperType.Amplitude, TODO, true);
+			caliperCollection.AddCaliper(CaliperType.Time, new ViewportBoundsOffset(), true);
+			caliperCollection.AddCaliper(CaliperType.Amplitude, new ViewportBoundsOffset(), true);
 			var timeCalipers = caliperCollection.FilteredCalipers(CaliperType.Time);
 			Assert.Single(timeCalipers);
 			var amplitudeCalipers = caliperCollection.FilteredCalipers(CaliperType.Amplitude);
@@ -56,8 +56,8 @@ namespace EPCalipersWinUi3Tests.Tests
 			var stubCaliperView = new FakeCaliperView();
 			var stubSettings = new FakeSettings();
 			var caliperCollection = new CaliperCollection(stubCaliperView, stubSettings);
-			var timeCaliper = (TimeCaliper)caliperCollection.AddCaliper(CaliperType.Time, TODO, true);
-			var amplitudeCaliper = (AmplitudeCaliper)caliperCollection.AddCaliper(CaliperType.Amplitude, TODO, true);
+			var timeCaliper = (TimeCaliper)caliperCollection.AddCaliper(CaliperType.Time, new ViewportBoundsOffset(), true);
+			var amplitudeCaliper = (AmplitudeCaliper)caliperCollection.AddCaliper(CaliperType.Amplitude, new ViewportBoundsOffset(), true);
 			timeCaliper.SelectFullCaliper();
 			Assert.True(timeCaliper.IsSelected);  // toggle bar unselects caliper
 			caliperCollection.ToggleCaliperSelection(new Point(timeCaliper.LeftBar.Position, 0));
