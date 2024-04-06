@@ -7,14 +7,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;ARM64;AnyCPU</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>
     <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <PackageCertificateKeyFile>epstudios.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <PlatformTarget>x64</PlatformTarget> 
+    <!--<PlatformTarget>x64</PlatformTarget>--> 
     <Company>EP Studios</Company>
     <Description>EP Calipers implentation for modern Windows systems.</Description>
     <Copyright>Copyright (c) 2023-2024</Copyright>
@@ -32,11 +32,12 @@
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
     <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <!--Added to put .NET 8 into backwards compatibility mode.-->
@@ -209,7 +210,7 @@
   <ItemGroup>
     <Folder Include="Themes\" />
   </ItemGroup>
-  <ItemGroup Condition="'$(PlatformTarget)' == 'x64' Or '$(PlatformTarget)' == 'x32'">
+  <ItemGroup>
     <ProjectReference Include="..\WinUI3PDFHandler\WinUI3PDFHandler.csproj" />
   </ItemGroup>
 </Project>
