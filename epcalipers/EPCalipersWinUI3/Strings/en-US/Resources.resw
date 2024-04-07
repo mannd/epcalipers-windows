@@ -341,10 +341,10 @@
     <value>Next PDF page</value>
   </data>
   <data name="NoCaliperSelectedMessage" xml:space="preserve">
-    <value>Select (by single click or tap) a time or an amplitude caliper before calibrating.</value>
+    <value>Add a time or amplitude caliper and select it with a single click or tap before calibrating.</value>
   </data>
   <data name="NoCaliperSelectedTitle" xml:space="preserve">
-    <value>No time or amplitude caliper selected</value>
+    <value>Select a time or amplitude caliper prior to calibration</value>
   </data>
   <data name="NotMeasured" xml:space="preserve">
     <value>Not measured</value>
@@ -444,7 +444,7 @@
     <value>Unselected caliper color</value>
   </data>
   <data name="ShowBrugadaTriangle.Content" xml:space="preserve">
-    <value>Show Brugada triangle</value>
+    <value>Show Brugada triangle in angle calipers after calibration of time (msec) and amplitude calipers (mm)</value>
   </data>
   <data name="StepChooseFormula.Text" xml:space="preserve">
     <value>Step 3 Choose QTc formula</value>
@@ -582,7 +582,7 @@
     <value>Clear calipers when changing PDF pages</value>
   </data>
   <data name="ResetRotationBetweenPdfPages.Content" xml:space="preserve">
-    <value>Reset image zoom between PDF pages</value>
+    <value>Reset image rotation between PDF pages</value>
   </data>
   <data name="ResetZoomBetweenPdfPages.Content" xml:space="preserve">
     <value>Reset image zoom between PDF pages</value>
@@ -695,10 +695,46 @@
     <value>Top left</value>
     <comment>image position setting</comment>
   </data>
+  <data name="BrugadaTriangleSettings.Text" xml:space="preserve">
+    <value>Brugada triangle</value>
+    <comment>Heading for Brugada triangle section of settings page</comment>
+  </data>
+  <data name="CaliperLIneWidth.Text" xml:space="preserve">
+    <value>Caliper line width=</value>
+    <comment>needs equals sign at end</comment>
+  </data>
+  <data name="CalipersSettings.Text" xml:space="preserve">
+    <value>Calipers</value>
+    <comment>Heading for calipers section of settings page</comment>
+  </data>
+  <data name="LabelsSettings.Text" xml:space="preserve">
+    <value>Labels</value>
+    <comment>Heading for labels section of settings page</comment>
+  </data>
+  <data name="NumberOfMarchingCalipers.Text" xml:space="preserve">
+    <value>Number of marching calipers=</value>
+    <comment>needs equals sign at end</comment>
+  </data>
+  <data name="PDFSettings.Text" xml:space="preserve">
+    <value>PDF</value>
+    <comment>Heading for PDF section of settings page</comment>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Title for settings page</comment>
+  </data>
+  <data name="StartupSettings.Text" xml:space="preserve">
+    <value>Startup</value>
+    <comment>Heading for startup section of settings page</comment>
+  </data>
   <data name="WebView_FailedMessage" xml:space="preserve">
     <value>Failed to load help file</value>
   </data>
   <data name="WebView_Reload" xml:space="preserve">
     <value>Try to reload help file?</value>
+  </data>
+  <data name="ZoomSettings.Text" xml:space="preserve">
+    <value>Zoom</value>
+    <comment>Heading for zoom section of settings page</comment>
   </data>
 </root>

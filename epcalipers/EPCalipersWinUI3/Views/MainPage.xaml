@@ -264,15 +264,16 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem"
+                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"
+                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
-                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
+                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>
@@ -290,8 +291,6 @@
                 <MenuFlyoutItem x:Uid="AboutMenuItem"  Click="About_Click" />
             </MenuBarItem>
         </MenuBar>
-        <!--TODO: Segoe Fluent icons not included in Win10, so must add
-      the font to shared resources, and may need to change syntax below.-->
         <CommandBar Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                         IsOpen="False" DefaultLabelPosition="Right">
             <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click" >
@@ -342,7 +341,7 @@
                 </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="CalibrationBarButton">
+            <AppBarButton x:Uid="CalibrationBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73E;" />
                 <AppBarButton.Flyout>
                     <MenuFlyout>
@@ -353,13 +352,13 @@
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton"
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
-            <AppBarButton x:Uid="MeanRateIntervalBarButton"
+            <AppBarButton x:Uid="MeanRateIntervalBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                           Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">

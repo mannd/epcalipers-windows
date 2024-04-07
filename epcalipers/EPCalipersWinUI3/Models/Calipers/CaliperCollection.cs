@@ -291,7 +291,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var caliperAndBar = GetCaliperAndBarAt(point);
 			if (caliperAndBar.Item1 is Caliper caliper)
 			{
-				SelectedCaliper = null;
+				if (caliper.IsSelected)
+				{
+					SelectedCaliper = null;
+				}
 				caliper.Remove(_caliperView);
 				_calipers.Remove(caliper);
 			}
