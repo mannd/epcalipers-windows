@@ -195,7 +195,7 @@
                         <KeyboardAccelerator Key="Left" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xF0B0;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0B0;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveRightMenuItem"
@@ -204,7 +204,7 @@
                         <KeyboardAccelerator Key="Right" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xF0AF;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0AF;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveUpMenuItem"
@@ -213,7 +213,7 @@
                         <KeyboardAccelerator Key="Up" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xF0AD;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0AD;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveDownMenuItem"
@@ -222,7 +222,7 @@
                         <KeyboardAccelerator Key="Down" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xF0AE;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF0AE;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
@@ -232,7 +232,7 @@
                         <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xEC52;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC52;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveRightMenuItem"
@@ -241,7 +241,7 @@
                         <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xEBE7;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEBE7;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveUpMenuItem"
@@ -250,7 +250,7 @@
                         <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE74A;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74A;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveDownMenuItem"
@@ -259,7 +259,7 @@
                         <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE74B;"/>
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74B;"/>
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
             </MenuBarItem>
@@ -276,7 +276,7 @@
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE713;" />
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;" />
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
             </MenuBarItem>
@@ -343,7 +343,7 @@
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton x:Uid="CalibrationBarButton">
-                <FontIcon Glyph="&#xE73E;" />
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73E;" />
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
@@ -357,7 +357,7 @@
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
             <AppBarButton x:Uid="MeanRateIntervalBarButton"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
-                <FontIcon Glyph="&#xE94A;" />
+                <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE94A;" />
             </AppBarButton>
             <AppBarButton Icon="Calculator" x:Uid="QTcBarButton"
                           Command="{x:Bind ViewModel.MeasureQtcCommand}"/>

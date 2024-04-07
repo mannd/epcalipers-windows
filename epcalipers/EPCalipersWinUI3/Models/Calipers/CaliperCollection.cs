@@ -16,7 +16,7 @@ using WinUIEx;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
-
+// TODO: ********Verify measurement and calibration dialogs.  Do they make sense?
     /// <summary>
     /// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
     /// </summary>

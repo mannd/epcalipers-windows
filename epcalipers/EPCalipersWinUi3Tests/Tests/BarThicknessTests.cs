@@ -14,10 +14,10 @@ namespace EPCalipersWinUi3Tests.Tests
 		[Fact]
 		public void TestBarThickness()
 		{
-			var barThickness = new ScaledBarThickness(100, 2, false);
-			Assert.Equal(100, barThickness.ScaledThickness());
+			var barThickness = new ScaledBarThickness(10, 2, false);
+			Assert.Equal(10, barThickness.ScaledThickness());
 			barThickness.DoScaling = true;
-			Assert.Equal(50, barThickness.ScaledThickness());
+			Assert.Equal(5, barThickness.ScaledThickness());
 		}
 	}
 }

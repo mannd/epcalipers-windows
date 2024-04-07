@@ -695,4 +695,10 @@
     <value>Top left</value>
     <comment>image position setting</comment>
   </data>
+  <data name="WebView_FailedMessage" xml:space="preserve">
+    <value>Failed to load help file</value>
+  </data>
+  <data name="WebView_Reload" xml:space="preserve">
+    <value>Try to reload help file?</value>
+  </data>
 </root>

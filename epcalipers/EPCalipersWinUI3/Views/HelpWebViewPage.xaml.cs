@@ -44,7 +44,6 @@ namespace EPCalipersWinUI3.Views
 				"appassets", "Assets", CoreWebView2HostResourceAccessKind.Allow);
 
 			WebView.Source = new Uri("http://appassets/Help/beta-help.html");
-			//WebView.CoreWebView2.OpenDevToolsWindow();
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)

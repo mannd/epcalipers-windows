@@ -9,7 +9,7 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <Platforms>x64;x86;arm64;AnyCPU</Platforms>
+    <Platforms>x64;x86;arm64;AnyCPU;ARM32</Platforms>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
