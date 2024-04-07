@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -37,6 +38,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Bars = InitBars(position);
 			CaliperType = CaliperType.Time;
 			InitCaliperLabel();
+		}
+
+		public override Color UnselectedColor
+		{
+			get => base.UnselectedColor;
+			set
+			{
+				base.UnselectedColor = value;
+				if (MarchingCaliper != null)
+				{
+					MarchingCaliper.UnselectedColor = value;
+				}
+			}
 		}
 
 		public void AddMarchingCaliper()

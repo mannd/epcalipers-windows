@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation;
+using Windows.UI;
 
 namespace EPCalipersWinUI3.Models.Calipers
 {
@@ -37,6 +38,22 @@ namespace EPCalipersWinUI3.Models.Calipers
 			RightPosition = right;
 			TimeCaliper = caliper;
 			InitBars();
+		}
+
+		public override Color UnselectedColor
+		{
+			get => base.UnselectedColor;
+			set
+			{
+				foreach (var bar in LeftBars)
+				{
+					bar.UnselectedColor = value;
+				}
+				foreach (var bar in RightBars)
+				{
+					bar.UnselectedColor = value;
+				}
+			}
 		}
 
 		private void InitBars()
