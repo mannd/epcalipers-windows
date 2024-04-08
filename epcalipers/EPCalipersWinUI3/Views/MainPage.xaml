@@ -140,16 +140,20 @@
                 <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
-            <MenuBarItem x:Uid="CalipersMenu" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
-                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
+            <MenuBarItem x:Uid="CalipersMenu" >
+                <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
+                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="T" Modifiers="Control"/>
+                        <KeyboardAccelerator Key="T" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
+                <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                                Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
@@ -157,7 +161,9 @@
                         <KeyboardAccelerator Key="A" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
+                <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                                Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
                     </MenuFlyoutItem.Icon>
@@ -313,29 +319,22 @@
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
+                        <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
+                                        IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                                        Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="T" Modifiers="Control" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="A" Modifiers="Control" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
                             </MenuFlyoutItem.Icon>
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="G" Modifiers="Control" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
