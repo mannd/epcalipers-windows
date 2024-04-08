@@ -68,7 +68,7 @@
                     Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
-            <MenuBarItem x:Uid="ImageMenu" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
+            <MenuBarItem x:Uid="ImageMenu" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <MenuFlyoutItem x:Name="ZoomInMenuItem" x:Uid="ZoomInMenuItem" 
                                 Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>
@@ -303,18 +303,16 @@
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="ZoomInBarButton" 
-                          IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton x:Uid="ZoomInBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                           Command="{x:Bind ViewModel.ZoomInCommand}" ToolTipService.ToolTip="Zoom in">
                 <SymbolIcon Symbol="ZoomIn" />
             </AppBarButton>
-            <AppBarButton x:Uid="ZoomOutBarButton" 
-                          IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton x:Uid="ZoomOutBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                           Command="{x:Bind ViewModel.ZoomOutCommand}" ToolTipService.ToolTip="Zoom out">
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="AddCaliperBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
+            <AppBarButton x:Uid="AddCaliperBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
@@ -340,7 +338,7 @@
                 </AppBarButton.Flyout>
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="CalibrationBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
+            <AppBarButton x:Uid="CalibrationBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE73E;" />
                 <AppBarButton.Flyout>
                     <MenuFlyout>
@@ -351,13 +349,13 @@
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
-            <AppBarButton x:Uid="MeanRateIntervalBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton x:Uid="MeanRateIntervalBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                           Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">
