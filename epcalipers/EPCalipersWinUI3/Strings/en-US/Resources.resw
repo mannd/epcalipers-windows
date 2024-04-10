@@ -171,7 +171,7 @@
     <value>EP Calipers 3 - {0}</value>
   </data>
   <data name="AppMultipagePDFTitle" xml:space="preserve">
-    <value>EP Calipers 3 - {0} - Page {1}/{2}</value>
+    <value>{0} - Page {1}/{2}</value>
   </data>
   <data name="AppSimpleTitle" xml:space="preserve">
     <value>EP Calipers 3</value>
@@ -535,7 +535,7 @@
     <value>Save file</value>
   </data>
   <data name="OpenFromScreenshotMenuItem.Text" xml:space="preserve">
-    <value>Open from screenshot</value>
+    <value>Open from screenshot...</value>
   </data>
   <data name="SaveScreenshotMenuItem.Text" xml:space="preserve">
     <value>Save screenshot</value>
@@ -736,5 +736,9 @@
   <data name="ZoomSettings.Text" xml:space="preserve">
     <value>Zoom</value>
     <comment>Heading for zoom section of settings page</comment>
+  </data>
+  <data name="DeleteSelectedCaliperMenuItem.Text" xml:space="preserve">
+    <value>Delete selected caliper</value>
+    <comment>Main menu delete selected caliper</comment>
   </data>
 </root>

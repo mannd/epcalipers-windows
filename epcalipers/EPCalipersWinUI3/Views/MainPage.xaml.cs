@@ -505,9 +505,9 @@ namespace EPCalipersWinUI3.Views
 				var hWnd = WindowNative.GetWindowHandle(AppHelper.AppMainWindow);
 				InitializeWithWindow.Initialize(savePicker, hWnd);
 				savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-				savePicker.FileTypeChoices.Add("JPG image", new List<string>() { ".jpg" });
-				savePicker.FileTypeChoices.Add("PNG image", new List<string>() { ".png" });
-				savePicker.FileTypeChoices.Add("BMP image", new List<string>() { ".bmp" });
+				savePicker.FileTypeChoices.Add("JPG image", [".jpg"]);
+				savePicker.FileTypeChoices.Add("PNG image", [".png"]);
+				savePicker.FileTypeChoices.Add("BMP image", [".bmp"]);
 				savePicker.SuggestedFileName = "EPCalipersScreenshot";
 				StorageFile file = await savePicker.PickSaveFileAsync();
 				ContentDialog dialog;
@@ -553,53 +553,45 @@ namespace EPCalipersWinUI3.Views
 
 		private static async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
 		{
-			using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
+			using IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite);
+			// Create an encoder with the desired format
+			var ext = outputFile.FileType;
+			ext = ext.ToLower();
+			Debug.Print(ext);
+			var encoderID = ext switch
 			{
-				// Create an encoder with the desired format
-				var ext = outputFile.FileType;
-				ext = ext.ToLower();
-				Debug.Print(ext);
-				Guid encoderID;
-				switch (ext)
+				".png" => BitmapEncoder.PngEncoderId,
+				".bmp" => BitmapEncoder.BmpEncoderId,
+				_ => BitmapEncoder.JpegEncoderId,
+			};
+			BitmapEncoder encoder = await BitmapEncoder.CreateAsync(encoderID, stream);
+
+			// Set the software bitmap
+			encoder.SetSoftwareBitmap(softwareBitmap);
+			encoder.IsThumbnailGenerated = true;
+
+			try
+			{
+				await encoder.FlushAsync();
+			}
+			catch (Exception err)
+			{
+				const int WINCODEC_ERR_UNSUPPORTEDOPERATION = unchecked((int)0x88982F81);
+				switch (err.HResult)
 				{
+					case WINCODEC_ERR_UNSUPPORTEDOPERATION:
+						// If the encoder does not support writing a thumbnail, then try again
+						// but disable thumbnail generation.
+						encoder.IsThumbnailGenerated = false;
+						break;
 					default:
-					case ".jpg":
-						encoderID = BitmapEncoder.JpegEncoderId; break;
-					case ".png":
-						encoderID = BitmapEncoder.PngEncoderId; break;
-					case ".bmp":
-						encoderID = BitmapEncoder.BmpEncoderId; break;
+						throw;
 				}
+			}
 
-				BitmapEncoder encoder = await BitmapEncoder.CreateAsync(encoderID, stream);
-
-				// Set the software bitmap
-				encoder.SetSoftwareBitmap(softwareBitmap);
-				encoder.IsThumbnailGenerated = true;
-
-				try
-				{
-					await encoder.FlushAsync();
-				}
-				catch (Exception err)
-				{
-					const int WINCODEC_ERR_UNSUPPORTEDOPERATION = unchecked((int)0x88982F81);
-					switch (err.HResult)
-					{
-						case WINCODEC_ERR_UNSUPPORTEDOPERATION:
-							// If the encoder does not support writing a thumbnail, then try again
-							// but disable thumbnail generation.
-							encoder.IsThumbnailGenerated = false;
-							break;
-						default:
-							throw;
-					}
-				}
-
-				if (encoder.IsThumbnailGenerated == false)
-				{
-					await encoder.FlushAsync();
-				}
+			if (encoder.IsThumbnailGenerated == false)
+			{
+				await encoder.FlushAsync();
 			}
 		}
 
