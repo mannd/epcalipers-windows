@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private static Point _upMicroMovement = new(0, -_microDelta);
 		private static Point _downMicroMovement = new(0, _microDelta);
 
-		private readonly IList<Caliper> _calipers;
+		private readonly ObservableCollection<Caliper> _calipers;
 		private readonly ICaliperView _caliperView;
 		private readonly ISettings _settings;
 
@@ -58,11 +60,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 			string defaultBpm = "bpm")
 		{
 			_calipers = [];
+			_calipers.CollectionChanged += OnMyPropertyChanged;
 			_caliperView = caliperView;
 			_settings = settings ?? Settings.Instance;
 			Calibration.DefaultUnit = defaultUnit;
 			Calibration.DefaultBpm = defaultBpm;
 		}
+
+		private void OnMyPropertyChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			Debug.Print("Collection changed");
+			if (CaliperCollectionDelegate != null)
+			{
+				CaliperCollectionDelegate(_calipers.Count);
+			}
+		}
+
+		public delegate void CaliperCollectionChangeDelegate(int numberOfCalipers);
+
+		public CaliperCollectionChangeDelegate CaliperCollectionDelegate { get; set; }
+
 
 		private async Task ShowMessage(string title, string message)
 		{

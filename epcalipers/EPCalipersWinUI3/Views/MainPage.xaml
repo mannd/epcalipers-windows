@@ -180,7 +180,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem Icon="Delete" x:Uid="DeleteAllCalipersMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.HasCalipers, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.DeleteAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>

@@ -33,7 +33,15 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
 			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
+			_caliperCollection.CaliperCollectionDelegate = CollectionChanged;
+			//_caliperCollection._calipers.PropertyChanged += OnMyPropertyChanged;
 		}
+
+		public void CollectionChanged(int numberOfCalipers)
+		{
+			HasCalipers = numberOfCalipers > 0;
+		}
+
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -294,6 +302,12 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool aCaliperIsSelected;
+
+		[ObservableProperty]
+		private bool hasCalipers;
+
+		[ObservableProperty]
+		private bool isTimeCalibrated;
 
 		#endregion
 	}
