@@ -7,6 +7,7 @@ using EPCalipersWinUI3.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -31,7 +32,23 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperView = caliperView;
 			_caliperCollection = new CaliperCollection(caliperView, defaultUnit: "points".GetLocalized(),
 				defaultBpm: "bpm".GetLocalized());
-			AreScreenshotsSupported = GraphicsCaptureSession.IsSupported();
+			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
+		}
+
+		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
+			{ 
+				Debug.Print("SelectedCaliper changed");
+				if (_caliperCollection.SelectedCaliper != null)
+				{
+					ACaliperIsSelected = _caliperCollection.SelectedCaliper.IsSelected;
+				}
+				else
+				{
+					ACaliperIsSelected = false;
+				}
+			}
 		}
 
 		private Bounds ViewportBounds
@@ -276,7 +293,8 @@ namespace EPCalipersWinUI3.ViewModels
 		private bool caliperIsMarching;
 
 		[ObservableProperty]
-		private bool areScreenshotsSupported;
+		private bool aCaliperIsSelected;
+
 		#endregion
 	}
 }

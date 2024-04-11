@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using EPCalipersWinUI3PDFHandler;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Graphics.Capture;
 
 namespace EPCalipersWinUI3
 {
@@ -28,6 +29,20 @@ namespace EPCalipersWinUI3
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom { get; set; }
+		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView, ScrollViewer scrollViewer)
+			: base(caliperView, scrollViewer)
+		{
+			Debug.Print("MainPageViewModel constructor");
+			SetZoom = setZoomDelegate;
+			_pdfHelper = new PdfHelper();
+			isOpenFromScreenshotSupported = GraphicsCaptureSession.IsSupported();
+			AreScreenshotsSupported = HasMainImage && IsOpenFromScreenshotSupported;
+		}
+
+		partial void OnHasMainImageChanged(bool value)
+		{
+			AreScreenshotsSupported = value && IsOpenFromScreenshotSupported;
+		}
 
 		public bool ClearCalipersBetweenPdfPages
 		{
@@ -66,14 +81,6 @@ namespace EPCalipersWinUI3
 			}
 		}
 		private float _zoomFactor;
-
-		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView, ScrollViewer scrollViewer)
-			: base(caliperView, scrollViewer)
-		{
-			Debug.Print("MainPageViewModel constructor");
-			SetZoom = setZoomDelegate;
-			_pdfHelper = new PdfHelper();
-		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
@@ -325,6 +332,12 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private bool hasMainImage;
+
+		[ObservableProperty]
+		private bool areScreenshotsSupported;
+
+		[ObservableProperty]
+		private bool isOpenFromScreenshotSupported;
 
 		#endregion
 	}
