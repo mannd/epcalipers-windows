@@ -363,13 +363,16 @@
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" 
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
-            <AppBarButton x:Uid="MeanRateIntervalBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton x:Uid="MeanRateIntervalBarButton" 
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" 
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                           Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">

@@ -53,6 +53,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
 		public CaliperCollection(
 			ICaliperView caliperView,
 			ISettings settings = null,
@@ -69,16 +70,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void OnMyPropertyChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			Debug.Print("Collection changed");
-			if (CaliperCollectionDelegate != null)
-			{
-				CaliperCollectionDelegate(_calipers.Count);
-			}
+			CaliperCollectionChangeHandler?.Invoke(_calipers.Count);
 		}
 
 		public delegate void CaliperCollectionChangeDelegate(int numberOfCalipers);
 
-		public CaliperCollectionChangeDelegate CaliperCollectionDelegate { get; set; }
+		public CaliperCollectionChangeDelegate CaliperCollectionChangeHandler { get; set; }
 
 
 		private async Task ShowMessage(string title, string message)

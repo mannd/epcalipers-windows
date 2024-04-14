@@ -140,7 +140,7 @@ namespace EPCalipersWinUI3
 				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
 				// NB can get OOM errors with large PDF files when running on x86 system.
-				if (PdfHelper.IsPdfFile(file))
+				if (_pdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
