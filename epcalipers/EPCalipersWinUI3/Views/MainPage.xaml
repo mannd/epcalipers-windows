@@ -45,11 +45,11 @@
                         <KeyboardAccelerator Key="O" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="OpenFromScreenshotMenuItem" Click="OpenFromScreenshot_Click"
-                    IsEnabled="{x:Bind ViewModel.IsOpenFromScreenshotSupported}">
+                <MenuFlyoutItem x:Name="OpenFromScreenShotMenuFlyoutItem"
+                    x:Uid="OpenFromScreenshotMenuItem" Click="OpenFromScreenshot_Click">
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="SaveScreenshotMenuItem" Click="SaveScreenshot_Click" 
-                                IsEnabled="{x:Bind ViewModel.AreScreenshotsSupported, Mode=OneWay}">
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="S" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -68,8 +68,9 @@
                     Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
-            <MenuBarItem x:Uid="ImageMenu" Visibility="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
+            <MenuBarItem x:Uid="ImageMenu" >
                 <MenuFlyoutItem x:Name="ZoomInMenuItem" x:Uid="ZoomInMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ZoomInCommand}">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="ZoomIn" />
@@ -78,7 +79,9 @@
                         <KeyboardAccelerator Key="Add" Modifiers="Control" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Name="ZoomOutMenuItem" x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
+                <MenuFlyoutItem x:Name="ZoomOutMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                                x:Uid="ZoomOutMenuItem" Command="{x:Bind ViewModel.ZoomOutCommand}">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="ZoomOut" />
                     </MenuFlyoutItem.Icon>
@@ -86,39 +89,55 @@
                         <KeyboardAccelerator Key="Subtract" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetZoomMenuItem" Command="{x:Bind ViewModel.ResetZoomCommand}"/>
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="ResetZoomMenuItem" Command="{x:Bind ViewModel.ResetZoomCommand}"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="Rotate90RMenuItem" Click="Rotate90R_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate90RMenuItem" Click="Rotate90R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate90LMenuItem" Click="Rotate90L_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate90LMenuItem" Click="Rotate90L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate1RMenuItem" Click="Rotate1R_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate1RMenuItem" Click="Rotate1R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate1LMenuItem" Click="Rotate1L_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate1LMenuItem" Click="Rotate1L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate01RMenuItem" Click="Rotate01R_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate01RMenuItem" Click="Rotate01R_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="R" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="Rotate01LMenuItem" Click="Rotate01L_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="Rotate01LMenuItem" Click="Rotate01L_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="L" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="ResetRotationMenuItem" Click="ResetRotation_Click">
+                <MenuFlyoutItem 
+                    IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                    x:Uid="ResetRotationMenuItem" Click="ResetRotation_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -395,5 +414,18 @@
                 </Image>
             </local:CaliperGrid>
         </ScrollViewer>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Visibility="{x:Bind ViewModel.HasNoMainImage, Mode=OneWay}">
+            <TextBlock Margin="0,0,0,20" Style="{StaticResource TitleTextBlockStyle}" >
+                Welcome to EP Calipers 3</TextBlock>
+            <HyperlinkButton Margin="0,0,0,10" Click="OpenFile_Click" >
+                Click here or type Ctrl+O to open an image file</HyperlinkButton>
+            <HyperlinkButton Margin="0,0,0,10"  Command="{x:Bind ViewModel.TransparenWindowCommand}">
+                Click here to switch to a transparent window</HyperlinkButton>
+            <HyperlinkButton  Margin="0,0,0,10" Command="{x:Bind ViewModel.ShowSettingsCommand}">
+                Click here to change startup settings</HyperlinkButton>
+            <HyperlinkButton  Command="{x:Bind ViewModel.HelpCommand}">
+                Click here for help</HyperlinkButton>
+        </StackPanel>
     </Grid>
 </Page>

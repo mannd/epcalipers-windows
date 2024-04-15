@@ -35,13 +35,8 @@ namespace EPCalipersWinUI3
 			Debug.Print("MainPageViewModel constructor");
 			SetZoom = setZoomDelegate;
 			_pdfHelper = new PdfHelper();
-			isOpenFromScreenshotSupported = GraphicsCaptureSession.IsSupported();
-			AreScreenshotsSupported = HasMainImage && IsOpenFromScreenshotSupported;
-		}
-
-		partial void OnHasMainImageChanged(bool value)
-		{
-			AreScreenshotsSupported = value && IsOpenFromScreenshotSupported;
+			HasMainImage = (MainImageSource != null);
+			HasNoMainImage = !HasMainImage;
 		}
 
 		public bool ClearCalipersBetweenPdfPages
@@ -87,10 +82,9 @@ namespace EPCalipersWinUI3
 			base.OnPropertyChanged(e);
 			if (e.PropertyName == nameof(MainImageSource))
 			{
-				if (MainImageSource != null)
-				{
-					HasMainImage = true;
-				}
+				Debug.Print("changing main image source");
+				HasMainImage = (MainImageSource != null);
+				HasNoMainImage = !HasMainImage;
 			}
 		}
 
@@ -123,11 +117,6 @@ namespace EPCalipersWinUI3
 			{
 				MainImageSource = new BitmapImage { UriSource = new Uri("ms-appx:///Assets/Images/sampleECG.jpg") };
 				SetTitleBarName("SampleECG".GetLocalized());
-				HasMainImage = true;
-			}
-			else
-			{
-				HasMainImage = false;
 			}
 			_isStartup = false;
 		}
@@ -334,7 +323,7 @@ namespace EPCalipersWinUI3
 		private bool hasMainImage;
 
 		[ObservableProperty]
-		private bool areScreenshotsSupported;
+		private bool hasNoMainImage;
 
 		[ObservableProperty]
 		private bool isOpenFromScreenshotSupported;

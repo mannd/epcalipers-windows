@@ -66,6 +66,22 @@
                    HorizontalAlignment="Center" Style="{StaticResource TitleLargeTextBlockStyle}" />
         <ScrollViewer Grid.Row="2" VerticalScrollMode="Enabled" Margin="10" HorizontalScrollBarVisibility="Auto">
             <StackPanel>
+                <TextBlock x:Uid="StartupSettings" 
+                           Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+                <CheckBox x:Uid="ShowSampleEcgAtStartUp" IsChecked="{x:Bind ViewModel.ShowSampleEcgAtStartUp, Mode=TwoWay}" />
+                <RadioButtons x:Name="CaliperViewOrientationRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.CaliperViewAlignment}"  
+                          MaxColumns="2" Header="Image orientation"
+                              SelectionChanged="CaliperViewOrientationRadioButtons_SelectionChanged" 
+                              ItemsSource="{x:Bind ViewModel.ImagePositionItems}">
+                </RadioButtons>
+                <RadioButtons x:Name="StartupWindowRadioButtons" 
+                              SelectedIndex="{x:Bind ViewModel.StartupPage}"  
+                          MaxColumns="2" Header="Startup window"
+                              SelectionChanged="StartupPageRadioButtons_SelectionChanged" 
+                              ItemsSource="{x:Bind ViewModel.ViewItems}">
+                </RadioButtons>
+                <CheckBox x:Uid="IsAlwaysOnTop" IsChecked="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 <TextBlock x:Uid="LabelsSettings" Style="{StaticResource SubtitleTextBlockStyle}"
                            Margin="0,20,0,10"></TextBlock>
                 <CheckBox x:Uid="Autoposition" IsChecked="{x:Bind ViewModel.AutoAlignLabel, Mode=TwoWay}" />
@@ -133,22 +149,6 @@
                 <TextBlock x:Uid="BrugadaTriangleSettings" 
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}" ></TextBlock>
                 <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />
-                <TextBlock x:Uid="StartupSettings" 
-                           Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                <CheckBox x:Uid="ShowSampleEcgAtStartUp" IsChecked="{x:Bind ViewModel.ShowSampleEcgAtStartUp, Mode=TwoWay}" />
-                <RadioButtons x:Name="CaliperViewOrientationRadioButtons" 
-                              SelectedIndex="{x:Bind ViewModel.CaliperViewAlignment}"  
-                          MaxColumns="2" Header="Image orientation"
-                              SelectionChanged="CaliperViewOrientationRadioButtons_SelectionChanged" 
-                              ItemsSource="{x:Bind ViewModel.ImagePositionItems}">
-                </RadioButtons>
-                <RadioButtons x:Name="StartupWindowRadioButtons" 
-                              SelectedIndex="{x:Bind ViewModel.StartupPage}"  
-                          MaxColumns="2" Header="Startup window"
-                              SelectionChanged="StartupPageRadioButtons_SelectionChanged" 
-                              ItemsSource="{x:Bind ViewModel.ViewItems}">
-                </RadioButtons>
-                <CheckBox x:Uid="IsAlwaysOnTop" IsChecked="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 <TextBlock x:Uid="ZoomSettings" 
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />

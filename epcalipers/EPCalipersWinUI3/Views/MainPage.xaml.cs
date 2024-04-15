@@ -11,33 +11,24 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX.Direct3D11;
-using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
-using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.Storage.Streams;
 using Windows.Win32.Foundation;
 using WinRT.Interop;
-using WinUIEx;
 
 
 namespace EPCalipersWinUI3.Views
 {
-	public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page
 	{
 		#region fields
 		public MainPageViewModel ViewModel { get; set; }
@@ -65,6 +56,12 @@ namespace EPCalipersWinUI3.Views
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
 			_device = Direct3D11Helper.CreateDirect3DDeviceFromD3D11Device(_d3dDevice);
+
+			// Don't bother showing screenshot capture if it isn't supported at all on device.
+			if (!GraphicsCaptureSession.IsSupported())
+			{
+				OpenFromScreenShotMenuFlyoutItem.Visibility = Visibility.Collapsed;
+			}
 
 			ZoomInMenuItem.KeyboardAccelerators.Add(new KeyboardAccelerator()
 			{

@@ -163,16 +163,17 @@ namespace EPCalipersWinUI3.Models
 			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? false);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
-		// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
 
 		public bool ShowSampleEcgAtStartUp
 		{
-			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? true);
+			// NB: The default is now true, since we have a nice startup screen.
+			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? false);
 			set => _localSettings.Values[_showSampleEcgAtStartUpKey ] = value;	
 		}
 
 		public bool ShowBrugadaTriangle
 		{
+			// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
 			get => (bool)(_localSettings.Values[_showBrugadaTriangleKey] ?? true);
 			set => _localSettings.Values[_showBrugadaTriangleKey] = value;
 		}

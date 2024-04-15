@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Windows.Graphics.DirectX;
 
 // This screen capture code is from https://github.com/robmikh/WinUI3CaptureSample, covered under the MIT license
-
 namespace EPCalipersWinUI3.Helpers
 {
 	static class CaptureSnapshot
