@@ -14,6 +14,7 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class MeasureIntervalViewModel : ObservableObject
 	{
 		private static readonly string _invalidCaliperText = "InvalidCaliperText".GetLocalized();
+		private static readonly string _timeCaliperNotCalibratedText = "TimeCalipersNotCalibratedText".GetLocalized();
 		private static readonly string _dialogTitle = "MeanRateIntervalTitle".GetLocalized();
 		private static readonly string _totalInterval = "TotalInterval".GetLocalized();
 		private static readonly string _qtTotalInterval = "QTTotalInterval".GetLocalized();
@@ -153,17 +154,26 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			// Number of intervals = 1 forces total interval, and showBpm false forces interval, not bpm.
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, 1, false);
-			return IsValidCaliper() ? _totalIntervalText + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _totalIntervalText + $" = {interval?.Item1} {interval?.Item2}" : InvalidCaliperText();
 		}
 		private string GetFormattedMeanInterval()
 		{
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, false);
-			return IsValidCaliper() ? _meanInterval + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _meanInterval + $" = {interval?.Item1} {interval?.Item2}" : InvalidCaliperText();
 		}
 		private string GetFormattedMeanRate()
 		{
 			var interval = Caliper?.Calibration.GetMeanCalibratedInterval(Caliper.Value, NumberOfIntervals, true);
-			return IsValidCaliper() ? _meanRate + $" = {interval?.Item1} {interval?.Item2}" : _invalidCaliperText;
+			return IsValidCaliper() ? _meanRate + $" = {interval?.Item1} {interval?.Item2}" : InvalidCaliperText();
+		}
+
+		private string InvalidCaliperText()
+		{
+			if (CaliperCollection != null && CaliperCollection.TimeCalibration.IsUncalibrated)
+			{
+				return _timeCaliperNotCalibratedText;
+			}
+			return _invalidCaliperText;
 		}
 
 		private Measurement MeanIntervalMeasurement()

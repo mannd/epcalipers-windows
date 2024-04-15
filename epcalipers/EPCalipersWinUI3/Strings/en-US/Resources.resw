@@ -753,6 +753,9 @@
   <data name="StartupWelcomeMessage.Text" xml:space="preserve">
     <value>Welcome to EP Calipers 3</value>
   </data>
+  <data name="TimeCalipersNotCalibratedText" xml:space="preserve">
+    <value>Time calipers not calibrated</value>
+  </data>
   <data name="TransparentWindowHyperlinkButton.Content" xml:space="preserve">
     <value>Click here to switch to a transparent window</value>
   </data>
