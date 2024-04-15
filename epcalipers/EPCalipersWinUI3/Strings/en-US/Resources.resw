@@ -741,4 +741,19 @@
     <value>Delete selected caliper</value>
     <comment>Main menu delete selected caliper</comment>
   </data>
+  <data name="HelpHyperlinkButton.Content" xml:space="preserve">
+    <value>Click here for help</value>
+  </data>
+  <data name="OpenFileHyperlinkButton.Content" xml:space="preserve">
+    <value>Click here or type Ctrl+O to open an image file</value>
+  </data>
+  <data name="SettingsHyperlinkButton.Content" xml:space="preserve">
+    <value>Click here to change settings</value>
+  </data>
+  <data name="StartupWelcomeMessage.Text" xml:space="preserve">
+    <value>Welcome to EP Calipers 3</value>
+  </data>
+  <data name="TransparentWindowHyperlinkButton.Content" xml:space="preserve">
+    <value>Click here to switch to a transparent window</value>
+  </data>
 </root>
