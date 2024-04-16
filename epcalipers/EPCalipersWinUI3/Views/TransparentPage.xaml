@@ -77,7 +77,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" 
+                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                     Command="{x:Bind ViewModel.DeleteSelectedCaliperCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" />
@@ -90,7 +90,8 @@
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem Icon="Clear" x:Uid="UnselectAllCalipersMenuItem"
+                <MenuFlyoutItem Icon="Clear" x:Uid="UnselectAllCalipersMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.UnselectAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Escape" />
@@ -99,10 +100,11 @@
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                 Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
+                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MoveLeftMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Control"/>
@@ -112,6 +114,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveRightMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Control"/>
@@ -121,6 +124,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveUpMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Up" Modifiers="Control"/>
@@ -130,6 +134,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveDownMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Down" Modifiers="Control"/>
@@ -140,6 +145,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MicroMoveLeftMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MicroMoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
@@ -149,6 +155,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveRightMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MicroMoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
@@ -158,6 +165,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveUpMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MicroMoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
@@ -167,6 +175,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveDownMenuItem"
+                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MicroMoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
@@ -177,15 +186,16 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem"
+                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" >
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem"
+                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
-                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
+                <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
+                                Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}"> 
                     <MenuFlyoutItem.Icon>
@@ -203,11 +213,9 @@
                 <MenuFlyoutItem x:Uid="AboutMenuItem" Click="About_Click"/>
             </MenuBarItem>
         </MenuBar>
-        <!--TODO: Segoe Fluent icons not included in Win10, so must add
-      the font to shared resources, and may need to change syntax below.-->
         <CommandBar Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                         IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton x:Uid="AddCaliperBarButton"  >
+            <AppBarButton x:Uid="AddCaliperBarButton">
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
@@ -237,17 +245,20 @@
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                         Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                        <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
+                        <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
+                                        IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
+                                        Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton"
+            <AppBarButton Icon="Switch" x:Uid="RateIntervalBarButton" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}" />
-            <AppBarButton x:Uid="MeanRateIntervalBarButton"
+            <AppBarButton x:Uid="MeanRateIntervalBarButton" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}">
                 <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE94A;" />
             </AppBarButton>
-            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
+            <AppBarButton Icon="Calculator" x:Uid="QTcBarButton" IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}" 
+                          Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Icon="Setting" x:Uid="SettingsBarButton">
                     <AppBarButton.KeyboardAccelerators>

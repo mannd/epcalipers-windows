@@ -85,6 +85,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			await dialog.ShowAsync();
 		}
 
+		public bool IsCalibrated => TimeCalibration.IsCalibrated || AmplitudeCalibration.IsCalibrated;
+
 		public Calibration TimeCalibration
 		{
 			get => _timeCalibration;
@@ -98,7 +100,21 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 		private Calibration _timeCalibration = Calibration.Uncalibrated;
-		public Calibration AmplitudeCalibration { get; set; } = Calibration.Uncalibrated;
+
+		public Calibration AmplitudeCalibration
+		{
+			get => _amplitudeCalibration;
+			set
+			{
+				if (_amplitudeCalibration != value)
+				{
+					_amplitudeCalibration = value;
+					OnPropertyChanged(nameof(AmplitudeCalibration));
+				}
+			}
+		}
+		private Calibration _amplitudeCalibration = Calibration.Uncalibrated;
+
 		public AngleCalibration AngleCalibration { get; set; } = AngleCalibration.Uncalibrated;
 
 		// A calibrated time caliper can show interval or rate.
@@ -174,6 +190,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 				var bar = caliper.IsNearBar(point);
 				if (bar != null)
 				{
+					if (caliper.IsSelected)
+					{
+						SelectedCaliper = null;
+					}
 					caliper.Remove(_caliperView);
 					_calipers.Remove(caliper);
 					break;

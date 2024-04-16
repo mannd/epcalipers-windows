@@ -35,7 +35,7 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.PropertyChanged += OnMyPropertyChanged;
 			_caliperCollection.CaliperCollectionChangeHandler = CaliperCollectionChanged;
 			IsTimeCalibrated = _caliperCollection.TimeCalibration?.IsCalibrated ?? false;
-			//_caliperCollection._calipers.PropertyChanged += OnMyPropertyChanged;
+			IsCalibrated = _caliperCollection.IsCalibrated;
 		}
 
 		public void CaliperCollectionChanged(int numberOfCalipers)
@@ -48,16 +48,16 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
 			{ 
-				Debug.Print("SelectedCaliper changed");
 				ACaliperIsSelected = _caliperCollection.SelectedCaliper?.IsSelected ?? false;
 			}
-			// TODO: Logic to activate measurements:
-			// Need a time caliper, need it to be calibrated?
-			// Or just require calibration, it may be too distracting to see the menu disappear everytime a caliper is deleted.
 			if (e.PropertyName == nameof(CaliperCollection.TimeCalibration))
 			{
-				Debug.Print("Time calibration changed");
 				IsTimeCalibrated = _caliperCollection.TimeCalibration?.IsCalibrated ?? false;
+				IsCalibrated = _caliperCollection.IsCalibrated;
+			}
+			if (e.PropertyName == nameof(CaliperCollection.AmplitudeCalibration))
+			{
+				IsCalibrated = _caliperCollection.IsCalibrated;
 			}
 		}
 
@@ -310,6 +310,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool isTimeCalibrated;
+
+		[ObservableProperty]
+		private bool isCalibrated;
 
 		#endregion
 	}

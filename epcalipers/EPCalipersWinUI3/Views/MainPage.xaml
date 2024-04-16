@@ -68,7 +68,7 @@
                     Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
-            <MenuBarItem x:Uid="ImageMenu" >
+            <MenuBarItem x:Uid="ImageMenu" x:Name="ImageMenu">
                 <MenuFlyoutItem x:Name="ZoomInMenuItem" x:Uid="ZoomInMenuItem" 
                                 IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ZoomInCommand}">
@@ -159,7 +159,7 @@
                 <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
-            <MenuBarItem x:Uid="CalipersMenu" >
+            <MenuBarItem x:Uid="CalipersMenu" x:Name="CalipersMenu">
                 <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
                                Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
@@ -206,7 +206,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem Icon="Clear" x:Uid="UnselectAllCalipersMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.UnselectAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Escape" />
@@ -216,12 +216,11 @@
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MoveLeftMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Control"/>
@@ -231,7 +230,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveRightMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Control"/>
@@ -241,7 +240,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveUpMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Up" Modifiers="Control"/>
@@ -251,7 +250,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MoveDownMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Down" Modifiers="Control"/>
@@ -262,7 +261,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MicroMoveLeftMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
@@ -272,7 +271,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveRightMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
@@ -282,7 +281,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveUpMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
@@ -292,7 +291,7 @@
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="MicroMoveDownMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
@@ -377,7 +376,9 @@
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                         Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                        <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" Command="{x:Bind ViewModel.ClearCalibrationCommand}">
+                        <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
+                                        IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
+                                        Command="{x:Bind ViewModel.ClearCalibrationCommand}">
                         </MenuFlyoutItem>
                     </MenuFlyout>
                 </AppBarButton.Flyout>
