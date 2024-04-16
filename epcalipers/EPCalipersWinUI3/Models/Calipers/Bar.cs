@@ -168,7 +168,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_line = fakeUI ? null : new Line();
 			if (_line != null)
 			{
-				// TODO: This doesn't seem to affect the shape at the end of the line.
+				// NB: This doesn't seem to affect the shape at the end of the line.
 				// Would like to have a rounded shape at the apex of the angle calipers.
 				//_line.StrokeEndLineCap = PenLineCap.Round;
 			}

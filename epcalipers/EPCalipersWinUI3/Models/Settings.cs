@@ -4,14 +4,13 @@ using EPCalipersWinUI3.Views;
 using Microsoft.UI;
 using System;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using Windows.Storage;
 using Windows.UI;
 using static EPCalipersWinUI3.Helpers.MathHelper;
 
 namespace EPCalipersWinUI3.Models
 {
-	public enum Rounding
+    public enum Rounding
 	{
 		ToInt,
 		ToFourPlaces,
@@ -166,14 +165,13 @@ namespace EPCalipersWinUI3.Models
 
 		public bool ShowSampleEcgAtStartUp
 		{
-			// NB: The default is now true, since we have a nice startup screen.
+			// The default is now true, since we have a nice startup screen.
 			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? false);
 			set => _localSettings.Values[_showSampleEcgAtStartUpKey ] = value;	
 		}
 
 		public bool ShowBrugadaTriangle
 		{
-			// TODO: default for show Brugada triangle should probably be false.  Set true for testing.
 			get => (bool)(_localSettings.Values[_showBrugadaTriangleKey] ?? true);
 			set => _localSettings.Values[_showBrugadaTriangleKey] = value;
 		}

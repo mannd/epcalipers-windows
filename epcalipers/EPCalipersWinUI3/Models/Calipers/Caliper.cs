@@ -326,7 +326,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (Selection == CaliperSelection.Full)
 			{
 				Color = SelectedColor;
-				// TODO: setting to change all unselected colors too?
+				// DEFER: setting to change all unselected colors too?
 				// If selected, all unselected colors are changed.
 			}
 			else if (Selection == CaliperSelection.Partial)

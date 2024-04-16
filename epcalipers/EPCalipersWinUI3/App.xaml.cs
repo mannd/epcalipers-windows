@@ -38,7 +38,7 @@ namespace EPCalipersWinUI3
 		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 		{
 			Debug.Print("App.OnLaunched()");
-			// TODO: WinUI3 Bug? First attempt to open file type fails, but subsequent attempts work.
+			// NB: WinUI3 Bug? First attempt to open file type fails, but subsequent attempts work.
 			// see https://stackoverflow.com/questions/76650127/how-to-handle-activation-through-files-in-winui-3-packaged
 			AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 

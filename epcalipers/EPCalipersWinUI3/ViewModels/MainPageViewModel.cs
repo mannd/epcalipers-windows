@@ -128,7 +128,8 @@ namespace EPCalipersWinUI3
 			{
 				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
-				// NB can get OOM errors with large PDF files when running on x86 system.
+				// BUG: (Possible) Can get OOM errors with large PDF files when running on x86 system.  
+				// But no way to test on an ARM64 system that only can emulate x64 code?
 				if (_pdfHelper.IsPdfFile(file))
 				{
 					_pdfHelper.LoadPdfFile(file);
