@@ -165,6 +165,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return point;
 		}
 
+		// TODO: Keep triangle label within bounds - this should be fixed when all labels kept withing bounds.
 		private void InitTriangleBase(double height)
 		{
 			Point point1 = GetBasePoint1ForHeight(height);
@@ -274,7 +275,20 @@ CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWith
 				double baseValue = point2.X - point1.X;
 				TriangleBaseLabel.Text = AngleCalibration.GetSecondaryText(baseValue);
 				TriangleBaseLabel.SetPosition();
-				TriangleBaseLabel.Visibility = Visibility.Visible;
+				if ( // Hide TriangleBaseBar if it is out of bounds. 
+					TriangleBaseBar.X1 < _margin
+					|| TriangleBaseBar.X1 > Bounds.Width -  _margin
+					|| TriangleBaseBar.X2 < _margin
+					|| TriangleBaseBar.X2 > Bounds.Width - _margin
+					|| TriangleBaseBar.Y1 > Bounds.Height - _margin
+					)
+				{
+					TriangleBaseBar.Visibility = Visibility.Collapsed;
+				}
+				else
+				{
+					TriangleBaseLabel.Visibility = Visibility.Visible;
+				}
 			}
 			else
 			{

@@ -63,7 +63,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var right = (int)(left + _size.Width);
 			if (right > _view.Bounds.Width - 10)
 			{
-				left =  left - (right - ((int)_view.Bounds.Width - 10));
+				left -=  (right - ((int)_view.Bounds.Width - 10));
 			}
 			var top = (int)(Caliper.ApexBar.Position - _size.Height - _padding);
 			top = Math.Max(top, 10);
