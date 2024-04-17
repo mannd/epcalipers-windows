@@ -177,8 +177,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			string text = AngleCalibration.GetFormattedMeasurement(Value);
 			int fontSize = _settings.FontSize;
-			CaliperLabel = new AngleCaliperLabel(this, text,
-				CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI);
+			CaliperLabel = new AngleCaliperLabel(this, CaliperView, text,
+CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI);
 		}
 
 		private void InitTriangleLabel(AngleCaliperPosition position)
