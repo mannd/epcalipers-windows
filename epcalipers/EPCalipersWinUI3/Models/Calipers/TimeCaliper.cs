@@ -1,6 +1,7 @@
 ﻿using EPCalipersWinUI3.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -146,18 +147,31 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// TODO: Consider hiding out of bounds caliper components, to avoid image shifting when it is centered.
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
+			var width = Bounds.Width - 10;
+			var height = Bounds.Height - 10;
+			Debug.Print(Bounds.Width.ToString());
 			if (bar == LeftBar)
 			{
+				var leftBarPosition = LeftBar.Position + delta.X;
+				if (leftBarPosition > width || leftBarPosition < 10) return;
 				bar.Position += delta.X;
 				CrossBar.X1 += delta.X;
 			}
 			else if (bar == RightBar)
 			{
+				var rightBarPosition = RightBar.Position + delta.X;
+				if (rightBarPosition > width || rightBarPosition < 10) return;
 				bar.Position += delta.X;
 				CrossBar.X2 += delta.X;
 			}
 			else if (bar == CrossBar)
 			{
+				var leftBarPosition = LeftBar.Position + delta.X;
+				var rightBarPosition = RightBar.Position + delta.X;
+				var crossBarPosition = CrossBar.Position + delta.Y;
+				if (leftBarPosition > width || leftBarPosition < 10) return;
+				if (rightBarPosition > width || rightBarPosition < 10) return;
+				if (crossBarPosition > height || crossBarPosition < 10) return;
 				LeftBar.Position += delta.X;
 				RightBar.Position += delta.X;
 				bar.X1 += delta.X;
@@ -168,6 +182,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				MarchingCaliper?.Move();
 			}
+			// TODO: Don't allow label to go out of bounds!
 			UpdateLabel();
 		}
 		#endregion

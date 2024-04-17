@@ -211,13 +211,13 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
-				if (position.Position.X < EcgImage.ActualWidth - _dragMargin
-					&& position.Position.Y < EcgImage.ActualHeight - 5
-					&& position.Position.Y > 5
-					&& position.Position.X > 5)
-				{
+				//if (position.Position.X < EcgImage.ActualWidth - _dragMargin
+				//	&& position.Position.Y < EcgImage.ActualHeight - 5
+				//	&& position.Position.Y > 5
+				//	&& position.Position.X > 5)
+				//{
 					ViewModel.DragCaliperComponent(position.Position);
-				}
+				//}
 			}
 		}
 
