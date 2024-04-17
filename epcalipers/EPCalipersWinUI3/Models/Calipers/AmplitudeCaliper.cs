@@ -58,18 +58,30 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
+			var width = Bounds.Width - _margin;
+			var height = Bounds.Height - _margin;
 			if (bar == TopBar)
 			{
+				var topBarPosition = TopBar.Position + delta.Y;
+				if (topBarPosition > height || topBarPosition < _margin) return;
 				bar.Position += delta.Y;
 				CrossBar.Y1 += delta.Y;
 			}
 			else if (bar == BottomBar)
 			{
+				var bottomBarPosition = BottomBar.Position + delta.Y;
+				if (bottomBarPosition > height || bottomBarPosition < _margin) return;
 				bar.Position += delta.Y;
 				CrossBar.Y2 += delta.Y;
 			}
 			else if (bar == CrossBar)
 			{
+				var topBarPosition = TopBar.Position + delta.Y;
+				var bottomBarPosition = BottomBar.Position + delta.Y;
+				var crossBarPosition = CrossBar.Position + delta.X;
+				if (topBarPosition > height || topBarPosition < _margin) return;
+				if (bottomBarPosition > height || bottomBarPosition < _margin) return;
+				if (crossBarPosition > width || crossBarPosition < _margin) return;
 				TopBar.Position += delta.Y;
 				BottomBar.Position += delta.Y;
 				bar.Position += delta.X;

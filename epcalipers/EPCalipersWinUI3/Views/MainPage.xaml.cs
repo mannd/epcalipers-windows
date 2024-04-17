@@ -201,6 +201,7 @@ namespace EPCalipersWinUI3.Views
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(CaliperView);
+			CaliperView.CapturePointer(e.Pointer);
 			pointerPosition = position.Position;
 			pointerDown = true;
 			ViewModel.GrabCaliper(pointerPosition);
@@ -211,19 +212,21 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
-				//if (position.Position.X < EcgImage.ActualWidth - _dragMargin
-				//	&& position.Position.Y < EcgImage.ActualHeight - 5
-				//	&& position.Position.Y > 5
-				//	&& position.Position.X > 5)
-				//{
+				// TODO: See if this code is needed if we can keep caliper elements all within bounds.
+				if (position.Position.X < EcgImage.ActualWidth - _dragMargin
+					&& position.Position.Y < EcgImage.ActualHeight - 5
+					&& position.Position.Y > 5
+					&& position.Position.X > 5)
+				{
 					ViewModel.DragCaliperComponent(position.Position);
-				//}
+				}
 			}
 		}
 
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			ViewModel.ReleaseGrabbedCaliper();
+			CaliperView.ReleasePointerCapture(e.Pointer);
 			pointerDown = false;
 		}
 		#endregion

@@ -147,20 +147,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		// TODO: Consider hiding out of bounds caliper components, to avoid image shifting when it is centered.
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
-			var width = Bounds.Width - 10;
-			var height = Bounds.Height - 10;
+			var width = Bounds.Width - _margin;
+			var height = Bounds.Height - _margin;
 			Debug.Print(Bounds.Width.ToString());
 			if (bar == LeftBar)
 			{
 				var leftBarPosition = LeftBar.Position + delta.X;
-				if (leftBarPosition > width || leftBarPosition < 10) return;
+				if (leftBarPosition > width || leftBarPosition < _margin) return;
 				bar.Position += delta.X;
 				CrossBar.X1 += delta.X;
 			}
 			else if (bar == RightBar)
 			{
 				var rightBarPosition = RightBar.Position + delta.X;
-				if (rightBarPosition > width || rightBarPosition < 10) return;
+				if (rightBarPosition > width || rightBarPosition < _margin) return;
 				bar.Position += delta.X;
 				CrossBar.X2 += delta.X;
 			}
@@ -169,9 +169,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 				var leftBarPosition = LeftBar.Position + delta.X;
 				var rightBarPosition = RightBar.Position + delta.X;
 				var crossBarPosition = CrossBar.Position + delta.Y;
-				if (leftBarPosition > width || leftBarPosition < 10) return;
-				if (rightBarPosition > width || rightBarPosition < 10) return;
-				if (crossBarPosition > height || crossBarPosition < 10) return;
+				if (leftBarPosition > width || leftBarPosition < _margin) return;
+				if (rightBarPosition > width || rightBarPosition < _margin) return;
+				if (crossBarPosition > height || crossBarPosition < _margin) return;
 				LeftBar.Position += delta.X;
 				RightBar.Position += delta.X;
 				bar.X1 += delta.X;

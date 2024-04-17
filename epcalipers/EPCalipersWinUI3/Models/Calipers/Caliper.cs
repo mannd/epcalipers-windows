@@ -55,6 +55,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private const double _defaultCaliperValue = 200;
 		private static readonly int _maxNumberIntervals = 10;
 		protected bool _fakeUI;  // Is true for testing.
+		protected const double _margin = 10;  // Margin between Bounds of CaliperView and calipers.
 
 		protected Caliper(ICaliperView caliperView, Calibration calibration = null)
 		{

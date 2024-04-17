@@ -75,6 +75,7 @@ namespace EPCalipersWinUI3.Views
 		private void CaliperGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			var position = e.GetCurrentPoint(this.TransparentCaliperView);
+			TransparentCaliperView.CapturePointer(e.Pointer);
 			pointerPosition = position.Position;
 			pointerDown = true;
 			ViewModel.GrabCaliper(pointerPosition);
@@ -132,6 +133,7 @@ namespace EPCalipersWinUI3.Views
 		private void CaliperGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			ViewModel.ReleaseGrabbedCaliper();
+			TransparentCaliperView.ReleasePointerCapture(e.Pointer);
 			pointerDown = false;
 		}
 
