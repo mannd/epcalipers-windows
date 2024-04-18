@@ -94,18 +94,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return IsInBounds(_position, _size, _bounds);
 		}
 
-		public bool IsInBounds(CaliperLabelPosition position, Size size, Bounds bounds)
-		{
-			int margin = 0;
-			var right = position.Left + size.Width;
-			var bottom = position.Top + size.Height;
-			var inBounds = position.Left > margin 
-				&& position.Top > margin
-				&& right < bounds.Width - margin
-				&& bottom < bounds.Height - margin;
-			return inBounds;
-		}
-
 		public CaliperLabelAlignment AutoAlign(CaliperLabelAlignment alignment, bool autoAlign)
 		{
 			if (!autoAlign) { return alignment; }

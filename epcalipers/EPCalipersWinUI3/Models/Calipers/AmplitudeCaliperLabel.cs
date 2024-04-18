@@ -52,13 +52,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (TextBlock == null) return;
 			var alignment = AutoAlign(Alignment, AutoAlignLabel);
-			GetPosition(alignment);
-			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
+			if (GetPosition(alignment))
+			{
+				TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
+				TextBlock.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				TextBlock.Visibility = Visibility.Collapsed;
+			}
 		}
 
-		private void GetPosition(CaliperLabelAlignment alignment)
+		private bool GetPosition(CaliperLabelAlignment alignment)
 		{
-			if (TextBlock == null) return;
+			if (TextBlock == null) return false;
 			_size = ShapeMeasure(TextBlock);
 			_size.Width = TextBlock.ActualWidth;
 			_size.Height = TextBlock.ActualHeight;
@@ -81,6 +88,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					_position.Top = (int)(Caliper.CrossBar.MidPoint.Y - _size.Height / 2);
 					break;
 			}
+			return IsInBounds(_position, _size, _bounds);
 		}
 
 		public CaliperLabelAlignment AutoAlign(CaliperLabelAlignment alignment, bool autoAlign)

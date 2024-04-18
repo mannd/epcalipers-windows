@@ -187,5 +187,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			SetPosition();
 		}
+
+		public static bool IsInBounds(CaliperLabelPosition position, Size size, Bounds bounds)
+		{
+			int margin = 0;
+			var right = position.Left + size.Width;
+			var bottom = position.Top + size.Height;
+			var inBounds = position.Left > margin 
+				&& position.Top > margin
+				&& right < bounds.Width - margin
+				&& bottom < bounds.Height - margin;
+			return inBounds;
+		}
 	}
 }

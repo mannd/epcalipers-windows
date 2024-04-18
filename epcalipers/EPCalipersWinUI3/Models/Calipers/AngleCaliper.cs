@@ -287,13 +287,12 @@ CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWith
 				}
 				else
 				{
-					TriangleBaseLabel.Visibility = Visibility.Visible;
+					TriangleBaseBar.Visibility = Visibility.Visible;
 				}
 			}
 			else
 			{
 				TriangleBaseBar.Visibility = Visibility.Collapsed;
-				TriangleBaseLabel.Visibility = Visibility.Collapsed;
 			}
 		}
 
