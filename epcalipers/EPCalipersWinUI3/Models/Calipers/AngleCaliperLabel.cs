@@ -62,18 +62,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_size = ShapeMeasure(TextBlock);
 			_size.Width = TextBlock.ActualWidth;
 			_size.Height = TextBlock.ActualHeight;
-			// Angle caliper labels are always at the top,
-			// but they need to adjust to avoid hitting the view bounds.
-			//var left = (int)(Caliper.ApexBar.MidPoint.X - _size.Width / 2);
-			//left = Math.Max(left, 10);
-			//var right = (int)(left + _size.Width);
-			//if (right > _view.Bounds.Width - 10)
-			//{
-			//	left -=  (right - ((int)_view.Bounds.Width - 10));
-			//}
 			var left = (int)(Caliper.ApexBar.MidPoint.X - _size.Width / 2);
 			var top = (int)(Caliper.ApexBar.Position - _size.Height - _padding);
-			//top = Math.Max(top, 10);
 			_position.Left = left;
 			_position.Top = top;
 			return IsInBounds(_position, _size, _view.Bounds);
