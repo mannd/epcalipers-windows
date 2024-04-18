@@ -50,16 +50,28 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (TextBlock == null) return;
 			var alignment = AutoAlign(Alignment, AutoAlignLabel);
-			GetPosition(alignment);
-			TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
+			var isInBounds = GetPosition(alignment);
+			if (isInBounds)
+			{
+				TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
+				TextBlock.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				TextBlock.Visibility = Visibility.Collapsed;
+			}
 		}
 
-		private void GetPosition(CaliperLabelAlignment alignment)
+		// TODO: Need to hide labels that are out of bounds.  
+		// This can happen even with autoalign labels on, and it can definitely
+		// happen when there is no autoalignment.
+		private bool GetPosition(CaliperLabelAlignment alignment)
 		{
-			if (TextBlock == null) return;
+			if (TextBlock == null) return false;
 			_size = ShapeMeasure(TextBlock);
 			_size.Width = TextBlock.ActualWidth;
 			_size.Height = TextBlock.ActualHeight;
+			// Check for out of bounds
 			switch (alignment)
 			{
 				case CaliperLabelAlignment.Top:
@@ -79,6 +91,19 @@ namespace EPCalipersWinUI3.Models.Calipers
 					_position.Top = (int)(Caliper.CrossBar.Position - _size.Height / 2);
 					break;
 			}
+			return IsInBounds(_position, _size, _bounds);
+		}
+
+		public bool IsInBounds(CaliperLabelPosition position, Size size, Bounds bounds)
+		{
+			int margin = 0;
+			var right = position.Left + size.Width;
+			var bottom = position.Top + size.Height;
+			var inBounds = position.Left > margin 
+				&& position.Top > margin
+				&& right < bounds.Width - margin
+				&& bottom < bounds.Height - margin;
+			return inBounds;
 		}
 
 		public CaliperLabelAlignment AutoAlign(CaliperLabelAlignment alignment, bool autoAlign)

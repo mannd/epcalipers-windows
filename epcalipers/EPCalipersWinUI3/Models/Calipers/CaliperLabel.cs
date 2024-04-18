@@ -42,7 +42,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public const int LargeFont = 32;
 		public const int ExtraLargeFont = 46;
 
-		protected readonly int _padding = 10;
+		protected readonly int _padding = 5;
 
 		public CaliperLabel(
 			Caliper caliper,
