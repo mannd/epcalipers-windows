@@ -32,7 +32,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Marching  // For marching calipers
 		}
 
-		private readonly double _barMargin = 5;  // offset from margin of CaliperView.
+		private static double _barMargin = 2;  // offset from margin of CaliperView.
 
 		public Role BarRole { get; set; }
 		public Bounds Bounds { get; set; }
@@ -234,13 +234,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void SetAngleBarPosition(Point apex, double angle)
 		{
 			var length = 2 * Math.Max(Bounds.Height, Bounds.Width);
-			var adjustedEndPoint = ClippedEndPoint(apex, angle, length, new Point(0, Bounds.Height), new Point(Bounds.Width, Bounds.Height));
+			var adjustedEndPoint = ClippedEndPoint(apex,
+										  angle,
+										  length,
+										  new Point(_barMargin, Bounds.Height - _barMargin),
+										  new Point(Bounds.Width - _barMargin, Bounds.Height - _barMargin));
 			X1 = apex.X;
 			Y1 = apex.Y;
-			X2 = adjustedEndPoint.X - _barMargin;
-			X2 = Math.Max(X2, _barMargin);
-			Y2 = adjustedEndPoint.Y - _barMargin;
-			Y2 = Math.Max(Y2, _barMargin);	
+			X2 = adjustedEndPoint.X;
+			Y2 = adjustedEndPoint.Y;
 		}
 
 		private static Point? AdjustEndPoint(Point apex, Point endPoint, Point border1, Point border2)
@@ -253,9 +255,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			var endPoint = EndPointForPosition(apex, angle, length);
 			var adjustedEndPoint = AdjustEndPoint(apex, endPoint, lowerBorder, rightBorder) ?? endPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), lowerBorder) ?? adjustedEndPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(0, 0), new Point(rightBorder.X, 0)) ?? adjustedEndPoint;
-			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, new Point(rightBorder.X, 0), rightBorder) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, 
+				new Point(_barMargin, _barMargin), lowerBorder) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, 
+				new Point(_barMargin, _barMargin), new Point(rightBorder.X, _barMargin)) ?? adjustedEndPoint;
+			adjustedEndPoint = AdjustEndPoint(apex, adjustedEndPoint, 
+				new Point(rightBorder.X, _barMargin), rightBorder) ?? adjustedEndPoint;
 			return adjustedEndPoint;
 		}
 
