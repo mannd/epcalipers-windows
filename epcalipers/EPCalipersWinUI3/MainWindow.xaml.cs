@@ -1,11 +1,14 @@
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -17,6 +20,8 @@ namespace EPCalipersWinUI3
 	/// </summary>
 	public sealed partial class MainWindow : WinUIEx.WindowEx
 	{
+		UISettings _uiSettings;
+
 		public MainWindow()
 		{
 			this.InitializeComponent();
@@ -50,6 +55,8 @@ namespace EPCalipersWinUI3
 			MainFrame.NavigationFailed += OnNavigationFailed;
 			Activated += MainWindow_Activated;
 			Closed += MainWindow_Closed;
+			_uiSettings = new();
+			_uiSettings.ColorValuesChanged += UISettings_ColorValuesChanged;
 		}
 
 		private void MainWindow_Closed(object sender, WindowEventArgs args)
@@ -102,6 +109,26 @@ namespace EPCalipersWinUI3
 		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
 			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+		}
+
+		private void UISettings_ColorValuesChanged(UISettings sender, object args)
+		{
+			DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
+				() =>
+				{
+					// Workaround for failure of WinUI 3 to change titlebar button colors
+					// with theme change.
+					if (Application.Current.RequestedTheme == ApplicationTheme.Light)
+					{
+						Debug.Print("Light theme");
+						AppWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+					}
+					else
+					{
+						Debug.Print("Dark theme");
+						AppWindow.TitleBar.ButtonForegroundColor = Colors.White;
+					}
+				});
 		}
 	}
 }
