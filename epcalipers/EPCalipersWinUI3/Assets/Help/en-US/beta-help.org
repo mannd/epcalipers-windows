@@ -13,7 +13,7 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 #+XSLT:
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * This help file is under construction!
 This is a placeholder for the help file for the EP Calipers 3 Windows application, which is still under development.  Stay tuned!

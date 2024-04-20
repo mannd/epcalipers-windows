@@ -147,10 +147,10 @@
     <Content Update="Assets\Fonts\Segoe Fluent Icons.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Update="Assets\Help\beta-help.html">
+    <None Update="Assets\Help\en-US\beta-help.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Help\newhelp.html">
+    <None Update="Assets\Help\en-US\newhelp.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Help\org.css">

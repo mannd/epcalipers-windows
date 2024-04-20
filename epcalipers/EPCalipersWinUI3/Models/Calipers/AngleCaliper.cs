@@ -165,7 +165,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return point;
 		}
 
-		// TODO: Keep triangle label within bounds - this should be fixed when all labels kept withing bounds.
 		private void InitTriangleBase(double height)
 		{
 			Point point1 = GetBasePoint1ForHeight(height);

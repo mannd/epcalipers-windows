@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
+using System.Diagnostics;
+using Windows.Globalization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -42,8 +44,15 @@ namespace EPCalipersWinUI3.Views
 
 			WebView.CoreWebView2.SetVirtualHostNameToFolderMapping(
 				"appassets", "Assets", CoreWebView2HostResourceAccessKind.Allow);
-
-			WebView.Source = new Uri("http://appassets/Help/beta-help.html");
+			var userLanguage = GlobalizationHelper.GetUserLanguage();
+			// DEFER: Check for supported languages here, but fallback to default English for now.
+			// Will need to add logic like using "fr-FR" for "fr-CA".	
+			Debug.Print("User language is {0}", userLanguage);
+			if (userLanguage != "en-US")
+			{
+				userLanguage = "en-US";	
+			}
+			WebView.Source = new Uri($"http://appassets/Help/{userLanguage}/beta-help.html");
 		}
 
 		private void BackButton_Click(object sender, RoutedEventArgs e)
