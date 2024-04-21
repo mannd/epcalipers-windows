@@ -2,7 +2,7 @@
 #+AUTHOR:    David Mann
 #+EMAIL:     mannd@epstudiossoftware.com
 #+DATE:      [2015-04-02 Thu]
-#+DESCRIPTION: EP Calipers Help
+#+DESCRIPTION: EP Calipers 3 Help
 #+KEYWORDS:
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
@@ -15,5 +15,104 @@
 #+XSLT:
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../org.css"/>
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* This help file is under construction!
-This is a placeholder for the help file for the EP Calipers 3 Windows application, which is still under development.  Stay tuned!
+* Quick start
+:PROPERTIES:
+:CUSTOM_ID: quick-start-id
+:END:
+1) Click on ~Open~ on the toolbar to open an image file.
+2) Click on the ~Add caliper~ on the toolbar to add a caliper.
+3) Use the mouse or trackpad to manipulate the caliper.
+4) Single click a caliper to select it for calibration or for making measurements.
+5) Click ~Calibration~ and then ~Set calibration~ to calibrate the selected caliper.
+6) Use the ~Rate/Interval~ to switch between rate and interval measurements.
+7) Make other measurements with the ~Mean interval~ and ~QTc~ buttons on the toolbar.
+8) Double-click a caliper to delete it.
+9) You can switch to a transparent window using the ~View|Transparent~ menu item.
+10) Explore the items on the ~Main menu~ and ~Tools|Settings~ to explore further, or read the details on this page.
+* Images
+:PROPERTIES:
+:CUSTOM_ID: images-id
+:END:
+You can open image files including JPG, PNG, BMP, TIFF, and PDF files.  If the image is not completely vertical use the ~Image~ menu to rotate it.  
+* Adding, moving and deleting calipers
+:PROPERTIES:
+:CUSTOM_ID: moving-calipers-id
+:END:
+Click on ~Add caliper~ on the toolbar and select the type of caliper you want to add.
+
+Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
+
+You can also move the selected caliper or a selected bar of a caliper using the keyboard.  Use ~Ctrl~ plus the ~arrow keys~ to move the selected caliper or selected caliper bar.  Use ~Ctrl~ plus ~Alt~ plus the ~arrow keys~ for fine movements.
+
+Delete a caliper by double-clicking it.
+* Selecting a caliper or an individual bar of a caliper
+:PROPERTIES:
+:CUSTOM_ID: selecting-caliper-id
+:END:
+Select a caliper by single clicking it.  The caliper color will change.  Unselect the caliper the same way or by pressing the ~Escape~ key.  Right click on a caliper bar to select that specific bar to move the bar using the keyboard.  
+* Calibration
+:PROPERTIES:
+:CUSTOM_ID: calibration-id
+:END:
+Select a caliper and then calibrate by clicking first the ~Calibration~ button and then the ~Set calibration~ button on the toolbar.  A dialog will appear with suggested calibration intervals, such as 1000 msec for a time caliper.  You can also set a custom interval, but be sure to include units when you use a custom interval, such as "500 msec."  After a time caliper is calibrated, you will be able to make measurements such as the QTc interval with the caliper.
+
+You can recalibrate at any time, or clear calibration by clicking ~Calibration~ and then ~Clear calibration~.  Also calibration is preserved when zooming the image or when calipers are deleted and added.  
+* Making measurements
+:PROPERTIES:
+:CUSTOM_ID: making-measurements-id
+:END:
+The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
+* Interval/Rate
+:PROPERTIES:
+:CUSTOM_ID: interval-rate-id
+:END:
+Once a time caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by clicking ~Rate/Interval~.
+* Mean rate and interval calculation
+:PROPERTIES:
+:CUSTOM_ID: mean-rate-id
+:END:
+Select a calibrated caliper and stretch it over a number of intervals.  Select ~Mean interval~.  A dialog box will show the calculated mean heart rate and interval.  You can adjust the caliper while the dialog box is open and change the number of intervals measured.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+* QTc calculation
+:PROPERTIES:
+:CUSTOM_ID: qtc-id
+:END:
+Click ~QTc~ on the toolbar to open the QTc dialog.  Use the dialog to measure one or more RR intervals and a QT interval with a selected time caliper.  Choose which QTc formula you want to use and then click ~Calculate~ to calculate the QTc interval.   
+* Transparent window
+:PROPERTIES:
+:CUSTOM_ID: transparent-id
+:END:
+Click on the ~View|Transparent~ menu item to switch to a transparent window that you can use to make measurements on a window open on your desktop, such as a web page.  You can adjust Settings to make this window float above all other windows on the desktop.  You can also change Settings to have the app start with a transparent window.
+* More caliper options
+:PROPERTIES:
+:CUSTOM_ID: more-caliper-options-id
+:END:
+** Change caliper colors
+Right click a caliper and select ~Color~ to change its unselected color.  This only affects that specific caliper.  To change the color of new calipers, click on ~Settings~.
+** Marching calipers
+Right click a time caliper and select ~Marching caliper~ to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Right click and select ~Marching caliper~ again to change the marching caliper back to normal again, or just double click to delete it.
+* PDFs
+PDFs are supported, including multipage PDFs.  Use ~Alt~ plus the ~arrow keys~ to change PDF pages.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.
+* Brugadometer
+:PROPERTIES:
+:CUSTOM_ID: brugadometer-id
+:END:
+The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper in msec.  After doing so, an angle caliper will appear to have a triangle at its apex.  The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
+
+Note that the Brugadometer triangle can be turned off in ~Settings~.
+* Settings
+:PROPERTIES:
+:CUSTOM_ID: preferences-id
+:END:
+Click on ~Settings~ to open the Settings page.  Here you can adjust various defaults including whether the app starts with the image window of the transparent window, as well as thickness of the caliper bars, the font size of the caliper labels, caliper colors, and various other parameters.
+* Acknowledgements
+:PROPERTIES:
+:CUSTOM_ID: acknowledgements-id
+:END:
+- Thanks to Dr. Michael Katz for the concept.
+- Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
+- Thanks to Scott Krankkala for the idea behind marching calipers.
+- The source code for EP Calipers is available on GitHub.
+- EP Calipers is open source software and is licensed under [[https://www.gnu.org/licenses/gpl-3.0.html][GNU GPL v3]]. No guarantees are made as to the accuracy of the app, so use at your own risk.
+- The screen capture code is from https://github.com/robmikh/WinUI3CaptureSample, covered under the MIT license.
+- For questions, error reporting or suggestions contact mannd@epstudiossoftware.com
+- Website: https://www.epstudiossoftware.com

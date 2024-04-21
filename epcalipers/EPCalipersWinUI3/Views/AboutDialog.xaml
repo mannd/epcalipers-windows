@@ -12,7 +12,7 @@
         <Image x:Name="AppIcon" HorizontalAlignment="Center"  
                 Width="100" Source="/Assets/StoreLogo.scale-150.png" />
         <TextBlock Text="{x:Bind ViewModel.AppName, Mode=OneTime}" HorizontalAlignment="Center" FontStyle="Italic" />
-        <TextBlock Text="{x:Bind ViewModel.Version, Mode=OneTime}" HorizontalAlignment="Center"/>
+        <TextBlock Text="{x:Bind ViewModel.SaneProductVersion, Mode=OneTime}" HorizontalAlignment="Center"/>
         <TextBlock Text="{x:Bind ViewModel.Copyright, Mode=OneTime}" HorizontalAlignment="Center"/>
         <HyperlinkButton Style="{ThemeResource DefaultHyperlinkButtonStyle}" Content="{x:Bind ViewModel.HomePage, Mode=OneTime}" 
                          NavigateUri="{x:Bind ViewModel.NavigateUri, Mode=OneTime}" 

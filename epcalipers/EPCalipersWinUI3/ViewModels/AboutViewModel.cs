@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
+using System;
 using System.Diagnostics;
 
 namespace EPCalipersWinUI3.ViewModels
@@ -8,13 +9,15 @@ namespace EPCalipersWinUI3.ViewModels
 	public partial class AboutViewModel : ObservableObject
 	{
 
-		private readonly AppInfo model = new AppInfo();
+		private readonly AppInfo model = new();
 
 		public AboutViewModel()
 		{
-			version = model.FileVersion;
-			title = string.Format("AboutEPCalipersDialogTitle".GetLocalized(), model.ProductName);
-			copyright = $"{model.Copyright} {model.Company}";
+			Version = model.FileVersion;
+			Title = string.Format("AboutEPCalipersDialogTitle".GetLocalized(), model.ProductName);
+			Copyright = $"{model.Copyright} {model.Company}";
+			ProductVersion = model.ProductVersion;
+			SaneProductVersion = model.SaneProductVersion;
 		}
 
 		[ObservableProperty]
@@ -25,6 +28,12 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private string version;
+
+		[ObservableProperty] 
+		private string productVersion;
+
+		[ObservableProperty]
+		private string saneProductVersion;
 
 		[ObservableProperty]
 		private string copyright;
@@ -38,6 +47,7 @@ namespace EPCalipersWinUI3.ViewModels
 		public void DebugPrintAssemblyInfo()
 		{
 			Debug.WriteLine(model.ProductName);
+			Debug.WriteLine(model.SaneProductVersion);
 			Debug.WriteLine(model.ProductVersion);
 			Debug.WriteLine(model.FileVersion);
 			Debug.WriteLine(model.Title);

@@ -12,6 +12,8 @@ namespace EPCalipersWinUI3.Helpers
 		public static string GetUserLanguage()
 		{
 			// Get the user's preferred language from system settings
+			// NB: This can only choose from the list of languages in the app manifest.
+			// See https://learn.microsoft.com/en-us/uwp/api/windows.globalization.applicationlanguages?view=winrt-22621
 			var userLanguages = ApplicationLanguages.Languages;
 			if (userLanguages.Count > 0)
 			{
@@ -22,10 +24,5 @@ namespace EPCalipersWinUI3.Helpers
 			// Fallback: Return a default language (e.g., English)
 			return "en-US";
 		}
-
-		// Usage example:
-		//string userLanguage = GetUserLanguage();
-		//System.Diagnostics.Debug.WriteLine($"User language: {userLanguage}");
-
 	}
 }

@@ -6,7 +6,7 @@ namespace EPCalipersWinUI3.Models
 {
 	public class AppInfo
 	{
-		Assembly assembly;
+		readonly Assembly assembly;
 
 		public AppInfo(Assembly assembly = null)
 		{
@@ -79,5 +79,27 @@ namespace EPCalipersWinUI3.Models
 				return ((AssemblyCompanyAttribute)attributes[0]).Company;
 			}
 		}
+
+		public string SaneProductVersion
+		{
+			get
+			{
+				return GetUntilOrOriginal(ProductVersion);
+			}
+		}
+
+		private static string GetUntilOrOriginal(string text, string stopAt = "+")
+		{
+			if (!String.IsNullOrWhiteSpace(text))
+			{
+				int charLocation = text.IndexOf(stopAt, StringComparison.Ordinal);
+				if (charLocation > 0)
+				{
+					return text[..charLocation];
+				}
+			}
+			return text;
+		}
+
 	}
 }

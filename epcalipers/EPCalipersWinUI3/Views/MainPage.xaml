@@ -302,16 +302,18 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ToolsMenu">
-                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                <MenuFlyoutItem x:Uid="ToggleRateIntervalMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ToggleRateIntervalCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="I" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
+                <MenuFlyoutItem x:Uid="MeanRateIntervalMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.MeanRateIntervalCommand}"/>
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"
-                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"/>
+                                IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>

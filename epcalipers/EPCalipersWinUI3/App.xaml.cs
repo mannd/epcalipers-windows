@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3
 			Debug.Print("System architecture = {0}", arch.ToString());
 		}
 
-		public static MainWindow MainWindow = new();
+		public readonly static MainWindow MainWindow = new();
 
 		/// <summary>
 		/// Invoked when the application is launched.

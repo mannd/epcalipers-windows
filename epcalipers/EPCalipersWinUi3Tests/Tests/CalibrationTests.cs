@@ -14,7 +14,6 @@ namespace EPCalipersWinUi3Tests.Tests
 			var input2 = new CalibrationMeasurement(100, Unit.Custom, "rods");
 			var calibration2 = new Calibration(5.0, input2);
 			Assert.Equal("200 rods", calibration2.GetFormattedMeasurement(10, false));
-			var input3 = new CalibrationMeasurement(100, Unit.Custom, "MSEC");
 			var calibration3 = new Calibration(5.0, input1);
 			Assert.Equal("300 bpm", calibration3.GetFormattedMeasurement(10, true));
 			//Assert.Equal(CalibrationUnit.Msec , output1.Unit);

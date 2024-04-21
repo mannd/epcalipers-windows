@@ -20,7 +20,7 @@
     <Copyright>Copyright (c) 2023-2024</Copyright>
     <PackageProjectUrl>https://www.epstudiossoftware.com</PackageProjectUrl>
     <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
-    <Version>3.0.0.0-alpha</Version>
+    <Version>3.0.0.0-beta.1</Version>
     <Authors>EP Studios</Authors>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -32,7 +32,7 @@
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
     <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -90,9 +90,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240311000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26031-preview" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.2.24128.3" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.3.24172.9" />
     <PackageReference Include="WinUIEx" Version="2.3.4" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -148,9 +148,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Update="Assets\Help\en-US\beta-help.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Help\en-US\newhelp.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Help\org.css">

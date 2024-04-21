@@ -32,7 +32,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			Marching  // For marching calipers
 		}
 
-		private static double _barMargin = 2;  // offset from margin of CaliperView.
+		private static readonly double _barMargin = 2;  // offset from margin of CaliperView.
 
 		public Role BarRole { get; set; }
 		public Bounds Bounds { get; set; }

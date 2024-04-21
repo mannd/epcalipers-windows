@@ -20,7 +20,7 @@ namespace EPCalipersWinUI3
 	/// </summary>
 	public sealed partial class MainWindow : WinUIEx.WindowEx
 	{
-		UISettings _uiSettings;
+		readonly UISettings _uiSettings;
 
 		public MainWindow()
 		{

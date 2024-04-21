@@ -22,7 +22,6 @@ namespace EPCalipersWinUi3Tests.Tests
 			result = MathHelper.QtcCalculator.QtcBazettMsec(459, 777);
 			Assert.Equal(521, Math.Round(result));
 			var calculator = new MathHelper.QtcCalculator(MathHelper.QtcFormula.qtcBzt);
-			var calibration = new Calibration();
 			var formattedResult = calculator.Calculate(0.345, 0.879, true, "msec");
 			Assert.Equal(
 				"RR interval = 879 msec\nQT interval = 345 msec\nQTc = 368 msec (Bazett formula)", 

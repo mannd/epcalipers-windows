@@ -46,7 +46,6 @@ namespace EPCalipersWinUI3.Views
 				"appassets", "Assets", CoreWebView2HostResourceAccessKind.Allow);
 			var userLanguage = GlobalizationHelper.GetUserLanguage();
 			// DEFER: Check for supported languages here, but fallback to default English for now.
-			// Will need to add logic like using "fr-FR" for "fr-CA".	
 			Debug.Print("User language is {0}", userLanguage);
 			if (userLanguage != "en-US")
 			{

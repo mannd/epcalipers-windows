@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-04-20 Sat 13:46 -->
+<!-- 2024-04-21 Sun 19:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
 <meta name="author" content="David Mann" />
-<meta name="description" content="EP Calipers Help" />
+<meta name="description" content="EP Calipers 3 Help" />
 <meta name="generator" content="Org Mode" />
 <style>
   #content { max-width: 60em; margin: auto; }
@@ -199,12 +199,173 @@
 </head>
 <body>
 <div id="content" class="content">
-<div id="outline-container-orgf8461c4" class="outline-2">
-<h2 id="orgf8461c4">This help file is under construction!</h2>
-<div class="outline-text-2" id="text-orgf8461c4">
+<div id="outline-container-quick-start-id" class="outline-2">
+<h2 id="quick-start-id">Quick start</h2>
+<div class="outline-text-2" id="text-quick-start-id">
+<ol class="org-ol">
+<li>Click on <code>Open</code> on the toolbar to open an image file.</li>
+<li>Click on the <code>Add caliper</code> on the toolbar to add a caliper.</li>
+<li>Use the mouse or trackpad to manipulate the caliper.</li>
+<li>Single click a caliper to select it for calibration or for making measurements.</li>
+<li>Click <code>Calibration</code> and then <code>Set calibration</code> to calibrate the selected caliper.</li>
+<li>Use the <code>Rate/Interval</code> to switch between rate and interval measurements.</li>
+<li>Make other measurements with the <code>Mean interval</code> and <code>QTc</code> buttons on the toolbar.</li>
+<li>Double-click a caliper to delete it.</li>
+<li>You can switch to a transparent window using the <code>View|Transparent</code> menu item.</li>
+<li>Explore the items on the <code>Main menu</code> and <code>Tools|Settings</code> to explore further, or read the details on this page.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-images-id" class="outline-2">
+<h2 id="images-id">Images</h2>
+<div class="outline-text-2" id="text-images-id">
 <p>
-This is a placeholder for the help file for the EP Calipers 3 Windows application, which is still under development.  Stay tuned!
+You can open image files including JPG, PNG, BMP, TIFF, and PDF files.  If the image is not completely vertical use the <code>Image</code> menu to rotate it.  
 </p>
+</div>
+</div>
+<div id="outline-container-moving-calipers-id" class="outline-2">
+<h2 id="moving-calipers-id">Adding, moving and deleting calipers</h2>
+<div class="outline-text-2" id="text-moving-calipers-id">
+<p>
+Click on <code>Add caliper</code> on the toolbar and select the type of caliper you want to add.
+</p>
+
+<p>
+Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
+</p>
+
+<p>
+You can also move the selected caliper or a selected bar of a caliper using the keyboard.  Use <code>Ctrl</code> plus the <code>arrow keys</code> to move the selected caliper or selected caliper bar.  Use <code>Ctrl</code> plus <code>Alt</code> plus the <code>arrow keys</code> for fine movements.
+</p>
+
+<p>
+Delete a caliper by double-clicking it.
+</p>
+</div>
+</div>
+<div id="outline-container-selecting-caliper-id" class="outline-2">
+<h2 id="selecting-caliper-id">Selecting a caliper or an individual bar of a caliper</h2>
+<div class="outline-text-2" id="text-selecting-caliper-id">
+<p>
+Select a caliper by single clicking it.  The caliper color will change.  Unselect the caliper the same way or by pressing the <code>Escape</code> key.  Right click on a caliper bar to select that specific bar to move the bar using the keyboard.  
+</p>
+</div>
+</div>
+<div id="outline-container-calibration-id" class="outline-2">
+<h2 id="calibration-id">Calibration</h2>
+<div class="outline-text-2" id="text-calibration-id">
+<p>
+Select a caliper and then calibrate by clicking first the <code>Calibration</code> button and then the <code>Set calibration</code> button on the toolbar.  A dialog will appear with suggested calibration intervals, such as 1000 msec for a time caliper.  You can also set a custom interval, but be sure to include units when you use a custom interval, such as "500 msec."  After a time caliper is calibrated, you will be able to make measurements such as the QTc interval with the caliper.
+</p>
+
+<p>
+You can recalibrate at any time, or clear calibration by clicking <code>Calibration</code> and then <code>Clear calibration</code>.  Also calibration is preserved when zooming the image or when calipers are deleted and added.  
+</p>
+</div>
+</div>
+<div id="outline-container-making-measurements-id" class="outline-2">
+<h2 id="making-measurements-id">Making measurements</h2>
+<div class="outline-text-2" id="text-making-measurements-id">
+<p>
+The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
+</p>
+</div>
+</div>
+<div id="outline-container-interval-rate-id" class="outline-2">
+<h2 id="interval-rate-id">Interval/Rate</h2>
+<div class="outline-text-2" id="text-interval-rate-id">
+<p>
+Once a time caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by clicking <code>Rate/Interval</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-mean-rate-id" class="outline-2">
+<h2 id="mean-rate-id">Mean rate and interval calculation</h2>
+<div class="outline-text-2" id="text-mean-rate-id">
+<p>
+Select a calibrated caliper and stretch it over a number of intervals.  Select <code>Mean interval</code>.  A dialog box will show the calculated mean heart rate and interval.  You can adjust the caliper while the dialog box is open and change the number of intervals measured.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+</p>
+</div>
+</div>
+<div id="outline-container-qtc-id" class="outline-2">
+<h2 id="qtc-id">QTc calculation</h2>
+<div class="outline-text-2" id="text-qtc-id">
+<p>
+Click <code>QTc</code> on the toolbar to open the QTc dialog.  Use the dialog to measure one or more RR intervals and a QT interval with a selected time caliper.  Choose which QTc formula you want to use and then click <code>Calculate</code> to calculate the QTc interval.   
+</p>
+</div>
+</div>
+<div id="outline-container-transparent-id" class="outline-2">
+<h2 id="transparent-id">Transparent window</h2>
+<div class="outline-text-2" id="text-transparent-id">
+<p>
+Click on the <code>View|Transparent</code> menu item to switch to a transparent window that you can use to make measurements on a window open on your desktop, such as a web page.  You can adjust Settings to make this window float above all other windows on the desktop.  You can also change Settings to have the app start with a transparent window.
+</p>
+</div>
+</div>
+<div id="outline-container-more-caliper-options-id" class="outline-2">
+<h2 id="more-caliper-options-id">More caliper options</h2>
+<div class="outline-text-2" id="text-more-caliper-options-id">
+</div>
+<div id="outline-container-org044d09d" class="outline-3">
+<h3 id="org044d09d">Change caliper colors</h3>
+<div class="outline-text-3" id="text-org044d09d">
+<p>
+Right click a caliper and select <code>Color</code> to change its unselected color.  This only affects that specific caliper.  To change the color of new calipers, click on <code>Settings</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgdafddca" class="outline-3">
+<h3 id="orgdafddca">Marching calipers</h3>
+<div class="outline-text-3" id="text-orgdafddca">
+<p>
+Right click a time caliper and select <code>Marching caliper</code> to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Right click and select <code>Marching caliper</code> again to change the marching caliper back to normal again, or just double click to delete it.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4c6696c" class="outline-2">
+<h2 id="org4c6696c">PDFs</h2>
+<div class="outline-text-2" id="text-org4c6696c">
+<p>
+PDFs are supported, including multipage PDFs.  Use <code>Alt</code> plus the <code>arrow keys</code> to change PDF pages.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.
+</p>
+</div>
+</div>
+<div id="outline-container-brugadometer-id" class="outline-2">
+<h2 id="brugadometer-id">Brugadometer</h2>
+<div class="outline-text-2" id="text-brugadometer-id">
+<p>
+The <b>Brugadometer</b> is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  In order to use the <b>Brugadometer</b>, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper in msec.  After doing so, an angle caliper will appear to have a triangle at its apex.  The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called <i>beta angle</i> and the triangle base.  A triangle base &gt; 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/">de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180</a> for further information.
+</p>
+
+<p>
+Note that the Brugadometer triangle can be turned off in <code>Settings</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-preferences-id" class="outline-2">
+<h2 id="preferences-id">Settings</h2>
+<div class="outline-text-2" id="text-preferences-id">
+<p>
+Click on <code>Settings</code> to open the Settings page.  Here you can adjust various defaults including whether the app starts with the image window of the transparent window, as well as thickness of the caliper bars, the font size of the caliper labels, caliper colors, and various other parameters.
+</p>
+</div>
+</div>
+<div id="outline-container-acknowledgements-id" class="outline-2">
+<h2 id="acknowledgements-id">Acknowledgements</h2>
+<div class="outline-text-2" id="text-acknowledgements-id">
+<ul class="org-ul">
+<li>Thanks to Dr. Michael Katz for the concept.</li>
+<li>Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.</li>
+<li>Thanks to Scott Krankkala for the idea behind marching calipers.</li>
+<li>The source code for EP Calipers is available on GitHub.</li>
+<li>EP Calipers is open source software and is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL v3</a>. No guarantees are made as to the accuracy of the app, so use at your own risk.</li>
+<li>The screen capture code is from <a href="https://github.com/robmikh/WinUI3CaptureSample">https://github.com/robmikh/WinUI3CaptureSample</a>, covered under the MIT license.</li>
+<li>For questions, error reporting or suggestions contact mannd@epstudiossoftware.com</li>
+<li>Website: <a href="https://www.epstudiossoftware.com">https://www.epstudiossoftware.com</a></li>
+</ul>
 </div>
 </div>
 </div>

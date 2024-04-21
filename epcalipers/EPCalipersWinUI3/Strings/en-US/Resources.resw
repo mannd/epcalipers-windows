@@ -281,7 +281,7 @@
     <comment>Title of button that opens EP Studios home page</comment>
   </data>
   <data name="HowToMeasureMeanIntervalMessage" xml:space="preserve">
-    <value>You need to select a time caliper and extend it over a series of intervals, then try again.</value>
+    <value>First select a time caliper, then click on Mean interval again.</value>
   </data>
   <data name="HowToMeasureMeanIntervalTitle" xml:space="preserve">
     <value>How to measure a mean interval</value>
@@ -341,7 +341,7 @@
     <value>Next PDF page</value>
   </data>
   <data name="NoCaliperSelectedMessage" xml:space="preserve">
-    <value>Add a time or amplitude caliper and select it with a single click or tap before calibrating.</value>
+    <value>Add a time or amplitude caliper and select it with a single click before calibrating.</value>
   </data>
   <data name="NoCaliperSelectedTitle" xml:space="preserve">
     <value>Select a time or amplitude caliper prior to calibration</value>
@@ -511,7 +511,7 @@
     <value>200 msec</value>
   </data>
   <data name="HowToMeasureQTcMessage" xml:space="preserve">
-    <value>To be done.</value>
+    <value>First select a time caliper, then click on QTc again.</value>
   </data>
   <data name="HowToMeasureQTcTitle" xml:space="preserve">
     <value>How to measure the QTc interval</value>
