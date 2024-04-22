@@ -28,4 +28,8 @@
       </PackageReference>
       <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.3.24172.9" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\EPCalipersWinUI3Helpers.csproj" />
+  </ItemGroup>
 </Project>

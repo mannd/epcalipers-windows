@@ -15,7 +15,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
+#if !ARM64_CONFIG
 using EPCalipersWinUI3PDFHandler;
+#endif
 using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics.Capture;
 
@@ -23,7 +25,7 @@ namespace EPCalipersWinUI3
 {
     public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly IPdfHelper _pdfHelper;
+		private readonly EPCalipersWinUI3Helpers.IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 		private ISettings _settings = Settings.Instance;
 

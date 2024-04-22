@@ -199,6 +199,12 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <DefineConstants>$(DefineConstants);ARM64_CONFIG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <DefineConstants>$(DefineConstants);ARM64_CONFIG</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PRIResource Update="Strings\en-US\Resources.resw">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -211,6 +217,7 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\EPCalipersWinUI3Helpers.csproj" />
     <ProjectReference Include="..\WinUI3PDFHandler\WinUI3PDFHandler.csproj" />
   </ItemGroup>
 </Project>

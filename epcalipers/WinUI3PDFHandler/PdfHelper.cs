@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3PDFHandler
     /// Encapsulate and isolate nasty PDF code.
     /// This uses the Pdfium NuGet package.
     /// </summary>
-    public class PdfHelper : IPdfHelper
+    public class PdfHelper : EPCalipersWinUI3Helpers.IPdfHelper
     {
         private PdfDocument _pdfDocument = null;
         private int _pageNumber = 0;

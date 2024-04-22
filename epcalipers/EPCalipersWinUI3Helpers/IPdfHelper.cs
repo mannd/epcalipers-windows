@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 
-namespace EPCalipersWinUI3PDFHandler
+namespace EPCalipersWinUI3Helpers
 {
     /// <summary>
     /// Interface for classes providing PDF functions.
