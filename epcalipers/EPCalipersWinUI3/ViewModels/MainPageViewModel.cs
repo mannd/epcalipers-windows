@@ -15,9 +15,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
-#if !ARM64_CONFIG
-using EPCalipersWinUI3PDFHandler;
-#endif
 using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics.Capture;
 
@@ -36,7 +33,11 @@ namespace EPCalipersWinUI3
 		{
 			Debug.Print("MainPageViewModel constructor");
 			SetZoom = setZoomDelegate;
-			_pdfHelper = new PdfHelper();
+#if ARM64_CONFIG
+			_pdfHelper = new EPCalipersWinUI3Helpers.NullPdf();
+#else
+			_pdfHelper = new EPCalipersWinUI3PDFHandler.PdfHelper();
+#endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;
 		}
