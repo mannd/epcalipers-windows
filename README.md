@@ -59,6 +59,12 @@ Thanks to Dr. Michael Katz for the original concept, to Scott Krankkala for the 
 
 The screen capture code is from https://github.com/robmikh/WinUI3CaptureSample, covered under the MIT license.
 
+The PDF handling code is from https://github.com/chromium/pdfium and
+is covered under the Apache version 2.0 license.  Note that Pdfium
+only supports x86 and x64 processors, so PDFs are not supported on
+native ARM systems.  It might be preferable to install the x64 version
+on such systems and rely on x64 emulation on ARM.
+
 ## Copyright
 Copyright © 2016-2024 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 

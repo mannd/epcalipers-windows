@@ -16,13 +16,13 @@ using PdfiumViewer;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 
-namespace EPCalipersWinUI3PDFHandler
+namespace PdfiumPDFHandler
 {
     /// <summary>
     /// Encapsulate and isolate nasty PDF code.
     /// This uses the Pdfium NuGet package.
     /// </summary>
-    public class PdfHelper : EPCalipersWinUI3Helpers.IPdfHelper
+    public class PdfHelper : PDFHandler.IPdfHelper
     {
         private PdfDocument _pdfDocument = null;
         private int _pageNumber = 0;

@@ -30,6 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EPCalipersWinUI3Helpers\EPCalipersWinUI3Helpers.csproj" />
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj" />
   </ItemGroup>
 </Project>

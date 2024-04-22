@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 
-namespace EPCalipersWinUI3Helpers
+namespace PDFHandler
 {
-    /// <summary>
-    /// Interface for classes providing PDF functions.
-    /// </summary>
-    public interface IPdfHelper
+	/// <summary>
+	/// Interface for classes providing PDF functions.
+	/// </summary>
+	public interface IPdfHelper
     {
         /// <summary>
         /// Gets current PDF page number.
@@ -84,49 +84,4 @@ namespace EPCalipersWinUI3Helpers
         /// <param name="file">File containing the PDF document.</param>
         void LoadPdfFile(StorageFile file);
     }
-
-	public class NullPdf : IPdfHelper
-	{
-		public int CurrentPageNumber => throw new System.NotImplementedException();
-
-		public string FilePath { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-		public bool IsMultiPage => throw new System.NotImplementedException();
-
-		public int MaximumPageNumber => throw new System.NotImplementedException();
-
-		public int NumberOfPdfPages => throw new System.NotImplementedException();
-
-		public bool PdfIsLoaded => throw new System.NotImplementedException();
-
-		public void ClearPdfFile()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Task<SoftwareBitmapSource> GetNextPage()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public Task<SoftwareBitmapSource> GetPreviousPage()
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public bool IsPdfFile(StorageFile file)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void LoadPdfFile(StorageFile file)
-		{
-			throw new System.NotImplementedException();
-		}
-	}
 }

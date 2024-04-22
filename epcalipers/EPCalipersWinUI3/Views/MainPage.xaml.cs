@@ -90,11 +90,11 @@ namespace EPCalipersWinUI3.Views
 				{
 					ViewModel.DeleteAllCalipersCommand.Execute(null);
 				}
-				if (ViewModel.ResetZoomWithNewImage)
+				if (ViewModel.ResetZoomWithNewPdfPage)
 				{
 					ViewModel.ResetZoomCommand.Execute(null);
 				}
-				if (ViewModel.ResetRotationWithNewImage)
+				if (ViewModel.ResetRotationWithNewPdfPage)
 				{
 					RotateImageWithoutAnimation(0);
 				}

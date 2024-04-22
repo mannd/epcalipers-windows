@@ -33,7 +33,7 @@
 :PROPERTIES:
 :CUSTOM_ID: images-id
 :END:
-You can open image files including JPG, PNG, BMP, TIFF, and PDF files.  If the image is not completely vertical use the ~Image~ menu to rotate it.  
+You can open image files including JPG, PNG, BMP, TIFF, and PDF files.  If the image is not completely vertical use the ~Image~ menu to rotate it.  NOTE: PDF files are not supported in the ARM version of the program.
 * Adding, moving and deleting calipers
 :PROPERTIES:
 :CUSTOM_ID: moving-calipers-id
@@ -91,7 +91,7 @@ Right click a caliper and select ~Color~ to change its unselected color.  This o
 ** Marching calipers
 Right click a time caliper and select ~Marching caliper~ to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Right click and select ~Marching caliper~ again to change the marching caliper back to normal again, or just double click to delete it.
 * PDFs
-PDFs are supported, including multipage PDFs.  Use ~Alt~ plus the ~arrow keys~ to change PDF pages.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.
+PDFs are supported, including multipage PDFs in the x64 and x85 versions of the program.  Note that PDFs are not supported in the ARM version of the program.  Use ~Alt~ plus the ~arrow keys~ to change PDF pages.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.
 * Brugadometer
 :PROPERTIES:
 :CUSTOM_ID: brugadometer-id
@@ -114,5 +114,6 @@ Click on ~Settings~ to open the Settings page.  Here you can adjust various defa
 - The source code for EP Calipers is available on GitHub.
 - EP Calipers is open source software and is licensed under [[https://www.gnu.org/licenses/gpl-3.0.html][GNU GPL v3]]. No guarantees are made as to the accuracy of the app, so use at your own risk.
 - The screen capture code is from https://github.com/robmikh/WinUI3CaptureSample, covered under the MIT license.
+- The PDF handling code is from https://github.com/chromium/pdfium and is covered under the Apache version 2.0 license.
 - For questions, error reporting or suggestions contact mannd@epstudiossoftware.com
 - Website: https://www.epstudiossoftware.com

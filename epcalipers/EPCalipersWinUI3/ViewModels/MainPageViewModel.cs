@@ -22,7 +22,7 @@ namespace EPCalipersWinUI3
 {
     public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly EPCalipersWinUI3Helpers.IPdfHelper _pdfHelper;
+		private readonly PDFHandler.IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 		private ISettings _settings = Settings.Instance;
 
@@ -34,9 +34,9 @@ namespace EPCalipersWinUI3
 			Debug.Print("MainPageViewModel constructor");
 			SetZoom = setZoomDelegate;
 #if ARM64_CONFIG
-			_pdfHelper = new EPCalipersWinUI3Helpers.NullPdf();
+			_pdfHelper = new PDFHandler.NullPdf();
 #else
-			_pdfHelper = new EPCalipersWinUI3PDFHandler.PdfHelper();
+			_pdfHelper = new PdfiumPDFHandler.PdfHelper();
 #endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;
@@ -50,7 +50,7 @@ namespace EPCalipersWinUI3
 				return true;
 			}
 		}
-		public bool ResetZoomWithNewImage
+		public bool ResetZoomWithNewPdfPage
 		{
 			get 
 			{
@@ -58,7 +58,7 @@ namespace EPCalipersWinUI3
 				return true;
 			}
 		}
-		public bool ResetRotationWithNewImage
+		public bool ResetRotationWithNewPdfPage
 		{
 			get
 			{
@@ -94,7 +94,6 @@ namespace EPCalipersWinUI3
 		public override void RefreshCalipers()
 		{
 			base.RefreshCalipers();
-
 		}
 
 		public override void AddTimeCaliper()
