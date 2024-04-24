@@ -15,6 +15,8 @@ namespace PDFHandler
 	/// </summary>
 	public class NullPdf : IPdfHelper
 	{
+		public bool SupportsPdfs => false;
+
         public int CurrentPageNumber => 1;
 
 		public string FilePath { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }

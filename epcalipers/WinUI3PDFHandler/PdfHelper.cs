@@ -28,6 +28,9 @@ namespace PdfiumPDFHandler
         private int _pageNumber = 0;
 
         /// <inheritdoc/>
+        public bool SupportsPdfs => true;
+
+        /// <inheritdoc/>
         public string FilePath { get; set; }
 
         /// <inheritdoc/>

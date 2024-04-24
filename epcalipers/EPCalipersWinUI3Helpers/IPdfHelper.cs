@@ -16,6 +16,11 @@ namespace PDFHandler
 	public interface IPdfHelper
     {
         /// <summary>
+        /// Gets whether a class supports processing of PDF files.
+        /// </summary>
+        bool SupportsPdfs { get; }
+
+        /// <summary>
         /// Gets current PDF page number.
         /// Page numbering is 1 based.
         /// </summary>
