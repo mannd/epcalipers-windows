@@ -4,6 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
@@ -49,7 +50,8 @@ namespace PDFHandler
 			throw new System.NotImplementedException();
 		}
 
-        public bool IsPdfFile(StorageFile file) => false;
+        public bool IsPdfFile(StorageFile file) =>
+            file.FileType.Equals(".PDF", StringComparison.CurrentCultureIgnoreCase);
 
 		public void LoadPdfFile(StorageFile file)
 		{

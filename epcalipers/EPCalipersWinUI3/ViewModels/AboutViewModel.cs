@@ -53,6 +53,7 @@ namespace EPCalipersWinUI3.ViewModels
 			Debug.WriteLine(model.Title);
 			Debug.WriteLine(model.Copyright);
 			Debug.WriteLine(model.Company);
+			Debug.WriteLine(model.CpuArchitecture);
 		}
 	}
 }

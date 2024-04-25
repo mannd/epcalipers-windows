@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
+
 
 // See https://stackoverflow.com/questions/23144872/assemblytitle-attribute-in-the-net-framework
 // for definitions of some of the Assembly keys.
@@ -113,7 +115,17 @@ public class AssemblyProperties
 			return ((AssemblyCompanyAttribute)attributes[0]).Company;
 		}
 	}
-	#endregion
 
+	public static string CpuArchitecture
+	{
+		get
+		{
+			// Detect CPU architecture
+			var arch = RuntimeInformation.ProcessArchitecture;
+			return $"CPU Architecture: {arch}";
+		}
+
+	}
+	#endregion
 }
 

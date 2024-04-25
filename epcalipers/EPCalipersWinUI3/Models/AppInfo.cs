@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace EPCalipersWinUI3.Models
 {
@@ -66,6 +67,7 @@ namespace EPCalipersWinUI3.Models
 				return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
 			}
 		}
+		public string CpuArchitecture => AssemblyProperties.CpuArchitecture;
 
 		public string Company
 		{

@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics.Capture;
+using Microsoft.UI.Xaml;
 
 namespace EPCalipersWinUI3
 {
@@ -131,15 +132,18 @@ namespace EPCalipersWinUI3
 				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
 				// BUG: (Possible) Can get OOM errors with large PDF files when running on x86 system.  
-				// But no way to test on an ARM64 system that only can emulate x64 code?
 				if (_pdfHelper.IsPdfFile(file))
 				{
+#if ARM64_CONFIG
+					return;
+#else
 					_pdfHelper.LoadPdfFile(file);
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
 					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
 					IsMultipagePdf = _pdfHelper.IsMultiPage;
 					UpdatePageNumber();
+#endif
 				}
 				else
 				{
@@ -159,7 +163,6 @@ namespace EPCalipersWinUI3
 				//dialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
 				//await dialog.ShowAsync();
 			}
-
 		}
 
 		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
@@ -194,7 +197,7 @@ namespace EPCalipersWinUI3
 			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
 			mainWindow.Navigate(typeof(TransparentPage));
 		}
-		#endregion
+#endregion
 
 		#region zoom
 		// Zoom methods

@@ -420,8 +420,10 @@ namespace EPCalipersWinUI3.Views
 			openPicker.FileTypeFilter.Add(".jpeg");
 			openPicker.FileTypeFilter.Add(".png");
 			openPicker.FileTypeFilter.Add(".bmp");
+#if !ARM64_CONFIG
+			// Pdfium doesn't support ARM64...
 			openPicker.FileTypeFilter.Add(".pdf");
-
+#endif
 			// Open the picker for the user to pick a file
 			var file = await openPicker.PickSingleFileAsync();
 			// Change the cursor to a wait icon
