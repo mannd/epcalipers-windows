@@ -217,9 +217,7 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj">
-      <Private></Private>
-    </ProjectReference>
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj" />
     <ProjectReference Include="..\WinUI3PDFHandler\PdfiumPDFHandler.csproj" Condition=" '$(Platform)'=='x86' Or '$(Platform)'=='x64' ">
       <Private></Private>
     </ProjectReference>

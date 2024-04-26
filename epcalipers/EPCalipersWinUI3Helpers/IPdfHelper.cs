@@ -25,6 +25,7 @@ namespace PDFHandler
         /// Page numbering is 1 based.
         /// </summary>
         int CurrentPageNumber { get; }
+        // Dummy edit
 
         /// <summary>
         /// Gets or sets path to PDF file.
