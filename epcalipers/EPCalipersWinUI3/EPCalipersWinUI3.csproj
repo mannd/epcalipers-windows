@@ -32,7 +32,7 @@
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
     <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
-    <AppxBundlePlatforms>arm64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -217,7 +217,11 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj" />
-    <ProjectReference Include="..\WinUI3PDFHandler\PdfiumPDFHandler.csproj" Condition=" '$(Platform)'=='x86' Or '$(Platform)'=='x64' " />
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj">
+      <Private></Private>
+    </ProjectReference>
+    <ProjectReference Include="..\WinUI3PDFHandler\PdfiumPDFHandler.csproj" Condition=" '$(Platform)'=='x86' Or '$(Platform)'=='x64' ">
+      <Private></Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>

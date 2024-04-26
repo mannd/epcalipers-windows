@@ -153,14 +153,21 @@
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />
                 <CheckBox x:Uid="AdjustCaliperLabelSizeWithZoom" IsChecked="{x:Bind ViewModel.AdjustCaliperLabelSizeWithZoom, Mode=TwoWay}" />
-                <TextBlock x:Uid="PDFSettings" 
+                <TextBlock x:Uid="PDFSettings" Visibility="{x:Bind ViewModel.SupportsPdfs}"
                           Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
-                <CheckBox x:Uid="RecalibrateBetweenPdfPages" IsChecked="{x:Bind ViewModel.RecalibrateBetweenPdfPages, Mode=TwoWay}" />
-                <CheckBox x:Uid="ResetZoomBetweenPdfPages" IsChecked="{x:Bind ViewModel.ResetZoomBetweenPdfPages, Mode=TwoWay}" />
-                <CheckBox x:Uid="ResetRotationBetweenPdfPages" IsChecked="{x:Bind ViewModel.ResetRotationBetweenPdfPages, Mode=TwoWay}" />
-                <CheckBox x:Uid="ClearCalipersBetweenPdfPages" IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
+                <CheckBox x:Uid="RecalibrateBetweenPdfPages" 
+                          Visibility="{x:Bind ViewModel.SupportsPdfs}"
+                          IsChecked="{x:Bind ViewModel.RecalibrateBetweenPdfPages, Mode=TwoWay}" />
+                <CheckBox x:Uid="ResetZoomBetweenPdfPages" 
+                          Visibility="{x:Bind ViewModel.SupportsPdfs}"
+                          IsChecked="{x:Bind ViewModel.ResetZoomBetweenPdfPages, Mode=TwoWay}" />
+                <CheckBox x:Uid="ResetRotationBetweenPdfPages" 
+                          Visibility="{x:Bind ViewModel.SupportsPdfs}"
+                          IsChecked="{x:Bind ViewModel.ResetRotationBetweenPdfPages, Mode=TwoWay}" />
+                <CheckBox x:Uid="ClearCalipersBetweenPdfPages" 
+                          Visibility="{x:Bind ViewModel.SupportsPdfs}"
+                          IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
             </StackPanel>
         </ScrollViewer>
-
     </Grid>
 </Page>

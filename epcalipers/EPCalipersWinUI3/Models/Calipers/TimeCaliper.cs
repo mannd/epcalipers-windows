@@ -149,7 +149,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			var width = Bounds.Width - _margin;
 			var height = Bounds.Height - _margin;
-			Debug.Print(Bounds.Width.ToString());
 			if (bar == LeftBar)
 			{
 				var leftBarPosition = LeftBar.Position + delta.X;

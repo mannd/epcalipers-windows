@@ -16,6 +16,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Microsoft.UI.Xaml.Controls;
+using PDFHandler;
 using Windows.Graphics.Capture;
 using Microsoft.UI.Xaml;
 
@@ -23,7 +24,7 @@ namespace EPCalipersWinUI3
 {
     public partial class MainPageViewModel : CaliperPageViewModel
 	{
-		private readonly PDFHandler.IPdfHelper _pdfHelper;
+		private readonly IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
 		private ISettings _settings = Settings.Instance;
 
@@ -41,6 +42,7 @@ namespace EPCalipersWinUI3
 #endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;
+			SupportsPdfs = _pdfHelper.SupportsPdfs;
 		}
 
 		public bool ClearCalipersBetweenPdfPages
@@ -333,6 +335,9 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private bool isOpenFromScreenshotSupported;
+
+		[ObservableProperty]
+		private bool supportsPdfs;
 
 		#endregion
 	}

@@ -142,8 +142,9 @@
                         <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
-                <MenuFlyoutSeparator/>
+                <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SupportsPdfs}"/>
                 <MenuFlyoutItem x:Uid="NextPageMenuItem" Command="{x:Bind ViewModel.NextPdfPageCommand}"
+                                Visibility="{x:Bind ViewModel.SupportsPdfs}"
                                 IsEnabled="{x:Bind ViewModel.IsNotLastPageOfPdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
@@ -151,12 +152,14 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="PreviousPageMenuItem" 
                                 Command="{x:Bind ViewModel.PreviousPdfPageCommand}"
+                                Visibility="{x:Bind ViewModel.SupportsPdfs}"
                                 IsEnabled="{x:Bind ViewModel.IsNotFirstPageOfPdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"
+                                Visibility="{x:Bind ViewModel.SupportsPdfs}"
                                 IsEnabled="{x:Bind ViewModel.IsMultipagePdf, Mode=OneWay}"/>
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu" x:Name="CalipersMenu">

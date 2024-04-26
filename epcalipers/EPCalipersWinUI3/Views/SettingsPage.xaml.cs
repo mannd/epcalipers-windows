@@ -13,6 +13,7 @@ namespace EPCalipersWinUI3.Views
 	public sealed partial class SettingsPage : Page
 	{
 		public SettingsViewModel ViewModel { get; set; }
+
 		public SettingsPage()
 		{
 			this.InitializeComponent();

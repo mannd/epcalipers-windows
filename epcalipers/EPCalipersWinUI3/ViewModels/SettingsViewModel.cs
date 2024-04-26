@@ -26,6 +26,14 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public SettingsViewModel()
 		{
+			// Handle lack of support for Pdfs in Windows ARM version.
+#if ARM64_CONFIG
+			var pdfHelper = new PDFHandler.NullPdf();
+#else
+			var pdfHelper = new PdfiumPDFHandler.PdfHelper();
+#endif
+			SupportsPdfs = pdfHelper.SupportsPdfs;
+
 			AutoAlignLabel = _model.AutoAlignLabel;
 			TimeCaliperLabelAlignment = (int)_model.TimeCaliperLabelAlignment;
 			AmplitudeCaliperLabelAlignment = (int)_model.AmplitudeCaliperLabelAlignment;
@@ -226,5 +234,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private List<string> imagePositionItems;
+
+		[ObservableProperty]
+		private bool supportsPdfs;
 	}
 }

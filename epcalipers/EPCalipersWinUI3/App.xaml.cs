@@ -26,7 +26,6 @@ namespace EPCalipersWinUI3
 		{
 			this.InitializeComponent();
 			var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
-			Debug.Print("System architecture = {0}", arch.ToString());
 		}
 
 		public readonly static MainWindow MainWindow = new();
@@ -38,9 +37,9 @@ namespace EPCalipersWinUI3
 		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 		{
 			Debug.Print("App.OnLaunched()");
-			// NB: WinUI3 Bug? First attempt to open file type fails, but subsequent attempts work.
-			// see https://stackoverflow.com/questions/76650127/how-to-handle-activation-through-files-in-winui-3-packaged
-			AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+            // NB: WinUI3 Bug? First attempt to open file type fails, but subsequent attempts work.
+            // see https://stackoverflow.com/questions/76650127/how-to-handle-activation-through-files-in-winui-3-packaged
+            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
 
 			if (appActivationArguments.Kind is ExtendedActivationKind.File &&
 				appActivationArguments.Data is IFileActivatedEventArgs fileActivatedEventArgs &&

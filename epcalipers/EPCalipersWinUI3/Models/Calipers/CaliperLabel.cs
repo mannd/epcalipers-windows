@@ -172,7 +172,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void UpdateScaledFontSize()
 		{
-			Debug.Print("Update font scale factor");
 			if (DoScaleFontSize)
 			{
 				double adjustedSize = FontSize / ScaleFactor;

@@ -170,7 +170,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			get => _scaleFactor;
 			set
 			{
-				// TODO: consider only triggering OnPropertyChanged if scaleFactor changes significantly?
 				if (_scaleFactor != value)
 				{
 					_scaleFactor = value;
