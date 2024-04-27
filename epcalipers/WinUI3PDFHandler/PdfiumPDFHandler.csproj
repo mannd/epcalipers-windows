@@ -19,7 +19,6 @@
 
   <ItemGroup>
       <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
-      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26031-preview" />
       <PackageReference Include="PdfiumViewer" Version="2.13.0" />
       <PackageReference Include="PdfiumViewer.Native.x86.v8-xfa" Version="2018.4.8.256" />
       <PackageReference Include="PdfiumViewer.Native.x86_64.v8-xfa" Version="2018.4.8.256" />

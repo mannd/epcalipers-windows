@@ -27,11 +27,11 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
-    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\epcalipers-3-msix\</AppxPackageDir>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
@@ -92,7 +92,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26031-preview" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.3.24172.9" />
     <PackageReference Include="WinUIEx" Version="2.3.4" />
     <Manifest Include="$(ApplicationManifest)" />
