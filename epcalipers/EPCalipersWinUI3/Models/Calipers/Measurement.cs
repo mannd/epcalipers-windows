@@ -10,7 +10,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 	{
 		RR,
 		QT,
-		MeanRR
+		MeanRR,
+		None
 	}
 
 	public readonly struct Measurement

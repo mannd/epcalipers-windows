@@ -94,6 +94,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				UpdateQTInterval();
 			}
+			_qtcParameters.IntervalMeasured = IntervalMeasured.None;
 			CheckCanCalculate();
 		}
 

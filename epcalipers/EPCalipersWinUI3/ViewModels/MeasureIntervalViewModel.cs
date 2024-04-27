@@ -51,6 +51,8 @@ namespace EPCalipersWinUI3.ViewModels
 						NumberOfIntervals = 1;
 						_totalIntervalText = _qtTotalInterval;
 						break;
+					case IntervalMeasured.None:
+						break;
 				}
 			Caliper = caliperCollection.SelectedCaliper;
 			CaliperCollection = caliperCollection;
@@ -119,6 +121,8 @@ namespace EPCalipersWinUI3.ViewModels
 			switch (QtcParameters.IntervalMeasured)
 			{
 				case IntervalMeasured.MeanRR:
+					return;
+				case IntervalMeasured.None:
 					return;
 				case IntervalMeasured.RR:
 					if (IsValidCaliper())

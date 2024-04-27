@@ -147,6 +147,9 @@ namespace EPCalipersWinUI3.Helpers
 
 			public string Calculate(Measurement rr, Measurement qt, Calibration calibration)
 			{
+				// TODO: Internationize these strings.  Also empty values give misleading "Invalid
+				// unit" message.  Should not be able to calculate at all -- the button should be
+				// greyed out!
 				if (!ValidUnit(rr) || !ValidUnit(qt)) return "Invalid unit";
 				if (rr.Unit != qt.Unit) return "Mismatched units";
 				double rrInSec = calibration.CalibratedInterval(rr.Value, false).Value;

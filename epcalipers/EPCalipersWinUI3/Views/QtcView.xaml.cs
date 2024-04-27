@@ -28,6 +28,7 @@ namespace EPCalipersWinUI3.Views
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
 			base.OnNavigatedTo(e);
+			Debug.Print("QtcView OnNavigatedTo");
 			QtcParameters = e.Parameter as QtcParameters;
 			if (QtcParameters != null)
 			{
