@@ -20,7 +20,7 @@
     <Copyright>Copyright (c) 2023-2024</Copyright>
     <PackageProjectUrl>https://www.epstudiossoftware.com</PackageProjectUrl>
     <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
-    <Version>3.0.0.0-beta.1</Version>
+    <Version>3.0.0.0</Version>
     <Authors>EP Studios</Authors>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -49,9 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Assets\Help\beta-help.html" />
+    <Content Remove="Assets\Help\en-US\beta-help.org" />
     <Content Remove="Assets\Help\newhelp.html" />
     <Content Remove="Assets\Help\newhelp.org" />
-    <Content Remove="Assets\Help\org.css" />
     <Content Remove="Assets\icons8-check-mark-48.png" />
     <Content Remove="Assets\Images\iconfinder-document03-1622833_121957.ico" />
   </ItemGroup>
@@ -59,6 +59,7 @@
     <None Remove="Assets\calipers.png" />
     <None Remove="Assets\EpCalipersLargeTemplate1.ico" />
     <None Remove="Assets\Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Assets\Help\org.css" />
     <None Remove="Assets\icons8-check-mark-48.png" />
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
@@ -150,9 +151,9 @@
     <None Update="Assets\Help\en-US\beta-help.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\Help\org.css">
+    <Content Update="Assets\Help\org.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Update="Assets\StoreLogo.scale-200.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
