@@ -74,7 +74,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			if (GetPosition(alignment))
 			{
 				TextBlock.Margin = new Thickness(_position.Left, _position.Top, 0, 0);
-				TextBlock.Visibility = Visibility.Visible;
+				// BUG: this makes the Triangle label visible when it shouldn't be.
+				TextBlock.Visibility = Visibility;
 			}
 			else
 			{

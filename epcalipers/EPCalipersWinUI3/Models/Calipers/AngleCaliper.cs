@@ -190,7 +190,8 @@ CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWith
 				Visibility.Visible : Visibility.Collapsed;
 			int fontSize = _settings.FontSize;
 			TriangleBaseLabel = new TriangleBaseLabel(this, CaliperView, text,
-				alignment, autoAlignLabel, fontSize, _settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI, visibility);
+				alignment, autoAlignLabel, fontSize, 
+				_settings.AdjustCaliperLabelSizeWithZoom, ScaleFactor, _fakeUI, visibility);
 		}
 
 		public override void AddToView(ICaliperView caliperView)
@@ -285,15 +286,18 @@ CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWith
 					)
 				{
 					TriangleBaseBar.Visibility = Visibility.Collapsed;
+					TriangleBaseLabel.Visibility = Visibility.Collapsed;
 				}
 				else
 				{
 					TriangleBaseBar.Visibility = Visibility.Visible;
+					TriangleBaseLabel.Visibility = Visibility.Visible;
 				}
 			}
 			else
 			{
 				TriangleBaseBar.Visibility = Visibility.Collapsed;
+				TriangleBaseLabel.Visibility = Visibility.Collapsed;
 			}
 		}
 
