@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using EPCalipersWinUI3.Models.Calipers;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Diagnostics;
 
 namespace EPCalipersWinUI3.Helpers

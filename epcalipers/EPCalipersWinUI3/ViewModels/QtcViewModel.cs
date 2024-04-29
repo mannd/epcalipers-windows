@@ -68,6 +68,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_qtcParameters.RRMeasurement = new Measurement();
 			UpdateRRInterval();
+			CheckCanCalculate();
 		}
 
 		[RelayCommand]
@@ -75,6 +76,7 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_qtcParameters.QTMeasurement = new Measurement();
 			UpdateQTInterval();
+			CheckCanCalculate();
 		}
 
 		[RelayCommand]
@@ -95,7 +97,6 @@ namespace EPCalipersWinUI3.ViewModels
 				UpdateQTInterval();
 			}
 			_qtcParameters.IntervalMeasured = IntervalMeasured.None;
-			CheckCanCalculate();
 		}
 
 		public void UpdateRRInterval()
@@ -112,6 +113,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				RrInterval = formattedRRMeasurement;
 			}
+			CheckCanCalculate();
 		}
 		public void UpdateQTInterval()
 		{
@@ -127,6 +129,7 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				QtInterval = formattedQTMeasurement;
 			}
+			CheckCanCalculate();
 		}
 
 		private void CheckCanCalculate()
@@ -135,7 +138,9 @@ namespace EPCalipersWinUI3.ViewModels
 			var qtUnit = QtcParameters.QTMeasurement.Unit;
 			var rrIsMeasured = rrUnit != Unit.None;
 			var qtIsMeasured = qtUnit != Unit.None;
-			CanCalculate = rrIsMeasured && qtIsMeasured;
+			CanCalculate = rrIsMeasured && qtIsMeasured
+				&& MathHelper.QtcCalculator.CanCalculate(QtcParameters.RRMeasurement,
+				QtcParameters.QTMeasurement);
 		}
 
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)

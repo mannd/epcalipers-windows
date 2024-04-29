@@ -37,6 +37,7 @@
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <Configurations>Debug;Release;Test</Configurations>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
@@ -202,8 +203,17 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DefineConstants>$(DefineConstants);ARM64_CONFIG</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|ARM64'">
+    <DefineConstants>$(DefineConstants);ARM64_CONFIG;TEST</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DefineConstants>$(DefineConstants);ARM64_CONFIG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x86'">
+    <DefineConstants>$(DefineConstants);TEST</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|x64'">
+    <DefineConstants>$(DefineConstants);TEST</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PRIResource Update="Strings\en-US\Resources.resw">

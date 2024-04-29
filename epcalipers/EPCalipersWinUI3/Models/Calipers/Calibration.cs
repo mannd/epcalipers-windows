@@ -38,7 +38,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 	// TODO: Localize and improve exception error messages.
 	public sealed class ZeroValueException : Exception
 	{
-		public ZeroValueException() : base("Divide by zero error.") { }
+		public ZeroValueException() { }
+
+		public ZeroValueException(string message) : base(message) { }
 	}
 
 	public sealed class EmptyCustomStringException : Exception
@@ -76,7 +78,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// <param name="input">The desired calibration interval parameters, e.g. "1000 msec"</param>
 		public Calibration(double uncalibratedValue, CalibrationMeasurement calibrationMeasurement)
 		{
-			if (uncalibratedValue == 0) throw new ZeroValueException();
+			if (uncalibratedValue == 0) throw new ZeroValueException("ZeroValueException".GetLocalized()); ;
 			CalibrationMeasurment = calibrationMeasurement;
 			Multiplier = CalibrationMeasurment.Value / uncalibratedValue;
 		}

@@ -150,8 +150,12 @@ namespace EPCalipersWinUI3.Helpers
 				// TODO: Internationize these strings.  Also empty values give misleading "Invalid
 				// unit" message.  Should not be able to calculate at all -- the button should be
 				// greyed out!
-				if (!ValidUnit(rr) || !ValidUnit(qt)) return "Invalid unit";
-				if (rr.Unit != qt.Unit) return "Mismatched units";
+				if (!CanCalculate(rr, qt))
+				{
+					// TODO: Exception here?
+					// need to throw error here
+					return "*ERROR*";
+				}
 				double rrInSec = calibration.CalibratedInterval(rr.Value, false).Value;
 				double qtInSec = calibration.CalibratedInterval(qt.Value, false).Value;
 				if (rr.Unit == Unit.Msec)
@@ -167,7 +171,20 @@ namespace EPCalipersWinUI3.Helpers
 				return Calculate(qtInSec, rrInSec, convertToMsec, unitString);
 			}
 
-			private bool ValidUnit(Measurement measurement)
+			public static bool CanCalculate(Measurement rr, Measurement qt)
+			{
+				if (!ValidUnit(rr) || !ValidUnit(qt))
+				{
+					return false;
+				}
+				if (rr.Unit != qt.Unit)
+				{
+					return false;
+				}
+				return true;
+			}
+
+			private static bool ValidUnit(Measurement measurement)
 			{
 				return measurement.Unit == Unit.Msec || measurement.Unit == Unit.Sec;
 			}

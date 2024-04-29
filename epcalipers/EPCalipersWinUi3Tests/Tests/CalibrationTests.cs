@@ -1,5 +1,7 @@
 ﻿using EPCalipersWinUI3.Models.Calipers;
+using System.Reflection;
 using Xunit;
+using Xunit.Sdk;
 
 namespace EPCalipersWinUi3Tests.Tests
 {
@@ -264,6 +266,13 @@ namespace EPCalipersWinUi3Tests.Tests
 			formattedInterval = calibration.GetNewMeanCalibratedInterval(120, 3, true);
 			Assert.Equal("150", formattedInterval.Item1);
 			Assert.Equal("bpm", formattedInterval.Item2);
+		}
+
+		[Fact]
+		public void TestCalibrationExceptions()
+		{
+			var parameters = new CalibrationMeasurement(1000, Unit.Msec, "msec");
+			Assert.Throws<ZeroValueException>(() => new Calibration(0, parameters));
 		}
 	}
 }

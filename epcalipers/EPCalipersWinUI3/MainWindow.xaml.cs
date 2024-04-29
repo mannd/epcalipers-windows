@@ -1,5 +1,6 @@
 using EPCalipersWinUI3.Helpers;
 using EPCalipersWinUI3.Models;
+using EPCalipersWinUI3.Models.Calipers;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -108,6 +109,7 @@ namespace EPCalipersWinUI3
 
 		void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
 		{
+			// If navigation to a page fails, there is no reason to save the program.
 			throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 		}
 

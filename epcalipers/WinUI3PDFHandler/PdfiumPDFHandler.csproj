@@ -8,6 +8,7 @@
     <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <Platforms>x64;x86</Platforms>
+    <Configurations>Debug;Release;Test</Configurations>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
