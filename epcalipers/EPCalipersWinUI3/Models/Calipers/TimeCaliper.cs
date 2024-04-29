@@ -144,7 +144,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return null;
 		}
 
-		// TODO: Consider hiding out of bounds caliper components, to avoid image shifting when it is centered.
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
 			var width = Bounds.Width - _margin;
@@ -181,7 +180,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			{
 				MarchingCaliper?.Move();
 			}
-			// TODO: Don't allow label to go out of bounds!
 			UpdateLabel();
 		}
 		#endregion

@@ -35,22 +35,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 		}
 	}
 
-	// TODO: Localize and improve exception error messages.
 	public sealed class ZeroValueException : Exception
 	{
-		public ZeroValueException() { }
+		public ZeroValueException() : base("ZeroValueException".GetLocalized()) { }
 
 		public ZeroValueException(string message) : base(message) { }
 	}
 
 	public sealed class EmptyCustomStringException : Exception
 	{
-		public EmptyCustomStringException() : base("Custom calibration can't be empty.") { }
-	}
-
-	public sealed class CantShowBpmException: Exception
-	{
-		public CantShowBpmException() : base("Can't show BPM with this type of calibration") { }
+		public EmptyCustomStringException() : base("EmptyCustomStringException".GetLocalized()) { }
+		public EmptyCustomStringException(string message) : base(message) { }
 	}
 
 	public class Calibration: INotifyPropertyChanged

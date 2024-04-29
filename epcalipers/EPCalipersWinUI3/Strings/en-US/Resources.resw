@@ -759,4 +759,7 @@
   <data name="TransparentWindowHyperlinkButton.Content" xml:space="preserve">
     <value>Click here to switch to a transparent window</value>
   </data>
+  <data name="QTcCalculationError" xml:space="preserve">
+    <value>Could not calculate QTc.</value>
+  </data>
 </root>

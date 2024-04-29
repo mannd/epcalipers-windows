@@ -238,6 +238,8 @@ CaliperLabelAlignment.Top, false, fontSize, _settings.AdjustCaliperLabelSizeWith
 				default: break;
 			}
 			DrawTriangleBase();
+			// BUG: zooming angle caliper shows double labels! 
+			// Note bug is not in UpdateLabel or DrawTriangleBase.
 			UpdateLabel();
 		}
 

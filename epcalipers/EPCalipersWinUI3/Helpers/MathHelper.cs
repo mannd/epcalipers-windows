@@ -137,24 +137,21 @@ namespace EPCalipersWinUI3.Helpers
 			{
 				this.formula = formula;
 				// format here
-				formulaNames = new Dictionary<QtcFormula, string>();
-				formulaNames.Add(QtcFormula.qtcBzt, "Bazett");
-				formulaNames.Add(QtcFormula.qtcFrm, "Framingham");
-				formulaNames.Add(QtcFormula.qtcHdg, "Hodges");
-				formulaNames.Add(QtcFormula.qtcFrd, "Fridericia");
-				formulaNames.Add(QtcFormula.qtcAll, "All formulas");
+				formulaNames = new Dictionary<QtcFormula, string>
+				{
+					{ QtcFormula.qtcBzt, "Bazett" },
+					{ QtcFormula.qtcFrm, "Framingham" },
+					{ QtcFormula.qtcHdg, "Hodges" },
+					{ QtcFormula.qtcFrd, "Fridericia" },
+					{ QtcFormula.qtcAll, "All formulas" }
+				};
 			}
 
 			public string Calculate(Measurement rr, Measurement qt, Calibration calibration)
 			{
-				// TODO: Internationize these strings.  Also empty values give misleading "Invalid
-				// unit" message.  Should not be able to calculate at all -- the button should be
-				// greyed out!
 				if (!CanCalculate(rr, qt))
 				{
-					// TODO: Exception here?
-					// need to throw error here
-					return "*ERROR*";
+					return "QTcCalculationError".GetLocalized();
 				}
 				double rrInSec = calibration.CalibratedInterval(rr.Value, false).Value;
 				double qtInSec = calibration.CalibratedInterval(qt.Value, false).Value;
