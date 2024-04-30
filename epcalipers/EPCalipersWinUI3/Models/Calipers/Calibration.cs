@@ -21,8 +21,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		Unknown,
 		None
 	}
-	// TODO: If possible, refactor this to just be a Measurement, provided this struct
-	// remains as just a wrapper of a Measurement.
+	// NB: This is just a redirection to Measurement, however since we may need to add
+	// fields to CalibrationMeasurement, we'll keep it as a separate struct.
 	public readonly struct CalibrationMeasurement
 	{
 		public Measurement Measurement { get; init; }
@@ -55,7 +55,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private const string _roundToFourPlacesString = "G4"; // Useful?
 		private const string _roundToTenthsString = "F1";
 		private const string _roundToHundredthsString = "F2"; // This is needed for units in seconds.
-		private const string _noRoundingString = "G8";  // This is too precise for clinical use.
+		private const string _noRoundingString = "F4";  // This is too precise for clinical use.
 
 		private readonly IDictionary<Rounding, string> _roundingFormat = new Dictionary<Rounding, string>()
 		{
@@ -120,7 +120,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public string GetFormattedRoundedValue(double value, bool showBpm = false)
 		{
-			// 
 			string format = ForceRoundingToHundredths(showBpm) ?
 				_roundingFormat[Rounding.ToHundredths] : _roundingFormat[Rounding];
 			if (Rounding == Rounding.ToInt)

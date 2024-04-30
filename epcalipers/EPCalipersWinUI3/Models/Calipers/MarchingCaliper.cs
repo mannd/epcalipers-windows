@@ -142,7 +142,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				LeftBars[i].Visibility = left - (value * (i + 1)) < 0 || left - (value * (i + 1)) > Bounds.Width 
 					? Microsoft.UI.Xaml.Visibility.Collapsed : Microsoft.UI.Xaml.Visibility.Visible;
 			}
-			// TODO: hide bars when cycle length less than minimum value ? necessary
+			// DEFER: hide bars when cycle length less than minimum value ? necessary
 			// Can do this by adding a abs(value) < minimumValue to the Visibility statements above.
 		}
 

@@ -106,7 +106,8 @@ namespace EPCalipersWinUI3.Views
 			});
 		}
 
-		// TODO: Investigate further.  It appears necessary to refresh calipers TWICE, first in OnNavigatedTo() and
+		// DEFER: Investigate further.  It appears necessary to refresh calipers TWICE,
+		// first in OnNavigatedTo() and
 		// then in MainPage_Loaded() to get changes to update.  Why??
 		private void MainPage_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -212,7 +213,6 @@ namespace EPCalipersWinUI3.Views
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
-				// TODO: See if this code is needed if we can keep caliper elements all within bounds.
 				if (position.Position.X < EcgImage.ActualWidth - _dragMargin
 					&& position.Position.Y < EcgImage.ActualHeight - 5
 					&& position.Position.Y > 5

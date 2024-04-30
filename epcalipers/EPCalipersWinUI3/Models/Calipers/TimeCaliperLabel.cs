@@ -62,9 +62,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
-		// TODO: Need to hide labels that are out of bounds.  
-		// This can happen even with autoalign labels on, and it can definitely
-		// happen when there is no autoalignment.
 		private bool GetPosition(CaliperLabelAlignment alignment)
 		{
 			if (TextBlock == null) return false;

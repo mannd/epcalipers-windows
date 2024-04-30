@@ -17,7 +17,6 @@ namespace EPCalipersWinUI3.Views
 		Center
 	}
 
-	// DEFER: Consider not drawing or measuring calipers that have elements that are out of bounds.
 	public partial class CaliperGrid : Grid, ICaliperView
 	{
 		public InputCursor InputCursor

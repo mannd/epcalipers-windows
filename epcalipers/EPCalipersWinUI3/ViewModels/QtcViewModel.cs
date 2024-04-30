@@ -30,6 +30,13 @@ namespace EPCalipersWinUI3.ViewModels
 		public IntervalMeasured IntervalMeasured { get; set; }
 	}
 
+	// BUG: Don't allow any menu items to appear while calibration dialog is open.
+	// Opening new files, etc. causes bugs.
+
+	// BUG: Measurements completely mishandled when seconds used as units.
+
+	// NB: QTc calculation always rounds to 1 decimal place, since clinically anything
+	// more than that is not realistic.
 	public partial class QtcViewModel: ObservableObject
 	{
 		public static string NotMeasured { get; set; } = "Not measured".GetLocalized();
