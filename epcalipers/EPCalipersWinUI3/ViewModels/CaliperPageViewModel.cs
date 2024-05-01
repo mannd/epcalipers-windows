@@ -61,6 +61,8 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 		}
 
+		public bool IsLocked => _caliperCollection.IsLocked;
+
 		private Bounds ViewportBounds
 		{
 			get

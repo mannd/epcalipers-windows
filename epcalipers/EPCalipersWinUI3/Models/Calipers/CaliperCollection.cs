@@ -155,6 +155,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// <summary>
 		/// If the caliper collection is locked, then calipers can not be added, deleted, selected or
 		/// unselected.  They can be moved, however.  This allows calibration to focus on one caliper.
+		/// Numerous menu items aren't allowed as well.
 		/// </summary>
 		public bool IsLocked { get; set; }
 

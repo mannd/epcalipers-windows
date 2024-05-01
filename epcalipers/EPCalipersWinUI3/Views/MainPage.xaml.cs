@@ -403,6 +403,10 @@ namespace EPCalipersWinUI3.Views
 
 		private async void OpenFile_Click(object sender, RoutedEventArgs e)
 		{
+			if (await WarnIfLocked())
+			{
+				return;
+			}
 			// Create a file picker
 			var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
 
@@ -610,8 +614,25 @@ namespace EPCalipersWinUI3.Views
 				);
 			return softwareBitmap;
 		}
-
 		#endregion
+
+		// TODO: Localize, implement for all relevant menu items.
+		private async Task<bool> WarnIfLocked()
+		{
+			if (ViewModel.IsLocked)
+			{
+				var title = "Operation not permitted during calibration";
+				var message = "You must finish calibrating before doing anything else.";
+				var dialog = MessageHelper.CreateMessageDialog(title, message);
+				dialog.XamlRoot = XamlRoot;
+				await dialog.ShowAsync();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 
 }

@@ -26,7 +26,7 @@ namespace EPCalipersWinUI3
 	{
 		private readonly IPdfHelper _pdfHelper;
 		private bool _isStartup = true;
-		private ISettings _settings = Settings.Instance;
+		private readonly ISettings _settings = Settings.Instance;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
 		public SetZoomDelegate SetZoom { get; set; }
