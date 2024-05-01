@@ -122,7 +122,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			string format = ForceRoundingToHundredths(showBpm) ?
 				_roundingFormat[Rounding.ToHundredths] : _roundingFormat[Rounding];
-			if (Rounding == Rounding.ToInt)
+			// Ignore Rounding.ToInt if we have forced Rounding.ToHundredths due to 
+			// using units of sec or mV.  
+			if (Rounding == Rounding.ToInt && 
+				format != _roundingFormat[Rounding.ToHundredths])
 			{
 				int intValue = (int)Math.Round(value);
 				return intValue.ToString(format);
@@ -141,6 +144,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (roundedInterval, intervalPlusUnit.UnitString);
 		}
 
+		// TODO: Why isn't this used other than in tests?
 		public (string, string) GetNewMeanCalibratedInterval(double interval, int numberOfIntervals, bool showBpm = false)
 		{
 			var meanInterval = GetMeanInterval(interval, numberOfIntervals);
