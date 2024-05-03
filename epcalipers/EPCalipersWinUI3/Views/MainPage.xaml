@@ -37,7 +37,9 @@
         </Grid.ColumnDefinitions>
         <MenuBar x:Name="MainMenuBar" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <MenuBarItem x:Name="FileMenuBarItem" x:Uid="FileMenu">
-                <MenuFlyoutItem x:Uid="OpenMenuItem" Click="OpenFile_Click">
+                <MenuFlyoutItem x:Uid="OpenMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                                Click="OpenFile_Click">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="OpenFile" />
                     </MenuFlyoutItem.Icon>
@@ -46,7 +48,9 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Name="OpenFromScreenShotMenuFlyoutItem"
-                    x:Uid="OpenFromScreenshotMenuItem" Click="OpenFromScreenshot_Click">
+                    x:Uid="OpenFromScreenshotMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                                Click="OpenFromScreenshot_Click">
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="SaveScreenshotMenuItem" Click="SaveScreenshot_Click" 
                                 IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
@@ -336,7 +340,9 @@
         </MenuBar>
         <CommandBar Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                         IsOpen="False" DefaultLabelPosition="Right">
-            <AppBarButton x:Uid="OpenBarButton" Click="OpenFile_Click" >
+            <AppBarButton x:Uid="OpenBarButton" 
+                          IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                          Click="OpenFile_Click" >
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
             <AppBarSeparator/>

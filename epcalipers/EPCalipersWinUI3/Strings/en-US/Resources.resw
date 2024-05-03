@@ -762,4 +762,12 @@
   <data name="QTcCalculationError" xml:space="preserve">
     <value>Could not calculate QTc.</value>
   </data>
+  <data name="OperationBlockedMessage" xml:space="preserve">
+    <value>You must finish or cancel calibration first.</value>
+    <comment>Error when trying to do certain operations while calibrating</comment>
+  </data>
+  <data name="OperationBlockedTitle" xml:space="preserve">
+    <value>Operation not allowed</value>
+    <comment>Error when trying to do certain operations while calibrating</comment>
+  </data>
 </root>

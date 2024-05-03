@@ -31,7 +31,13 @@ namespace EPCalipersWinUI3.ViewModels
 	}
 
 	// BUG: Don't allow any menu items to appear while calibration dialog is open.
-	// Opening new files, etc. causes bugs.
+	// Opening new files, settings, help, changing view, etc. causes bugs.
+
+	// BUG: Don't select full caliper automatically if one bar of sole caliper is selected.  This allows fine tuning
+	// of caliper movement with keyboard shortcuts during calibration.  Can selected bar be changed
+	// during calibration?
+
+	// BUG: Consider inhibiting inactive menu items during calibration.
 
 	// NB: QTc calculation always rounds to 1 decimal place, since clinically anything
 	// more than that is not realistic.

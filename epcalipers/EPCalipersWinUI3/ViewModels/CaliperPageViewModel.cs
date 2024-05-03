@@ -36,6 +36,7 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.CaliperCollectionChangeHandler = CaliperCollectionChanged;
 			IsTimeCalibrated = _caliperCollection.TimeCalibration?.IsCalibrated ?? false;
 			IsCalibrated = _caliperCollection.IsCalibrated;
+			IsUnlocked = !_caliperCollection.IsLocked;
 		}
 
 		public void CaliperCollectionChanged(int numberOfCalipers)
@@ -59,9 +60,30 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				IsCalibrated = _caliperCollection.IsCalibrated;
 			}
+			if (e.PropertyName == nameof(CaliperCollection.IsLocked))
+			{
+				IsUnlocked = !_caliperCollection.IsLocked;
+			}
 		}
 
 		public bool IsLocked => _caliperCollection.IsLocked;
+
+		public async Task<bool> WarnIfLocked(XamlRoot xamlRoot)
+		{
+			if (IsLocked)
+			{
+				var title = "OperationBlockedTitle".GetLocalized();
+				var message = "OperationBlockedMessage".GetLocalized();
+				var dialog = MessageHelper.CreateMessageDialog(title, message);
+				dialog.XamlRoot = xamlRoot;
+				await dialog.ShowAsync();
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 		private Bounds ViewportBounds
 		{
@@ -315,6 +337,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool isCalibrated;
+
+		[ObservableProperty]
+		private bool isUnlocked;
 
 		#endregion
 	}

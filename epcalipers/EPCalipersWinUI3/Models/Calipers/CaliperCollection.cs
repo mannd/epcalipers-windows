@@ -157,7 +157,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// unselected.  They can be moved, however.  This allows calibration to focus on one caliper.
 		/// Numerous menu items aren't allowed as well.
 		/// </summary>
-		public bool IsLocked { get; set; }
+		public bool IsLocked
+		{
+			get => _isLocked;
+			set
+			{
+				if (_isLocked != value)
+				{
+					_isLocked = value;
+					OnPropertyChanged(nameof(IsLocked));
+				}
+			}
+
+		}
+		private bool _isLocked;
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();

@@ -138,5 +138,10 @@ namespace EPCalipersWinUI3.Views
 		}
 
 		private async void About_Click(object sender, RoutedEventArgs e) => await CommandHelper.About(XamlRoot);
+
+		private async Task<bool> WarnIfLocked()
+		{
+			return await ViewModel.WarnIfLocked(XamlRoot);
+		}
 	}
 }
