@@ -36,7 +36,8 @@ namespace EPCalipersWinUI3.ViewModels
 			_caliperCollection.CaliperCollectionChangeHandler = CaliperCollectionChanged;
 			IsTimeCalibrated = _caliperCollection.TimeCalibration?.IsCalibrated ?? false;
 			IsCalibrated = _caliperCollection.IsCalibrated;
-			IsUnlocked = !_caliperCollection.IsLocked;
+			IsNotCalibrating = !_caliperCollection.IsCalibrating;
+			OkToAddCalipers = CanAddCalipers();
 		}
 
 		public void CaliperCollectionChanged(int numberOfCalipers)
@@ -45,6 +46,10 @@ namespace EPCalipersWinUI3.ViewModels
 		}
 
 
+		// TODO: Need more detailed properties for certain menu items, maybe different
+		// for MainPageViewModel and TransparentPageViewModel, e.g. Add calipers if
+		// there is a main image, or page is transparent page, and caliper collection unlocked.
+		// Consider changing locked and unlocked to IsCalibrating and IsNotCalibrating.
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
@@ -60,17 +65,25 @@ namespace EPCalipersWinUI3.ViewModels
 			{
 				IsCalibrated = _caliperCollection.IsCalibrated;
 			}
-			if (e.PropertyName == nameof(CaliperCollection.IsLocked))
+			if (e.PropertyName == nameof(CaliperCollection.IsCalibrating))
 			{
-				IsUnlocked = !_caliperCollection.IsLocked;
+				IsNotCalibrating = !_caliperCollection.IsCalibrating;
+				Debug.Print($"IsNotCalibrating = {IsNotCalibrating}");
+				OkToAddCalipers = CanAddCalipers();
+				Debug.Print($"CanAddCalipers = {CanAddCalipers()}");	
 			}
 		}
 
-		public bool IsLocked => _caliperCollection.IsLocked;
+		public virtual bool CanAddCalipers()
+		{
+			return true;
+		}
+
+		public bool IsCalibrating => _caliperCollection.IsCalibrating;
 
 		public async Task<bool> WarnIfLocked(XamlRoot xamlRoot)
 		{
-			if (IsLocked)
+			if (IsCalibrating)
 			{
 				var title = "OperationBlockedTitle".GetLocalized();
 				var message = "OperationBlockedMessage".GetLocalized();
@@ -339,7 +352,10 @@ namespace EPCalipersWinUI3.ViewModels
 		private bool isCalibrated;
 
 		[ObservableProperty]
-		private bool isUnlocked;
+		private bool isNotCalibrating;
+
+		[ObservableProperty]
+		private bool okToAddCalipers;
 
 		#endregion
 	}

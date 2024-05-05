@@ -157,27 +157,26 @@ namespace EPCalipersWinUI3.Models.Calipers
 		/// unselected.  They can be moved, however.  This allows calibration to focus on one caliper.
 		/// Numerous menu items aren't allowed as well.
 		/// </summary>
-		public bool IsLocked
+		public bool IsCalibrating
 		{
-			get => _isLocked;
+			get => _isCalibrating;
 			set
 			{
-				if (_isLocked != value)
+				if (_isCalibrating != value)
 				{
-					_isLocked = value;
-					OnPropertyChanged(nameof(IsLocked));
+					_isCalibrating = value;
+					OnPropertyChanged(nameof(IsCalibrating));
 				}
 			}
-
 		}
-		private bool _isLocked;
+		private bool _isCalibrating;
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
 			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
 
 		public Caliper AddCaliper(CaliperType type, ViewportBoundsOffset boundsOffset, bool fakeUI = false)
 		{
-			if (IsLocked) return null;
+			if (IsCalibrating) return null;
 			var caliper = Caliper.InitCaliper(type,
 				_caliperView,
 				_settings,
@@ -197,7 +196,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void RemoveAtPoint(Point point)
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			foreach (var caliper in _calipers)
 			{
 				var bar = caliper.IsNearBar(point);
@@ -309,7 +308,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void Clear()
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			foreach (var caliper in _calipers)
 			{
 				caliper.Remove(_caliperView);
@@ -320,7 +319,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void RemoveActiveCaliper()
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			foreach (var caliper in _calipers)
 			{
 				if (caliper.IsSelected)
@@ -349,7 +348,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public bool ToggleMarchingCaliper(Point point)
 		{
-			if (IsLocked) return false;
+			if (IsCalibrating) return false;
 			bool isMarching = false;
 			foreach (var caliper in _calipers)
 			{
@@ -402,7 +401,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void UnselectAllCalipers()
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			foreach (var caliper in _calipers)
 			{
 				caliper.UnselectFullCaliper();
@@ -427,7 +426,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ToggleCaliperSelection(Point point)
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			bool caliperToggled = false;
 			foreach (var caliper in _calipers)
 			{
@@ -451,7 +450,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ToggleComponentSelection(Point point)
 		{
-			if (IsLocked) return;
+			if (IsCalibrating) return;
 			bool caliperToggled = false;
 			foreach (var caliper in _calipers)
 			{
@@ -520,7 +519,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case CaliperType.Time:
 				case CaliperType.Amplitude:
-					IsLocked = true;
+					IsCalibrating = true;
 					ShowCalibrationDialogWindow(SelectedCaliperType);
 					break;
 			}
@@ -578,7 +577,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		private void OnCalibrationWindowClosed(object sender, WindowEventArgs args)
 		{
-			IsLocked = false;
+			IsCalibrating = false;
 			RefreshCalipers();
 			if (_calibrationWindow != null)
 			{

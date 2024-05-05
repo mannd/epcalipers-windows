@@ -38,7 +38,7 @@
         <MenuBar x:Name="MainMenuBar" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <MenuBarItem x:Name="FileMenuBarItem" x:Uid="FileMenu">
                 <MenuFlyoutItem x:Uid="OpenMenuItem" 
-                                IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
                                 Click="OpenFile_Click">
                     <MenuFlyoutItem.Icon>
                         <SymbolIcon Symbol="OpenFile" />
@@ -49,7 +49,7 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Name="OpenFromScreenShotMenuFlyoutItem"
                     x:Uid="OpenFromScreenshotMenuItem" 
-                                IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
                                 Click="OpenFromScreenshot_Click">
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="SaveScreenshotMenuItem" Click="SaveScreenshot_Click" 
@@ -67,9 +67,12 @@
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Name="ViewMenuBarItem" x:Uid="ViewMenu">
-                <MenuFlyoutItem x:Uid="MainMenuItem" />
+                <ToggleMenuFlyoutItem x:Uid="MainMenuItem"
+                          IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}" 
+                                      IsChecked="True"/>
                 <MenuFlyoutItem x:Uid="TransparentMenuItem" 
-                    Command="{x:Bind ViewModel.TransparenWindowCommand}">
+                      IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.TransparenWindowCommand}">
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="ImageMenu" x:Name="ImageMenu">
@@ -168,7 +171,7 @@
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu" x:Name="CalipersMenu">
                 <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
                                Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
@@ -178,7 +181,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" 
-                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
@@ -188,7 +191,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" 
-                                IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                                IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
@@ -322,14 +325,18 @@
                 <MenuFlyoutItem x:Uid="MeasureQTcMenuItem" Command="{x:Bind ViewModel.MeasureQtcCommand}"
                                 IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"/>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="OptionsMenuItem" Command="{x:Bind ViewModel.ShowSettingsCommand}">
+                <MenuFlyoutItem x:Uid="OptionsMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
+                                Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <MenuFlyoutItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE713;" />
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
             </MenuBarItem>
             <MenuBarItem x:Uid="HelpMenu">
-                <MenuFlyoutItem x:Uid="HelpMenuItem" Command="{x:Bind ViewModel.HelpCommand}">
+                <MenuFlyoutItem x:Uid="HelpMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
+                                Command="{x:Bind ViewModel.HelpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="F1"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
@@ -341,7 +348,7 @@
         <CommandBar Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
                         IsOpen="False" DefaultLabelPosition="Right">
             <AppBarButton x:Uid="OpenBarButton" 
-                          IsEnabled="{x:Bind ViewModel.IsUnlocked, Mode=OneWay}"
+                          IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
                           Click="OpenFile_Click" >
                 <SymbolIcon Symbol="OpenFile" />
             </AppBarButton>
@@ -355,13 +362,13 @@
                 <SymbolIcon Symbol="ZoomOut" />
             </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton x:Uid="AddCaliperBarButton" IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}">
+            <AppBarButton x:Uid="AddCaliperBarButton" 
+                          IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}">
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
-                                        IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
                                         Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                             <MenuFlyoutItem.Icon>
                                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
@@ -406,7 +413,9 @@
                                 IsEnabled="{x:Bind ViewModel.IsTimeCalibrated, Mode=OneWay}"
                           Command="{x:Bind ViewModel.MeasureQtcCommand}"/>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" Command="{x:Bind ViewModel.ShowSettingsCommand}">
+                <AppBarButton Icon="Setting" x:Uid="SettingsBarButton" 
+                              IsEnabled="{x:Bind ViewModel.IsNotCalibrating, Mode=OneWay}"
+                              Command="{x:Bind ViewModel.ShowSettingsCommand}">
                     <AppBarButton.KeyboardAccelerators>
                         <KeyboardAccelerator Modifiers="Control" Key="I" />
                     </AppBarButton.KeyboardAccelerators>

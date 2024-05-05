@@ -30,7 +30,7 @@ namespace EPCalipersWinUI3.ViewModels
 		public IntervalMeasured IntervalMeasured { get; set; }
 	}
 
-	// BUG: Don't allow any menu items to appear while calibration dialog is open.
+	// BUG: Don't allow certain menu items to appear while calibration dialog is open.
 	// Opening new files, settings, help, changing view, etc. causes bugs.
 
 	// BUG: Don't select full caliper automatically if one bar of sole caliper is selected.  This allows fine tuning

@@ -235,12 +235,9 @@ namespace EPCalipersWinUi3Tests.Tests
 			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToInt;
 			var interval = calibration.GetMeanInterval(1200, 3);
 			Assert.Equal(400, interval);
-			var formattedInterval = calibration.GetNewMeanCalibratedInterval(120, 3);
-			Assert.Equal("400", formattedInterval.Item1);
-			Assert.Equal("msec", formattedInterval.Item2);
-			formattedInterval = calibration.GetNewMeanCalibratedInterval(120, 3, true);
-			Assert.Equal("150", formattedInterval.Item1);
-			Assert.Equal("bpm", formattedInterval.Item2);
+			var meanInterval = calibration.MeanCalibratedInterval(1200, 3);
+			Assert.Equal(400, meanInterval.Value);
+			Assert.Equal("msec", meanInterval.UnitString);
 		}
 
 		[Fact]

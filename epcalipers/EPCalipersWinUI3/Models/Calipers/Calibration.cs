@@ -144,16 +144,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (roundedInterval, intervalPlusUnit.UnitString);
 		}
 
-		// TODO: Why isn't this used other than in tests?
-		public (string, string) GetNewMeanCalibratedInterval(double interval, int numberOfIntervals, bool showBpm = false)
-		{
-			var meanInterval = GetMeanInterval(interval, numberOfIntervals);
-			var meanMeasurement = CalibratedInterval(meanInterval, showBpm);
-			var calibratedMeanInterval = meanMeasurement.Value;
-			var roundedInterval = GetFormattedRoundedValue(calibratedMeanInterval, showBpm: showBpm);
-			return (roundedInterval, meanMeasurement.UnitString);
-		}
-
 		public double GetMeanInterval(double interval, int numberOfIntervals)
 		{
 			if (numberOfIntervals < 1) throw new ZeroValueException();

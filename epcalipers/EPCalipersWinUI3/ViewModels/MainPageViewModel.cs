@@ -45,6 +45,12 @@ namespace EPCalipersWinUI3
 			SupportsPdfs = _pdfHelper.SupportsPdfs;
 		}
 
+		public override bool CanAddCalipers()
+		{
+			return HasMainImage && IsNotCalibrating;
+		}
+
+
 		public bool ClearCalipersBetweenPdfPages
 		{
 			get
@@ -91,6 +97,7 @@ namespace EPCalipersWinUI3
 				Debug.Print("changing main image source");
 				HasMainImage = (MainImageSource != null);
 				HasNoMainImage = !HasMainImage;
+				OkToAddCalipers = CanAddCalipers();
 			}
 		}
 

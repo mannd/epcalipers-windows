@@ -9,6 +9,11 @@ namespace EPCalipersWinUI3.ViewModels
 	{
 		public TransparentPageViewModel(ICaliperView caliperView) : base(caliperView, null) { }
 
+		public override bool CanAddCalipers()
+		{
+			return IsNotCalibrating;
+		}
+
 		[RelayCommand]
 		private static void ToggleTransparentWindow()
 		{
