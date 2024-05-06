@@ -227,7 +227,7 @@
     <value>Delete all calipers</value>
   </data>
   <data name="DeleteCaliperMenuItem.Text" xml:space="preserve">
-    <value>Delete caliper</value>
+    <value>Delete selected caliper</value>
   </data>
   <data name="EmptyCustomStringException" xml:space="preserve">
     <value>You must enter a value and units.  Example, 500 ms.</value>

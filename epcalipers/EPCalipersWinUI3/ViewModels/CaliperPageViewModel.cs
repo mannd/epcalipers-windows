@@ -37,12 +37,15 @@ namespace EPCalipersWinUI3.ViewModels
 			IsTimeCalibrated = _caliperCollection.TimeCalibration?.IsCalibrated ?? false;
 			IsCalibrated = _caliperCollection.IsCalibrated;
 			IsNotCalibrating = !_caliperCollection.IsCalibrating;
-			OkToAddCalipers = CanAddCalipers();
+			ShowCaliperMenuItems = CanAddCalipers();
+			ShowSelectedCaliperMenuItems = CanActOnSelectedCaliper();
+			ShowActOnCalipersMenuItems = CanActOnCalipers();
 		}
 
 		public void CaliperCollectionChanged(int numberOfCalipers)
 		{
 			HasCalipers = numberOfCalipers > 0;
+			ShowActOnCalipersMenuItems = CanActOnCalipers();
 		}
 
 
@@ -55,6 +58,7 @@ namespace EPCalipersWinUI3.ViewModels
 			if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
 			{ 
 				ACaliperIsSelected = _caliperCollection.SelectedCaliper?.IsSelected ?? false;
+				ShowSelectedCaliperMenuItems = CanActOnSelectedCaliper();
 			}
 			if (e.PropertyName == nameof(CaliperCollection.TimeCalibration))
 			{
@@ -68,15 +72,29 @@ namespace EPCalipersWinUI3.ViewModels
 			if (e.PropertyName == nameof(CaliperCollection.IsCalibrating))
 			{
 				IsNotCalibrating = !_caliperCollection.IsCalibrating;
-				Debug.Print($"IsNotCalibrating = {IsNotCalibrating}");
-				OkToAddCalipers = CanAddCalipers();
-				Debug.Print($"CanAddCalipers = {CanAddCalipers()}");	
+				ShowCaliperMenuItems = CanAddCalipers();
+				ShowSelectedCaliperMenuItems = CanActOnSelectedCaliper();
+				ShowActOnCalipersMenuItems = CanActOnCalipers();
 			}
 		}
 
+		// TODO: Need to close measurement windows when switching between views.
+
+		// TODO: Add check marks to right click menu (like we have with Marching Calipers)?
+
 		public virtual bool CanAddCalipers()
 		{
-			return true;
+			return IsNotCalibrating;
+		}
+
+		public virtual bool CanActOnSelectedCaliper()
+		{
+			return ACaliperIsSelected && IsNotCalibrating;
+		}
+
+		public virtual bool CanActOnCalipers()
+		{
+			return HasCalipers && IsNotCalibrating;
 		}
 
 		public bool IsCalibrating => _caliperCollection.IsCalibrating;
@@ -355,7 +373,16 @@ namespace EPCalipersWinUI3.ViewModels
 		private bool isNotCalibrating;
 
 		[ObservableProperty]
-		private bool okToAddCalipers;
+		private bool showCaliperMenuItems;
+
+		[ObservableProperty]
+		private bool showSelectedCaliperMenuItems;
+
+		[ObservableProperty]
+		private bool showActOnCalipersMenuItems;
+
+		[ObservableProperty]
+		private bool caliperIsSelected;
 
 		#endregion
 	}

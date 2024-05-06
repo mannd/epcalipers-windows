@@ -171,7 +171,7 @@
             </MenuBarItem>
             <MenuBarItem x:Uid="CalipersMenu" x:Name="CalipersMenu">
                 <MenuFlyoutItem x:Uid="TimeCaliperMenuItem" 
-                               IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ShowCaliperMenuItems, Mode=OneWay}" 
                                Command="{x:Bind ViewModel.AddTimeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" />
@@ -181,7 +181,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AmplitudeCaliperMenuItem" 
-                               IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ShowCaliperMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.AddAmplitudeCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AmplitudeCaliper.scale-200.png" />
@@ -191,7 +191,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="AngleCaliperMenuItem" 
-                                IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}" 
+                                IsEnabled="{x:Bind ViewModel.ShowCaliperMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.AddAngleCaliperCommand}">
                     <MenuFlyoutItem.Icon>
                         <BitmapIcon UriSource="Assets/AngleCaliper.scale-200.png" />
@@ -363,7 +363,7 @@
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton x:Uid="AddCaliperBarButton" 
-                          IsEnabled="{x:Bind ViewModel.OkToAddCalipers, Mode=OneWay}">
+                          IsEnabled="{x:Bind ViewModel.ShowCaliperMenuItems, Mode=OneWay}">
                 <BitmapIcon UriSource="Assets/TimeCaliper.scale-200.png" 
                            ToolTipService.ToolTip="Add time caliper"/>
                 <AppBarButton.Flyout>

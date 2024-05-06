@@ -97,7 +97,7 @@ namespace EPCalipersWinUI3
 				Debug.Print("changing main image source");
 				HasMainImage = (MainImageSource != null);
 				HasNoMainImage = !HasMainImage;
-				OkToAddCalipers = CanAddCalipers();
+				ShowCaliperMenuItems = CanAddCalipers();
 			}
 		}
 
