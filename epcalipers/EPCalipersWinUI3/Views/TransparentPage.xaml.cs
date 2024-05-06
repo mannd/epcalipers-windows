@@ -108,6 +108,10 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.CaliperIsMarching = false;
 			}
+			if (caliper != null)
+			{
+				ViewModel.CaliperIsSelected = caliper.IsSelected;
+			} 
 		}
 
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)

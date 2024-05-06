@@ -424,10 +424,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		// New stuff
 
-		public void ToggleCaliperSelection(Point point)
+		public bool ToggleCaliperSelection(Point point)
 		{
-			if (IsCalibrating) return;
+			if (IsCalibrating) return false;
 			bool caliperToggled = false;
+			bool caliperIsSelected = false;
 			foreach (var caliper in _calipers)
 			{
 				if (caliper.IsNearBar(point) != null && !caliperToggled)
@@ -442,10 +443,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 					{
 						caliper.SelectFullCaliper();
 						SelectedCaliper = caliper;
+						caliperIsSelected = true;
 					}
 					UnselectCalipersExcept(caliper);
 				}
 			}
+			return caliperIsSelected;
 		}
 
 		public void ToggleComponentSelection(Point point)

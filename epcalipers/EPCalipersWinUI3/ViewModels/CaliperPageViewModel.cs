@@ -222,7 +222,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public void ToggleCaliperSelection(Point point)
 		{
-			_caliperCollection.ToggleCaliperSelection(point);
+			CaliperIsSelected = _caliperCollection.ToggleCaliperSelection(point);
 		}
 
 		[RelayCommand]
