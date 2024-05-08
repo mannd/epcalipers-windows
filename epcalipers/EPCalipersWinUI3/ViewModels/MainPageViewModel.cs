@@ -47,7 +47,7 @@ namespace EPCalipersWinUI3
 
 		public override bool CanAddCalipers()
 		{
-			return HasMainImage && IsNotCalibrating;
+			return HasMainImage && base.CanAddCalipers();
 		}
 
 

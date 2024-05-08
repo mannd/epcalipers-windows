@@ -202,21 +202,21 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="DeleteSelectedCaliperMenuItem" 
-                        IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.ShowSelectedCaliperMenuItems, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.DeleteSelectedCaliperCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem Icon="Delete" x:Uid="DeleteAllCalipersMenuItem"
-                               IsEnabled="{x:Bind ViewModel.HasCalipers, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ShowActOnCalipersMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.DeleteAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Delete" Modifiers="Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem Icon="Clear" x:Uid="UnselectAllCalipersMenuItem"
-                               IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ShowSelectedCaliperMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.UnselectAllCalipersCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="Escape" />
@@ -224,9 +224,10 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
-                               IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}" 
+                               IsEnabled="{x:Bind ViewModel.ShowActOnCalipersMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.SetCalibrationCommand}" />
-                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
+                <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
+                                IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.ClearCalibrationCommand}"/>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="MoveLeftMenuItem"
@@ -393,6 +394,7 @@
                 <AppBarButton.Flyout>
                     <MenuFlyout>
                         <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
+                        IsEnabled="{x:Bind ViewModel.ShowActOnCalipersMenuItems, Mode=OneWay}"
                                         Command="{x:Bind ViewModel.SetCalibrationCommand}" />
                         <MenuFlyoutItem x:Uid="ClearCalibrationMenuItem" 
                                         IsEnabled="{x:Bind ViewModel.IsCalibrated, Mode=OneWay}"

@@ -85,7 +85,7 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
-                <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" 
+                <MenuFlyoutItem x:Uid="DeleteSelectedCaliperMenuItem" 
                                 IsEnabled="{x:Bind ViewModel.ShowSelectedCaliperMenuItems, Mode=OneWay}"
                                 Command="{x:Bind ViewModel.DeleteSelectedCaliperCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
