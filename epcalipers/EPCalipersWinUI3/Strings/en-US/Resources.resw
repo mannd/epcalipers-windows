@@ -227,7 +227,7 @@
     <value>Delete all calipers</value>
   </data>
   <data name="DeleteCaliperMenuItem.Text" xml:space="preserve">
-    <value>Delete selected caliper</value>
+    <value>Delete caliper</value>
   </data>
   <data name="EmptyCustomStringException" xml:space="preserve">
     <value>You must enter a value and units.  Example, 500 ms.</value>
@@ -423,10 +423,10 @@
     <value>sec</value>
   </data>
   <data name="SelectCaliperMenuItem.Text" xml:space="preserve">
-    <value>Toggle select caliper</value>
+    <value>Select/unselect caliper</value>
   </data>
   <data name="SelectComponentMenuItem.Text" xml:space="preserve">
-    <value>Toggle select bar</value>
+    <value>Select/unselect bar</value>
   </data>
   <data name="SetCalibration.Content" xml:space="preserve">
     <value>Set calibration</value>
