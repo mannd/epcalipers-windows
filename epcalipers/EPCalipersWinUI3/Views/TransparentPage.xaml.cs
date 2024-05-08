@@ -4,25 +4,14 @@ using EPCalipersWinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Graphics.Capture;
-using Windows.Graphics.DirectX.Direct3D11;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Provider;
-using Windows.Storage.Streams;
-using WinRT.Interop;
 
 namespace EPCalipersWinUI3.Views
 {
-	public sealed partial class TransparentPage : Page
+    public sealed partial class TransparentPage : Page
 	{
 		TransparentPageViewModel ViewModel { get; set; }
 		private Point _rightClickPosition;
@@ -42,6 +31,13 @@ namespace EPCalipersWinUI3.Views
 		{
 			base.OnNavigatedTo(e);
 			ViewModel.RefreshCalipers();
+		}
+
+		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			base.OnNavigatedFrom(e);
+			ViewModel.CloseWindows();
+
 		}
 
 		private void TransparentPage_Loaded(object sender, RoutedEventArgs e)

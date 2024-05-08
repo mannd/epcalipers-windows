@@ -250,6 +250,11 @@ namespace EPCalipersWinUI3.ViewModels
 		{
 			_caliperCollection.ChangeBounds();
 		}
+
+		public void CloseWindows()
+		{
+			_caliperCollection.CloseWindows();
+		}
 		#endregion
 
 		#region menu comands

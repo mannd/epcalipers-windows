@@ -686,10 +686,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			else
 			{
-				// show dialog, get number of interval
 				ShowMeanRateIntervalDialog();
-				//var numberIntervals = 5;
-				//var meanInterval = Caliper.MeanInterval(SelectedCaliper.Value, numberIntervals);
 			}
 		}
 
@@ -778,6 +775,13 @@ namespace EPCalipersWinUI3.Models.Calipers
 			_colorWindow.Content = colorView;
 			_colorWindow.Closed += OnColorWindowClosed;
 			_colorWindow.Show();
+		}
+
+		public void CloseWindows()
+		{
+			_colorWindow?.Close();
+			_meanRateIntervalWindow?.Close();
+			_measureQtcWindow?.Close();
 		}
 	}
 }

@@ -127,7 +127,13 @@ namespace EPCalipersWinUI3.Views
 				AppHelper.StartupFile = null;
 			}
 			ViewModel.RefreshCalipers();
+			ViewModel.CloseWindows();
 			SetCaliperViewOrientation();
+		}
+		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			base.OnNavigatedFrom(e);
+			ViewModel.CloseWindows();
 		}
 
 		private void SetCaliperViewOrientation()

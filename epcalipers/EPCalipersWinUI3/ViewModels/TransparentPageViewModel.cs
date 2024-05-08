@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.Views;
 
 namespace EPCalipersWinUI3.ViewModels
