@@ -15,8 +15,7 @@
             <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"
                             Tag="red" Click="SelectComponent_Click"/>
-            <ToggleMenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="SelectCaliper_Click"
-                IsChecked="{x:Bind ViewModel.CaliperIsSelected, Mode=OneWay}"
+            <MenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="SelectCaliper_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
             <MenuFlyoutItem x:Uid="DeleteCaliperMenuItem" Tag="green" Click="DeleteCaliper_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
