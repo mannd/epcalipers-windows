@@ -453,7 +453,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public void ToggleComponentSelection(Point point)
 		{
-			if (IsCalibrating) return;
 			bool caliperToggled = false;
 			foreach (var caliper in _calipers)
 			{
@@ -470,12 +469,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 						}
 						else // toggle off partial selection
 						{
+							if (IsCalibrating) return; // Don't allow complete unselection during calibration.
 							caliper.UnselectFullCaliper();
 							SelectedCaliper = null;
 						}
 					}
 					else // toggle on partial selection
 					{
+						if (IsCalibrating && !caliper.IsSelected) return; // Don't allow changing calipers during calibration.
 						caliper.SelectPartialCaliper(bar);
 						SelectedCaliper = caliper;
 					}

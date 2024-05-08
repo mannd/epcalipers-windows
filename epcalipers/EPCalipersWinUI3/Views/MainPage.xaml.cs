@@ -167,7 +167,8 @@ namespace EPCalipersWinUI3.Views
 			var position = e.GetPosition(CaliperView);
 			_rightClickPosition = position;
 			var caliper = ViewModel.GetCaliperAt(position);
-			ViewModel.IsNearCaliper = caliper != null;
+			ViewModel.IsNearCaliperAllowDuringCalibration = caliper != null;
+			ViewModel.IsNearCaliper = ViewModel.IsNearCaliperAllowDuringCalibration && !ViewModel.IsCalibrating;
 			if (caliper != null && caliper is TimeCaliper timeCaliper)
 			{
 				ViewModel.CaliperIsMarching = timeCaliper.IsMarching;

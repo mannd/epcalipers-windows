@@ -13,7 +13,7 @@
     <Page.Resources>
         <MenuFlyout x:Key="ContextMenuFlyout">
             <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 
-                IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"
+                IsEnabled="{x:Bind ViewModel.IsNearCaliperAllowDuringCalibration, Mode=OneWay}"
                             Tag="red" Click="SelectComponent_Click"/>
             <MenuFlyoutItem x:Uid="SelectCaliperMenuItem" Tag="green" Click="SelectCaliper_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>

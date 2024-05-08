@@ -48,11 +48,6 @@ namespace EPCalipersWinUI3.ViewModels
 			ShowActOnCalipersMenuItems = CanActOnCalipers();
 		}
 
-
-		// TODO: Need more detailed properties for certain menu items, maybe different
-		// for MainPageViewModel and TransparentPageViewModel, e.g. Add calipers if
-		// there is a main image, or page is transparent page, and caliper collection unlocked.
-		// Consider changing locked and unlocked to IsCalibrating and IsNotCalibrating.
 		private void OnMyPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof(CaliperCollection.SelectedCaliper))
@@ -80,7 +75,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		// TODO: Need to close measurement windows when switching between views.
 
-		// TODO: Add check marks to right click menu (like we have with Marching Calipers)?
+		// DEFER: Add check marks to right click menu (like we have with Marching Calipers)?
 
 		public virtual bool CanAddCalipers()
 		{
@@ -353,6 +348,9 @@ namespace EPCalipersWinUI3.ViewModels
 		#region observable properties
 		[ObservableProperty]
 		private bool isNearCaliper;
+
+		[ObservableProperty]
+		private bool isNearCaliperAllowDuringCalibration;
 
 		[ObservableProperty]
 		private bool caliperIsMarching;
