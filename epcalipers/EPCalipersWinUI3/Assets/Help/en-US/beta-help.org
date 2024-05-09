@@ -19,16 +19,16 @@
 :PROPERTIES:
 :CUSTOM_ID: quick-start-id
 :END:
-1) Click on ~Open~ on the toolbar to open an image file.
-2) Click on the ~Add caliper~ on the toolbar to add a caliper.
+1) Click ~Open~ on the toolbar to open an image file.
+2) Click ~Add caliper~ on the toolbar to add a caliper.
 3) Use the mouse or trackpad to manipulate the caliper.
-4) Single click a caliper to select it for calibration or for making measurements.
-5) Click ~Calibration~ and then ~Set calibration~ to calibrate the selected caliper.
-6) Use the ~Rate/Interval~ to switch between rate and interval measurements.
-7) Make other measurements with the ~Mean interval~ and ~QTc~ buttons on the toolbar.
-8) Double-click a caliper to delete it.
-9) You can switch to a transparent window using the ~View|Transparent~ menu item.
-10) Explore the items on the ~Main menu~ and ~Tools|Settings~ to explore further, or read the details on this page.
+4) *Single click* a caliper to select it for calibration or for making measurements.
+5) *Double-click* a caliper to delete it.
+6) Click ~Calibration~ and then ~Set calibration~ to calibrate the selected caliper.
+7) Click ~Rate/Interval~ to switch between rate and interval measurements.
+8) Make other measurements with the ~Mean interval~ and ~QTc~ buttons on the toolbar.
+9) You can switch to a transparent window using ~View|Transparent~ on the menu bar.
+10) Adjust settings using ~Tools|Settings~ on the menu bar.
 * Images
 :PROPERTIES:
 :CUSTOM_ID: images-id
@@ -38,7 +38,7 @@ You can open image files including JPG, PNG, BMP, TIFF, and PDF files.  If the i
 :PROPERTIES:
 :CUSTOM_ID: moving-calipers-id
 :END:
-Click on ~Add caliper~ on the toolbar and select the type of caliper you want to add.
+Click ~Add caliper~ on the toolbar and select the type of caliper you want to add.
 
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
 
@@ -49,7 +49,7 @@ Delete a caliper by double-clicking it.
 :PROPERTIES:
 :CUSTOM_ID: selecting-caliper-id
 :END:
-Select a caliper by single clicking it.  The caliper color will change.  Unselect the caliper the same way or by pressing the ~Escape~ key.  Right click on a caliper bar to select that specific bar to move the bar using the keyboard.  
+Select a caliper by single clicking it.  The caliper color will change.  Unselect the caliper the same way or by pressing the ~Escape~ key.  Right click a caliper bar to select that specific bar to move the bar using the keyboard.  
 * Calibration
 :PROPERTIES:
 :CUSTOM_ID: calibration-id
@@ -81,13 +81,13 @@ Click ~QTc~ on the toolbar to open the QTc dialog.  Use the dialog to measure on
 :PROPERTIES:
 :CUSTOM_ID: transparent-id
 :END:
-Click on the ~View|Transparent~ menu item to switch to a transparent window that you can use to make measurements on a window open on your desktop, such as a web page.  You can adjust Settings to make this window float above all other windows on the desktop.  You can also change Settings to have the app start with a transparent window.
+Click the ~View|Transparent~ menu item to switch to a transparent window that you can use to make measurements on a window open on your desktop, such as a web page.  You can adjust Settings to make this window float above all other windows on the desktop.  You can also change Settings to have the app start with a transparent window.
 * More caliper options
 :PROPERTIES:
 :CUSTOM_ID: more-caliper-options-id
 :END:
 ** Change caliper colors
-Right click a caliper and select ~Color~ to change its unselected color.  This only affects that specific caliper.  To change the color of new calipers, click on ~Settings~.
+Right click a caliper and select ~Color~ to change its unselected color.  This only affects that specific caliper.  To change the color of new calipers, click ~Settings~.
 ** Marching calipers
 Right click a time caliper and select ~Marching caliper~ to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Right click and select ~Marching caliper~ again to change the marching caliper back to normal again, or just double click to delete it.
 * PDFs
@@ -103,7 +103,7 @@ Note that the Brugadometer triangle can be turned off in ~Settings~.
 :PROPERTIES:
 :CUSTOM_ID: preferences-id
 :END:
-Click on ~Settings~ to open the Settings page.  Here you can adjust various defaults including whether the app starts with the image window of the transparent window, as well as thickness of the caliper bars, the font size of the caliper labels, caliper colors, and various other parameters.
+Click ~Settings~ to open the Settings page.  Here you can adjust various defaults including whether the app starts with the image window of the transparent window, as well as thickness of the caliper bars, the font size of the caliper labels, caliper colors, and various other parameters.
 * Acknowledgements
 :PROPERTIES:
 :CUSTOM_ID: acknowledgements-id

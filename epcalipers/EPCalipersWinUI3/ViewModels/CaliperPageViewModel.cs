@@ -73,8 +73,6 @@ namespace EPCalipersWinUI3.ViewModels
 			}
 		}
 
-		// TODO: Need to close measurement windows when switching between views.
-
 		// DEFER: Add check marks to right click menu (like we have with Marching Calipers)?
 
 		public virtual bool CanAddCalipers()

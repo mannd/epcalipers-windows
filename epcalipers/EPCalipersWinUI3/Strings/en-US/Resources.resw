@@ -423,10 +423,10 @@
     <value>sec</value>
   </data>
   <data name="SelectCaliperMenuItem.Text" xml:space="preserve">
-    <value>Select/unselect caliper</value>
+    <value>Toggle select caliper</value>
   </data>
   <data name="SelectComponentMenuItem.Text" xml:space="preserve">
-    <value>Select/unselect bar</value>
+    <value>Toggle select bar</value>
   </data>
   <data name="SetCalibration.Content" xml:space="preserve">
     <value>Set calibration</value>
