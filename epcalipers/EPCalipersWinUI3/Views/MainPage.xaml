@@ -275,7 +275,7 @@
                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveLeftCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Left" Modifiers="Control,Menu"/>
+                        <KeyboardAccelerator Key="Left" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEC52;"/>
@@ -285,7 +285,7 @@
                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveRightCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Right" Modifiers="Control,Menu"/>
+                        <KeyboardAccelerator Key="Right" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xEBE7;"/>
@@ -295,7 +295,7 @@
                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveUpCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Up" Modifiers="Control,Menu"/>
+                        <KeyboardAccelerator Key="Up" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74A;"/>
@@ -305,7 +305,7 @@
                                IsEnabled="{x:Bind ViewModel.ACaliperIsSelected, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.MicroMoveDownCommand}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Down" Modifiers="Control,Menu"/>
+                        <KeyboardAccelerator Key="Down" Modifiers="Control,Shift"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                     <MenuFlyoutItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE74B;"/>

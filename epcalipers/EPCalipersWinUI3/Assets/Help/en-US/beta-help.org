@@ -42,7 +42,7 @@ Click ~Add caliper~ on the toolbar and select the type of caliper you want to ad
 
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
 
-You can also move the selected caliper or a selected bar of a caliper using the keyboard.  Use ~Ctrl~ plus the ~arrow keys~ to move the selected caliper or selected caliper bar.  Use ~Ctrl~ plus ~Alt~ plus the ~arrow keys~ for fine movements.
+You can also move the selected caliper or a selected bar of a caliper using the keyboard.  Use ~Ctrl~ plus the ~arrow keys~ to move the selected caliper or selected caliper bar.  Use ~Ctrl~ plus ~Shift~ plus the ~arrow keys~ for fine movements.
 
 Delete a caliper by double-clicking it.
 * Selecting a caliper or an individual bar of a caliper
