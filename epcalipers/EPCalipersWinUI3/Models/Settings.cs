@@ -159,13 +159,13 @@ namespace EPCalipersWinUI3.Models
 		}
 		public bool AutoAlignLabel
 		{
-			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? false);
+			get => (bool)(_localSettings.Values[_autoAlignLabelKey] ?? true);
 			set => _localSettings.Values[_autoAlignLabelKey] = value;
 		}
 
 		public bool ShowSampleEcgAtStartUp
 		{
-			// The default is now true, since we have a nice startup screen.
+			// The default is now false, since we have a nice startup screen.
 			get => (bool)(_localSettings.Values[_showSampleEcgAtStartUpKey] ?? false);
 			set => _localSettings.Values[_showSampleEcgAtStartUpKey ] = value;	
 		}
