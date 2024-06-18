@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>WinUI3PDFHandler</RootNamespace>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <!--<RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>-->
+    <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+    <Platforms>x64;x86</Platforms>
+    <Configurations>Debug;Release;Test</Configurations>
+    <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
+      <PackageReference Include="PdfiumViewer" Version="2.13.0" />
+      <PackageReference Include="PdfiumViewer.Native.x86.v8-xfa" Version="2018.4.8.256" />
+      <PackageReference Include="PdfiumViewer.Native.x86_64.v8-xfa" Version="2018.4.8.256" />
+      <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.3.24172.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EPCalipersWinUI3Helpers\PDFHandler.csproj" />
+  </ItemGroup>
+</Project>
