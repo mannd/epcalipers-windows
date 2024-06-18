@@ -70,7 +70,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -116,7 +116,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>epcalipers_3_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -181,7 +182,6 @@
     <None Include="app.manifest" />
     <None Include="epcalipers_1_TemporaryKey.pfx" />
     <None Include="epcalipers_2_TemporaryKey.pfx" />
-    <None Include="epcalipers_3_TemporaryKey.pfx" />
     <None Include="epcalipers_4_TemporaryKey.pfx" />
     <None Include="epcalipers_TemporaryKey.pfx" />
     <None Include="epstudios.pfx" />
