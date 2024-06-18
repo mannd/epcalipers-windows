@@ -6,7 +6,10 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 @media (prefers-color-scheme: dark) {
     :root {
 	--text-color: white;
-	--background-color:black
+	--background-color:black;
+	code {
+	    color: #FFD700; /* Replace with your desired color */
+	}
     }
 }
 @media (prefers-color-scheme: light) {
