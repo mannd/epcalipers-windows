@@ -235,6 +235,14 @@
       <Project>{40025627-4d6c-4449-b66a-e04bb1aa9814}</Project>
       <Name>EPCalipersCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PdfHandler\PdfHandler.csproj">
+      <Project>{ee36dae8-9b36-4f0a-bf85-af8e555072d8}</Project>
+      <Name>PdfHandler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PdfiumPdfHandler\PdfiumPdfHandler.csproj">
+      <Project>{0f8831a8-7476-485f-821a-6c08a03e28d7}</Project>
+      <Name>PdfiumPdfHandler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WpfTransparentWindow\WpfTransparentWindow.csproj">
       <Project>{7c85aaa4-7a4d-42d1-bcb7-92c80f3b31ac}</Project>
       <Name>WpfTransparentWindow</Name>

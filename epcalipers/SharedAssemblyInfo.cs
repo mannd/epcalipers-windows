@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyCompany("EP Studios, Inc.")]
 [assembly: AssemblyProduct("EP Calipers")]
-[assembly: AssemblyCopyright("Copyright © 2016-2023 EP Studios, Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2016-2024 EP Studios, Inc.")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visiblejjj 
