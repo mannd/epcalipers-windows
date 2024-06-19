@@ -83,6 +83,7 @@ namespace epcalipers
         private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
+        IPdfHelper pdfHelper = null;
 
         private WpfTransparentWindow.Window1 transWindow;
         #endregion
@@ -985,7 +986,10 @@ namespace epcalipers
         // PDF stuff
         private async void OpenPdf(string filename)
         {
-            IPdfHelper pdfHelper = new PdfHelper();
+            if (pdfHelper == null)
+            {
+				pdfHelper = new PdfHelper();
+            }
             pdfHelper.LoadPdfFile(filename);
             numberOfPdfPages = pdfHelper.NumberOfPdfPages;
             // Now using 0 based page numbers.
@@ -1041,20 +1045,23 @@ namespace epcalipers
             }
         }
 
-        private void NextPdfPage()
+        private async void NextPdfPage()
         {
-            if (NoPdfIsLoaded())
-            {
-                return;
-            }
-            if (currentPdfPage < numberOfPdfPages)
+            if (!pdfHelper?.IsMultiPage ?? false) return;
+            //if (NoPdfIsLoaded())
+            //{
+            //    return;
+            //}
+            if (currentPdfPage < numberOfPdfPages - 1)
             {
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
-                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                Image image = await pdfHelper?.GetNextPage();
+                Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
-                    ecgPictureBox.Image = bitmap;
+                    ecgPictureBox.Image = image;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else
@@ -1066,20 +1073,23 @@ namespace epcalipers
 			}
         }
 
-        private void PreviousPdfPage()
+        private async void PreviousPdfPage()
         {
-            if (NoPdfIsLoaded())
-            {
-                return;
-            }
-            if (currentPdfPage > 1)
+            if (!pdfHelper?.IsMultiPage ?? false) return;
+            //if (NoPdfIsLoaded())
+            //{
+            //    return;
+            //}
+            if (currentPdfPage > 0)
             {
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
-                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                Image image = await pdfHelper?.GetPreviousPage();
+                Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
-                    ecgPictureBox.Image = bitmap;
+                    ecgPictureBox.Image = image;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else
@@ -1091,32 +1101,35 @@ namespace epcalipers
 			}
         }
 
-        private void GotoPdfPage()
+        private async void GotoPdfPage()
         {
-            if (NoPdfIsLoaded())
-            {
-                return;
-            }
-            gotoPdfPageForm.pdfPageUpDown.Value = currentPdfPage;
+            if (!pdfHelper?.IsMultiPage ?? false) return;
+            //if (NoPdfIsLoaded())
+            //{
+            //    return;
+            //}
+            gotoPdfPageForm.pdfPageUpDown.Value = currentPdfPage + 1;
             DialogResult result = gotoPdfPageForm.ShowDialog();
             if (result == DialogResult.OK)
             {
                 int value = (int)gotoPdfPageForm.pdfPageUpDown.Value;
-                int pageNumber = value;
-                if (pageNumber < 1)
+                int pageNumber = value - 1;
+                if (pageNumber < 0)
                 {
-                    pageNumber = 1;
+                    pageNumber = 0;
                 }
-                if (pageNumber > numberOfPdfPages)
+                if (pageNumber > numberOfPdfPages - 1) 
                 {
-                    pageNumber = numberOfPdfPages;
+                    pageNumber = numberOfPdfPages - 1 ;
                 }
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
-                Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
+                Image image = await pdfHelper?.GetPdfPageSourceAsync(pageNumber);
+                Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
-                    ecgPictureBox.Image = bitmap;
+                    ecgPictureBox.Image = image;
                     ResetBitmap(ecgPictureBox.Image);
                 }
                 else
