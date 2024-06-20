@@ -7,15 +7,22 @@
     <!--<RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>-->
     <PublishProfile>Properties\PublishProfiles\win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
-    <Platforms>x64;x86</Platforms>
+    <Platforms>x86;x64</Platforms>
     <Configurations>Debug;Release;Test</Configurations>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="ARM64\pdfium.dll" />
     <None Remove="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ARM64\pdfium.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
