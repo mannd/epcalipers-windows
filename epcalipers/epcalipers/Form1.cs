@@ -1,11 +1,12 @@
 ﻿using epcalipers.Properties;
 using EPCalipersCore;
 using EPCalipersCore.Properties;
-using ImageMagick;
+//using ImageMagick;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -80,7 +81,6 @@ namespace epcalipers
         private int lastY = 0;
 
         // PDF stuff
-        private MagickImageCollection pdfImages = null;
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
         IPdfHelper pdfHelper = null;
@@ -105,10 +105,6 @@ namespace epcalipers
             ecgPictureBox.MouseDoubleClick += EcgPictureBox_MouseDoubleClick;
             ecgPictureBox.MouseUp += EcgPictureBox_MouseUp;
 
-            // Ghostscript location
-            string ghostscriptDir = AppDomain.CurrentDomain.BaseDirectory;
-            MagickNET.SetGhostscriptDirectory(ghostscriptDir);
-
             SetupButtons();
             // form starts with no image loaded, so no pages either
             EnablePages(false);
@@ -124,20 +120,20 @@ namespace epcalipers
                         lastFilename = arg1;
                         if (ext.ToUpperInvariant() == ".PDF")
                         {
-                            OpenPdf(lastFilename);
+							Task task = OpenPdf(lastFilename);
                         }
                         else
                         {
                             Image argImage = new Bitmap(lastFilename);
                             ecgPictureBox.Image = argImage;
-                        }
-                        ResetBitmap(ecgPictureBox.Image);
-                    }
-                }
+						}
+						ResetBitmap(ecgPictureBox.Image);
+					}
+				}
             }
             catch (Exception ex)
             {
-                if (ex is FileNotFoundException || ex is MagickException)
+                if (ex is FileNotFoundException)
                 {
                     lastFilename = "";
                 }
@@ -162,7 +158,6 @@ namespace epcalipers
             {
                 Debug.Print("Disposing");
                 if (theBitmap != null) theBitmap.Dispose();
-                if (pdfImages != null) pdfImages.Dispose();
                 if (nextImage != null) nextImage.Dispose();
                 if (imageButton != null) imageButton.Dispose();
                 if (addCalipersButton != null) addCalipersButton.Dispose();
@@ -272,7 +267,7 @@ namespace epcalipers
             ShowMainMenu();
         }
 
-        private void ImageButton_Click(object sender, EventArgs e)
+        private async void ImageButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
@@ -287,7 +282,7 @@ namespace epcalipers
                                 ecgPictureBox.Image.Dispose();
 							}
                             ClearPdf();
-                            OpenPdf(openFileDialog1.FileName);
+                            await OpenPdf(openFileDialog1.FileName);
                         }
                         else
                         {
@@ -304,7 +299,7 @@ namespace epcalipers
                 }
                 catch (Exception exception)
                 {
-                    if (exception is FileNotFoundException || exception is MagickException || exception is ArgumentException)
+                    if (exception is FileNotFoundException)
                     {
                         MessageBox.Show(String.Format(CultureInfo.CurrentCulture, Resources.couldNotOpenFileErrorText, openFileDialog1.FileName) + "\n\nDetailed error: " +
                             exception.Message, Resources.errorTitleText);
@@ -461,7 +456,7 @@ namespace epcalipers
          *  usage terms in the article text or the download files themselves. 
          *  If in doubt please contact the author via the discussion board below."
          */
-        private void OnDragDrop(object sender, DragEventArgs e)
+        private async void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
             try
@@ -488,7 +483,7 @@ namespace epcalipers
                     if (FileIsPdf(lastFilename))
                     {
                         ClearPdf();
-                        OpenPdf(lastFilename);
+                        await OpenPdf(lastFilename);
                         ResetBitmap(ecgPictureBox.Image);
                     }
                     else
@@ -502,7 +497,7 @@ namespace epcalipers
             }
             catch (Exception exception)
             {
-                if (exception is FileNotFoundException || exception is MagickException)
+                if (exception is FileNotFoundException)
                 {
                     MessageBox.Show(Resources.errorOpeningFileText + exception.Message, Resources.errorTitleText);
                     return;
@@ -876,10 +871,14 @@ namespace epcalipers
             }
         }
 
+        // TODO: location of null exception when loading PDF!s
         private void ResetBitmap(Image image)
         {
             KillBitmap();
-            theBitmap = new Bitmap(image);
+            if (image != null)
+            {
+				theBitmap = new Bitmap(image);
+            }
 			theCalipers.CancelTweaking();
 			CommonCaliper.ClearCalibration(theCalipers, ImageRefresh, EnableMeasurementMenuItems);
 			currentActualZoom = 1.0;
@@ -984,7 +983,7 @@ namespace epcalipers
         #endregion
         #region PDF
         // PDF stuff
-        private async void OpenPdf(string filename)
+        private async Task OpenPdf(string filename)
         {
             if (pdfHelper == null)
             {
@@ -1034,18 +1033,13 @@ namespace epcalipers
         }
 
         private void ClearPdf()
-        {
-            if (pdfImages != null)
-            {
-                pdfImages.Dispose();
-                pdfImages = null;
-                numberOfPdfPages = 0;
-                currentPdfPage = 0;
-                EnablePages(false);
-            }
-        }
+		{
+			numberOfPdfPages = 0;
+			currentPdfPage = 0;
+			EnablePages(false);
+		}
 
-        private async void NextPdfPage()
+		private async void NextPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
             //if (NoPdfIsLoaded())
@@ -1141,12 +1135,6 @@ namespace epcalipers
                 }
             }
         }
-
-        private bool NoPdfIsLoaded()
-        {
-            return pdfImages == null || ecgPictureBox.Image == null;
-        }
-
         #endregion
         #region Menu
 

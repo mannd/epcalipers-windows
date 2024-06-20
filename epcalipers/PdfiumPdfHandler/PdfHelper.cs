@@ -35,7 +35,7 @@ namespace PdfiumPdfHandler
         public bool PdfIsLoaded => _pdfDocument != null;
 
         /// <inheritdoc/>
-        public int NumberOfPdfPages => _pdfDocument.PageCount;
+        public int NumberOfPdfPages => _pdfDocument?.PageCount ?? 0;
 
         /// <inheritdoc/>
         public int CurrentPageNumber => _pageNumber + 1;
