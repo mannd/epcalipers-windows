@@ -24,7 +24,7 @@
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
@@ -37,7 +37,8 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <Configurations>Debug;Release;Test</Configurations>
-    <Version>3.0.1.0</Version>
+    <Version>3.0.2.0</Version>
+    <FileVersion>3.0.2.0</FileVersion>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
