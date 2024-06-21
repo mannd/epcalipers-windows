@@ -109,6 +109,7 @@ namespace epcalipers
             // form starts with no image loaded, so no pages either
             EnablePages(false);
 
+
             try
             {
                 if (Environment.GetCommandLineArgs().Length > 1)
@@ -120,7 +121,7 @@ namespace epcalipers
                         lastFilename = arg1;
                         if (pdfHelper?.IsPdfFile(lastFilename) ?? false)
                         {
-							Task task = OpenPdf(lastFilename);
+							OpenPdf(lastFilename);
                         }
                         else
                         {
@@ -145,6 +146,19 @@ namespace epcalipers
             finally
             {
                 ShowMainMenu();
+            }
+        }
+
+        private int PDFDotsPerInch(Preferences.PDFResolution resolution)
+        {
+            switch (resolution)
+            {
+                case Preferences.PDFResolution.Low:
+                    return 150;
+                case Preferences.PDFResolution.High:
+                    return 300;
+                default:
+                    return 300;
             }
         }
 
@@ -267,7 +281,7 @@ namespace epcalipers
             ShowMainMenu();
         }
 
-        private async void ImageButton_Click(object sender, EventArgs e)
+        private void ImageButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
             openFileDialog1.Filter = openFileTypeFilter;
@@ -282,7 +296,7 @@ namespace epcalipers
                                 ecgPictureBox.Image.Dispose();
 							}
                             ClearPdf();
-                            await OpenPdf(openFileDialog1.FileName);
+                            OpenPdf(openFileDialog1.FileName);
                         }
                         else
                         {
@@ -456,7 +470,7 @@ namespace epcalipers
          *  usage terms in the article text or the download files themselves. 
          *  If in doubt please contact the author via the discussion board below."
          */
-        private async void OnDragDrop(object sender, DragEventArgs e)
+        private void OnDragDrop(object sender, DragEventArgs e)
         {
             Debug.WriteLine("OnDragDrop");
             try
@@ -483,7 +497,7 @@ namespace epcalipers
                     if (pdfHelper.IsPdfFile(lastFilename))
                     {
                         ClearPdf();
-                        await OpenPdf(lastFilename);
+                        OpenPdf(lastFilename);
                         ResetBitmap(ecgPictureBox.Image);
                     }
                     else
@@ -983,18 +997,19 @@ namespace epcalipers
         #endregion
         #region PDF
         // PDF stuff
-        private async Task OpenPdf(string filename)
+        private void OpenPdf(string filename)
         {
             if (pdfHelper == null)
             {
                 return;
             }
+            pdfHelper.DotsPerInch = PDFDotsPerInch(preferences.PDFResolutionParameter());
             pdfHelper.LoadPdfFile(filename);
             numberOfPdfPages = pdfHelper.NumberOfPdfPages;
             // Now using 0 based page numbers.
             EnablePages(numberOfPdfPages > 0);
             currentPdfPage = 0;
-            ecgPictureBox.Image = await pdfHelper.GetPdfPageSourceAsync(currentPdfPage);
+            ecgPictureBox.Image = pdfHelper.GetPdfPageSource(currentPdfPage);
         }
                 
    //             pdfImages[currentPdfPage - 1].ToBitmap();
@@ -1039,7 +1054,7 @@ namespace epcalipers
 			EnablePages(false);
 		}
 
-		private async void NextPdfPage()
+		private void NextPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
             if (currentPdfPage < numberOfPdfPages - 1)
@@ -1047,7 +1062,7 @@ namespace epcalipers
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetNextPage() ?? null;
+                Image image = pdfHelper?.GetNextPage() ?? null;
                 if (image == null) return;
                 Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
@@ -1064,7 +1079,7 @@ namespace epcalipers
 			}
         }
 
-        private async void PreviousPdfPage()
+        private void PreviousPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
             if (currentPdfPage > 0)
@@ -1072,7 +1087,7 @@ namespace epcalipers
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetPreviousPage() ?? null;
+                Image image = pdfHelper?.GetPreviousPage() ?? null;
                 if (image == null) return;
                 Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
@@ -1089,7 +1104,7 @@ namespace epcalipers
 			}
         }
 
-        private async void GotoPdfPage()
+        private void GotoPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
             //if (NoPdfIsLoaded())
@@ -1113,7 +1128,7 @@ namespace epcalipers
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetPdfPageSourceAsync(pageNumber) ?? null;
+                Image image = pdfHelper?.GetPdfPageSource(pageNumber) ?? null;
                 if (image == null)
                 {
                     return;

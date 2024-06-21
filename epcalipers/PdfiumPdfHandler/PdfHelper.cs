@@ -52,8 +52,10 @@ namespace PdfiumPdfHandler
             }
         }
 
-        /// <inheritdoc/>
-        public bool IsPdfFile(string fileName)
+		public int DotsPerInch { get; set; } = 300;  // default to high res
+
+		/// <inheritdoc/>
+		public bool IsPdfFile(string fileName)
         {
             try
             {
@@ -85,7 +87,7 @@ namespace PdfiumPdfHandler
         }
 
         /// <inheritdoc/>
-        public async Task<Image> GetPdfPageSourceAsync(int pageNumber)
+        public Image GetPdfPageSource(int pageNumber)
         {
             if (_pdfDocument == null)
             {
@@ -98,7 +100,7 @@ namespace PdfiumPdfHandler
             }
 
             _pageNumber = pageNumber;
-            var img = _pdfDocument.Render(pageNumber, 300, 300, PdfRenderFlags.CorrectFromDpi);
+            var img = _pdfDocument.Render(pageNumber, DotsPerInch, DotsPerInch, PdfRenderFlags.CorrectFromDpi);
             return img;
         }
 
@@ -111,7 +113,7 @@ namespace PdfiumPdfHandler
         }
 
         /// <inheritdoc/>
-        public async Task<Image> GetNextPage()
+        public Image GetNextPage()
         {
             if (_pdfDocument == null)
             {
@@ -125,11 +127,11 @@ namespace PdfiumPdfHandler
             }
 
             _pageNumber = nextPage;
-            return await GetPdfPageSourceAsync(nextPage);
+            return GetPdfPageSource(nextPage);
         }
 
         /// <inheritdoc/>
-        public async Task<Image> GetPreviousPage()
+        public Image GetPreviousPage()
         {
             if (_pdfDocument == null)
             {
@@ -143,7 +145,7 @@ namespace PdfiumPdfHandler
             }
 
             _pageNumber = previousPage;
-            return await GetPdfPageSourceAsync(previousPage);
+            return GetPdfPageSource(previousPage);
         }
     }
 }

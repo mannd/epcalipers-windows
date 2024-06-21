@@ -19,6 +19,8 @@ namespace PdfHandler
         /// </summary>
         bool SupportsPdfs { get; }
 
+        int DotsPerInch { get; set; } 
+
         /// <summary>
         /// Gets current PDF page number.
         /// Page numbering is 1 based.
@@ -61,20 +63,20 @@ namespace PdfHandler
         /// Gets bitmap of next PDF page.
         /// </summary>
         /// <returns>Bitmap of next PDF page or null if no next page.</returns>
-        Task<Image> GetNextPage();
+        Image GetNextPage();
 
         /// <summary>
         /// Get a PDF page asynchronously.
         /// </summary>
         /// <param name="pageNumber">Page number, 1 based.</param>
         /// <returns>Page Bitmap.</returns>
-        Task<Image> GetPdfPageSourceAsync(int pageNumber);
+        Image GetPdfPageSource(int pageNumber);
 
         /// <summary>
         /// Gets bitmap of previous PDF page.
         /// </summary>
         /// <returns>Bitmap of previous PDF page or null if no previous page.</returns>
-        Task<Image> GetPreviousPage();
+        Image GetPreviousPage();
 
         /// <summary>
         /// Checks whether fileName is a PDF document.

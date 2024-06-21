@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using System.Net.Http.Headers;
 
 namespace EPCalipersCore.Properties
 {
@@ -18,6 +19,7 @@ namespace EPCalipersCore.Properties
 		private string timeCaliperTextPosition;
 		private string amplitudeCaliperTextPosition;
 		private bool recalibrateOnChangePDFPage;
+		private string pdfResolution;
 
 		// When changing next two lines, be consistent.
 		private const int MAX_LINEWIDTH = 10;
@@ -31,6 +33,12 @@ namespace EPCalipersCore.Properties
 			ToTenths,
 			ToHundredths,
 			None
+		}
+
+		public enum PDFResolution
+		{
+			Low,
+			High
 		}
 
 		public enum TextPosition
@@ -63,6 +71,7 @@ namespace EPCalipersCore.Properties
 			timeCaliperTextPosition = (string)Settings.Default["TimeCaliperTextPosition"];
 			amplitudeCaliperTextPosition = (string)Settings.Default["AmplitudeCaliperTextPosition"];
 			recalibrateOnChangePDFPage = (bool)Settings.Default["RecalibrateOnChangePDFPage"];
+			pdfResolution = (string)Settings.Default["PDFResolution"];
 		}
 
 		public QtcFormula ActiveQtcFormula()
@@ -100,6 +109,19 @@ namespace EPCalipersCore.Properties
 					return Rounding.None;
 				default:
 					return Rounding.ToInt;
+			}
+		}
+
+		public PDFResolution PDFResolutionParameter()
+		{
+			switch (pdfResolution)
+			{
+				case "High":
+					return PDFResolution.High;
+				case "Low":
+					return PDFResolution.Low;
+				default:
+					return PDFResolution.High;
 			}
 		}
 
@@ -150,7 +172,7 @@ namespace EPCalipersCore.Properties
 			ReadOnly(false),
 			Description("Clear calibration with each change of PDF page"),
 			DisplayName("Clear calibration each page"),
-			Category("Calipers")]
+			Category("PDF")]
 		public bool RecalibrationOnChangePDFPage
 		{
 			get { return recalibrateOnChangePDFPage; }
@@ -233,6 +255,18 @@ namespace EPCalipersCore.Properties
 		{
 			get { return rounding; }
 			set { rounding = value; }
+		}
+
+		[Browsable(true),
+			ReadOnly(false),
+			TypeConverter(typeof(PDFResolutionConverter)),
+			Description("PDF resolution (use low resolution if you get out of memory errors)"),
+			DisplayName("PDF resolution"),
+			Category("PDF")]
+		public string GetPDFResolution
+		{
+			get { return pdfResolution; }
+			set { pdfResolution = value; }
 		}
 
 		[Browsable(true),
@@ -330,6 +364,7 @@ namespace EPCalipersCore.Properties
 			Settings.Default["TimeCaliperTextPosition"] = timeCaliperTextPosition;
 			Settings.Default["AmplitudeCaliperTextPosition"] = amplitudeCaliperTextPosition;
 			Settings.Default["RecalibrateOnChangePDFPage"] = recalibrateOnChangePDFPage;
+			Settings.Default["PDFResolution"] = pdfResolution;
 			Settings.Default.Save();
 		}
 
@@ -350,6 +385,19 @@ namespace EPCalipersCore.Properties
 																"Fridericia",
 																"All"});
 
+		}
+	}
+
+	public class PDFResolutionConverter : StringConverter
+	{
+		public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+		{
+			return true;
+		}
+
+		public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+		{
+			return new StandardValuesCollection(new string[] { "High", "Low"});
 		}
 	}
 
