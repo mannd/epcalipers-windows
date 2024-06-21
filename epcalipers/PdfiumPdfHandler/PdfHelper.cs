@@ -54,7 +54,16 @@ namespace PdfiumPdfHandler
 
         /// <inheritdoc/>
         public bool IsPdfFile(string fileName)
-            => Path.GetExtension(fileName).ToUpperInvariant() == ".PDF";
+        {
+            try
+            {
+                return Path.GetExtension(fileName).ToUpperInvariant() == ".PDF";
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+        }
 
         /// <inheritdoc/>
         public void LoadPdfFile(string fileName)

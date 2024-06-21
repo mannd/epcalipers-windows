@@ -83,7 +83,7 @@ namespace epcalipers
         // PDF stuff
         int numberOfPdfPages = 0;
         int currentPdfPage = 0;
-        IPdfHelper pdfHelper = null;
+        IPdfHelper pdfHelper = new PdfHelper();
 
         private WpfTransparentWindow.Window1 transWindow;
         #endregion
@@ -118,7 +118,7 @@ namespace epcalipers
                     if (IsValidFileType(ext, true))
                     {
                         lastFilename = arg1;
-                        if (ext.ToUpperInvariant() == ".PDF")
+                        if (pdfHelper?.IsPdfFile(lastFilename) ?? false)
                         {
 							Task task = OpenPdf(lastFilename);
                         }
@@ -275,7 +275,7 @@ namespace epcalipers
                 try
                 {
                     {
-                        if (Path.GetExtension(openFileDialog1.FileName).ToUpperInvariant() == ".PDF")
+                        if (pdfHelper.IsPdfFile(openFileDialog1.FileName))
                         {
                             if (ecgPictureBox.Image != null)
 							{
@@ -480,7 +480,7 @@ namespace epcalipers
                     {
                         ecgPictureBox.Image.Dispose();
                     }
-                    if (FileIsPdf(lastFilename))
+                    if (pdfHelper.IsPdfFile(lastFilename))
                     {
                         ClearPdf();
                         await OpenPdf(lastFilename);
@@ -517,7 +517,7 @@ namespace epcalipers
                     thumbnail.Image = null;
                     thumbnail.Visible = false;
                     lastFilename = filename;
-                    if (!FileIsPdf(filename))
+                    if (!pdfHelper.IsPdfFile(filename))
                     {
                         getImageThread = new Thread(new ThreadStart(LoadImage));
                         getImageThread.Start();
@@ -987,7 +987,7 @@ namespace epcalipers
         {
             if (pdfHelper == null)
             {
-				pdfHelper = new PdfHelper();
+                return;
             }
             pdfHelper.LoadPdfFile(filename);
             numberOfPdfPages = pdfHelper.NumberOfPdfPages;
@@ -1042,16 +1042,13 @@ namespace epcalipers
 		private async void NextPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
-            //if (NoPdfIsLoaded())
-            //{
-            //    return;
-            //}
             if (currentPdfPage < numberOfPdfPages - 1)
             {
                 currentPdfPage++;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetNextPage();
+                Image image = await pdfHelper?.GetNextPage() ?? null;
+                if (image == null) return;
                 Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
@@ -1070,16 +1067,13 @@ namespace epcalipers
         private async void PreviousPdfPage()
         {
             if (!pdfHelper?.IsMultiPage ?? false) return;
-            //if (NoPdfIsLoaded())
-            //{
-            //    return;
-            //}
             if (currentPdfPage > 0)
             {
                 currentPdfPage--;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetPreviousPage();
+                Image image = await pdfHelper?.GetPreviousPage() ?? null;
+                if (image == null) return;
                 Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
@@ -1119,7 +1113,11 @@ namespace epcalipers
                 currentPdfPage = pageNumber;
                 ecgPictureBox.Image.Dispose();
                 //Bitmap bitmap = pdfImages[currentPdfPage - 1].ToBitmap();
-                Image image = await pdfHelper?.GetPdfPageSourceAsync(pageNumber);
+                Image image = await pdfHelper?.GetPdfPageSourceAsync(pageNumber) ?? null;
+                if (image == null)
+                {
+                    return;
+                }
                 Bitmap bitmap = new Bitmap(image);
                 if (preferences.RecalibrationOnChangePDFPage)
                 {
