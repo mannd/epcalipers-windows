@@ -65,7 +65,7 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <PackageCertificateKeyFile>C:\Users\mannd\OneDrive\Documents\certs\epstudios.pfx</PackageCertificateKeyFile>
-    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\epcalipers-msix\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <AppxBundle>Auto</AppxBundle>

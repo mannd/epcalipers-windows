@@ -1012,33 +1012,6 @@ namespace epcalipers
             ecgPictureBox.Image = pdfHelper.GetPdfPageSource(currentPdfPage);
         }
                 
-   //             pdfImages[currentPdfPage - 1].ToBitmap();
-
-
-			//MagickReadSettings settings = new MagickReadSettings
-   //         {
-   //             Density = new Density(144, 144)
-   //         };
-   //         //PdfReadDefines defines = new PdfReadDefines();
-
-   //         using (pdfImages)
-   //         {
-   //             if (pdfImages == null)
-   //             {
-   //                 pdfImages = new MagickImageCollection();
-   //             }
-   //             Cursor.Current = Cursors.WaitCursor;
-   //             // Consider using background worker here
-   //             //Application.DoEvents();
-   //             pdfImages.Read(filename, settings);
-   //             // Can't use optimize if pdf pages are different sizes
-   //             Cursor.Current = Cursors.Default;
-   //             numberOfPdfPages = pdfImages.Count;
-   //             EnablePages(numberOfPdfPages > 1);
-   //             currentPdfPage = 1;
-   //             ecgPictureBox.Image = pdfImages[currentPdfPage - 1].ToBitmap();
-        //    }
-        //}
 
         private void EnablePages(bool enable)
         {
