@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\OneDrive\Documents\epcalipers-clickonce\epcalipers-2.11.0-x86\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\epcalipers-clickonce\epcalipers-2.11.0-x64\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
