@@ -14,6 +14,14 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using PdfiumViewer;
 
+// Note on including pdfium.dll files
+// For MSIX packages, the pdfium.dll files are included automatically, regardless
+// of where you install the NuGet packages, PdfiumViewer.Native.x86.v8-xfa and
+// PdfiumViewer.Native.x86_64.v8-xfa.  However, for clickonce to work, you must install
+// the two Native packages into the main project, i.e. epcalipers.  The PdfiumView must
+// be installed in the PdfiumPdfHandler project, and it looks like it automatically also
+// includes references to the installed Native packages.
+
 namespace PdfiumPdfHandler
 {
     /// <summary>
