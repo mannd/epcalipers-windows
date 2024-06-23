@@ -16,7 +16,7 @@
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\mannd\OneDrive\Documents\epcalipers-clickonce\</PublishUrl>
+    <PublishUrl>C:\Users\mannd\OneDrive\Documents\test\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -258,7 +258,14 @@
       <Name>WpfTransparentWindow</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="PdfiumViewer.Native.x86.no_v8-no_xfa">
+      <Version>2018.4.8.256</Version>
+    </PackageReference>
+    <PackageReference Include="PdfiumViewer.Native.x86_64.no_v8-no_xfa">
+      <Version>2018.4.8.256</Version>
+    </PackageReference>
+  </ItemGroup>
   <ItemGroup>
     <PublishFile Include="epcalipers.pdb">
       <Visible>False</Visible>
