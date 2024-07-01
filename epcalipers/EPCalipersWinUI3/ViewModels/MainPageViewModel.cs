@@ -39,7 +39,6 @@ namespace EPCalipersWinUI3
 			_pdfHelper = new PDFHandler.NullPdf();
 #else
 			_pdfHelper = new PdfiumPDFHandler.PdfHelper();
-			_pdfHelper.Resolution = PDFHandler.PdfResolution.High;
 #endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;
@@ -149,6 +148,7 @@ namespace EPCalipersWinUI3
 					return;
 #else
 					_pdfHelper.LoadPdfFile(file);
+					_pdfHelper.Resolution = _settings.PdfResolution;
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
 					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
@@ -251,6 +251,8 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task NextPdfPage()
 		{
+			// DEFER: doing this before each call to get a page is fraught.
+			_pdfHelper.Resolution = _settings.PdfResolution;
 			var nextPage = await _pdfHelper.GetNextPage();
 			if (nextPage != null)
 			{
@@ -265,6 +267,7 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task PreviousPdfPage()
 		{
+			_pdfHelper.Resolution = _settings.PdfResolution;
 			var previousPage = await _pdfHelper.GetPreviousPage();
 			if (previousPage != null)
 			{
@@ -276,6 +279,7 @@ namespace EPCalipersWinUI3
 
 		public async Task GotoPdfPage(int pageNumber)
 		{
+			_pdfHelper.Resolution = _settings.PdfResolution;
 			// Users input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
 			if (page != null)
