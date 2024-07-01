@@ -39,6 +39,7 @@ namespace EPCalipersWinUI3
 			_pdfHelper = new PDFHandler.NullPdf();
 #else
 			_pdfHelper = new PdfiumPDFHandler.PdfHelper();
+			_pdfHelper.Resolution = PDFHandler.PdfResolution.High;
 #endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;

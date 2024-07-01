@@ -767,4 +767,12 @@
     <value>Operation not allowed</value>
     <comment>Error when trying to do certain operations while calibrating</comment>
   </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+    <comment>PDF resolution</comment>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+    <comment>PDF resolution</comment>
+  </data>
 </root>

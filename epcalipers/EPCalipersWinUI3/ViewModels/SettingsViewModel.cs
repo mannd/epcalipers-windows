@@ -41,6 +41,7 @@ namespace EPCalipersWinUI3.ViewModels
 			SelectedCaliperColor = _model.SelectedCaliperColor;
 			BarThickness = _model.BarThickness;
 			Rounding = (int)_model.Rounding;
+			PdfResolution = (int)_model.PdfResolution;
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
 			FontSize = _fontSizes.IndexOf(_model.FontSize);
@@ -78,6 +79,11 @@ namespace EPCalipersWinUI3.ViewModels
 					"Medium".GetLocalized(),
 					"Large".GetLocalized(),
 					"ExtraLarge".GetLocalized()
+			};
+			PdfResolutionItems = new List<string>()
+			{
+				"Low".GetLocalized(),
+				"High".GetLocalized()
 			};
 			ImagePositionItems = new List<string>()
 			{
@@ -118,6 +124,9 @@ namespace EPCalipersWinUI3.ViewModels
 					break;
 				case nameof(NumberOfMarchingCalipers):
 					_model.NumberOfMarchingCalipers = NumberOfMarchingCalipers;
+					break;
+				case nameof(PdfResolution):
+					_model.PdfResolution = (PDFHandler.PdfResolution)PdfResolution;
 					break;
 				case nameof(FontSize):
 					_model.FontSize = _fontSizes[FontSize];
@@ -179,6 +188,9 @@ namespace EPCalipersWinUI3.ViewModels
 		private int rounding;
 
 		[ObservableProperty]
+		private int pdfResolution;
+
+		[ObservableProperty]
 		private bool showBrugadaTriangle;
 
 		[ObservableProperty]
@@ -228,6 +240,9 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private List<string> roundingItems;
+
+		[ObservableProperty]
+		private List<string> pdfResolutionItems;
 
 		[ObservableProperty]
 		private List<string> fontSizeItems;

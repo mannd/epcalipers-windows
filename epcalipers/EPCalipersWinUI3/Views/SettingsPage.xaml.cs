@@ -60,7 +60,14 @@ namespace EPCalipersWinUI3.Views
 				int selection = rb.SelectedIndex;
 				if (selection >= 0) ViewModel.Rounding = selection;
 			}
-
+		}
+		private void PdfResolution_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (sender is RadioButtons rb)
+			{
+				int selection = rb.SelectedIndex;
+				if (selection >= 0) ViewModel.PdfResolution = selection;
+			}
 		}
 
 		private void CaliperLabelSize_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -55,6 +55,9 @@ namespace PdfiumPDFHandler
         }
 
         /// <inheritdoc/>
+        public PDFHandler.PdfResolution Resolution { get; set; } = PDFHandler.PdfResolution.High;
+
+        /// <inheritdoc/>
         public bool IsPdfFile(StorageFile file) =>
             file.FileType.Equals(".PDF", StringComparison.CurrentCultureIgnoreCase);
 
@@ -91,7 +94,12 @@ namespace PdfiumPDFHandler
             }
 
             _pageNumber = pageNumber;
-            var img = _pdfDocument.Render(pageNumber, 300, 300, PdfRenderFlags.CorrectFromDpi);
+            var dotsPerInch = DotsPerInch();
+            var img = _pdfDocument.Render(
+                pageNumber,
+                dotsPerInch,
+                dotsPerInch,
+                PdfRenderFlags.CorrectFromDpi);
             var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(img));
             img.Dispose();
             return source;
@@ -170,6 +178,20 @@ namespace PdfiumPDFHandler
             var source = new SoftwareBitmapSource();
             await source.SetBitmapAsync(softwareBitmap);
             return source;
+        }
+
+        /// <summary>
+        /// Converts PDF resolution to dots per inch.
+        /// </summary>
+        /// <returns>resolution in dots per inch.</returns>
+        private int DotsPerInch()
+        {
+            return Resolution switch
+            {
+                PDFHandler.PdfResolution.High => 300,
+                PDFHandler.PdfResolution.Low => 150,
+                _ => 300,
+            };
         }
     }
 }

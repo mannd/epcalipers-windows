@@ -30,6 +30,8 @@ namespace PDFHandler
 
         public bool PdfIsLoaded => false;
 
+		public PdfResolution Resolution { get; set; } = PdfResolution.High;
+
 		public void ClearPdfFile()
 		{
             // Do nothing

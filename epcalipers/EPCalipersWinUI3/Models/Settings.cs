@@ -47,6 +47,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _resetZoomBetweenPdfPagesKey = "ResetZoomBetweenPdfPages";
 		private const string _resetRotationBetweenPdfPagesKey = "ResetRotationBetweenPdfPages";
 		private const string _clearCalipersBetweenPdfPagesKey = "ClearCalipersBetweenPdfPages";
+		private const string _pdfResolutionKey = "PdfResolution";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -75,6 +76,13 @@ namespace EPCalipersWinUI3.Models
 				_localSettings.Values[_numberOfMeanIntervalsKey] = value;
 				Debug.Print($"numberOfMeanIntervals = {value}");
 			} 
+		}
+
+		public PDFHandler.PdfResolution PdfResolution
+		{
+			get => (PDFHandler.PdfResolution)(_localSettings.Values[_pdfResolutionKey] 
+				?? PDFHandler.PdfResolution.High);
+			set => _localSettings.Values[_pdfResolutionKey] = (int)value;
 		}
 
 		public int FontSize
@@ -280,6 +288,7 @@ namespace EPCalipersWinUI3.Models
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
+		public PDFHandler.PdfResolution PdfResolution { get; set; } = PDFHandler.PdfResolution.High;
 		public int FontSize { get; set; } = CaliperLabel.MediumFont;
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;

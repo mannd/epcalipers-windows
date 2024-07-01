@@ -10,6 +10,12 @@ using Windows.Storage;
 
 namespace PDFHandler
 {
+	public enum PdfResolution
+	{
+		Low,
+		High
+	}
+
 	/// <summary>
 	/// Interface for classes providing PDF functions.
 	/// </summary>
@@ -54,9 +60,14 @@ namespace PDFHandler
         bool PdfIsLoaded { get; }
 
         /// <summary>
-        /// Clears and nullifies the PDF document.
+        /// Resolution of PDF page, high or low.
         /// </summary>
-        void ClearPdfFile();
+		PdfResolution Resolution { get; set; }
+
+		/// <summary>
+		/// Clears and nullifies the PDF document.
+		/// </summary>
+		void ClearPdfFile();
 
         /// <summary>
         /// Gets bitmap of next PDF page.
