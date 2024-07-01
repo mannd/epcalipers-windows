@@ -13,16 +13,18 @@
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="ARM64\pdfium.dll" />
+    <Compile Remove="ARM64\**" />
+    <Content Remove="ARM64\**" />
+    <EmbeddedResource Remove="ARM64\**" />
+    <None Remove="ARM64\**" />
+    <Page Remove="ARM64\**" />
+    <PRIResource Remove="ARM64\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ARM64\pdfium.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -24,13 +24,13 @@
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
-    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\epcalipers-3-msix\</AppxPackageDir>
+    <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
