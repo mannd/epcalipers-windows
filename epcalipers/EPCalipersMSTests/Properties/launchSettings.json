@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EPCalipersMSTests (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EPCalipersMSTests (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

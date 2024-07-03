@@ -16,7 +16,8 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestAppInfo()
 		{
 			//Assert.Equal("3.0.0.0-alpha", appInfo.ProductVersion);
-			Assert.Equal("3.0.0.0", appInfo.FileVersion);
+			// don't bother testing file version, it changes too much.
+			//Assert.Equal("3.0.0.0", appInfo.FileVersion);
 			Assert.Equal("EPCalipersWinUI3", appInfo.Title);
 			Assert.Equal("EP Calipers 3", appInfo.ProductName);
 			Assert.Equal("Copyright (c) 2023-2024", appInfo.Copyright);
