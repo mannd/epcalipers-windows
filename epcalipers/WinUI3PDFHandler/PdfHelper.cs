@@ -37,7 +37,7 @@ namespace PdfiumPDFHandler
         public bool PdfIsLoaded => _pdfDocument != null;
 
         /// <inheritdoc/>
-        public int NumberOfPdfPages => _pdfDocument.PageCount;
+        public int NumberOfPdfPages => _pdfDocument?.PageCount ?? 0;
 
         /// <inheritdoc/>
         public int CurrentPageNumber => _pageNumber + 1;
@@ -50,7 +50,7 @@ namespace PdfiumPDFHandler
         {
             get
             {
-                return _pdfDocument?.PageCount > 0;
+                return _pdfDocument?.PageCount > 1;
             }
         }
 
@@ -88,7 +88,7 @@ namespace PdfiumPDFHandler
                 return null;
             }
 
-            if (pageNumber < 0 || pageNumber > _pdfDocument.PageCount - 1)
+            if (pageNumber < 0 || pageNumber > _pdfDocument?.PageCount - 1)
             {
                 return null;
             }
@@ -122,7 +122,7 @@ namespace PdfiumPDFHandler
             }
 
             int nextPage = _pageNumber + 1;
-            if (nextPage > _pdfDocument.PageCount - 1)
+            if (nextPage > _pdfDocument?.PageCount - 1)
             {
                 return null;
             }

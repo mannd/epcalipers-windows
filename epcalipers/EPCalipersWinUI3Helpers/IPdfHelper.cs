@@ -28,7 +28,7 @@ namespace PDFHandler
 
         /// <summary>
         /// Gets current PDF page number.
-        /// Page numbering is 1 based.
+        /// Page numbering is 1 based, so the first page has a CurrentPageNumber of 1.
         /// </summary>
         int CurrentPageNumber { get; }
         // Dummy edit

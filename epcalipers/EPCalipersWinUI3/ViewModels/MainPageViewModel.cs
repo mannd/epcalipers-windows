@@ -101,6 +101,11 @@ namespace EPCalipersWinUI3
 			}
 		}
 
+		public void RefreshImage()
+		{
+			// specifically reload PDF page with new resolution if it has changed.
+		}
+
 		public override void RefreshCalipers()
 		{
 			base.RefreshCalipers();
@@ -140,8 +145,6 @@ namespace EPCalipersWinUI3
 			{
 				FileName = file.DisplayName;
 				_pdfHelper.ClearPdfFile();
-				// NB: Can get OOM errors with large PDF files when running on x86 system??
-				// Not clear if this still happens.
 				if (_pdfHelper.IsPdfFile(file))
 				{
 #if ARM64_CONFIG
@@ -153,7 +156,6 @@ namespace EPCalipersWinUI3
 					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
 					IsMultipagePdf = _pdfHelper.IsMultiPage;
-					UpdatePageNumber();
 #endif
 				}
 				else
@@ -165,6 +167,7 @@ namespace EPCalipersWinUI3
 					IsMultipagePdf = false;
 					SetTitleBarName(FileName);
 				}
+				UpdatePageNumber();
 				_caliperCollection.ClearCalibration();
 			}
 			else
@@ -251,7 +254,7 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task NextPdfPage()
 		{
-			// DEFER: doing this before each call to get a page is fraught.
+			// TODO: doing this before each call to get a page is fraught.
 			_pdfHelper.Resolution = _settings.PdfResolution;
 			var nextPage = await _pdfHelper.GetNextPage();
 			if (nextPage != null)
@@ -267,6 +270,7 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task PreviousPdfPage()
 		{
+			// TODO: doing this before each call to get a page is fraught.
 			_pdfHelper.Resolution = _settings.PdfResolution;
 			var previousPage = await _pdfHelper.GetPreviousPage();
 			if (previousPage != null)
@@ -279,6 +283,7 @@ namespace EPCalipersWinUI3
 
 		public async Task GotoPdfPage(int pageNumber)
 		{
+			// TODO: doing this before each call to get a page is fraught.
 			_pdfHelper.Resolution = _settings.PdfResolution;
 			// Users input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
@@ -300,6 +305,7 @@ namespace EPCalipersWinUI3
 
 		private void UpdatePageNumber()
 		{
+			// BUG: Next page and Previous Page NOT disabled after loading PDF and then loading image file.
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
 			var extension = string.Format("AppMultipagePDFTitle".GetLocalized(),
