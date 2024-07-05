@@ -23,7 +23,7 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
 <ItemGroup>
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240607001" />
   </ItemGroup>
 
   <ItemGroup>
