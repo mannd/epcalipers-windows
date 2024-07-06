@@ -150,11 +150,12 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SupportsPdfs}"/>
-                <MenuFlyoutItem x:Uid="NextPageMenuItem" Command="{x:Bind ViewModel.NextPdfPageCommand}"
+                <MenuFlyoutItem x:Uid="NextPageMenuItem" 
+                                Command="{x:Bind ViewModel.NextPdfPageCommand}"
                                 Visibility="{x:Bind ViewModel.SupportsPdfs}"
                                 IsEnabled="{x:Bind ViewModel.IsNotLastPageOfPdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Right" Modifiers="Menu"/>
+                        <KeyboardAccelerator Key="N" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="PreviousPageMenuItem" 
@@ -162,7 +163,7 @@
                                 Visibility="{x:Bind ViewModel.SupportsPdfs}"
                                 IsEnabled="{x:Bind ViewModel.IsNotFirstPageOfPdf, Mode=OneWay}">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Left" Modifiers="Menu"/>
+                        <KeyboardAccelerator Key="P" />
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutItem x:Uid="GotoPageMenuItem" Click="GotoPdfPage_Click"

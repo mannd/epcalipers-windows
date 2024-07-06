@@ -91,7 +91,7 @@ Right click a caliper and select ~Color~ to change its unselected color.  This o
 ** Marching calipers
 Right click a time caliper and select ~Marching caliper~ to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Right click and select ~Marching caliper~ again to change the marching caliper back to normal again, or just double click to delete it.
 * PDFs
-PDFs are supported, including multipage PDFs in the x64 and x85 versions of the program.  Note that PDFs are not supported in the ARM version of the program.  Use ~Alt~ plus the ~arrow keys~ to change PDF pages.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.
+PDFs are supported, including multipage PDFs in the x64 and x86 versions of the program.  Note that PDFs are not supported in the ARM version of the program.  Use the ~N~ and ~P~ keys (for ~Next page~ and ~Previous page~) to change PDF pages or use the ~Goto page~ menu item to go to a specific page.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.   You can also adjust the resolution of the PDF image in Settings, if the PDF image is too large or too small.
 * Brugadometer
 :PROPERTIES:
 :CUSTOM_ID: brugadometer-id

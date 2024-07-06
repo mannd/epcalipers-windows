@@ -293,7 +293,7 @@
     <value>Main</value>
   </data>
   <data name="MarchingMenuItem.Text" xml:space="preserve">
-    <value>Marching calipers</value>
+    <value>Marching caliper</value>
   </data>
   <data name="MeanRateIntervalBarButton.Label" xml:space="preserve">
     <value>Mean interval</value>
@@ -774,5 +774,8 @@
   <data name="Low" xml:space="preserve">
     <value>Low</value>
     <comment>PDF resolution</comment>
+  </data>
+  <data name="PDFResolution.Header" xml:space="preserve">
+    <value>PDF resolution (changing this will clear calipers and calibration)</value>
   </data>
 </root>

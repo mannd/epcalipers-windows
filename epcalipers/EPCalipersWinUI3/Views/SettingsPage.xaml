@@ -156,10 +156,11 @@
                 <TextBlock x:Uid="PDFSettings" Visibility="{x:Bind ViewModel.SupportsPdfs}"
                           Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <RadioButtons x:Name="PdfResolutionRadioButtons" 
-                              SelectedIndex="{x:Bind ViewModel.PdfResolution}"  
-                          MaxColumns="2" Header="PDF Resolution"
-                          SelectionChanged="PdfResolution_SelectionChanged"
-                              ItemsSource="{x:Bind ViewModel.PdfResolutionItems}">
+                            x:Uid="PDFResolution"
+                            SelectedIndex="{x:Bind ViewModel.PdfResolution}"  
+                            MaxColumns="2" 
+                            SelectionChanged="PdfResolution_SelectionChanged"
+                            ItemsSource="{x:Bind ViewModel.PdfResolutionItems}">
                 </RadioButtons>
                 <CheckBox x:Uid="RecalibrateBetweenPdfPages" 
                           Visibility="{x:Bind ViewModel.SupportsPdfs}"
