@@ -26,18 +26,18 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Auto</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
     <AppxPackageDir>C:\Users\mannd\OneDrive\Documents\test\</AppxPackageDir>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <StartupObject>EPCalipersWinUI3.Program</StartupObject>
     <ApplicationIcon>Assets\EpCalipersLargeTemplate1.ico</ApplicationIcon>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <Configurations>Debug;Release;Test</Configurations>
-    <Version>3.0.2.0</Version>
+    <Version>3.1.0.0</Version>
     <FileVersion>3.0.2.0</FileVersion>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
