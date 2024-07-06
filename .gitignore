@@ -287,3 +287,6 @@ epcalipers/MigrationBackup/
 #VS code
 .vscode
 !.vscode/launch.json
+
+#Signing certificate
+*.cer

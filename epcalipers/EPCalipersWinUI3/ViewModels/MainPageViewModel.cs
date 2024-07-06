@@ -101,9 +101,22 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-		public void RefreshImage()
+		/// <summary>
+		/// If the PDF resolution has been changed in Settings, will reload the PDF page.
+		/// Note that caliber calibration can't handle changing PDF resolution, so 
+		/// calipers and calibration are both cleared.
+		/// </summary>
+		/// <returns>Task</returns>
+		public async Task RefreshImageIfPdfResolutionChanged()
 		{
+			if (_pdfHelper.Resolution == _settings.PdfResolution) return;
+			_pdfHelper.Resolution = _settings.PdfResolution;
 			// specifically reload PDF page with new resolution if it has changed.
+			if (!_pdfHelper.PdfIsLoaded) return;
+			// GetPdfPageSourceAsync uses zero based page number
+			MainImageSource = await _pdfHelper.GetPdfPageSourceAsync(_pdfHelper.CurrentPageNumber - 1);
+			_caliperCollection.ClearCalibration();
+			DeleteAllCalipers();
 		}
 
 		public override void RefreshCalipers()
@@ -254,8 +267,6 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task NextPdfPage()
 		{
-			// TODO: doing this before each call to get a page is fraught.
-			_pdfHelper.Resolution = _settings.PdfResolution;
 			var nextPage = await _pdfHelper.GetNextPage();
 			if (nextPage != null)
 			{
@@ -270,8 +281,6 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task PreviousPdfPage()
 		{
-			// TODO: doing this before each call to get a page is fraught.
-			_pdfHelper.Resolution = _settings.PdfResolution;
 			var previousPage = await _pdfHelper.GetPreviousPage();
 			if (previousPage != null)
 			{
@@ -283,8 +292,6 @@ namespace EPCalipersWinUI3
 
 		public async Task GotoPdfPage(int pageNumber)
 		{
-			// TODO: doing this before each call to get a page is fraught.
-			_pdfHelper.Resolution = _settings.PdfResolution;
 			// Users input 1 based page numbers.
 			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
 			if (page != null)
@@ -305,7 +312,6 @@ namespace EPCalipersWinUI3
 
 		private void UpdatePageNumber()
 		{
-			// BUG: Next page and Previous Page NOT disabled after loading PDF and then loading image file.
 			IsNotFirstPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber > 1;
 			IsNotLastPageOfPdf = IsMultipagePdf && _pdfHelper.CurrentPageNumber < _pdfHelper.NumberOfPdfPages;
 			var extension = string.Format("AppMultipagePDFTitle".GetLocalized(),

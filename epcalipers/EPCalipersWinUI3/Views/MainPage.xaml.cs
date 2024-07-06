@@ -127,9 +127,7 @@ namespace EPCalipersWinUI3.Views
 				AppHelper.StartupFile = null;
 			}
 			ViewModel.RefreshCalipers();
-			// TODO: Need to update ViewModel's _pdfHelper here to reflect possible new PDF
-			// resolution, and reload the image if it is currently a PDF.
-			// ViewModel.RefreshImage();  
+			await ViewModel.RefreshImageIfPdfResolutionChanged();  
 			SetCaliperViewOrientation();
 		}
 		protected override void OnNavigatedFrom(NavigationEventArgs e)

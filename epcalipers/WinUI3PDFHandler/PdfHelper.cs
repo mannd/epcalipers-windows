@@ -25,7 +25,7 @@ namespace PdfiumPDFHandler
     public class PdfHelper : PDFHandler.IPdfHelper
     {
         private PdfDocument _pdfDocument = null;
-        private int _pageNumber = 0;
+        private int _pageNumber = 0;  // zero-based page numbers
 
         /// <inheritdoc/>
         public bool SupportsPdfs => true;
@@ -40,7 +40,7 @@ namespace PdfiumPDFHandler
         public int NumberOfPdfPages => _pdfDocument?.PageCount ?? 0;
 
         /// <inheritdoc/>
-        public int CurrentPageNumber => _pageNumber + 1;
+        public int CurrentPageNumber => _pageNumber + 1;  // 1-based page number for UI
 
         /// <inheritdoc/>
         public int MaximumPageNumber => NumberOfPdfPages;
