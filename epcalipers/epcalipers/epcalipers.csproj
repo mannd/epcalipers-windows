@@ -202,10 +202,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="epcalipers_1_TemporaryKey.pfx" />
-    <None Include="epcalipers_2_TemporaryKey.pfx" />
-    <None Include="epcalipers_4_TemporaryKey.pfx" />
-    <None Include="epcalipers_TemporaryKey.pfx" />
     <None Include="epstudios.pfx" />
     <None Include="LICENSE" />
     <None Include="newtemporarykey.pfx" />
