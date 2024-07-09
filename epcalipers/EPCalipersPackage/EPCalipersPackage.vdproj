@@ -15,38 +15,32 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_046CE5A300A6C78253921F987059A20B"
-        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_38E9D7BFFBA8432BA4BDA46E514AFDB4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_3CC2E00E52747A1322DB157977EDEC6C"
+        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_44A5979D320B13AF763FE1B6F90EB675"
+        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_44A5979D320B13AF763FE1B6F90EB675"
+        "OwnerKey" = "8:_3CC2E00E52747A1322DB157977EDEC6C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_471B1B28124C4A558EC7EDDD8E4F7C1A"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_597709B6E050EB3FD28AFE9E7549FDF9"
-        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5AB2B852C62A59808CEC39B3D77E825D"
-        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5AB2B852C62A59808CEC39B3D77E825D"
-        "OwnerKey" = "8:_046CE5A300A6C78253921F987059A20B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,25 +64,31 @@
         "Entry"
         {
         "MsmKey" = "8:_AD99384425FB4A62FA07F73FF55FE304"
-        "OwnerKey" = "8:_046CE5A300A6C78253921F987059A20B"
+        "OwnerKey" = "8:_3CC2E00E52747A1322DB157977EDEC6C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B0D02BD8FD14FF3CE49D3B821977D285"
+        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D5DF2CEA62E128E4A273700240DFDFF6"
+        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D5DF2CEA62E128E4A273700240DFDFF6"
+        "OwnerKey" = "8:_B0D02BD8FD14FF3CE49D3B821977D285"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_DCD4DAB11A2D0D8D11B92172B1716F0E"
         "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD5FC7C44DEBCB16EFC286BB7EFAFE3E"
-        "OwnerKey" = "8:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD5FC7C44DEBCB16EFC286BB7EFAFE3E"
-        "OwnerKey" = "8:_597709B6E050EB3FD28AFE9E7549FDF9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -106,25 +106,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_046CE5A300A6C78253921F987059A20B"
+        "OwnerKey" = "8:_B0D02BD8FD14FF3CE49D3B821977D285"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5AB2B852C62A59808CEC39B3D77E825D"
+        "OwnerKey" = "8:_3CC2E00E52747A1322DB157977EDEC6C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_597709B6E050EB3FD28AFE9E7549FDF9"
+        "OwnerKey" = "8:_44A5979D320B13AF763FE1B6F90EB675"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DD5FC7C44DEBCB16EFC286BB7EFAFE3E"
+        "OwnerKey" = "8:_D5DF2CEA62E128E4A273700240DFDFF6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -234,14 +234,34 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_046CE5A300A6C78253921F987059A20B"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_38E9D7BFFBA8432BA4BDA46E514AFDB4"
+            {
+            "SourcePath" = "8:..\\epcalipers\\x86\\pdfium.dll"
+            "TargetName" = "8:pdfium.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3CC2E00E52747A1322DB157977EDEC6C"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PdfiumPdfHandler, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:PdfiumPdfHandler, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_046CE5A300A6C78253921F987059A20B"
+                    "_3CC2E00E52747A1322DB157977EDEC6C"
                     {
                     "Name" = "8:PdfiumPdfHandler.dll"
                     "Attributes" = "3:512"
@@ -265,85 +285,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_38E9D7BFFBA8432BA4BDA46E514AFDB4"
-            {
-            "SourcePath" = "8:..\\epcalipers\\x86\\pdfium.dll"
-            "TargetName" = "8:pdfium.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_471B1B28124C4A558EC7EDDD8E4F7C1A"
-            {
-            "SourcePath" = "8:..\\epcalipers\\EpCalipersIcon4.ico"
-            "TargetName" = "8:EpCalipersIcon4.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_597709B6E050EB3FD28AFE9E7549FDF9"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_44A5979D320B13AF763FE1B6F90EB675"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WpfTransparentWindow, Version=2.11.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:PdfHandler, Version=2.11.1.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_597709B6E050EB3FD28AFE9E7549FDF9"
-                    {
-                    "Name" = "8:WpfTransparentWindow.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WpfTransparentWindow.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5AB2B852C62A59808CEC39B3D77E825D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PdfHandler, Version=2.11.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_5AB2B852C62A59808CEC39B3D77E825D"
+                    "_44A5979D320B13AF763FE1B6F90EB675"
                     {
                     "Name" = "8:PdfHandler.dll"
                     "Attributes" = "3:512"
@@ -365,6 +314,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_471B1B28124C4A558EC7EDDD8E4F7C1A"
+            {
+            "SourcePath" = "8:..\\epcalipers\\EpCalipersIcon4.ico"
+            "TargetName" = "8:EpCalipersIcon4.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9A2EDAFE47A84F2FAFF98FC3D81A427D"
@@ -418,20 +387,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCD4DAB11A2D0D8D11B92172B1716F0E"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B0D02BD8FD14FF3CE49D3B821977D285"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+            "AssemblyAsmDisplayName" = "8:WpfTransparentWindow, Version=2.11.1.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_DCD4DAB11A2D0D8D11B92172B1716F0E"
+                    "_B0D02BD8FD14FF3CE49D3B821977D285"
                     {
-                    "Name" = "8:System.Net.Http.dll"
+                    "Name" = "8:WpfTransparentWindow.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:System.Net.Http.dll"
+            "SourcePath" = "8:WpfTransparentWindow.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
@@ -449,20 +418,51 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DD5FC7C44DEBCB16EFC286BB7EFAFE3E"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D5DF2CEA62E128E4A273700240DFDFF6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:EPCalipersCore, Version=2.11.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:EPCalipersCore, Version=2.11.1.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_DD5FC7C44DEBCB16EFC286BB7EFAFE3E"
+                    "_D5DF2CEA62E128E4A273700240DFDFF6"
                     {
                     "Name" = "8:EPCalipersCore.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:EPCalipersCore.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCD4DAB11A2D0D8D11B92172B1716F0E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                "ScatterAssemblies"
+                {
+                    "_DCD4DAB11A2D0D8D11B92172B1716F0E"
+                    {
+                    "Name" = "8:System.Net.Http.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
@@ -567,15 +567,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:EP Calipers"
-        "ProductCode" = "8:{B4E2F688-8854-4AEC-8DC9-B22DFA53852C}"
-        "PackageCode" = "8:{584C34EF-2932-407D-8B92-D2208A87ADB7}"
+        "ProductCode" = "8:{688B60D4-551A-4DAD-AFFE-EE47D20FC9E6}"
+        "PackageCode" = "8:{1CA1D84E-D918-48D8-8523-0F07A8281179}"
         "UpgradeCode" = "8:{66672ADF-B267-44D2-992A-2678083BEA47}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.11.0"
+        "ProductVersion" = "8:2.11.1"
         "Manufacturer" = "8:EP Studios"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1145,7 +1145,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7ABA9B84DB3B4ECBA44B4E2693EC602B"
             {
-            "SourcePath" = "8:..\\epcalipers\\obj\\x86\\Release\\epcalipers.exe"
+            "SourcePath" = "8:..\\epcalipers\\obj\\x64\\Debug\\epcalipers.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CF1318C0013C47C6B6598C9BCF08FD96"
