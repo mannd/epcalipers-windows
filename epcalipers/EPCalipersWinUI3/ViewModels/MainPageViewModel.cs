@@ -169,6 +169,7 @@ namespace EPCalipersWinUI3
 					MainImageSource = pdfImagePage;
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
 					IsMultipagePdf = _pdfHelper.IsMultiPage;
+					UpdatePageNumber();
 #endif
 				}
 				else
@@ -180,7 +181,6 @@ namespace EPCalipersWinUI3
 					IsMultipagePdf = false;
 					SetTitleBarName(FileName);
 				}
-				UpdatePageNumber();
 				_caliperCollection.ClearCalibration();
 			}
 			else
