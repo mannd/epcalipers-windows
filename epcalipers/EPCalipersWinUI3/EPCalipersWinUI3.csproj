@@ -17,7 +17,7 @@
     <!--<PlatformTarget>x64</PlatformTarget>--> 
     <Company>EP Studios</Company>
     <Description>EP Calipers implentation for modern Windows systems.</Description>
-    <Copyright>Copyright (c) 2023-2024</Copyright>
+    <Copyright>Copyright (c) 2023-2025</Copyright>
     <PackageProjectUrl>https://www.epstudiossoftware.com</PackageProjectUrl>
     <PackageIcon>StoreLogo.scale-200.png</PackageIcon>
     <Authors>EP Studios</Authors>
@@ -37,8 +37,8 @@
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <Configurations>Debug;Release;Test</Configurations>
-    <Version>3.1.1.0</Version>
-    <FileVersion>3.1.1.0</FileVersion>
+    <Version>3.1.2.0</Version>
+    <FileVersion>3.1.2.0</FileVersion>
     <!--<PlatformTarget>AnyCPU</PlatformTarget>-->
   </PropertyGroup>
   <ItemGroup>
