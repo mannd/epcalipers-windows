@@ -297,6 +297,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			get => _thickness;
 			set
 			{
+				// TODO: value == 0 when adding marching calipers with thickness 1
+				Debug.Assert(value > 0, "Thickness must be positive.");
 				_thickness = value;
 				if (_line != null) _line.StrokeThickness = value;
 			}
