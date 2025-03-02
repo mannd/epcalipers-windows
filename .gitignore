@@ -3,6 +3,8 @@
 
 .DS_Store
 
+Generated\ Files/
+
 # User-specific files
 *.suo
 *.user
