@@ -1,26 +1,13 @@
 # EP Calipers for Microsoft Windows
 
 ## IMPORTANT!!
-The epcalipers-3 branch is now the default branch for this repo.
+The `epcalipers-3` branch is now the main development branch for EP Calipers for Windows.
 
-However, epcalipers-3 is still in beta.  The
-epcalipers-2 branch contains the current production code.  The
-epcalipers-2 branch will continue to be maintained to support current
-users with older versions of Windows.
+It contains the from scratch rewrite of EP Calipers for WinUI (if
+that's what Microsoft is calling it at the moment).  This version is
+called EP Calipers 3 to distinguish it from the earlier version.
 
-This epcalipers-3 branch is a rewrite nearly from scratch of EP
-Calipers.  It is still under development, and we are still adding
-functionality to get it to the same level of functionality as the
-epcalipers-2 branch.
-
-The goals of this new branch are to recreate the app with the
-following improvements:
-- Target Windows 10/11.
-- Use the most modern Windows desktop system, WinUI 3.
-- Improve the archecture of the app (XAML views, MVVM).
-- Eliminate PDF processing via Ghostscript, and use Nuget packages instead.
-- Support dark mode
-- MSIX installation via the Microsoft Store.
+The `epcalipers-2` branch contains the original version of EP Calipers.  It is the older version of EP Calipers that is still available but will not be developed further.
 
 ## Description 
 This is the Microsoft Windows™ version of EP Calipers.
@@ -39,7 +26,7 @@ EP Calipers 3 is open source, and licensed under the
 [GNU GPL v3 license.](http://www.gnu.org/licenses/gpl.html).
 
 ## Dependencies
-The app uses .NET 8 and WinUI 3, but will be published as a
+The app uses .NET 9 and WinUI 3, but is published as a
 self-contained package, meaning it should not be necessary to install
 either of these on your computer.  The target OS is Windows 11 or
 later, though it should run on later versions of Windows 10
@@ -66,7 +53,7 @@ native ARM systems.  It might be preferable to install the x64 version
 on such systems and rely on x64 emulation on ARM.
 
 ## Copyright
-Copyright © 2016-2024 [EP Studios, Inc.](https://www.epstudiossoftware.com)
+Copyright © 2016-2025 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann, MD
