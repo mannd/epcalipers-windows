@@ -82,13 +82,13 @@ namespace NewPdfHandler
 			if (pageNumber < 0 || pageNumber > _pdfDocument.Pages.Count) return null;
 			_pageNumber = pageNumber;
 			using var pdfPage = _pdfDocument.Pages[pageNumber];
-			var dpiX = 300D;
-			var dpiY = 300D;
+            var dpiX = DotsPerInch();
+			var dpiY = DotsPerInch();
 			var pageWidth = (int)(dpiX * pdfPage.Size.Width / 72);
 			var pageHeight = (int)(dpiY * pdfPage.Size.Height / 72);
 
 			using var bitmap = new PdfiumBitmap(pageWidth, pageHeight, true);
-			pdfPage.Render(bitmap, PageOrientations.Normal, RenderingFlags.LcdText);
+			pdfPage.Render(bitmap, PageOrientations.Normal, RenderingFlags.None);
 			using var stream = bitmap.AsBmpStream(dpiX, dpiY);
             var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(stream));
 			return source;

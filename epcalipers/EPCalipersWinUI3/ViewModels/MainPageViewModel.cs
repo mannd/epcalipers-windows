@@ -36,11 +36,7 @@ namespace EPCalipersWinUI3
 		{
 			Debug.Print("MainPageViewModel constructor");
 			SetZoom = setZoomDelegate;
-#if ARM64_CONFIG
-			_pdfHelper = new PDFHandler.NullPdf();
-#else
 			_pdfHelper = new PdfHelper();
-#endif
 			HasMainImage = (MainImageSource != null);
 			HasNoMainImage = !HasMainImage;
 			SupportsPdfs = _pdfHelper.SupportsPdfs;
@@ -161,9 +157,6 @@ namespace EPCalipersWinUI3
 				_pdfHelper.ClearPdfFile();
 				if (_pdfHelper.IsPdfFile(file))
 				{
-#if ARM64_CONFIG
-					return;
-#else
 					_pdfHelper.LoadPdfFile(file);
 					_pdfHelper.Resolution = _settings.PdfResolution;
 					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
@@ -171,7 +164,6 @@ namespace EPCalipersWinUI3
 					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
 					IsMultipagePdf = _pdfHelper.IsMultiPage;
 					UpdatePageNumber();
-#endif
 				}
 				else
 				{

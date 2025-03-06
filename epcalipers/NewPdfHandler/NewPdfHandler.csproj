@@ -5,6 +5,7 @@
     <RootNamespace>NewPdfHandler</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
+    <Platforms>AnyCPU;ARM64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />

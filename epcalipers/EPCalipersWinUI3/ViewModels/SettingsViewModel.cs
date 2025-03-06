@@ -26,12 +26,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public SettingsViewModel()
 		{
-			// Handle lack of support for Pdfs in Windows ARM version.
-#if ARM64_CONFIG
-			var pdfHelper = new PDFHandler.NullPdf();
-#else
-			var pdfHelper = new PdfiumPDFHandler.PdfHelper();
-#endif
+			var pdfHelper = new NewPdfHandler.PdfHelper();
 			SupportsPdfs = pdfHelper.SupportsPdfs;
 
 			AutoAlignLabel = _model.AutoAlignLabel;
