@@ -23,16 +23,12 @@ namespace EPCalipersWinUI3.Models.Calipers
 	}
 	// NB: This is just a redirection to Measurement, however since we may need to add
 	// fields to CalibrationMeasurement, we'll keep it as a separate struct.
-	public readonly struct CalibrationMeasurement
+	public readonly struct CalibrationMeasurement(double interval, Unit unit, string unitString)
 	{
-		public Measurement Measurement { get; init; }
+		public Measurement Measurement { get; init; } = new Measurement(interval, unit, unitString);
 		public double Value => Measurement.Value;
 		public Unit Unit => Measurement.Unit;
 		public string UnitString => Measurement.UnitString;
-		public CalibrationMeasurement(double interval, Unit unit, string unitString)
-		{
-			Measurement = new Measurement(interval, unit, unitString);
-		}
 	}
 
 	public sealed class ZeroValueException : Exception
@@ -48,7 +44,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public EmptyCustomStringException(string message) : base(message) { }
 	}
 
-	public class Calibration: INotifyPropertyChanged
+	public partial class Calibration: INotifyPropertyChanged
 	{
 		// Rounding format strings
 		private const string _roundToIntString = "D";
@@ -144,7 +140,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return (roundedInterval, intervalPlusUnit.UnitString);
 		}
 
-		public double GetMeanInterval(double interval, int numberOfIntervals)
+		public static double GetMeanInterval(double interval, int numberOfIntervals)
 		{
 			if (numberOfIntervals < 1) throw new ZeroValueException();
 			interval = Math.Abs(interval);

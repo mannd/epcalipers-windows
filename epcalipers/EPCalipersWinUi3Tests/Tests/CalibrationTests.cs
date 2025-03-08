@@ -197,8 +197,10 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestNewMeanRateInterval()
 		{
 			var parameters = new CalibrationMeasurement(1000, Unit.Msec, "msec");
-			var calibration = new Calibration(100, parameters);
-			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToInt;
+			var calibration = new Calibration(100, parameters)
+			{
+				Rounding = EPCalipersWinUI3.Models.Rounding.ToInt
+			};
 			Assert.Equal(1000.0, calibration.CalibratedInterval(100.0).Value);
 			var meanInterval = calibration.GetMeanCalibratedInterval(500, 4, false);
 			Assert.Equal("1250", meanInterval.Item1);
@@ -217,8 +219,10 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestCalibrationMeasurement()
 		{
 			var parameters = new CalibrationMeasurement(1000, Unit.Msec, "msec");
-			var calibration = new Calibration(100, parameters);
-			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToInt;
+			var calibration = new Calibration(100, parameters)
+			{
+				Rounding = EPCalipersWinUI3.Models.Rounding.ToInt
+			};
 			Assert.Equal(1000.0, calibration.CalibratedInterval(100.0).Value);
 			Assert.Equal(Unit.Msec, calibration.CalibratedInterval(100.0).Unit);
 			Assert.Equal("msec", calibration.CalibratedInterval(100.0).UnitString);
@@ -231,9 +235,11 @@ namespace EPCalipersWinUi3Tests.Tests
 		public void TestMeanIntervals()
 		{
 			var parameters = new CalibrationMeasurement(1000, Unit.Msec, "msec");
-			var calibration = new Calibration(100, parameters);
-			calibration.Rounding = EPCalipersWinUI3.Models.Rounding.ToInt;
-			var interval = calibration.GetMeanInterval(1200, 3);
+			var calibration = new Calibration(100, parameters)
+			{
+				Rounding = EPCalipersWinUI3.Models.Rounding.ToInt
+			};
+			var interval = Calibration.GetMeanInterval(1200, 3);
 			Assert.Equal(400, interval);
 			var meanInterval = calibration.MeanCalibratedInterval(1200, 3);
 			Assert.Equal(400, meanInterval.Value);

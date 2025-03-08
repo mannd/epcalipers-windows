@@ -5,7 +5,7 @@ namespace EPCalipersWinUi3Tests.Tests
 {
 	public class AppInfoModelTests
 	{
-		private AppInfo appInfo;
+		private readonly AppInfo appInfo;
 
 		public AppInfoModelTests()
 		{

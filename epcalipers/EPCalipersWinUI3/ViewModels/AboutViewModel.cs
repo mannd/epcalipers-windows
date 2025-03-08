@@ -29,7 +29,7 @@ namespace EPCalipersWinUI3.ViewModels
 		[ObservableProperty]
 		private string version;
 
-		[ObservableProperty] 
+		[ObservableProperty]
 		private string productVersion;
 
 		[ObservableProperty]
