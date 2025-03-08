@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
-using PDFHandler;
+using EPCalipersPdf;
 using PdfLibCore;
 using PdfLibCore.Enums;
 using System;
@@ -18,7 +18,7 @@ using Windows.Storage;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace NewPdfHandler
+namespace EPCalipersPdfCore
 {
 	public class PdfHelper : IPdfHelper
 	{
@@ -47,7 +47,7 @@ namespace NewPdfHandler
 		public bool PdfIsLoaded => _pdfDocument != null;
 
 		/// <inheritdoc/>
-		public PdfResolution Resolution { get; set; } = PDFHandler.PdfResolution.High;
+		public PdfResolution Resolution { get; set; } = EPCalipersPdf.PdfResolution.High;
 
 		/// <inheritdoc/>
 		public void ClearPdfFile()

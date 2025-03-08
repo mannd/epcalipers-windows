@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 
-namespace PDFHandler
+namespace EPCalipersPdf
 {
 	public enum PdfResolution
 	{

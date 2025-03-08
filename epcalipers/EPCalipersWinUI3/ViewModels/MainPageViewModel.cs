@@ -6,7 +6,7 @@ using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
 using EPCalipersWinUI3.Views;
-using NewPdfHandler;
+using EPCalipersPdfCore;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
@@ -17,7 +17,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Microsoft.UI.Xaml.Controls;
-using PDFHandler;
+using EPCalipersPdf;
 using Windows.Graphics.Capture;
 using Microsoft.UI.Xaml;
 

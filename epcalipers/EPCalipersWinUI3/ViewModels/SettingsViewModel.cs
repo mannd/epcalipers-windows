@@ -26,7 +26,7 @@ namespace EPCalipersWinUI3.ViewModels
 
 		public SettingsViewModel()
 		{
-			var pdfHelper = new NewPdfHandler.PdfHelper();
+			var pdfHelper = new EPCalipersPdfCore.PdfHelper();
 			SupportsPdfs = pdfHelper.SupportsPdfs;
 
 			AutoAlignLabel = _model.AutoAlignLabel;
@@ -121,7 +121,7 @@ namespace EPCalipersWinUI3.ViewModels
 					_model.NumberOfMarchingCalipers = NumberOfMarchingCalipers;
 					break;
 				case nameof(PdfResolution):
-					_model.PdfResolution = (PDFHandler.PdfResolution)PdfResolution;
+					_model.PdfResolution = (EPCalipersPdf.PdfResolution)PdfResolution;
 					break;
 				case nameof(FontSize):
 					_model.FontSize = _fontSizes[FontSize];

@@ -78,10 +78,10 @@ namespace EPCalipersWinUI3.Models
 			} 
 		}
 
-		public PDFHandler.PdfResolution PdfResolution
+		public EPCalipersPdf.PdfResolution PdfResolution
 		{
-			get => (PDFHandler.PdfResolution)(_localSettings.Values[_pdfResolutionKey] 
-				?? PDFHandler.PdfResolution.High);
+			get => (EPCalipersPdf.PdfResolution)(_localSettings.Values[_pdfResolutionKey] 
+				?? EPCalipersPdf.PdfResolution.High);
 			set => _localSettings.Values[_pdfResolutionKey] = (int)value;
 		}
 
@@ -288,7 +288,7 @@ namespace EPCalipersWinUI3.Models
 	public class FakeSettings : ISettings
 	{
 		public double BarThickness { get; set; } = 2.0;
-		public PDFHandler.PdfResolution PdfResolution { get; set; } = PDFHandler.PdfResolution.High;
+		public EPCalipersPdf.PdfResolution PdfResolution { get; set; } = EPCalipersPdf.PdfResolution.High;
 		public int FontSize { get; set; } = CaliperLabel.MediumFont;
 		public bool AutoAlignLabel { get; set; } = false;
 		public CaliperLabelAlignment TimeCaliperLabelAlignment { get; set; } = CaliperLabelAlignment.Left;
