@@ -12,7 +12,7 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <PackageCertificateKeyFile>epstudios.pfx</PackageCertificateKeyFile>
-    <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <!--<PlatformTarget>x64</PlatformTarget>--> 
     <Company>EP Studios</Company>
@@ -26,7 +26,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <Title>EP Calipers 3</Title>
     <Product>EP Calipers 3</Product>
@@ -65,6 +65,7 @@
     <None Remove="Assets\icons8-check-mark-48.png" />
     <None Remove="Assets\Images\sampleECG.jpg" />
     <None Remove="Assets\SplashScreen.scale-200.png" />
+    <None Remove="epstudios.pfx" />
     <None Remove="Views\AboutDialog.xaml" />
     <None Remove="Views\CalibrationView.xaml" />
     <None Remove="Views\ColorView.xaml" />
