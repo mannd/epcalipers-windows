@@ -107,14 +107,23 @@ namespace EPCalipersWinUI3
 		/// <returns>Task</returns>
 		public async Task RefreshImageIfPdfResolutionChanged()
 		{
-			if (_pdfHelper.Resolution == _settings.PdfResolution) return;
-			_pdfHelper.Resolution = _settings.PdfResolution;
-			// specifically reload PDF page with new resolution if it has changed.
-			if (!_pdfHelper.PdfIsLoaded) return;
-			// GetPdfPageSourceAsync uses zero based page number
-			MainImageSource = await _pdfHelper.GetPdfPageSourceAsync(_pdfHelper.CurrentPageNumber - 1);
-			_caliperCollection.ClearCalibration();
-			DeleteAllCalipers();
+			try
+			{
+				if (_pdfHelper.Resolution == _settings.PdfResolution) return;
+				_pdfHelper.Resolution = _settings.PdfResolution;
+				// specifically reload PDF page with new resolution if it has changed.
+				if (!_pdfHelper.PdfIsLoaded) return;
+				// GetPdfPageSourceAsync uses zero based page number
+				MainImageSource = await _pdfHelper.GetPdfPageSourceAsync(_pdfHelper.CurrentPageNumber - 1);
+				_caliperCollection.ClearCalibration();
+				DeleteAllCalipers();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Exception in RefreshImageIfPdfResolutionChanged: {ex}");
+				_pdfHelper.ClearPdfFile();
+				await ShowExceptionDialog(ex, null);
+			}
 		}
 
 		public override void RefreshCalipers()
@@ -231,88 +240,53 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-		//private async Task ShowExceptionDialog(Exception ex, string path)
-		//{
-		//	if (ex == null) return;
-
-		//	string details = $"File: {path ?? "(unknown)"}\n\nException: {ex.GetType().FullName}\nMessage: {ex.Message}\n\nStackTrace:\n{ex.StackTrace}";
-
-		//	// Use a read-only TextBlock for display so newlines and wrapping render correctly.
-		//	var detailsBlock = new TextBlock
-		//	{
-		//		Text = details,
-		//		TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
-		//		Height = 300,
-		//		HorizontalAlignment = HorizontalAlignment.Stretch
-		//	};
-
-		//	// Use a ScrollViewer to enable vertical scrolling and disable horizontal scrolling.
-		//	var scroll = new ScrollViewer
-		//	{
-		//		Content = detailsBlock,
-		//		VerticalScrollMode = ScrollMode.Enabled,
-		//		VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-		//		HorizontalScrollMode = ScrollMode.Disabled,
-		//		HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-		//		Height = 300
-		//	};
-
-		//	var dialog = new ContentDialog
-		//	{
-		//		Title = "Error opening file",
-		//		Content = scroll,
-		//		PrimaryButtonText = "Copy Details",
-		//		CloseButtonText = "OK",
-		//	};
-
-		//	// Ensure we have a XamlRoot to show the dialog.
-		//	var mainWindow = AppHelper.AppMainWindow;
-		//	if (mainWindow?.Content != null)
-		//	{
-		//		dialog.XamlRoot = mainWindow.Content.XamlRoot;
-		//	}
-
-		//	var result = await dialog.ShowAsync();
-
-		//	if (result == ContentDialogResult.Primary)
-		//	{
-		//		var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
-		//		dp.SetText(details);
-		//		Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
-		//	}
-		//}
-
 		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
 		{
 			if (bmp == null)
 				return null;
 
-			// get pixels as an array of bytes
-			var data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
-			var bytes = new byte[data.Stride * data.Height];
-			Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
-			bmp.UnlockBits(data);
+			try
+			{
+				// get pixels as an array of bytes
+				var data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadOnly, bmp.PixelFormat);
+				var bytes = new byte[data.Stride * data.Height];
+				Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
+				bmp.UnlockBits(data);
 
-			// get WinRT SoftwareBitmap
-			var softwareBitmap = new Windows.Graphics.Imaging.SoftwareBitmap(
-				Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
-				bmp.Width,
-				bmp.Height,
-				Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
-			softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
+				// get WinRT SoftwareBitmap
+				var softwareBitmap = new Windows.Graphics.Imaging.SoftwareBitmap(
+					Windows.Graphics.Imaging.BitmapPixelFormat.Bgra8,
+					bmp.Width,
+					bmp.Height,
+					Windows.Graphics.Imaging.BitmapAlphaMode.Premultiplied);
+				softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
 
-			// build WinUI3 SoftwareBitmapSource
-			var source = new SoftwareBitmapSource();
-			await source.SetBitmapAsync(softwareBitmap);
-			return source;
+				// build WinUI3 SoftwareBitmapSource
+				var source = new SoftwareBitmapSource();
+				await source.SetBitmapAsync(softwareBitmap);
+				return source;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"GetWinUI3BitmapSourceFromGdiBitmap failed: {ex}");
+				return null;
+			}
 		}
 
 		[RelayCommand]
 		private static void TransparenWindow()
 		{
 			var mainWindow = AppHelper.AppMainWindow;
-			mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
-			mainWindow.Navigate(typeof(TransparentPage));
+			if (mainWindow == null) return;
+			try
+			{
+				mainWindow.SystemBackdrop = new WinUIEx.TransparentTintBackdrop();
+				mainWindow.Navigate(typeof(TransparentPage));
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"TransparenWindow error: {ex}");
+			}
 		}
 #endregion
 
@@ -329,7 +303,7 @@ namespace EPCalipersWinUI3
 			var zoomTarget = multiple * ZoomFactor;
 			if (zoomTarget < _minZoom || zoomTarget > _maxZoom) { return; }
 			ZoomFactor = zoomTarget;
-			SetZoom(ZoomFactor);
+			SetZoom?.Invoke(ZoomFactor);
 		}
 
 		[RelayCommand]
@@ -357,38 +331,61 @@ namespace EPCalipersWinUI3
 		[RelayCommand]
 		private async Task NextPdfPage()
 		{
-			var nextPage = await _pdfHelper.GetNextPage();
-			if (nextPage != null)
+			try
 			{
-				MainImageSource = nextPage;
-				UpdatePageNumber();
-				HandleBetweenPagePdfCalibration();
-
+				var nextPage = await _pdfHelper.GetNextPage();
+				if (nextPage != null)
+				{
+					MainImageSource = nextPage;
+					UpdatePageNumber();
+					HandleBetweenPagePdfCalibration();
+				}
+				Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
 			}
-			Debug.WriteLine($"Current page number = {CurrentPdfPageNumber}");
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Exception in NextPdfPage: {ex}");
+				await ShowExceptionDialog(ex, null);
+			}
 		}
 
 		[RelayCommand]
 		private async Task PreviousPdfPage()
 		{
-			var previousPage = await _pdfHelper.GetPreviousPage();
-			if (previousPage != null)
+			try
 			{
-				MainImageSource = previousPage;
-				UpdatePageNumber();
-				HandleBetweenPagePdfCalibration();
+				var previousPage = await _pdfHelper.GetPreviousPage();
+				if (previousPage != null)
+				{
+					MainImageSource = previousPage;
+					UpdatePageNumber();
+					HandleBetweenPagePdfCalibration();
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Exception in PreviousPdfPage: {ex}");
+				await ShowExceptionDialog(ex, null);
 			}
 		}
 
 		public async Task GotoPdfPage(int pageNumber)
 		{
-			// Users input 1 based page numbers.
-			var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
-			if (page != null)
+			try
 			{
-				MainImageSource = page;
-				UpdatePageNumber();
-				HandleBetweenPagePdfCalibration();
+				// Users input 1 based page numbers.
+				var page = await _pdfHelper.GetPdfPageSourceAsync(pageNumber - 1);
+				if (page != null)
+				{
+					MainImageSource = page;
+					UpdatePageNumber();
+					HandleBetweenPagePdfCalibration();
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"Exception in GotoPdfPage({pageNumber}): {ex}");
+				await ShowExceptionDialog(ex, null);
 			}
 		}
 

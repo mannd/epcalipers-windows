@@ -12,10 +12,12 @@ namespace EPCalipersWinUI3.Helpers
 		public static ContentDialog CreateMessageDialog(string title, string message)
 		{
 			Debug.Print(message);
-			var dialog = new ContentDialog();
-			dialog.Title = title;
-			dialog.Content = message;
-			dialog.PrimaryButtonText = "OK".GetLocalized();
+			var dialog = new ContentDialog
+			{
+				Title = title,
+				Content = message,
+				PrimaryButtonText = "OK".GetLocalized()
+			};
 			return dialog;
 		}
 

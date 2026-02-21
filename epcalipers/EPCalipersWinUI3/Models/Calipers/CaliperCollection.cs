@@ -21,7 +21,7 @@ namespace EPCalipersWinUI3.Models.Calipers
     /// <summary>
     /// Maintains a collection of calipers, sets colors, adds, deletes them, etc.
     /// </summary>
-    public class CaliperCollection : INotifyPropertyChanged
+    public partial class CaliperCollection : INotifyPropertyChanged
 	{
 		private static readonly double _delta = 1.0;
 		private static readonly double _microDelta = 0.2;
@@ -172,7 +172,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		private bool _isCalibrating;
 
 		public IList<Caliper> FilteredCalipers(CaliperType caliperType)
-			=> _calipers.Where(x => x.CaliperType == caliperType).ToList();
+			=> [.. _calipers.Where(x => x.CaliperType == caliperType)];
 
 		public Caliper AddCaliper(CaliperType type, ViewportBoundsOffset boundsOffset, bool fakeUI = false)
 		{
