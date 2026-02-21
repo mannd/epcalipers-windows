@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using EPCalipersWinUI3.Contracts;
 using EPCalipersWinUI3.Helpers;
+using static EPCalipersWinUI3.Helpers.MessageHelper;
 using EPCalipersWinUI3.Models;
 using EPCalipersWinUI3.Models.Calipers;
 using EPCalipersWinUI3.ViewModels;
@@ -219,7 +220,7 @@ namespace EPCalipersWinUI3
 					}
 				}
 
-	_caliperCollection.ClearCalibration();
+				_caliperCollection.ClearCalibration();
 			}
 			catch (Exception ex)
 			{
@@ -230,56 +231,56 @@ namespace EPCalipersWinUI3
 			}
 		}
 
-		private async Task ShowExceptionDialog(Exception ex, string path)
-		{
-			if (ex == null) return;
+		//private async Task ShowExceptionDialog(Exception ex, string path)
+		//{
+		//	if (ex == null) return;
 
-			string details = $"File: {path ?? "(unknown)"}\n\nException: {ex.GetType().FullName}\nMessage: {ex.Message}\n\nStackTrace:\n{ex.StackTrace}";
+		//	string details = $"File: {path ?? "(unknown)"}\n\nException: {ex.GetType().FullName}\nMessage: {ex.Message}\n\nStackTrace:\n{ex.StackTrace}";
 
-			// Use a read-only TextBlock for display so newlines and wrapping render correctly.
-	var detailsBlock = new TextBlock
-	{
-		Text = details,
-		TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
-		Height = 300,
-		HorizontalAlignment = HorizontalAlignment.Stretch
-	};
+		//	// Use a read-only TextBlock for display so newlines and wrapping render correctly.
+		//	var detailsBlock = new TextBlock
+		//	{
+		//		Text = details,
+		//		TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
+		//		Height = 300,
+		//		HorizontalAlignment = HorizontalAlignment.Stretch
+		//	};
 
-	// Use a ScrollViewer to enable vertical scrolling and disable horizontal scrolling.
-	var scroll = new ScrollViewer
-	{
-		Content = detailsBlock,
-		VerticalScrollMode = ScrollMode.Enabled,
-		VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-		HorizontalScrollMode = ScrollMode.Disabled,
-		HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-		Height = 300
-	};
+		//	// Use a ScrollViewer to enable vertical scrolling and disable horizontal scrolling.
+		//	var scroll = new ScrollViewer
+		//	{
+		//		Content = detailsBlock,
+		//		VerticalScrollMode = ScrollMode.Enabled,
+		//		VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+		//		HorizontalScrollMode = ScrollMode.Disabled,
+		//		HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+		//		Height = 300
+		//	};
 
-	var dialog = new ContentDialog
-	{
-		Title = "Error opening file",
-		Content = scroll,
-		PrimaryButtonText = "Copy Details",
-		CloseButtonText = "OK",
-	};
+		//	var dialog = new ContentDialog
+		//	{
+		//		Title = "Error opening file",
+		//		Content = scroll,
+		//		PrimaryButtonText = "Copy Details",
+		//		CloseButtonText = "OK",
+		//	};
 
-	// Ensure we have a XamlRoot to show the dialog.
-	var mainWindow = AppHelper.AppMainWindow;
-	if (mainWindow?.Content != null)
-	{
-		dialog.XamlRoot = mainWindow.Content.XamlRoot;
-	}
+		//	// Ensure we have a XamlRoot to show the dialog.
+		//	var mainWindow = AppHelper.AppMainWindow;
+		//	if (mainWindow?.Content != null)
+		//	{
+		//		dialog.XamlRoot = mainWindow.Content.XamlRoot;
+		//	}
 
-	var result = await dialog.ShowAsync();
+		//	var result = await dialog.ShowAsync();
 
-	if (result == ContentDialogResult.Primary)
-	{
-		var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
-		dp.SetText(details);
-		Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
-	}
-		}
+		//	if (result == ContentDialogResult.Primary)
+		//	{
+		//		var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
+		//		dp.SetText(details);
+		//		Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
+		//	}
+		//}
 
 		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)
 		{
