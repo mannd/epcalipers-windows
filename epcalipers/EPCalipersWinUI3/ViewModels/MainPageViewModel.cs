@@ -151,38 +151,134 @@ namespace EPCalipersWinUI3
 		#region menu
 		public async Task OpenImageFile(StorageFile file)
 		{
-			if (file != null)
+			if (file == null)
 			{
-				FileName = file.DisplayName;
-				_pdfHelper.ClearPdfFile();
+				Debug.Print("Operation cancelled.");
+				return;
+			}
+
+			FileName = file.DisplayName;
+			_pdfHelper.ClearPdfFile();
+
+			try
+			{
 				if (_pdfHelper.IsPdfFile(file))
 				{
-					_pdfHelper.LoadPdfFile(file);
-					_pdfHelper.Resolution = _settings.PdfResolution;
-					SoftwareBitmapSource pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
-					MainImageSource = pdfImagePage;
-					MaximumPdfPage = _pdfHelper.MaximumPageNumber;
-					IsMultipagePdf = _pdfHelper.IsMultiPage;
-					UpdatePageNumber();
+					try
+					{
+						_pdfHelper.LoadPdfFile(file);
+						_pdfHelper.Resolution = _settings.PdfResolution;
+
+						// GetPdfPageSourceAsync uses zero based page number
+						var pdfImagePage = await _pdfHelper.GetPdfPageSourceAsync(0);
+						if (pdfImagePage == null)
+						{
+							Debug.WriteLine($"Failed to render PDF page for '{file.Path}'.");
+							_pdfHelper.ClearPdfFile();
+							await ShowExceptionDialog(new Exception("Failed to render PDF page."), file.Path);
+						}
+						else
+						{
+							MainImageSource = pdfImagePage;
+							MaximumPdfPage = _pdfHelper.MaximumPageNumber;
+							IsMultipagePdf = _pdfHelper.IsMultiPage;
+							UpdatePageNumber();
+							SetTitleBarName(FileName);
+						}
+					}
+					catch (OutOfMemoryException oom)
+					{
+						Debug.WriteLine($"OutOfMemory while opening PDF '{file.Path}': {oom}");
+						_pdfHelper.ClearPdfFile();
+						await ShowExceptionDialog(oom, file.Path);
+					}
+					catch (Exception ex)
+					{
+						Debug.WriteLine($"Exception while opening PDF '{file.Path}': {ex}");
+						_pdfHelper.ClearPdfFile();
+						await ShowExceptionDialog(ex, file.Path);
+					}
 				}
 				else
 				{
 					var bitmapImage = new BitmapImage();
-					await bitmapImage.SetSourceAsync(await file.OpenAsync(FileAccessMode.Read));
-					// Set the image on the main page to the dropped image
-					MainImageSource = bitmapImage;
-					IsMultipagePdf = false;
-					SetTitleBarName(FileName);
+					try
+					{
+						using (var stream = await file.OpenAsync(FileAccessMode.Read))
+						{
+							await bitmapImage.SetSourceAsync(stream);
+						}
+						MainImageSource = bitmapImage;
+						IsMultipagePdf = false;
+						SetTitleBarName(FileName);
+					}
+					catch (Exception ex)
+					{
+						Debug.WriteLine($"Failed to load image '{file.Path}': {ex}");
+						await ShowExceptionDialog(ex, file.Path);
+					}
 				}
-				_caliperCollection.ClearCalibration();
+
+	_caliperCollection.ClearCalibration();
 			}
-			else
+			catch (Exception ex)
 			{
-				Debug.Print("Operation cancelled.");
-				//ContentDialog dialog = MessageDialog.Create(title: "Test", message: "Message");
-				//dialog.XamlRoot = (App.Current as App)?.Window.Content.XamlRoot;
-				//await dialog.ShowAsync();
+				// Last-resort catch to prevent an unhandled exception from closing the app
+				Debug.WriteLine($"Unhandled exception while opening file '{file?.Path}': {ex}");
+				_pdfHelper.ClearPdfFile();
+				await ShowExceptionDialog(ex, file?.Path);
 			}
+		}
+
+		private async Task ShowExceptionDialog(Exception ex, string path)
+		{
+			if (ex == null) return;
+
+			string details = $"File: {path ?? "(unknown)"}\n\nException: {ex.GetType().FullName}\nMessage: {ex.Message}\n\nStackTrace:\n{ex.StackTrace}";
+
+			// Use a read-only TextBlock for display so newlines and wrapping render correctly.
+	var detailsBlock = new TextBlock
+	{
+		Text = details,
+		TextWrapping = Microsoft.UI.Xaml.TextWrapping.Wrap,
+		Height = 300,
+		HorizontalAlignment = HorizontalAlignment.Stretch
+	};
+
+	// Use a ScrollViewer to enable vertical scrolling and disable horizontal scrolling.
+	var scroll = new ScrollViewer
+	{
+		Content = detailsBlock,
+		VerticalScrollMode = ScrollMode.Enabled,
+		VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+		HorizontalScrollMode = ScrollMode.Disabled,
+		HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+		Height = 300
+	};
+
+	var dialog = new ContentDialog
+	{
+		Title = "Error opening file",
+		Content = scroll,
+		PrimaryButtonText = "Copy Details",
+		CloseButtonText = "OK",
+	};
+
+	// Ensure we have a XamlRoot to show the dialog.
+	var mainWindow = AppHelper.AppMainWindow;
+	if (mainWindow?.Content != null)
+	{
+		dialog.XamlRoot = mainWindow.Content.XamlRoot;
+	}
+
+	var result = await dialog.ShowAsync();
+
+	if (result == ContentDialogResult.Primary)
+	{
+		var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
+		dp.SetText(details);
+		Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
+	}
 		}
 
 		public static async Task<SoftwareBitmapSource> GetWinUI3BitmapSourceFromGdiBitmap(System.Drawing.Bitmap bmp)

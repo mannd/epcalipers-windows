@@ -22,5 +22,6 @@ namespace EPCalipersWinUI3.Helpers
 			var title = "Error".GetLocalized();
 			return CreateMessageDialog(title, message);
 		}
+
 	}
 }
