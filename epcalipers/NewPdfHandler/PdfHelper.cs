@@ -14,9 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System.Diagnostics;
 
 namespace EPCalipersPdfCore
 {
@@ -31,8 +29,8 @@ namespace EPCalipersPdfCore
 		/// <inheritdoc/>
 		public int CurrentPageNumber => _pageNumber + 1;
 
-		/// <inheritdoc/>
-		public string FilePath { get; set; }
+        /// <inheritdoc/>
+        public string FilePath { get; set; } = null; // not used in this implementation, but required by interface
 
 		/// <inheritdoc/>
 		public bool IsMultiPage => _pdfDocument?.Pages.Count > 1;
@@ -52,7 +50,14 @@ namespace EPCalipersPdfCore
 		/// <inheritdoc/>
 		public void ClearPdfFile()
 		{
-			_pdfDocument?.Close();
+			try
+			{
+				_pdfDocument?.Close();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"ClearPdfFile: unexpected error closing PDF: {ex}");
+			}
 			_pdfDocument = null;
 			_pageNumber = 0;
 		}
@@ -79,19 +84,37 @@ namespace EPCalipersPdfCore
 		public async Task<SoftwareBitmapSource> GetPdfPageSourceAsync(int pageNumber)
 		{
 			if (_pdfDocument == null) return null;
-			if (pageNumber < 0 || pageNumber > _pdfDocument.Pages.Count) return null;
-			_pageNumber = pageNumber;
-			using var pdfPage = _pdfDocument.Pages[pageNumber];
-            var dpiX = DotsPerInch();
-			var dpiY = DotsPerInch();
-			var pageWidth = (int)(dpiX * pdfPage.Size.Width / 72);
-			var pageHeight = (int)(dpiY * pdfPage.Size.Height / 72);
+			// guard: valid zero-based index
+			if (pageNumber < 0 || pageNumber >= _pdfDocument.Pages.Count) return null;
 
-			using var bitmap = new PdfiumBitmap(pageWidth, pageHeight, true);
-			pdfPage.Render(bitmap, PageOrientations.Normal, RenderingFlags.None);
-			using var stream = bitmap.AsBmpStream(dpiX, dpiY);
-            var source = await GetWinUI3BitmapSourceFromGdiBitmap(new Bitmap(stream));
-			return source;
+			_pageNumber = pageNumber;
+
+			try
+			{
+				using var pdfPage = _pdfDocument.Pages[pageNumber];
+				var dpiX = DotsPerInch();
+				var dpiY = DotsPerInch();
+
+				// ensure non-zero, positive dimensions
+				var pageWidth = Math.Max(1, (int)(dpiX * pdfPage.Size.Width / 72));
+				var pageHeight = Math.Max(1, (int)(dpiY * pdfPage.Size.Height / 72));
+
+				using var bitmap = new PdfiumBitmap(pageWidth, pageHeight, true);
+				pdfPage.Render(bitmap, PageOrientations.Normal, RenderingFlags.None);
+
+				using var stream = bitmap.AsBmpStream(dpiX, dpiY);
+
+				// create a managed Bitmap from the stream and convert
+				using var gdiBitmap = new Bitmap(stream);
+				var source = await GetWinUI3BitmapSourceFromGdiBitmap(gdiBitmap);
+				return source;
+			}
+			catch (Exception ex)
+			{
+				// log and return null so callers can handle failure without app crash
+				Debug.WriteLine($"GetPdfPageSourceAsync failed (page {pageNumber}): {ex}");
+				return null;
+			}
 		}
 
         // From https://stackoverflow.com/questions/76640972/convert-system-drawing-icon-to-microsoft-ui-xaml-imagesource
@@ -102,27 +125,47 @@ namespace EPCalipersPdfCore
                 return null;
             }
 
-            // get pixels as an array of bytes
-            var data = bmp.LockBits(
-                new Rectangle(0, 0, bmp.Width, bmp.Height),
-                ImageLockMode.ReadOnly,
-                bmp.PixelFormat);
-            var bytes = new byte[data.Stride * data.Height];
-            Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
-            bmp.UnlockBits(data);
+			BitmapData data = null;
+            try
+            {
+                // get pixels as an array of bytes
+                data = bmp.LockBits(
+                    new Rectangle(0, 0, bmp.Width, bmp.Height),
+                    ImageLockMode.ReadOnly,
+                    bmp.PixelFormat);
 
-            // get WinRT SoftwareBitmap
-            var softwareBitmap = new SoftwareBitmap(
-                BitmapPixelFormat.Bgra8,
-                bmp.Width,
-                bmp.Height,
-                BitmapAlphaMode.Premultiplied);
-            softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
+                var bytes = new byte[Math.Abs(data.Stride) * data.Height];
+                Marshal.Copy(data.Scan0, bytes, 0, bytes.Length);
 
-            // build WinUI3 SoftwareBitmapSource
-            var source = new SoftwareBitmapSource();
-            await source.SetBitmapAsync(softwareBitmap);
-            return source;
+                // get WinRT SoftwareBitmap
+                var softwareBitmap = new SoftwareBitmap(
+                    BitmapPixelFormat.Bgra8,
+                    bmp.Width,
+                    bmp.Height,
+                    BitmapAlphaMode.Premultiplied);
+
+                // If pixel formats don't match you may need to convert bytes appropriately.
+                softwareBitmap.CopyFromBuffer(bytes.AsBuffer());
+
+                // build WinUI3 SoftwareBitmapSource
+                var source = new SoftwareBitmapSource();
+                await source.SetBitmapAsync(softwareBitmap);
+                return source;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"GetWinUI3BitmapSourceFromGdiBitmap failed: {ex}");
+                return null;
+            }
+            finally
+            {
+                // ensure unlock even on exception
+                if (data != null)
+                {
+                    try { bmp.UnlockBits(data); }
+                    catch (Exception ex) { Debug.WriteLine($"UnlockBits failed: {ex}"); }
+                }
+            }
         }
 
         /// <summary>
@@ -158,14 +201,27 @@ namespace EPCalipersPdfCore
 
 		/// <inheritdoc/>
         public bool IsPdfFile(StorageFile file) =>
-            file.FileType.Equals(".PDF", StringComparison.CurrentCultureIgnoreCase);
+            file != null && file.FileType.Equals(".PDF", StringComparison.CurrentCultureIgnoreCase);
 
 		/// <inheritdoc/>
 		public void LoadPdfFile(StorageFile file)
 		{
 			if (file == null) return;
-			_pdfDocument = new PdfDocument(file.Path);
-			_pageNumber = 0;
+
+			// Let callers handle critical load errors (they usually wrap this call),
+			// but guard to log and keep helper in consistent state if construction fails.
+			try
+			{
+				_pdfDocument = new PdfDocument(file.Path);
+				_pageNumber = 0;
+				FilePath = file.Path;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"LoadPdfFile failed for '{file?.Path}': {ex}");
+				ClearPdfFile();
+				throw;
+			}
 		}
 	}
 }
