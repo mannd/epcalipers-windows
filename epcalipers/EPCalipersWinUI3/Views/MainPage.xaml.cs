@@ -24,6 +24,10 @@ using Windows.Storage.Provider;
 using Windows.Storage.Streams;
 using Windows.Win32.Foundation;
 using WinRT.Interop;
+using System.Collections.Generic;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Shapes;
+using Microsoft.UI.Text;
 
 
 namespace EPCalipersWinUI3.Views
@@ -80,6 +84,7 @@ namespace EPCalipersWinUI3.Views
 			ScrollView.RegisterPropertyChangedCallback(ScrollViewer.ZoomFactorProperty, (s, e) =>
 			{
 				ViewModel.ZoomFactor = ScrollView.ZoomFactor;
+				UpdateNoteFrames();
 			});
 
 			EcgImage.RegisterPropertyChangedCallback(Image.SourceProperty, (s, e) =>
@@ -103,6 +108,8 @@ namespace EPCalipersWinUI3.Views
 					var originalRotation = _imageRotation;
 					RotateImageWithoutAnimation(originalRotation);
 				}
+				UpdateNotesCanvasSize();
+				UpdateNoteFrames();
 			});
 		}
 
@@ -115,6 +122,7 @@ namespace EPCalipersWinUI3.Views
 			ViewModel.LoadSampleImage();
 			ViewModel.RefreshCalipers();
 			ViewModel.RestoreTitleBarName();
+			UpdateNotesCanvasSize();
 		}
 
 		protected async override void OnNavigatedTo(NavigationEventArgs e)
@@ -172,6 +180,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetPosition(CaliperView);
 			_rightClickPosition = position;
+			Debug.WriteLine($"Right click position: {_rightClickPosition.X}, {_rightClickPosition.Y}");
 			var caliper = ViewModel.GetCaliperAt(position);
 			ViewModel.IsNearCaliperAllowDuringCalibration = caliper != null;
 			ViewModel.IsNearCaliper = ViewModel.IsNearCaliperAllowDuringCalibration && !ViewModel.IsCalibrating;
@@ -183,6 +192,7 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.CaliperIsMarching = false;
 			}
+			ViewModel.IsNearNote = NoteIndexNear(position) >= 0;
 		}
 
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)
@@ -621,15 +631,369 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 
+		#region notes
+		private sealed class NoteEntry
+		{
+			public Border Container { get; set; }
+			public RichEditBox Editor { get; set; }
+			public Border DragHandle { get; set; }
+			public Point AbsoluteAnchor { get; set; }
+			public bool IsHovering { get; set; }
+			public bool IsEditing { get; set; }
+			public bool IsSelected { get; set; }
+		}
+
+		private readonly List<NoteEntry> _noteEntries = [];
+		private readonly Size _defaultNoteSize = new(180, 80);
+		private const double _noteHitSlop = 10.0;
+		private const double _defaultNoteFontSize = 14.0;
+		private const double _minimumFontSize = 10.0;
+		private const double _maximumFontSize = 36.0;
+
+		private NoteEntry _draggedNote;
+		private Point _lastDragPoint;
+		private bool _isDraggingNote;
+
+		private bool HasNotes => _noteEntries.Count > 0;
+
+		private void AddNote()
+		{
+			var absoluteAnchor = ResolveNoteAbsoluteAnchor();
+			var scaledAnchor = NoteAnchorInViewFromAbsoluteAnchor(absoluteAnchor);
+			var scaledOrigin = NoteOriginInViewFromAnchor(scaledAnchor);
+
+			var editor = new RichEditBox
+			{
+				Width = _defaultNoteSize.Width,
+				Height = _defaultNoteSize.Height,
+				Background = new SolidColorBrush(Colors.Transparent),
+				BorderThickness = new Thickness(0),
+				TextWrapping = TextWrapping.Wrap,
+				AcceptsReturn = true,
+				IsSpellCheckEnabled = false,
+				FontSize = NoteFontSizeForCurrentZoom(),
+				HorizontalAlignment = HorizontalAlignment.Stretch,
+				VerticalAlignment = VerticalAlignment.Stretch
+			};
+			editor.Document.SetText(TextSetOptions.None, "");
+
+			var container = new Border
+			{
+				Width = _defaultNoteSize.Width,
+				Height = _defaultNoteSize.Height,
+				Background = new SolidColorBrush(Colors.Transparent),
+				BorderBrush = new SolidColorBrush(Colors.Black),
+				BorderThickness = new Thickness(0),
+				Child = editor
+			};
+
+			var dragHandle = new Border
+			{
+				Width = _defaultNoteSize.Width + (_noteHitSlop * 2),
+				Height = _defaultNoteSize.Height + (_noteHitSlop * 2),
+				Background = new SolidColorBrush(Colors.Transparent)
+			};
+
+			var entry = new NoteEntry
+			{
+				Container = container,
+				Editor = editor,
+				DragHandle = dragHandle,
+				AbsoluteAnchor = absoluteAnchor
+			};
+
+			Canvas.SetLeft(container, scaledOrigin.X);
+			Canvas.SetTop(container, scaledOrigin.Y);
+			Canvas.SetLeft(dragHandle, scaledOrigin.X - _noteHitSlop);
+			Canvas.SetTop(dragHandle, scaledOrigin.Y - _noteHitSlop);
+
+			WireNoteEvents(entry);
+
+			Debug.WriteLine($"Note placed at: {scaledOrigin.X}, {scaledOrigin.Y}");
+
+			NotesCanvas.Children.Add(dragHandle);
+			NotesCanvas.Children.Add(container);
+
+			_noteEntries.Add(entry);
+			UpdateNoteBorderVisibility(entry);
+
+			editor.Focus(FocusState.Programmatic);
+			entry.IsEditing = true;
+			entry.IsSelected = true;
+			UpdateNoteBorderVisibility(entry);
+		}
+
+		private void WireNoteEvents(NoteEntry entry)
+		{
+			entry.Container.PointerEntered += (_, __) =>
+			{
+				entry.IsHovering = true;
+				UpdateNoteBorderVisibility(entry);
+			};
+
+			entry.Container.PointerExited += (_, __) =>
+			{
+				entry.IsHovering = false;
+				if (!_isDraggingNote || _draggedNote != entry)
+				{
+					UpdateNoteBorderVisibility(entry);
+				}
+			};
+
+			entry.Editor.GotFocus += (_, __) =>
+			{
+				entry.IsEditing = true;
+				entry.IsSelected = true;
+				UpdateNoteBorderVisibility(entry);
+			};
+
+			entry.Editor.LostFocus += (_, __) =>
+			{
+				entry.IsEditing = false;
+				entry.IsSelected = false;
+				UpdateNoteBorderVisibility(entry);
+			};
+
+			entry.DragHandle.PointerPressed += NoteDragHandle_PointerPressed;
+			entry.DragHandle.PointerMoved += NoteDragHandle_PointerMoved;
+			entry.DragHandle.PointerReleased += NoteDragHandle_PointerReleased;
+			entry.DragHandle.PointerCanceled += NoteDragHandle_PointerReleased;
+		}
+
+		private void NoteDragHandle_PointerPressed(object sender, PointerRoutedEventArgs e)
+		{
+			var handle = sender as Border;
+			var entry = FindNoteByHandle(handle);
+			if (entry == null)
+			{
+				return;
+			}
+
+			if (!IsBorderVisible(entry))
+			{
+				return;
+			}
+
+			var pointInHandle = e.GetCurrentPoint(handle).Position;
+			var innerRect = new Rect(_noteHitSlop, _noteHitSlop, _defaultNoteSize.Width, _defaultNoteSize.Height);
+
+			if (innerRect.Contains(pointInHandle))
+			{
+				return;
+			}
+
+			_draggedNote = entry;
+			_isDraggingNote = true;
+			_lastDragPoint = e.GetCurrentPoint(CaliperView).Position;
+			handle.CapturePointer(e.Pointer);
+
+			EndAllNoteEditing();
+			Focus(FocusState.Programmatic);
+
+			e.Handled = true;
+		}
+
+		private void NoteDragHandle_PointerMoved(object sender, PointerRoutedEventArgs e)
+		{
+			if (!_isDraggingNote || _draggedNote == null)
+			{
+				return;
+			}
+
+			var currentPoint = e.GetCurrentPoint(CaliperView).Position;
+			var dx = currentPoint.X - _lastDragPoint.X;
+			var dy = currentPoint.Y - _lastDragPoint.Y;
+
+			MoveNote(_draggedNote, dx, dy);
+
+			_lastDragPoint = currentPoint;
+			e.Handled = true;
+		}
+
+		private void NoteDragHandle_PointerReleased(object sender, PointerRoutedEventArgs e)
+		{
+			if (sender is Border handle)
+			{
+				handle.ReleasePointerCaptures();
+			}
+
+			_isDraggingNote = false;
+			_draggedNote = null;
+			e.Handled = true;
+		}
+
+		private void MoveNote(NoteEntry entry, double dx, double dy)
+		{
+			entry.AbsoluteAnchor = new Point(
+				entry.AbsoluteAnchor.X + dx,
+				entry.AbsoluteAnchor.Y + dy);
+
+			UpdateNoteFrames();
+		}
+
+		private void DeleteNoteAt(Point position)
+		{
+			var index = NoteIndexNear(position);
+			if (index < 0)
+			{
+				return;
+			}
+
+			var entry = _noteEntries[index];
+			NotesCanvas.Children.Remove(entry.Container);
+			NotesCanvas.Children.Remove(entry.DragHandle);
+			_noteEntries.RemoveAt(index);
+		}
+
+		private void DeleteAllNotes()
+		{
+			foreach (var entry in _noteEntries)
+			{
+				NotesCanvas.Children.Remove(entry.Container);
+				NotesCanvas.Children.Remove(entry.DragHandle);
+			}
+			_noteEntries.Clear();
+		}
+
+		private void EndAllNoteEditing()
+		{
+			foreach (var entry in _noteEntries)
+			{
+				entry.IsEditing = false;
+				entry.IsSelected = false;
+				UpdateNoteBorderVisibility(entry);
+			}
+		}
+
+		private void UpdateNoteBorderVisibility(NoteEntry entry)
+		{
+			entry.Container.BorderThickness = IsBorderVisible(entry) ? new Thickness(1) : new Thickness(0);
+		}
+
+		private bool IsBorderVisible(NoteEntry entry)
+		{
+			return entry.IsHovering || entry.IsEditing || entry.IsSelected;
+		}
+
+		private NoteEntry FindNoteByHandle(Border handle)
+		{
+			foreach (var entry in _noteEntries)
+			{
+				if (entry.DragHandle == handle)
+				{
+					return entry;
+				}
+			}
+			return null;
+		}
+
+		private int NoteIndexNear(Point p)
+		{
+			for (int i = 0; i < _noteEntries.Count; i++)
+			{
+				var entry = _noteEntries[i];
+				var x = Canvas.GetLeft(entry.Container);
+				var y = Canvas.GetTop(entry.Container);
+				var frame = new Rect(x, y, entry.Container.Width, entry.Container.Height);
+				var expanded = new Rect(
+					frame.X - _noteHitSlop,
+					frame.Y - _noteHitSlop,
+					frame.Width + (_noteHitSlop * 2),
+					frame.Height + (_noteHitSlop * 2));
+
+				if (expanded.Contains(p) && !frame.Contains(p))
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		private Point ResolveNoteAbsoluteAnchor()
+		{
+			var position = _rightClickPosition;
+			return position;
+		}
+
+		private Point NoteAnchorInAbsoluteSpaceFromView(Point scaledAnchor)
+		{
+			var zoom = Math.Max((double)ScrollView.ZoomFactor, 0.0001);
+			return new Point(
+				(scaledAnchor.X + ScrollView.HorizontalOffset) / zoom,
+				(scaledAnchor.Y + ScrollView.VerticalOffset) / zoom);
+		}
+
+		private Point NoteAnchorInViewFromAbsoluteAnchor(Point absoluteAnchor)
+		{
+			return absoluteAnchor;
+		}
+
+		private Point NoteOriginInViewFromAnchor(Point anchor)
+		{
+			return anchor;
+		}
+
+		private void UpdateNoteFrames()
+		{
+			if (_noteEntries.Count == 0)
+			{
+				return;
+			}
+
+			foreach (var entry in _noteEntries)
+			{
+				var scaledAnchor = NoteAnchorInViewFromAbsoluteAnchor(entry.AbsoluteAnchor);
+				var scaledOrigin = NoteOriginInViewFromAnchor(scaledAnchor);
+
+				Canvas.SetLeft(entry.Container, scaledOrigin.X);
+				Canvas.SetTop(entry.Container, scaledOrigin.Y);
+
+				Canvas.SetLeft(entry.DragHandle, scaledOrigin.X - _noteHitSlop);
+				Canvas.SetTop(entry.DragHandle, scaledOrigin.Y - _noteHitSlop);
+
+				entry.Editor.FontSize = NoteFontSizeForCurrentZoom();
+
+
+		var frame = new Rect(scaledOrigin.X, scaledOrigin.Y, _defaultNoteSize.Width, _defaultNoteSize.Height);
+				var viewport = new Rect(0, 0, EcgImage.ActualWidth, EcgImage.ActualHeight);
+				var isVisible = RectsIntersect(frame, viewport);
+				entry.Container.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+				entry.DragHandle.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+			}
+		}
+
+		private void UpdateNotesCanvasSize()
+		{
+			NotesCanvas.Width = EcgImage.ActualWidth;
+			NotesCanvas.Height = EcgImage.ActualHeight;
+		}
+
+		private static bool RectsIntersect(Rect a, Rect b)
+		{
+			return a.X < b.X + b.Width &&
+				   a.X + a.Width > b.X &&
+				   a.Y < b.Y + b.Height &&
+				   a.Y + a.Height > b.Y;
+		}
+		private double NoteFontSizeForCurrentZoom()
+		{
+			var zoom = Math.Max((double)ScrollView.ZoomFactor, 0.0001);
+			var scaledSize = _defaultNoteFontSize * zoom;
+			return Math.Max(_minimumFontSize, Math.Min(_maximumFontSize, scaledSize));
+		}
+
 		private void AddNote_Click(object sender, RoutedEventArgs e)
 		{
+			AddNote();
 
 		}
 
 		private void DeleteNote_Click(object sender, RoutedEventArgs e)
 		{
-
+			DeleteNoteAt(_rightClickPosition);
 		}
+		#endregion
+
 	}
 }
 

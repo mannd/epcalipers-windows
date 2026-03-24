@@ -440,6 +440,10 @@
                 <Image x:Name="EcgImage" Source="{x:Bind ViewModel.MainImageSource, Mode=OneWay}" Stretch="None"
                      HorizontalAlignment="Left" VerticalAlignment="Top">
                 </Image>
+            <Canvas x:Name="NotesCanvas"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                IsHitTestVisible="True" />
             </local:CaliperGrid>
         </ScrollViewer>
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
