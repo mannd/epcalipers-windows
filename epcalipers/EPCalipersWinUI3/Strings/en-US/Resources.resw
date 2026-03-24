@@ -778,4 +778,12 @@
   <data name="PDFResolution.Header" xml:space="preserve">
     <value>PDF resolution (changing this will clear calipers and calibration)</value>
   </data>
+  <data name="AddNoteMenuItem.Text" xml:space="preserve">
+    <value>Add note</value>
+    <comment>add a text note to the image</comment>
+  </data>
+  <data name="DeleteNoteMenuItem.Text" xml:space="preserve">
+    <value>Delete note</value>
+    <comment>delete a text note</comment>
+  </data>
 </root>

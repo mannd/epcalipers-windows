@@ -48,7 +48,6 @@ namespace EPCalipersWinUI3
 			return HasMainImage && base.CanAddCalipers();
 		}
 
-
 		public bool ClearCalipersBetweenPdfPages
 		{
 			get
@@ -409,6 +408,10 @@ namespace EPCalipersWinUI3
 		#endregion
 
 		#region observable properties
+
+		[ObservableProperty]
+		private bool isNearNote;
+
 		[ObservableProperty]
 		private Microsoft.UI.Xaml.Controls.Image mainImage;
 

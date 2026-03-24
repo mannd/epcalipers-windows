@@ -620,6 +620,16 @@ namespace EPCalipersWinUI3.Views
 			return softwareBitmap;
 		}
 		#endregion
+
+		private void AddNote_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void DeleteNote_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }
 

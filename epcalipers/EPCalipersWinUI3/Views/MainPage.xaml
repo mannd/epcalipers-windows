@@ -24,6 +24,10 @@
             <ToggleMenuFlyoutItem x:Uid="MarchingMenuItem" Tag="green" Click="MarchingCaliper_Click"
                 IsChecked="{x:Bind ViewModel.CaliperIsMarching, Mode=OneWay}"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem x:Uid="AddNoteMenuItem" Click="AddNote_Click" />
+            <MenuFlyoutItem x:Uid="DeleteNoteMenuItem" Click="DeleteNote_Click"
+                IsEnabled="{x:Bind ViewModel.IsNearNote, Mode=OneWay}" />
         </MenuFlyout>
     </Page.Resources>
     <Grid AllowDrop="True" Drop="EcgImage_Drop" DragOver="EcgImage_DragOver" >
