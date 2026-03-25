@@ -218,9 +218,29 @@ namespace EPCalipersWinUI3.Views
 
 		private void ScrollView_PointerPressed(object sender, PointerRoutedEventArgs e)
 		{
-			var position = e.GetCurrentPoint(CaliperView);
+			var point = e.GetCurrentPoint(CaliperView);
+			var p = point.Position;
+
+			bool insideNote = PointInsideAnyNote(p);
+			bool insideNoteDragRegion = PointInsideAnyNoteDragRegion(p);
+
+			// Any click outside the actual textbox ends note editing.
+			if (!insideNote)
+			{
+				EndAllNoteEditing();
+			}
+
+			// If the user is interacting with a note or its drag region,
+			// do not start caliper interaction.
+			if (insideNote || insideNoteDragRegion)
+			{
+				ViewModel.ReleaseGrabbedCaliper();
+				pointerDown = false;
+				return;
+			}
+
 			CaliperView.CapturePointer(e.Pointer);
-			pointerPosition = position.Position;
+			pointerPosition = p;
 			pointerDown = true;
 			ViewModel.GrabCaliper(pointerPosition);
 		}
@@ -671,9 +691,12 @@ namespace EPCalipersWinUI3.Views
 				TextWrapping = TextWrapping.Wrap,
 				AcceptsReturn = true,
 				IsSpellCheckEnabled = false,
-				FontSize = NoteFontSizeForCurrentZoom(),
+				FontSize = _defaultNoteFontSize,
 				HorizontalAlignment = HorizontalAlignment.Stretch,
-				VerticalAlignment = VerticalAlignment.Stretch
+				VerticalAlignment = VerticalAlignment.Stretch,
+				IsReadOnly = false,
+				IsTabStop = true,
+				AllowFocusOnInteraction = true
 			};
 			editor.Document.SetText(TextSetOptions.None, "");
 
@@ -717,10 +740,41 @@ namespace EPCalipersWinUI3.Views
 			_noteEntries.Add(entry);
 			UpdateNoteBorderVisibility(entry);
 
-			editor.Focus(FocusState.Programmatic);
-			entry.IsEditing = true;
-			entry.IsSelected = true;
-			UpdateNoteBorderVisibility(entry);
+			BeginEditingNote(entry);
+		}
+
+		private bool PointInsideAnyNoteDragRegion(Point p)
+		{
+			foreach (var entry in _noteEntries)
+			{
+				var x = Canvas.GetLeft(entry.DragHandle);
+				var y = Canvas.GetTop(entry.DragHandle);
+				var rect = new Rect(x, y, entry.DragHandle.Width, entry.DragHandle.Height);
+				if (rect.Contains(p))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private bool PointInsideAnyNote(Point p)
+		{
+			foreach (var entry in _noteEntries)
+			{
+				// Get the note's position
+				var x = Canvas.GetLeft(entry.Container);
+				var y = Canvas.GetTop(entry.Container);
+
+				// Build the rectangle representing the actual textbox area
+				var rect = new Rect(x, y, entry.Container.Width, entry.Container.Height);
+
+				if (rect.Contains(p))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private void WireNoteEvents(NoteEntry entry)
@@ -742,16 +796,35 @@ namespace EPCalipersWinUI3.Views
 
 			entry.Editor.GotFocus += (_, __) =>
 			{
-				entry.IsEditing = true;
-				entry.IsSelected = true;
 				UpdateNoteBorderVisibility(entry);
 			};
 
 			entry.Editor.LostFocus += (_, __) =>
 			{
-				entry.IsEditing = false;
-				entry.IsSelected = false;
-				UpdateNoteBorderVisibility(entry);
+				if (!entry.IsEditing)
+				{
+					UpdateNoteBorderVisibility(entry);
+				}
+			};
+
+			//entry.Container.PointerPressed += (_, e) =>
+			//{
+			//	var p = e.GetCurrentPoint(entry.Container);
+			//	if (p.Properties.IsLeftButtonPressed)
+			//	{
+			//		BeginEditingNote(entry);
+			//		e.Handled = true;
+			//	}
+			//};
+
+			entry.Container.Tapped += (_, e) =>
+			{
+				BeginEditingNote(entry);
+
+				DispatcherQueue.TryEnqueue(() =>
+				{
+					entry.Editor.Focus(FocusState.Programmatic);
+				});
 			};
 
 			entry.DragHandle.PointerPressed += NoteDragHandle_PointerPressed;
@@ -853,16 +926,6 @@ namespace EPCalipersWinUI3.Views
 				NotesCanvas.Children.Remove(entry.DragHandle);
 			}
 			_noteEntries.Clear();
-		}
-
-		private void EndAllNoteEditing()
-		{
-			foreach (var entry in _noteEntries)
-			{
-				entry.IsEditing = false;
-				entry.IsSelected = false;
-				UpdateNoteBorderVisibility(entry);
-			}
 		}
 
 		private void UpdateNoteBorderVisibility(NoteEntry entry)
@@ -977,9 +1040,43 @@ namespace EPCalipersWinUI3.Views
 		}
 		private double NoteFontSizeForCurrentZoom()
 		{
-			var zoom = Math.Max((double)ScrollView.ZoomFactor, 0.0001);
-			var scaledSize = _defaultNoteFontSize * zoom;
-			return Math.Max(_minimumFontSize, Math.Min(_maximumFontSize, scaledSize));
+			return _defaultNoteFontSize;
+		}
+
+		private void BeginEditingNote(NoteEntry entry)
+		{
+			entry.IsEditing = true;
+			entry.IsSelected = true;
+
+			entry.Editor.IsReadOnly = false;
+			entry.Editor.IsTabStop = true;
+			entry.Editor.AllowFocusOnInteraction = true;
+
+			UpdateNoteBorderVisibility(entry);
+			//entry.Editor.Focus(FocusState.Programmatic);
+		}
+
+		private void EndEditingNote(NoteEntry entry)
+		{
+			entry.IsEditing = false;
+			entry.IsSelected = false;
+
+			entry.Editor.IsReadOnly = true;
+			entry.Editor.IsTabStop = false;
+			entry.Editor.AllowFocusOnInteraction = false;
+
+			UpdateNoteBorderVisibility(entry);
+		}
+
+		private void EndAllNoteEditing()
+		{
+			foreach (var entry in _noteEntries)
+			{
+				EndEditingNote(entry);
+			}
+
+			// Move focus away from any RichEditBox.
+			Focus(FocusState.Programmatic);
 		}
 
 		private void AddNote_Click(object sender, RoutedEventArgs e)
