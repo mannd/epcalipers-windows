@@ -180,6 +180,7 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = e.GetPosition(CaliperView);
 			_rightClickPosition = position;
+
 			Debug.WriteLine($"Right click position: {_rightClickPosition.X}, {_rightClickPosition.Y}");
 			var caliper = ViewModel.GetCaliperAt(position);
 			ViewModel.IsNearCaliperAllowDuringCalibration = caliper != null;
@@ -193,6 +194,23 @@ namespace EPCalipersWinUI3.Views
 				ViewModel.CaliperIsMarching = false;
 			}
 			ViewModel.IsNearNote = NoteIndexNear(position) >= 0;
+			ViewModel.CanAddNote = NoteIndexNear(position) < 0;
+
+			// Clear prior context note highlight
+			if (_contextMenuNote != null)
+			{
+				_contextMenuNote.IsSelected = false;
+				UpdateNoteBorderVisibility(_contextMenuNote);
+				_contextMenuNote = null;
+			}
+
+			// Highlight note under context click
+			_contextMenuNote = GetNoteNear(position);
+			if (_contextMenuNote != null)
+			{
+				_contextMenuNote.IsSelected = true;
+				UpdateNoteBorderVisibility(_contextMenuNote);
+			}
 		}
 
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)
@@ -670,6 +688,7 @@ namespace EPCalipersWinUI3.Views
 		private const double _defaultNoteFontSize = 14.0;
 		private const double _minimumFontSize = 10.0;
 		private const double _maximumFontSize = 36.0;
+		private NoteEntry _contextMenuNote;
 
 		private NoteEntry _draggedNote;
 		private Point _lastDragPoint;
@@ -743,6 +762,12 @@ namespace EPCalipersWinUI3.Views
 			UpdateNoteBorderVisibility(entry);
 
 			BeginEditingNote(entry);
+		}
+
+		private NoteEntry GetNoteNear(Point p)
+		{
+			var index = NoteIndexNear(p);
+			return index >= 0 ? _noteEntries[index] : null;
 		}
 
 		private bool PointInsideAnyNoteDragRegion(Point p)
@@ -1111,6 +1136,15 @@ namespace EPCalipersWinUI3.Views
 		}
 		#endregion
 
+		private void ContextMenuFlyout_Closed(object sender, object e)
+		{
+			if (_contextMenuNote != null && !_contextMenuNote.IsEditing)
+			{
+				_contextMenuNote.IsSelected = false;
+				UpdateNoteBorderVisibility(_contextMenuNote);
+				_contextMenuNote = null;
+			}
+		}
 	}
 }
 

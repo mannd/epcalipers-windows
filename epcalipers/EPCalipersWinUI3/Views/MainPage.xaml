@@ -11,7 +11,7 @@
     NavigationCacheMode="Required"
     Background="Transparent" >
     <Page.Resources>
-        <MenuFlyout x:Key="ContextMenuFlyout">
+        <MenuFlyout x:Key="ContextMenuFlyout" Closed="ContextMenuFlyout_Closed" >
             <MenuFlyoutItem x:Uid="SelectComponentMenuItem" 
                 IsEnabled="{x:Bind ViewModel.IsNearCaliperAllowDuringCalibration, Mode=OneWay}"
                             Tag="red" Click="SelectComponent_Click"/>
@@ -25,7 +25,8 @@
                 IsChecked="{x:Bind ViewModel.CaliperIsMarching, Mode=OneWay}"
                 IsEnabled="{x:Bind ViewModel.IsNearCaliper, Mode=OneWay}"/>
             <MenuFlyoutSeparator />
-            <MenuFlyoutItem x:Uid="AddNoteMenuItem" Click="AddNote_Click" />
+            <MenuFlyoutItem x:Uid="AddNoteMenuItem" Click="AddNote_Click"
+                            IsEnabled="{x:Bind ViewModel.CanAddNote, Mode=OneWay}"/>
             <MenuFlyoutItem x:Uid="DeleteNoteMenuItem" Click="DeleteNote_Click"
                 IsEnabled="{x:Bind ViewModel.IsNearNote, Mode=OneWay}" />
         </MenuFlyout>

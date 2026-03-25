@@ -413,6 +413,9 @@ namespace EPCalipersWinUI3
 		private bool isNearNote;
 
 		[ObservableProperty]
+		private bool canAddNote;
+
+		[ObservableProperty]
 		private Microsoft.UI.Xaml.Controls.Image mainImage;
 
 		[ObservableProperty]
