@@ -193,8 +193,8 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.CaliperIsMarching = false;
 			}
-			ViewModel.IsNearNote = NoteIndexNear(position) >= 0;
-			ViewModel.CanAddNote = NoteIndexNear(position) < 0;
+			ViewModel.IsNearNote = NoteIndexForContextMenu(position) >= 0;
+			ViewModel.CanAddNote = NoteIndexForContextMenu(position) < 0;
 
 			// Clear prior context note highlight
 			if (_contextMenuNote != null)
@@ -205,12 +205,18 @@ namespace EPCalipersWinUI3.Views
 			}
 
 			// Highlight note under context click
-			_contextMenuNote = GetNoteNear(position);
+			_contextMenuNote = GetNoteForContextMenu(position);
 			if (_contextMenuNote != null)
 			{
 				_contextMenuNote.IsSelected = true;
 				UpdateNoteBorderVisibility(_contextMenuNote);
 			}
+		}
+
+		private NoteEntry GetNoteForContextMenu(Point p)
+		{
+			var index = NoteIndexForContextMenu(p);
+			return index >= 0 ? _noteEntries[index] : null;
 		}
 
 		private void SelectComponent_Click(object sender, RoutedEventArgs e)
@@ -764,6 +770,47 @@ namespace EPCalipersWinUI3.Views
 			BeginEditingNote(entry);
 		}
 
+		private Rect GetNoteRect(NoteEntry entry)
+		{
+			var x = Canvas.GetLeft(entry.Container);
+			var y = Canvas.GetTop(entry.Container);
+			return new Rect(x, y, entry.Container.Width, entry.Container.Height);
+		}
+
+		private Rect GetExpandedNoteRect(NoteEntry entry)
+		{
+			var rect = GetNoteRect(entry);
+			return new Rect(
+				rect.X - _noteHitSlop,
+				rect.Y - _noteHitSlop,
+				rect.Width + (_noteHitSlop * 2),
+				rect.Height + (_noteHitSlop * 2));
+		}
+
+		private int NoteIndexForContextMenu(Point p)
+		{
+			for (int i = _noteEntries.Count - 1; i >= 0; i--)
+			{
+				var entry = _noteEntries[i];
+
+				// Do not allow delete targeting while actively editing.
+				if (entry.IsEditing)
+				{
+					continue;
+				}
+
+				var noteRect = GetNoteRect(entry);
+				var expandedRect = GetExpandedNoteRect(entry);
+
+				if (noteRect.Contains(p) || expandedRect.Contains(p))
+				{
+					return i;
+				}
+			}
+
+			return -1;
+		}
+
 		private NoteEntry GetNoteNear(Point p)
 		{
 			var index = NoteIndexNear(p);
@@ -948,7 +995,7 @@ namespace EPCalipersWinUI3.Views
 
 		private void DeleteNoteAt(Point position)
 		{
-			var index = NoteIndexNear(position);
+			var index = NoteIndexForContextMenu(position);
 			if (index < 0)
 			{
 				return;
