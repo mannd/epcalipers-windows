@@ -661,6 +661,7 @@ namespace EPCalipersWinUI3.Views
 			public bool IsHovering { get; set; }
 			public bool IsEditing { get; set; }
 			public bool IsSelected { get; set; }
+			public int HoverCount { get; set; }
 		}
 
 		private readonly List<NoteEntry> _noteEntries = [];
@@ -782,13 +783,15 @@ namespace EPCalipersWinUI3.Views
 		{
 			entry.Container.PointerEntered += (_, __) =>
 			{
-				entry.IsHovering = true;
+				entry.HoverCount++;
+				entry.IsHovering = entry.HoverCount > 0;
 				UpdateNoteBorderVisibility(entry);
 			};
 
 			entry.Container.PointerExited += (_, __) =>
 			{
-				entry.IsHovering = false;
+				entry.HoverCount = Math.Max(0, entry.HoverCount - 1);
+				entry.IsHovering = entry.HoverCount > 0;
 				if (!_isDraggingNote || _draggedNote != entry)
 				{
 					UpdateNoteBorderVisibility(entry);
@@ -817,6 +820,20 @@ namespace EPCalipersWinUI3.Views
 			//		e.Handled = true;
 			//	}
 			//};
+
+			entry.DragHandle.PointerEntered += (_, __) =>
+			{
+				entry.HoverCount++;
+				entry.IsHovering = entry.HoverCount > 0;
+				UpdateNoteBorderVisibility(entry);
+			};
+
+			entry.DragHandle.PointerExited += (_, __) =>
+			{
+				entry.HoverCount = Math.Max(0, entry.HoverCount - 1);
+				entry.IsHovering = entry.HoverCount > 0;
+				UpdateNoteBorderVisibility(entry);
+			};
 
 			entry.Container.Tapped += (_, e) =>
 			{
@@ -981,14 +998,6 @@ namespace EPCalipersWinUI3.Views
 		{
 			var position = _rightClickPosition;
 			return position;
-		}
-
-		private Point NoteAnchorInAbsoluteSpaceFromView(Point scaledAnchor)
-		{
-			var zoom = Math.Max((double)ScrollView.ZoomFactor, 0.0001);
-			return new Point(
-				(scaledAnchor.X + ScrollView.HorizontalOffset) / zoom,
-				(scaledAnchor.Y + ScrollView.VerticalOffset) / zoom);
 		}
 
 		private Point NoteAnchorInViewFromAbsoluteAnchor(Point absoluteAnchor)
