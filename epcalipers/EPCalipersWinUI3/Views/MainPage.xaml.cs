@@ -696,7 +696,8 @@ namespace EPCalipersWinUI3.Views
 				VerticalAlignment = VerticalAlignment.Stretch,
 				IsReadOnly = false,
 				IsTabStop = true,
-				AllowFocusOnInteraction = true
+				AllowFocusOnInteraction = true,
+				IsHitTestVisible = true
 			};
 			editor.Document.SetText(TextSetOptions.None, "");
 
@@ -794,18 +795,18 @@ namespace EPCalipersWinUI3.Views
 				}
 			};
 
-			entry.Editor.GotFocus += (_, __) =>
-			{
-				UpdateNoteBorderVisibility(entry);
-			};
+			//entry.Editor.GotFocus += (_, __) =>
+			//{
+			//	UpdateNoteBorderVisibility(entry);
+			//};
 
-			entry.Editor.LostFocus += (_, __) =>
-			{
-				if (!entry.IsEditing)
-				{
-					UpdateNoteBorderVisibility(entry);
-				}
-			};
+			//entry.Editor.LostFocus += (_, __) =>
+			//{
+			//	if (!entry.IsEditing)
+			//	{
+			//		UpdateNoteBorderVisibility(entry);
+			//	}
+			//};
 
 			//entry.Container.PointerPressed += (_, e) =>
 			//{
@@ -819,12 +820,11 @@ namespace EPCalipersWinUI3.Views
 
 			entry.Container.Tapped += (_, e) =>
 			{
-				BeginEditingNote(entry);
-
-				DispatcherQueue.TryEnqueue(() =>
+				if (!entry.IsEditing)
 				{
-					entry.Editor.Focus(FocusState.Programmatic);
-				});
+					BeginEditingNote(entry);
+					e.Handled = true;
+				}
 			};
 
 			entry.DragHandle.PointerPressed += NoteDragHandle_PointerPressed;
@@ -930,7 +930,12 @@ namespace EPCalipersWinUI3.Views
 
 		private void UpdateNoteBorderVisibility(NoteEntry entry)
 		{
-			entry.Container.BorderThickness = IsBorderVisible(entry) ? new Thickness(1) : new Thickness(0);
+			bool showBorder = entry.IsHovering || entry.IsEditing || entry.IsSelected;
+			entry.Container.BorderThickness = showBorder ? new Thickness(1) : new Thickness(0);
+
+			entry.Container.Background = entry.IsEditing
+				? new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(40, 255, 255, 255))
+				: new SolidColorBrush(Colors.Transparent);
 		}
 
 		private bool IsBorderVisible(NoteEntry entry)
@@ -1051,9 +1056,14 @@ namespace EPCalipersWinUI3.Views
 			entry.Editor.IsReadOnly = false;
 			entry.Editor.IsTabStop = true;
 			entry.Editor.AllowFocusOnInteraction = true;
+			entry.Editor.IsHitTestVisible = true;
 
 			UpdateNoteBorderVisibility(entry);
-			//entry.Editor.Focus(FocusState.Programmatic);
+
+			DispatcherQueue.TryEnqueue(() =>
+			{
+				entry.Editor.Focus(FocusState.Programmatic);
+			});
 		}
 
 		private void EndEditingNote(NoteEntry entry)
@@ -1064,6 +1074,7 @@ namespace EPCalipersWinUI3.Views
 			entry.Editor.IsReadOnly = true;
 			entry.Editor.IsTabStop = false;
 			entry.Editor.AllowFocusOnInteraction = false;
+			entry.Editor.IsHitTestVisible = false;
 
 			UpdateNoteBorderVisibility(entry);
 		}
