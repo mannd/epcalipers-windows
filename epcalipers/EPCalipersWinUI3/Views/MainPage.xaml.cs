@@ -302,13 +302,7 @@ namespace EPCalipersWinUI3.Views
 				var newX = _noteDragStartPosition.X + dx;
 				var newY = _noteDragStartPosition.Y + dy;
 
-				Canvas.SetLeft(_draggingNote.Container, newX);
-				Canvas.SetTop(_draggingNote.Container, newY);
-
-				// keep drag handle in sync if you use one
-				Canvas.SetLeft(_draggingNote.DragHandle, newX - _noteHitSlop);
-				Canvas.SetTop(_draggingNote.DragHandle, newY - _noteHitSlop);
-
+				SetNotePosition(_draggingNote, newX, newY);
 				return;
 			}
 
@@ -862,6 +856,17 @@ namespace EPCalipersWinUI3.Views
 			}
 
 			return -1;
+		}
+
+		private void SetNotePosition(NoteEntry entry, double x, double y)
+		{
+			entry.AbsoluteAnchor = new Point(x, y);
+
+			Canvas.SetLeft(entry.Container, x);
+			Canvas.SetTop(entry.Container, y);
+
+			Canvas.SetLeft(entry.DragHandle, x - _noteHitSlop);
+			Canvas.SetTop(entry.DragHandle, y - _noteHitSlop);
 		}
 
 		private bool PointInsideAnyEditingNote(Point p)
