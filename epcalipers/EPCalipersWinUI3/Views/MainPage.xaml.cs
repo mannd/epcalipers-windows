@@ -193,8 +193,10 @@ namespace EPCalipersWinUI3.Views
 			{
 				ViewModel.CaliperIsMarching = false;
 			}
-			ViewModel.IsNearNote = NoteIndexForContextMenu(position) >= 0;
-			ViewModel.CanAddNote = NoteIndexForContextMenu(position) < 0;
+
+			bool noteTargeted = NoteIndexForContextMenu(position) >= 0;
+			ViewModel.IsNearNote = noteTargeted;
+			ViewModel.CanAddNote = !noteTargeted;
 
 			// Clear prior context note highlight
 			if (_contextMenuNote != null)
@@ -245,21 +247,36 @@ namespace EPCalipersWinUI3.Views
 			var point = e.GetCurrentPoint(CaliperView);
 			var p = point.Position;
 
-			bool insideNote = PointInsideAnyNote(p);
-			bool insideNoteDragRegion = PointInsideAnyNoteDragRegion(p);
+			int noteIndex = NoteIndexForDrag(p);
+			bool onDraggableNote = noteIndex >= 0;
+
+			bool insideEditingNote = PointInsideAnyEditingNote(p);
+			//bool insideNote = PointInsideAnyNote(p);
+			//bool insideNoteDragRegion = PointInsideAnyNoteDragRegion(p);
 
 			// Any click outside the actual textbox ends note editing.
-			if (!insideNote)
+			if (!insideEditingNote)
 			{
 				EndAllNoteEditing();
 			}
 
 			// If the user is interacting with a note or its drag region,
 			// do not start caliper interaction.
-			if (insideNote || insideNoteDragRegion)
+			if (onDraggableNote)
 			{
+				_draggingNote = _noteEntries[noteIndex];
+
+				_noteDragStartPointer = p;
+
+				_noteDragStartPosition = new Point(
+					Canvas.GetLeft(_draggingNote.Container),
+					Canvas.GetTop(_draggingNote.Container));
+
+				CaliperView.CapturePointer(e.Pointer);
+
 				ViewModel.ReleaseGrabbedCaliper();
 				pointerDown = false;
+
 				return;
 			}
 
@@ -271,6 +288,26 @@ namespace EPCalipersWinUI3.Views
 
 		private void ScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
 		{
+			if (_draggingNote != null)
+			{
+				var position = e.GetCurrentPoint(CaliperView).Position;
+
+				var dx = position.X - _noteDragStartPointer.X;
+				var dy = position.Y - _noteDragStartPointer.Y;
+
+				var newX = _noteDragStartPosition.X + dx;
+				var newY = _noteDragStartPosition.Y + dy;
+
+				Canvas.SetLeft(_draggingNote.Container, newX);
+				Canvas.SetTop(_draggingNote.Container, newY);
+
+				// keep drag handle in sync if you use one
+				Canvas.SetLeft(_draggingNote.DragHandle, newX - _noteHitSlop);
+				Canvas.SetTop(_draggingNote.DragHandle, newY - _noteHitSlop);
+
+				return;
+			}
+
 			if (pointerDown) // && dragging caliper...
 			{
 				var position = e.GetCurrentPoint(CaliperView);
@@ -286,6 +323,13 @@ namespace EPCalipersWinUI3.Views
 
 		private void ScrollView_PointerReleased(object sender, PointerRoutedEventArgs e)
 		{
+			if (_draggingNote != null)
+			{
+				_draggingNote = null;
+				CaliperView.ReleasePointerCapture(e.Pointer);
+				return;
+			}
+
 			ViewModel.ReleaseGrabbedCaliper();
 			CaliperView.ReleasePointerCapture(e.Pointer);
 			pointerDown = false;
@@ -699,6 +743,9 @@ namespace EPCalipersWinUI3.Views
 		private NoteEntry _draggedNote;
 		private Point _lastDragPoint;
 		private bool _isDraggingNote;
+		private NoteEntry _draggingNote;
+		private Point _noteDragStartPointer;
+		private Point _noteDragStartPosition;
 
 		private bool HasNotes => _noteEntries.Count > 0;
 
@@ -808,6 +855,58 @@ namespace EPCalipersWinUI3.Views
 				}
 			}
 
+			return -1;
+		}
+
+		private bool PointInsideAnyEditingNote(Point p)
+		{
+			foreach (var entry in _noteEntries)
+			{
+				if (!entry.IsEditing)
+				{
+					continue;
+				}
+
+				var x = Canvas.GetLeft(entry.Container);
+				var y = Canvas.GetTop(entry.Container);
+
+				var rect = new Rect(
+					x,
+					y,
+					entry.Container.Width,
+					entry.Container.Height);
+
+				if (rect.Contains(p))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private bool PointIsInNonEditingNoteDragTarget(NoteEntry entry, Point p)
+		{
+			if (entry.IsEditing)
+			{
+				return false;
+			}
+
+			var noteRect = GetNoteRect(entry);
+			var expandedRect = GetExpandedNoteRect(entry);
+
+			return noteRect.Contains(p) || expandedRect.Contains(p);
+		}
+
+		private int NoteIndexForDrag(Point p)
+		{
+			for (int i = _noteEntries.Count - 1; i >= 0; i--)
+			{
+				if (PointIsInNonEditingNoteDragTarget(_noteEntries[i], p))
+				{
+					return i;
+				}
+			}
 			return -1;
 		}
 
