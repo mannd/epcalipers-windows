@@ -290,6 +290,10 @@ namespace EPCalipersWinUI3.Views
 		{
 			if (_draggingNote != null)
 			{
+				// Bring dragging note to front.
+				Canvas.SetZIndex(_draggingNote.Container, 1000);
+				Canvas.SetZIndex(_draggingNote.DragHandle, 1000);
+
 				var position = e.GetCurrentPoint(CaliperView).Position;
 
 				var dx = position.X - _noteDragStartPointer.X;
@@ -724,7 +728,8 @@ namespace EPCalipersWinUI3.Views
 		{
 			public Border Container { get; set; }
 			public RichEditBox Editor { get; set; }
-			public Border DragHandle { get; set; }
+			public Border DragHandle { get; set; } // Transparent border around the note
+												   // that serves as a larger hit target for dragging the note.
 			public Point AbsoluteAnchor { get; set; }
 			public bool IsHovering { get; set; }
 			public bool IsEditing { get; set; }
@@ -765,6 +770,7 @@ namespace EPCalipersWinUI3.Views
 				AcceptsReturn = true,
 				IsSpellCheckEnabled = false,
 				FontSize = _defaultNoteFontSize,
+				Foreground = new SolidColorBrush(Colors.Black),
 				HorizontalAlignment = HorizontalAlignment.Stretch,
 				VerticalAlignment = VerticalAlignment.Stretch,
 				IsReadOnly = false,
