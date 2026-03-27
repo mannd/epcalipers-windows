@@ -783,8 +783,8 @@ namespace EPCalipersWinUI3.Views
 
 			var container = new Border
 			{
-				Width = _defaultNoteSize.Width,
-				Height = _defaultNoteSize.Height,
+				Width = settings.DefaultNoteWidth,
+				Height = settings.DefaultNoteHeight,
 				Background = new SolidColorBrush(Colors.Transparent),
 				BorderBrush = new SolidColorBrush(Colors.Black),
 				BorderThickness = new Thickness(0),
@@ -793,8 +793,8 @@ namespace EPCalipersWinUI3.Views
 
 			var dragHandle = new Border
 			{
-				Width = _defaultNoteSize.Width + (_noteHitSlop * 2),
-				Height = _defaultNoteSize.Height + (_noteHitSlop * 2),
+				Width = settings.DefaultNoteWidth + (_noteHitSlop * 2),
+				Height = settings.DefaultNoteHeight + (_noteHitSlop * 2),
 				Background = new SolidColorBrush(Colors.Transparent)
 			};
 

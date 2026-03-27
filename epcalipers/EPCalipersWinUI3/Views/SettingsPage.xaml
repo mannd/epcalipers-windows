@@ -174,8 +174,45 @@
                 <CheckBox x:Uid="ClearCalipersBetweenPdfPages" 
                           Visibility="{x:Bind ViewModel.SupportsPdfs}"
                           IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
-                <TextBlock x:Uid="NoteSettings" Style="{StaticResource SubtitleTextBlockStyle}"
-                           Margin="0,20,0,10"></TextBlock>
+                <!--<TextBlock x:Uid="NoteSettings" Style="{StaticResource SubtitleTextBlockStyle}"
+                           Margin="0,20,0,10"></TextBlock>-->
+                <TextBlock Text="Notes"
+           Style="{ThemeResource SubtitleTextBlockStyle}"
+           Margin="0,24,0,12"/>
+
+                <StackPanel Spacing="12">
+
+                    <NumberBox Header="Default note font size"
+               Value="{x:Bind ViewModel.DefaultNoteFontSize, Mode=TwoWay}"
+               Minimum="8"
+               Maximum="48"
+               SmallChange="1"
+               SpinButtonPlacementMode="Inline" />
+
+                    <NumberBox Header="Default note width"
+               Value="{x:Bind ViewModel.DefaultNoteWidth, Mode=TwoWay}"
+               Minimum="60"
+               Maximum="600"
+               SmallChange="10"
+               SpinButtonPlacementMode="Inline" />
+
+                    <NumberBox Header="Default note height"
+               Value="{x:Bind ViewModel.DefaultNoteHeight, Mode=TwoWay}"
+               Minimum="30"
+               Maximum="400"
+               SmallChange="10"
+               SpinButtonPlacementMode="Inline" />
+
+                    <TextBlock Text="Default note text color" />
+
+                    <ColorPicker Color="{x:Bind ViewModel.DefaultNoteForegroundColor, Mode=TwoWay}"
+                 IsAlphaEnabled="False"
+                 IsColorSpectrumVisible="True"
+                 IsColorSliderVisible="True"
+                 IsColorPreviewVisible="True"
+                 IsColorChannelTextInputVisible="True"
+                 IsHexInputVisible="True" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

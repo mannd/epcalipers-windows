@@ -50,6 +50,10 @@ namespace EPCalipersWinUI3.ViewModels
 			ResetZoomBetweenPdfPages = _model.ResetZoomBetweenPdfPages;
 			ResetRotationBetweenPdfPages = _model.ResetRotationBetweenPdfPages;
 			ClearCalipersBetweenPdfPages = _model.ClearCalipersBetweenPdfPages;
+			DefaultNoteFontSize = _model.DefaultNoteFontSize;
+			DefaultNoteForegroundColor = _model.DefaultNoteForegroundColor;
+			DefaultNoteWidth = _model.DefaultNoteWidth;
+			DefaultNoteHeight = _model.DefaultNoteHeight;
 
 			ViewItems = new List<string>() { "MainWindow".GetLocalized(), "TransparentWindow".GetLocalized() };
 			Alignments = new List<string>() 
@@ -156,6 +160,18 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(ClearCalipersBetweenPdfPages):
 					_model.ClearCalipersBetweenPdfPages = ClearCalipersBetweenPdfPages;
 					break;
+				case nameof(DefaultNoteFontSize):
+					_model.DefaultNoteFontSize = DefaultNoteFontSize;
+					break;
+				case nameof(DefaultNoteForegroundColor):
+					_model.DefaultNoteForegroundColor = DefaultNoteForegroundColor;
+					break;
+				case nameof(DefaultNoteWidth):
+					_model.DefaultNoteWidth = DefaultNoteWidth;
+					break;
+				case nameof(DefaultNoteHeight):
+					_model.DefaultNoteHeight = DefaultNoteHeight;
+					break;
 				default:
 					break;
 			}
@@ -247,5 +263,17 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool supportsPdfs;
+
+		[ObservableProperty]
+		private double defaultNoteFontSize;
+
+		[ObservableProperty]
+		private Color defaultNoteForegroundColor;
+
+		[ObservableProperty]
+		private double defaultNoteWidth;
+
+		[ObservableProperty]
+		private double defaultNoteHeight;
 	}
 }
