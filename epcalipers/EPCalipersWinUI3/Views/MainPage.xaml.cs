@@ -748,23 +748,30 @@ namespace EPCalipersWinUI3.Views
 
 		private bool HasNotes => _noteEntries.Count > 0;
 
+		// TODO: Delete note if it is empty after adding.  Also consider delete note
+		// if it is empty after editing and losing focus.
 		private void AddNote()
 		{
 			var absoluteAnchor = ResolveNoteAbsoluteAnchor();
 			var scaledAnchor = NoteAnchorInViewFromAbsoluteAnchor(absoluteAnchor);
 			var scaledOrigin = NoteOriginInViewFromAnchor(scaledAnchor);
+			ISettings settings = Settings.Instance;
 
 			var editor = new RichEditBox
 			{
-				Width = _defaultNoteSize.Width,
-				Height = _defaultNoteSize.Height,
+				//Width = _defaultNoteSize.Width,
+				Width = settings.DefaultNoteWidth,
+				//Height = _defaultNoteSize.Height,
+				Height = settings.DefaultNoteHeight,
 				Background = new SolidColorBrush(Colors.Transparent),
 				BorderThickness = new Thickness(0),
 				TextWrapping = TextWrapping.Wrap,
 				AcceptsReturn = true,
 				IsSpellCheckEnabled = false,
-				FontSize = _defaultNoteFontSize,
-				Foreground = new SolidColorBrush(Colors.Black),
+				//FontSize = _defaultNoteFontSize,
+				FontSize = settings.DefaultNoteFontSize,
+				//Foreground = new SolidColorBrush(Colors.Black),
+				Foreground = new SolidColorBrush(settings.DefaultNoteForegroundColor),
 				HorizontalAlignment = HorizontalAlignment.Stretch,
 				VerticalAlignment = VerticalAlignment.Stretch,
 				IsReadOnly = false,

@@ -37,5 +37,9 @@ namespace EPCalipersWinUI3.Contracts
 		public bool ResetZoomBetweenPdfPages { get; set; }
 		public bool ResetRotationBetweenPdfPages { get; set; }
 		public bool ClearCalipersBetweenPdfPages { get; set; }
+		public double DefaultNoteFontSize { get; set; }
+		public double DefaultNoteWidth { get; set; }
+		public double DefaultNoteHeight { get; set; }
+		public Color DefaultNoteForegroundColor { get; set; }
 	}
 }

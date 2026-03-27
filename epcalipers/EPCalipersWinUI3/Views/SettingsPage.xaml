@@ -174,6 +174,8 @@
                 <CheckBox x:Uid="ClearCalipersBetweenPdfPages" 
                           Visibility="{x:Bind ViewModel.SupportsPdfs}"
                           IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
+                <TextBlock x:Uid="NoteSettings" Style="{StaticResource SubtitleTextBlockStyle}"
+                           Margin="0,20,0,10"></TextBlock>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -48,6 +48,10 @@ namespace EPCalipersWinUI3.Models
 		private const string _resetRotationBetweenPdfPagesKey = "ResetRotationBetweenPdfPages";
 		private const string _clearCalipersBetweenPdfPagesKey = "ClearCalipersBetweenPdfPages";
 		private const string _pdfResolutionKey = "PdfResolution";
+		private const string _defaultNoteFontSizeKey = "DefaultNoteFontSize";
+		private const string _defaultNoteForegroundColorKey = "DefaultNoteForegroundColor";
+		private const string _defaultNoteWidthKey = "DefaultNoteWidth";
+		private const string _defaultNoteHeightKey = "DefaultNoteHeight";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -273,6 +277,41 @@ namespace EPCalipersWinUI3.Models
 			}
 		}
 
+		public double DefaultNoteFontSize
+		{
+			get => (double)(_localSettings.Values[_defaultNoteFontSizeKey] ?? 14.0);
+			set => _localSettings.Values[_defaultNoteFontSizeKey] = value;
+		}
+
+		public double DefaultNoteWidth
+		{
+			get => (double)(_localSettings.Values[_defaultNoteWidthKey] ?? 180.0);
+			set => _localSettings.Values[_defaultNoteWidthKey] = value;
+		}
+
+		public double DefaultNoteHeight
+		{
+			get => (double)(_localSettings.Values[_defaultNoteHeightKey] ?? 80.0);
+			set => _localSettings.Values[_defaultNoteHeightKey] = value;
+		}
+
+		public Color DefaultNoteForegroundColor
+		{
+			get
+			{
+				if (_localSettings.Values[_defaultNoteForegroundColorKey] is not string hexColor)
+				{
+					return Colors.Black;
+				}
+				return GetColorFromString(hexColor);
+			}
+			set
+			{
+				var hexColor = value.ToString();
+				_localSettings.Values[_defaultNoteForegroundColorKey] = hexColor;
+			}
+		}
+
 
 		private static Color GetColorFromString(string colorHex)
 		{
@@ -317,5 +356,9 @@ namespace EPCalipersWinUI3.Models
 		public bool ResetZoomBetweenPdfPages { get; set; } = true;
 		public bool ResetRotationBetweenPdfPages { get; set; } = true;
 		public bool ClearCalipersBetweenPdfPages { get; set; } = true;
+		public double DefaultNoteFontSize { get; set; } = 14.0;
+		public double DefaultNoteWidth { get; set; } = 180.0;
+		public double DefaultNoteHeight { get; set; } = 80.0;
+		public Color DefaultNoteForegroundColor { get; set; } = Colors.Black;
 	}
 }

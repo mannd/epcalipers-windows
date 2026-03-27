@@ -786,4 +786,8 @@
     <value>Delete note</value>
     <comment>delete a text note</comment>
   </data>
+  <data name="NoteSettings.Text" xml:space="preserve">
+    <value>Notes</value>
+    <comment>notes settings title</comment>
+  </data>
 </root>
