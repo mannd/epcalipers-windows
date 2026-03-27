@@ -757,12 +757,13 @@ namespace EPCalipersWinUI3.Views
 			var scaledOrigin = NoteOriginInViewFromAnchor(scaledAnchor);
 			ISettings settings = Settings.Instance;
 
+			var noteWidth = settings.DefaultNoteWidth;
+			var noteHeight = settings.DefaultNoteHeight;
+
 			var editor = new RichEditBox
 			{
-				//Width = _defaultNoteSize.Width,
-				Width = settings.DefaultNoteWidth,
-				//Height = _defaultNoteSize.Height,
-				Height = settings.DefaultNoteHeight,
+				Width = noteWidth,
+				Height = noteHeight,
 				Background = new SolidColorBrush(Colors.Transparent),
 				BorderThickness = new Thickness(0),
 				TextWrapping = TextWrapping.Wrap,
@@ -783,8 +784,8 @@ namespace EPCalipersWinUI3.Views
 
 			var container = new Border
 			{
-				Width = settings.DefaultNoteWidth,
-				Height = settings.DefaultNoteHeight,
+				Width = noteWidth,
+				Height = noteHeight,
 				Background = new SolidColorBrush(Colors.Transparent),
 				BorderBrush = new SolidColorBrush(Colors.Black),
 				BorderThickness = new Thickness(0),
@@ -793,8 +794,8 @@ namespace EPCalipersWinUI3.Views
 
 			var dragHandle = new Border
 			{
-				Width = settings.DefaultNoteWidth + (_noteHitSlop * 2),
-				Height = settings.DefaultNoteHeight + (_noteHitSlop * 2),
+				Width = noteWidth + (_noteHitSlop * 2),
+				Height = noteHeight + (_noteHitSlop * 2),
 				Background = new SolidColorBrush(Colors.Transparent)
 			};
 
