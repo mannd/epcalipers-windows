@@ -39,7 +39,7 @@ namespace EPCalipersWinUI3.ViewModels
 			PdfResolution = (int)_model.PdfResolution;
 			ShowBrugadaTriangle = _model.ShowBrugadaTriangle;
 			NumberOfMarchingCalipers = _model.NumberOfMarchingCalipers;
-			FontSize = _fontSizes.IndexOf(_model.FontSize);
+			FontSize =_model.FontSize;
 			ShowSampleEcgAtStartUp = _model.ShowSampleEcgAtStartUp;
 			AdjustBarThicknessWithZoom = _model.AdjustBarThicknessWithZoom;
 			AdjustCaliperLabelSizeWithZoom = _model.AdjustCaliperLabelSizeWithZoom;
@@ -128,7 +128,7 @@ namespace EPCalipersWinUI3.ViewModels
 					_model.PdfResolution = (EPCalipersPdf.PdfResolution)PdfResolution;
 					break;
 				case nameof(FontSize):
-					_model.FontSize = _fontSizes[FontSize];
+					_model.FontSize = FontSize;
 					break;
 				case nameof(ShowSampleEcgAtStartUp):
 					_model.ShowSampleEcgAtStartUp = ShowSampleEcgAtStartUp;

@@ -803,4 +803,7 @@
   <data name="SettingsNoteHeight.Header" xml:space="preserve">
     <value>Note height</value>
   </data>
+  <data name="SettingsCaliperFontSize.Header" xml:space="preserve">
+    <value>Caliper font size</value>
+  </data>
 </root>

@@ -151,12 +151,19 @@
                           SelectionChanged="Rounding_SelectionChanged"
                               ItemsSource="{x:Bind ViewModel.RoundingItems}">
                 </RadioButtons>
-                <RadioButtons x:Name="CaliperLabelSizeRadioButtons" 
+                <!--<RadioButtons x:Name="CaliperLabelSizeRadioButtons" 
                               SelectedIndex="{x:Bind ViewModel.FontSize}"  
                           MaxColumns="5" Header="Caliper label size"
                           SelectionChanged="CaliperLabelSize_SelectionChanged"
                               ItemsSource="{x:Bind ViewModel.FontSizeItems}">
-                </RadioButtons>
+                </RadioButtons>-->
+                    <NumberBox x:Uid="SettingsCaliperFontSize" Width="200"
+                               HorizontalAlignment="Left"
+               Value="{x:Bind ViewModel.FontSize, Mode=TwoWay}"
+               Minimum="8"
+               Maximum="48"
+               SmallChange="1"
+               SpinButtonPlacementMode="Inline" />
                 <StackPanel Orientation="Horizontal">
                     <Slider x:Name="NumberOfMarchingCalipersSlider" Width="200" Minimum="1" Maximum="20" 
                         StepFrequency="1" HorizontalAlignment="Left"
@@ -193,9 +200,7 @@
                 <CheckBox x:Uid="ClearCalipersBetweenPdfPages" 
                           Visibility="{x:Bind ViewModel.SupportsPdfs}"
                           IsChecked="{x:Bind ViewModel.ClearCalipersBetweenPdfPages, Mode=TwoWay}" />
-                <!--<TextBlock x:Uid="NoteSettings" Style="{StaticResource SubtitleTextBlockStyle}"
-                           Margin="0,20,0,10"></TextBlock>-->
-                <TextBlock Text="Notes"
+            <TextBlock Text="Notes"
            Style="{ThemeResource SubtitleTextBlockStyle}"
            Margin="0,24,0,12"/>
 
@@ -226,10 +231,6 @@
                Maximum="400"
                SmallChange="10"
                SpinButtonPlacementMode="Inline" />
-
-                    <TextBlock Text="Default note text color" Name="defaultNoteColorTextBlock" />
-
-
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                         <Button x:Name="fontColorPickerButton" x:Uid="SettingsFontColor" Width="200"
                             Flyout="{StaticResource fontColorPickerFlyout}">
