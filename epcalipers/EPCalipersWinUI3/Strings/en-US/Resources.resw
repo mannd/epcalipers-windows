@@ -794,4 +794,13 @@
     <value>Note text color</value>
     <comment>default color for text in notes</comment>
   </data>
+  <data name="SettingsNoteFontSize.Header" xml:space="preserve">
+    <value>Note font size</value>
+  </data>
+  <data name="SettingsNoteWidth.Header" xml:space="preserve">
+    <value>Note width</value>
+  </data>
+  <data name="SettingsNoteHeight.Header" xml:space="preserve">
+    <value>Note height</value>
+  </data>
 </root>
