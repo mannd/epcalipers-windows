@@ -790,4 +790,8 @@
     <value>Notes</value>
     <comment>notes settings title</comment>
   </data>
+  <data name="SettingsFontColor.Content" xml:space="preserve">
+    <value>Note text color</value>
+    <comment>default color for text in notes</comment>
+  </data>
 </root>

@@ -51,6 +51,11 @@ namespace EPCalipersWinUI3.Views
 			selectedColorPickerButton.Flyout.Hide();
 		}
 
+		private void fontColorPickerButton_Click(object sender, RoutedEventArgs e)
+		{
+			fontColorPickerButton.Flyout.Hide();
+		}
+
 		// NOTE: Due to a bug(?) in WinUI 3, the selection changed event is fired twice, and
 		// the first time returns a SelectedIndex of -1!  thus need to ignore those events.
 		private void Rounding_SelectionChanged(object sender, SelectionChangedEventArgs e)

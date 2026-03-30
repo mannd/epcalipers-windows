@@ -47,6 +47,25 @@
                 </Grid>
             </RelativePanel>
         </Flyout>
+        <Flyout x:Key="fontColorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="fontColorPicker" 
+                         IsColorChannelTextInputVisible="False"
+                             Color="{x:Bind ViewModel.DefaultNoteForegroundColor, Mode=TwoWay}"
+                         IsHexInputVisible="False"/>
+                <Grid RelativePanel.Below="fontColorPicker"
+                  RelativePanel.AlignLeftWithPanel="True"
+                  RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Uid="ButtonDone" Click="fontColorPickerButton_Click"
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"
+                            Grid.Column="1"/>
+                </Grid>
+            </RelativePanel>
+        </Flyout>
     </Page.Resources>
 
     <Grid x:Name="ContentArea" Margin="20" MinWidth="400">
@@ -182,36 +201,53 @@
 
                 <StackPanel Spacing="12">
 
-                    <NumberBox Header="Default note font size"
+                    <NumberBox Header="Default note font size" Width="200"
+                               HorizontalAlignment="Left"
                Value="{x:Bind ViewModel.DefaultNoteFontSize, Mode=TwoWay}"
                Minimum="8"
                Maximum="48"
                SmallChange="1"
                SpinButtonPlacementMode="Inline" />
 
-                    <NumberBox Header="Default note width"
+                    <NumberBox Header="Default note width" Width="200"
+                               HorizontalAlignment="Left"
                Value="{x:Bind ViewModel.DefaultNoteWidth, Mode=TwoWay}"
                Minimum="60"
                Maximum="600"
                SmallChange="10"
                SpinButtonPlacementMode="Inline" />
 
-                    <NumberBox Header="Default note height"
+                    <NumberBox Header="Default note height" Width="200"
+                               HorizontalAlignment="Left"
+
+
                Value="{x:Bind ViewModel.DefaultNoteHeight, Mode=TwoWay}"
                Minimum="30"
                Maximum="400"
                SmallChange="10"
                SpinButtonPlacementMode="Inline" />
 
-                    <TextBlock Text="Default note text color" />
+                <TextBlock Text="Default note text color" Name="defaultNoteColorTextBlock" />
 
-                    <ColorPicker Color="{x:Bind ViewModel.DefaultNoteForegroundColor, Mode=TwoWay}"
+                    
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="fontColorPickerButton" x:Uid="SettingsFontColor" Width="200"
+                            Flyout="{StaticResource fontColorPickerFlyout}">
+                    </Button> 
+                    <Rectangle Width="100" Height="20" HorizontalAlignment="Left" Margin="15,0,0,0">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="{x:Bind ViewModel.DefaultNoteForegroundColor, Mode=OneWay}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
+
+                    <!--<ColorPicker Color="{x:Bind ViewModel.DefaultNoteForegroundColor, Mode=TwoWay}"
                  IsAlphaEnabled="False"
                  IsColorSpectrumVisible="True"
                  IsColorSliderVisible="True"
                  IsColorPreviewVisible="True"
                  IsColorChannelTextInputVisible="True"
-                 IsHexInputVisible="True" />
+                 IsHexInputVisible="True" />-->
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
