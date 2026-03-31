@@ -56,6 +56,7 @@ namespace EPCalipersWinUI3.Views
 			Debug.Print("MainPage constructor");
 			Loaded += MainPage_Loaded;
 			ViewModel = new MainPageViewModel(SetZoom, CaliperView, ScrollView);
+			ViewModel.DeleteAllNotesAction = DeleteAllNotes;
 
 			// Used for screenshot features
 			_d3dDevice = Direct3D11Helper.CreateD3DDevice();
@@ -823,6 +824,8 @@ namespace EPCalipersWinUI3.Views
 			UpdateNoteBorderVisibility(entry);
 
 			BeginEditingNote(entry);
+
+			ViewModel.HasNotes = _noteEntries.Count > 0; 
 		}
 
 		private Rect GetNoteRect(NoteEntry entry)
@@ -1123,6 +1126,7 @@ namespace EPCalipersWinUI3.Views
 			NotesCanvas.Children.Remove(entry.Container);
 			NotesCanvas.Children.Remove(entry.DragHandle);
 			_noteEntries.RemoveAt(index);
+			ViewModel.HasNotes = _noteEntries.Count > 0;
 		}
 
 		private void DeleteAllNotes()
@@ -1133,6 +1137,7 @@ namespace EPCalipersWinUI3.Views
 				NotesCanvas.Children.Remove(entry.DragHandle);
 			}
 			_noteEntries.Clear();
+			ViewModel.HasNotes = false;
 		}
 
 		private void UpdateNoteBorderVisibility(NoteEntry entry)

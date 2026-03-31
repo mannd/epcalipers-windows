@@ -31,6 +31,7 @@ namespace EPCalipersWinUI3
 		private readonly ISettings _settings = Settings.Instance;
 
 		public delegate void SetZoomDelegate(float zoomFactor);
+		public Action DeleteAllNotesAction { get; set; }
 		public SetZoomDelegate SetZoom { get; set; }
 		public MainPageViewModel(SetZoomDelegate setZoomDelegate, ICaliperView caliperView, ScrollViewer scrollViewer)
 			: base(caliperView, scrollViewer)
@@ -323,6 +324,12 @@ namespace EPCalipersWinUI3
 			ZoomFactor = 1;
 			SetZoom(ZoomFactor);
 		}
+
+		[RelayCommand]
+		private void DeleteAllNotes()
+		{
+			DeleteAllNotesAction?.Invoke();
+		}
 		#endregion
 
 
@@ -414,6 +421,9 @@ namespace EPCalipersWinUI3
 
 		[ObservableProperty]
 		private bool canAddNote;
+
+		[ObservableProperty]
+		private bool hasNotes;
 
 		[ObservableProperty]
 		private Microsoft.UI.Xaml.Controls.Image mainImage;

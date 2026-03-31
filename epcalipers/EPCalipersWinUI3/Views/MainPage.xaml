@@ -229,6 +229,11 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
+                <MenuFlyoutItem x:Uid="DeleteAllNotesMenuItem"
+                               IsEnabled="{x:Bind ViewModel.HasNotes, Mode=OneWay}" 
+                                Command="{x:Bind ViewModel.DeleteAllNotesCommand}">
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator/>
                 <MenuFlyoutItem x:Uid="SetCalibrationMenuItem" 
                                IsEnabled="{x:Bind ViewModel.ShowActOnCalipersMenuItems, Mode=OneWay}" 
                                 Command="{x:Bind ViewModel.SetCalibrationCommand}" />

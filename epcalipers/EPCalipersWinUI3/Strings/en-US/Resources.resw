@@ -806,4 +806,7 @@
   <data name="SettingsCaliperFontSize.Header" xml:space="preserve">
     <value>Caliper font size</value>
   </data>
+  <data name="DeleteAllNotesMenuItem.Text" xml:space="preserve">
+    <value>Delete all notes</value>
+  </data>
 </root>
