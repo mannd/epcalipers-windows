@@ -169,6 +169,7 @@ namespace EPCalipersWinUI3
 
 			FileName = file.DisplayName;
 			_pdfHelper.ClearPdfFile();
+			DeleteAllNotesAction?.Invoke();
 
 			try
 			{
