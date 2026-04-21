@@ -94,6 +94,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (_timeCalibration != value)
 				{
 					_timeCalibration = value;
+					//_timeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
 					OnPropertyChanged(nameof(TimeCalibration));
 				}
 			}
@@ -108,6 +109,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (_amplitudeCalibration != value)
 				{
 					_amplitudeCalibration = value;
+				//	_amplitudeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
 					OnPropertyChanged(nameof(AmplitudeCalibration));
 				}
 			}
@@ -632,6 +634,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
 			AngleCalibration.Rounding = _settings.Rounding;
+			TimeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
+			AmplitudeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
+			AngleCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
 			
 			foreach (var caliper in _calipers)
 			{
