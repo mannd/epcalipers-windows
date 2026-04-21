@@ -29,6 +29,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public double Value => Measurement.Value;
 		public Unit Unit => Measurement.Unit;
 		public string UnitString => Measurement.UnitString;
+		public double AbsoluteValue => Measurement.AbsoluteValue;
 	}
 
 	public sealed class ZeroValueException : Exception
@@ -110,7 +111,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			var measurement = CalibratedInterval(interval, showBpm);
 			double value = AllowNegativeCaliperValues ? measurement.Value : measurement.AbsoluteValue;
-			// double value = measurement.Value;
 			string unitString = measurement.UnitString;
 			string formattedValue = GetFormattedRoundedValue(value, showBpm);
 			return string.Format("{0} {1}", formattedValue, unitString);
