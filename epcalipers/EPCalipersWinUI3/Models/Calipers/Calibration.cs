@@ -108,7 +108,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public virtual string GetFormattedMeasurement(double interval, bool showBpm = false)
 		{
 			var measurement = CalibratedInterval(interval, showBpm);
-			double value = measurement.Value;
+			double value = Settings.Instance.AllowNegativeCaliperValues ? measurement.Value : measurement.AbsoluteValue;
+			// double value = measurement.Value;
 			string unitString = measurement.UnitString;
 			string formattedValue = GetFormattedRoundedValue(value, showBpm);
 			return string.Format("{0} {1}", formattedValue, unitString);

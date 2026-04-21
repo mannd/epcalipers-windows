@@ -809,4 +809,8 @@
   <data name="DeleteAllNotesMenuItem.Text" xml:space="preserve">
     <value>Delete all notes</value>
   </data>
+  <data name="AllowNegativeCaliperValues.Content" xml:space="preserve">
+    <value>Allow negative caliper values</value>
+    <comment>settings checkbox context</comment>
+  </data>
 </root>

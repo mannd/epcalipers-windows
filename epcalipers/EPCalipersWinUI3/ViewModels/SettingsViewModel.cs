@@ -54,6 +54,7 @@ namespace EPCalipersWinUI3.ViewModels
 			DefaultNoteForegroundColor = _model.DefaultNoteForegroundColor;
 			DefaultNoteWidth = _model.DefaultNoteWidth;
 			DefaultNoteHeight = _model.DefaultNoteHeight;
+			allowNegativeCaliperValues = _model.AllowNegativeCaliperValues;
 
 			ViewItems = new List<string>() { "MainWindow".GetLocalized(), "TransparentWindow".GetLocalized() };
 			Alignments = new List<string>() 
@@ -172,6 +173,9 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(DefaultNoteHeight):
 					_model.DefaultNoteHeight = DefaultNoteHeight;
 					break;
+				case nameof(AllowNegativeCaliperValues):
+					_model.AllowNegativeCaliperValues = AllowNegativeCaliperValues;
+					break;
 				default:
 					break;
 			}
@@ -275,5 +279,8 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private double defaultNoteHeight;
+
+		[ObservableProperty]
+		private bool allowNegativeCaliperValues;
 	}
 }

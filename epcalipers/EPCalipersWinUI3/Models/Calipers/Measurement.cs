@@ -33,5 +33,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public double Value {  get; init; }
 		public Unit Unit { get; init; }
 		public string UnitString { get; init; }
+		public double AbsoluteValue => Math.Abs(Value);
 	}
 }

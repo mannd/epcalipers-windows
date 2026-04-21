@@ -172,6 +172,7 @@
                     <TextBlock VerticalAlignment="Center" x:Uid="NumberOfMarchingCalipers"/>
                     <TextBlock Text="{x:Bind NumberOfMarchingCalipersSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
                 </StackPanel>
+                <CheckBox x:Uid="AllowNegativeCaliperValues" IsChecked="{x:Bind ViewModel.AllowNegativeCaliperValues, Mode=TwoWay}" />
                 <TextBlock x:Uid="BrugadaTriangleSettings" 
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}" ></TextBlock>
                 <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />

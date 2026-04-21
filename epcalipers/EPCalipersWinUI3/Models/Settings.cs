@@ -52,6 +52,7 @@ namespace EPCalipersWinUI3.Models
 		private const string _defaultNoteForegroundColorKey = "DefaultNoteForegroundColor";
 		private const string _defaultNoteWidthKey = "DefaultNoteWidth";
 		private const string _defaultNoteHeightKey = "DefaultNoteHeight";
+		private const string _allowNegativeCaliperValuesKey = "AllowNegativeCaliperValues";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -295,6 +296,12 @@ namespace EPCalipersWinUI3.Models
 			set => _localSettings.Values[_defaultNoteHeightKey] = value;
 		}
 
+		public bool AllowNegativeCaliperValues
+		{
+			get => (bool)(_localSettings.Values[_allowNegativeCaliperValuesKey] ?? true);
+			set => _localSettings.Values[_allowNegativeCaliperValuesKey] = value;
+		}
+
 		public Color DefaultNoteForegroundColor
 		{
 			get
@@ -360,5 +367,7 @@ namespace EPCalipersWinUI3.Models
 		public double DefaultNoteWidth { get; set; } = 180.0;
 		public double DefaultNoteHeight { get; set; } = 80.0;
 		public Color DefaultNoteForegroundColor { get; set; } = Colors.Black;
+
+		public bool AllowNegativeCaliperValues { get; set; } = true;
 	}
 }
