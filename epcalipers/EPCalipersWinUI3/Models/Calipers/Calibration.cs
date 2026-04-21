@@ -94,6 +94,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public double Multiplier { get; init; }
 		public bool IsUncalibrated => CalibrationMeasurment.Unit == Unit.Uncalibrated;
 		public bool IsCalibrated => !IsUncalibrated;
+		public bool AllowNegativeCaliperValues { get; set; } = true;
 
 		public static Unit StringToCalibrationUnit(string input)
 		{
@@ -108,7 +109,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public virtual string GetFormattedMeasurement(double interval, bool showBpm = false)
 		{
 			var measurement = CalibratedInterval(interval, showBpm);
-			double value = Settings.Instance.AllowNegativeCaliperValues ? measurement.Value : measurement.AbsoluteValue;
+			double value = AllowNegativeCaliperValues ? measurement.Value : measurement.AbsoluteValue;
 			// double value = measurement.Value;
 			string unitString = measurement.UnitString;
 			string formattedValue = GetFormattedRoundedValue(value, showBpm);

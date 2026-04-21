@@ -499,6 +499,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public void RefreshCalipers()
 		{
 			Debug.Print("RefreshCalipers()");
+			TimeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
+			AmplitudeCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;
+			AngleCalibration.AllowNegativeCaliperValues = _settings.AllowNegativeCaliperValues;	
 			TimeCalibration.Rounding = _settings.Rounding;
 			AmplitudeCalibration.Rounding = _settings.Rounding;
 			AngleCalibration.Rounding = _settings.Rounding;
