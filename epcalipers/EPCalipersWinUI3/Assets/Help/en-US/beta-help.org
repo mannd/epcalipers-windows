@@ -29,6 +29,41 @@
 8) Make other measurements with the ~Mean interval~ and ~QTc~ buttons on the toolbar.
 9) You can switch to a transparent window using ~View|Transparent~ on the menu bar.
 10) Adjust settings using ~Tools|Settings~ on the menu bar.
+* Key bindings
+| Key                    | Action                       |
+|------------------------+------------------------------|
+| Ctrl+O                 | Open image or PDF file       |
+| Ctrl+S                 | Save screenshot              |
+| Alt+F4                 | Exit program                 |
+| Ctrl++                 | Zoom in                      |
+| Ctrl+-                 | Zoom out                     |
+| Ctrl+0                 | Reset zoom                   |
+| Ctrl+Shift+R           | Rotate image right 90°             |
+| Ctrl+Shift+L           | Rotate image left 90°              |
+| Ctrl+R                 | Rotate image right 1°              |
+| Ctrl+L                 | Rotate image left 1°               |
+| Ctrl+Alt+R             | Rotate image right 0.01°           |
+| Ctrl+Alt+L             | Rotate image left 0.01°            |
+| Ctrl+Alt+0             | Reset image rotation         |
+| N                      | Next PDF page                |
+| P                      | Previous PDF page            |
+| Ctrl-T                 | Add time caliper             |
+| Ctrl-A                 | Add amplitude caliper        |
+| Ctrl-G                 | Add angle caliper            |
+| Delete                 | Delete selected caliper      |
+| Shift-Delete           | Delete all calipers          |
+| Esc                    | Clear selection              |
+| Ctrl+Left arrow        | Move selected bar left       |
+| Ctrl+Right arrow       | Move selected bar right      |
+| Ctrl+Up arrow          | Move selected bar up         |
+| Ctrl+Down arrow        | Move selected bar down       |
+| Ctrl+Shift+Left arrow  | Micromove selected bar left  |
+| Ctrl+Shift+Right arrow | Micromove selected bar right |
+| Ctrl+Shift+Up arrow    | Micromove selected bar up    |
+| Ctrl+Shift+Down arrow  | Micromove selected bar down  |
+| Ctrl+I                 | Toggle rate/interval         |
+| F1                     | Show help                    |
+
 * Images
 :PROPERTIES:
 :CUSTOM_ID: images-id
@@ -93,7 +128,7 @@ Right click a time caliper and select ~Marching caliper~ to convert a time calip
 ** Notes
 You can add text notes to the image by right clicking and selecting ~Add note~.  A text box will appear in which you can type a note.  Click outside the text box to stop editing the note.  The outline of the text box will appear when you hover the cursor over a note.  Click inside the text box to edit the note.  Drag the text box to reposition the note.  Right click on the box and select ~Delete note~ to delete the note.  You can delete all notes using the ~Calipers | Delete all notes~ menu item.
 * PDFs
-PDFs are supported, including multipage PDFs in the x64 and x86 versions of the program.  Note that PDFs are not supported in the ARM version of the program.  Use the ~N~ and ~P~ keys (for ~Next page~ and ~Previous page~) to change PDF pages or use the ~Goto page~ menu item to go to a specific page.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.   You can also adjust the resolution of the PDF image in Settings, if the PDF image is too large or too small.
+PDFs are supported, including multipage PDFs.  Use the ~N~ and ~P~ keys (for ~Next page~ and ~Previous page~) to change PDF pages or use the ~Goto page~ menu item to go to a specific page.  You can adjust PDF parameters in Settings to maintain calipers, calibration and zoom between PDF pages if you desire.   You can also adjust the resolution of the PDF image in Settings.
 * Brugadometer
 :PROPERTIES:
 :CUSTOM_ID: brugadometer-id
