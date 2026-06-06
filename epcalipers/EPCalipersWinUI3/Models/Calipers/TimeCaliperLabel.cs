@@ -58,7 +58,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 			else
 			{
-				TextBlock.Visibility = Visibility.Collapsed;
+				if (!AutoAlignLabel)
+				{
+					TextBlock.Visibility = Visibility.Collapsed;
+				}
 			}
 		}
 
