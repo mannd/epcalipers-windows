@@ -53,7 +53,7 @@ native ARM systems.  It might be preferable to install the x64 version
 on such systems and rely on x64 emulation on ARM.
 
 ## Copyright
-Copyright © 2016-2025 [EP Studios, Inc.](https://www.epstudiossoftware.com)
+Copyright © 2016-2026 [EP Studios, Inc.](https://www.epstudiossoftware.com)
 
 ## Author
 David Mann, MD

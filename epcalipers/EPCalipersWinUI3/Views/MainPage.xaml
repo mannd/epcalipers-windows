@@ -103,7 +103,11 @@
                 </MenuFlyoutItem>
                 <MenuFlyoutItem 
                     IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
-                    x:Uid="ResetZoomMenuItem" Command="{x:Bind ViewModel.ResetZoomCommand}"/>
+                    x:Uid="ResetZoomMenuItem" Command="{x:Bind ViewModel.ResetZoomCommand}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
                 <MenuFlyoutSeparator/>
                 <MenuFlyoutItem 
                     IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
@@ -151,7 +155,7 @@
                     IsEnabled="{x:Bind ViewModel.HasMainImage, Mode=OneWay}"
                     x:Uid="ResetRotationMenuItem" Click="ResetRotation_Click">
                     <MenuFlyoutItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Number0" Modifiers="Control"/>
+                        <KeyboardAccelerator Key="Number0" Modifiers="Control,Menu"/>
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
                 <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SupportsPdfs}"/>
