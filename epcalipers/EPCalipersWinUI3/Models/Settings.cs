@@ -53,6 +53,8 @@ namespace EPCalipersWinUI3.Models
 		private const string _defaultNoteWidthKey = "DefaultNoteWidth";
 		private const string _defaultNoteHeightKey = "DefaultNoteHeight";
 		private const string _allowNegativeCaliperValuesKey = "AllowNegativeCaliperValues";
+		private const string _adjustableSidebarLengthKey = "AdjustableSidebarLength";
+		private const string _sidebarLengthKey = "SidebarLength";
 
 		// Saved parameters not set directly by the user.
 		private const string _numberOfMeanIntervalsKey = "NumberOfMeanIntervals";
@@ -278,6 +280,18 @@ namespace EPCalipersWinUI3.Models
 			}
 		}
 
+		public double SidebarLength
+		{
+			get => (double)(_localSettings.Values[_sidebarLengthKey] ?? 200.0);
+			set => _localSettings.Values[_sidebarLengthKey] = value;
+		}
+
+		public bool AdjustableSidebarLength
+		{
+			get => (bool)(_localSettings.Values[_adjustableSidebarLengthKey] ?? true);
+			set => _localSettings.Values[_adjustableSidebarLengthKey] = value;
+		}
+
 		public double DefaultNoteFontSize
 		{
 			get => (double)(_localSettings.Values[_defaultNoteFontSizeKey] ?? 14.0);
@@ -369,5 +383,9 @@ namespace EPCalipersWinUI3.Models
 		public Color DefaultNoteForegroundColor { get; set; } = Colors.Black;
 
 		public bool AllowNegativeCaliperValues { get; set; } = true;
+
+		public bool AdjustableSidebarLength { get; set; } = true;
+
+		public double SidebarLength { get; set; } = 200.0;
 	}
 }

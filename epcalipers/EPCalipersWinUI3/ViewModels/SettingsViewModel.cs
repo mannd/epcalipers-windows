@@ -54,7 +54,9 @@ namespace EPCalipersWinUI3.ViewModels
 			DefaultNoteForegroundColor = _model.DefaultNoteForegroundColor;
 			DefaultNoteWidth = _model.DefaultNoteWidth;
 			DefaultNoteHeight = _model.DefaultNoteHeight;
-			allowNegativeCaliperValues = _model.AllowNegativeCaliperValues;
+			AllowNegativeCaliperValues = _model.AllowNegativeCaliperValues;
+			AdjustableSidebarLength = _model.AdjustableSidebarLength;
+			SidebarLength = _model.SidebarLength;
 
 			ViewItems = new List<string>() { "MainWindow".GetLocalized(), "TransparentWindow".GetLocalized() };
 			Alignments = new List<string>() 
@@ -176,6 +178,12 @@ namespace EPCalipersWinUI3.ViewModels
 				case nameof(AllowNegativeCaliperValues):
 					_model.AllowNegativeCaliperValues = AllowNegativeCaliperValues;
 					break;
+					case nameof(AdjustableSidebarLength):
+						_model.AdjustableSidebarLength = AdjustableSidebarLength;
+					break;
+				case nameof(SidebarLength):
+					_model.SidebarLength = SidebarLength;
+					break;
 				default:
 					break;
 			}
@@ -282,5 +290,11 @@ namespace EPCalipersWinUI3.ViewModels
 
 		[ObservableProperty]
 		private bool allowNegativeCaliperValues;
+
+		[ObservableProperty]
+		private bool adjustableSidebarLength;
+
+		[ObservableProperty]
+		private double sidebarLength;
 	}
 }

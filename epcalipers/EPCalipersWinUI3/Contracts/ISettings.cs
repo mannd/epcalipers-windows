@@ -42,5 +42,7 @@ namespace EPCalipersWinUI3.Contracts
 		public double DefaultNoteHeight { get; set; }
 		public Color DefaultNoteForegroundColor { get; set; }
 		public bool AllowNegativeCaliperValues { get; set; }
+		public double SidebarLength { get; set; }
+		public bool AdjustableSidebarLength { get; set; }
 	}
 }

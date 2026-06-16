@@ -813,4 +813,12 @@
     <value>Allow negative caliper values</value>
     <comment>settings checkbox context</comment>
   </data>
+  <data name="AdjustableSidebarLength.Content" xml:space="preserve">
+    <value>Sidebar length can be adjusted</value>
+    <comment>Toggles between "infinite" sidebars and short sidebars on calipers.</comment>
+  </data>
+  <data name="SidebarLength.Header" xml:space="preserve">
+    <value>Sidebar length</value>
+    <comment>Length of time and amplitude sidebar lengths in points.</comment>
+  </data>
 </root>

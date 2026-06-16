@@ -173,9 +173,19 @@
                     <TextBlock Text="{x:Bind NumberOfMarchingCalipersSlider.Value, Mode=OneWay}" VerticalAlignment="Center"/>
                 </StackPanel>
                 <CheckBox x:Uid="AllowNegativeCaliperValues" IsChecked="{x:Bind ViewModel.AllowNegativeCaliperValues, Mode=TwoWay}" />
+                <CheckBox x:Uid="AdjustableSidebarLength" IsChecked="{x:Bind ViewModel.AdjustableSidebarLength, Mode=TwoWay}" />
+                <NumberBox x:Uid="SidebarLength" Width="200"
+                               HorizontalAlignment="Left"
+                           IsEnabled="{x:Bind ViewModel.AdjustableSidebarLength, Mode=TwoWay}"
+               Value="{x:Bind ViewModel.SidebarLength, Mode=TwoWay}"
+               Minimum="20"
+               Maximum="600"
+               SmallChange="10"
+               SpinButtonPlacementMode="Inline" />
                 <TextBlock x:Uid="BrugadaTriangleSettings" 
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}" ></TextBlock>
                 <CheckBox x:Uid="ShowBrugadaTriangle" IsChecked="{x:Bind ViewModel.ShowBrugadaTriangle, Mode=TwoWay}" />
+
                 <TextBlock x:Uid="ZoomSettings" 
                            Margin="0,20,0,10" Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
                 <CheckBox x:Uid="AdjustBarThicknessWithZoom" IsChecked="{x:Bind ViewModel.AdjustBarThicknessWithZoom, Mode=TwoWay}" />
