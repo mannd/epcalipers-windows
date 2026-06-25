@@ -92,8 +92,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			// NB Crossbar must be first, to allow IsNear to work correctly.
 			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
-			LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
-			RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
+			if (_settings.AdjustableSidebarLength)
+			{
+				var sidebarLength = _settings.SidebarLength;
+				LeftBar = new Bar(Bar.Role.Vertical, position.First, position.Center - 100, position.Center + 100, _fakeUI);
+				RightBar = new Bar(Bar.Role.Vertical, position.Last, position.Center - 100, position.Center + 100, _fakeUI);
+			}
+			else
+			{
+				LeftBar = new Bar(Bar.Role.Vertical, position.First, 0, Bounds.Height, _fakeUI);
+				RightBar = new Bar(Bar.Role.Vertical, position.Last, 0, Bounds.Height, _fakeUI);
+			}
 			return [LeftBar, RightBar, CrossBar];
 		}
 
@@ -175,6 +184,15 @@ namespace EPCalipersWinUI3.Models.Calipers
 				bar.X1 += delta.X;
 				bar.X2 += delta.X;
 				bar.Position += delta.Y;
+				// for short bars
+				if (_settings.AdjustableSidebarLength)
+				{
+					var sidebarLength = _settings.SidebarLength;
+					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
+					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
+					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+				}
 			}
 			if (IsMarching)
 			{
