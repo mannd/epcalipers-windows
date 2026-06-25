@@ -32,6 +32,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void UpdateSidebars()
 		{
+			if (_settings.AdjustableSidebarLength)
+			{
+				var sidebarHalfLength = _settings.SidebarLength / 2;
+					TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					TopBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+					BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					BottomBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+			} else
+			{
+				TopBar.X1 = 0;
+				TopBar.X2 = Bounds.Width;
+				BottomBar.X1 = 0;
+				BottomBar.X2 = Bounds.Width;
+			}
 		}
 
 		private List<Bar> InitBars(CaliperPosition position)
@@ -39,8 +53,17 @@ namespace EPCalipersWinUI3.Models.Calipers
 			// NB Crossbar must be first to allow isNear to work properly.
 			CrossBar = new Bar(Bar.Role.VerticalCrossBar,
 				position.Center, position.First, position.Last, _fakeUI);
-			TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeUI);
-			BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeUI);
+			if (_settings.AdjustableSidebarLength)
+			{
+				var sidebarHalfLength = _settings.SidebarLength / 2;
+				TopBar = new Bar(Bar.Role.Horizontal, position.First, position.Center - sidebarHalfLength, position.Center + sidebarHalfLength, _fakeUI);
+				BottomBar = new Bar(Bar.Role.Horizontal, position.Last, position.Center - sidebarHalfLength, position.Center + sidebarHalfLength, _fakeUI);
+			}
+			else
+			{
+				TopBar = new Bar(Bar.Role.Horizontal, position.First, 0, Bounds.Width, _fakeUI);
+				BottomBar = new Bar(Bar.Role.Horizontal, position.Last, 0, Bounds.Width, _fakeUI);
+			}
 			return new List<Bar> { TopBar, BottomBar, CrossBar };
 		}
 		private void InitCaliperLabel()
@@ -91,6 +114,14 @@ namespace EPCalipersWinUI3.Models.Calipers
 				bar.Position += delta.X;
 				bar.Y1 += delta.Y;
 				bar.Y2 += delta.Y;
+				if (_settings.AdjustableSidebarLength)
+				{
+					var sidebarHalfLength = _settings.SidebarLength / 2;
+					TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					TopBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+					BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					BottomBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+				}
 			}
 			UpdateLabel();
 		}

@@ -189,7 +189,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			switch (BarRole)
 			{
 				case Role.Horizontal:
-					X1 = _barMargin;
+					X1 = start + _barMargin;
 					Y1 = Y2 = position;
 					X2 = end - _barMargin;
 					break;

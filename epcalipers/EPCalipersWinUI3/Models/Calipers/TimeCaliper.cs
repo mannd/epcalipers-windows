@@ -94,9 +94,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CrossBar = new Bar(Bar.Role.HorizontalCrossBar, position.Center, position.First, position.Last, _fakeUI);
 			if (_settings.AdjustableSidebarLength)
 			{
-				var sidebarLength = _settings.SidebarLength;
-				LeftBar = new Bar(Bar.Role.Vertical, position.First, position.Center - 100, position.Center + 100, _fakeUI);
-				RightBar = new Bar(Bar.Role.Vertical, position.Last, position.Center - 100, position.Center + 100, _fakeUI);
+				var sidebarHalfLength = _settings.SidebarLength / 2;
+				LeftBar = new Bar(Bar.Role.Vertical, position.First, position.Center - sidebarHalfLength, position.Center + sidebarHalfLength, _fakeUI);
+				RightBar = new Bar(Bar.Role.Vertical, position.Last, position.Center - sidebarHalfLength, position.Center + sidebarHalfLength, _fakeUI);
 			}
 			else
 			{
@@ -157,11 +157,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 		{
 			if (_settings.AdjustableSidebarLength)
 			{
-					var sidebarLength = _settings.SidebarLength;
-					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
-					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
-					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
-					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+				var sidebarHalfLength = _settings.SidebarLength / 2;
+					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
 			} else
 			{
 				LeftBar.Y1 = Bounds.Height;
@@ -206,11 +206,11 @@ namespace EPCalipersWinUI3.Models.Calipers
 				// for short bars
 				if (_settings.AdjustableSidebarLength)
 				{
-					var sidebarLength = _settings.SidebarLength;
-					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
-					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
-					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
-					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+					var sidebarHalfLength = _settings.SidebarLength / 2;
+					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
 				}
 			}
 			if (IsMarching)
