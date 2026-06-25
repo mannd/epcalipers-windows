@@ -30,6 +30,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			CaliperType = CaliperType.Amplitude;
 		}
 
+		public override void UpdateSidebars()
+		{
+		}
+
 		private List<Bar> InitBars(CaliperPosition position)
 		{
 			// NB Crossbar must be first to allow isNear to work properly.

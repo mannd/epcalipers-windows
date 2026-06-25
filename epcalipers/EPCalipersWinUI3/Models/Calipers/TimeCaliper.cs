@@ -153,6 +153,25 @@ namespace EPCalipersWinUI3.Models.Calipers
 			return null;
 		}
 
+		public override void UpdateSidebars()
+		{
+			if (_settings.AdjustableSidebarLength)
+			{
+					var sidebarLength = _settings.SidebarLength;
+					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
+					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarLength, Bounds.Height);
+					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarLength, 0);
+			} else
+			{
+				LeftBar.Y1 = Bounds.Height;
+				LeftBar.Y2 = 0;
+				RightBar.Y1 = Bounds.Height;
+				RightBar.Y2 = 0;
+			}
+		}
+
+
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{
 			var width = Bounds.Width - _margin;

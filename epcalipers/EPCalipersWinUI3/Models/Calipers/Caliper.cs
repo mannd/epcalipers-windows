@@ -312,6 +312,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 			ScaledBarThickness.Thickness = settings.BarThickness;
 			ScaledBarThickness.DoScaling = settings.AdjustBarThicknessWithZoom;
 			UpdateScaledBarThickness();
+			UpdateSidebars();
 			CaliperLabel.DoScaleFontSize = settings.AdjustCaliperLabelSizeWithZoom;
 			UpdateColors(settings.SelectedCaliperColor);
 			CaliperLabel.AutoAlignLabel = settings.AutoAlignLabel;
@@ -364,6 +365,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 		public abstract void ChangeBounds();
 
 		public abstract void Drag(Bar bar, Point delta, Point previousPoint);
+
+		public abstract void UpdateSidebars();
 
 		public abstract Bar IsNearBar(Point p);
 

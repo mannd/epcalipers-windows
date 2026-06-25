@@ -56,6 +56,10 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public override void UpdateSidebars()
+		{
+		}
+
 		private void InitBars()
 		{
 			var value = RightPosition - LeftPosition;

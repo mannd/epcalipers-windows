@@ -86,6 +86,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			}
 		}
 
+		public override void UpdateSidebars() { }  // Angle calipers don't have sidebars, so this is a no-op.
+
 
 		private List<Bar> InitBars(AngleCaliperPosition position)
 		{
