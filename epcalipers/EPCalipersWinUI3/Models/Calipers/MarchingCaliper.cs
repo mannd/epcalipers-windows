@@ -65,7 +65,8 @@ namespace EPCalipersWinUI3.Models.Calipers
 			var value = RightPosition - LeftPosition;
 			var leftOrigin = LeftPosition;
 			var rightOrigin = RightPosition;
-			var height = TimeCaliper.LeftBar.Y2;
+			//var height = TimeCaliper.LeftBar.Y2;
+			var height = CaliperView.Bounds.Height;
 			// DEFER: Other means to deemphasize marching calipers?
 			var thickness = Math.Max(TimeCaliper.ScaledBarThickness.Thickness - 1, 1.0);
 			for (int i = 0; i < NumberOfBars; i++)

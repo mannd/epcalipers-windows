@@ -195,7 +195,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 					break;
 				case Role.Vertical:
 					X1 = X2 = position;
-					Y1 = _barMargin;
+					Y1 = start + _barMargin;
 					Y2 = end - _barMargin;
 					break;
 				case Role.Marching:
