@@ -136,9 +136,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 		#region movement
 		public override void ChangeBounds()
 		{
-			var bounds = CaliperView.Bounds;
-			LeftBar.Y2 = bounds.Height;
-			RightBar.Y2 = bounds.Height;
+			SetSidebarLength();
 		}
 
 		public override Bar IsNearBar(Point p)
@@ -155,14 +153,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void UpdateSidebars()
 		{
+			SetSidebarLength();
+		}
+
+		private void SetSidebarLength()
+		{
 			if (_settings.AdjustableSidebarLength)
 			{
 				var sidebarHalfLength = _settings.SidebarLength / 2;
-					LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
-					LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
-					RightBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
-					RightBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
-			} else
+				LeftBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+				LeftBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+				RightBar.Y1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+				RightBar.Y2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+			}
+			else
 			{
 				LeftBar.Y1 = Bounds.Height;
 				LeftBar.Y2 = 0;
@@ -170,7 +174,6 @@ namespace EPCalipersWinUI3.Models.Calipers
 				RightBar.Y2 = 0;
 			}
 		}
-
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
 		{

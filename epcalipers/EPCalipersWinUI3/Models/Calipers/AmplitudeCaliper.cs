@@ -32,14 +32,20 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void UpdateSidebars()
 		{
+			SetSidebarLength();
+		}
+
+		private void SetSidebarLength()
+		{
 			if (_settings.AdjustableSidebarLength)
 			{
 				var sidebarHalfLength = _settings.SidebarLength / 2;
-					TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
-					TopBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
-					BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
-					BottomBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
-			} else
+				TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Width);
+				TopBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+				BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Width);
+				BottomBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
+			}
+			else
 			{
 				TopBar.X1 = 0;
 				TopBar.X2 = Bounds.Width;
@@ -78,9 +84,7 @@ namespace EPCalipersWinUI3.Models.Calipers
 
 		public override void ChangeBounds()
 		{
-			var bounds = CaliperView.Bounds;
-			TopBar.X2 = bounds.Width;
-			BottomBar.X2 = bounds.Width;
+			SetSidebarLength();
 		}
 
 		public override void Drag(Bar bar, Point delta, Point previousPoint)
@@ -117,9 +121,9 @@ namespace EPCalipersWinUI3.Models.Calipers
 				if (_settings.AdjustableSidebarLength)
 				{
 					var sidebarHalfLength = _settings.SidebarLength / 2;
-					TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					TopBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Width);
 					TopBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
-					BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Height);
+					BottomBar.X1 = Math.Min(CrossBar.Position - sidebarHalfLength, Bounds.Width);
 					BottomBar.X2 = Math.Max(CrossBar.Position + sidebarHalfLength, 0);
 				}
 			}
