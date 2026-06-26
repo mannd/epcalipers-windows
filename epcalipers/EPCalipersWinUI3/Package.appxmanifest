@@ -11,7 +11,7 @@
   <Identity
     Name="EPStudios.50317C53AD165"
     Publisher="CN=EP Studios Inc."
-    Version="3.4.0.0" />
+    Version="3.5.0.0" />
 
     <!--Publisher="CN=7BF3A7C0-B349-472C-A59D-2DA2C3F6ACD5"-->
   <mp:PhoneIdentity PhoneProductId="233945dc-653f-425d-a123-c26d259d669a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
